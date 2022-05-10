@@ -12,7 +12,9 @@ import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFil
 import { useAdminLoadSampleEntities } from '../../hooks/useAdminLoadSampleEntities';
 import { useAdminLoadSearchEntitiesAndTotalCount } from '../../hooks/useAdminLoadSearchEntitiesAndTotalCount';
 import {
+  AuthKeyTagSelector,
   EntityMap,
+  EntityTypeTagSelector,
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
@@ -21,6 +23,7 @@ import {
 import { AdminEntityList } from '../AdminEntityList/AdminEntityList';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
 import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar';
+import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector';
 
 interface AdminEntitySelectorDialogProps {
   show: boolean;
@@ -39,7 +42,7 @@ export function AdminEntitySelectorDialog({
     <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
       <FullscreenContainer card height="100%">
         <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={2} paddingVertical={2}>
+          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
             <Text textStyle="headline5">{title}</Text>
           </FullscreenContainer.Item>
           <IconButton icon="close" color="white" onClick={onClose} />
@@ -134,6 +137,17 @@ function Content({ onItemClick }: { onItemClick: (item: AdminEntity) => void }) 
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
         >
           <FullscreenContainer.Row>
+            <FullscreenContainer.Item paddingHorizontal={3}>
+              <EntityTypeTagSelector
+                state={entityTypeFilterState}
+                dispatch={dispatchEntityTypeFilterState}
+              />
+              <StatusTagSelector state={statusFilterState} dispatch={dispatchStatusFilterState} />
+              <AuthKeyTagSelector
+                state={authKeyFilterState}
+                dispatch={dispatchAuthKeyFilterState}
+              />
+            </FullscreenContainer.Item>
             <AdminEntityList {...{ searchEntityState, dispatchSearchEntityState, onItemClick }} />
           </FullscreenContainer.Row>
         </FullscreenContainer.ScrollableRow>
