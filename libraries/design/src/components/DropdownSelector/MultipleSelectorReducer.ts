@@ -20,7 +20,7 @@ export interface MultipleSelectorState<TItem extends MultipleSelectorItem> {
 }
 
 export interface MultipleSelectorStateAction<TItem extends MultipleSelectorItem> {
-  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem>;
+  reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>>;
 }
 
 export function initializeMultipleSelectorState<TItem extends MultipleSelectorItem>({
@@ -34,9 +34,9 @@ export function initializeMultipleSelectorState<TItem extends MultipleSelectorIt
 }
 
 export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
-  state: MultipleSelectorState<TItem>,
+  state: Readonly<MultipleSelectorState<TItem>>,
   action: MultipleSelectorStateAction<TItem>
-): MultipleSelectorState<TItem> {
+): Readonly<MultipleSelectorState<TItem>> {
   const newState = action.reduce(state);
   return newState;
 }
@@ -46,7 +46,7 @@ export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
 class ClearSelectionAction<TItem extends MultipleSelectorItem>
   implements MultipleSelectorStateAction<TItem>
 {
-  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
+  reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
     if (state.selectedIds.length === 0) {
       return state;
     }
@@ -63,7 +63,7 @@ class ToggleItemAction<TItem extends MultipleSelectorItem>
     this.id = id;
   }
 
-  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
+  reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
     const index = state.selectedIds.indexOf(this.id);
     const selectedIds = [...state.selectedIds];
     if (index < 0) {
@@ -85,7 +85,7 @@ class UpdateItemsAction<TItem extends MultipleSelectorItem<TId>, TId extends str
     this.items = items;
   }
 
-  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
+  reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
     const selectedIds = state.selectedIds.filter((id) => this.items.some((it) => it.id === id));
     return { ...state, items: this.items, selectedIds };
   }
