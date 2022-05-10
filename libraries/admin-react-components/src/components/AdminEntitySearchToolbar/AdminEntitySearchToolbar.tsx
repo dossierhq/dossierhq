@@ -48,6 +48,7 @@ export function AdminEntitySearchToolbar({
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
       <EntityTypeSelector
         schema={schema}
+        restrictEntityTypes={searchEntityState.restrictEntityTypes}
         state={entityTypeFilterState}
         dispatch={dispatchEntityTypeFilterState}
       >
