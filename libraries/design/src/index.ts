@@ -14,6 +14,7 @@ export {
   Field,
   FullscreenContainer,
   HoverRevealContainer,
+  HoverRevealStack,
   IconButton,
   initializeMultipleSelectorState,
   Input,
