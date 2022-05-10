@@ -46,3 +46,31 @@ RowLeftIsVisible.args = {
     </>
   ),
 };
+
+export const Nested = Template.bind({});
+Nested.args = {
+  flexDirection: 'row',
+  gap: 5,
+  children: (
+    <>
+      <HoverRevealContainer.Item style={{ backgroundColor: 'pink' }} flexGrow={1} forceVisible>
+        <p>Outer container</p>
+        <HoverRevealContainer>
+          <HoverRevealContainer.Item
+            forceVisible
+            flexGrow={1}
+            style={{ backgroundColor: 'greenyellow' }}
+          >
+            Inner container
+          </HoverRevealContainer.Item>
+          <HoverRevealContainer.Item style={{ backgroundColor: 'wheat' }}>
+            Inner container
+          </HoverRevealContainer.Item>
+        </HoverRevealContainer>
+      </HoverRevealContainer.Item>
+      <HoverRevealContainer.Item style={{ backgroundColor: 'burlywood' }}>
+        Outer container
+      </HoverRevealContainer.Item>
+    </>
+  ),
+};
