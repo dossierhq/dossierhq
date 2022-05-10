@@ -1,8 +1,9 @@
 import type { FieldSpecification } from '@jonasb/datadata-core';
-import { isEntityTypeField, isStringField } from '@jonasb/datadata-core';
+import { isEntityTypeField, isStringField, isValueTypeField } from '@jonasb/datadata-core';
 import React from 'react';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
 import { StringFieldEditor } from './StringFieldEditor';
+import { ValueTypeFieldEditor } from './ValueTypeFieldEditor';
 
 export interface FieldEditorProps<T> {
   fieldSpec: FieldSpecification;
@@ -17,6 +18,8 @@ export function FieldEditor({ value, ...props }: FieldEditorProps<unknown>) {
     editor = <EntityTypeFieldEditor {...props} value={value} />;
   } else if (isStringField(fieldSpec, value)) {
     editor = <StringFieldEditor {...props} value={value} />;
+  } else if (isValueTypeField(fieldSpec, value)) {
+    editor = <ValueTypeFieldEditor {...props} value={value} />;
   } else {
     editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }

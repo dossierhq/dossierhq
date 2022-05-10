@@ -681,3 +681,9 @@ ul li {
   align-items: center;
   inset: 0;
 }
+
+.nested-value-item-indentation {
+  border-left: 3px solid lightgray;
+  border-radius: 3px 0 0 3px;
+  padding-left: 1rem;
+}
