@@ -27,7 +27,7 @@ export function Input({
 }: InputProps): JSX.Element {
   const className = toClassName('control', iconLeft && 'has-icons-left');
   return (
-    <p className={className}>
+    <div className={className}>
       <input
         className={toClassName('input', toColorClassName(color))}
         type="text"
@@ -38,6 +38,6 @@ export function Input({
         onKeyDown={onKeyDown}
       />
       {iconLeft ? <Icon className="is-left" icon={iconLeft} /> : null}
-    </p>
+    </div>
   );
 }
