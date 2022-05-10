@@ -26,7 +26,6 @@ export type EntityTypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<En
 
 type Props = Omit<DropdownSelectorProps<EntityTypeItem>, 'renderItem'> & {
   schema: AdminSchema | PublishedSchema | undefined;
-  restrictEntityTypes?: string[];
 };
 
 export function initializeEntityTypeSelectorState({
@@ -41,21 +40,17 @@ export function initializeEntityTypeSelectorState({
 
 export const reduceEntityTypeSelectorState: EntityTypeSelectorReducer = reduceMultipleSelectorState;
 
-export function EntityTypeSelector({ schema, restrictEntityTypes, ...props }: Props): JSX.Element {
+export function EntityTypeSelector({ schema, ...props }: Props): JSX.Element {
   const { dispatch } = props;
 
   useEffect(() => {
     if (schema) {
-      let entityTypes = schema.spec.entityTypes;
-      if (restrictEntityTypes && restrictEntityTypes.length > 0) {
-        entityTypes = entityTypes.filter((it) => restrictEntityTypes.includes(it.name));
-      }
-      const items = entityTypes.map((it) => ({ id: it.name, name: it.name }));
+      const items = schema.spec.entityTypes.map((it) => ({ id: it.name, name: it.name }));
       dispatch(new MultipleSelectorStateActions.UpdateItems(items));
     }
-  }, [schema, dispatch, restrictEntityTypes]);
+  }, [schema, dispatch]);
 
-  // useDebugLogChangedValues('EntityTypeSelector changed values', { schema, dispatch, restrictEntityTypes });
+  // useDebugLogChangedValues('EntityTypeSelector changed values', { schema, dispatch });
 
   return <DropdownSelector<EntityTypeItem> {...props} renderItem={(item) => item.name} />;
 }
