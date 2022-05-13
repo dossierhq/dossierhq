@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { Button } from './Button';
 import type { ButtonProps } from './Button';
-import { Icon } from '../../';
+import { Icon } from '../Icon/Icon';
 
 const meta: Meta<ButtonProps> = {
   title: 'Generic/Button',
