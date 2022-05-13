@@ -1,7 +1,8 @@
 import type { BoundingBox, Location } from '@jonasb/datadata-core';
+import type { Map } from 'leaflet';
 import { Icon } from 'leaflet';
 import type { FunctionComponent } from 'react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
@@ -27,6 +28,7 @@ const currentMarkerIcon = new Icon({
 export interface MapContainerProps {
   className?: string;
   center?: Location | null;
+  resetSignal?: unknown;
   zoom?: number | null;
   onBoundingBoxChanged?: (boundingBox: BoundingBox) => void;
   children: React.ReactNode;
@@ -51,12 +53,23 @@ interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
 export const MapContainer: MapContainerComponent = ({
   className,
   center,
+  resetSignal,
   zoom,
   onBoundingBoxChanged,
   children,
 }: MapContainerProps) => {
+  const mapRef = useRef<Map>(null);
+
+  useEffect(() => {
+    if (resetSignal && mapRef.current) {
+      mapRef.current.setView(center ?? defaultCenter, zoom ?? defaultZoom, { animate: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetSignal]);
+
   return (
     <LeafletMapContainer
+      ref={mapRef}
       className={className}
       center={center ?? defaultCenter}
       zoom={zoom ?? defaultZoom}
