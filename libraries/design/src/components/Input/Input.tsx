@@ -11,6 +11,10 @@ export interface InputProps {
   iconLeft?: IconName;
   placeholder?: string;
   readOnly?: boolean;
+  type?: 'text' | 'number';
+  min?: number;
+  max?: number;
+  step?: number;
   value?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
@@ -20,7 +24,11 @@ export function Input({
   color,
   iconLeft,
   placeholder,
+  type,
   readOnly,
+  min,
+  max,
+  step,
   value,
   onChange,
   onKeyDown,
@@ -30,12 +38,8 @@ export function Input({
     <div className={className}>
       <input
         className={toClassName('input', toColorClassName(color))}
-        type="text"
-        placeholder={placeholder}
-        readOnly={readOnly}
-        value={value}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
+        type={type ?? 'text'}
+        {...{ min, max, step, placeholder, readOnly, value, onChange, onKeyDown }}
       />
       {iconLeft ? <Icon className="is-left" icon={iconLeft} /> : null}
     </div>
