@@ -7,7 +7,7 @@ import {
   Text,
   toSizeClassName,
 } from '@jonasb/datadata-design';
-import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
 import {
@@ -83,6 +83,11 @@ function Content({
     []
   );
 
+  // Reset signal
+
+  const [resetSignal, setResetSignal] = useState(0);
+  const handleResetClick = useCallback(() => setResetSignal((it) => it + 1), []);
+
   // Entity search state
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
@@ -113,6 +118,7 @@ function Content({
           max={180.0}
           step={0.000001}
         />
+        <IconButton disabled={!value} icon="location" onClick={handleResetClick} />
       </FullscreenContainer.Row>
       <FullscreenContainer.Row fillHeight fullWidth>
         <EntityMap<AdminEntity>
@@ -122,6 +128,7 @@ function Content({
             <AdminEntityMapMarker key={key} entity={entity} location={location} />
           )}
           center={value}
+          resetSignal={resetSignal}
         >
           <MapContainer.EditLocationMarker value={value} onChange={onChange} />
         </EntityMap>

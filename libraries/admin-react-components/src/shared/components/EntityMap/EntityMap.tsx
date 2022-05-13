@@ -1,13 +1,14 @@
 import type {
   AdminEntity,
   AdminSchema,
+  BoundingBox,
   Location,
   PublishedEntity,
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { Dispatch, ReactNode } from 'react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { SearchEntityStateActions } from '../..';
 import type { SearchEntityState, SearchEntityStateAction } from '../../..';
 import { MapContainer } from '../../..';
@@ -16,6 +17,7 @@ export interface EntityMapProps<TEntity> {
   className?: string;
   schema: AdminSchema | PublishedSchema | undefined;
   center?: Location | null;
+  resetSignal?: unknown;
   searchEntityState: SearchEntityState;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   renderEntityMarker: (key: string, entity: TEntity, location: Location) => JSX.Element;
@@ -26,6 +28,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
   className,
   schema,
   center,
+  resetSignal,
   searchEntityState,
   dispatchSearchEntityState,
   renderEntityMarker,
@@ -33,18 +36,23 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
 }: EntityMapProps<TEntity>): JSX.Element | null {
   const { entities } = searchEntityState;
 
+  const handleBoundingBoxChange = useCallback(
+    (boundingBox: BoundingBox): void =>
+      dispatchSearchEntityState(
+        new SearchEntityStateActions.SetQuery(
+          { boundingBox },
+          { partial: true, resetPagingIfModifying: true }
+        )
+      ),
+    [dispatchSearchEntityState]
+  );
+
   return (
     <MapContainer
       className={className}
       center={center}
-      onBoundingBoxChanged={(boundingBox) =>
-        dispatchSearchEntityState(
-          new SearchEntityStateActions.SetQuery(
-            { boundingBox },
-            { partial: true, resetPagingIfModifying: true }
-          )
-        )
-      }
+      resetSignal={resetSignal}
+      onBoundingBoxChanged={handleBoundingBoxChange}
     >
       {schema
         ? entities.map((entityResult) => {
