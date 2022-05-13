@@ -17,7 +17,7 @@ export function LocationFieldEditor({ value, onChange }: Props) {
       {value ? (
         <HoverRevealContainer gap={2}>
           <HoverRevealContainer.Item forceVisible flexGrow={1}>
-            <Button onClick={handleShowSelector}>
+            <Button onClick={handleShowSelector} iconLeft="location">
               {value.lat}, {value.lng}
             </Button>
           </HoverRevealContainer.Item>
@@ -26,7 +26,9 @@ export function LocationFieldEditor({ value, onChange }: Props) {
           </HoverRevealContainer.Item>
         </HoverRevealContainer>
       ) : (
-        <Button onClick={handleShowSelector}>Select location</Button>
+        <Button onClick={handleShowSelector} iconLeft="map">
+          Select location
+        </Button>
       )}
       {showSelector ? (
         <AdminLocationSelectorDialog
