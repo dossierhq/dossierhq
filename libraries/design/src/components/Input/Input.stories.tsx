@@ -28,3 +28,6 @@ ReadOnly.args = { value: 'Read only', readOnly: true };
 
 export const LeftIcon = Template.bind({});
 LeftIcon.args = { iconLeft: 'map' };
+
+export const Number = Template.bind({});
+Number.args = { type: 'number', min: 0, max: 100, step: 1 };

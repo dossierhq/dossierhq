@@ -9,7 +9,8 @@
     "fortawesome",
     "fullwidth",
     "hoverable",
-    "rushstack"
+    "rushstack",
+    "Xmark"
   ],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
