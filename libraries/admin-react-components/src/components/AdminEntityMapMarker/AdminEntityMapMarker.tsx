@@ -3,15 +3,13 @@ import { Column, Text } from '@jonasb/datadata-design';
 import React from 'react';
 import { MapContainer, StatusTag } from '../..';
 
-export function AdminEntityMapMarker({
-  entity,
-  location,
-  onClick,
-}: {
+interface Props {
   entity: AdminEntity;
   location: Location;
-  onClick: () => void;
-}) {
+  onClick?: () => void;
+}
+
+export function AdminEntityMapMarker({ entity, location, onClick }: Props) {
   return (
     <MapContainer.Marker
       location={location}

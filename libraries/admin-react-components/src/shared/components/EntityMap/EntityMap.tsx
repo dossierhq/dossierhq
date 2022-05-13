@@ -6,7 +6,7 @@ import type {
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
-import type { Dispatch } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 import React from 'react';
 import { SearchEntityStateActions } from '../..';
 import type { SearchEntityState, SearchEntityStateAction } from '../../..';
@@ -15,24 +15,28 @@ import { MapContainer } from '../../..';
 export interface EntityMapProps<TEntity> {
   className?: string;
   schema: AdminSchema | PublishedSchema | undefined;
+  center?: Location | null;
   searchEntityState: SearchEntityState;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   renderEntityMarker: (key: string, entity: TEntity, location: Location) => JSX.Element;
+  children?: ReactNode;
 }
 
 export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
   className,
   schema,
+  center,
   searchEntityState,
   dispatchSearchEntityState,
   renderEntityMarker,
+  children,
 }: EntityMapProps<TEntity>): JSX.Element | null {
   const { entities } = searchEntityState;
 
   return (
     <MapContainer
       className={className}
-      center={null}
+      center={center}
       onBoundingBoxChanged={(boundingBox) =>
         dispatchSearchEntityState(
           new SearchEntityStateActions.SetQuery(
@@ -54,6 +58,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
             );
           })
         : null}
+      {children}
     </MapContainer>
   );
 }

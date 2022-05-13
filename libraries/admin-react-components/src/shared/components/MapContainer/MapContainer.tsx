@@ -73,7 +73,7 @@ export const MapContainer: MapContainerComponent = ({
     </LeafletMapContainer>
   );
 };
-MapContainer.displayName = 'Map';
+MapContainer.displayName = 'MapContainer';
 
 function MapEventListener({
   onBoundingBoxChanged,
