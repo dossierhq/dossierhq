@@ -51,7 +51,7 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
-    "graphql": "~16.4.0",
+    "graphql": "~16.5.0",
     "graphql-type-json": "~0.3.2",
     "tslib": "~2.4.0"
   }
