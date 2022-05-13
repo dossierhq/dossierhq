@@ -17,7 +17,7 @@ importers:
       '@types/sql.js': ~1.4.2
       '@vitejs/plugin-react': ^1.0.7
       history: ~5.3.0
-      leaflet: ~1.7.1
+      leaflet: ~1.8.0
       react: ~18.1.0
       react-dom: ~18.1.0
       react-router-dom: ~6.2.2
@@ -32,7 +32,7 @@ importers:
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-server': link:../../libraries/server
       history: 5.3.0
-      leaflet: 1.7.1
+      leaflet: 1.8.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-router-dom: 6.2.2_react-dom@18.1.0+react@18.1.0
@@ -179,7 +179,7 @@ importers:
       graphql-voyager: ~1.0.0-rc.31
       jest: ~28.1.0
       joi: ~17.6.0
-      leaflet: ~1.7.1
+      leaflet: ~1.8.0
       next: ~12.1.4
       prettier: 2.6.2
       react: ~18.1.0
@@ -208,7 +208,7 @@ importers:
       graphql: 16.4.0
       graphql-voyager: 1.0.0-rc.31_31988351503c2de22921197346220568
       joi: 17.6.0
-      leaflet: 1.7.1
+      leaflet: 1.8.0
       next: 12.1.4_react-dom@18.1.0+react@18.1.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
@@ -270,13 +270,13 @@ importers:
       eslint-plugin-storybook: ~0.5.8
       eslint-plugin-testing-library: ~5.4.0
       jest-environment-jsdom: ~27.5.1
-      leaflet: ~1.7.1
+      leaflet: ~1.8.0
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
       prettier: 2.6.2
       react: ~18.1.0
       react-dom: ~18.1.0
-      react-leaflet: ~3.2.5
+      react-leaflet: ~4.0.0
       react-test-renderer: ~18.1.0
       svgo: ~2.8.0
       swr: ~1.3.0
@@ -287,11 +287,11 @@ importers:
       '@editorjs/editorjs': 2.23.2
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
-      leaflet: 1.7.1
+      leaflet: 1.8.0
       lodash: 4.17.21
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      react-leaflet: 3.2.5_9e10bc46344a7fd5c7c8434138420a58
+      react-leaflet: 4.0.0_fb85b8de45cf8c3e28a257845956bbe4
       swr: 1.3.0_react@18.1.0
       tslib: 2.4.0
       uuid: 8.3.2
@@ -3449,14 +3449,14 @@ packages:
     resolution: {integrity: sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==}
     dev: true
 
-  /@react-leaflet/core/1.1.1_9e10bc46344a7fd5c7c8434138420a58:
-    resolution: {integrity: sha512-7PGLWa9MZ5x/cWy8EH2VzI4T8q5WpuHbixzCDXqixP/WyqwIrg5NDUPgYuFnB4IEIZF+6nA265mYzswFo/h1Pw==}
+  /@react-leaflet/core/2.0.0_fb85b8de45cf8c3e28a257845956bbe4:
+    resolution: {integrity: sha512-SQQ5DCQIaLzvslN6wCXs5OWqtlvk1Ubv2n5d7zTM8SDl9hM5Rr2wVy7/nOCIY958D75/ovhq6ZoSvT7GLCX6sg==}
     peerDependencies:
-      leaflet: ^1.7.1
-      react: ^17.0.1
-      react-dom: ^17.0.1
+      leaflet: ^1.8.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
     dependencies:
-      leaflet: 1.7.1
+      leaflet: 1.8.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
     dev: false
@@ -12330,8 +12330,8 @@ packages:
       dotenv-expand: 5.1.0
     dev: true
 
-  /leaflet/1.7.1:
-    resolution: {integrity: sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==}
+  /leaflet/1.8.0:
+    resolution: {integrity: sha512-gwhMjFCQiYs3x/Sf+d49f10ERXaEFCPr+nVTryhAW8DWbMGqJqt9G4XuIaHmFW08zYvhgdzqXGr8AlW8v8dQkA==}
     dev: false
 
   /leven/3.1.0:
@@ -14297,15 +14297,15 @@ packages:
     resolution: {integrity: sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==}
     dev: true
 
-  /react-leaflet/3.2.5_9e10bc46344a7fd5c7c8434138420a58:
-    resolution: {integrity: sha512-Z3KZ+4SijsRbbrt2I1a3ZDY6+V6Pm91eYTdxTN18G6IOkFRsJo1BuSPLFnyFrlF3WDjQFPEcTPkEgD1VEeAoBg==}
+  /react-leaflet/4.0.0_fb85b8de45cf8c3e28a257845956bbe4:
+    resolution: {integrity: sha512-qJJvoCNe12XHSWVUwhXYmMObPoSYy8h/hn0aDNvcBuq3O8zmVI5S2RdabhaDg/iWMCJ2jbCWZWtIU5VtztO9sg==}
     peerDependencies:
-      leaflet: ^1.7.1
-      react: ^17.0.1
-      react-dom: ^17.0.1
+      leaflet: ^1.8.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 1.1.1_9e10bc46344a7fd5c7c8434138420a58
-      leaflet: 1.7.1
+      '@react-leaflet/core': 2.0.0_fb85b8de45cf8c3e28a257845956bbe4
+      leaflet: 1.8.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
     dev: false

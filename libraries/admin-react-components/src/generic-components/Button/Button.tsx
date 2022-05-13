@@ -1,8 +1,9 @@
 import React from 'react';
-import type { LegacyKind } from '../..';
-import { Loader, Stack } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
+import type { LegacyKind } from '../../utils/LegacyKindUtils';
 import { kindToClassName } from '../../utils/LegacyKindUtils';
+import { Loader } from '../Loader/Loader';
+import { Stack } from '../Stack/Stack';
 
 export interface ButtonProps {
   id?: string;
