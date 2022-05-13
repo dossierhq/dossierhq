@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@jonasb/datadata-core';
 import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
@@ -14,8 +14,7 @@ import {
   SearchEntityStateActions,
   SearchOrSampleEntitiesButtons,
   StatusTagSelector,
-  useAdminLoadSampleEntities,
-  useAdminLoadSearchEntitiesAndTotalCount,
+  useAdminLoadEntitySearch,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../..';
 import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar';
@@ -78,17 +77,7 @@ export function AdminEntityListScreen({
   );
 
   // load search/total or sampling
-  useAdminLoadSearchEntitiesAndTotalCount(
-    searchEntityState.paging ? (searchEntityState.query as AdminSearchQuery) : undefined,
-    searchEntityState.paging,
-    dispatchSearchEntityState
-  );
-
-  useAdminLoadSampleEntities(
-    searchEntityState.sampling ? (searchEntityState.query as AdminQuery) : undefined,
-    searchEntityState.sampling,
-    dispatchSearchEntityState
-  );
+  useAdminLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 

@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@jonasb/datadata-core';
 import {
   Dialog,
   FullscreenContainer,
@@ -9,8 +9,7 @@ import {
 import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
-import { useAdminLoadSampleEntities } from '../../hooks/useAdminLoadSampleEntities';
-import { useAdminLoadSearchEntitiesAndTotalCount } from '../../hooks/useAdminLoadSearchEntitiesAndTotalCount';
+import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
 import {
   AuthKeyTagSelector,
   EntityMap,
@@ -95,17 +94,7 @@ function Content({
   }, [showMap]);
 
   // load search/total or sampling
-  useAdminLoadSearchEntitiesAndTotalCount(
-    searchEntityState.paging ? (searchEntityState.query as AdminSearchQuery) : undefined,
-    searchEntityState.paging,
-    dispatchSearchEntityState
-  );
-
-  useAdminLoadSampleEntities(
-    searchEntityState.sampling ? (searchEntityState.query as AdminQuery) : undefined,
-    searchEntityState.sampling,
-    dispatchSearchEntityState
-  );
+  useAdminLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
 
   return (
     <>
