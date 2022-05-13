@@ -4,6 +4,8 @@ import {
   isBooleanListField,
   isEntityTypeField,
   isEntityTypeListField,
+  isLocationField,
+  isLocationListField,
   isStringField,
   isStringListField,
   isValueTypeField,
@@ -13,6 +15,7 @@ import React from 'react';
 import { BooleanFieldEditor } from './BooleanFieldEditor';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
 import { FieldListWrapper } from './FieldListWrapper';
+import { LocationFieldEditor } from './LocationFieldEditor';
 import { StringFieldEditor } from './StringFieldEditor';
 import { ValueTypeFieldEditor } from './ValueTypeFieldEditor';
 
@@ -33,6 +36,10 @@ export function FieldEditor({ value, ...props }: FieldEditorProps<unknown>) {
     editor = <EntityTypeFieldEditor {...props} value={value} />;
   } else if (isEntityTypeListField(fieldSpec, value)) {
     editor = <FieldListWrapper {...props} value={value} Editor={EntityTypeFieldEditor} />;
+  } else if (isLocationField(fieldSpec, value)) {
+    editor = <LocationFieldEditor {...props} value={value} />;
+  } else if (isLocationListField(fieldSpec, value)) {
+    editor = <FieldListWrapper {...props} value={value} Editor={LocationFieldEditor} />;
   } else if (isStringField(fieldSpec, value)) {
     editor = <StringFieldEditor {...props} value={value} />;
   } else if (isStringListField(fieldSpec, value)) {
