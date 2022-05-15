@@ -1,7 +1,7 @@
 import type { BoundingBox, Location } from '@jonasb/datadata-core';
 import type { Map } from 'leaflet';
 import { Icon } from 'leaflet';
-import type { FunctionComponent } from 'react';
+import { FunctionComponent, RefObject, useMemo } from 'react';
 import React, { useEffect, useRef } from 'react';
 import {
   MapContainer as LeafletMapContainer,
@@ -66,6 +66,12 @@ export const MapContainer: MapContainerComponent = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetSignal]);
+
+  useEffect(() => {
+    // Fix issue where tiles are sometimes not loaded on initial display
+    // https://github.com/PaulLeCam/react-leaflet/issues/340
+    setTimeout(() => mapRef.current?.invalidateSize(), 0);
+  }, []);
 
   return (
     <LeafletMapContainer
