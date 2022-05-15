@@ -22,7 +22,11 @@ export {
   ok,
 } from './ErrorResult';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
-export { AdminItemTraverseNodeType, traverseAdminItem } from './ItemTraverser';
+export {
+  AdminItemTraverseNodeType,
+  traverseAdminItem,
+  traverseAdminItemField,
+} from './ItemTraverser';
 export type { AdminItemTraverseNode } from './ItemTraverser';
 export {
   copyEntity,
