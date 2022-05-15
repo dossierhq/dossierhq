@@ -20,6 +20,7 @@ export interface EntityMapProps<TEntity> {
   resetSignal?: unknown;
   searchEntityState: SearchEntityState;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
+  filterEntity?: (entity: TEntity) => boolean;
   renderEntityMarker: (key: string, entity: TEntity, location: Location) => JSX.Element;
   children?: ReactNode;
 }
@@ -31,6 +32,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
   resetSignal,
   searchEntityState,
   dispatchSearchEntityState,
+  filterEntity,
   renderEntityMarker,
   children,
 }: EntityMapProps<TEntity>): JSX.Element | null {
@@ -59,7 +61,10 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
             if (entityResult.isError()) {
               return null;
             }
-            const entity = entityResult.value;
+            const entity = entityResult.value as TEntity;
+            if (filterEntity && !filterEntity(entity)) {
+              return null;
+            }
             const locations = extractEntityLocations(schema, entity);
             return locations.map((location, locationIndex) =>
               renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location)
