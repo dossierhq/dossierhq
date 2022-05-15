@@ -1,4 +1,5 @@
-import type { AdminEntity, Location } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminSchema, Location } from '@jonasb/datadata-core';
+import { AdminItemTraverseNodeType, isLocationItemField } from '@jonasb/datadata-core';
 import {
   Dialog,
   FullscreenContainer,
@@ -7,9 +8,20 @@ import {
   Text,
   toSizeClassName,
 } from '@jonasb/datadata-design';
-import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
+import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/EntityDraftTraverser';
+import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import {
   EntityMap,
   initializeSearchEntityState,
@@ -18,6 +30,7 @@ import {
   SearchEntityStateActions,
 } from '../../shared';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
+import { EntityDraftMapMarker } from './EntityDraftMapMarker';
 import { initializeLocationState, reduceLocation } from './LocationReducer';
 
 interface AdminLocationSelectorDialogProps {
@@ -58,6 +71,8 @@ function Content({
   onChange: (location: Location | null) => void;
 }) {
   const { schema } = useContext(AdminDataDataContext);
+  const entityEditorState = useContext(EntityEditorStateContext);
+
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
@@ -96,8 +111,16 @@ function Content({
     initializeSearchEntityState
   );
 
-  // load search/total or sampling
   useAdminLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
+
+  // Draft locations
+  const { draftIds, markers } = useMemo(
+    () => extractDraftLocations(schema, entityEditorState.drafts, value),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [schema, entityEditorState.drafts]
+  );
+
+  const filterEntity = useCallback((entity: AdminEntity) => !draftIds.has(entity.id), [draftIds]);
 
   return (
     <>
@@ -124,15 +147,55 @@ function Content({
         <EntityMap<AdminEntity>
           className={toSizeClassName({ height: '100%' })}
           {...{ schema, searchEntityState, dispatchSearchEntityState }}
+          filterEntity={filterEntity}
           renderEntityMarker={(key, entity, location) => (
             <AdminEntityMapMarker key={key} entity={entity} location={location} />
           )}
           center={value}
           resetSignal={resetSignal}
         >
+          {markers.map((marker, index) => (
+            <EntityDraftMapMarker
+              key={index}
+              draftState={marker.draftState}
+              location={marker.location}
+            />
+          ))}
           <MapContainer.EditLocationMarker value={value} onChange={onChange} />
         </EntityMap>
       </FullscreenContainer.Row>
     </>
   );
+}
+
+function extractDraftLocations(
+  schema: AdminSchema | undefined,
+  drafts: EntityEditorDraftState[],
+  value: Location | null
+) {
+  const draftIds = new Set<string>();
+  const markers: { draftState: EntityEditorDraftState; location: Location }[] = [];
+
+  function considerLocation(draftState: EntityEditorDraftState, location: Location) {
+    if (value && value.lat === location.lat && value.lng === location.lat) {
+      return;
+    }
+    markers.push({ draftState, location });
+  }
+
+  for (const draftState of drafts) {
+    draftIds.add(draftState.id);
+
+    if (schema) {
+      for (const node of traverseEntityEditorDraft(schema, draftState)) {
+        if (node.type === AdminItemTraverseNodeType.fieldItem) {
+          if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
+            considerLocation(draftState, node.value);
+          }
+        }
+      }
+    }
+  }
+
+  return { draftIds, markers };
 }
