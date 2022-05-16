@@ -19,7 +19,16 @@ export interface ButtonProps {
   children: ReactNode;
 }
 
-export const Button: FunctionComponent<ButtonProps> = forwardRef(
+export interface ButtonGroupProps {
+  centered?: boolean;
+  children: ReactNode;
+}
+
+interface ButtonComponent extends FunctionComponent<ButtonProps> {
+  Group: FunctionComponent<ButtonGroupProps>;
+}
+
+const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
   (
     {
       className,
@@ -50,4 +59,11 @@ export const Button: FunctionComponent<ButtonProps> = forwardRef(
     );
   }
 );
-Button.displayName = 'Button';
+ButtonWithRef.displayName = 'Button';
+
+export const Button = ButtonWithRef as ButtonComponent;
+
+Button.Group = ({ centered, children }: ButtonGroupProps) => {
+  return <div className={toClassName('buttons', centered && 'is-centered')}>{children}</div>;
+};
+Button.Group.displayName = 'Button.Group';
