@@ -25,6 +25,7 @@ import {
   reduceEntityEditorState,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import { useSynchronizeUrlQueryAndEntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
+import { EntityEditorDraftSidebar } from './EntityEditorDraftSidebar';
 import { EntityEditorMenu } from './EntityEditorMenu';
 
 export interface EntityEditorScreenProps {
@@ -119,7 +120,7 @@ export function EntityEditorScreen({
               )}
             </FullscreenContainer.ScrollableColumn>
             <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
-              RIGHT
+              <EntityEditorDraftSidebar entityEditorState={entityEditorState} />
             </FullscreenContainer.ScrollableColumn>
           </FullscreenContainer.Columns>
           {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}

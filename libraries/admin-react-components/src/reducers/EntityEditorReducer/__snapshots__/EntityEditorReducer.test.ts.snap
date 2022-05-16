@@ -1168,6 +1168,152 @@ Object {
 }
 `;
 
+exports[`EntityEditorReducer scenarios open existing entity, simulate publish 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Existing title",
+            "status": "",
+            "value": "Existing title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open existing entity, simulate publish 2`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Existing title",
+            "status": "",
+            "value": "Existing title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "published",
+          "type": "Foo",
+          "updatedAt": "2022-05-01T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
 exports[`EntityEditorReducer scenarios open first entity, open second entity: 1 Initial 1`] = `
 Object {
   "activeEntityEditorScrollSignal": 1,

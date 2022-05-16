@@ -1,4 +1,5 @@
-import type { AdminClient } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Button, Field, Input, NotificationContext } from '@jonasb/datadata-design';
 import type { NotificationInfo } from '@jonasb/datadata-design/lib/contexts/NotificationContext';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
@@ -45,6 +46,11 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
       showNotification
     );
   }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
+  const handlePublishClick = useCallback(() => {
+    if (draftState.entity) {
+      publishEntity(draftState.entity, adminClient, showNotification);
+    }
+  }, [adminClient, draftState.entity, showNotification]);
 
   if (!draftState.draft) {
     return null;
@@ -56,6 +62,12 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
     draftState.status === 'changed' &&
     draftState.draft.name &&
     draftState.draft.authKey;
+  const isPublishable =
+    !submitLoading &&
+    draftState.status !== 'changed' &&
+    !draftState.draft.entitySpec.adminOnly &&
+    draftState.entity &&
+    draftState.entity.info.status !== AdminEntityStatus.published;
 
   return (
     <>
@@ -73,9 +85,14 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
           </Field.Control>
         </Field>
       ) : null}
-      <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
-        {isNewEntity ? 'Create' : 'Save'}
-      </Button>
+      <Button.Group centered>
+        <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
+          {isNewEntity ? 'Create' : 'Save'}
+        </Button>
+        <Button disabled={!isPublishable} onClick={handlePublishClick}>
+          Publish
+        </Button>
+      </Button.Group>
       {draftState.draft.fields.map((field) => (
         <EntityFieldEditor
           key={field.fieldSpec.name}
@@ -125,4 +142,19 @@ async function submitEntity(
   }
 
   setSubmitLoading(false);
+}
+
+async function publishEntity(
+  entity: AdminEntity,
+  adminClient: AdminClient,
+  showNotification: (notification: NotificationInfo) => void
+) {
+  const result = await adminClient.publishEntities([
+    { id: entity.id, version: entity.info.version },
+  ]);
+  if (result.isOk()) {
+    showNotification({ color: 'success', message: 'Published entity' });
+  } else {
+    showNotification({ color: 'error', message: 'Failed publishing entity' });
+  }
 }

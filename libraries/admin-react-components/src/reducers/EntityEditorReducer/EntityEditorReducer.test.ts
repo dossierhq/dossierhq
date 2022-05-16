@@ -1,4 +1,11 @@
-import { AdminEntityStatus, AdminSchema, FieldType } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  AdminSchema,
+  assertIsDefined,
+  copyEntity,
+  FieldType,
+} from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
@@ -448,6 +455,63 @@ describe('EntityEditorReducer scenarios', () => {
       })
     );
     expect(state).toMatchSnapshot();
+  });
+
+  test('open existing entity, simulate publish', async () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const entity: AdminEntity = {
+      id,
+      info: {
+        authKey: 'none',
+        name: 'Foo name#123456',
+        type: 'Foo',
+        status: AdminEntityStatus.draft,
+        createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+        updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+        version: 0,
+      },
+      fields: {
+        title: 'Existing title',
+      },
+    };
+    let state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id }),
+      new EntityEditorActions.UpdateEntity(entity)
+    );
+    expect(state).toMatchSnapshot();
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.UpdateEntity(
+        copyEntity(entity, {
+          info: {
+            status: AdminEntityStatus.published,
+            updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+          },
+        })
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    const draftState = state.drafts.find((it) => it.id === id);
+    assertIsDefined(draftState);
+    expect(draftState.entity?.info.status).toBe(AdminEntityStatus.published);
+    expect(draftState.entity?.info.updatedAt).toEqual(
+      Temporal.Instant.from('2022-05-01T07:51:25.56Z')
+    );
   });
 
   test('open first entity, open second entity', async () => {
