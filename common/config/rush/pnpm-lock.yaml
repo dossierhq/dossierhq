@@ -232,7 +232,7 @@ importers:
   ../../libraries/admin-react-components:
     specifiers:
       '@babel/core': ^7.17.9
-      '@editorjs/editorjs': ~2.23.2
+      '@editorjs/editorjs': ~2.24.3
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-design': workspace:*
@@ -284,7 +284,7 @@ importers:
       typescript: ^4.6.3
       uuid: ^8.3.2
     dependencies:
-      '@editorjs/editorjs': 2.23.2
+      '@editorjs/editorjs': 2.24.3
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
       leaflet: 1.8.0
@@ -2380,8 +2380,8 @@ packages:
     resolution: {integrity: sha512-087oW0oOIE5HX8llj4Eap/reFDFw8VCLlp6GU0E9GEp7f3zy2aV6KdFR+6dbYhZ50w7tSnkMpCAcSq1NXJeB4Q==}
     dev: false
 
-  /@editorjs/editorjs/2.23.2:
-    resolution: {integrity: sha512-SXWQjxE/ZO6zWvo83U+gfkM9LVJzYOtNkttyXkdfyYALVWiENyxtlej/Jmd1TZ4yWpKwQEICPXz0ceGkzKnJyQ==}
+  /@editorjs/editorjs/2.24.3:
+    resolution: {integrity: sha512-VzrWaQ7mggNUAPTDGcqXJNIlBZH3S2IqsIUGA43UM2Q9VFaeS5KuVFVOTrFJvAzF7G+vZTO52ocm+hrDhTwvyw==}
     dependencies:
       codex-notifier: 1.1.2
       codex-tooltip: 1.0.5
@@ -6587,7 +6587,7 @@ packages:
     optional: true
 
   /assert-plus/1.0.0:
-    resolution: {integrity: sha1-8S4PPF13sLHN2RRpQuTpbB5N1SU=}
+    resolution: {integrity: sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==}
     engines: {node: '>=0.8'}
     optional: true
 
@@ -6647,7 +6647,7 @@ packages:
     dev: true
 
   /aws-sign2/0.7.0:
-    resolution: {integrity: sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=}
+    resolution: {integrity: sha512-08kcGqnYf/YmjoRhfxyu+CLxBjUtHLXLXX/vUfx9l2LYzG3c1m61nrpyFUZI6zeS+Li/wWMMidD9KgrqtGq3mA==}
     optional: true
 
   /aws4/1.11.0:
@@ -6979,7 +6979,7 @@ packages:
     dev: true
 
   /bcrypt-pbkdf/1.0.2:
-    resolution: {integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=}
+    resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
     dependencies:
       tweetnacl: 0.14.5
     optional: true
@@ -7363,7 +7363,7 @@ packages:
     dev: true
 
   /caseless/0.12.0:
-    resolution: {integrity: sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=}
+    resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
     optional: true
 
   /ccount/1.1.0:
