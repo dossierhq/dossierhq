@@ -1,7 +1,7 @@
 import type { BoundingBox, Location } from '@jonasb/datadata-core';
 import type { Map } from 'leaflet';
 import { Icon } from 'leaflet';
-import { FunctionComponent, RefObject, useMemo } from 'react';
+import type { FunctionComponent } from 'react';
 import React, { useEffect, useRef } from 'react';
 import {
   MapContainer as LeafletMapContainer,
