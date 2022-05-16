@@ -3,7 +3,7 @@ import { AdminClientOperationName, AdminSchema, assertIsDefined } from '@jonasb/
 import type { OkFromPromiseResult } from '@jonasb/datadata-core/lib/cjs/ErrorResult';
 import type { RefObject } from 'react';
 import type { Cache, ScopedMutator } from 'swr/dist/types';
-import { updateCacheEntity, updateCacheSchemas } from './CacheUtils';
+import { updateCacheEntity, updateCacheEntityInfo, updateCacheSchemas } from './CacheUtils';
 
 export type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
 
@@ -16,6 +16,13 @@ export function createCachingAdminMiddleware<TContext extends ClientContext>(
       assertIsDefined(swrConfig.current);
       const { cache, mutate } = swrConfig.current;
       switch (operation.name) {
+        case AdminClientOperationName.archiveEntity: {
+          const payload = result.value as OkFromPromiseResult<
+            ReturnType<AdminClient['archiveEntity']>
+          >;
+          updateCacheEntityInfo(mutate, payload);
+          break;
+        }
         case AdminClientOperationName.createEntity: {
           const createPayload = result.value as OkFromPromiseResult<
             ReturnType<AdminClient['createEntity']>
@@ -23,11 +30,39 @@ export function createCachingAdminMiddleware<TContext extends ClientContext>(
           updateCacheEntity(mutate, createPayload.entity);
           break;
         }
+        case AdminClientOperationName.publishEntities: {
+          const payload = result.value as OkFromPromiseResult<
+            ReturnType<AdminClient['publishEntities']>
+          >;
+          payload.forEach((it) => updateCacheEntityInfo(mutate, it));
+          break;
+        }
+        case AdminClientOperationName.unarchiveEntity: {
+          const payload = result.value as OkFromPromiseResult<
+            ReturnType<AdminClient['unarchiveEntity']>
+          >;
+          updateCacheEntityInfo(mutate, payload);
+          break;
+        }
+        case AdminClientOperationName.unpublishEntities: {
+          const payload = result.value as OkFromPromiseResult<
+            ReturnType<AdminClient['unpublishEntities']>
+          >;
+          payload.forEach((it) => updateCacheEntityInfo(mutate, it));
+          break;
+        }
         case AdminClientOperationName.updateEntity: {
           const updatePayload = result.value as OkFromPromiseResult<
             ReturnType<AdminClient['updateEntity']>
           >;
           updateCacheEntity(mutate, updatePayload.entity);
+          break;
+        }
+        case AdminClientOperationName.upsertEntity: {
+          const payload = result.value as OkFromPromiseResult<
+            ReturnType<AdminClient['upsertEntity']>
+          >;
+          updateCacheEntity(mutate, payload.entity);
           break;
         }
         case AdminClientOperationName.updateSchemaSpecification: {

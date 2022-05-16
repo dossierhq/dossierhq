@@ -406,6 +406,11 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     draftState: Readonly<EntityEditorDraftState>,
     editorState: EntityEditorState
   ): Readonly<EntityEditorDraftState> {
+    if (draftState.entity && draftState.entity.info.version === this.entity.info.version) {
+      // only changed entity info
+      return { ...draftState, entity: this.entity };
+    }
+
     //TODO handle when changed on server
     if (!draftState.entityWillBeUpdatedDueToUpsert && draftState.entity) {
       return draftState;

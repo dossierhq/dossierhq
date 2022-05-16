@@ -1,10 +1,11 @@
 import type {
   AdminEntity,
+  AdminEntityPublishingPayload,
   AdminSchema,
   EntityReference,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
-import { PublishedSchema } from '@jonasb/datadata-core';
+import { copyEntity, PublishedSchema } from '@jonasb/datadata-core';
 import type { Cache } from 'swr';
 import type { ScopedMutator } from 'swr/dist/types';
 
@@ -33,4 +34,15 @@ export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSch
 export function updateCacheEntity(mutate: ScopedMutator, entity: AdminEntity) {
   const key = CACHE_KEYS.adminEntity({ id: entity.id });
   mutate(key, entity);
+}
+
+export function updateCacheEntityInfo<TEffect>(
+  mutate: ScopedMutator<AdminEntity>,
+  payload: AdminEntityPublishingPayload<TEffect>
+) {
+  const key = CACHE_KEYS.adminEntity({ id: payload.id });
+  mutate(key, (entity) => {
+    if (!entity) return entity;
+    return copyEntity(entity, { info: { status: payload.status, updatedAt: payload.updatedAt } });
+  });
 }
