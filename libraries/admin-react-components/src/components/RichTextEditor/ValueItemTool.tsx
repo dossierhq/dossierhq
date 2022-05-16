@@ -98,10 +98,12 @@ function Wrapper({
   onDataChange(value);
 
   return (
-    <AdminDataDataContext.Provider value={adminDataDataContext}>
-      <EntityEditorDispatchContext.Provider value={entityEditorDispatchContext}>
-        <ValueTypeFieldEditor fieldSpec={fieldSpec} value={value} onChange={setValue} />
-      </EntityEditorDispatchContext.Provider>
-    </AdminDataDataContext.Provider>
+    <div className="reset-editor-js">
+      <AdminDataDataContext.Provider value={adminDataDataContext}>
+        <EntityEditorDispatchContext.Provider value={entityEditorDispatchContext}>
+          <ValueTypeFieldEditor fieldSpec={fieldSpec} value={value} onChange={setValue} />
+        </EntityEditorDispatchContext.Provider>
+      </AdminDataDataContext.Provider>
+    </div>
   );
 }
