@@ -6,9 +6,14 @@ import type {
   RichTextBlockSpecification,
 } from '@jonasb/datadata-core';
 import { RichTextBlockType } from '@jonasb/datadata-core';
+import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useId, useReducer, useState } from 'react';
-import type { AdminDataDataContextAdapter } from '../../contexts/AdminDataDataContext';
+import type { AdminDataDataContextValue } from '../../contexts/AdminDataDataContext';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
+import type { EntityEditorStateAction } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import type { EntityToolConfig } from './EntityTool';
+import { createEntityToolFactory } from './EntityTool';
 import {
   initializeRichTextState,
   reduceRichTextState,
@@ -23,7 +28,8 @@ interface Props {
 }
 
 export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
-  const { adapter } = useContext(AdminDataDataContext);
+  const adminDataDataContext = useContext(AdminDataDataContext);
+  const entityEditorDispatchContext = useContext(EntityEditorDispatchContext);
   const id = useId();
   const [editor, setEditor] = useState<EditorJS | null>(null);
   const [{ initialized, data, dataSetFromEditor }, dispatch] = useReducer(
@@ -33,7 +39,11 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   );
 
   useEffect(() => {
-    const { tools, inlineToolbar } = initializeTools(adapter, fieldSpec);
+    const { tools, inlineToolbar } = initializeTools(
+      adminDataDataContext,
+      entityEditorDispatchContext,
+      fieldSpec
+    );
     setEditor(
       new EditorJS({
         holder: id,
@@ -82,9 +92,13 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   );
 }
 
-function initializeTools(adapter: AdminDataDataContextAdapter, fieldSpec: FieldSpecification) {
+function initializeTools(
+  adminDataDataContext: AdminDataDataContextValue,
+  entityEditorDispatchContext: Dispatch<EntityEditorStateAction>,
+  fieldSpec: FieldSpecification
+) {
   const standardTools: { [toolName: string]: ToolSettings } = {};
-  // const includeAll = !richTextBlocks || richTextBlocks.length === 0;
+  const includeAll = !fieldSpec.richTextBlocks || fieldSpec.richTextBlocks.length === 0;
 
   const paragraphInlineToolbar = fieldSpec.richTextBlocks?.find(
     (it) => it.type === RichTextBlockType.paragraph
@@ -93,13 +107,13 @@ function initializeTools(adapter: AdminDataDataContextAdapter, fieldSpec: FieldS
     inlineToolbar: paragraphInlineToolbar ? paragraphInlineToolbar : true,
   } as ToolSettings;
 
-  // if (includeAll || richTextBlocks?.find((it) => it.type === RichTextBlockType.entity)) {
-  //   const config: EntityToolConfig = { id, fieldSpec, draftState, valuePath };
-  //   standardTools[RichTextBlockType.entity] = {
-  //     class: createEntityToolFactory(context),
-  //     config,
-  //   };
-  // }
+  if (includeAll || fieldSpec.richTextBlocks?.find((it) => it.type === RichTextBlockType.entity)) {
+    const config: EntityToolConfig = { fieldSpec };
+    standardTools[RichTextBlockType.entity] = {
+      class: createEntityToolFactory(adminDataDataContext, entityEditorDispatchContext),
+      config,
+    };
+  }
 
   // if (includeAll || richTextBlocks?.find((it) => it.type === RichTextBlockType.valueItem)) {
   //   const config: ValueItemToolConfig = { id, fieldSpec, draftState, valuePath };
@@ -109,11 +123,11 @@ function initializeTools(adapter: AdminDataDataContextAdapter, fieldSpec: FieldS
   //   };
   // }
 
-  const { tools, inlineToolbar } = adapter.getEditorJSConfig(fieldSpec, standardTools, [
-    'bold',
-    'italic',
-    'link',
-  ]);
+  const { tools, inlineToolbar } = adminDataDataContext.adapter.getEditorJSConfig(
+    fieldSpec,
+    standardTools,
+    ['bold', 'italic', 'link']
+  );
 
   return { tools, inlineToolbar };
 }
