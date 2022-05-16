@@ -266,7 +266,7 @@ importers:
       eslint-plugin-import: ~2.26.0
       eslint-plugin-jest-dom: ~4.0.1
       eslint-plugin-react: ~7.29.4
-      eslint-plugin-react-hooks: ~4.4.0
+      eslint-plugin-react-hooks: ~4.5.0
       eslint-plugin-storybook: ~0.5.8
       eslint-plugin-testing-library: ~5.5.0
       jest-environment-jsdom: ~27.5.1
@@ -328,7 +328,7 @@ importers:
       eslint-plugin-import: 2.26.0_eslint@8.13.0
       eslint-plugin-jest-dom: 4.0.1_eslint@8.13.0
       eslint-plugin-react: 7.29.4_eslint@8.13.0
-      eslint-plugin-react-hooks: 4.4.0_eslint@8.13.0
+      eslint-plugin-react-hooks: 4.5.0_eslint@8.13.0
       eslint-plugin-storybook: 0.5.8_eslint@8.13.0+typescript@4.6.3
       eslint-plugin-testing-library: 5.5.0_eslint@8.13.0+typescript@4.6.3
       jest-environment-jsdom: 27.5.1
@@ -725,7 +725,7 @@ importers:
       eslint: ^8.13.0
       eslint-plugin-jest-dom: ~4.0.1
       eslint-plugin-react: ~7.29.4
-      eslint-plugin-react-hooks: ~4.4.0
+      eslint-plugin-react-hooks: ~4.5.0
       eslint-plugin-storybook: ~0.5.8
       eslint-plugin-testing-library: ~5.5.0
       prettier: 2.6.2
@@ -766,7 +766,7 @@ importers:
       eslint: 8.13.0
       eslint-plugin-jest-dom: 4.0.1_eslint@8.13.0
       eslint-plugin-react: 7.29.4_eslint@8.13.0
-      eslint-plugin-react-hooks: 4.4.0_eslint@8.13.0
+      eslint-plugin-react-hooks: 4.5.0_eslint@8.13.0
       eslint-plugin-storybook: 0.5.8_eslint@8.13.0+typescript@4.6.3
       eslint-plugin-testing-library: 5.5.0_eslint@8.13.0+typescript@4.6.3
       prettier: 2.6.2
@@ -6587,7 +6587,7 @@ packages:
     optional: true
 
   /assert-plus/1.0.0:
-    resolution: {integrity: sha1-8S4PPF13sLHN2RRpQuTpbB5N1SU=}
+    resolution: {integrity: sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==}
     engines: {node: '>=0.8'}
     optional: true
 
@@ -6647,7 +6647,7 @@ packages:
     dev: true
 
   /aws-sign2/0.7.0:
-    resolution: {integrity: sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=}
+    resolution: {integrity: sha512-08kcGqnYf/YmjoRhfxyu+CLxBjUtHLXLXX/vUfx9l2LYzG3c1m61nrpyFUZI6zeS+Li/wWMMidD9KgrqtGq3mA==}
     optional: true
 
   /aws4/1.11.0:
@@ -6979,7 +6979,7 @@ packages:
     dev: true
 
   /bcrypt-pbkdf/1.0.2:
-    resolution: {integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=}
+    resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
     dependencies:
       tweetnacl: 0.14.5
     optional: true
@@ -7363,7 +7363,7 @@ packages:
     dev: true
 
   /caseless/0.12.0:
-    resolution: {integrity: sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=}
+    resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
     optional: true
 
   /ccount/1.1.0:
@@ -8999,8 +8999,8 @@ packages:
       eslint: 8.13.0
     dev: true
 
-  /eslint-plugin-react-hooks/4.4.0_eslint@8.13.0:
-    resolution: {integrity: sha512-U3RVIfdzJaeKDQKEJbz5p3NW8/L80PCATJAfuojwbaEL+gBjfGdhUcGde+WGUW46Q5sr/NgxevsIiDtNXrvZaQ==}
+  /eslint-plugin-react-hooks/4.5.0_eslint@8.13.0:
+    resolution: {integrity: sha512-8k1gRt7D7h03kd+SAAlzXkQwWK22BnK6GKZG+FJA6BAGy22CFvl8kCIXKpVux0cCxMWDQUPqSok0LKaZ0aOcCw==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
