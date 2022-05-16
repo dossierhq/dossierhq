@@ -6,6 +6,8 @@ import {
   isEntityTypeListField,
   isLocationField,
   isLocationListField,
+  isRichTextField,
+  isRichTextListField,
   isStringField,
   isStringListField,
   isValueTypeField,
@@ -16,6 +18,7 @@ import { BooleanFieldEditor } from './BooleanFieldEditor';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
 import { FieldListWrapper } from './FieldListWrapper';
 import { LocationFieldEditor } from './LocationFieldEditor';
+import { RichTextFieldEditor } from './RichTextFieldEditor';
 import { StringFieldEditor } from './StringFieldEditor';
 import { ValueTypeFieldEditor } from './ValueTypeFieldEditor';
 
@@ -40,6 +43,10 @@ export function FieldEditor({ value, ...props }: FieldEditorProps<unknown>) {
     editor = <LocationFieldEditor {...props} value={value} />;
   } else if (isLocationListField(fieldSpec, value)) {
     editor = <FieldListWrapper {...props} value={value} Editor={LocationFieldEditor} />;
+  } else if (isRichTextField(fieldSpec, value)) {
+    editor = <RichTextFieldEditor {...props} value={value} />;
+  } else if (isRichTextListField(fieldSpec, value)) {
+    editor = <FieldListWrapper {...props} value={value} Editor={RichTextFieldEditor} />;
   } else if (isStringField(fieldSpec, value)) {
     editor = <StringFieldEditor {...props} value={value} />;
   } else if (isStringListField(fieldSpec, value)) {
