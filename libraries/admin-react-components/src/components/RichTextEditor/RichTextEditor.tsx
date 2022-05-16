@@ -1,10 +1,6 @@
 import type { LogLevels, ToolSettings } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
-import type {
-  FieldSpecification,
-  RichText,
-  RichTextBlockSpecification,
-} from '@jonasb/datadata-core';
+import type { FieldSpecification, RichText } from '@jonasb/datadata-core';
 import { RichTextBlockType } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useId, useReducer, useState } from 'react';
@@ -26,7 +22,6 @@ interface Props {
   fieldSpec: FieldSpecification;
   value: RichText | null;
   onChange: (value: RichText | null) => void;
-  richTextBlocks?: RichTextBlockSpecification[];
 }
 
 export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
@@ -123,7 +118,7 @@ function initializeTools(
   ) {
     const config: ValueItemToolConfig = { fieldSpec };
     standardTools[RichTextBlockType.valueItem] = {
-      class: createValueItemToolFactory(adminDataDataContext),
+      class: createValueItemToolFactory(adminDataDataContext, entityEditorDispatchContext),
       config,
     };
   }
