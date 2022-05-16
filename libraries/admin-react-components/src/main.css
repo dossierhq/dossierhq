@@ -687,3 +687,7 @@ ul li {
   border-radius: 3px 0 0 3px;
   padding-left: 1rem;
 }
+
+.reset-editor-js a {
+  text-decoration: none;
+}
