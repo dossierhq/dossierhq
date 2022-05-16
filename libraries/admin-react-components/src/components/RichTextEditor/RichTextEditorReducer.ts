@@ -1,4 +1,5 @@
 import type { RichText } from '@jonasb/datadata-core';
+import isEqual from 'lodash/isEqual';
 
 interface RichTextState {
   initialized: boolean;
@@ -18,7 +19,11 @@ export function reduceRichTextState(
   state: Readonly<RichTextState>,
   action: RichTextAction
 ): Readonly<RichTextState> {
-  return action.reduce(state);
+  const newState = action.reduce(state);
+  // if (newState !== state) {
+  //   console.log(`State changed for ${action.constructor.name}`, state, action, newState);
+  // }
+  return newState;
 }
 
 class SetInitializedAction implements RichTextAction {
@@ -37,6 +42,9 @@ class SetDataAction implements RichTextAction {
   }
 
   reduce(state: Readonly<RichTextState>): Readonly<RichTextState> {
+    if (isEqual(state.data, this.data)) {
+      return state;
+    }
     return { ...state, data: this.data, dataSetFromEditor: this.dataSetFromEditor };
   }
 }
