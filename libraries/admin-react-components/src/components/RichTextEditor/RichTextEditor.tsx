@@ -19,6 +19,8 @@ import {
   reduceRichTextState,
   RichTextActions,
 } from './RichTextEditorReducer';
+import type { ValueItemToolConfig } from './ValueItemTool';
+import { createValueItemToolFactory } from './ValueItemTool';
 
 interface Props {
   fieldSpec: FieldSpecification;
@@ -115,13 +117,16 @@ function initializeTools(
     };
   }
 
-  // if (includeAll || richTextBlocks?.find((it) => it.type === RichTextBlockType.valueItem)) {
-  //   const config: ValueItemToolConfig = { id, fieldSpec, draftState, valuePath };
-  //   standardTools[RichTextBlockType.valueItem] = {
-  //     class: createValueItemToolFactory(context),
-  //     config,
-  //   };
-  // }
+  if (
+    includeAll ||
+    fieldSpec.richTextBlocks?.find((it) => it.type === RichTextBlockType.valueItem)
+  ) {
+    const config: ValueItemToolConfig = { fieldSpec };
+    standardTools[RichTextBlockType.valueItem] = {
+      class: createValueItemToolFactory(adminDataDataContext),
+      config,
+    };
+  }
 
   const { tools, inlineToolbar } = adminDataDataContext.adapter.getEditorJSConfig(
     fieldSpec,
