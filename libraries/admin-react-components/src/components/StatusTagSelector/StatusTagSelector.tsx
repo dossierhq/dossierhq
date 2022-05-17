@@ -1,7 +1,6 @@
 import { Field, TagSelector } from '@jonasb/datadata-design';
 import React from 'react';
 import type { StatusSelectorDispatch, StatusSelectorState } from '../..';
-import { statusDisplay } from '../../utils/DisplayUtils';
 
 interface Props {
   state: StatusSelectorState;
@@ -19,7 +18,7 @@ export function StatusTagSelector({ state, dispatch }: Props) {
       <Field.Control>
         <TagSelector
           clearLabel="Clear"
-          itemTag={(item) => ({ tag: statusDisplay(item.id), color: item.id })}
+          itemTag={(item) => ({ tag: item.id, color: item.id })}
           state={state}
           dispatch={dispatch}
         />

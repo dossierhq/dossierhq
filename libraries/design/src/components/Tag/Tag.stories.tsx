@@ -15,13 +15,13 @@ const Template: Story<TagProps> = (args) => {
 };
 
 export const Normal = Template.bind({});
-Normal.args = { children: 'Tag' };
+Normal.args = { children: 'tag' };
 
 export const Remove = Template.bind({});
-Remove.args = { children: ['Tag', <Tag.Remove key="1" />] };
+Remove.args = { children: ['tag', <Tag.Remove key="1" />] };
 
 export const Published = Template.bind({});
-Published.args = { children: 'Published', color: 'published' };
+Published.args = { children: 'published', color: 'published' };
 
 export const PublishedRemove = Template.bind({});
-PublishedRemove.args = { color: 'published', children: ['Tag', <Tag.Remove key="1" />] };
+PublishedRemove.args = { color: 'published', children: ['tag', <Tag.Remove key="1" />] };
