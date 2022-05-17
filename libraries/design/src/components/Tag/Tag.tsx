@@ -32,7 +32,7 @@ export const Tag: TagComponent = ({ color, children }: TagProps) => {
   const bulmaColor = resolveBulmaColor(color);
   if (typeof children === 'string') {
     return (
-      <BulmaTag className="control" color={bulmaColor}>
+      <BulmaTag className="control is-capitalized" color={bulmaColor}>
         {children}
       </BulmaTag>
     );
@@ -40,7 +40,9 @@ export const Tag: TagComponent = ({ color, children }: TagProps) => {
   return (
     <div className="control">
       <BulmaTag.Group hasAddons>
-        <BulmaTag color={bulmaColor}>{children[0]}</BulmaTag>
+        <BulmaTag className="is-capitalized" color={bulmaColor}>
+          {children[0]}
+        </BulmaTag>
         {children[1]}
       </BulmaTag.Group>
     </div>
