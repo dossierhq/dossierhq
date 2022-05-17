@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-database-adapter-test-integration",
   "entries": [
     {
+      "version": "0.1.8",
+      "tag": "@jonasb/datadata-database-adapter-test-integration_v0.1.8",
+      "date": "Tue, 17 May 2022 18:54:10 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.7",
       "tag": "@jonasb/datadata-database-adapter-test-integration_v0.1.7",
       "date": "Tue, 22 Mar 2022 23:23:55 GMT",
