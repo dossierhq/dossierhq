@@ -13,6 +13,12 @@ export const CACHE_KEYS = {
   adminEntity(reference: EntityReference | EntityVersionReference) {
     return ['datadata/useAdminEntity', JSON.stringify(reference)];
   },
+  adminEntityHistory(reference: EntityReference) {
+    return ['datadata/useAdminEntityHistory', reference];
+  },
+  adminPublishingHistory(reference: EntityReference) {
+    return ['datadata/useAdminPublishingHistory', reference];
+  },
   adminSchema: 'datadata/useAdminSchema',
   publishedSchema: 'datadata/usePublishedSchema',
 };

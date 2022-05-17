@@ -3,6 +3,7 @@ import { Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useCallback, useMemo, useState } from 'react';
 import type { LegacyEntityEditorSelector } from '../..';
+import { foo1Id } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { EntityEditorScreenProps } from './LegacyEntityEditorScreen';
 import { LegacyEntityEditorScreen } from './LegacyEntityEditorScreen';
@@ -81,4 +82,9 @@ HeaderFooter.args = {
 export const OpenWithNewType = Template.bind({});
 OpenWithNewType.args = {
   initialUrlQuery: { type: 'Bar' },
+};
+
+export const OpenWithFoo1 = Template.bind({});
+OpenWithFoo1.args = {
+  initialUrlQuery: { ids: foo1Id },
 };
