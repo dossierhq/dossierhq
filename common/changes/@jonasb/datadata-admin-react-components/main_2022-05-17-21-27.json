@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Stop exporting legacy",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}
