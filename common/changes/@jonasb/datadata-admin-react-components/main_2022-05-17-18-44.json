@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Create new EntityEditorScreen. Create SchemaEditorScreen. Rename old components to LegacyXxx. Add caching middleware. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}
