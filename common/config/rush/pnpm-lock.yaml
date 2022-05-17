@@ -250,7 +250,7 @@ importers:
       '@storybook/react': ^6.4.21
       '@testing-library/jest-dom': ~5.16.4
       '@testing-library/react': ~13.0.0
-      '@testing-library/user-event': ~14.1.0
+      '@testing-library/user-event': ~14.2.0
       '@types/heft-jest': 1.0.2
       '@types/leaflet': ~1.7.9
       '@types/lodash': ~4.14.181
@@ -312,7 +312,7 @@ importers:
       '@storybook/react': 6.4.21_169bc9d361b776ba1d304f62b7551230
       '@testing-library/jest-dom': 5.16.4
       '@testing-library/react': 13.0.0_react-dom@18.1.0+react@18.1.0
-      '@testing-library/user-event': 14.1.0
+      '@testing-library/user-event': 14.2.0
       '@types/heft-jest': 1.0.2
       '@types/leaflet': 1.7.9
       '@types/lodash': 4.14.181
@@ -5135,8 +5135,8 @@ packages:
       react-dom: 18.1.0_react@18.1.0
     dev: true
 
-  /@testing-library/user-event/14.1.0:
-    resolution: {integrity: sha512-+CGfMXlVM+OwREHDEsfTGsXIMI+rjr3a7YBUSutq7soELht+8kQrM5k46xa/WLfHdtX/wqsDIleL6bi4i+xz0w==}
+  /@testing-library/user-event/14.2.0:
+    resolution: {integrity: sha512-+hIlG4nJS6ivZrKnOP7OGsDu9Fxmryj9vCl8x0ZINtTJcCHs2zLsYif5GzuRiBF2ck5GZG2aQr7Msg+EHlnYVQ==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
@@ -6587,7 +6587,7 @@ packages:
     optional: true
 
   /assert-plus/1.0.0:
-    resolution: {integrity: sha1-8S4PPF13sLHN2RRpQuTpbB5N1SU=}
+    resolution: {integrity: sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==}
     engines: {node: '>=0.8'}
     optional: true
 
@@ -6647,7 +6647,7 @@ packages:
     dev: true
 
   /aws-sign2/0.7.0:
-    resolution: {integrity: sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=}
+    resolution: {integrity: sha512-08kcGqnYf/YmjoRhfxyu+CLxBjUtHLXLXX/vUfx9l2LYzG3c1m61nrpyFUZI6zeS+Li/wWMMidD9KgrqtGq3mA==}
     optional: true
 
   /aws4/1.11.0:
@@ -6979,7 +6979,7 @@ packages:
     dev: true
 
   /bcrypt-pbkdf/1.0.2:
-    resolution: {integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=}
+    resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
     dependencies:
       tweetnacl: 0.14.5
     optional: true
@@ -7363,7 +7363,7 @@ packages:
     dev: true
 
   /caseless/0.12.0:
-    resolution: {integrity: sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=}
+    resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
     optional: true
 
   /ccount/1.1.0:
