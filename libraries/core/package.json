@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-core",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
