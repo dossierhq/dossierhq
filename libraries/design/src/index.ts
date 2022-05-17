@@ -28,6 +28,7 @@ export {
   reduceMultipleSelectorState,
   Row,
   SelectDisplay,
+  TabContainer,
   Table,
   Tag,
   TagInput,

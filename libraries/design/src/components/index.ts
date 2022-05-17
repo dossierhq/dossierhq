@@ -41,6 +41,7 @@ export { Radio } from './Radio/Radio.js';
 export { Row } from './Row/Row.js';
 export { Scrollable } from './Scrollable/Scrollable.js';
 export { SelectDisplay } from './SelectDisplay/SelectDisplay.js';
+export { TabContainer } from './TabContainer/TabContainer.js';
 export { Table } from './Table/Table.js';
 export { Tag } from './Tag/Tag.js';
 export type { TagProps } from './Tag/Tag.js';
