@@ -1,6 +1,10 @@
-import type { AdminClient, AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminClientMiddleware,
+  ClientContext,
+  OkFromResult,
+} from '@jonasb/datadata-core';
 import { AdminClientOperationName, AdminSchema, assertIsDefined } from '@jonasb/datadata-core';
-import type { OkFromPromiseResult } from '@jonasb/datadata-core/lib/cjs/ErrorResult';
 import type { RefObject } from 'react';
 import type { Cache, ScopedMutator } from 'swr/dist/types';
 import { updateCacheEntity, updateCacheEntityInfo, updateCacheSchemas } from './CacheUtils';
@@ -17,56 +21,48 @@ export function createCachingAdminMiddleware<TContext extends ClientContext>(
       const { cache, mutate } = swrConfig.current;
       switch (operation.name) {
         case AdminClientOperationName.archiveEntity: {
-          const payload = result.value as OkFromPromiseResult<
-            ReturnType<AdminClient['archiveEntity']>
-          >;
+          const payload = result.value as OkFromResult<ReturnType<AdminClient['archiveEntity']>>;
           updateCacheEntityInfo(mutate, payload);
           break;
         }
         case AdminClientOperationName.createEntity: {
-          const createPayload = result.value as OkFromPromiseResult<
+          const createPayload = result.value as OkFromResult<
             ReturnType<AdminClient['createEntity']>
           >;
           updateCacheEntity(mutate, createPayload.entity);
           break;
         }
         case AdminClientOperationName.publishEntities: {
-          const payload = result.value as OkFromPromiseResult<
-            ReturnType<AdminClient['publishEntities']>
-          >;
+          const payload = result.value as OkFromResult<ReturnType<AdminClient['publishEntities']>>;
           payload.forEach((it) => updateCacheEntityInfo(mutate, it));
           break;
         }
         case AdminClientOperationName.unarchiveEntity: {
-          const payload = result.value as OkFromPromiseResult<
-            ReturnType<AdminClient['unarchiveEntity']>
-          >;
+          const payload = result.value as OkFromResult<ReturnType<AdminClient['unarchiveEntity']>>;
           updateCacheEntityInfo(mutate, payload);
           break;
         }
         case AdminClientOperationName.unpublishEntities: {
-          const payload = result.value as OkFromPromiseResult<
+          const payload = result.value as OkFromResult<
             ReturnType<AdminClient['unpublishEntities']>
           >;
           payload.forEach((it) => updateCacheEntityInfo(mutate, it));
           break;
         }
         case AdminClientOperationName.updateEntity: {
-          const updatePayload = result.value as OkFromPromiseResult<
+          const updatePayload = result.value as OkFromResult<
             ReturnType<AdminClient['updateEntity']>
           >;
           updateCacheEntity(mutate, updatePayload.entity);
           break;
         }
         case AdminClientOperationName.upsertEntity: {
-          const payload = result.value as OkFromPromiseResult<
-            ReturnType<AdminClient['upsertEntity']>
-          >;
+          const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           break;
         }
         case AdminClientOperationName.updateSchemaSpecification: {
-          const updatePayload = result.value as OkFromPromiseResult<
+          const updatePayload = result.value as OkFromResult<
             ReturnType<AdminClient['updateSchemaSpecification']>
           >;
           const adminSchema = new AdminSchema(updatePayload.schemaSpecification);

@@ -5,9 +5,11 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  ErrorFromResult,
   JsonConnection,
   JsonEdge,
   JsonResult,
+  OkFromResult,
   Paging,
   PromiseResult,
   PublishedEntity,
@@ -25,7 +27,6 @@ import {
   notOk,
   ok,
 } from '.';
-import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type { JsonPublishedEntity } from './JsonUtils';
 import { convertJsonPublishedEntity } from './JsonUtils';
 import type {
@@ -91,10 +92,10 @@ type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<Publ
 type MethodReturnTypeWithoutPromise<T extends keyof PublishedClient> = Awaited<
   PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
 >;
-type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromPromiseResult<
+type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromResult<
   ReturnType<PublishedClient[T]>
 >;
-type MethodReturnTypeError<T extends keyof PublishedClient> = ErrorFromPromiseResult<
+type MethodReturnTypeError<T extends keyof PublishedClient> = ErrorFromResult<
   ReturnType<PublishedClient[T]>
 >;
 
