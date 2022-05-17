@@ -33,11 +33,11 @@ export function AdminEntitiesRoute() {
   );
 
   const handleCreateEntity = useCallback(
-    (type: string) => navigate(ROUTE.legacyEditEntities.url([], type)),
+    (type: string) => navigate(ROUTE.editEntities.url([{ type }])),
     []
   );
   const handleEntityOpen = useCallback(
-    (entity: AdminEntity) => navigate(ROUTE.legacyEditEntities.url([entity.id])),
+    (entity: AdminEntity) => navigate(ROUTE.editEntities.url([{ id: entity.id }])),
     []
   );
 

@@ -4,7 +4,6 @@ import { DataDataSharedProvider } from './components/DataDataSharedProvider';
 import { ServerProvider } from './components/ServerProvider';
 import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
-import { LegacyEditEntitiesRoute } from './routes/LegacyEditEntitiesRoute';
 import { EditSchemaRoute } from './routes/EditSchemaRoute';
 import { IndexRoute } from './routes/IndexRoute';
 import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute';
@@ -22,7 +21,6 @@ export default function App() {
               <Route path={ROUTE.index.route} element={<IndexRoute />} />
               <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
               <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
-              <Route path={ROUTE.legacyEditEntities.route} element={<LegacyEditEntitiesRoute />} />
               <Route path={ROUTE.publishedEntities.route} element={<PublishedEntitiesRoute />} />
               <Route
                 path={ROUTE.publishedEntityDetails.route}

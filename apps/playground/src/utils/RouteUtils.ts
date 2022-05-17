@@ -8,16 +8,17 @@ export const ROUTE = {
     url: '/admin-entities',
   },
   editEntities: {
-    route: 'admin-edit-entities',
-    url: '/admin-edit-entities',
-  },
-  legacyEditEntities: {
-    route: 'admin-entities/edit',
-    url: (ids: string[], type?: string) => {
-      const search = new URLSearchParams();
-      if (ids.length > 0) search.set('ids', ids.join(','));
-      if (type) search.set('type', type);
-      return `/admin-entities/edit?${search.toString()}`;
+    route: 'edit-entities',
+    url: (selectors: ({ type: string } | { id: string })[]) => {
+      const p = new URLSearchParams();
+      for (const selector of selectors) {
+        if ('type' in selector) {
+          p.set('type', selector.type);
+        } else {
+          p.set('id', selector.id);
+        }
+      }
+      return `/edit-entities?${p.toString()}`;
     },
   },
   publishedEntities: {
