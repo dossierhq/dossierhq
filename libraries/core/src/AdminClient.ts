@@ -25,7 +25,9 @@ import type {
   EntitySamplingOptions,
   EntitySamplingPayload,
   EntityVersionReference,
+  ErrorFromResult,
   JsonResult,
+  OkFromResult,
   Paging,
   PromiseResult,
   PublishingHistory,
@@ -33,7 +35,6 @@ import type {
   SchemaSpecificationUpdatePayload,
 } from '.';
 import { assertExhaustive, convertJsonResult, ErrorType, notOk, ok } from '.';
-import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type {
   JsonAdminEntity,
   JsonAdminEntityCreatePayload,
@@ -221,10 +222,8 @@ type MethodReturnType<T extends keyof AdminClient> = PromiseResult<
 type MethodReturnTypeWithoutPromise<T extends keyof AdminClient> = Awaited<
   PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
 >;
-type MethodReturnTypeOk<T extends keyof AdminClient> = OkFromPromiseResult<
-  ReturnType<AdminClient[T]>
->;
-type MethodReturnTypeError<T extends keyof AdminClient> = ErrorFromPromiseResult<
+type MethodReturnTypeOk<T extends keyof AdminClient> = OkFromResult<ReturnType<AdminClient[T]>>;
+type MethodReturnTypeError<T extends keyof AdminClient> = ErrorFromResult<
   ReturnType<AdminClient[T]>
 >;
 

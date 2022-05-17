@@ -21,7 +21,14 @@ export {
   notOk,
   ok,
 } from './ErrorResult';
-export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
+export type {
+  ErrorFromResult,
+  ErrorResult,
+  OkFromResult,
+  OkResult,
+  PromiseResult,
+  Result,
+} from './ErrorResult';
 export {
   AdminItemTraverseNodeType,
   traverseAdminItem,
