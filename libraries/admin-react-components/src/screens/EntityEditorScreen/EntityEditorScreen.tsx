@@ -3,6 +3,7 @@ import {
   findAscendantHTMLElement,
   FullscreenContainer,
   Level,
+  Tag,
   Text,
   useWindowEventListener,
 } from '@jonasb/datadata-design';
@@ -173,7 +174,9 @@ function EntityRows({
             </Level.Item>
           </Level.Left>
           <Level.Right>
-            <Level.Item textStyle="headline6">{draftState.status}</Level.Item>
+            <Level.Item>
+              <Tag>{draftState.status}</Tag>
+            </Level.Item>
           </Level.Right>
         </Level>
       </FullscreenContainer.Row>
