@@ -1,8 +1,8 @@
 import type { AdminClient, EntityReference, PublishingEvent } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { InstantDisplay, Row, Tag, Text } from '@jonasb/datadata-design';
+import { InstantDisplay, Row, TabContainer, Tag, Text } from '@jonasb/datadata-design';
 import { Temporal } from '@js-temporal/polyfill';
-import React, { Fragment, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory';
@@ -13,9 +13,24 @@ interface Props {
   entityEditorState: EntityEditorState;
 }
 
+interface ActivityListEvent {
+  instant: Temporal.Instant;
+  version: number | null;
+  kind: PublishingEvent['kind'] | 'create';
+}
+
+const ActivityFilter = {
+  All: 'All',
+  Versions: 'Versions',
+  Publishing: 'Publishing',
+} as const;
+type ActivityFilter = keyof typeof ActivityFilter;
+
 export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
   const { activeEntityId } = entityEditorState;
+
+  const [activityFilter, setActivityFilter] = useState<ActivityFilter>(ActivityFilter.All);
 
   if (!activeEntityId) return null;
   const draftState = entityEditorState.drafts.find((it) => it.id === activeEntityId);
@@ -32,30 +47,48 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
         <>
           <Text textStyle="body2">{entity.id}</Text>
           <StatusTag status={entity.info.status} />
-          <ActivityList adminClient={adminClient} reference={{ id: activeEntityId }} />
+          <TabContainer small>
+            {Object.keys(ActivityFilter).map((filter) => (
+              <TabContainer.Item
+                key={filter}
+                active={filter === activityFilter}
+                onClick={() => setActivityFilter(filter as ActivityFilter)}
+              >
+                {filter}
+              </TabContainer.Item>
+            ))}
+          </TabContainer>
+          <ActivityList
+            adminClient={adminClient}
+            activityFilter={activityFilter}
+            reference={{ id: activeEntityId }}
+          />
         </>
       ) : null}
     </>
   );
 }
 
-interface ActivityListEvent {
-  instant: Temporal.Instant;
-  version: number | null;
-  kind: PublishingEvent['kind'] | 'create';
-}
-
 function ActivityList({
   adminClient,
+  activityFilter,
   reference,
 }: {
   adminClient: AdminClient;
+  activityFilter: ActivityFilter;
   reference: EntityReference;
 }) {
-  const { entityHistory, entityHistoryError: _1 } = useAdminEntityHistory(adminClient, reference);
+  const { entityHistory, entityHistoryError: _1 } = useAdminEntityHistory(
+    adminClient,
+    activityFilter === ActivityFilter.All || activityFilter === ActivityFilter.Versions
+      ? reference
+      : undefined
+  );
   const { publishingHistory, publishingHistoryError: _2 } = useAdminPublishingHistory(
     adminClient,
-    reference
+    activityFilter === ActivityFilter.All || activityFilter === ActivityFilter.Publishing
+      ? reference
+      : undefined
   );
 
   if (!entityHistory && !publishingHistory) return null;
