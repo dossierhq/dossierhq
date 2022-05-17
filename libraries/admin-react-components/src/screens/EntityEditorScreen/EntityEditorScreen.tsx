@@ -173,11 +173,13 @@ function EntityRows({
               </Text>
             </Level.Item>
           </Level.Left>
-          <Level.Right>
-            <Level.Item>
-              <Tag>{draftState.status}</Tag>
-            </Level.Item>
-          </Level.Right>
+          {draftState.status ? (
+            <Level.Right>
+              <Level.Item>
+                <Tag>{draftState.status}</Tag>
+              </Level.Item>
+            </Level.Right>
+          ) : null}
         </Level>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row
