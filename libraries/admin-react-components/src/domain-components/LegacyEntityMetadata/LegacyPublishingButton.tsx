@@ -6,8 +6,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
-import type { LegacyDataDataContextValue } from '../..';
-import { ButtonWithDropDown, LegacyDataDataContext } from '../..';
+import type { LegacyDataDataContextValue } from '../../contexts/LegacyDataDataContext';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { ButtonWithDropDown } from '../../generic-components/ButtonWithDropDown/ButtonWithDropDown';
 
 interface PublishAction {
   name: string;

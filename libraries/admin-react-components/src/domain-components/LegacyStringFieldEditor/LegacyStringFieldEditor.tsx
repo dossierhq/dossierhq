@@ -1,6 +1,7 @@
 import React from 'react';
-import type { LegacyEntityFieldEditorProps } from '../..';
-import { IconButton, InputText } from '../..';
+import { IconButton } from '../../generic-components/IconButton/IconButton';
+import { InputText } from '../../generic-components/InputText/InputText';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
 
 type Props = LegacyEntityFieldEditorProps<string>;
 

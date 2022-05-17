@@ -1,4 +1,4 @@
-import type { SpacingSize } from '..';
+import type { SpacingSize } from '../types/LayoutTypes';
 
 export function joinClassNames(...classNames: Array<string | undefined>): string {
   let result = '';

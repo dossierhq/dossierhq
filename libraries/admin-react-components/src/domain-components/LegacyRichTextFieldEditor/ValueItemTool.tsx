@@ -7,10 +7,11 @@ import type {
 import type { FieldSpecification, ItemValuePath, ValueItem } from '@jonasb/datadata-core';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import type { LegacyDataDataContextValue } from '../../contexts/LegacyDataDataContext';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
 import icons from '../../icons';
-import type { LegacyDataDataContextValue } from '../..';
-import { LegacyDataDataContext, LegacyValueTypeFieldEditor } from '../..';
 import type { LegacyEntityEditorDraftState } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import { LegacyValueTypeFieldEditor } from '../LegacyValueTypeFieldEditor/LegacyValueTypeFieldEditor';
 
 export interface ValueItemToolConfig {
   id: string;

@@ -1,17 +1,18 @@
 import { FullscreenContainer } from '@jonasb/datadata-design';
-import React from 'react';
-import { useContext, useEffect, useReducer } from 'react';
-import type { LegacyEntityEditorSelector } from '../..';
+import React, { useContext, useEffect, useReducer } from 'react';
+import { WaitForLegacyDataDataContext } from '../../components/AdminDataDataProvider/AdminDataDataProvider';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
 import {
-  LegacyAddEntityDraftAction,
-  LegacyDataDataContext,
-  LegacyEntityEditorContainer,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
+} from '../../contexts/LegacyEntityEditorState';
+import type { LegacyEntityEditorSelector } from '../../domain-components/LegacyEntityEditor/LegacyEntityEditorReducer';
+import {
   initializeLegacyEntityEditorState,
+  LegacyAddEntityDraftAction,
   reduceLegacyEntityEditorState,
-  WaitForLegacyDataDataContext,
-} from '../..';
+} from '../../domain-components/LegacyEntityEditor/LegacyEntityEditorReducer';
+import { LegacyEntityEditorContainer } from '../../domain-components/LegacyEntityEditorContainer/LegacyEntityEditorContainer';
 
 export interface EntityEditorScreenProps {
   header?: React.ReactNode;

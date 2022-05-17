@@ -1,8 +1,10 @@
 import type { AdminEntity, AdminSearchQuery, Paging } from '@jonasb/datadata-core';
-import { IconButton } from '@jonasb/datadata-design';
+import { Button, IconButton } from '@jonasb/datadata-design';
 import React, { useContext, useMemo, useState } from 'react';
-import { Button, LegacyDataDataContext, Message, LegacyPublishStateTag } from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { Message } from '../../generic-components/Message/Message';
 import { joinClassNames } from '../../utils/ClassNameUtils';
+import { LegacyPublishStateTag } from '../LegacyPublishStateTag/LegacyPublishStateTag';
 
 export interface LegacyEntityListProps {
   className?: string;

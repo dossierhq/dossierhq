@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DropDown } from '../..';
 import type { DropDownProps } from './DropDown';
+import { DropDown } from './DropDown';
 
 const meta: Meta<DropDownProps> = {
   title: 'Generic/DropDown',

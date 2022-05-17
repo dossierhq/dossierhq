@@ -1,9 +1,16 @@
 import type { AdminEntity, ItemValuePath, Location } from '@jonasb/datadata-core';
 import { isItemValuePathEqual } from '@jonasb/datadata-core';
+import { Column } from '@jonasb/datadata-design';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import type { LegacyEntityFieldEditorProps } from '../..';
-import { Button, Column, ColumnItem, IconButton, InputText, MapContainer, Modal, Row } from '../..';
+import { Button } from '../../generic-components/Button/Button';
+import { ColumnItem } from '../../generic-components/Column/Column';
+import { IconButton } from '../../generic-components/IconButton/IconButton';
+import { InputText } from '../../generic-components/InputText/InputText';
+import { Modal } from '../../generic-components/Modal/Modal';
+import { Row } from '../../generic-components/Row/Row';
+import { MapContainer } from '../..';
 import type { LegacyEntityEditorDraftState } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
 import { LegacyEntityMap } from '../LegacyEntityMap/LegacyEntityMap';
 import { initializeLocationState, reduceLocation } from './LegacyLocationReducer';
 

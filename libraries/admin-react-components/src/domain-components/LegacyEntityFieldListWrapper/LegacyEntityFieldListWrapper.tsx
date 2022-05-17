@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import type { LegacyEntityFieldEditorProps } from '../..';
-import { Column } from '../..';
+import { Column } from '../../generic-components/Column/Column';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
 
 interface Props<Item> extends LegacyEntityFieldEditorProps<Item[]> {
   Editor: React.JSXElementConstructor<LegacyEntityFieldEditorProps<Item>>;

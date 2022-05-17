@@ -1,8 +1,8 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { LegacyEntityList } from '../..';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { LegacyEntityListProps } from './LegacyEntityList';
+import { LegacyEntityList } from './LegacyEntityList';
 
 type EntityListStoryProps = LegacyEntityListProps;
 

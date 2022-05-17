@@ -3,22 +3,23 @@ import { assertIsDefined } from '@jonasb/datadata-core';
 import { ButtonDropdown } from '@jonasb/datadata-design';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
-import type { LegacyDataDataContextValue, MessageItem } from '../..';
+import type { LegacyDataDataContextValue } from '../../contexts/LegacyDataDataContext';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
 import {
-  Button,
-  ColumnAs,
-  LegacyDataDataContext,
-  Divider,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
-  LegacyEntityFieldEditor,
-  Form,
-  FormField,
-  InputText,
-  Loader,
-  Message,
-  Row,
-} from '../..';
+} from '../../contexts/LegacyEntityEditorState';
+import { Button } from '../../generic-components/Button/Button';
+import { ColumnAs } from '../../generic-components/Column/Column';
+import { Divider } from '../../generic-components/Divider/Divider';
+import { Form } from '../../generic-components/Form/Form';
+import { FormField } from '../../generic-components/FormField/FormField';
+import { InputText } from '../../generic-components/InputText/InputText';
+import { Loader } from '../../generic-components/Loader/Loader';
+import type { MessageItem } from '../../generic-components/Message/Message';
+import { Message } from '../../generic-components/Message/Message';
+import { Row } from '../../generic-components/Row/Row';
+import { LegacyEntityFieldEditor } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
 import type {
   LegacyEntityEditorDraftState,
   LegacyEntityEditorStateAction,
@@ -27,10 +28,10 @@ import {
   LegacyEntityUpsertedAction,
   LegacyResetEntityAction,
   LegacySetAuthKeyAction,
-  SetFieldAction,
   LegacySetMessageLoadMessageAction,
   LegacySetNameAction,
   LegacyUpdateEntityAction,
+  SetFieldAction,
 } from './LegacyEntityEditorReducer';
 
 export interface LegacyEntityEditorProps {

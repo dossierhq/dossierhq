@@ -1,15 +1,11 @@
 import type { AdminEntity, AdminSearchQuery } from '@jonasb/datadata-core';
+import { Column, Row, Button } from '@jonasb/datadata-design';
 import React, { useCallback, useReducer, useState } from 'react';
-import {
-  Button,
-  Column,
-  ColumnItem,
-  LegacyEntityList,
-  LegacyEntityMap,
-  InputText,
-  Row,
-  RowItem,
-} from '../..';
+import { ColumnItem } from '../../generic-components/Column/Column';
+import { InputText } from '../../generic-components/InputText/InputText';
+import { RowItem } from '../../generic-components/Row/Row';
+import { LegacyEntityList } from '../LegacyEntityList/LegacyEntityList';
+import { LegacyEntityMap } from '../LegacyEntityMap/LegacyEntityMap';
 import {
   initializeAdminQueryState,
   reduceAdminQueryState,

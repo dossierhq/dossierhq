@@ -1,13 +1,15 @@
 import React, { useCallback, useContext } from 'react';
 import {
-  LegacyAddEntityDraftAction,
-  Button,
-  Column,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
+} from '../../contexts/LegacyEntityEditorState';
+import { Button } from '../../generic-components/Button/Button';
+import { Column } from '../../generic-components/Column/Column';
+import {
+  LegacyAddEntityDraftAction,
   LegacySetActiveEntityAction,
-  LegacyTypePicker,
-} from '../..';
+} from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import { LegacyTypePicker } from '../LegacyTypePicker/LegacyTypePicker';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface LegacyEntityEditorOverviewProps {}

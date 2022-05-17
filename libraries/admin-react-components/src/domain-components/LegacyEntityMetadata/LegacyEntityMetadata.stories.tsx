@@ -1,21 +1,23 @@
 import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
-import type { LegacyEntityEditorSelector } from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
 import {
-  initializeLegacyEntityEditorState,
-  LegacyAddEntityDraftAction,
-  LegacyDataDataContext,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
-  LegacyEntityMetadata,
-  reduceLegacyEntityEditorState,
-} from '../..';
+} from '../../contexts/LegacyEntityEditorState';
 import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { SlowMiddleware } from '../../test/TestContextAdapter';
 import { LegacyEntityLoader } from '../LegacyEntityEditor/LegacyEntityEditor';
+import type { LegacyEntityEditorSelector } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import {
+  reduceLegacyEntityEditorState,
+  LegacyAddEntityDraftAction,
+  initializeLegacyEntityEditorState,
+} from '../LegacyEntityEditor/LegacyEntityEditorReducer';
 import type { LegacyEntityMetadataProps } from './LegacyEntityMetadata';
+import { LegacyEntityMetadata } from './LegacyEntityMetadata';
 
 export type EntityMetadataStoryProps = Omit<LegacyEntityMetadataProps, 'entityId'> & {
   entitySelector: LegacyEntityEditorSelector;

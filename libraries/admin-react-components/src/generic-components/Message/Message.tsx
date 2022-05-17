@@ -1,7 +1,8 @@
 import React from 'react';
-import type { LegacyKind } from '../..';
-import { IconButton, Stack } from '../..';
+import type { LegacyKind } from '../../utils/LegacyKindUtils';
 import { kindToClassName } from '../../utils/LegacyKindUtils';
+import { IconButton } from '../IconButton/IconButton';
+import { Stack } from '../Stack/Stack';
 
 export interface MessageItem {
   kind?: LegacyKind;

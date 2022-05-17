@@ -1,7 +1,7 @@
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import React from 'react';
-import { Tag } from '../..';
-import type { LegacyKind } from '../..';
+import { Tag } from '../../generic-components/Tag/Tag';
+import type { LegacyKind } from '../../utils/LegacyKindUtils';
 
 const LOOKUP: Record<AdminEntityStatus, LegacyKind> = {
   [AdminEntityStatus.archived]: 'danger',

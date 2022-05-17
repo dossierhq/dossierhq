@@ -1,25 +1,21 @@
 import type { EntityVersionInfo } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
-import {
-  AuthKeyTag,
-  Button,
-  Column,
-  ColumnItem,
-  LegacyDataDataContext,
-  DropDown,
-  LegacyEntityEditorStateContext,
-  Loader,
-  Message,
-  LegacyPublishStateTag,
-  Row,
-  RowElement,
-  Stack,
-  Tag,
-} from '../..';
-import type { DropDownItem } from '../..';
+import { AuthKeyTag } from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { LegacyEntityEditorStateContext } from '../../contexts/LegacyEntityEditorState';
+import { Button } from '../../generic-components/Button/Button';
+import { Column, ColumnItem } from '../../generic-components/Column/Column';
+import type { DropDownItem } from '../../generic-components/DropDown/DropDown';
+import { DropDown } from '../../generic-components/DropDown/DropDown';
+import { Loader } from '../../generic-components/Loader/Loader';
+import { Message } from '../../generic-components/Message/Message';
+import { Row, RowElement } from '../../generic-components/Row/Row';
+import { Stack } from '../../generic-components/Stack/Stack';
+import { Tag } from '../../generic-components/Tag/Tag';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 import type { LegacyEntityEditorDraftState } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import { LegacyPublishStateTag } from '../LegacyPublishStateTag/LegacyPublishStateTag';
 import { LegacyPublishingButton } from './LegacyPublishingButton';
 
 export interface LegacyEntityMetadataProps {

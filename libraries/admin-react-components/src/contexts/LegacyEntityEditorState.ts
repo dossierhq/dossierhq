@@ -1,6 +1,9 @@
 import type { Dispatch } from 'react';
 import { createContext } from 'react';
-import type { LegacyEntityEditorState, LegacyEntityEditorStateAction } from '..';
+import type {
+  LegacyEntityEditorState,
+  LegacyEntityEditorStateAction,
+} from '../domain-components/LegacyEntityEditor/LegacyEntityEditorReducer';
 
 export const LegacyEntityEditorStateContext = createContext<LegacyEntityEditorState>({
   defaultContextValue: true,
