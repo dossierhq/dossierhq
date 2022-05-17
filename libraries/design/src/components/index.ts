@@ -38,6 +38,7 @@ export { Menu } from './Menu/Menu.js';
 export { NavBar } from './NavBar/NavBar.js';
 export { NotificationContainer } from './NotificationContainer/NotificationContainer.js';
 export { Radio } from './Radio/Radio.js';
+export { Row } from './Row/Row.js';
 export { Scrollable } from './Scrollable/Scrollable.js';
 export { SelectDisplay } from './SelectDisplay/SelectDisplay.js';
 export { Table } from './Table/Table.js';
