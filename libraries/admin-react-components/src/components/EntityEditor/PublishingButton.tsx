@@ -53,15 +53,18 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
       >
         {buttonAction?.name ?? 'Publish'}
       </Button>
-      <ButtonDropdown
-        disabled={disabled || dropdownActions.length === 0}
-        left
-        items={dropdownActions}
-        renderItem={(it) => it.name}
-        onItemClick={
-          entity ? (it) => executeAction(it.id, entity, adminClient, showNotification) : undefined
-        }
-      />
+
+      {dropdownActions.length > 0 ? (
+        <ButtonDropdown
+          disabled={disabled}
+          left
+          items={dropdownActions}
+          renderItem={(it) => it.name}
+          onItemClick={
+            entity ? (it) => executeAction(it.id, entity, adminClient, showNotification) : undefined
+          }
+        />
+      ) : null}
     </Row>
   );
 }
