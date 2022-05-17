@@ -26,6 +26,7 @@ export {
   NotificationContainer,
   Radio,
   reduceMultipleSelectorState,
+  Row,
   SelectDisplay,
   Table,
   Tag,
