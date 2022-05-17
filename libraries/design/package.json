@@ -20,7 +20,7 @@
     "test": "echo Empty for now",
     "ts:check": "tsc --noEmit",
     "ts:check:watch": "tsc --noEmit --watch",
-    "start": "start-storybook -p 6007",
+    "start": "start-storybook -p 6007 --no-open",
     "storybook:build": "build-storybook --quiet",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
