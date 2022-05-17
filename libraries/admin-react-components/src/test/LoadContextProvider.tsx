@@ -2,7 +2,7 @@ import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core
 import React, { useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
 import type { AdminDataDataContextAdapter } from '..';
-import { AdminDataDataProvider } from '..';
+import { AdminDataDataProvider } from '../components/AdminDataDataProvider/AdminDataDataProvider';
 import {
   createBackendAdminClient,
   DISPLAY_AUTH_KEYS,

@@ -1,7 +1,7 @@
 import React from 'react';
-import type { IconType } from '../..';
-import { Icon } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
+import type { IconType } from '../Icon/Icon';
+import { Icon } from '../Icon/Icon';
 
 export interface IconButtonProps {
   id?: string;

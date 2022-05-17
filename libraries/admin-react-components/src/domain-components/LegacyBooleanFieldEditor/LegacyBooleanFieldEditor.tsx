@@ -1,6 +1,7 @@
 import React from 'react';
-import type { LegacyEntityFieldEditorProps } from '../..';
-import { Checkbox, IconButton } from '../..';
+import { Checkbox } from '../../generic-components/Checkbox/Checkbox';
+import { IconButton } from '../../generic-components/IconButton/IconButton';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
 
 type Props = LegacyEntityFieldEditorProps<boolean>;
 

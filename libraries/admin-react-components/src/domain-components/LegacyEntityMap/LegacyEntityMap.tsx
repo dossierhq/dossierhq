@@ -10,7 +10,9 @@ import type {
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { ReactNode } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
-import { LegacyDataDataContext, MapContainer, LegacyPublishStateTag } from '../..';
+import { MapContainer } from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { LegacyPublishStateTag } from '../LegacyPublishStateTag/LegacyPublishStateTag';
 
 export interface LegacyEntityMapProps {
   className?: string;

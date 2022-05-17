@@ -1,23 +1,23 @@
 import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
-import type { LegacyEntityEditorSelector } from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
 import {
-  LegacyDataDataContext,
-  LegacyEntityEditorContainer,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
-} from '../..';
+} from '../../contexts/LegacyEntityEditorState';
 import { bar1Id, bar2Id, foo1Id, fooArchivedId, qux1Id } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
 import { SlowMiddleware } from '../../test/TestContextAdapter';
+import type { LegacyEntityEditorSelector } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
 import {
   initializeLegacyEntityEditorState,
   LegacyAddEntityDraftAction,
   reduceLegacyEntityEditorState,
 } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
 import type { LegacyEntityEditorContainerProps } from './LegacyEntityEditorContainer';
+import { LegacyEntityEditorContainer } from './LegacyEntityEditorContainer';
 
 interface StoryProps extends LegacyEntityEditorContainerProps {
   entitySelectors?: LegacyEntityEditorSelector[];

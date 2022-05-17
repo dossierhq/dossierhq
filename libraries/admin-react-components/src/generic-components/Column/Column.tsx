@@ -1,5 +1,5 @@
 import React from 'react';
-import type { LayoutProps, SpacingSize } from '../..';
+import type { LayoutProps, SpacingSize } from '../../types/LayoutTypes';
 import { gapClassName, joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface ColumnProps {

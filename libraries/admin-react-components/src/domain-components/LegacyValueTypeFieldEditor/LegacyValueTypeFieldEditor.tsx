@@ -1,15 +1,12 @@
 import type { ValueItem } from '@jonasb/datadata-core';
 import React, { useCallback, useContext } from 'react';
-import type { LegacyEntityFieldEditorProps } from '../..';
-import {
-  LegacyDataDataContext,
-  LegacyEntityFieldEditor,
-  IconButton,
-  Row,
-  RowItem,
-  Segment,
-  LegacyTypePicker,
-} from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { IconButton } from '../../generic-components/IconButton/IconButton';
+import { Row, RowItem } from '../../generic-components/Row/Row';
+import { Segment } from '../../generic-components/Segment/Segment';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
+import { LegacyEntityFieldEditor } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
+import { LegacyTypePicker } from '../LegacyTypePicker/LegacyTypePicker';
 
 type Props = LegacyEntityFieldEditorProps<ValueItem>;
 

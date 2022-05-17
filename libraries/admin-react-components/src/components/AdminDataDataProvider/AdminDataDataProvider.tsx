@@ -2,12 +2,11 @@ import type { AdminClient, Logger } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useContext, useMemo } from 'react';
 import type { AdminDataDataContextAdapter, AdminDataDataContextValue, DisplayAuthKey } from '../..';
+import { AdminDataDataContext, useAdminSchema } from '../..';
 import {
   LegacyDataDataContext,
-  AdminDataDataContext,
   LegacyDataDataContextValue,
-  useAdminSchema,
-} from '../..';
+} from '../../contexts/LegacyDataDataContext';
 
 interface Props {
   adapter: AdminDataDataContextAdapter;

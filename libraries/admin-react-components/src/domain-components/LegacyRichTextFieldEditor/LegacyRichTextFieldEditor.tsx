@@ -3,9 +3,12 @@ import EditorJS from '@editorjs/editorjs';
 import type { FieldSpecification, ItemValuePath, RichText } from '@jonasb/datadata-core';
 import { RichTextBlockType } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import type { LegacyDataDataContextValue, LegacyEntityFieldEditorProps } from '../..';
-import { LegacyDataDataContext, IconButton, Row, RowItem } from '../..';
+import type { LegacyDataDataContextValue } from '../../contexts/LegacyDataDataContext';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { IconButton } from '../../generic-components/IconButton/IconButton';
+import { Row, RowItem } from '../../generic-components/Row/Row';
 import type { LegacyEntityEditorDraftState } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
 import type { EntityToolConfig } from './EntityTool';
 import { createEntityToolFactory } from './EntityTool';
 import {

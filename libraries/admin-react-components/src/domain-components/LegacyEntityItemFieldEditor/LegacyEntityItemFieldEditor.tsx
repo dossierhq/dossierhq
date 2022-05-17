@@ -1,17 +1,15 @@
 import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
 import React, { useCallback, useContext, useState } from 'react';
-import type { LegacyEntityFieldEditorProps } from '../..';
-import {
-  Button,
-  LegacyDataDataContext,
-  LegacyEntityEditorDispatchContext,
-  LegacyEntitySearch,
-  IconButton,
-  Modal,
-  LegacyPublishStateTag,
-  Row,
-} from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
+import { LegacyEntityEditorDispatchContext } from '../../contexts/LegacyEntityEditorState';
+import { Button } from '../../generic-components/Button/Button';
+import { IconButton } from '../../generic-components/IconButton/IconButton';
+import { Modal } from '../../generic-components/Modal/Modal';
+import { Row } from '../../generic-components/Row/Row';
 import { LegacyAddEntityDraftAction } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import type { LegacyEntityFieldEditorProps } from '../LegacyEntityFieldEditor/LegacyEntityFieldEditor';
+import { LegacyEntitySearch } from '../LegacyEntitySearch/LegacyEntitySearch';
+import { LegacyPublishStateTag } from '../LegacyPublishStateTag/LegacyPublishStateTag';
 
 export type LegacyEntityItemFieldEditorProps = LegacyEntityFieldEditorProps<EntityReference>;
 

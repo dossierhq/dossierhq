@@ -5,7 +5,7 @@ import type {
 import type { IconName } from '@jonasb/datadata-design';
 import { ButtonDropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
-import { LegacyDataDataContext } from '../..';
+import { LegacyDataDataContext } from '../../contexts/LegacyDataDataContext';
 
 export interface LegacyTypePickerProps {
   text: string;

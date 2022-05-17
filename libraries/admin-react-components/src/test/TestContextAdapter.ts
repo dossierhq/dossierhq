@@ -29,7 +29,7 @@ import {
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import type { AdminDataDataContextAdapter } from '..';
-import { LegacyDataDataContextValue } from '..';
+import { LegacyDataDataContextValue } from '../contexts/LegacyDataDataContext';
 import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
 import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
 

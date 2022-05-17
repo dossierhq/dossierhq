@@ -1,14 +1,14 @@
 import { findAscendantHTMLElement, useWindowEventListener } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import {
-  LegacyEntityEditor,
-  LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
-  LegacyEntityEditorOverview,
-  LegacyEntityMetadata,
-  LegacySetActiveEntityAction,
-} from '../..';
+  LegacyEntityEditorDispatchContext,
+} from '../../contexts/LegacyEntityEditorState';
 import { joinClassNames } from '../../utils/ClassNameUtils';
+import { LegacyEntityEditor } from '../LegacyEntityEditor/LegacyEntityEditor';
+import { LegacySetActiveEntityAction } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import { LegacyEntityEditorOverview } from '../LegacyEntityEditorOverview/LegacyEntityEditorOverview';
+import { LegacyEntityMetadata } from '../LegacyEntityMetadata/LegacyEntityMetadata';
 
 export interface LegacyEntityEditorContainerProps {
   className?: string;

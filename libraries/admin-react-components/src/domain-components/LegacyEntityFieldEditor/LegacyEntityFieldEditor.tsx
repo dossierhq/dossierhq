@@ -14,17 +14,15 @@ import {
   isValueTypeListField,
 } from '@jonasb/datadata-core';
 import React from 'react';
-import {
-  LegacyBooleanFieldEditor,
-  LegacyEntityFieldListWrapper,
-  LegacyEntityItemFieldEditor,
-  FormField,
-  LegacyLocationFieldEditor,
-  LegacyRichTextFieldEditor,
-  LegacyStringFieldEditor,
-  LegacyValueTypeFieldEditor,
-} from '../..';
+import { FormField } from '../../generic-components/FormField/FormField';
+import { LegacyBooleanFieldEditor } from '../LegacyBooleanFieldEditor/LegacyBooleanFieldEditor';
 import type { LegacyEntityEditorDraftState } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
+import { LegacyEntityFieldListWrapper } from '../LegacyEntityFieldListWrapper/LegacyEntityFieldListWrapper';
+import { LegacyEntityItemFieldEditor } from '../LegacyEntityItemFieldEditor/LegacyEntityItemFieldEditor';
+import { LegacyLocationFieldEditor } from '../LegacyLocationFieldEditor/LegacyLocationFieldEditor';
+import { LegacyRichTextFieldEditor } from '../LegacyRichTextFieldEditor/LegacyRichTextFieldEditor';
+import { LegacyStringFieldEditor } from '../LegacyStringFieldEditor/LegacyStringFieldEditor';
+import { LegacyValueTypeFieldEditor } from '../LegacyValueTypeFieldEditor/LegacyValueTypeFieldEditor';
 
 interface Props {
   idPrefix: string;

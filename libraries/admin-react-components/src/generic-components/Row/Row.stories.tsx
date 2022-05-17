@@ -1,7 +1,8 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import type { RowProps } from '../..';
-import { Column, ColumnElement, Row, RowElement, RowItem } from '../..';
+import { Column, ColumnElement } from '../Column/Column';
+import type { RowProps } from './Row';
+import { Row, RowElement, RowItem } from './Row';
 
 const meta: Meta<RowProps> = {
   title: 'Generic/Row',
