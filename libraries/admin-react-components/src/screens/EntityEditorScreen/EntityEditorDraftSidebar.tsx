@@ -89,7 +89,7 @@ function ActivityList({
     <>
       {events.map((event, index) => (
         <Row key={index} gap={2}>
-          <Text textStyle="body1">v{event.version ?? '—'}</Text>
+          <Tag>{event.version === null ? '—' : '' + event.version}</Tag>
           <Row.Item flexGrow={1}>
             <InstantDisplay instant={event.instant} />
           </Row.Item>

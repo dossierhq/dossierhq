@@ -52,3 +52,13 @@ export function updateCacheEntityInfo<TEffect>(
     return copyEntity(entity, { info: { status: payload.status, updatedAt: payload.updatedAt } });
   });
 }
+
+export function invalidateEntityHistory(mutate: ScopedMutator, entityId: string) {
+  const key = CACHE_KEYS.adminEntityHistory({ id: entityId });
+  mutate(key);
+}
+
+export function invalidatePublishingHistory(mutate: ScopedMutator, entityId: string) {
+  const key = CACHE_KEYS.adminPublishingHistory({ id: entityId });
+  mutate(key);
+}
