@@ -65,3 +65,6 @@ temp/
 ##
 .envrc
 *.code-workspace
+
+# Local Netlify folder
+.netlify
