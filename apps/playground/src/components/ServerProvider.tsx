@@ -2,7 +2,8 @@ import { ErrorType, notOk, PromiseResult } from '@jonasb/datadata-core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
 import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { useEffect, useState } from 'react';
-import initSqlJs from 'sql.js/dist/sql-wasm-debug';
+import initSqlJs from 'sql.js/dist/sql-wasm';
+import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
 import { SERVER_LOGGER } from '../config/LoggerConfig';
 import { ServerContext, ServerContextValue } from '../contexts/ServerContext';
 
@@ -31,9 +32,8 @@ export function ServerProvider({ children }: Props) {
 
 async function initializeServer(): PromiseResult<Server, ErrorType.BadRequest | ErrorType.Generic> {
   try {
-    //TODO use version from node_modules
     const SQL = await initSqlJs({
-      locateFile: (file) => `https://sql.js.org/dist/${file}`,
+      locateFile: (_file) => sqlJsWasm,
     });
     const database = new SQL.Database();
     const adapterResult = await createSqlJsAdapter({ logger: SERVER_LOGGER }, database);
