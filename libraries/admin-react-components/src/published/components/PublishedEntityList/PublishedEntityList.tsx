@@ -1,6 +1,6 @@
 import type { AdminQueryOrder, PublishedEntity } from '@jonasb/datadata-core';
 import { PublishedQueryOrder } from '@jonasb/datadata-core';
-import { Table } from '@jonasb/datadata-design';
+import { EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
 import { PublishedDataDataContext } from '../..';
@@ -23,9 +23,11 @@ export function PublishedEntityList({
     query: { order, reverse },
   } = searchEntityState;
   const { authKeys } = useContext(PublishedDataDataContext);
+
   const direction = reverse ? 'desc' : 'asc';
+  const isEmpty = entities.length === 0;
   return (
-    <Table>
+    <Table className={isEmpty ? toSizeClassName({ height: '100%' }) : undefined}>
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
@@ -41,22 +43,34 @@ export function PublishedEntityList({
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {entities.map((entityResult) => {
-          if (entityResult.isOk()) {
-            const entity = entityResult.value;
-            return (
-              <EntityListRow
-                key={entity.id}
-                {...{
-                  entity,
-                  authKeys,
-                  order: order as PublishedQueryOrder | undefined,
-                  onItemClick,
-                }}
+        {isEmpty ? (
+          <Table.Row>
+            <Table.Cell className={toSizeClassName({ height: '100%' })} colSpan={3}>
+              <EmptyStateMessage
+                icon="search"
+                title="No matches"
+                message="No entities matches the query"
               />
-            );
-          }
-        })}
+            </Table.Cell>
+          </Table.Row>
+        ) : (
+          entities.map((entityResult) => {
+            if (entityResult.isOk()) {
+              const entity = entityResult.value;
+              return (
+                <EntityListRow
+                  key={entity.id}
+                  {...{
+                    entity,
+                    authKeys,
+                    order: order as PublishedQueryOrder | undefined,
+                    onItemClick,
+                  }}
+                />
+              );
+            }
+          })
+        )}
       </Table.Body>
     </Table>
   );

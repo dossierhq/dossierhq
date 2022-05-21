@@ -1,6 +1,6 @@
 import type { AdminEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
 import { AdminQueryOrder } from '@jonasb/datadata-core';
-import { InstantDisplay, Table } from '@jonasb/datadata-design';
+import { EmptyStateMessage, InstantDisplay, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
 import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../..';
@@ -24,8 +24,9 @@ export function AdminEntityList({
   const { authKeys } = useContext(AdminDataDataContext);
 
   const direction = reverse ? 'desc' : 'asc';
+  const isEmpty = entities.length === 0;
   return (
-    <Table>
+    <Table className={isEmpty ? toSizeClassName({ height: '100%' }) : undefined}>
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
@@ -70,22 +71,34 @@ export function AdminEntityList({
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {entities.map((entityResult) => {
-          if (entityResult.isOk()) {
-            const entity = entityResult.value as AdminEntity;
-            return (
-              <EntityListRow
-                key={entity.id}
-                {...{
-                  entity,
-                  authKeys,
-                  order: order as AdminQueryOrder | undefined,
-                  onItemClick,
-                }}
+        {isEmpty ? (
+          <Table.Row>
+            <Table.Cell className={toSizeClassName({ height: '100%' })} colSpan={6}>
+              <EmptyStateMessage
+                icon="search"
+                title="No matches"
+                message="No entities matches the query"
               />
-            );
-          }
-        })}
+            </Table.Cell>
+          </Table.Row>
+        ) : (
+          entities.map((entityResult) => {
+            if (entityResult.isOk()) {
+              const entity = entityResult.value as AdminEntity;
+              return (
+                <EntityListRow
+                  key={entity.id}
+                  {...{
+                    entity,
+                    authKeys,
+                    order: order as AdminQueryOrder | undefined,
+                    onItemClick,
+                  }}
+                />
+              );
+            }
+          })
+        )}
       </Table.Body>
     </Table>
   );
