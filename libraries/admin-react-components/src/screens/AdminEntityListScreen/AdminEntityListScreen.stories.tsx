@@ -6,7 +6,7 @@ import React, { useMemo, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
 import { CacheConfig } from '../../test/CacheConfig';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { SlowMiddleware } from '../../test/TestContextAdapter';
+import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import type { AdminEntityListScreenProps } from './AdminEntityListScreen';
 import { AdminEntityListScreen } from './AdminEntityListScreen';
 
@@ -91,17 +91,17 @@ InitialBoundingBoxQuery.args = {
 
 export const Slow = Template.bind({});
 Slow.args = {
-  adminClientMiddleware: [SlowMiddleware],
+  adminClientMiddleware: [createSlowAdminMiddleware()],
 };
 
 export const SlowUsingSharedCache = Template.bind({});
 SlowUsingSharedCache.args = {
   ownCache: false,
-  adminClientMiddleware: [SlowMiddleware],
+  adminClientMiddleware: [createSlowAdminMiddleware()],
 };
 
 export const SlowInitialTextNoMatch = Template.bind({});
 SlowInitialTextNoMatch.args = {
-  adminClientMiddleware: [SlowMiddleware],
+  adminClientMiddleware: [createSlowAdminMiddleware()],
   initialUrlQuery: { query: '{"text":"there-are-no-matches-for-this"}' },
 };

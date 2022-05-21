@@ -8,7 +8,7 @@ import {
 } from '../../contexts/LegacyEntityEditorState';
 import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { SlowMiddleware } from '../../test/TestContextAdapter';
+import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import { LegacyEntityLoader } from '../LegacyEntityEditor/LegacyEntityEditor';
 import type { LegacyEntityEditorSelector } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
 import {
@@ -99,5 +99,5 @@ ArchivedFooPublishingHistory.args = {
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelector: { id: foo1Id },
-  adminClientMiddleware: [SlowMiddleware],
+  adminClientMiddleware: [createSlowAdminMiddleware()],
 };

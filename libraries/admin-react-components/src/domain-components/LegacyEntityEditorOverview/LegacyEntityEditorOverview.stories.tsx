@@ -9,7 +9,7 @@ import {
 import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
-import { SlowMiddleware } from '../../test/TestContextAdapter';
+import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import { LegacyEntityLoader } from '../LegacyEntityEditor/LegacyEntityEditor';
 import type { LegacyEntityEditorSelector } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
 import {
@@ -70,5 +70,5 @@ Normal.args = {
 export const Slow = Template.bind({});
 Slow.args = {
   entitySelectors: [{ id: foo1Id }, { id: bar1Id }, { id: bar2Id }, { id: fooArchivedId }],
-  adminClientMiddleware: [SlowMiddleware],
+  adminClientMiddleware: [createSlowAdminMiddleware()],
 };

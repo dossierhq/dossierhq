@@ -9,7 +9,7 @@ import {
 import { baz1Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
-import { SlowMiddleware } from '../../test/TestContextAdapter';
+import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import type { LegacyEntityEditorProps } from './LegacyEntityEditor';
 import { LegacyEntityEditor } from './LegacyEntityEditor';
 import type { LegacyEntityEditorSelector } from './LegacyEntityEditorReducer';
@@ -74,7 +74,7 @@ FullBaz.args = { entitySelector: { id: baz1Id } };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelector: { id: foo1Id },
-  adminClientMiddleware: [SlowMiddleware],
+  adminClientMiddleware: [createSlowAdminMiddleware()],
 };
 
 export const NotFound = Template.bind({});
