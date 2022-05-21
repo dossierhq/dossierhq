@@ -34,7 +34,8 @@ export interface SearchEntityState {
   entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
   totalCount: number | null;
 
-  entities: Result<AdminEntity | PublishedEntity, ErrorType>[];
+  // null until first loaded
+  entities: Result<AdminEntity | PublishedEntity, ErrorType>[] | null;
   loadingState: '' | 'sample' | 'next-page' | 'prev-page' | 'first-page' | 'last-page';
   entitiesScrollToTopSignal: number;
 }
@@ -62,7 +63,7 @@ export function initializeSearchEntityState({
     entitySamples: undefined,
     entitySamplesError: undefined,
     totalCount: null,
-    entities: [],
+    entities: null,
     loadingState: '',
     entitiesScrollToTopSignal: 0,
   };

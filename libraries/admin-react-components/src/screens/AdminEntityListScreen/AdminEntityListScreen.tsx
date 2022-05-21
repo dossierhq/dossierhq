@@ -81,7 +81,7 @@ export function AdminEntityListScreen({
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
-  const isEmpty = searchEntityState.entities.length === 0;
+  const isEmpty = searchEntityState.entities?.length === 0;
 
   return (
     <FullscreenContainer>

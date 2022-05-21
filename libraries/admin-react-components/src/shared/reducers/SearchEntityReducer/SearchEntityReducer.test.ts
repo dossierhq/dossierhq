@@ -73,7 +73,7 @@ describe('initializeSearchEntityState', () => {
       Object {
         "connection": undefined,
         "connectionError": undefined,
-        "entities": Array [],
+        "entities": null,
         "entitiesScrollToTopSignal": 0,
         "entitySamples": undefined,
         "entitySamplesError": undefined,
@@ -97,7 +97,7 @@ describe('initializeSearchEntityState', () => {
       Object {
         "connection": undefined,
         "connectionError": undefined,
-        "entities": Array [],
+        "entities": null,
         "entitiesScrollToTopSignal": 0,
         "entitySamples": undefined,
         "entitySamplesError": undefined,

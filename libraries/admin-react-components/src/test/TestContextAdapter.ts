@@ -192,6 +192,13 @@ export const SlowMiddleware: AdminClientMiddleware<ClientContext> = async (_cont
   operation.resolve(await operation.next());
 };
 
+export function createSlowPublishedMiddleware(): PublishedClientMiddleware<ClientContext> {
+  return async (_context, operation) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    operation.resolve(await operation.next());
+  };
+}
+
 export class TestContextAdapter implements AdminDataDataContextAdapter {
   getEditorJSConfig: AdminDataDataContextAdapter['getEditorJSConfig'] = (
     _fieldSpec,

@@ -25,7 +25,8 @@ export function PublishedEntityList({
   const { authKeys } = useContext(PublishedDataDataContext);
 
   const direction = reverse ? 'desc' : 'asc';
-  const isEmpty = entities.length === 0;
+  const isEmpty = searchEntityState.entities?.length === 0;
+
   return (
     <Table className={isEmpty ? toSizeClassName({ height: '100%' }) : undefined}>
       <Table.Head>
@@ -54,7 +55,7 @@ export function PublishedEntityList({
             </Table.Cell>
           </Table.Row>
         ) : (
-          entities.map((entityResult) => {
+          entities?.map((entityResult) => {
             if (entityResult.isOk()) {
               const entity = entityResult.value;
               return (
