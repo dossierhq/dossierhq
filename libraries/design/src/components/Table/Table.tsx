@@ -5,6 +5,7 @@ import { Icon } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TableProps {
+  className?: string;
   children: React.ReactNode;
 }
 
@@ -32,6 +33,8 @@ interface TableHeaderProps {
 }
 
 interface TableCellProps {
+  className?: string;
+  colSpan?: number;
   narrow?: boolean;
   children: React.ReactNode;
 }
@@ -44,9 +47,9 @@ interface TableComponent extends FunctionComponent<TableProps> {
   Cell: FunctionComponent<TableCellProps>;
 }
 
-export const Table: TableComponent = ({ children }: TableProps) => {
+export const Table: TableComponent = ({ className, children }: TableProps) => {
   return (
-    <BulmaTable size="fullwidth" hoverable>
+    <BulmaTable className={className} size="fullwidth" hoverable>
       {children}
     </BulmaTable>
   );
@@ -85,8 +88,11 @@ Table.Header = ({ clickable, narrow, order, onClick, children }: TableHeaderProp
 };
 Table.Header.displayName = 'Table.Header';
 
-Table.Cell = ({ narrow, children }: TableCellProps) => {
-  const className = narrow ? 'is-narrow' : undefined;
-  return <td className={className}>{children}</td>;
+Table.Cell = ({ className, colSpan, narrow, children }: TableCellProps) => {
+  return (
+    <td className={toClassName(narrow && 'is-narrow', className)} colSpan={colSpan}>
+      {children}
+    </td>
+  );
 };
 Table.Cell.displayName = 'Table.Cell';
