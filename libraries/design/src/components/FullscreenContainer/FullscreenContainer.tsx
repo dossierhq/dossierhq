@@ -23,7 +23,8 @@ export interface FullscreenContainerRowProps
   extends MarginProps,
     PaddingProps,
     GapProps,
-    FlexContainerProps {
+    FlexContainerProps,
+    Pick<SizeProps, 'height'> {
   id?: string;
   center?: boolean;
   fullWidth?: boolean;
@@ -104,7 +105,7 @@ FullscreenContainer.Row = ({
   ...props
 }: FullscreenContainerRowProps) => {
   const width = !fullWidth && !center ? '100%' : undefined; // .container centers by default
-  const height = fillHeight ? 0 : undefined;
+  const height = fillHeight ? 0 : props.height;
   const addStickyFullWidthWrapper = sticky && !fullWidth;
   const { layoutProps, otherProps } = extractLayoutProps(props);
 
