@@ -123,6 +123,8 @@ export function PublishedEntityListScreen({
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
+  const isEmpty = searchEntityState.entities.length === 0;
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
@@ -157,7 +159,7 @@ export function PublishedEntityListScreen({
         </FullscreenContainer.Row>
       ) : (
         <FullscreenContainer.ScrollableRow>
-          <FullscreenContainer.Row>
+          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
             <EntityTypeTagSelector
               state={entityTypeFilterState}
               dispatch={dispatchEntityTypeFilter}

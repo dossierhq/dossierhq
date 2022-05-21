@@ -81,6 +81,8 @@ export function AdminEntityListScreen({
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
+  const isEmpty = searchEntityState.entities.length === 0;
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
@@ -120,7 +122,7 @@ export function AdminEntityListScreen({
         <FullscreenContainer.ScrollableRow
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
         >
-          <FullscreenContainer.Row>
+          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
             <FullscreenContainer.Item paddingHorizontal={3}>
               <EntityTypeTagSelector
                 state={entityTypeFilterState}
