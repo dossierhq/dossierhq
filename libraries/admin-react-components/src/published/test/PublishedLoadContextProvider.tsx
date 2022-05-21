@@ -8,7 +8,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export function LoadContextProvider({
+export function PublishedLoadContextProvider({
   publishedClientMiddleware,
   children,
 }: Props): JSX.Element | null {

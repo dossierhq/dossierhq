@@ -7,7 +7,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminSchema } from '../../hooks/useAdminSchema';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { SchemaEditorScreenProps } from './SchemaEditorScreen';
 import { SchemaEditorScreen } from './SchemaEditorScreen';
 
@@ -31,11 +31,11 @@ const Template: Story<StoryProps> = (args) => {
 
 function Wrapper(props: StoryProps) {
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <NotificationContainer>
         <SchemaEditorScreen {...props} />
       </NotificationContainer>
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 }
 

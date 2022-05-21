@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import schema from '../../stories/StoryboardSchema';
 import { bar2Id } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
 import type { LegacyEntityItemFieldEditorProps } from './LegacyEntityItemFieldEditor';
 import { LegacyEntityItemFieldEditor } from './LegacyEntityItemFieldEditor';
@@ -19,11 +19,11 @@ export default meta;
 
 const Template: Story<LegacyEntityItemFieldEditorProps> = (args) => {
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <LoadFixtures>
         <LegacyEntityItemFieldEditor {...args} />
       </LoadFixtures>
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 };
 

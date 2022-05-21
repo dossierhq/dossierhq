@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { LegacyEntityListProps } from './LegacyEntityList';
 import { LegacyEntityList } from './LegacyEntityList';
 
@@ -16,9 +16,9 @@ export default meta;
 
 const Template: Story<EntityListStoryProps> = (args) => {
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <Wrapper {...args} />
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 };
 

@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export function LoadContextProvider({
+export function AdminLoadContextProvider({
   adapter,
   adminClientMiddleware,
   children,

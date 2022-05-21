@@ -5,7 +5,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
 import { CacheConfig } from '../../test/CacheConfig';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import type { AdminEntityListScreenProps } from './AdminEntityListScreen';
 import { AdminEntityListScreen } from './AdminEntityListScreen';
@@ -51,7 +51,7 @@ function Wrapper({
   const displayUrl = useMemo(() => decodeURI(buildUrlWithUrlQuery('/', urlQuery)), [urlQuery]);
   return (
     <CacheConfig ownCache={ownCache}>
-      <LoadContextProvider adminClientMiddleware={adminClientMiddleware}>
+      <AdminLoadContextProvider adminClientMiddleware={adminClientMiddleware}>
         <AdminEntityListScreen
           {...props}
           header={
@@ -63,7 +63,7 @@ function Wrapper({
           urlQuery={urlQuery}
           onUrlQueryChanged={setUrlQuery}
         />
-      </LoadContextProvider>
+      </AdminLoadContextProvider>
     </CacheConfig>
   );
 }

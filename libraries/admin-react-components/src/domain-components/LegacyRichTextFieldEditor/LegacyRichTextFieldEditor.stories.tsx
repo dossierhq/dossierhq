@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import schema from '../../stories/StoryboardSchema';
 import { bar2Id, foo1Id } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
 import type { LegacyRichTextFieldEditorProps } from './LegacyRichTextFieldEditor';
 import { LegacyRichTextFieldEditor } from './LegacyRichTextFieldEditor';
@@ -21,11 +21,11 @@ export default meta;
 
 const Template: Story<RichTextFieldEditorStoryProps> = (args) => {
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <LoadFixtures>
         <Wrapper {...args} />
       </LoadFixtures>
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 };
 
