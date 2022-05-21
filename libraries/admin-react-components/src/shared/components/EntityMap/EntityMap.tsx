@@ -56,7 +56,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
       resetSignal={resetSignal}
       onBoundingBoxChanged={handleBoundingBoxChange}
     >
-      {schema
+      {schema && entities
         ? entities.map((entityResult) => {
             if (entityResult.isError()) {
               return null;

@@ -1,15 +1,20 @@
+import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
 import { buildUrlWithUrlQuery } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
+import { CacheConfig } from '../../test/CacheConfig';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { SlowMiddleware } from '../../test/TestContextAdapter';
 import type { AdminEntityListScreenProps } from './AdminEntityListScreen';
 import { AdminEntityListScreen } from './AdminEntityListScreen';
 
 type StoryProps = Omit<AdminEntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlQuery?: EntitySearchStateUrlQuery;
   showUrl: boolean;
+  ownCache: boolean;
+  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
 };
 
 const meta: Meta<StoryProps> = {
@@ -25,7 +30,7 @@ const meta: Meta<StoryProps> = {
       table: { disable: true },
     },
   },
-  args: { showUrl: false },
+  args: { showUrl: false, ownCache: true },
   parameters: { layout: 'fullscreen' },
 };
 export default meta;
@@ -34,23 +39,32 @@ const Template: Story<StoryProps> = (args) => {
   return Wrapper(args);
 };
 
-function Wrapper({ initialUrlQuery, showUrl, header, ...props }: StoryProps) {
+function Wrapper({
+  initialUrlQuery,
+  ownCache,
+  showUrl,
+  header,
+  adminClientMiddleware,
+  ...props
+}: StoryProps) {
   const [urlQuery, setUrlQuery] = useState<EntitySearchStateUrlQuery>(initialUrlQuery ?? {});
   const displayUrl = useMemo(() => decodeURI(buildUrlWithUrlQuery('/', urlQuery)), [urlQuery]);
   return (
-    <LoadContextProvider>
-      <AdminEntityListScreen
-        {...props}
-        header={
-          <>
-            {showUrl ? <Text textStyle="body2">{displayUrl}</Text> : null}
-            {header}
-          </>
-        }
-        urlQuery={urlQuery}
-        onUrlQueryChanged={setUrlQuery}
-      />
-    </LoadContextProvider>
+    <CacheConfig ownCache={ownCache}>
+      <LoadContextProvider adminClientMiddleware={adminClientMiddleware}>
+        <AdminEntityListScreen
+          {...props}
+          header={
+            <>
+              {showUrl ? <Text textStyle="body2">{displayUrl}</Text> : null}
+              {header}
+            </>
+          }
+          urlQuery={urlQuery}
+          onUrlQueryChanged={setUrlQuery}
+        />
+      </LoadContextProvider>
+    </CacheConfig>
   );
 }
 
@@ -73,4 +87,21 @@ InitialBoundingBoxQuery.args = {
     query:
       '{"boundingBox":{"minLat":55.59004909705666,"maxLat":55.63212782260112,"minLng":12.938149496912958,"maxLng":13.074276968836786}}',
   },
+};
+
+export const Slow = Template.bind({});
+Slow.args = {
+  adminClientMiddleware: [SlowMiddleware],
+};
+
+export const SlowUsingSharedCache = Template.bind({});
+SlowUsingSharedCache.args = {
+  ownCache: false,
+  adminClientMiddleware: [SlowMiddleware],
+};
+
+export const SlowInitialTextNoMatch = Template.bind({});
+SlowInitialTextNoMatch.args = {
+  adminClientMiddleware: [SlowMiddleware],
+  initialUrlQuery: { query: '{"text":"there-are-no-matches-for-this"}' },
 };
