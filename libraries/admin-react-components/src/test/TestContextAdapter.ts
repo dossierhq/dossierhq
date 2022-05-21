@@ -187,10 +187,12 @@ async function terminatingPublishedMiddleware(
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }
 
-export const SlowMiddleware: AdminClientMiddleware<ClientContext> = async (_context, operation) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  operation.resolve(await operation.next());
-};
+export function createSlowAdminMiddleware(): AdminClientMiddleware<ClientContext> {
+  return async (_context, operation) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    operation.resolve(await operation.next());
+  };
+}
 
 export function createSlowPublishedMiddleware(): PublishedClientMiddleware<ClientContext> {
   return async (_context, operation) => {
