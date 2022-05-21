@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { AdminTypePickerProps } from './AdminTypePicker';
 import { AdminTypePicker } from './AdminTypePicker';
 
@@ -16,9 +16,9 @@ export default meta;
 
 const Template: Story<AdminTypePickerProps> = (args) => {
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <AdminTypePicker {...args} />
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 };
 

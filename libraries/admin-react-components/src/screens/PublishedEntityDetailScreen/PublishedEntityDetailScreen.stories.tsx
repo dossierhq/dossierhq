@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { foo1Id } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../published/test/LoadContextProvider';
+import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
 import type { PublishedEntityDetailScreenProps } from './PublishedEntityDetailScreen';
 import { PublishedEntityDetailScreen } from './PublishedEntityDetailScreen';
 
@@ -22,9 +22,9 @@ const Template: Story<StoryProps> = (args) => {
 
 function Wrapper(props: StoryProps) {
   return (
-    <LoadContextProvider>
+    <PublishedLoadContextProvider>
       <PublishedEntityDetailScreen {...props} />
-    </LoadContextProvider>
+    </PublishedLoadContextProvider>
   );
 }
 

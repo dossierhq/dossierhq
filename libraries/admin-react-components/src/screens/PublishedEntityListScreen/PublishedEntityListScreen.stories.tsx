@@ -2,7 +2,7 @@ import type { ClientContext, PublishedClientMiddleware } from '@jonasb/datadata-
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
-import { LoadContextProvider } from '../../published/test/LoadContextProvider';
+import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
 import { createSlowPublishedMiddleware } from '../../test/TestContextAdapter';
 import type { PublishedEntityListScreenProps } from './PublishedEntityListScreen';
@@ -33,9 +33,9 @@ function Wrapper({ initialUrlQuery, ownCache, publishedClientMiddleware, ...prop
   const [urlQuery, setUrlQuery] = useState<EntitySearchStateUrlQuery>(initialUrlQuery ?? {});
   return (
     <CacheConfig ownCache={ownCache}>
-      <LoadContextProvider publishedClientMiddleware={publishedClientMiddleware}>
+      <PublishedLoadContextProvider publishedClientMiddleware={publishedClientMiddleware}>
         <PublishedEntityListScreen {...props} urlQuery={urlQuery} onUrlQueryChanged={setUrlQuery} />
-      </LoadContextProvider>
+      </PublishedLoadContextProvider>
     </CacheConfig>
   );
 }

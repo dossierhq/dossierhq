@@ -7,7 +7,7 @@ import {
   LegacyEntityEditorStateContext,
 } from '../../contexts/LegacyEntityEditorState';
 import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import { LegacyEntityLoader } from '../LegacyEntityEditor/LegacyEntityEditor';
 import type { LegacyEntityEditorSelector } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
@@ -33,13 +33,13 @@ export default meta;
 
 const Template: Story<EntityMetadataStoryProps> = (args) => {
   return (
-    <LoadContextProvider adminClientMiddleware={args.adminClientMiddleware}>
+    <AdminLoadContextProvider adminClientMiddleware={args.adminClientMiddleware}>
       <Wrapper
         className={args.className}
         entitySelector={args.entitySelector}
         initialSelectedHistory={args.initialSelectedHistory}
       />
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 };
 

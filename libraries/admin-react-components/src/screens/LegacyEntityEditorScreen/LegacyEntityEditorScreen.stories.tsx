@@ -4,7 +4,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useCallback, useMemo, useState } from 'react';
 import type { LegacyEntityEditorSelector } from '../../domain-components/LegacyEntityEditor/LegacyEntityEditorReducer';
 import { foo1Id } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { EntityEditorScreenProps } from './LegacyEntityEditorScreen';
 import { LegacyEntityEditorScreen } from './LegacyEntityEditorScreen';
 
@@ -55,7 +55,7 @@ function Wrapper({ initialUrlQuery, showUrl, header, ...props }: StoryProps) {
 
   const displayUrl = useMemo(() => decodeURI(buildUrlWithUrlQuery('/', urlQuery)), [urlQuery]);
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <LegacyEntityEditorScreen
         {...props}
         header={
@@ -67,7 +67,7 @@ function Wrapper({ initialUrlQuery, showUrl, header, ...props }: StoryProps) {
         entitySelectors={entitySelectors}
         onEntityIdsChanged={handleEntityIdsChanged}
       />
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 }
 

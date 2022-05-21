@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { LegacyEntityMapProps } from './LegacyEntityMap';
 import { LegacyEntityMap } from './LegacyEntityMap';
 
@@ -16,9 +16,9 @@ export default meta;
 
 const Template: Story<LegacyEntityMapProps> = (args) => {
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <LegacyEntityMap {...args} />
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 };
 

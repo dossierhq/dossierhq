@@ -2,7 +2,7 @@ import { NotificationContainer, Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
 import { foo1Id } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { EntityEditorScreenProps } from './EntityEditorScreen';
 import { EntityEditorScreen } from './EntityEditorScreen';
 
@@ -39,7 +39,7 @@ function Wrapper({
   );
   const displayUrl = useMemo(() => decodeURI(urlSearchParams.toString()), [urlSearchParams]);
   return (
-    <LoadContextProvider>
+    <AdminLoadContextProvider>
       <NotificationContainer>
         <EntityEditorScreen
           {...props}
@@ -53,7 +53,7 @@ function Wrapper({
           onUrlSearchParamsChange={onUrlSearchParamsChange}
         />
       </NotificationContainer>
-    </LoadContextProvider>
+    </AdminLoadContextProvider>
   );
 }
 
