@@ -53,7 +53,10 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
-  const containerClassName = `${width === 'wide' ? 'container ' : ''}is-height-100`;
+  const containerClassName = toClassName(
+    width === 'wide' && 'container',
+    height === 'fill' && 'is-height-100'
+  );
 
   return (
     <dialog
