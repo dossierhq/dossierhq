@@ -730,7 +730,6 @@ importers:
       eslint-plugin-testing-library: ~5.5.0
       prettier: 2.6.2
       react: ~18.1.0
-      react-bulma-components: ~4.1.0
       react-dom: ~18.1.0
       sass: ~1.50.0
       sass-loader: ~12.6.0
@@ -743,7 +742,6 @@ importers:
       '@fortawesome/react-fontawesome': 0.1.18_3a4aa64e1b793e119583fa1b1a3cd25b
       '@js-temporal/polyfill': 0.4.0
       react: 18.1.0
-      react-bulma-components: 4.1.0_65ddb6239fffed6066139bdf48eadd0a
       react-dom: 18.1.0_react@18.1.0
       tslib: 2.4.0
     devDependencies:
@@ -6379,11 +6377,11 @@ packages:
     dev: true
 
   /ansi-regex/2.1.1:
-    resolution: {integrity: sha1-w7M6te42DYbg5ijwRorn7yfWVN8=}
+    resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==}
     engines: {node: '>=0.10.0'}
 
   /ansi-regex/3.0.0:
-    resolution: {integrity: sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=}
+    resolution: {integrity: sha512-wFUFA5bg5dviipbQQ32yOQhl6gcJaJXiHE7dvR8VYPG97+J/GNC5FKGepKdEDUFeXRzDxPF1X/Btc8L+v7oqIQ==}
     engines: {node: '>=4'}
 
   /ansi-regex/5.0.1:
@@ -6620,7 +6618,7 @@ packages:
     optional: true
 
   /asynckit/0.4.0:
-    resolution: {integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=}
+    resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
   /at-least-node/1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
@@ -14154,20 +14152,6 @@ packages:
       schema-utils: 3.1.1
       webpack: 4.46.0
     dev: true
-
-  /react-bulma-components/4.1.0_65ddb6239fffed6066139bdf48eadd0a:
-    resolution: {integrity: sha512-keETQwNOBidiX1nrwBPsfcQBQbOQHXB9yQvjNpebdZgzqpcU07wKyxDwFQhHAsNK+YrsppSACQPKZSYqIlX0iw==}
-    peerDependencies:
-      bulma: '>=0.9.2'
-      prop-types: '>=15.6.0'
-      react: '>=16.3.0'
-      react-dom: '>=16.3.0'
-    dependencies:
-      bulma: 0.9.3
-      classnames: 2.3.1
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-    dev: false
 
   /react-colorful/5.5.0_react-dom@18.1.0+react@18.1.0:
     resolution: {integrity: sha512-BuzrlrM0ylg7coPkXOrRqlf2BgHLw5L44sybbr9Lg4xy7w9e5N7fGYbojOO0s8J0nvrM3PERN2rVFkvSa24lnQ==}
