@@ -48,7 +48,7 @@ export function AdminTypePicker({
       iconLeft={iconLeft}
       items={items}
       renderItem={(item) => item.name}
-      disabled={!schema}
+      disabled={!schema || items.length === 0}
       onItemClick={onTypeSelected ? (item) => onTypeSelected(item.id) : undefined}
     >
       {children}
