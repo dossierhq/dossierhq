@@ -1,8 +1,7 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
 import React from 'react';
-import { Table as BulmaTable } from 'react-bulma-components';
-import { Icon } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
+import { Icon } from '../index.js';
 
 export interface TableProps {
   className?: string;
@@ -49,9 +48,7 @@ interface TableComponent extends FunctionComponent<TableProps> {
 
 export const Table: TableComponent = ({ className, children }: TableProps) => {
   return (
-    <BulmaTable className={className} size="fullwidth" hoverable>
-      {children}
-    </BulmaTable>
+    <table className={toClassName('table is-fullwidth is-hoverable', className)}>{children}</table>
   );
 };
 Table.displayName = 'Table';
