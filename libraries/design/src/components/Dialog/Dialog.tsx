@@ -42,7 +42,14 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
       showModal(): void;
       show(): void;
       close(): void;
+      open: boolean;
     };
+
+    // don't do anything if already in right state (due to useEffect double run)
+    if (show === dialog.open) {
+      return;
+    }
+
     if (show && modal) {
       dialog.showModal();
     } else if (show) {
