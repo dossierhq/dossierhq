@@ -30,7 +30,7 @@ const statusColorMap: Record<StatusColor, string> = {
   archived: 'danger',
 };
 
-export function resolveBulmaColor(color: Color | undefined): string | undefined {
+function resolveBulmaColor(color: Color | undefined): string | undefined {
   if (!color) return undefined;
   const statusColorValue = statusColorMap[color as StatusColor];
   return statusColorValue ?? color;

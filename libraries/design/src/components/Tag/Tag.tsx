@@ -1,8 +1,8 @@
 import type { FunctionComponent, MouseEventHandler, ReactElement } from 'react';
 import React from 'react';
-import { Tag as BulmaTag } from 'react-bulma-components';
+import { toColorClassName } from '../../config/Colors.js';
 import type { StatusColor } from '../../index.js';
-import { resolveBulmaColor } from '../../config/Colors.js';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TagProps {
   color?: keyof typeof StatusColor;
@@ -29,37 +29,31 @@ interface TagComponent extends FunctionComponent<TagProps> {
 }
 
 export const Tag: TagComponent = ({ color, children }: TagProps) => {
-  const bulmaColor = resolveBulmaColor(color);
+  const tagClassName = toClassName('tag is-capitalized', toColorClassName(color));
   if (typeof children === 'string') {
-    return (
-      <BulmaTag className="control is-capitalized" color={bulmaColor}>
-        {children}
-      </BulmaTag>
-    );
+    return <span className={toClassName(tagClassName, 'control')}>{children}</span>;
   }
   return (
     <div className="control">
-      <BulmaTag.Group hasAddons>
-        <BulmaTag className="is-capitalized" color={bulmaColor}>
-          {children[0]}
-        </BulmaTag>
+      <span className="tags has-addons">
+        <span className={tagClassName}>{children[0]}</span>
         {children[1]}
-      </BulmaTag.Group>
+      </span>
     </div>
   );
 };
 Tag.displayName = 'Tag';
 
 Tag.Remove = ({ onClick }: TagRemoveProps) => {
-  return <BulmaTag className="is-clickable" remove onClick={onClick} />;
+  return <span className="tag is-delete is-clickable" onClick={onClick} />;
 };
 Tag.Remove.displayName = 'Tag.Remove';
 
 Tag.Clear = ({ onClick, children }: TagClearProps) => {
   return (
-    <BulmaTag className="is-clickable" color="white" onClick={onClick}>
+    <span className="tag is-clickable is-white" onClick={onClick}>
       {children}
-    </BulmaTag>
+    </span>
   );
 };
 Tag.Clear.displayName = 'Tag.Clear';
