@@ -50,7 +50,7 @@
     "bulma": "~0.9.3",
     "eslint-plugin-jest-dom": "~4.0.1",
     "eslint-plugin-react-hooks": "~4.4.0",
-    "eslint-plugin-react": "~7.29.4",
+    "eslint-plugin-react": "~7.30.0",
     "eslint-plugin-storybook": "~0.5.8",
     "eslint-plugin-testing-library": "~5.5.0",
     "eslint": "^8.13.0",
