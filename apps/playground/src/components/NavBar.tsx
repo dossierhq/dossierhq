@@ -1,6 +1,7 @@
 import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
-import { useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 import { ROUTE } from '../utils/RouteUtils';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export function NavBar({ current }: Props) {
+  const { currentUserId, users, setCurrentUserId } = useContext(UserContext);
   const [active, setActive] = useState(false);
   return (
     <DesignNavbar>
@@ -27,8 +29,39 @@ export function NavBar({ current }: Props) {
         <DesignNavbar.Item active={current === 'schema'}>
           {NavItemRender('Schema', ROUTE.schema.url)}
         </DesignNavbar.Item>
+        <DesignNavbar.Dropdown renderLink={(className) => <a className={className}>User</a>}>
+          {users.map((user) => (
+            <NavigationItem
+              key={user.id}
+              active={user.id === currentUserId}
+              to={ROUTE.login.url(user.id)}
+            >
+              {user.name}
+            </NavigationItem>
+          ))}
+        </DesignNavbar.Dropdown>
       </DesignNavbar.Menu>
     </DesignNavbar>
+  );
+}
+
+function NavigationItem({
+  active,
+  to,
+  children,
+}: {
+  active?: boolean;
+  to: string;
+  children: ReactNode;
+}) {
+  return (
+    <DesignNavbar.Item active={active}>
+      {({ className }: { className: string }) => (
+        <Link to={to} className={className}>
+          {children}
+        </Link>
+      )}
+    </DesignNavbar.Item>
   );
 }
 

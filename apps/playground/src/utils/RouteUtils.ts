@@ -7,6 +7,10 @@ export const ROUTE = {
     route: 'admin-entities',
     url: '/admin-entities',
   },
+  login: {
+    route: '/login/:userId',
+    url: (userId: string) => `/login/${userId}`,
+  },
   editEntities: {
     route: 'edit-entities',
     url: (selectors: ({ type: string } | { id: string })[]) => {

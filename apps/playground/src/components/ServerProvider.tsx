@@ -42,6 +42,7 @@ async function initializeServer(): PromiseResult<Server, ErrorType.BadRequest | 
     const serverResult = await createServer({
       databaseAdapter: adapterResult.value,
       authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
+      logger: SERVER_LOGGER,
     });
     return serverResult;
   } catch (error) {
