@@ -20,26 +20,30 @@ export function NavBar({ current }: Props) {
         <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
-        <DesignNavbar.Item active={current === 'admin-entities'}>
-          {NavItemRender('Admin entities', ROUTE.adminEntities.url)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'published-entities'}>
-          {NavItemRender('Published entities', ROUTE.publishedEntities.url)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'schema'}>
-          {NavItemRender('Schema', ROUTE.schema.url)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Dropdown renderLink={(className) => <a className={className}>User</a>}>
-          {users.map((user) => (
-            <NavigationItem
-              key={user.id}
-              active={user.id === currentUserId}
-              to={ROUTE.login.url(user.id)}
-            >
-              {user.name}
-            </NavigationItem>
-          ))}
-        </DesignNavbar.Dropdown>
+        <DesignNavbar.Start>
+          <DesignNavbar.Item active={current === 'admin-entities'}>
+            {NavItemRender('Admin entities', ROUTE.adminEntities.url)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'published-entities'}>
+            {NavItemRender('Published entities', ROUTE.publishedEntities.url)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'schema'}>
+            {NavItemRender('Schema', ROUTE.schema.url)}
+          </DesignNavbar.Item>
+        </DesignNavbar.Start>
+        <DesignNavbar.End>
+          <DesignNavbar.Dropdown left renderLink={(className) => <a className={className}>User</a>}>
+            {users.map((user) => (
+              <NavigationItem
+                key={user.id}
+                active={user.id === currentUserId}
+                to={ROUTE.login.url(user.id)}
+              >
+                {user.name}
+              </NavigationItem>
+            ))}
+          </DesignNavbar.Dropdown>
+        </DesignNavbar.End>
       </DesignNavbar.Menu>
     </DesignNavbar>
   );
