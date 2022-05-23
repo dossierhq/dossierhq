@@ -82,6 +82,10 @@ function Screen({
           </Navbar.Brand>
           <Navbar.Menu active={burgerOpen}>
             <Navbar.Item active>{NavItemRender('Entities')}</Navbar.Item>
+            <Navbar.Dropdown renderLink={(className) => <a className={className}>Dropdown</a>}>
+              <Navbar.Item>{NavItemRender('Item 1')}</Navbar.Item>
+              <Navbar.Item>{NavItemRender('Item 2')}</Navbar.Item>
+            </Navbar.Dropdown>
           </Navbar.Menu>
         </Navbar>
       </FullscreenContainer.Row>

@@ -1,13 +1,13 @@
-import type { FunctionComponent, MouseEventHandler } from 'react';
+import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface NavbarProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export interface NavbarBrandProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export interface NavbarBurgerProps {
@@ -17,7 +17,7 @@ export interface NavbarBurgerProps {
 
 export interface NavbarMenuProps {
   active: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export interface NavbarItemProps {
@@ -25,11 +25,17 @@ export interface NavbarItemProps {
   children: ({ className }: { className: string }) => React.ReactElement;
 }
 
+export interface NavbarDropdownProps {
+  renderLink: (className: string) => React.ReactElement;
+  children: ReactNode;
+}
+
 interface NavbarComponent extends FunctionComponent<NavbarProps> {
   Brand: FunctionComponent<NavbarBrandProps>;
   Burger: FunctionComponent<NavbarBurgerProps>;
   Menu: FunctionComponent<NavbarMenuProps>;
   Item: FunctionComponent<NavbarItemProps>;
+  Dropdown: FunctionComponent<NavbarDropdownProps>;
 }
 
 export const Navbar: NavbarComponent = ({ children }: NavbarProps) => {
@@ -71,3 +77,13 @@ Navbar.Item = ({ active, children }: NavbarItemProps) => {
   return children({ className });
 };
 Navbar.Item.displayName = 'Navbar.Item';
+
+Navbar.Dropdown = ({ renderLink, children }: NavbarDropdownProps) => {
+  return (
+    <div className="navbar-item has-dropdown is-hoverable">
+      {renderLink('navbar-link')}
+      <div className="navbar-dropdown">{children}</div>
+    </div>
+  );
+};
+Navbar.Dropdown.displayName = 'Navbar.Dropdown';
