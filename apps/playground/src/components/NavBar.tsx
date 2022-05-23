@@ -1,4 +1,5 @@
-import { NavBar as DesignNavBar } from '@jonasb/datadata-design';
+import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../utils/RouteUtils';
 
@@ -7,23 +8,27 @@ interface Props {
 }
 
 export function NavBar({ current }: Props) {
+  const [active, setActive] = useState(false);
   return (
-    <DesignNavBar>
-      <DesignNavBar.Brand>
-        <DesignNavBar.Item active={current === 'home'}>
+    <DesignNavbar>
+      <DesignNavbar.Brand>
+        <DesignNavbar.Item active={current === 'home'}>
           {NavItemRender('Playground', ROUTE.index.url)}
-        </DesignNavBar.Item>
-      </DesignNavBar.Brand>
-      <DesignNavBar.Item active={current === 'admin-entities'}>
-        {NavItemRender('Admin entities', ROUTE.adminEntities.url)}
-      </DesignNavBar.Item>
-      <DesignNavBar.Item active={current === 'published-entities'}>
-        {NavItemRender('Published entities', ROUTE.publishedEntities.url)}
-      </DesignNavBar.Item>
-      <DesignNavBar.Item active={current === 'schema'}>
-        {NavItemRender('Schema', ROUTE.schema.url)}
-      </DesignNavBar.Item>
-    </DesignNavBar>
+        </DesignNavbar.Item>
+        <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
+      </DesignNavbar.Brand>
+      <DesignNavbar.Menu active={active}>
+        <DesignNavbar.Item active={current === 'admin-entities'}>
+          {NavItemRender('Admin entities', ROUTE.adminEntities.url)}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'published-entities'}>
+          {NavItemRender('Published entities', ROUTE.publishedEntities.url)}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'schema'}>
+          {NavItemRender('Schema', ROUTE.schema.url)}
+        </DesignNavbar.Item>
+      </DesignNavbar.Menu>
+    </DesignNavbar>
   );
 }
 
