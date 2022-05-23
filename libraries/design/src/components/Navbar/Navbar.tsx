@@ -20,12 +20,21 @@ export interface NavbarMenuProps {
   children: ReactNode;
 }
 
+export interface NavbarStartProps {
+  children: ReactNode;
+}
+
+export interface NavbarEndProps {
+  children: ReactNode;
+}
+
 export interface NavbarItemProps {
   active?: boolean;
   children: ({ className }: { className: string }) => React.ReactElement;
 }
 
 export interface NavbarDropdownProps {
+  left?: boolean;
   renderLink: (className: string) => React.ReactElement;
   children: ReactNode;
 }
@@ -34,6 +43,8 @@ interface NavbarComponent extends FunctionComponent<NavbarProps> {
   Brand: FunctionComponent<NavbarBrandProps>;
   Burger: FunctionComponent<NavbarBurgerProps>;
   Menu: FunctionComponent<NavbarMenuProps>;
+  Start: FunctionComponent<NavbarStartProps>;
+  End: FunctionComponent<NavbarEndProps>;
   Item: FunctionComponent<NavbarItemProps>;
   Dropdown: FunctionComponent<NavbarDropdownProps>;
 }
@@ -72,17 +83,27 @@ Navbar.Menu = ({ active, children }: NavbarMenuProps) => {
 };
 Navbar.Menu.displayName = 'Navbar.Menu';
 
+Navbar.Start = ({ children }: NavbarStartProps) => {
+  return <div className="navbar-start">{children}</div>;
+};
+Navbar.Start.displayName = 'Navbar.Start';
+
+Navbar.End = ({ children }: NavbarEndProps) => {
+  return <div className="navbar-end">{children}</div>;
+};
+Navbar.End.displayName = 'Navbar.End';
+
 Navbar.Item = ({ active, children }: NavbarItemProps) => {
   const className = toClassName('navbar-item', active && 'is-active');
   return children({ className });
 };
 Navbar.Item.displayName = 'Navbar.Item';
 
-Navbar.Dropdown = ({ renderLink, children }: NavbarDropdownProps) => {
+Navbar.Dropdown = ({ left, renderLink, children }: NavbarDropdownProps) => {
   return (
     <div className="navbar-item has-dropdown is-hoverable">
       {renderLink('navbar-link')}
-      <div className="navbar-dropdown">{children}</div>
+      <div className={toClassName('navbar-dropdown', left && 'is-right')}>{children}</div>
     </div>
   );
 };

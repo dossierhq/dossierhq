@@ -81,11 +81,18 @@ function Screen({
             <Navbar.Burger active={burgerOpen} onClick={() => setBurgerOpen(!burgerOpen)} />
           </Navbar.Brand>
           <Navbar.Menu active={burgerOpen}>
-            <Navbar.Item active>{NavItemRender('Entities')}</Navbar.Item>
-            <Navbar.Dropdown renderLink={(className) => <a className={className}>Dropdown</a>}>
-              <Navbar.Item>{NavItemRender('Item 1')}</Navbar.Item>
-              <Navbar.Item>{NavItemRender('Item 2')}</Navbar.Item>
-            </Navbar.Dropdown>
+            <Navbar.Start>
+              <Navbar.Item active>{NavItemRender('Entities')}</Navbar.Item>
+            </Navbar.Start>
+            <Navbar.End>
+              <Navbar.Dropdown
+                left
+                renderLink={(className) => <a className={className}>Dropdown</a>}
+              >
+                <Navbar.Item>{NavItemRender('Item 1')}</Navbar.Item>
+                <Navbar.Item>{NavItemRender('Item 2')}</Navbar.Item>
+              </Navbar.Dropdown>
+            </Navbar.End>
           </Navbar.Menu>
         </Navbar>
       </FullscreenContainer.Row>
