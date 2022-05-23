@@ -1,51 +1,128 @@
 import {
   AdminDataDataProvider,
-  PublishedDataDataProvider,
   createCachingAdminMiddleware,
+  PublishedDataDataProvider,
 } from '@jonasb/datadata-admin-react-components';
-import { useContext, useMemo, useRef } from 'react';
-import { useSWRConfig } from 'swr';
+import {
+  AdminClientMiddleware,
+  assertIsDefined,
+  ClientContext,
+  ErrorType,
+  LoggingClientMiddleware,
+  notOk,
+  ok,
+  PromiseResult,
+  PublishedClientMiddleware,
+  Result,
+} from '@jonasb/datadata-core';
+import { NotificationContext } from '@jonasb/datadata-design';
+import { CreateSessionPayload, Server } from '@jonasb/datadata-server';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Cache, useSWRConfig } from 'swr';
+import { ScopedMutator } from 'swr/dist/types';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig';
 import { ContextAdapter } from '../config/ContextAdapter';
 import { SESSION_LOGGER } from '../config/LoggerConfig';
+import { LoginContext } from '../contexts/LoginContext';
 import { ServerContext } from '../contexts/ServerContext';
+import { UserContext } from '../contexts/UserContext';
+
+type SessionResult = Result<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
+
+const uninitializedSession = notOk.Generic('Uninitialized user');
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
   const { server } = useContext(ServerContext);
+  const { showNotification } = useContext(NotificationContext);
+  const { users, setCurrentUserId } = useContext(UserContext);
+
+  const [sessionResult, setSessionResult] = useState<SessionResult>(uninitializedSession);
+  const sessionResultRef = useRef<SessionResult>(sessionResult);
+  sessionResultRef.current = sessionResult;
+
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
   swrConfigRef.current = { cache, mutate };
 
+  const login = useCallback(
+    async (userId: string): PromiseResult<void, ErrorType.BadRequest | ErrorType.Generic> => {
+      assertIsDefined(server);
+      const user = users.find((it) => it.id === userId);
+      assertIsDefined(user);
+
+      const result = await loginUser(
+        server,
+        userId,
+        swrConfigRef.current.cache,
+        swrConfigRef.current.mutate
+      );
+      if (result.isError()) return result;
+
+      setSessionResult(result);
+      setCurrentUserId(userId);
+      showNotification({ color: 'success', message: `Logged in as ${user.name}` });
+      return ok(undefined);
+    },
+    [server]
+  );
+
+  useEffect(() => {
+    if (server) {
+      login(users[0].id);
+    }
+  }, [server]);
+
   const args = useMemo(() => {
     if (!server) return null;
 
-    const sessionResult = server.createSession({
-      provider: 'sys',
-      identifier: 'johndoe',
-      defaultAuthKeys: DISPLAY_AUTH_KEYS.map((it) => it.authKey),
-      logger: SESSION_LOGGER,
-    });
-
     const adminArgs = {
       adminClient: server.createAdminClient(
-        () => sessionResult,
-        [createCachingAdminMiddleware(swrConfigRef)]
+        () => Promise.resolve(sessionResultRef.current),
+        [
+          LoggingClientMiddleware as AdminClientMiddleware<ClientContext>,
+          createCachingAdminMiddleware(swrConfigRef),
+        ]
       ),
       adapter: new ContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     };
 
     const publishedArgs = {
-      publishedClient: server.createPublishedClient(() => sessionResult),
+      publishedClient: server.createPublishedClient(
+        () => Promise.resolve(sessionResultRef.current),
+        [LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>]
+      ),
       authKeys: DISPLAY_AUTH_KEYS,
     };
     return { adminArgs, publishedArgs };
   }, [server]);
 
-  if (!args) return null;
+  if (!args || sessionResult === uninitializedSession) {
+    return null;
+  }
   return (
-    <AdminDataDataProvider {...args.adminArgs}>
-      <PublishedDataDataProvider {...args.publishedArgs}>{children}</PublishedDataDataProvider>
-    </AdminDataDataProvider>
+    <LoginContext.Provider value={login}>
+      <AdminDataDataProvider {...args.adminArgs}>
+        <PublishedDataDataProvider {...args.publishedArgs}>{children}</PublishedDataDataProvider>
+      </AdminDataDataProvider>
+    </LoginContext.Provider>
   );
+}
+
+async function loginUser(server: Server, userId: string, cache: Cache<any>, mutate: ScopedMutator) {
+  const result = await server.createSession({
+    provider: 'sys',
+    identifier: userId,
+    defaultAuthKeys: DISPLAY_AUTH_KEYS.map((it) => it.authKey),
+    logger: SESSION_LOGGER,
+  });
+
+  if (result.isError()) return result;
+
+  if (cache instanceof Map) {
+    const mutators = [...cache.keys()].map((key) => mutate(key));
+    await Promise.all(mutators);
+  }
+
+  return result;
 }

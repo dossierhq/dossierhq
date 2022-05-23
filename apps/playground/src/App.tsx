@@ -1,36 +1,48 @@
 import { BeforeUnload, NotificationContainer } from '@jonasb/datadata-design';
+import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DataDataSharedProvider } from './components/DataDataSharedProvider';
 import { ServerProvider } from './components/ServerProvider';
-import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
+import { User, UserContext } from './contexts/UserContext';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
+import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
 import { EditSchemaRoute } from './routes/EditSchemaRoute';
 import { IndexRoute } from './routes/IndexRoute';
+import { LoginRoute } from './routes/LoginRoute';
 import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute';
 import { PublishedEntityDetailsRoute } from './routes/PublishedEntityDetailsRoute';
 import { ROUTE } from './utils/RouteUtils';
 
+const users: User[] = [
+  { id: 'alice', name: 'Alice' },
+  { id: 'bob', name: 'Bob' },
+];
+
 export default function App() {
+  const [currentUserId, setCurrentUserId] = useState(users[0].id);
   return (
     <NotificationContainer>
-      <ServerProvider>
-        <BeforeUnload message="Leaving the page will delete the database" />
-        <DataDataSharedProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path={ROUTE.index.route} element={<IndexRoute />} />
-              <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
-              <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
-              <Route path={ROUTE.publishedEntities.route} element={<PublishedEntitiesRoute />} />
-              <Route
-                path={ROUTE.publishedEntityDetails.route}
-                element={<PublishedEntityDetailsRoute />}
-              />
-              <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
-            </Routes>
-          </BrowserRouter>
-        </DataDataSharedProvider>
-      </ServerProvider>
+      <UserContext.Provider value={{ currentUserId, users, setCurrentUserId }}>
+        <ServerProvider>
+          <BeforeUnload message="Leaving the page will delete the database" />
+          <DataDataSharedProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path={ROUTE.index.route} element={<IndexRoute />} />
+                <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
+                <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
+                <Route path={ROUTE.login.route} element={<LoginRoute />} />
+                <Route path={ROUTE.publishedEntities.route} element={<PublishedEntitiesRoute />} />
+                <Route
+                  path={ROUTE.publishedEntityDetails.route}
+                  element={<PublishedEntityDetailsRoute />}
+                />
+                <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
+              </Routes>
+            </BrowserRouter>
+          </DataDataSharedProvider>
+        </ServerProvider>
+      </UserContext.Provider>
     </NotificationContainer>
   );
 }
