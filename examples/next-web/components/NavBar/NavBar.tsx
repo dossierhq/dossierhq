@@ -1,34 +1,39 @@
-import { NavBar as DesignNavBar } from '@jonasb/datadata-design';
+import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export function NavBar({
   current,
 }: {
   current: 'home' | 'entities' | 'published-entities' | 'schema' | 'graphiql' | 'voyager';
 }) {
+  const [active, setActive] = useState(false);
   return (
-    <DesignNavBar>
-      <DesignNavBar.Brand>
-        <DesignNavBar.Item active={current === 'home'}>
+    <DesignNavbar>
+      <DesignNavbar.Brand>
+        <DesignNavbar.Item active={current === 'home'}>
           {NavItemRender('next-web', '/')}
-        </DesignNavBar.Item>
-      </DesignNavBar.Brand>
-      <DesignNavBar.Item active={current === 'entities'}>
-        {NavItemRender('Entities', '/entities')}
-      </DesignNavBar.Item>
-      <DesignNavBar.Item active={current === 'published-entities'}>
-        {NavItemRender('Published entities', '/published-entities')}
-      </DesignNavBar.Item>
-      <DesignNavBar.Item active={current === 'schema'}>
-        {NavItemRender('Schema', '/schema')}
-      </DesignNavBar.Item>
-      <DesignNavBar.Item active={current === 'graphiql'}>
-        {NavItemRender('GraphiQL', '/graphiql')}
-      </DesignNavBar.Item>
-      <DesignNavBar.Item active={current === 'voyager'}>
-        {NavItemRender('Voyager', '/voyager')}
-      </DesignNavBar.Item>
-    </DesignNavBar>
+        </DesignNavbar.Item>
+        <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
+      </DesignNavbar.Brand>
+      <DesignNavbar.Menu active={active}>
+        <DesignNavbar.Item active={current === 'entities'}>
+          {NavItemRender('Entities', '/entities')}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'published-entities'}>
+          {NavItemRender('Published entities', '/published-entities')}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'schema'}>
+          {NavItemRender('Schema', '/schema')}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'graphiql'}>
+          {NavItemRender('GraphiQL', '/graphiql')}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'voyager'}>
+          {NavItemRender('Voyager', '/voyager')}
+        </DesignNavbar.Item>
+      </DesignNavbar.Menu>
+    </DesignNavbar>
   );
 }
 

@@ -22,7 +22,7 @@ export {
   Level,
   Menu,
   MultipleSelectorStateActions,
-  NavBar,
+  Navbar,
   NotificationContainer,
   Radio,
   reduceMultipleSelectorState,

@@ -1,13 +1,13 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import type { MouseEvent } from 'react';
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import {
   ButtonDropdown,
   Field,
   FullscreenContainer,
   IconButton,
   Input,
-  NavBar,
+  Navbar,
   reduceMultipleSelectorState,
   Table,
   Tag,
@@ -70,15 +70,20 @@ function Screen({
     StatusSelectorReducer,
     StatusSelectorInitArgs
   >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
+  const [burgerOpen, setBurgerOpen] = useState(false);
+
   return (
     <FullscreenContainer>
       <FullscreenContainer.Row fullWidth>
-        <NavBar>
-          <NavBar.Brand>
-            <NavBar.Item>{NavItemRender('Data data')}</NavBar.Item>
-          </NavBar.Brand>
-          <NavBar.Item active>{NavItemRender('Entities')}</NavBar.Item>
-        </NavBar>
+        <Navbar>
+          <Navbar.Brand>
+            <Navbar.Item>{NavItemRender('Data data')}</Navbar.Item>
+            <Navbar.Burger active={burgerOpen} onClick={() => setBurgerOpen(!burgerOpen)} />
+          </Navbar.Brand>
+          <Navbar.Menu active={burgerOpen}>
+            <Navbar.Item active>{NavItemRender('Entities')}</Navbar.Item>
+          </Navbar.Menu>
+        </Navbar>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchBar
