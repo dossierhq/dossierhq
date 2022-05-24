@@ -44,8 +44,12 @@ function urlQueryToSearchEntityStateActions(
 ) {
   const actions = [];
   if (urlSearchParams) {
-    for (const type of urlSearchParams.getAll('type')) {
-      actions.push(new EntityEditorActions.AddDraft({ newType: type }));
+    for (const newTypeId of urlSearchParams.getAll('new')) {
+      const parts = newTypeId.split(':');
+      if (parts.length === 2) {
+        const [newType, id] = parts;
+        actions.push(new EntityEditorActions.AddDraft({ newType, id }));
+      }
     }
     for (const id of urlSearchParams.getAll('id')) {
       actions.push(new EntityEditorActions.AddDraft({ id }));

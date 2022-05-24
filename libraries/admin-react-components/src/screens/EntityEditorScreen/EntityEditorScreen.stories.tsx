@@ -66,7 +66,9 @@ HeaderFooter.args = {
 };
 
 export const NewFooUrl = Template.bind({});
-NewFooUrl.args = { initialUrlSearchParams: new URLSearchParams({ type: 'Foo' }) };
+NewFooUrl.args = {
+  initialUrlSearchParams: new URLSearchParams({ new: `Foo:${crypto.randomUUID()}` }),
+};
 
-export const FooUrl = Template.bind({});
-FooUrl.args = { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) };
+export const OpenFoo1Url = Template.bind({});
+OpenFoo1Url.args = { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) };
