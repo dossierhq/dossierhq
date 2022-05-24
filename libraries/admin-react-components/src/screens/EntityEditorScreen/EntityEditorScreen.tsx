@@ -68,7 +68,9 @@ export function EntityEditorScreen({
   }, []);
 
   const onCreateEntity = useCallback((type: string) => {
-    dispatchEntityEditorState(new EntityEditorActions.AddDraft({ newType: type }));
+    dispatchEntityEditorState(
+      new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type })
+    );
   }, []);
 
   useEffect(() => {

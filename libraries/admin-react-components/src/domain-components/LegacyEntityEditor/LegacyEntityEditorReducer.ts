@@ -7,7 +7,6 @@ import type {
 } from '@jonasb/datadata-core';
 import { ErrorType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
-import { v4 as uuidv4 } from 'uuid';
 import type { MessageItem } from '../../generic-components/Message/Message';
 
 export type LegacyEntityEditorSelector = { id: string } | { id?: string; newType: string };
@@ -55,7 +54,7 @@ export class LegacyAddEntityDraftAction implements LegacyEntityEditorStateAction
     if (this.#entitySelector.id && state.drafts.some((it) => it.id === this.#entitySelector.id)) {
       return state;
     }
-    const id = this.#entitySelector.id ?? uuidv4();
+    const id = this.#entitySelector.id ?? crypto.randomUUID();
     let message: MessageItem | null = null;
     let entity: LegacyEntityEditorDraftState['entity'] = null;
     let exists = true;
