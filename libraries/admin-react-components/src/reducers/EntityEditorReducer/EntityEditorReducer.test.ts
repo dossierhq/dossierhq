@@ -215,7 +215,11 @@ describe('SetNameAction', () => {
       new EntityEditorActions.SetName(id, 'New name')
     );
     expect(state).toMatchSnapshot();
-    expect(state.drafts.find((it) => it.id === id)?.draft?.name).toEqual('New name');
+
+    const draftState = state.drafts.find((it) => it.id === id);
+    assertIsDefined(draftState);
+    expect(draftState.draft?.name).toEqual('New name');
+    expect(draftState.status).toEqual('changed');
   });
 });
 
