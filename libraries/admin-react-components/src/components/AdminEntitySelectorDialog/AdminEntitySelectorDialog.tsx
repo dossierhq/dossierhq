@@ -27,7 +27,7 @@ import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector';
 interface AdminEntitySelectorDialogProps {
   show: boolean;
   title: string;
-  entityTypes: string[] | undefined;
+  entityTypes?: string[] | undefined;
   onClose: () => void;
   onItemClick: (item: AdminEntity) => void;
 }
