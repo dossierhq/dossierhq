@@ -5,7 +5,7 @@ import type { ParsedUrlQuery } from 'querystring';
 
 export const urls = {
   editPage: (ids: string[]): string => `/entities/edit?id=${ids.join('&id=')}`,
-  editPageNew: (entityType: string): string => `/entities/edit?type=${entityType}`,
+  editPageNew: (entityType: string, id: string): string => `/entities/edit?new=${entityType}:${id}`,
   publishedEntityDetail: (reference: EntityReference): string =>
     `/published-entities/${reference.id}`,
 };

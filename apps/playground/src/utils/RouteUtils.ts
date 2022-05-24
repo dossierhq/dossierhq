@@ -13,11 +13,11 @@ export const ROUTE = {
   },
   editEntities: {
     route: 'edit-entities',
-    url: (selectors: ({ type: string } | { id: string })[]) => {
+    url: (selectors: ({ newType: string; id: string } | { id: string })[]) => {
       const p = new URLSearchParams();
       for (const selector of selectors) {
-        if ('type' in selector) {
-          p.set('type', selector.type);
+        if ('newType' in selector) {
+          p.set('new', `${selector.newType}:${selector.id}`);
         } else {
           p.set('id', selector.id);
         }

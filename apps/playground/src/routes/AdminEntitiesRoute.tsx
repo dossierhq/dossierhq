@@ -33,7 +33,8 @@ export function AdminEntitiesRoute() {
   );
 
   const handleCreateEntity = useCallback(
-    (type: string) => navigate(ROUTE.editEntities.url([{ type }])),
+    (type: string) =>
+      navigate(ROUTE.editEntities.url([{ newType: type, id: crypto.randomUUID() }])),
     []
   );
   const handleEntityOpen = useCallback(

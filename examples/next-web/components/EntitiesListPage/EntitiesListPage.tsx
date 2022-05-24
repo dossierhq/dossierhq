@@ -11,7 +11,7 @@ import { NavBar } from '../NavBar/NavBar';
 export default function EntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const handleCreateEntity = useCallback(
-    (type: string) => router.push(urls.editPageNew(type)),
+    (type: string) => router.push(urls.editPageNew(type, crypto.randomUUID())),
     [router]
   );
   const handleEntityOpen = useCallback(
