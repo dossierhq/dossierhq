@@ -1,10 +1,10 @@
 import { ErrorType, notOk, PromiseResult } from '@jonasb/datadata-core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
 import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
-import { useEffect, useState } from 'react';
-import initSqlJs from 'sql.js/dist/sql-wasm';
-import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
+import { useContext, useEffect, useState } from 'react';
+import { Database } from 'sql.js';
 import { SERVER_LOGGER } from '../config/LoggerConfig';
+import { DatabaseContext } from '../contexts/DatabaseContext';
 import { ServerContext, ServerContextValue } from '../contexts/ServerContext';
 
 interface Props {
@@ -12,30 +12,33 @@ interface Props {
 }
 
 export function ServerProvider({ children }: Props) {
+  const { database } = useContext(DatabaseContext);
   const [value, setValue] = useState<ServerContextValue>({
     server: null,
     error: false,
   });
 
   useEffect(() => {
-    initializeServer().then((result) => {
-      if (result.isOk()) {
-        setValue({ server: result.value, error: false });
-      } else {
-        setValue({ server: null, error: true });
-      }
-    });
-  }, []);
+    if (!database) {
+      setValue({ server: null, error: false });
+    } else {
+      initializeServer(database).then((result) => {
+        if (result.isOk()) {
+          setValue({ server: result.value, error: false });
+        } else {
+          setValue({ server: null, error: true });
+        }
+      });
+    }
+  }, [database]);
 
   return <ServerContext.Provider value={value}>{children}</ServerContext.Provider>;
 }
 
-async function initializeServer(): PromiseResult<Server, ErrorType.BadRequest | ErrorType.Generic> {
+async function initializeServer(
+  database: Database
+): PromiseResult<Server, ErrorType.BadRequest | ErrorType.Generic> {
   try {
-    const SQL = await initSqlJs({
-      locateFile: (_file) => sqlJsWasm,
-    });
-    const database = new SQL.Database();
     const adapterResult = await createSqlJsAdapter({ logger: SERVER_LOGGER }, database);
     if (adapterResult.isError()) return adapterResult;
 

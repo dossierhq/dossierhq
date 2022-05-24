@@ -12,5 +12,5 @@ export interface UserContextValue {
 }
 
 export const UserContext = createContext<UserContextValue>({
-  defaultUserContentValue: true,
+  defaultUserContextValue: true,
 } as unknown as UserContextValue);

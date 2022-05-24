@@ -1,6 +1,7 @@
 import { BeforeUnload, NotificationContainer } from '@jonasb/datadata-design';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { DatabaseProvider } from './components/DatabaseProvider';
 import { DataDataSharedProvider } from './components/DataDataSharedProvider';
 import { ServerProvider } from './components/ServerProvider';
 import { User, UserContext } from './contexts/UserContext';
@@ -23,25 +24,29 @@ export default function App() {
   return (
     <NotificationContainer>
       <UserContext.Provider value={{ currentUserId, users, setCurrentUserId }}>
-        <ServerProvider>
-          <BeforeUnload message="Leaving the page will delete the database" />
-          <DataDataSharedProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path={ROUTE.index.route} element={<IndexRoute />} />
-                <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
-                <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
-                <Route path={ROUTE.login.route} element={<LoginRoute />} />
-                <Route path={ROUTE.publishedEntities.route} element={<PublishedEntitiesRoute />} />
-                <Route
-                  path={ROUTE.publishedEntityDetails.route}
-                  element={<PublishedEntityDetailsRoute />}
-                />
-                <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
-              </Routes>
-            </BrowserRouter>
-          </DataDataSharedProvider>
-        </ServerProvider>
+        <DatabaseProvider>
+          <ServerProvider>
+            <DataDataSharedProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path={ROUTE.index.route} element={<IndexRoute />} />
+                  <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
+                  <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
+                  <Route path={ROUTE.login.route} element={<LoginRoute />} />
+                  <Route
+                    path={ROUTE.publishedEntities.route}
+                    element={<PublishedEntitiesRoute />}
+                  />
+                  <Route
+                    path={ROUTE.publishedEntityDetails.route}
+                    element={<PublishedEntityDetailsRoute />}
+                  />
+                  <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
+                </Routes>
+              </BrowserRouter>
+            </DataDataSharedProvider>
+          </ServerProvider>
+        </DatabaseProvider>
       </UserContext.Provider>
     </NotificationContainer>
   );
