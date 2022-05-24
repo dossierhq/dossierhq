@@ -57,7 +57,7 @@ function Wrapper({
   };
 
   return (
-    <Table>
+    <Table hoverable>
       <Table.Head>
         <Table.Row sticky={stickyHeader}>
           <Table.Header order={orderForColumn('one')} onClick={onClickHandlerForColumn('one')}>
