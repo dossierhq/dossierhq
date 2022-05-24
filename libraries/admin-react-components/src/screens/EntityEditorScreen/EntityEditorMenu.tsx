@@ -1,7 +1,7 @@
 import { Delete } from '@jonasb/datadata-design';
 import { HoverRevealContainer } from '@jonasb/datadata-design';
 import { Menu, Text } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback } from 'react';
 import type {
   EntityEditorDraftState,
@@ -49,14 +49,18 @@ function MenuItem({
     [dispatchEntityEditorState, id]
   );
 
-  const handleDeleteClick = useCallback(() => {
-    if (status === 'changed') {
-      if (!window.confirm('The entity has unsaved changes, are you sure you want to close it?')) {
-        return;
+  const handleDeleteClick = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation(); // otherwise it will try to activate the entity after delete
+      if (status === 'changed') {
+        if (!window.confirm('The entity has unsaved changes, are you sure you want to close it?')) {
+          return;
+        }
       }
-    }
-    dispatchEntityEditorState(new EntityEditorActions.DeleteDraft(id));
-  }, [dispatchEntityEditorState, id, status]);
+      dispatchEntityEditorState(new EntityEditorActions.DeleteDraft(id));
+    },
+    [dispatchEntityEditorState, id, status]
+  );
 
   if (!draftState.draft) return null;
   return (

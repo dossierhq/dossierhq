@@ -274,6 +274,9 @@ class SetActiveEntityAction implements EntityEditorStateAction {
     if (state.activeEntityId === this.id) {
       return state;
     }
+    if (!state.drafts.some((it) => it.id === this.id)) {
+      throw new Error(`No draft with id '${this.id}`);
+    }
     let {
       activeEntityMenuScrollSignal: activeSelectorMenuScrollSignal,
       activeEntityEditorScrollSignal: activeSelectorEditorScrollSignal,
@@ -304,7 +307,7 @@ class SetFieldAction extends EntityEditorFieldAction {
 
   reduceField(
     fieldState: Readonly<FieldEditorState>,
-    draftState: Readonly<EntityEditorDraftState>,
+    _draftState: Readonly<EntityEditorDraftState>,
     editorState: Readonly<EntityEditorState>
   ): Readonly<FieldEditorState> {
     const { schema } = editorState;
