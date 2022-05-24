@@ -1,14 +1,18 @@
+import type { AdminEntity } from '@jonasb/datadata-core';
 import {
+  Button,
   EmptyStateMessage,
   findAscendantHTMLElement,
   FullscreenContainer,
   Level,
+  Row,
   Tag,
   Text,
   useWindowEventListener,
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback, useContext, useEffect, useReducer } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
 import { EntityEditor } from '../../components/EntityEditor/EntityEditor';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
@@ -55,6 +59,14 @@ export function EntityEditorScreen({
   const { drafts, activeEntityId, activeEntityMenuScrollSignal, activeEntityEditorScrollSignal } =
     entityEditorState;
 
+  const [showEntitySelector, setShowEntitySelector] = useState(false);
+  const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
+  const handleEntitySelectorClose = useCallback(() => setShowEntitySelector(false), []);
+  const handleOpenEntityClick = useCallback((entity: AdminEntity) => {
+    dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entity.id })),
+      setShowEntitySelector(false);
+  }, []);
+
   const onCreateEntity = useCallback((type: string) => {
     dispatchEntityEditorState(new EntityEditorActions.AddDraft({ newType: type }));
   }, []);
@@ -94,9 +106,14 @@ export function EntityEditorScreen({
               scrollToId={menuScrollToId}
               scrollToIdSignal={activeEntityMenuScrollSignal}
             >
-              <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
-                Create
-              </AdminTypePicker>
+              <Row gap={2}>
+                <Button iconLeft="search" onClick={handleShowEntitySelector}>
+                  Open
+                </Button>
+                <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
+                  Create
+                </AdminTypePicker>
+              </Row>
               <EntityEditorMenu
                 entityEditorState={entityEditorState}
                 dispatchEntityEditorState={dispatchEntityEditorState}
@@ -127,6 +144,12 @@ export function EntityEditorScreen({
             </FullscreenContainer.ScrollableColumn>
           </FullscreenContainer.Columns>
           {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
+          <AdminEntitySelectorDialog
+            show={showEntitySelector}
+            title="Select entity"
+            onClose={handleEntitySelectorClose}
+            onItemClick={handleOpenEntityClick}
+          />
         </FullscreenContainer>
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
