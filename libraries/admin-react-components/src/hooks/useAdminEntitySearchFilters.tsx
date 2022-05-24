@@ -85,7 +85,7 @@ function useSearchStateToEntitySelectorAdapter(
         if (searchEntityState.restrictEntityTypes.length > 0) {
           newItems = newItems.filter((it) => searchEntityState.restrictEntityTypes.includes(it.id));
         }
-        setItems(newItems);
+        setItems((oldItems) => (isEqual(newItems, oldItems) ? oldItems : newItems));
       }
       if (!isEqual(newState.selectedIds, searchEntityState.query.entityTypes)) {
         dispatchSearchEntityState(
@@ -103,6 +103,13 @@ function useSearchStateToEntitySelectorAdapter(
       searchEntityState.restrictEntityTypes,
     ]
   );
+
+  // useDebugLogChangedValues('useSearchStateToEntitySelectorAdapter changed values', {
+  //   dispatchSearchEntityState,
+  //   entityTypeFilterState,
+  //   entityTypes: searchEntityState.query.entityTypes,
+  //   restrictEntityTypes: searchEntityState.restrictEntityTypes,
+  // });
 
   return [entityTypeFilterState, dispatchEntityTypeFilterState];
 }

@@ -30,6 +30,7 @@ interface AdminEntitySelectorDialogProps {
   entityTypes?: string[] | undefined;
   onClose: () => void;
   onItemClick: (item: AdminEntity) => void;
+  onCreateItemClick?: (type: string) => void;
 }
 
 export function AdminEntitySelectorDialog({
@@ -38,6 +39,7 @@ export function AdminEntitySelectorDialog({
   entityTypes,
   onClose,
   onItemClick,
+  onCreateItemClick,
 }: AdminEntitySelectorDialogProps) {
   return (
     <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
@@ -48,7 +50,13 @@ export function AdminEntitySelectorDialog({
           </FullscreenContainer.Item>
           <IconButton icon="close" color="white" onClick={onClose} />
         </FullscreenContainer.Row>
-        {show ? <Content entityTypes={entityTypes} onItemClick={onItemClick} /> : null}
+        {show ? (
+          <Content
+            entityTypes={entityTypes}
+            onItemClick={onItemClick}
+            onCreateItemClick={onCreateItemClick}
+          />
+        ) : null}
       </FullscreenContainer>
     </Dialog>
   );
@@ -57,9 +65,11 @@ export function AdminEntitySelectorDialog({
 function Content({
   entityTypes,
   onItemClick,
+  onCreateItemClick,
 }: {
   entityTypes: string[] | undefined;
   onItemClick: (item: AdminEntity) => void;
+  onCreateItemClick?: (type: string) => void;
 }) {
   const { schema } = useContext(AdminDataDataContext);
 
@@ -111,6 +121,7 @@ function Content({
             dispatchStatusFilterState,
             dispatchAuthKeyFilterState,
             onToggleMapClick: handleToggleShowMap,
+            onCreateEntity: onCreateItemClick,
           }}
         />
       </FullscreenContainer.Row>

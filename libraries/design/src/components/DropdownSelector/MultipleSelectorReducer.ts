@@ -1,4 +1,5 @@
 import type { Reducer } from 'react';
+import isEqual from 'lodash/isEqual';
 
 export interface MultipleSelectorItem<TId extends string = string> {
   id: TId;
@@ -87,6 +88,9 @@ class UpdateItemsAction<TItem extends MultipleSelectorItem<TId>, TId extends str
 
   reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
     const selectedIds = state.selectedIds.filter((id) => this.items.some((it) => it.id === id));
+    if (isEqual(selectedIds, state.selectedIds) && isEqual(this.items, state.items)) {
+      return state;
+    }
     return { ...state, items: this.items, selectedIds };
   }
 }

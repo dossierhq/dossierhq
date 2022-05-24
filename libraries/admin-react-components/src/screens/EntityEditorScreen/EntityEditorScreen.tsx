@@ -66,6 +66,12 @@ export function EntityEditorScreen({
     dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entity.id })),
       setShowEntitySelector(false);
   }, []);
+  const handleCreateItemClick = useCallback((type: string) => {
+    dispatchEntityEditorState(
+      new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type })
+    ),
+      setShowEntitySelector(false);
+  }, []);
 
   const onCreateEntity = useCallback((type: string) => {
     dispatchEntityEditorState(
@@ -151,6 +157,7 @@ export function EntityEditorScreen({
             title="Select entity"
             onClose={handleEntitySelectorClose}
             onItemClick={handleOpenEntityClick}
+            onCreateItemClick={handleCreateItemClick}
           />
         </FullscreenContainer>
       </EntityEditorStateContext.Provider>

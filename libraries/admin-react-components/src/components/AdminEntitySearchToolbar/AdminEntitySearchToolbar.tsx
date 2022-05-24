@@ -61,7 +61,12 @@ export function AdminEntitySearchToolbar({
       </AuthKeySelector>
       <IconButton icon={showMap ? 'list' : 'map'} onClick={onToggleMapClick} />
       {onCreateEntity ? (
-        <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
+        <AdminTypePicker
+          iconLeft="add"
+          showEntityTypes
+          entityTypes={searchEntityState.restrictEntityTypes}
+          onTypeSelected={onCreateEntity}
+        >
           Create
         </AdminTypePicker>
       ) : null}
