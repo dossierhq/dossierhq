@@ -8,9 +8,8 @@ import type {
 } from '@jonasb/datadata-core';
 import { assertIsDefined, normalizeFieldValue } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
-import { v4 as uuidv4 } from 'uuid';
 
-type EntityEditorSelector = { id: string } | { id?: string; newType: string };
+type EntityEditorSelector = { id: string } | { id: string; newType: string };
 
 export interface EntityEditorState {
   status: '' | 'changed';
@@ -212,7 +211,7 @@ class AddDraftAction implements EntityEditorStateAction {
     assertIsDefined(schema);
 
     const draft: EntityEditorDraftState = {
-      id: this.selector.id ?? uuidv4(),
+      id: this.selector.id,
       status: '',
       draft: null,
       entity: null,
