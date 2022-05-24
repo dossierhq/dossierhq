@@ -22,10 +22,12 @@ import type {
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import {
   EntityEditorActions,
-  initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import { useSynchronizeUrlQueryAndEntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
+import {
+  initializeEditorEntityStateFromUrlQuery,
+  useSynchronizeUrlQueryAndEntityEditorState,
+} from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
 import { EntityEditorDraftSidebar } from './EntityEditorDraftSidebar';
 import { EntityEditorMenu } from './EntityEditorMenu';
 
@@ -47,8 +49,8 @@ export function EntityEditorScreen({
   const { schema } = useContext(AdminDataDataContext);
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
-    undefined,
-    initializeEntityEditorState
+    urlSearchParams,
+    initializeEditorEntityStateFromUrlQuery
   );
   const { drafts, activeEntityId, activeEntityMenuScrollSignal, activeEntityEditorScrollSignal } =
     entityEditorState;
