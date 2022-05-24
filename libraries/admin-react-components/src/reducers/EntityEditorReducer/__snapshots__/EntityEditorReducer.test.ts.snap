@@ -257,7 +257,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-      "status": "",
+      "status": "changed",
     },
   ],
   "pendingSchemaActions": null,
@@ -278,7 +278,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "",
+  "status": "changed",
 }
 `;
 
@@ -585,7 +585,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-      "status": "",
+      "status": "changed",
     },
   ],
   "pendingSchemaActions": null,
@@ -606,7 +606,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "",
+  "status": "changed",
 }
 `;
 
@@ -1970,7 +1970,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-      "status": "",
+      "status": "changed",
     },
   ],
   "pendingSchemaActions": null,
@@ -1991,7 +1991,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "",
+  "status": "changed",
 }
 `;
 

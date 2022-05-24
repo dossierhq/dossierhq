@@ -81,7 +81,7 @@ function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDra
     return '';
   }
   if (!draftState.entity) {
-    if (draftState.draft.authKey !== null || !draftState.draft.name) {
+    if (draftState.draft.authKey !== null || draftState.draft.name) {
       return 'changed';
     }
   } else {
@@ -333,7 +333,7 @@ class SetNameAction extends EntityEditorDraftAction {
     draftState: Readonly<EntityEditorDraftState>,
     _editorState: Readonly<EntityEditorState>
   ): Readonly<EntityEditorDraftState> {
-    if (!draftState.draft || draftState.draft?.name === this.name) {
+    if (!draftState.draft || draftState.draft.name === this.name) {
       return draftState;
     }
 
