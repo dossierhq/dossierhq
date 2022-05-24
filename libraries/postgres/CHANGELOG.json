@@ -2,6 +2,12 @@
   "name": "@jonasb/datadata-postgres",
   "entries": [
     {
+      "version": "0.1.11",
+      "tag": "@jonasb/datadata-postgres_v0.1.11",
+      "date": "Tue, 24 May 2022 15:02:06 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.10",
       "tag": "@jonasb/datadata-postgres_v0.1.10",
       "date": "Tue, 17 May 2022 22:02:29 GMT",
