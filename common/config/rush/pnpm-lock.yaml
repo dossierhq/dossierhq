@@ -48,6 +48,33 @@ importers:
       typescript: 4.6.3
       vite: 2.8.6
 
+  ../../apps/playground-example-generator:
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-sql.js': workspace:*
+      '@jonasb/datadata-server': workspace:*
+      '@rushstack/heft': ~0.45.0
+      '@types/sql.js': ~1.4.2
+      '@types/uuid': ~8.3.4
+      sql.js: ~1.6.1
+      tslib: ~2.4.0
+      typescript: ^4.6.3
+      undici: ~5.3.0
+      uuid: ^8.3.2
+    dependencies:
+      '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
+      '@jonasb/datadata-server': link:../../libraries/server
+      sql.js: 1.6.2
+      tslib: 2.4.0
+      undici: 5.3.0
+      uuid: 8.3.2
+    devDependencies:
+      '@rushstack/heft': 0.45.0
+      '@types/sql.js': 1.4.3
+      '@types/uuid': 8.3.4
+      typescript: 4.6.3
+
   ../../examples/benchmark:
     specifiers:
       '@faker-js/faker': ~6.0.0-alpha.5
@@ -16143,6 +16170,11 @@ packages:
       has-symbols: 1.0.2
       which-boxed-primitive: 1.0.2
     dev: true
+
+  /undici/5.3.0:
+    resolution: {integrity: sha512-8LxC/xmR2GCE4q1heE1sJxVnnf5S6yQ2dObvMFBBWkB8aQlaqNuWovgRFWRMB7KUdLPGZfOTTmUeeLEJYX56iQ==}
+    engines: {node: '>=12.18'}
+    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}

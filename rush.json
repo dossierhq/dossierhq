@@ -358,6 +358,10 @@
       "projectFolder": "apps/playground"
     },
     {
+      "packageName": "playground-example-generator",
+      "projectFolder": "apps/playground-example-generator"
+    },
+    {
       "packageName": "benchpress",
       "projectFolder": "libraries/benchpress"
     },
