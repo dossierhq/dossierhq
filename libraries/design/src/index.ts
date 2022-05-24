@@ -12,6 +12,7 @@ export {
   DropdownSelector,
   EmptyStateMessage,
   Field,
+  File,
   FullscreenContainer,
   HoverRevealContainer,
   HoverRevealStack,

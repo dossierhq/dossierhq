@@ -25,6 +25,7 @@ export type {
 } from './DropdownSelector/MultipleSelectorReducer.js';
 export { EmptyStateMessage } from './EmptyStateMessage/EmptyStateMessage.js';
 export { Field } from './Field/Field.js';
+export { File } from './File/File.js';
 export { FullscreenContainer } from './FullscreenContainer/FullscreenContainer.js';
 export { HoverRevealContainer } from './HoverRevealContainer/HoverRevealContainer.js';
 export { HoverRevealStack } from './HoverRevealStack/HoverRevealStack.js';
