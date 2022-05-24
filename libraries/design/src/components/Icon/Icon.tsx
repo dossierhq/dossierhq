@@ -14,6 +14,7 @@ import {
   faStepBackward,
   faStepForward,
   faThList,
+  faUpload,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,7 +28,7 @@ export interface IconProps {
   size?: 'small' | '' | 'medium' | 'large';
 }
 
-const icons = {
+export const icons = {
   add: faPlusSquare,
   chevronDown: faChevronDown,
   chevronUp: faChevronUp,
@@ -44,6 +45,7 @@ const icons = {
   previous: faStepBackward,
   search: faSearch,
   shuffle: faShuffle,
+  upload: faUpload,
 };
 
 export type IconName = keyof typeof icons;
