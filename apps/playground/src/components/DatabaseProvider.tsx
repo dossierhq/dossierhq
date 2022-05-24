@@ -15,14 +15,14 @@ export function DatabaseProvider({ children }: Props) {
   const [database, setDatabase] = useState<Database | null>(null);
   const startedInitialDatabase = useRef(false);
 
-  const createDatabase = useCallback(() => {
-    getSql().then((SQL) => setDatabase(new SQL.Database()));
+  const createDatabase = useCallback((data: Uint8Array | null) => {
+    getSql().then((SQL) => setDatabase(new SQL.Database(data)));
   }, []);
 
   useEffect(() => {
     if (startedInitialDatabase.current) return;
     startedInitialDatabase.current = true;
-    createDatabase();
+    createDatabase(null);
   }, []);
 
   return (

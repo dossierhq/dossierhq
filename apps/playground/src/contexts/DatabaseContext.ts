@@ -3,7 +3,7 @@ import { Database } from 'sql.js';
 
 export interface DatabaseContextValue {
   database: Database | null;
-  createDatabase(): void;
+  createDatabase(data: Uint8Array | null): void;
 }
 
 export const DatabaseContext = createContext<DatabaseContextValue>({
