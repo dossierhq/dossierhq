@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Stop using react-bulma-components. Rename and improve Navbar.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
