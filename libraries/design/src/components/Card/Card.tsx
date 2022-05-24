@@ -44,6 +44,7 @@ interface CardFooterButtonProps {
   value?: string;
   disabled?: boolean;
   children?: ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface CardComponent extends FunctionComponent<CardProps> {
@@ -126,12 +127,13 @@ Card.Footer = ({ children }: CardFooterProps) => {
 };
 Card.Footer.displayName = 'Card.Footer';
 
-Card.FooterButton = ({ value, disabled, children }: CardFooterButtonProps) => {
+Card.FooterButton = ({ value, disabled, children, onClick }: CardFooterButtonProps) => {
   return (
     <button
       className="card-footer-item button is-white card-footer-button"
       disabled={disabled}
       value={value}
+      onClick={onClick}
     >
       {children}
     </button>
