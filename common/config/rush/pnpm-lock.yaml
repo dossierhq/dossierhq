@@ -718,6 +718,7 @@ importers:
       '@storybook/manager-webpack5': ^6.4.21
       '@storybook/preset-scss': ~1.0.3
       '@storybook/react': ^6.4.21
+      '@types/lodash': ~4.14.181
       '@types/react': ~18.0.0
       '@types/react-dom': ~18.0.0
       '@typescript-eslint/eslint-plugin': ^5.18.0
@@ -730,6 +731,7 @@ importers:
       eslint-plugin-react-hooks: ~4.4.0
       eslint-plugin-storybook: ~0.5.8
       eslint-plugin-testing-library: ~5.5.0
+      lodash: ~4.17.21
       prettier: 2.6.2
       react: ~18.1.0
       react-dom: ~18.1.0
@@ -743,6 +745,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': 6.1.1
       '@fortawesome/react-fontawesome': 0.1.18_3a4aa64e1b793e119583fa1b1a3cd25b
       '@js-temporal/polyfill': 0.4.0
+      lodash: 4.17.21
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       tslib: 2.4.0
@@ -757,6 +760,7 @@ importers:
       '@storybook/manager-webpack5': 6.4.21_461759f572d7f231dd1f51723423c8d9
       '@storybook/preset-scss': 1.0.3_sass-loader@12.6.0
       '@storybook/react': 6.4.21_169bc9d361b776ba1d304f62b7551230
+      '@types/lodash': 4.14.181
       '@types/react': 18.0.0
       '@types/react-dom': 18.0.0
       '@typescript-eslint/eslint-plugin': 5.18.0_0dd9be2ba5ed9805045f3fec8be848f5
