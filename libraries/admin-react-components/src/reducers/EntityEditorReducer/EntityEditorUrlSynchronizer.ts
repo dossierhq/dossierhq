@@ -1,7 +1,14 @@
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
-import { EntityEditorActions } from './EntityEditorReducer';
+import { EntityEditorActions, initializeEntityEditorState } from './EntityEditorReducer';
+
+export function initializeEditorEntityStateFromUrlQuery(
+  urlSearchParams: Readonly<URLSearchParams> | undefined
+): EntityEditorState {
+  const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
+  return initializeEntityEditorState({ actions });
+}
 
 export function useSynchronizeUrlQueryAndEntityEditorState(
   urlSearchParams: Readonly<URLSearchParams> | undefined,

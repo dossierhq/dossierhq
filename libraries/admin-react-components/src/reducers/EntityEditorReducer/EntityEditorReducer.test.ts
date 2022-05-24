@@ -36,6 +36,56 @@ describe('initializeEntityEditorState', () => {
         "activeEntityId": null,
         "activeEntityMenuScrollSignal": 0,
         "drafts": Array [],
+        "pendingSchemaActions": null,
+        "schema": null,
+        "status": "",
+      }
+    `);
+  });
+
+  test('add draft', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = initializeEntityEditorState({
+      actions: [new EntityEditorActions.AddDraft({ id })],
+    });
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "activeEntityEditorScrollSignal": 0,
+        "activeEntityId": null,
+        "activeEntityMenuScrollSignal": 0,
+        "drafts": Array [],
+        "pendingSchemaActions": Array [
+          AddDraftAction {
+            "selector": Object {
+              "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+            },
+          },
+        ],
+        "schema": null,
+        "status": "",
+      }
+    `);
+  });
+
+  test('add new entity', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = initializeEntityEditorState({
+      actions: [new EntityEditorActions.AddDraft({ id, newType: 'Foo' })],
+    });
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "activeEntityEditorScrollSignal": 0,
+        "activeEntityId": null,
+        "activeEntityMenuScrollSignal": 0,
+        "drafts": Array [],
+        "pendingSchemaActions": Array [
+          AddDraftAction {
+            "selector": Object {
+              "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+              "newType": "Foo",
+            },
+          },
+        ],
         "schema": null,
         "status": "",
       }
@@ -262,6 +312,53 @@ describe('UpdateSchemaSpecificationAction', () => {
 });
 
 describe('EntityEditorReducer scenarios', () => {
+  test('open existing, get schema', async () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    let state = initializeEntityEditorState({
+      actions: [new EntityEditorActions.AddDraft({ id })],
+    });
+    expect(state).toMatchSnapshot();
+    expect(state.pendingSchemaActions).toHaveLength(1);
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
+          ],
+          valueTypes: [],
+        })
+      )
+    );
+    expect(state).toMatchSnapshot();
+    expect(state.pendingSchemaActions).toBeNull();
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.UpdateEntity({
+        id,
+        info: {
+          authKey: 'none',
+          name: 'Foo name#123456',
+          type: 'Foo',
+          status: AdminEntityStatus.draft,
+          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          version: 0,
+        },
+        fields: {
+          title: null,
+        },
+      })
+    );
+    expect(state).toMatchSnapshot();
+  });
+
   test('add new draft, set name and authKey, force update', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     let state = reduceEntityEditorStateActions(

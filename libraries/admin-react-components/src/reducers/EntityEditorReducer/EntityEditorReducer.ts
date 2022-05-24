@@ -19,6 +19,7 @@ export interface EntityEditorState {
   activeEntityId: string | null;
   activeEntityEditorScrollSignal: number;
   activeEntityMenuScrollSignal: number;
+  pendingSchemaActions: EntityEditorStateAction[] | null;
 }
 
 export interface EntityEditorDraftState {
@@ -45,7 +46,9 @@ export interface EntityEditorStateAction {
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState>;
 }
 
-export function initializeEntityEditorState(): EntityEditorState {
+export function initializeEntityEditorState({
+  actions,
+}: { actions?: EntityEditorStateAction[] } = {}): EntityEditorState {
   return {
     status: '',
     schema: null,
@@ -53,6 +56,7 @@ export function initializeEntityEditorState(): EntityEditorState {
     activeEntityId: null,
     activeEntityEditorScrollSignal: 0,
     activeEntityMenuScrollSignal: 0,
+    pendingSchemaActions: actions ?? null,
   };
 }
 
@@ -436,7 +440,14 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
   }
 
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
-    return { ...state, schema: this.schema };
+    const actions = state.pendingSchemaActions;
+    let newState: EntityEditorState = { ...state, schema: this.schema, pendingSchemaActions: null };
+    if (actions) {
+      for (const action of actions) {
+        newState = reduceEntityEditorState(newState, action);
+      }
+    }
+    return newState;
   }
 }
 
