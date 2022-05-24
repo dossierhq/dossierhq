@@ -27,7 +27,10 @@ export function AdminEntityList({
   const isEmpty = searchEntityState.entities?.length === 0;
 
   return (
-    <Table className={isEmpty ? toSizeClassName({ height: '100%' }) : undefined}>
+    <Table
+      className={isEmpty ? toSizeClassName({ height: '100%' }) : undefined}
+      hoverable={!isEmpty}
+    >
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
