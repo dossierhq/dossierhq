@@ -5,6 +5,7 @@ import { Icon } from '../index.js';
 
 export interface TableProps {
   className?: string;
+  hoverable?: boolean;
   children: React.ReactNode;
 }
 
@@ -46,9 +47,11 @@ interface TableComponent extends FunctionComponent<TableProps> {
   Cell: FunctionComponent<TableCellProps>;
 }
 
-export const Table: TableComponent = ({ className, children }: TableProps) => {
+export const Table: TableComponent = ({ className, hoverable, children }: TableProps) => {
   return (
-    <table className={toClassName('table is-fullwidth is-hoverable', className)}>{children}</table>
+    <table className={toClassName('table is-fullwidth', hoverable && 'is-hoverable', className)}>
+      {children}
+    </table>
   );
 };
 Table.displayName = 'Table';
