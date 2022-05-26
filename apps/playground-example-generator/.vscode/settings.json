@@ -1,5 +1,16 @@
 {
-  "cSpell.words": ["datadata", "jonasb", "rushstack"],
+  "cSpell.words": [
+    "atmosphering",
+    "datadata",
+    "homeworld",
+    "hyperdrive",
+    "jonasb",
+    "mglt",
+    "rushstack",
+    "Starships",
+    "starwars",
+    "uuidv"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
