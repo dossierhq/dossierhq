@@ -1,6 +1,13 @@
 import type { AdminClient, EntityReference, PublishingEvent } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { InstantDisplay, Row, TabContainer, Tag, Text } from '@jonasb/datadata-design';
+import {
+  InstantDisplay,
+  Row,
+  TabContainer,
+  Tag,
+  Text,
+  toFlexItemClassName,
+} from '@jonasb/datadata-design';
 import { Temporal } from '@js-temporal/polyfill';
 import React, { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag';
@@ -46,7 +53,10 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
       {entity ? (
         <>
           <Text textStyle="body2">{entity.id}</Text>
-          <StatusTag status={entity.info.status} />
+          <StatusTag
+            className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+            status={entity.info.status}
+          />
           <TabContainer small>
             {Object.keys(ActivityFilter).map((filter) => (
               <TabContainer.Item
