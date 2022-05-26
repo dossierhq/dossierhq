@@ -5,6 +5,7 @@ import type { StatusColor } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TagProps {
+  className?: string;
   color?: keyof typeof StatusColor;
   children: string | [string, ReactElement<TagRemoveProps>];
 }
@@ -28,13 +29,13 @@ interface TagComponent extends FunctionComponent<TagProps> {
   Group: FunctionComponent<TagGroupProps>;
 }
 
-export const Tag: TagComponent = ({ color, children }: TagProps) => {
+export const Tag: TagComponent = ({ className, color, children }: TagProps) => {
   const tagClassName = toClassName('tag is-capitalized', toColorClassName(color));
   if (typeof children === 'string') {
-    return <span className={toClassName(tagClassName, 'control')}>{children}</span>;
+    return <span className={toClassName(tagClassName, 'control', className)}>{children}</span>;
   }
   return (
-    <div className="control">
+    <div className={toClassName('control', className)}>
       <span className="tags has-addons">
         <span className={tagClassName}>{children[0]}</span>
         {children[1]}
