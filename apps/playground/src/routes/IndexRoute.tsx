@@ -1,12 +1,11 @@
 import {
   Button,
-  Card,
   File,
   FullscreenContainer,
+  Message,
   NotificationContext,
   NotificationInfo,
   Text,
-  toClassName,
   toSpacingClassName,
 } from '@jonasb/datadata-design';
 import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
@@ -44,24 +43,25 @@ export function IndexRoute() {
           Welcome to datadata Playground!
         </Text>
         <Text textStyle="body1">This is a playground where you can explore datadata.</Text>
-        <Card>
-          <Card.Header>
-            <Card.HeaderTitle>Database (sqlite3, in-memory)</Card.HeaderTitle>
-          </Card.Header>
-          <Card.Content>
-            <strong>Size:</strong> {data ? bytesToHumanSize(data.byteSize) : '–'}
+        <Message className={toSpacingClassName({ marginTop: 5 })}>
+          <Message.Header>
+            <Message.HeaderTitle>Database (sqlite3, in-memory)</Message.HeaderTitle>
+          </Message.Header>
+          <Message.Body gap={3} alignItems="flex-start">
+            <p>
+              <strong>Size:</strong> {data ? bytesToHumanSize(data.byteSize) : '–'}
+            </p>
             <Button disabled={!database} iconLeft="download" onClick={handleDownloadOnClick}>
               Download
             </Button>
-          </Card.Content>
-        </Card>
-        <article
-          className={toClassName('message is-warning', toSpacingClassName({ marginTop: 5 }))}
-        >
-          <div className="message-header">
-            <p>Change database</p>
-          </div>
-          <div className="message-body">
+          </Message.Body>
+        </Message>
+
+        <Message className={toSpacingClassName({ marginTop: 3 })} color="warning">
+          <Message.Header>
+            <Message.HeaderTitle>Change database</Message.HeaderTitle>
+          </Message.Header>
+          <Message.Body alignItems="flex-start">
             <Text textStyle="headline5">Reset</Text>
             <p>Reset the database to start from scratch.</p>
             <Button
@@ -96,8 +96,8 @@ export function IndexRoute() {
               accept=".sqlite, application/x-sqlite3"
               onChange={handleFileChange}
             />
-          </div>
-        </article>
+          </Message.Body>
+        </Message>
       </FullscreenContainer.Row>
     </FullscreenContainer>
   );
