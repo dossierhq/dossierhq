@@ -36,6 +36,7 @@ export interface FullscreenContainerRowProps
 
 export interface FullscreenContainerScrollableRowProps {
   scrollToTopSignal?: unknown;
+  shadows?: 'both' | 'bottom' | 'top' | 'none';
   children: React.ReactNode;
 }
 
@@ -136,11 +137,13 @@ FullscreenContainer.Row.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.ScrollableRow = ({
   scrollToTopSignal,
+  shadows,
   children,
 }: FullscreenContainerScrollableRowProps) => {
   return (
     <Scrollable
       className={toClassName('is-flex-grow-1', toSizeClassName({ height: 0 }))}
+      shadows={shadows}
       scrollToTopSignal={scrollToTopSignal}
     >
       {children}
@@ -186,7 +189,7 @@ FullscreenContainer.ScrollableColumn = ({
   return (
     <Scrollable
       className={className}
-      noShadows
+      shadows="none"
       scrollToId={scrollToId}
       scrollToIdSignal={scrollToIdSignal}
     >
