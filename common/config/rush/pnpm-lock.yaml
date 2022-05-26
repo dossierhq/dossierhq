@@ -18,6 +18,7 @@ importers:
       '@vitejs/plugin-react': ^1.0.7
       history: ~5.3.0
       leaflet: ~1.8.0
+      playground-example-generator: workspace:*
       react: ~18.1.0
       react-dom: ~18.1.0
       react-router-dom: ~6.2.2
@@ -34,6 +35,7 @@ importers:
       '@jonasb/datadata-server': link:../../libraries/server
       history: 5.3.0
       leaflet: 1.8.0
+      playground-example-generator: link:../playground-example-generator
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-router-dom: 6.2.2_react-dom@18.1.0+react@18.1.0
@@ -7642,7 +7644,7 @@ packages:
     dev: true
 
   /code-point-at/1.1.0:
-    resolution: {integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=}
+    resolution: {integrity: sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==}
     engines: {node: '>=0.10.0'}
     optional: true
 
