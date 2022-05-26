@@ -36,6 +36,7 @@ export { Input } from './Input/Input.js';
 export { InstantDisplay } from './InstantDisplay/InstantDisplay.js';
 export { Level } from './Level/Level.js';
 export { Menu } from './Menu/Menu.js';
+export { Message } from './Message/Message.js';
 export { Navbar } from './Navbar/Navbar.js';
 export { NotificationContainer } from './NotificationContainer/NotificationContainer.js';
 export { Radio } from './Radio/Radio.js';

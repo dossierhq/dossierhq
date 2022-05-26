@@ -1,9 +1,9 @@
 import { toClassName } from './ClassNameUtils.js';
 
 export interface FlexContainerProps {
-  flexDirection?: 'column' | 'row';
-  alignItems?: 'center';
-  justifyContent?: 'center';
+  flexDirection?: keyof typeof flexDirectionClassNames;
+  alignItems?: keyof typeof alignItemsClassNames;
+  justifyContent?: keyof typeof justifyContentClassNames;
 }
 
 const flexDirectionClassNames = {
@@ -13,6 +13,7 @@ const flexDirectionClassNames = {
 
 const alignItemsClassNames = {
   center: 'is-align-items-center',
+  'flex-start': 'is-align-items-flex-start',
 };
 
 const justifyContentClassNames = {
@@ -34,8 +35,18 @@ export function toFlexContainerClassName({
 
 export interface FlexItemProps {
   flexGrow?: 0 | 1;
+  alignSelf?: keyof typeof alignSelfClassNames;
 }
 
-export function toFlexItemClassName({ flexGrow }: FlexItemProps) {
-  return toClassName(typeof flexGrow === 'number' && `is-flex-grow-${flexGrow}`);
+const alignSelfClassNames = {
+  center: 'is-align-self-center',
+  'flex-start': 'is-align-self-flex-start',
+  'flex-end': 'is-align-self-flex-end',
+};
+
+export function toFlexItemClassName({ alignSelf, flexGrow }: FlexItemProps) {
+  return toClassName(
+    typeof flexGrow === 'number' && `is-flex-grow-${flexGrow}`,
+    alignSelf && alignSelfClassNames[alignSelf]
+  );
 }

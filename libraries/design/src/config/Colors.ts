@@ -12,6 +12,7 @@ const BulmaColor = {
   danger: 'danger',
   light: 'light',
   primary: 'primary',
+  warning: 'warning',
   white: 'white',
 } as const;
 

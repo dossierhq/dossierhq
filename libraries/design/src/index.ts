@@ -22,6 +22,7 @@ export {
   InstantDisplay,
   Level,
   Menu,
+  Message,
   MultipleSelectorStateActions,
   Navbar,
   NotificationContainer,
@@ -56,5 +57,6 @@ export { useWindowClick } from './hooks/useWindowClick.js';
 export { useWindowEventListener } from './hooks/useWindowEventListener.js';
 export { toClassName } from './utils/ClassNameUtils.js';
 export { findAscendantElement, findAscendantHTMLElement } from './utils/DOMUtils.js';
+export { toFlexItemClassName } from './utils/FlexboxUtils.js';
 export { toSizeClassName, toSpacingClassName } from './utils/LayoutPropsUtils.js';
 export type { TextStyle } from './utils/TextStylePropsUtils.js';
