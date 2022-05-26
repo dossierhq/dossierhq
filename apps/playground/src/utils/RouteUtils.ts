@@ -7,6 +7,10 @@ export const ROUTE = {
     route: 'admin-entities',
     url: '/admin-entities',
   },
+  graphiql: {
+    route: 'graphiql',
+    url: '/graphiql',
+  },
   login: {
     route: '/login/:userId',
     url: (userId: string) => `/login/${userId}`,

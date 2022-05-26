@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     commonjsOptions: { include: [] },
-    chunkSizeWarningLimit: 2500,
+    chunkSizeWarningLimit: 3000,
     rollupOptions: {
       plugins: [visualizer()],
     },
