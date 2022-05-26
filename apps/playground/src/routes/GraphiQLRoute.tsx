@@ -2,13 +2,10 @@ import {
   AdminDataDataContext,
   PublishedDataDataContext,
 } from '@jonasb/datadata-admin-react-components';
-import { AdminSchema, ok, PublishedSchema } from '@jonasb/datadata-core';
 import { EmptyStateMessage, FullscreenContainer } from '@jonasb/datadata-design';
-import { GraphQLSchemaGenerator, SessionGraphQLContext } from '@jonasb/datadata-graphql';
-import GraphiQL, { FetcherOpts, FetcherParams } from 'graphiql';
 import 'graphiql/graphiql.min.css';
-import { graphql } from 'graphql';
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext } from 'react';
+import { GraphiQLEditor } from '../components/GraphiQLEditor';
 import { NavBar } from '../components/NavBar';
 
 export function GraphiQLRoute(): JSX.Element {
@@ -29,54 +26,10 @@ export function GraphiQLRoute(): JSX.Element {
               message="Create an entity type to enable Graphql"
             />
           ) : (
-            <Editor {...{ adminSchema, publishedSchema }} />
+            <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
           )}
         </FullscreenContainer.Row>
       </FullscreenContainer>
     </>
   );
-}
-
-function Editor({
-  adminSchema,
-  publishedSchema,
-}: {
-  adminSchema: AdminSchema;
-  publishedSchema: PublishedSchema;
-}) {
-  const { adminClient } = useContext(AdminDataDataContext);
-  const { publishedClient } = useContext(PublishedDataDataContext);
-
-  const graphQlSchema = useMemo(() => {
-    const generator = new GraphQLSchemaGenerator({
-      adminSchema: adminSchema ?? null,
-      publishedSchema: publishedSchema ?? null,
-    });
-    const result = generator.buildSchema();
-
-    return result;
-  }, [adminSchema, publishedSchema]);
-
-  const graphQlSession = useMemo<SessionGraphQLContext>(() => {
-    return {
-      adminClient: ok(adminClient),
-      publishedClient: ok(publishedClient),
-    };
-  }, [adminClient, publishedClient]);
-
-  const fetcher = useCallback(
-    async (graphQLParams: FetcherParams, _opts?: FetcherOpts) => {
-      const result = await graphql({
-        schema: graphQlSchema,
-        source: graphQLParams.query,
-        operationName: graphQLParams.operationName,
-        variableValues: graphQLParams.variables,
-        contextValue: graphQlSession,
-      });
-      return result;
-    },
-    [graphQlSchema, graphQlSession]
-  );
-
-  return <GraphiQL fetcher={fetcher} headerEditorEnabled={false} />;
 }
