@@ -1,0 +1,71 @@
+import type { FunctionComponent, ReactNode } from 'react';
+import React from 'react';
+import type { Color } from '../../config/Colors';
+import { toColorClassName } from '../../config/Colors';
+import { toClassName } from '../../utils/ClassNameUtils';
+import type { FlexContainerProps } from '../../utils/FlexboxUtils';
+import { toFlexContainerClassName } from '../../utils/FlexboxUtils';
+import type { SpacingProps } from '../../utils/LayoutPropsUtils';
+import { toSpacingClassName } from '../../utils/LayoutPropsUtils';
+
+export interface MessageProps {
+  className?: string;
+  color?: Color;
+  children: ReactNode;
+}
+
+interface MessageHeaderProps {
+  children?: ReactNode;
+}
+
+interface MessageHeaderTitleProps {
+  children?: ReactNode;
+}
+
+interface MessageBodyProps extends FlexContainerProps, SpacingProps {
+  children?: ReactNode;
+}
+
+interface MessageComponent extends FunctionComponent<MessageProps> {
+  Header: FunctionComponent<MessageHeaderProps>;
+  HeaderTitle: FunctionComponent<MessageHeaderTitleProps>;
+  Body: FunctionComponent<MessageBodyProps>;
+}
+
+export const Message: MessageComponent = ({ className, color, children }: MessageProps) => {
+  return (
+    <article className={toClassName('message', toColorClassName(color), className)}>
+      {children}
+    </article>
+  );
+};
+Message.displayName = 'Message';
+
+Message.Header = ({ children }: MessageHeaderProps) => {
+  return <div className="message-header">{children}</div>;
+};
+Message.Header.displayName = 'Message.Header';
+
+Message.HeaderTitle = ({ children }: MessageHeaderTitleProps) => {
+  return <p>{children}</p>;
+};
+Message.HeaderTitle.displayName = 'Message.HeaderTitle';
+
+Message.Body = ({ children, ...props }: MessageBodyProps) => {
+  const flexContainerProps = { flexDirection: 'column', ...props } as const;
+  const overridePadding = Object.keys(props).some((it) => it.startsWith('padding'));
+  const spacingProps = overridePadding ? ({ padding: 0, ...props } as const) : props;
+
+  return (
+    <div
+      className={toClassName(
+        'message-body',
+        toFlexContainerClassName(flexContainerProps),
+        toSpacingClassName(spacingProps)
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+Message.Body.displayName = 'Message.Body';
