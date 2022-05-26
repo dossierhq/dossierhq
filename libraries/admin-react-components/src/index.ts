@@ -26,7 +26,7 @@ export { useAdminLoadEntitySearch } from './hooks/useAdminLoadEntitySearch';
 export { useAdminSchema } from './hooks/useAdminSchema';
 export { useAdminSearchEntities } from './hooks/useAdminSearchEntities';
 export { useAdminTotalCount } from './hooks/useAdminTotalCount';
-export { PublishedDataDataProvider } from './published/';
+export { PublishedDataDataContext, PublishedDataDataProvider } from './published/';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen';
 export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen';
 export { PublishedEntityDetailScreen } from './screens/PublishedEntityDetailScreen/PublishedEntityDetailScreen';
