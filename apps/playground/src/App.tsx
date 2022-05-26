@@ -1,4 +1,4 @@
-import { BeforeUnload, NotificationContainer } from '@jonasb/datadata-design';
+import { NotificationContainer } from '@jonasb/datadata-design';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DatabaseProvider } from './components/DatabaseProvider';
@@ -8,6 +8,7 @@ import { User, UserContext } from './contexts/UserContext';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
 import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
 import { EditSchemaRoute } from './routes/EditSchemaRoute';
+import { GraphiQLRoute } from './routes/GraphiQLRoute';
 import { IndexRoute } from './routes/IndexRoute';
 import { LoginRoute } from './routes/LoginRoute';
 import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute';
@@ -42,6 +43,7 @@ export default function App() {
                     element={<PublishedEntityDetailsRoute />}
                   />
                   <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
+                  <Route path={ROUTE.graphiql.route} element={<GraphiQLRoute />} />
                 </Routes>
               </BrowserRouter>
             </DataDataSharedProvider>

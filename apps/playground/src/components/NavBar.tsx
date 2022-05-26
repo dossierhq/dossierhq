@@ -5,11 +5,11 @@ import { UserContext } from '../contexts/UserContext';
 import { ROUTE } from '../utils/RouteUtils';
 
 interface Props {
-  current: 'home' | 'admin-entities' | 'published-entities' | 'schema';
+  current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'graphiql';
 }
 
 export function NavBar({ current }: Props) {
-  const { currentUserId, users, setCurrentUserId } = useContext(UserContext);
+  const { currentUserId, users } = useContext(UserContext);
   const [active, setActive] = useState(false);
   return (
     <DesignNavbar>
@@ -29,6 +29,9 @@ export function NavBar({ current }: Props) {
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'schema'}>
             {NavItemRender('Schema', ROUTE.schema.url)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'graphiql'}>
+            {NavItemRender('GraphiQL', ROUTE.graphiql.url)}
           </DesignNavbar.Item>
         </DesignNavbar.Start>
         <DesignNavbar.End>
