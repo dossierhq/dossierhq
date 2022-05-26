@@ -18,7 +18,7 @@
   "devDependencies": {
     "@rushstack/heft": "~0.45.5",
     "@types/sql.js": "~1.4.2",
-    "typescript": "^4.6.3",
+    "typescript": "^4.7.2",
     "@types/uuid": "~8.3.4"
   }
 }

@@ -24,6 +24,8 @@ export class InternalContextImpl
   extends TransactionContextImpl<InternalContext>
   implements InternalContext
 {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   [internalContextSymbol]: never;
 
   constructor(
@@ -46,7 +48,10 @@ export class SessionContextImpl
   extends TransactionContextImpl<SessionContext>
   implements SessionContext
 {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   [sessionContextSymbol]: never;
+
   readonly session: Session;
   readonly defaultAuthKeys: readonly string[];
 
