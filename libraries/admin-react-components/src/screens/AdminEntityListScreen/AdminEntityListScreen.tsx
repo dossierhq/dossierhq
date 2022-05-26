@@ -121,6 +121,7 @@ export function AdminEntityListScreen({
       ) : (
         <FullscreenContainer.ScrollableRow
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
+          shadows="bottom"
         >
           <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
             <FullscreenContainer.Item paddingHorizontal={3}>
