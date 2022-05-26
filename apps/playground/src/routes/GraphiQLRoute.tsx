@@ -4,6 +4,7 @@ import {
 } from '@jonasb/datadata-admin-react-components';
 import { EmptyStateMessage, FullscreenContainer } from '@jonasb/datadata-design';
 import { useContext, lazy, Suspense } from 'react';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { NavBar } from '../components/NavBar';
 
 const GraphiQLEditor = lazy(() => import('../components/GraphiQLEditor'));
@@ -26,9 +27,11 @@ export function GraphiQLRoute(): JSX.Element {
               message="Create an entity type to enable Graphql"
             />
           ) : (
-            <Suspense fallback={null}>
-              <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
+              </Suspense>
+            </ErrorBoundary>
           )}
         </FullscreenContainer.Row>
       </FullscreenContainer>
