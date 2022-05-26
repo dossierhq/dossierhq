@@ -3,9 +3,14 @@ import { Tag } from '@jonasb/datadata-design';
 import React from 'react';
 
 interface Props {
+  className?: string;
   status: AdminEntityStatus;
 }
 
-export function StatusTag({ status }: Props) {
-  return <Tag color={status}>{status}</Tag>;
+export function StatusTag({ className, status }: Props) {
+  return (
+    <Tag className={className} color={status}>
+      {status}
+    </Tag>
+  );
 }
