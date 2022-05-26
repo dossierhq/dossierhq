@@ -69,7 +69,7 @@ export function ColumnAsElement<Tag extends keyof JSX.IntrinsicElements>({
 }: ColumnAsElementProps<Tag>): JSX.Element {
   const Element = as as keyof JSX.IntrinsicElements;
   return (
-    <Element className={columnPropsAsClassName({ className, gap })} {...(args as unknown)}>
+    <Element className={columnPropsAsClassName({ className, gap })} {...(args as object)}>
       {children}
     </Element>
   );
@@ -142,7 +142,7 @@ export function ColumnElement<Tag extends keyof JSX.IntrinsicElements>({
   return (
     <Element
       className={itemPropsAsClassName({ className, grow, height, width, overflowY })}
-      {...(args as unknown)}
+      {...(args as object)}
     >
       {children}
     </Element>

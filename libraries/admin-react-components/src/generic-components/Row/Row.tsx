@@ -72,7 +72,7 @@ export function RowAsElement<Tag extends keyof JSX.IntrinsicElements>({
   return (
     <Element
       className={joinClassNames('dd-flex-row', className, gapClassName(gap))}
-      {...(args as unknown)}
+      {...(args as object)}
     >
       {children}
     </Element>
@@ -131,7 +131,7 @@ export function RowElement<Tag extends keyof JSX.IntrinsicElements = 'div'>({
   return (
     <Element
       className={itemPropsAsClassName({ className, grow, height, width })}
-      {...(args as unknown)}
+      {...(args as object)}
     >
       {children}
     </Element>
