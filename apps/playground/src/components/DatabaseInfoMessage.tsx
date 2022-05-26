@@ -1,8 +1,8 @@
 import { Button, Message } from '@jonasb/datadata-design';
 import { useCallback, useContext } from 'react';
-import { Database } from 'sql.js';
 import useSWR from 'swr';
 import { DatabaseContext } from '../contexts/DatabaseContext';
+import { downloadDatabase, queryDatabaseSize } from '../utils/DatabaseUtils';
 import { bytesToHumanSize } from '../utils/DisplayUtils';
 
 interface Props {
@@ -32,27 +32,4 @@ export function DatabaseInfoMessage({ className }: Props) {
       </Message.Body>
     </Message>
   );
-}
-
-function queryDatabaseSize(database: Database) {
-  const result = database.exec('PRAGMA page_size; PRAGMA page_count');
-  const pageSize = result[0].values[0][0] as number;
-  const pageCount = result[1].values[0][0] as number;
-  const byteSize = pageSize * pageCount;
-  return { byteSize };
-}
-
-function downloadDatabase(database: Database) {
-  const data = database.export();
-  const blob = new Blob([data]);
-  const a = document.createElement('a');
-  document.body.appendChild(a);
-  a.href = window.URL.createObjectURL(blob);
-  a.download = 'datadata.sqlite';
-  a.onclick = () => {
-    setTimeout(() => {
-      window.URL.revokeObjectURL(a.href);
-    }, 1500);
-  };
-  a.click();
 }
