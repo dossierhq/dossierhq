@@ -5,7 +5,8 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 export interface ScrollableProps {
   className?: string;
   style?: React.CSSProperties;
-  noShadows?: boolean;
+  // defaults to 'both'
+  shadows?: 'both' | 'bottom' | 'top' | 'none';
   scrollToId?: string;
   scrollToIdSignal?: unknown;
   scrollToTopSignal?: unknown;
@@ -15,7 +16,7 @@ export interface ScrollableProps {
 export function Scrollable({
   className,
   style,
-  noShadows,
+  shadows,
   scrollToId,
   scrollToIdSignal,
   scrollToTopSignal,
@@ -23,6 +24,8 @@ export function Scrollable({
 }: ScrollableProps): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
   const realClassName = toClassName('scrollable', className);
+  const topShadow = !shadows || shadows === 'both' || shadows === 'top';
+  const bottomShadow = !shadows || shadows === 'both' || shadows === 'bottom';
 
   useEffect(() => {
     if (scrollToTopSignal && ref.current) {
@@ -50,11 +53,9 @@ export function Scrollable({
 
   return (
     <div ref={ref} className={realClassName} style={style}>
-      {noShadows !== true ? <StickyShadow className="sticky-top-shadow is-sticky-top" /> : null}
+      {topShadow ? <StickyShadow className="sticky-top-shadow is-sticky-top" /> : null}
       {children}
-      {noShadows !== true ? (
-        <StickyShadow className="sticky-bottom-shadow is-sticky-bottom" />
-      ) : null}
+      {bottomShadow ? <StickyShadow className="sticky-bottom-shadow is-sticky-bottom" /> : null}
     </div>
   );
 }
