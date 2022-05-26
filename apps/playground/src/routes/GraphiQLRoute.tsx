@@ -3,10 +3,10 @@ import {
   PublishedDataDataContext,
 } from '@jonasb/datadata-admin-react-components';
 import { EmptyStateMessage, FullscreenContainer } from '@jonasb/datadata-design';
-import 'graphiql/graphiql.min.css';
-import { useContext } from 'react';
-import { GraphiQLEditor } from '../components/GraphiQLEditor';
+import { useContext, lazy, Suspense } from 'react';
 import { NavBar } from '../components/NavBar';
+
+const GraphiQLEditor = lazy(() => import('../components/GraphiQLEditor'));
 
 export function GraphiQLRoute(): JSX.Element {
   const { schema: adminSchema } = useContext(AdminDataDataContext);
@@ -26,7 +26,9 @@ export function GraphiQLRoute(): JSX.Element {
               message="Create an entity type to enable Graphql"
             />
           ) : (
-            <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
+            <Suspense fallback={null}>
+              <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
+            </Suspense>
           )}
         </FullscreenContainer.Row>
       </FullscreenContainer>

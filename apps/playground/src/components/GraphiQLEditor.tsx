@@ -9,7 +9,7 @@ import 'graphiql/graphiql.min.css';
 import { graphql } from 'graphql';
 import { useCallback, useContext, useMemo } from 'react';
 
-export function GraphiQLEditor({
+export default function GraphiQLEditor({
   adminSchema,
   publishedSchema,
 }: {
