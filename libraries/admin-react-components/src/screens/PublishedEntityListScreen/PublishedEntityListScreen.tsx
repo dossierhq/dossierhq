@@ -158,7 +158,10 @@ export function PublishedEntityListScreen({
           />
         </FullscreenContainer.Row>
       ) : (
-        <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.ScrollableRow
+          scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
+          shadows="bottom"
+        >
           <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
             <EntityTypeTagSelector
               state={entityTypeFilterState}
