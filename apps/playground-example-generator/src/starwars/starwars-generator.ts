@@ -11,6 +11,11 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       name: 'Film',
       fields: [
         { name: 'title', type: FieldType.String, required: true },
+        { name: 'episodeId', type: FieldType.String, required: true },
+        { name: 'director', type: FieldType.String, required: true },
+        { name: 'producers', type: FieldType.String, list: true, required: true },
+        { name: 'releaseDate', type: FieldType.String, required: true },
+        { name: 'openingCrawl', type: FieldType.String, required: true },
         {
           name: 'characters',
           type: FieldType.EntityType,
@@ -52,7 +57,14 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       name: 'Person',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
+        { name: 'gender', type: FieldType.String, required: true },
+        { name: 'skinColors', type: FieldType.String, list: true, required: true },
+        { name: 'hairColors', type: FieldType.String, list: true, required: true },
+        { name: 'eyeColors', type: FieldType.String, list: true, required: true },
+        { name: 'height', type: FieldType.String, required: true },
+        { name: 'mass', type: FieldType.String, required: true },
         { name: 'homeworld', type: FieldType.EntityType, entityTypes: ['Planet'], required: true },
+        { name: 'birthYear', type: FieldType.String, required: true },
       ],
     },
     {
@@ -60,12 +72,27 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'name', type: FieldType.String, required: true },
         { name: 'climate', type: FieldType.String, list: true, required: true },
+        { name: 'surfaceWater', type: FieldType.String, required: true },
+        { name: 'diameter', type: FieldType.String, required: true },
+        { name: 'terrain', type: FieldType.String, list: true, required: true },
+        { name: 'gravity', type: FieldType.String, required: true },
+        { name: 'rotationPeriod', type: FieldType.String, required: true },
+        { name: 'orbitalPeriod', type: FieldType.String, required: true },
+        { name: 'population', type: FieldType.String, required: true },
       ],
     },
     {
       name: 'Species',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
+        { name: 'classification', type: FieldType.String, required: true },
+        { name: 'designation', type: FieldType.String, required: true },
+        { name: 'skinColors', type: FieldType.String, list: true, required: true },
+        { name: 'hairColors', type: FieldType.String, list: true, required: true },
+        { name: 'eyeColors', type: FieldType.String, list: true, required: true },
+        { name: 'language', type: FieldType.String, required: true },
+        { name: 'averageLifespan', type: FieldType.String, required: true },
+        { name: 'averageHeight', type: FieldType.String, required: true },
         { name: 'people', type: FieldType.EntityType, list: true, entityTypes: ['Person'] },
         { name: 'homeworld', type: FieldType.EntityType, entityTypes: ['Planet'] },
       ],
@@ -74,12 +101,25 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       name: 'Starship',
       fields: [
         { name: 'starshipClass', type: FieldType.String, required: true },
+        { name: 'mglt', type: FieldType.String, required: true },
+        { name: 'hyperdriveRating', type: FieldType.String, required: true },
         { name: 'pilots', type: FieldType.EntityType, list: true, entityTypes: ['Person'] },
       ],
     },
     {
       name: 'Transport',
-      fields: [{ name: 'name', type: FieldType.String, required: true }],
+      fields: [
+        { name: 'name', type: FieldType.String, required: true },
+        { name: 'model', type: FieldType.String, required: true },
+        { name: 'manufacturers', type: FieldType.String, list: true, required: true },
+        { name: 'consumables', type: FieldType.String, required: true },
+        { name: 'cargoCapacity', type: FieldType.String, required: true },
+        { name: 'crew', type: FieldType.String, required: true },
+        { name: 'passengers', type: FieldType.String, required: true },
+        { name: 'maxAtmospheringSpeed', type: FieldType.String, required: true },
+        { name: 'length', type: FieldType.String, required: true },
+        { name: 'costInCredits', type: FieldType.String, required: true },
+      ],
     },
     {
       name: 'Vehicle',
@@ -123,6 +163,11 @@ async function createFilms(adminClient: AdminClient) {
           info: { type: 'Film', authKey: 'none', name: film.fields.title },
           fields: {
             title: film.fields.title,
+            episodeId: String(film.fields.episode_id),
+            director: film.fields.director,
+            producers: splitCsv(film.fields.producer),
+            releaseDate: film.fields.release_date,
+            openingCrawl: film.fields.opening_crawl.replace(/\r\n/g, '\n'),
             characters: uuidReferences('person', film.fields.characters),
             starships: uuidReferences('starship', film.fields.starships),
             vehicles: uuidReferences('vehicle', film.fields.vehicles),
@@ -146,7 +191,14 @@ async function createPeople(adminClient: AdminClient) {
           info: { type: 'Person', authKey: 'none', name: person.fields.name },
           fields: {
             name: person.fields.name,
+            gender: person.fields.gender,
+            skinColors: splitCsv(person.fields.skin_color),
+            hairColors: splitCsv(person.fields.hair_color),
+            eyeColors: splitCsv(person.fields.eye_color),
+            height: person.fields.height,
+            mass: person.fields.mass,
             homeworld: { id: uuidForEntity('planet', person.fields.homeworld) },
+            birthYear: person.fields.birth_year,
           },
         },
         { publish: true }
@@ -163,7 +215,17 @@ async function createPlanets(adminClient: AdminClient) {
         {
           id: uuidForEntity('planet', planet.pk),
           info: { type: 'Planet', authKey: 'none', name: planet.fields.name },
-          fields: { name: planet.fields.name, climate: splitCsv(planet.fields.climate) },
+          fields: {
+            name: planet.fields.name,
+            climate: splitCsv(planet.fields.climate),
+            surfaceWater: planet.fields.surface_water,
+            diameter: planet.fields.diameter,
+            terrain: splitCsv(planet.fields.terrain),
+            gravity: planet.fields.gravity,
+            rotationPeriod: planet.fields.rotation_period,
+            orbitalPeriod: planet.fields.orbital_period,
+            population: planet.fields.population,
+          },
         },
         { publish: true }
       )
@@ -181,6 +243,14 @@ async function createSpecies(adminClient: AdminClient) {
           info: { type: 'Species', authKey: 'none', name: species.fields.name },
           fields: {
             name: species.fields.name,
+            classification: species.fields.classification,
+            designation: species.fields.designation,
+            skinColors: splitCsv(species.fields.skin_colors),
+            hairColors: splitCsv(species.fields.hair_colors),
+            eyeColors: splitCsv(species.fields.eye_colors),
+            language: species.fields.language,
+            averageLifespan: species.fields.average_lifespan,
+            averageHeight: species.fields.average_height,
             people: uuidReferences('person', species.fields.people),
             homeworld: species.fields.homeworld
               ? { id: uuidForEntity('planet', species.fields.homeworld) }
@@ -203,6 +273,8 @@ async function createStarships(adminClient: AdminClient) {
           info: { type: 'Starship', authKey: 'none', name: starship.fields.starship_class },
           fields: {
             starshipClass: starship.fields.starship_class,
+            mglt: starship.fields.MGLT,
+            hyperdriveRating: starship.fields.hyperdrive_rating,
             pilots: uuidReferences('person', starship.fields.pilots),
           },
         },
@@ -222,6 +294,15 @@ async function createTransports(adminClient: AdminClient) {
           info: { type: 'Transport', authKey: 'none', name: transport.fields.name },
           fields: {
             name: transport.fields.name,
+            model: transport.fields.model,
+            manufacturers: splitCsv(transport.fields.manufacturer),
+            consumables: transport.fields.consumables,
+            cargoCapacity: transport.fields.cargo_capacity,
+            crew: transport.fields.crew,
+            passengers: transport.fields.passengers,
+            maxAtmospheringSpeed: transport.fields.max_atmosphering_speed,
+            length: transport.fields.length,
+            costInCredits: transport.fields.cost_in_credits,
           },
         },
         { publish: true }
