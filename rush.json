@@ -458,9 +458,14 @@
       "projectFolder": "rigs/heft-node-rig"
     },
     {
+      "packageName": "@jonasb/eslint-config-datadata-generic",
+      "projectFolder": "stack/eslint-config-generic"
+    },
+    {
       "packageName": "@jonasb/datadata-template-library",
       "projectFolder": "templates/library"
     }
+
     // {
     //   /**
     //    * The NPM package name of the project (must match package.json)
