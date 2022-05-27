@@ -452,6 +452,14 @@
       "packageName": "@jonasb/datadata-server",
       "projectFolder": "libraries/server",
       "versionPolicyName": "DataDataFramework"
+    },
+    {
+      "packageName": "@jonasb/datadata-heft-node-rig",
+      "projectFolder": "rigs/heft-node-rig"
+    },
+    {
+      "packageName": "@jonasb/datadata-template-library",
+      "projectFolder": "templates/library"
     }
     // {
     //   /**
