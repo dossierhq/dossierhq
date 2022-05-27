@@ -8,16 +8,16 @@
     "require": "./lib/cjs/index.js"
   },
   "scripts": {
-    "build": "npm run prettier:check && heft test --clean",
+    "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "heft test",
-    "test:update-snapshot": "heft test --update-snapshots",
-    "test:watch": "heft test --watch"
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch"
   },
   "author": "",
   "license": "ISC",
@@ -28,11 +28,11 @@
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@rushstack/heft": "~0.45.5",
-    "@rushstack/heft-jest-plugin": "~0.3.5",
-    "@types/heft-jest": "1.0.2",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
-    "prettier": "2.6.2"
+    "eslint": "^8.13.0",
+    "prettier": "2.6.2",
+    "vitest": "~0.12.9"
   },
   "dependencies": {
     "tslib": "~2.4.0"
