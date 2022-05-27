@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "exports": {
-    ".": "./lib/cjs/index.js"
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js"
   },
   "scripts": {
     "build": "npm run prettier:check && heft test --clean",
@@ -16,10 +17,7 @@
     "prettier:fix": "prettier --write .",
     "test": "heft test",
     "test:update-snapshot": "heft test --update-snapshots",
-    "test:watch": "heft test --watch",
-    "ts:check": "tsc --noEmit",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "test:watch": "heft test --watch"
   },
   "author": "",
   "license": "ISC",

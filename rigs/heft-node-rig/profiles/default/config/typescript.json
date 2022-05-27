@@ -24,7 +24,7 @@
       /**
        * (Required) The name of the folder where the output will be written.
        */
-      "outFolderName": "../../../../../lib/cjs"
+      "outFolderName": "lib/cjs"
     }
   ],
 
@@ -44,7 +44,7 @@
    *
    * The default value is "lib".
    */
-  "emitFolderNameForTests": "../../../../../lib/cjs",
+  "emitFolderNameForTests": "lib/cjs",
 
   /**
    * If set to "true", the TSlint task will not be invoked.
