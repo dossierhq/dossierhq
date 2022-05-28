@@ -12,7 +12,8 @@
     "testuser",
     "unarchived",
     "Unpublish",
-    "Upsert"
+    "Upsert",
+    "vitest"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,

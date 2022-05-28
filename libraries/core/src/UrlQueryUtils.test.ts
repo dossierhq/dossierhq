@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { buildUrlWithUrlQuery, decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '.';
 
 interface TestQueryParams {

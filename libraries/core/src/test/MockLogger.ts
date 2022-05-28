@@ -1,15 +1,23 @@
+import type { SpyInstanceFn } from 'vitest';
+import { vi } from 'vitest';
 import type { Logger } from '..';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+  Parameters<TFn>,
+  ReturnType<TFn>
+>;
+
 export function createMockLogger(): {
-  error: jest.MockedFunction<Logger['error']>;
-  warn: jest.MockedFunction<Logger['warn']>;
-  info: jest.MockedFunction<Logger['info']>;
-  debug: jest.MockedFunction<Logger['debug']>;
+  error: MockedFunction<Logger['error']>;
+  warn: MockedFunction<Logger['warn']>;
+  info: MockedFunction<Logger['info']>;
+  debug: MockedFunction<Logger['debug']>;
 } {
   return {
-    error: jest.fn(),
-    warn: jest.fn(),
-    info: jest.fn(),
-    debug: jest.fn(),
+    error: vi.fn(),
+    warn: vi.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
   };
 }

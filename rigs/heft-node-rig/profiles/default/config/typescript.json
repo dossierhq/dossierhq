@@ -44,7 +44,7 @@
    *
    * The default value is "lib".
    */
-  "emitFolderNameForTests": "lib/cjs",
+  // "emitFolderNameForTests": "lib/cjs",
 
   /**
    * If set to "true", the TSlint task will not be invoked.
