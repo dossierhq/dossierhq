@@ -9,11 +9,12 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authResolveAuthorizationKey } from '../Auth';
-import { encodeAdminEntity, resolveCreateEntity } from '../EntityCodec';
-import { randomNameGenerator } from './AdminEntityMutationUtils';
-import { publishEntityAfterMutation } from './publishEntityAfterMutation';
+import { authResolveAuthorizationKey } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { encodeAdminEntity, resolveCreateEntity } from '../EntityCodec.js';
+import { randomNameGenerator } from './AdminEntityMutationUtils.js';
+import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
 
 export async function adminCreateEntity(
   schema: AdminSchema,

@@ -6,8 +6,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
 
 export async function adminArchiveEntity(
   databaseAdapter: DatabaseAdapter,

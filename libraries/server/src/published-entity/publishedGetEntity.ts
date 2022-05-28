@@ -7,9 +7,10 @@ import type {
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
-import { decodePublishedEntity } from '../EntityCodec';
+import { authVerifyAuthorizationKey } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { decodePublishedEntity } from '../EntityCodec.js';
 
 export async function publishedGetEntity(
   schema: PublishedSchema,

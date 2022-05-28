@@ -1,14 +1,15 @@
 import { ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { DatabasePublishedEntitySearchPayloadEntity } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from '../test/AdditionalTestUtils';
-import { adminTestSchema } from '../test/TestSchema';
+} from '../test/AdditionalTestUtils.js';
+import { adminTestSchema } from '../test/TestSchema.js';
 import { publishedSearchEntities } from './publishedSearchEntities';
 
 describe('publishedSearchEntities', () => {
@@ -37,43 +38,43 @@ describe('publishedSearchEntities', () => {
 
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "publishedEntitySearchEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "publishedEntitySearchEntities",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            {
+              "after": null,
+              "afterInclusive": false,
+              "before": null,
+              "beforeInclusive": false,
+              "count": 25,
+              "forwards": true,
+            },
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Object {
-            "after": null,
-            "afterInclusive": false,
-            "before": null,
-            "beforeInclusive": false,
-            "count": 25,
-            "forwards": true,
-          },
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 
   test('Minimal (one result)', async () => {
@@ -103,17 +104,17 @@ describe('publishedSearchEntities', () => {
     );
 
     expect(result.valueOrThrow()).toMatchInlineSnapshot(`
-      Object {
-        "edges": Array [
-          Object {
+      {
+        "edges": [
+          {
             "cursor": "cursor-1",
             "node": OkResult {
-              "value": Object {
-                "fields": Object {
+              "value": {
+                "fields": {
                   "title": "Title",
                 },
                 "id": "id-1",
-                "info": Object {
+                "info": {
                   "authKey": "none",
                   "createdAt": "2022-03-15T08:51:25.56Z",
                   "name": "TitleOnly name",
@@ -123,7 +124,7 @@ describe('publishedSearchEntities', () => {
             },
           },
         ],
-        "pageInfo": Object {
+        "pageInfo": {
           "endCursor": "cursor-1",
           "hasNextPage": false,
           "hasPreviousPage": false,
@@ -134,43 +135,43 @@ describe('publishedSearchEntities', () => {
 
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "publishedEntitySearchEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "publishedEntitySearchEntities",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            {
+              "after": null,
+              "afterInclusive": false,
+              "before": null,
+              "beforeInclusive": false,
+              "count": 25,
+              "forwards": true,
+            },
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Object {
-            "after": null,
-            "afterInclusive": false,
-            "before": null,
-            "beforeInclusive": false,
-            "count": 25,
-            "forwards": true,
-          },
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 
   test('After', async () => {
@@ -199,17 +200,17 @@ describe('publishedSearchEntities', () => {
     );
 
     expect(result.valueOrThrow()).toMatchInlineSnapshot(`
-      Object {
-        "edges": Array [
-          Object {
+      {
+        "edges": [
+          {
             "cursor": "cursor-2",
             "node": OkResult {
-              "value": Object {
-                "fields": Object {
+              "value": {
+                "fields": {
                   "title": "Title",
                 },
                 "id": "id-2",
-                "info": Object {
+                "info": {
                   "authKey": "none",
                   "createdAt": "2022-03-15T08:51:25.56Z",
                   "name": "TitleOnly name",
@@ -219,7 +220,7 @@ describe('publishedSearchEntities', () => {
             },
           },
         ],
-        "pageInfo": Object {
+        "pageInfo": {
           "endCursor": "cursor-2",
           "hasNextPage": false,
           "hasPreviousPage": true,
@@ -230,77 +231,77 @@ describe('publishedSearchEntities', () => {
 
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "publishedEntitySearchEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "publishedEntitySearchEntities",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            {
+              "after": "cursor-1",
+              "afterInclusive": false,
+              "before": null,
+              "beforeInclusive": false,
+              "count": 25,
+              "forwards": true,
+            },
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Object {
-            "after": "cursor-1",
-            "afterInclusive": false,
-            "before": null,
-            "beforeInclusive": false,
-            "count": 25,
-            "forwards": true,
-          },
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-        Array [
-          "publishedEntitySearchEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+          [
+            "publishedEntitySearchEntities",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            {
+              "after": null,
+              "afterInclusive": false,
+              "before": "cursor-1",
+              "beforeInclusive": true,
+              "count": 0,
+              "forwards": false,
+            },
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Object {
-            "after": null,
-            "afterInclusive": false,
-            "before": "cursor-1",
-            "beforeInclusive": true,
-            "count": 0,
-            "forwards": false,
-          },
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 });
 

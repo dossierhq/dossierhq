@@ -1,6 +1,6 @@
 export type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
-export type { AuthorizationAdapter } from './AuthorizationAdapter';
-export { NoneAndSubjectAuthorizationAdapter } from './AuthorizationAdapter';
-export type { SessionContext } from './Context';
-export { createServer } from './Server';
-export type { CreateSessionPayload, Server } from './Server';
+export type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+export { NoneAndSubjectAuthorizationAdapter } from './AuthorizationAdapter.js';
+export type { SessionContext } from './Context.js';
+export { createServer } from './Server.js';
+export type { CreateSessionPayload, Server } from './Server.js';

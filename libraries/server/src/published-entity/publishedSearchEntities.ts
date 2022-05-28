@@ -9,14 +9,15 @@ import type {
   PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authResolveAuthorizationKeys } from '../Auth';
-import { decodePublishedEntity } from '../EntityCodec';
+import { authResolveAuthorizationKeys } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { decodePublishedEntity } from '../EntityCodec.js';
 import {
   getOppositeDirectionPaging,
   resolvePagingInfo,
   sharedSearchEntities,
-} from '../shared-entity/sharedSearchEntities';
+} from '../shared-entity/sharedSearchEntities.js';
 
 export async function publishedSearchEntities(
   schema: PublishedSchema,

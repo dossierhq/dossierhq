@@ -1,5 +1,6 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { FieldType, RichTextBlockType, AdminSchema } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType, RichTextBlockType } from '@jonasb/datadata-core';
+import { describe, expect, test } from 'vitest';
 import { forTest } from './EntityCodec';
 
 const { collectDataFromEntity } = forTest;
@@ -51,12 +52,12 @@ describe('collectDataFromEntity', () => {
   test('empty', () => {
     expect(collectDataFromEntity(schema, { info: { type: 'EntityCodecFoo' }, fields: {} }))
       .toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [],
-        "requestedReferences": Array [],
-      }
-    `);
+        {
+          "fullTextSearchText": [],
+          "locations": [],
+          "requestedReferences": [],
+        }
+      `);
   });
 
   test('name only', () => {
@@ -66,10 +67,10 @@ describe('collectDataFromEntity', () => {
         fields: {},
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [],
-        "requestedReferences": Array [],
+      {
+        "fullTextSearchText": [],
+        "locations": [],
+        "requestedReferences": [],
       }
     `);
   });
@@ -84,15 +85,15 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [
+      {
+        "fullTextSearchText": [
           "Hello string world",
           "one",
           "two",
           "three",
         ],
-        "locations": Array [],
-        "requestedReferences": Array [],
+        "locations": [],
+        "requestedReferences": [],
       }
     `);
   });
@@ -111,15 +112,15 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [
+      {
+        "fullTextSearchText": [
           "one",
           "two",
           "three",
           "four",
         ],
-        "locations": Array [],
-        "requestedReferences": Array [],
+        "locations": [],
+        "requestedReferences": [],
       }
     `);
   });
@@ -150,8 +151,8 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [
+      {
+        "fullTextSearchText": [
           "one one",
           "one two",
           "3",
@@ -161,8 +162,8 @@ describe('collectDataFromEntity', () => {
           "123",
           "two",
         ],
-        "locations": Array [],
-        "requestedReferences": Array [],
+        "locations": [],
+        "requestedReferences": [],
       }
     `);
   });
@@ -180,23 +181,23 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [
-          Object {
+      {
+        "fullTextSearchText": [],
+        "locations": [
+          {
             "lat": 1,
             "lng": 2,
           },
-          Object {
+          {
             "lat": 3,
             "lng": 4,
           },
-          Object {
+          {
             "lat": 5,
             "lng": 6,
           },
         ],
-        "requestedReferences": Array [],
+        "requestedReferences": [],
       }
     `);
   });
@@ -218,19 +219,19 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [
-          Object {
+      {
+        "fullTextSearchText": [],
+        "locations": [
+          {
             "lat": 1,
             "lng": 2,
           },
-          Object {
+          {
             "lat": 3,
             "lng": 4,
           },
         ],
-        "requestedReferences": Array [],
+        "requestedReferences": [],
       }
     `);
   });
@@ -246,41 +247,41 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [],
-        "requestedReferences": Array [
-          Object {
-            "entityTypes": Array [
+      {
+        "fullTextSearchText": [],
+        "locations": [],
+        "requestedReferences": [
+          {
+            "entityTypes": [
               "EntityCodecBar",
             ],
             "prefix": "entity.fields.bar",
-            "uuids": Array [
+            "uuids": [
               "barId1",
             ],
           },
-          Object {
-            "entityTypes": Array [
+          {
+            "entityTypes": [
               "EntityCodecBar",
             ],
             "prefix": "entity.fields.bars[0]",
-            "uuids": Array [
+            "uuids": [
               "barId2",
             ],
           },
-          Object {
-            "entityTypes": Array [
+          {
+            "entityTypes": [
               "EntityCodecBar",
             ],
             "prefix": "entity.fields.bars[1]",
-            "uuids": Array [
+            "uuids": [
               "barId3",
             ],
           },
-          Object {
+          {
             "entityTypes": undefined,
             "prefix": "entity.fields.reference",
-            "uuids": Array [
+            "uuids": [
               "unspecifiedId1",
             ],
           },
@@ -298,16 +299,16 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [],
-        "requestedReferences": Array [
-          Object {
-            "entityTypes": Array [
+      {
+        "fullTextSearchText": [],
+        "locations": [],
+        "requestedReferences": [
+          {
+            "entityTypes": [
               "EntityCodecBar",
             ],
             "prefix": "entity.fields.valueOne.bar",
-            "uuids": Array [
+            "uuids": [
               "bar1Id",
             ],
           },
@@ -333,25 +334,25 @@ describe('collectDataFromEntity', () => {
         },
       })
     ).toMatchInlineSnapshot(`
-      Object {
-        "fullTextSearchText": Array [],
-        "locations": Array [],
-        "requestedReferences": Array [
-          Object {
-            "entityTypes": Array [
+      {
+        "fullTextSearchText": [],
+        "locations": [],
+        "requestedReferences": [
+          {
+            "entityTypes": [
               "EntityCodecBar",
             ],
             "prefix": "entity.fields.richText[0]",
-            "uuids": Array [
+            "uuids": [
               "barId1",
             ],
           },
-          Object {
-            "entityTypes": Array [
+          {
+            "entityTypes": [
               "EntityCodecBar",
             ],
             "prefix": "entity.fields.richText[1].bar",
-            "uuids": Array [
+            "uuids": [
               "bar2Id",
             ],
           },

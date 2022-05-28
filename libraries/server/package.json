@@ -2,24 +2,28 @@
   "name": "@jonasb/datadata-server",
   "version": "0.1.11",
   "description": "",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/cjs/index.js"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft test --clean && ./deno-build.js",
+    "build": "npm run prettier:check && heft build --clean && npm run test && ./deno-build.js",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "heft test",
-    "test:update-snapshot": "heft test --update-snapshots",
-    "test:watch": "heft test --watch",
-    "ts:check": "tsc --noEmit",
-    "ts:check:watch": "tsc --noEmit --watch",
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
@@ -30,16 +34,14 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-core-jest": "workspace:*",
+    "@jonasb/datadata-core-vitest": "workspace:*",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.45.5",
-    "@rushstack/heft-jest-plugin": "~0.3.5",
-    "@types/heft-jest": "1.0.2",
-    "@types/node": "^17.0.23",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
     "eslint": "^8.13.0",
     "prettier": "2.6.2",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.2",
+    "vitest": "~0.12.9"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",

@@ -1,14 +1,15 @@
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from '../test/AdditionalTestUtils';
-import { adminTestSchema } from '../test/TestSchema';
-import { adminGetEntity } from './adminGetEntity';
+} from '../test/AdditionalTestUtils.js';
+import { adminTestSchema } from '../test/TestSchema.js';
+import { adminGetEntity } from './adminGetEntity.js';
 
 describe('Admin adminGetEntity', () => {
   test('Minimal', async () => {
@@ -62,15 +63,15 @@ describe('Admin adminGetEntity', () => {
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "adminEntityGetOne",
-          Object {
-            "id": "123",
-            "version": 3,
-          },
-        ],
-      ]
-    `);
+        [
+          [
+            "adminEntityGetOne",
+            {
+              "id": "123",
+              "version": 3,
+            },
+          ],
+        ]
+      `);
   });
 });

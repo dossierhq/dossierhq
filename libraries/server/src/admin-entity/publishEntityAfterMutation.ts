@@ -6,8 +6,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { adminPublishEntities } from './adminPublishEntities';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { adminPublishEntities } from './adminPublishEntities.js';
 
 //TODO not optimized since we already have the entity data before this and adminPublishEntities() fetches it again
 

@@ -1,14 +1,16 @@
 import { AdminEntityStatus, ErrorType, ok } from '@jonasb/datadata-core';
-import { expectErrorResult, expectResultValue } from '@jonasb/datadata-core-jest';
+
+import { expectErrorResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from '../test/AdditionalTestUtils';
-import { adminTestSchema } from '../test/TestSchema';
-import { adminCreateEntity } from './adminCreateEntity';
+} from '../test/AdditionalTestUtils.js';
+import { adminTestSchema } from '../test/TestSchema.js';
+import { adminCreateEntity } from './adminCreateEntity.js';
 
 describe('Admin adminCreateEntity', () => {
   test('Minimal', async () => {
@@ -56,37 +58,37 @@ describe('Admin adminCreateEntity', () => {
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "adminEntityCreate",
-          [Function],
-          Object {
-            "creator": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
+        [
+          [
+            "adminEntityCreate",
+            [Function],
+            {
+              "creator": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "fieldsData": {
+                "title": "Title",
+              },
+              "fullTextSearchText": "Title",
+              "id": null,
+              "locations": [],
+              "name": "TitleOnly name",
+              "referenceIds": [],
+              "resolvedAuthKey": {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
+              "type": "TitleOnly",
             },
-            "fieldsData": Object {
-              "title": "Title",
-            },
-            "fullTextSearchText": "Title",
-            "id": null,
-            "locations": Array [],
-            "name": "TitleOnly name",
-            "referenceIds": Array [],
-            "resolvedAuthKey": Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
-            "type": "TitleOnly",
-          },
-        ],
-        Array [
-          "withRootTransaction",
-          [Function],
-          [Function],
-        ],
-      ]
-    `);
+          ],
+          [
+            "withRootTransaction",
+            [Function],
+            [Function],
+          ],
+        ]
+      `);
   });
 
   test('Error: Create with invalid type', async () => {
@@ -109,7 +111,7 @@ describe('Admin adminCreateEntity', () => {
     expectErrorResult(result, ErrorType.BadRequest, 'Entity type Invalid doesn’t exist');
     expect(
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
-    ).toMatchInlineSnapshot(`Array []`);
+    ).toMatchInlineSnapshot('[]');
   });
 
   test('Error: Create without type', async () => {
@@ -132,6 +134,6 @@ describe('Admin adminCreateEntity', () => {
     expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.type');
     expect(
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
-    ).toMatchInlineSnapshot(`Array []`);
+    ).toMatchInlineSnapshot('[]');
   });
 });

@@ -11,9 +11,10 @@ import type {
   DatabaseAdapter,
   DatabasePublishedEntityGetOnePayload,
 } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
-import { decodePublishedEntity } from '../EntityCodec';
+import { authVerifyAuthorizationKey } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { decodePublishedEntity } from '../EntityCodec.js';
 
 /**
  * Fetches published entities. The entities are returned in the same order as in `ids`.

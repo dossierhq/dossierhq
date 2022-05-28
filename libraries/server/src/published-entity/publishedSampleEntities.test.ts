@@ -1,13 +1,14 @@
 import { ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from '../test/AdditionalTestUtils';
-import { publishedTestSchema } from '../test/TestSchema';
+} from '../test/AdditionalTestUtils.js';
+import { publishedTestSchema } from '../test/TestSchema.js';
 import { publishedSampleEntities } from './publishedSampleEntities';
 
 describe('Published publishedSampleEntities', () => {
@@ -20,7 +21,7 @@ describe('Published publishedSampleEntities', () => {
       Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
     );
     databaseAdapter.publishedEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
-    databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(Promise.resolve(ok([])));
+    databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(ok([]));
 
     const result = await publishedSampleEntities(
       publishedTestSchema,
@@ -34,35 +35,35 @@ describe('Published publishedSampleEntities', () => {
     expectResultValue(result, { seed: 777, totalCount: 0, items: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "publishedEntitySearchTotalCount",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "publishedEntitySearchTotalCount",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 
   test('One result', async () => {
@@ -76,18 +77,16 @@ describe('Published publishedSampleEntities', () => {
     );
     databaseAdapter.publishedEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(1)));
     databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(
-      Promise.resolve(
-        ok([
-          {
-            id: '123',
-            type: 'TitleOnly',
-            name: 'TitleOnly name',
-            authKey: 'none',
-            createdAt: now,
-            fieldValues: {},
-          },
-        ])
-      )
+      ok([
+        {
+          id: '123',
+          type: 'TitleOnly',
+          name: 'TitleOnly name',
+          authKey: 'none',
+          createdAt: now,
+          fieldValues: {},
+        },
+      ])
     );
 
     const result = await publishedSampleEntities(
@@ -117,62 +116,62 @@ describe('Published publishedSampleEntities', () => {
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "publishedEntitySampleEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "publishedEntitySampleEntities",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            0,
+            25,
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          0,
-          25,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-        Array [
-          "publishedEntitySearchTotalCount",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+          [
+            "publishedEntitySearchTotalCount",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 });

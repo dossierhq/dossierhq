@@ -1,5 +1,6 @@
 import { ErrorType, ok } from '@jonasb/datadata-core';
-import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+import { describe, expect, test } from 'vitest';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth';
 import {
   createMockDatabaseAdapter,
@@ -23,14 +24,14 @@ describe('Auth authCreateSession', () => {
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "authCreateSession",
-          "test",
-          "hello",
-        ],
-      ]
-    `);
+        [
+          [
+            "authCreateSession",
+            "test",
+            "hello",
+          ],
+        ]
+      `);
   });
 });
 

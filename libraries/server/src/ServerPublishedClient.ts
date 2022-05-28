@@ -11,13 +11,14 @@ import {
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '.';
-import { publishedGetEntities } from './published-entity/publishedGetEntities';
-import { publishedGetEntity } from './published-entity/publishedGetEntity';
-import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount';
-import { publishedSampleEntities } from './published-entity/publishedSampleEntities';
-import { publishedSearchEntities } from './published-entity/publishedSearchEntities';
-import type { ServerImpl } from './Server';
+import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+import type { SessionContext } from './Context.js';
+import { publishedGetEntities } from './published-entity/publishedGetEntities.js';
+import { publishedGetEntity } from './published-entity/publishedGetEntity.js';
+import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount.js';
+import { publishedSampleEntities } from './published-entity/publishedSampleEntities.js';
+import { publishedSearchEntities } from './published-entity/publishedSearchEntities.js';
+import type { ServerImpl } from './Server.js';
 
 export function createServerPublishedClient({
   context,

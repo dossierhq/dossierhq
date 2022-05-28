@@ -1,13 +1,14 @@
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from '../test/AdditionalTestUtils';
-import { adminTestSchema } from '../test/TestSchema';
+} from '../test/AdditionalTestUtils.js';
+import { adminTestSchema } from '../test/TestSchema.js';
 import { adminSampleEntities } from './adminSampleEntities';
 
 describe('Admin adminSampleEntities', () => {
@@ -20,7 +21,7 @@ describe('Admin adminSampleEntities', () => {
       Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
     );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
-    databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(Promise.resolve(ok([])));
+    databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(ok([]));
 
     const result = await adminSampleEntities(
       adminTestSchema,
@@ -34,35 +35,35 @@ describe('Admin adminSampleEntities', () => {
     expectResultValue(result, { seed: 9876, totalCount: 0, items: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "adminEntitySearchTotalCount",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "adminEntitySearchTotalCount",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 
   test('One result', async () => {
@@ -76,21 +77,19 @@ describe('Admin adminSampleEntities', () => {
     );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(1)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(
-      Promise.resolve(
-        ok([
-          {
-            id: '123',
-            type: 'TitleOnly',
-            name: 'TitleOnly name',
-            version: 0,
-            authKey: 'none',
-            status: AdminEntityStatus.published,
-            createdAt: now,
-            updatedAt: now,
-            fieldValues: {},
-          },
-        ])
-      )
+      ok([
+        {
+          id: '123',
+          type: 'TitleOnly',
+          name: 'TitleOnly name',
+          version: 0,
+          authKey: 'none',
+          status: AdminEntityStatus.published,
+          createdAt: now,
+          updatedAt: now,
+          fieldValues: {},
+        },
+      ])
     );
 
     const result = await adminSampleEntities(
@@ -123,62 +122,62 @@ describe('Admin adminSampleEntities', () => {
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "adminEntitySampleEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+        [
+          [
+            "adminEntitySampleEntities",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            0,
+            25,
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          0,
-          25,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-        Array [
-          "adminEntitySearchTotalCount",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
+          [
+            "adminEntitySearchTotalCount",
+            _SessionContextImpl {
+              "defaultAuthKeys": [
+                "none",
+              ],
+              "logger": {
+                "debug": [Function],
+                "error": [Function],
+                "info": [Function],
+                "warn": [Function],
+              },
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "transaction": null,
+            },
+            undefined,
+            [
+              {
+                "authKey": "none",
+                "resolvedAuthKey": "none",
+              },
             ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
           ],
-        ],
-      ]
-    `);
+        ]
+      `);
   });
 });
