@@ -1,5 +1,7 @@
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+/* eslint-disable no-useless-escape */
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
 import {
   createMockAdapter,
@@ -37,9 +39,9 @@ describe('publishedEntitySearchEntities', () => {
     );
     expectResultValue(result, { entities: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+      [
+        [
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = \$1 ORDER BY e.id LIMIT \$2",
           "none",
           26,
         ],
@@ -63,13 +65,13 @@ describe('publishedEntitySearchEntities', () => {
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
-        "value": Object {
-          "entities": Array [
-            Object {
+        "value": {
+          "entities": [
+            {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "cursor": "MQ==",
-              "fieldValues": Object {
+              "fieldValues": {
                 "title": "Title",
               },
               "id": "uuid-1",
@@ -82,9 +84,9 @@ describe('publishedEntitySearchEntities', () => {
       }
     `);
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+      [
+        [
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = \$1 ORDER BY e.id LIMIT \$2",
           "none",
           26,
         ],
@@ -108,13 +110,13 @@ describe('publishedEntitySearchEntities', () => {
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
-        "value": Object {
-          "entities": Array [
-            Object {
+        "value": {
+          "entities": [
+            {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "cursor": "Mg==",
-              "fieldValues": Object {
+              "fieldValues": {
                 "title": "Title",
               },
               "id": "uuid-2",
@@ -127,9 +129,9 @@ describe('publishedEntitySearchEntities', () => {
       }
     `);
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
+      [
+        [
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = \$1 AND e.id > \$2 ORDER BY e.id LIMIT \$3",
           "none",
           1,
           11,
@@ -154,13 +156,13 @@ describe('publishedEntitySearchEntities', () => {
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
-        "value": Object {
-          "entities": Array [
-            Object {
+        "value": {
+          "entities": [
+            {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "cursor": "Mg==",
-              "fieldValues": Object {
+              "fieldValues": {
                 "title": "Title",
               },
               "id": "uuid-2",
@@ -173,9 +175,9 @@ describe('publishedEntitySearchEntities', () => {
       }
     `);
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+      [
+        [
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = \$1 AND e.id < \$2 ORDER BY e.id LIMIT \$3",
           "none",
           1,
           11,

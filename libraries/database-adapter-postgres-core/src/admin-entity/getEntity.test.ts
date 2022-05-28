@@ -1,6 +1,8 @@
+/* eslint-disable no-useless-escape */
 import { AdminEntityStatus } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { adminGetEntity } from './getEntity';
 
@@ -43,11 +45,11 @@ describe('adminGetEntity', () => {
       fieldValues: { title: 'Title' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
             FROM entities e, entity_versions ev
-            WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id",
+            WHERE e.uuid = \$1 AND e.latest_draft_entity_versions_id = ev.id",
           "123",
         ],
       ]
@@ -92,13 +94,13 @@ describe('adminGetEntity', () => {
       fieldValues: { title: 'Title' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
           FROM entities e, entity_versions ev
-          WHERE e.uuid = $1
+          WHERE e.uuid = \$1
           AND e.id = ev.entities_id
-          AND ev.version = $2",
+          AND ev.version = \$2",
           "123",
           5,
         ],

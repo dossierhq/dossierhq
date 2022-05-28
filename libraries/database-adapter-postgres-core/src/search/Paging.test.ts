@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { createMockAdapter, resolvePaging } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePagingCursors } from './Paging';
@@ -7,13 +8,13 @@ describe('resolvePagingCursors()', () => {
     const databaseAdapter = createMockAdapter();
     expect(resolvePagingCursors(databaseAdapter, 'int', resolvePaging(undefined)))
       .toMatchInlineSnapshot(`
-      OkResult {
-        "value": Object {
-          "after": null,
-          "before": null,
-        },
-      }
-    `);
+        OkResult {
+          "value": {
+            "after": null,
+            "before": null,
+          },
+        }
+      `);
   });
 
   test('after', () => {
@@ -28,7 +29,7 @@ describe('resolvePagingCursors()', () => {
       )
     ).toMatchInlineSnapshot(`
       OkResult {
-        "value": Object {
+        "value": {
           "after": 999,
           "before": null,
         },
@@ -48,7 +49,7 @@ describe('resolvePagingCursors()', () => {
       )
     ).toMatchInlineSnapshot(`
       OkResult {
-        "value": Object {
+        "value": {
           "after": null,
           "before": 999,
         },
@@ -69,7 +70,7 @@ describe('resolvePagingCursors()', () => {
       )
     ).toMatchInlineSnapshot(`
       OkResult {
-        "value": Object {
+        "value": {
           "after": 111,
           "before": 222,
         },

@@ -1,14 +1,20 @@
 {
-  "name": "@jonasb/datadata-database-adapter-postgres-core",
+  "name": "@jonasb/datadata-core-vitest",
   "version": "0.1.11",
   "description": "",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/cjs/index.js"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && ./deno-build.js",
+    "build": "npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -28,11 +34,9 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-core-vitest": "workspace:*",
-    "@js-temporal/polyfill": "~0.4.0",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.45.5",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
     "eslint": "^8.13.0",
     "prettier": "2.6.2",
     "typescript": "^4.7.2",
@@ -40,7 +44,7 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
+    "@js-temporal/polyfill": "~0.4.0",
     "tslib": "~2.4.0"
   }
 }

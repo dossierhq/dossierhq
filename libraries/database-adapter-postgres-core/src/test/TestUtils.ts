@@ -7,9 +7,18 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
+import type { SpyInstanceFn } from 'vitest';
+import { vi } from 'vitest';
 import type { PostgresDatabaseAdapter } from '..';
 import { createPostgresDatabaseAdapterAdapter } from '..';
 import type { UniqueConstraints } from '../DatabaseSchema';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+  Parameters<TFn>,
+  ReturnType<TFn>
+> &
+  TFn;
 
 type QueryFn = PostgresDatabaseAdapter['query'];
 
@@ -27,9 +36,9 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
 }
 
 interface MockedPostgresDatabaseAdapter extends PostgresDatabaseAdapter {
-  query: jest.MockedFunction<QueryFn>;
-  base64Encode: jest.MockedFunction<PostgresDatabaseAdapter['base64Encode']>;
-  base64Decode: jest.MockedFunction<PostgresDatabaseAdapter['base64Decode']>;
+  query: MockedFunction<QueryFn>;
+  base64Encode: MockedFunction<PostgresDatabaseAdapter['base64Encode']>;
+  base64Decode: MockedFunction<PostgresDatabaseAdapter['base64Decode']>;
 }
 
 export class MockUniqueViolationOfConstraintError extends Error {
@@ -48,10 +57,11 @@ export function createMockContext(adapter: PostgresDatabaseAdapter): Transaction
 }
 
 export function createMockAdapter(): MockedPostgresDatabaseAdapter {
-  const query: jest.MockedFunction<QueryFn> = jest.fn();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const query: MockedFunction<QueryFn> = vi.fn<any, any>();
 
   const databaseAdapter: MockedPostgresDatabaseAdapter = {
-    disconnect: jest.fn(),
+    disconnect: vi.fn(),
     isUniqueViolationOfConstraint: (error, constraintName) =>
       error instanceof MockUniqueViolationOfConstraintError &&
       error.uniqueConstraint === constraintName,
@@ -59,10 +69,10 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
     createTransaction: async () => ({
       _type: 'Transaction',
       savePointCount: 0,
-      release: jest.fn(),
+      release: vi.fn(),
     }),
-    base64Encode: jest.fn(),
-    base64Decode: jest.fn(),
+    base64Encode: vi.fn(),
+    base64Decode: vi.fn(),
   };
 
   databaseAdapter.base64Encode.mockImplementation((value) => Buffer.from(value).toString('base64'));

@@ -1,14 +1,18 @@
 {
   "cSpell.words": [
     "datadata",
-    "nextval",
+    "deno",
+    "jonasb",
+    "middlewares",
+    "pino",
     "postgres",
     "rushstack",
-    "SAVEPOINT",
-    "tsquery",
-    "tsvector",
-    "vitest",
-    "websearch"
+    "testpass",
+    "testuser",
+    "unarchived",
+    "Unpublish",
+    "Upsert",
+    "vitest"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
