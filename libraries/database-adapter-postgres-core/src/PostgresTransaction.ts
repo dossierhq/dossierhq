@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk } from '@jonasb/datadata-core';
 import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '.';
+import type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
 
 export interface PostgresTransaction extends Transaction {
   release(): void;

@@ -6,9 +6,9 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { queryMany, queryNoneOrOne } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function adminEntityHistoryGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,

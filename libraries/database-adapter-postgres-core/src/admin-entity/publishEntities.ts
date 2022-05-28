@@ -12,10 +12,10 @@ import type {
   DatabaseResolvedEntityVersionReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { queryMany, queryNoneOrOne, queryOne } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { queryMany, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityPublishGetVersionInfo(
   databaseAdapter: PostgresDatabaseAdapter,

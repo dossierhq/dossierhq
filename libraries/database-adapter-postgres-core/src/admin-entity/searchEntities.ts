@@ -11,11 +11,11 @@ import type {
   ResolvedAuthKey,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import { queryMany } from '../QueryFunctions';
-import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
-import { searchAdminEntitiesQuery } from '../search/QueryGenerator';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryMany } from '../QueryFunctions.js';
+import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
+import { searchAdminEntitiesQuery } from '../search/QueryGenerator.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,

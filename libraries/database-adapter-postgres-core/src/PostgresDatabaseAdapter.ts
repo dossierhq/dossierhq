@@ -1,51 +1,51 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { PostgresTransaction } from '.';
-import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
-import { adminCreateEntity } from './admin-entity/createEntity';
-import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
-import { adminEntityGetMultiple } from './admin-entity/getEntities';
-import { adminGetEntity } from './admin-entity/getEntity';
+import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
+import { adminCreateEntity } from './admin-entity/createEntity.js';
+import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
+import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
+import { adminGetEntity } from './admin-entity/getEntity.js';
 import {
   adminEntityHistoryGetEntityInfo,
   adminEntityHistoryGetVersionsInfo,
-} from './admin-entity/getEntityHistory';
-import { adminEntityGetEntityName } from './admin-entity/getEntityName';
+} from './admin-entity/getEntityHistory.js';
+import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
 import {
   adminEntityPublishingHistoryGetEntityInfo,
   adminEntityPublishingHistoryGetEvents,
-} from './admin-entity/getPublishingHistory';
-import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
-import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount';
+} from './admin-entity/getPublishingHistory.js';
+import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
+import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
-} from './admin-entity/publishEntities';
-import { adminEntitySampleEntities } from './admin-entity/sampleEntities';
-import { adminEntitySearchEntities } from './admin-entity/searchEntities';
+} from './admin-entity/publishEntities.js';
+import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
+import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
 import {
   adminEntityUnpublishEntities,
   adminEntityUnpublishGetEntitiesInfo,
   adminEntityUnpublishGetPublishedReferencedEntities,
-} from './admin-entity/unpublishEntities';
+} from './admin-entity/unpublishEntities.js';
 import {
   adminEntityUpdateEntity,
   adminEntityUpdateGetEntityInfo,
-} from './admin-entity/updateEntity';
-import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
-import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire';
-import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired';
-import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease';
-import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew';
-import { authCreateSession } from './auth/createSession';
-import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
-import { publishedEntityGetEntities } from './published-entity/getEntities';
-import { publishedEntityGetOne } from './published-entity/getEntity';
-import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
-import { publishedEntitySampleEntities } from './published-entity/sampleEntities';
-import { publishedEntitySearchEntities } from './published-entity/searchEntities';
-import { schemaGetSpecification } from './schema/getSpecification';
-import { schemaUpdateSpecification } from './schema/updateSpecification';
+} from './admin-entity/updateEntity.js';
+import { adminEntityUpdateStatus } from './admin-entity/updateStatus.js';
+import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire.js';
+import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired.js';
+import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
+import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
+import { authCreateSession } from './auth/createSession.js';
+import type { PostgresTransaction } from './PostgresTransaction.js';
+import { withNestedTransaction, withRootTransaction } from './PostgresTransaction.js';
+import { publishedEntityGetEntities } from './published-entity/getEntities.js';
+import { publishedEntityGetOne } from './published-entity/getEntity.js';
+import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
+import { publishedEntitySampleEntities } from './published-entity/sampleEntities.js';
+import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
+import { schemaGetSpecification } from './schema/getSpecification.js';
+import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;

@@ -544,6 +544,7 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-core-vitest': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
+      '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
@@ -558,6 +559,7 @@ importers:
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-core-vitest': link:../core-vitest
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@js-temporal/polyfill': 0.4.0
       '@rushstack/heft': 0.45.5

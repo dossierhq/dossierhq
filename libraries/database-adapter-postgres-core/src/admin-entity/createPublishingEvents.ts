@@ -4,9 +4,9 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import { queryNone } from '../QueryFunctions';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryNone } from '../QueryFunctions.js';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 
 export async function adminEntityPublishingCreateEvents(
   databaseAdapter: PostgresDatabaseAdapter,

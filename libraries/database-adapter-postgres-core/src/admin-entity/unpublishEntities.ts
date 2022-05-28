@@ -11,10 +11,10 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable } from '../DatabaseSchema';
-import { queryMany } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { EntitiesTable } from '../DatabaseSchema.js';
+import { queryMany } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityUnpublishGetEntitiesInfo(
   databaseAdapter: PostgresDatabaseAdapter,

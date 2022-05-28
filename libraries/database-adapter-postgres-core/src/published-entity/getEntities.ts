@@ -4,9 +4,9 @@ import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { queryMany } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { queryMany } from '../QueryFunctions.js';
 
 export async function publishedEntityGetEntities(
   databaseAdapter: PostgresDatabaseAdapter,

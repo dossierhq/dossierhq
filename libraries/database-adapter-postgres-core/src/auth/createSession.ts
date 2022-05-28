@@ -4,11 +4,11 @@ import type {
   DatabaseAuthCreateSessionPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { SubjectsTable } from '../DatabaseSchema';
-import { UniqueConstraints } from '../DatabaseSchema';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
-import { createSession } from '../utils/SessionUtils';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { SubjectsTable } from '../DatabaseSchema.js';
+import { UniqueConstraints } from '../DatabaseSchema.js';
+import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { createSession } from '../utils/SessionUtils.js';
 
 export async function authCreateSession(
   adapter: PostgresDatabaseAdapter,

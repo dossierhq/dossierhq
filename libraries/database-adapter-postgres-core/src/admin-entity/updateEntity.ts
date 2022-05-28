@@ -7,13 +7,13 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { UniqueConstraints } from '../DatabaseSchema';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils';
-import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { UniqueConstraints } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
+import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,

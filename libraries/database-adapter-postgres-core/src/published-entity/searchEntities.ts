@@ -11,10 +11,10 @@ import type {
   DatabasePagingInfo,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import { queryMany } from '../QueryFunctions';
-import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
-import { searchPublishedEntitiesQuery } from '../search/QueryGenerator';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryMany } from '../QueryFunctions.js';
+import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
+import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
 
 export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,

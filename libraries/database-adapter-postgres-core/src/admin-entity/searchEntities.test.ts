@@ -2,7 +2,7 @@
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
-import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
+import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import {
   createMockAdapter,
   createMockContext,

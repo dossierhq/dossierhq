@@ -1,9 +1,9 @@
 import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { SchemaVersionsTable } from '../DatabaseSchema';
-import { queryNoneOrOne } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { SchemaVersionsTable } from '../DatabaseSchema.js';
+import { queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function schemaGetSpecification(
   adapter: PostgresDatabaseAdapter,

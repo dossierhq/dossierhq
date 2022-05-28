@@ -1,5 +1,5 @@
 import { AdminEntityStatus, assertExhaustive } from '@jonasb/datadata-core';
-import type { EntitiesTable } from '../DatabaseSchema';
+import type { EntitiesTable } from '../DatabaseSchema.js';
 
 export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
   switch (status) {
