@@ -1,7 +1,0 @@
-module.exports = {
-  extends: ['next', 'next/core-web-vitals'],
-  plugins: ['@typescript-eslint'],
-  rules: {
-    '@typescript-eslint/consistent-type-imports': ['warn'],
-  },
-};
