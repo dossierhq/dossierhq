@@ -1,5 +1,6 @@
-import type { Connection, Edge, ErrorType, Paging, PromiseResult, Result } from '.';
-import { notOk, ok } from '.';
+import type { ErrorType, PromiseResult, Result } from './ErrorResult.js';
+import { notOk, ok } from './ErrorResult.js';
+import type { Connection, Edge, Paging } from './Types.js';
 
 export interface PagingInfo {
   forwards: boolean;

@@ -1,13 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import type { AdminItemTraverseNode } from '.';
-import {
-  AdminItemTraverseNodeType,
-  AdminSchema,
-  FieldType,
-  RichTextBlockType,
-  traverseAdminItem,
-  visitorPathToString,
-} from '.';
+import type { AdminItemTraverseNode } from './ItemTraverser.js';
+import { AdminItemTraverseNodeType, traverseAdminItem } from './ItemTraverser.js';
+import { visitorPathToString } from './ItemUtils.js';
+import { AdminSchema, FieldType, RichTextBlockType } from './Schema.js';
 
 const schema = new AdminSchema({
   entityTypes: [

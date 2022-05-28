@@ -142,6 +142,7 @@ importers:
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@jonasb/datadata-template-library': workspace:*
     devDependencies:
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
@@ -149,6 +150,7 @@ importers:
       '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/datadata-server': link:../../libraries/server
+      '@jonasb/datadata-template-library': link:../../templates/library
 
   ../../examples/foo:
     specifiers:
@@ -435,6 +437,7 @@ importers:
 
   ../../libraries/core:
     specifiers:
+      '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
@@ -447,6 +450,7 @@ importers:
       '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
     devDependencies:
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.45.5
       eslint: 8.13.0
@@ -938,6 +942,7 @@ importers:
       eslint: ^8.13.0
       prettier: 2.6.2
       tslib: ~2.4.0
+      typescript: ^4.7.2
       vitest: ~0.12.9
     dependencies:
       '@js-temporal/polyfill': 0.4.0
@@ -948,6 +953,7 @@ importers:
       '@rushstack/heft': 0.45.5
       eslint: 8.13.0
       prettier: 2.6.2
+      typescript: 4.7.2
       vitest: 0.12.9
 
   ../../tools/generic-tools:

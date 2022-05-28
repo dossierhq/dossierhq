@@ -1,12 +1,8 @@
-import type {
-  AdminSchema,
-  AdminValueTypeSpecification,
-  EntityLike,
-  FieldSpecification,
-  ItemValuePath,
-  ValueItem,
-} from '.';
-import { isItemValueItem, isRichTextItemField, isValueTypeItemField, RichTextBlockType } from '.';
+import type { ItemValuePath } from './ItemUtils.js';
+import { isItemValueItem, isRichTextItemField, isValueTypeItemField } from './ItemUtils.js';
+import type { AdminSchema, AdminValueTypeSpecification, FieldSpecification } from './Schema.js';
+import { RichTextBlockType } from './Schema.js';
+import type { EntityLike, ValueItem } from './Types.js';
 
 export const AdminItemTraverseNodeType = {
   error: 'error',

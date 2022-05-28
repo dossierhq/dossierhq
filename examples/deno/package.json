@@ -18,6 +18,7 @@
     "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*"
+    "@jonasb/datadata-server": "workspace:*",
+    "@jonasb/datadata-template-library": "workspace:*"
   }
 }

@@ -1,28 +1,23 @@
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
+import { ErrorType, notOk, ok } from './ErrorResult.js';
 import type {
-  Connection,
-  Edge,
-  EntityHistory,
   JsonConnection,
   JsonEdge,
   JsonEntityHistory,
   JsonPublishingHistory,
   JsonResult,
-  PublishingHistory,
-} from '.';
+} from './JsonUtils.js';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
   convertJsonResult,
-  ErrorType,
-  notOk,
-  ok,
-  PublishingEventKind,
-} from '.';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils';
+} from './JsonUtils.js';
+import type { Connection, Edge, EntityHistory, PublishingHistory } from './Types.js';
+import { PublishingEventKind } from './Types.js';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
   edgeProperty: string;

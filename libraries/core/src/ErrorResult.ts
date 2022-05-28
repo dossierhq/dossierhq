@@ -1,4 +1,4 @@
-import type { Logger } from '.';
+import type { Logger } from './Logger.js';
 
 export enum ErrorType {
   /** Corresponds to 400 Bad Request */

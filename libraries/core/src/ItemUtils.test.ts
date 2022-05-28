@@ -1,16 +1,15 @@
 import { describe, expect, test } from 'vitest';
-import type { EntityLike, FieldSpecification, RichText, RichTextBlock, ValueItem } from '.';
+import { assertIsDefined } from './Asserts.js';
 import {
-  AdminSchema,
-  assertIsDefined,
-  FieldType,
   isEntityNameAsRequested,
   isFieldValueEqual,
   normalizeFieldValue,
-  RichTextBlockType,
   visitItemRecursively,
   visitorPathToString,
-} from '.';
+} from './ItemUtils.js';
+import type { FieldSpecification } from './Schema.js';
+import { AdminSchema, FieldType, RichTextBlockType } from './Schema.js';
+import type { EntityLike, RichText, RichTextBlock, ValueItem } from './Types.js';
 
 const schema = new AdminSchema({
   entityTypes: [

@@ -1,41 +1,33 @@
+import { assertExhaustive } from './Asserts.js';
+import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from './ErrorResult.js';
+import { ErrorType, notOk, ok } from './ErrorResult.js';
+import type { JsonConnection, JsonEdge, JsonPublishedEntity, JsonResult } from './JsonUtils.js';
+import {
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonPublishedEntity,
+  convertJsonResult,
+} from './JsonUtils.js';
+import type { PublishedSchemaSpecification } from './Schema.js';
+import type {
+  ClientContext,
+  ContextProvider,
+  Middleware,
+  Operation,
+  OperationWithoutCallbacks,
+} from './SharedClient.js';
+import { executeOperationPipeline } from './SharedClient.js';
 import type {
   Connection,
-  ContextProvider,
   Edge,
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
-  ErrorFromResult,
-  JsonConnection,
-  JsonEdge,
-  JsonResult,
-  OkFromResult,
   Paging,
-  PromiseResult,
   PublishedEntity,
   PublishedQuery,
-  PublishedSchemaSpecification,
   PublishedSearchQuery,
-  Result,
-} from '.';
-import {
-  assertExhaustive,
-  convertJsonConnection,
-  convertJsonEdge,
-  convertJsonResult,
-  ErrorType,
-  notOk,
-  ok,
-} from '.';
-import type { JsonPublishedEntity } from './JsonUtils';
-import { convertJsonPublishedEntity } from './JsonUtils';
-import type {
-  ClientContext,
-  Middleware,
-  Operation,
-  OperationWithoutCallbacks,
-} from './SharedClient';
-import { executeOperationPipeline } from './SharedClient';
+} from './Types.js';
 
 export interface PublishedClient {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, ErrorType.Generic>;

@@ -1,5 +1,5 @@
 import type { Temporal } from '@js-temporal/polyfill';
-import type { ErrorType, Result } from '.';
+import type { ErrorType, Result } from './ErrorResult.js';
 
 export interface PublishedEntity {
   id: string;
