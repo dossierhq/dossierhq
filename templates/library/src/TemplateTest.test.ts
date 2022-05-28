@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { TEMPLATE_VALUE } from './TemplateFile.js';
+import { AN_INSTANT, TEMPLATE_VALUE } from './TemplateFile.js';
 
 describe('hello', () => {
   test('world', () => {
@@ -16,5 +16,9 @@ describe('hello', () => {
 
   test('snapshot', () => {
     expect({ what: 123 }).toMatchSnapshot();
+  });
+
+  test('instant', () => {
+    expect(AN_INSTANT.epochSeconds).toMatchInlineSnapshot('1651305085');
   });
 });
