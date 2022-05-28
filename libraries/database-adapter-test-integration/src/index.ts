@@ -1,14 +1,14 @@
-export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite';
-export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite';
-export { createAuthTestSuite } from './auth/AuthTestSuite';
-export { IntegrationTestSchemaSpecifciationUpdate } from './IntegrationTestSchemaSpecifciationUpdate';
-export { createPublishedEntityTestSuite } from './published-entity/PublishedEntityTestSuite';
-export { createSchemaTestSuite } from './schema/SchemaTestSuite';
+export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite.js';
+export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite.js';
+export { createAuthTestSuite } from './auth/AuthTestSuite.js';
+export { IntegrationTestSchemaSpecifciationUpdate } from './IntegrationTestSchemaSpecifciationUpdate.js';
+export { createPublishedEntityTestSuite } from './published-entity/PublishedEntityTestSuite.js';
+export { createSchemaTestSuite } from './schema/SchemaTestSuite.js';
 export {
   createReadOnlyEntityRepository,
   type ReadOnlyEntityRepository,
-} from './shared-entity/ReadOnlyEntityRepository';
-export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter';
+} from './shared-entity/ReadOnlyEntityRepository.js';
+export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter.js';
 
 export interface TestFunctionInitializer<TContext, TCleanup> {
   before: () => Promise<[TContext, TCleanup]>;

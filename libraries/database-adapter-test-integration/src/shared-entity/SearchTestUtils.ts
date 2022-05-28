@@ -27,7 +27,7 @@ import {
   assertResultValue,
   assertSame,
   assertTruthy,
-} from '../Asserts';
+} from '../Asserts.js';
 
 const adminOrderCompare: Record<AdminQueryOrder, (a: AdminEntity, b: AdminEntity) => number> = {
   [AdminQueryOrder.createdAt]: (a, b) =>

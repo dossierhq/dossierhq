@@ -1,4 +1,4 @@
-import type { TestFunctionInitializer, TestSuite } from '.';
+import type { TestFunctionInitializer, TestSuite } from './index.js';
 
 export interface UnboundTestFunction<TContext> {
   (context: TContext): void | Promise<void>;

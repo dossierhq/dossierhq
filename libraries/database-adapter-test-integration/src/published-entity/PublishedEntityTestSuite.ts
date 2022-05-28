@@ -1,13 +1,13 @@
 import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
-import type { TestFunctionInitializer, TestSuite } from '..';
-import { buildSuite } from '../Builder';
-import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository';
-import { GetEntitiesSubSuite } from './PublishedEntityGetEntitiesSubSuite';
-import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite';
-import { GetTotalCountSubSuite } from './PublishedEntityGetTotalCountSubSuite';
-import { SampleEntitiesSubSuite } from './PublishedEntitySampleEntitiesSubSuite';
-import { SearchEntitiesSubSuite } from './PublishedEntitySearchEntitiesSubSuite';
+import { buildSuite } from '../Builder.js';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
+import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository.js';
+import { GetEntitiesSubSuite } from './PublishedEntityGetEntitiesSubSuite.js';
+import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite.js';
+import { GetTotalCountSubSuite } from './PublishedEntityGetTotalCountSubSuite.js';
+import { SampleEntitiesSubSuite } from './PublishedEntitySampleEntitiesSubSuite.js';
+import { SearchEntitiesSubSuite } from './PublishedEntitySearchEntitiesSubSuite.js';
 
 export interface PublishedEntityTestContext {
   server: Server;

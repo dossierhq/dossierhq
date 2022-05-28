@@ -1,14 +1,14 @@
 import type { AdminEntityUpsert } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
+import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
 import {
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
   TITLE_ONLY_UPSERT,
-} from '../shared-entity/Fixtures';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+} from '../shared-entity/Fixtures.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   upsertEntity_minimalCreate,

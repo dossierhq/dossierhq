@@ -3,7 +3,7 @@
     "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/esm/index.js",
     "@jonasb/datadata-database-adapter": "../node_modules/@jonasb/datadata-database-adapter/lib/deno/index.js",
     "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/esm/index.js",
-    "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/deno/index.js",
+    "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/esm/index.js",
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/deno/index.js",
     "@jonasb/datadata-template-library": "../node_modules/@jonasb/datadata-template-library/lib/esm/index.js",
     "@js-temporal/polyfill": "https://cdn.skypack.dev/@js-temporal/polyfill@~0.4.0?dts",

@@ -1,8 +1,8 @@
 import { ErrorType } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
-import type { TestFunctionInitializer, TestSuite } from '..';
-import { assertErrorResult, assertOkResult, assertSame } from '../Asserts';
-import { buildSuite } from '../Builder';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
+import { assertErrorResult, assertOkResult, assertSame } from '../Asserts.js';
+import { buildSuite } from '../Builder.js';
 
 export function createAuthTestSuite<TCleanup>(
   initializer: TestFunctionInitializer<{ server: Server }, TCleanup>

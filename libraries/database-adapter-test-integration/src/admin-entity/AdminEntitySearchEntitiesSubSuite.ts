@@ -6,23 +6,27 @@ import {
   getAllNodesForConnection,
 } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import {
+  LOCATIONS_CREATE,
+  REFERENCES_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures.js';
 import {
   boundingBoxBelowCenter,
   boundingBoxCenter,
   randomBoundingBox,
-} from '../shared-entity/LocationTestUtils';
+} from '../shared-entity/LocationTestUtils.js';
 import {
   assertAdminEntityConnectionToMatchSlice,
   assertPageInfoEquals,
   assertSearchResultEntities,
   countSearchResultStatuses,
   countSearchResultWithEntity,
-} from '../shared-entity/SearchTestUtils';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+} from '../shared-entity/SearchTestUtils.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   searchEntities_minimal,

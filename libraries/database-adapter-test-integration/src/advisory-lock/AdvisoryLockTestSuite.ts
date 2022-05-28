@@ -1,9 +1,9 @@
 import type { Server } from '@jonasb/datadata-server';
-import type { TestFunctionInitializer, TestSuite } from '..';
-import { buildSuite } from '../Builder';
-import { AdvisoryLockAcquireSubSuite } from './AdvisoryLockAcquireSubSuite';
-import { AdvisoryLockReleaseSubSuite } from './AdvisoryLockReleaseSubSuite';
-import { AdvisoryLockRenewSubSuite } from './AdvisoryLockRenewSubSuite';
+import { buildSuite } from '../Builder.js';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
+import { AdvisoryLockAcquireSubSuite } from './AdvisoryLockAcquireSubSuite.js';
+import { AdvisoryLockReleaseSubSuite } from './AdvisoryLockReleaseSubSuite.js';
+import { AdvisoryLockRenewSubSuite } from './AdvisoryLockRenewSubSuite.js';
 
 export interface AdvisoryLockTestContext {
   server: Server;

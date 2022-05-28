@@ -1,21 +1,21 @@
 import { copyEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
+import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
 import {
   adminToPublishedEntity,
   REFERENCES_CREATE,
   TITLE_ONLY_CREATE,
-} from '../shared-entity/Fixtures';
+} from '../shared-entity/Fixtures.js';
 import {
   assertPageInfoEquals,
   assertPublishedEntityConnectionToMatchSlice,
   assertSearchResultEntities,
-} from '../shared-entity/SearchTestUtils';
+} from '../shared-entity/SearchTestUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients';
-import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
+} from '../shared-entity/TestClients.js';
+import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   searchEntities_minimal,

@@ -1,10 +1,14 @@
 import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
-import { randomBoundingBox } from '../shared-entity/LocationTestUtils';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import {
+  LOCATIONS_CREATE,
+  REFERENCES_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures.js';
+import { randomBoundingBox } from '../shared-entity/LocationTestUtils.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const GetTotalCountSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getTotalCount_minimal,

@@ -6,7 +6,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import { assertEquals } from '../Asserts';
+import { assertEquals } from '../Asserts.js';
 
 export const LOCATIONS_CREATE: Readonly<AdminEntityCreate> = {
   info: {
