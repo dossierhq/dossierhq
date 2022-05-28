@@ -7,14 +7,23 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
+import type { SpyInstanceFn } from 'vitest';
+import { vi } from 'vitest';
 import type { SqliteDatabaseAdapter } from '..';
 import { createSqliteDatabaseAdapterAdapter } from '..';
 import { Mutex } from '../utils/MutexUtils';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+  Parameters<TFn>,
+  ReturnType<TFn>
+> &
+  TFn;
+
 type QueryFn = SqliteDatabaseAdapter['query'];
 
 interface MockedSqliteDatabaseAdapter extends SqliteDatabaseAdapter {
-  query: jest.MockedFunction<QueryFn>;
+  query: MockedFunction<QueryFn>;
 }
 
 interface MockedDatabase {
@@ -58,7 +67,8 @@ export function createMockDatabase(): MockedDatabase {
 }
 
 export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
-  const query: jest.MockedFunction<QueryFn> = jest.fn();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const query: MockedFunction<QueryFn> = vi.fn<any, any>();
   query.mockImplementation(async (query, _values) => {
     if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.35.0' }];
     if (query === 'PRAGMA user_version') return [{ user_version: 999 }]; // high number to avoid migrations
@@ -66,12 +76,12 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
   });
 
   const mockAdapter = {
-    disconnect: jest.fn(),
+    disconnect: vi.fn(),
     query,
-    isFtsVirtualTableConstraintFailed: jest.fn().mockReturnValue(false),
-    isUniqueViolationOfConstraint: jest.fn().mockReturnValue(false),
-    encodeCursor: jest.fn(),
-    decodeCursor: jest.fn(),
+    isFtsVirtualTableConstraintFailed: vi.fn().mockReturnValue(false),
+    isUniqueViolationOfConstraint: vi.fn().mockReturnValue(false),
+    encodeCursor: vi.fn(),
+    decodeCursor: vi.fn(),
   };
 
   mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));

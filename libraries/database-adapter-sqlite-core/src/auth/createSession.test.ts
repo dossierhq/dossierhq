@@ -1,4 +1,5 @@
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+import { describe, expect, test } from 'vitest';
 import {
   createMockContext,
   createMockInnerAndOuterAdapter,
@@ -71,8 +72,8 @@ describe('authCreateSession', () => {
       });
 
       expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
-        Array [
-          Array [
+        [
+          [
             "SELECT s.id, s.uuid FROM subjects s, principals p
             WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id",
             "test",
