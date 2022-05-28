@@ -9,21 +9,22 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, ok } from '@jonasb/datadata-core';
+import { createMockLogger, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchemaSpecifciationUpdate,
   type TestSuite,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import { createMockLogger, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
+import { expect, test } from 'vitest';
 import { createPostgresAdapter } from '..';
 
 export function registerTestSuite(testSuite: TestSuite): void {
   for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction as jest.ProvidesCallback);
+    test(testName, testFunction);
   }
 }
 

@@ -1,6 +1,7 @@
 import { ErrorType, ok } from '@jonasb/datadata-core';
-import { expectErrorResult } from '@jonasb/datadata-core-jest';
+import { expectErrorResult } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
 
 //TODO consider moving this test back to server or even to core
@@ -26,7 +27,7 @@ describe('AdminClient createAdminClient()', () => {
   });
 
   test('context provided as factory, factory is called for each request', async () => {
-    const factory = jest.fn(() => Promise.resolve(ok({ context })));
+    const factory = vi.fn(() => Promise.resolve(ok({ context })));
     const client = server.createAdminClient(factory);
 
     const firstResult = await client.getEntity({ id: insecureTestUuidv4() });
@@ -36,9 +37,9 @@ describe('AdminClient createAdminClient()', () => {
     expectErrorResult(secondResult, ErrorType.NotFound, 'No such entity');
 
     expect(factory.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [],
-        Array [],
+      [
+        [],
+        [],
       ]
     `);
   });

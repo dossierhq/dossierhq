@@ -1,6 +1,7 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAdvisoryLockTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
+import { afterAll, beforeAll } from 'vitest';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils';
 
 let server: Server | null = null;

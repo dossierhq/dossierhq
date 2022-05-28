@@ -567,7 +567,7 @@ importers:
   ../../libraries/database-adapter-postgres-pg:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-core-jest': workspace:*
+      '@jonasb/datadata-core-vitest': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
@@ -575,8 +575,6 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
-      '@rushstack/heft-jest-plugin': ~0.3.5
-      '@types/heft-jest': 1.0.2
       '@types/pg': ^8.6.1
       '@types/uuid': ~8.3.4
       '@typescript-eslint/eslint-plugin': ^5.18.0
@@ -588,6 +586,7 @@ importers:
       tslib: ~2.4.0
       typescript: ^4.7.2
       uuid: ^8.3.2
+      vitest: ~0.12.9
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
@@ -596,13 +595,11 @@ importers:
       pg: 8.7.1
       tslib: 2.4.0
     devDependencies:
-      '@jonasb/datadata-core-jest': link:../core-jest
+      '@jonasb/datadata-core-vitest': link:../core-vitest
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-postgres': link:../postgres
       '@jonasb/datadata-server': link:../server
       '@rushstack/heft': 0.45.5
-      '@rushstack/heft-jest-plugin': 0.3.5_@rushstack+heft@0.45.5
-      '@types/heft-jest': 1.0.2
       '@types/pg': 8.6.1
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.18.0_f634834830b3cce5385c59ca2d60ec0b
@@ -612,6 +609,7 @@ importers:
       prettier: 2.6.2
       typescript: 4.7.2
       uuid: 8.3.2
+      vitest: 0.12.9
 
   ../../libraries/database-adapter-sqlite-core:
     specifiers:

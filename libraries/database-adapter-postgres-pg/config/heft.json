@@ -7,6 +7,5 @@
       "actionId": "defaultClean",
       "globsToDelete": ["lib", "temp", "*.build.log", "*.build.error.log"]
     }
-  ],
-  "heftPlugins": [{ "plugin": "@rushstack/heft-jest-plugin" }]
+  ]
 }

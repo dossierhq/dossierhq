@@ -1,11 +1,12 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
+import { createMockLogger } from '@jonasb/datadata-core-vitest';
 import {
   createSchemaTestSuite,
   createTestAuthorizationAdapter,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import { createMockLogger } from '@jonasb/datadata-core-jest';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
+import { afterAll, beforeAll } from 'vitest';
 import { createPostgresTestAdapter, registerTestSuite } from '../TestUtils';
 
 let server: Server | null = null;

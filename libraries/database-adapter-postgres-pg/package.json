@@ -8,7 +8,7 @@
     ".": "./lib/cjs/index.js"
   },
   "scripts": {
-    "build": "npm run prettier:check && heft test --clean",
+    "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
@@ -17,9 +17,9 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "heft test",
-    "test:watch": "heft test --watch",
-    "ts:check": "tsc --noEmit",
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
@@ -31,12 +31,10 @@
   },
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
-    "@jonasb/datadata-core-jest": "workspace:*",
+    "@jonasb/datadata-core-vitest": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@rushstack/heft-jest-plugin": "~0.3.5",
     "@rushstack/heft": "~0.45.5",
-    "@types/heft-jest": "1.0.2",
     "@types/pg": "^8.6.1",
     "@types/uuid": "~8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
@@ -45,7 +43,8 @@
     "eslint": "^8.13.0",
     "prettier": "2.6.2",
     "typescript": "^4.7.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vitest": "~0.12.9"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",

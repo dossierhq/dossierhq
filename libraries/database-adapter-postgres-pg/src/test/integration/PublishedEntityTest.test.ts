@@ -4,6 +4,7 @@ import {
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
+import { afterAll, beforeAll } from 'vitest';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils';
 
 let server: Server | null = null;
