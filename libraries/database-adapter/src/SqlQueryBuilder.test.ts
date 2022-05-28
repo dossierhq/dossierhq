@@ -1,4 +1,6 @@
-import { createPostgresSqlQuery, createSqliteSqlQuery, DEFAULT } from './SqlQueryBuilder';
+/* eslint-disable no-useless-escape */
+import { describe, expect, test } from 'vitest';
+import { createPostgresSqlQuery, createSqliteSqlQuery, DEFAULT } from './SqlQueryBuilder.js';
 
 describe('createPostgresSqlQuery', () => {
   test('one text', () => {
@@ -6,9 +8,9 @@ describe('createPostgresSqlQuery', () => {
     sql`SELECT * FROM foo WHERE bar IS NULL`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
+      {
         "text": "SELECT * FROM foo WHERE bar IS NULL",
-        "values": Array [],
+        "values": [],
       }
     `);
   });
@@ -18,9 +20,9 @@ describe('createPostgresSqlQuery', () => {
     sql`SELECT * FROM foo WHERE id = ${123} AND name = ${'Hello world'}`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
-        "text": "SELECT * FROM foo WHERE id = $1 AND name = $2",
-        "values": Array [
+      {
+        "text": "SELECT * FROM foo WHERE id = \$1 AND name = \$2",
+        "values": [
           123,
           "Hello world",
         ],
@@ -33,9 +35,9 @@ describe('createPostgresSqlQuery', () => {
     sql`INSERT INTO foo (bar) VALUES (${DEFAULT})`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
+      {
         "text": "INSERT INTO foo (bar) VALUES (DEFAULT)",
-        "values": Array [],
+        "values": [],
       }
     `);
   });
@@ -46,9 +48,9 @@ describe('createPostgresSqlQuery', () => {
     sql`INSERT INTO foo (bar, baz) VALUES (${reference}, ${reference})`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
-        "text": "INSERT INTO foo (bar, baz) VALUES ($1, $1)",
-        "values": Array [
+      {
+        "text": "INSERT INTO foo (bar, baz) VALUES (\$1, \$1)",
+        "values": [
           "Hello",
         ],
       }
@@ -63,9 +65,9 @@ describe('createPostgresSqlQuery', () => {
     sql`(${reference}, ${2})`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
-        "text": "INSERT INTO foo (bar, baz) VALUES ($1, $2), ($1, $3)",
-        "values": Array [
+      {
+        "text": "INSERT INTO foo (bar, baz) VALUES (\$1, \$2), (\$1, \$3)",
+        "values": [
           "Hello",
           1,
           2,
@@ -81,9 +83,9 @@ describe('createSqliteSqlQuery', () => {
     sql`SELECT * FROM foo WHERE bar IS NULL`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
+      {
         "text": "SELECT * FROM foo WHERE bar IS NULL",
-        "values": Array [],
+        "values": [],
       }
     `);
   });
@@ -93,9 +95,9 @@ describe('createSqliteSqlQuery', () => {
     sql`SELECT * FROM foo WHERE id = ${123} AND name = ${'Hello world'}`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
+      {
         "text": "SELECT * FROM foo WHERE id = ?1 AND name = ?2",
-        "values": Array [
+        "values": [
           123,
           "Hello world",
         ],
@@ -108,9 +110,9 @@ describe('createSqliteSqlQuery', () => {
     sql`INSERT INTO foo (bar) VALUES (${DEFAULT})`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
+      {
         "text": "INSERT INTO foo (bar) VALUES (DEFAULT)",
-        "values": Array [],
+        "values": [],
       }
     `);
   });
@@ -121,9 +123,9 @@ describe('createSqliteSqlQuery', () => {
     sql`INSERT INTO foo (bar, baz) VALUES (${reference}, ${reference})`;
 
     expect(query).toMatchInlineSnapshot(`
-      Object {
+      {
         "text": "INSERT INTO foo (bar, baz) VALUES (?1, ?1)",
-        "values": Array [
+        "values": [
           "Hello",
         ],
       }

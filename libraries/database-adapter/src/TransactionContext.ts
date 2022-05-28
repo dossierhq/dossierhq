@@ -1,5 +1,5 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '.';
+import type { DatabaseAdapter } from './DatabaseAdapter.js';
 
 export interface Context {
   readonly logger: Logger;
