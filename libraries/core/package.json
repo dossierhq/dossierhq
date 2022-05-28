@@ -14,7 +14,7 @@
   },
   "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && ./deno-build.js",
+    "build": "npm run prettier:check && heft build --clean && npm run test && ./deno-build.js && ./generate-package-json.sh",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
