@@ -32,12 +32,6 @@
       "type": "shell",
       "command": "$SHELL -i -c \"rush check && rush update\"",
       "problemMatcher": []
-    },
-    {
-      "label": "rush build && rush ci:check",
-      "type": "shell",
-      "command": "$SHELL -i -c \"rush build && rush ci:check\"",
-      "problemMatcher": []
     }
   ]
 }

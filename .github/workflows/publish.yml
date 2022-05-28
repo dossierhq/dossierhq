@@ -38,8 +38,6 @@ jobs:
       - name: rush build
         run: |
           node common/scripts/install-run-rush.js build --verbose
-      - name: check
-        run: node common/scripts/install-run-rush.js ci:check --verbose
       - name: stop db
         run: |
           cd tools/generic-tools/

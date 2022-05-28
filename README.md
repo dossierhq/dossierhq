@@ -24,7 +24,6 @@
   - `npm run db:migrate:all`
   - `npm run db:make-users:no-superuser`
 - `rush build`
-- `rush ci:check`
 
 ## Dependencies
 
@@ -45,7 +44,6 @@ Check that the same versions of dependencies are used, run `rush check`.
   - `npm run upgrade-dependencies:all`
   - `rush update --full`
   - `rush check`
-- `rush ci:check`
 - Exceptions:
   - In `examples/next-web`: `"next": "~10.0.8", "next-transpile-modules": "~6.3.0"`, "Module parse failed: Unexpected token (1:7)". Reverted to `"next": "~10.0.6", "next-transpile-modules": "~6.1.0"`
 
