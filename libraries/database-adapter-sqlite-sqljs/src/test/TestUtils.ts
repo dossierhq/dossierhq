@@ -2,8 +2,9 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import base64 from 'base-64';
+import * as base64 from 'base-64';
 import initSqlJs from 'sql.js';
+import { test } from 'vitest';
 import { createSqlJsAdapter } from '..';
 
 export async function createSqlJsTestAdapter(): PromiseResult<
@@ -18,7 +19,7 @@ export async function createSqlJsTestAdapter(): PromiseResult<
 export function registerTestSuite(testSuite: TestSuite): void {
   polyfillAtoBToA();
   for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction as jest.ProvidesCallback);
+    test(testName, testFunction);
   }
 }
 

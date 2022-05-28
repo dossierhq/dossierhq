@@ -685,20 +685,19 @@ importers:
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
+      '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': ~0.45.5
-      '@rushstack/heft-jest-plugin': ~0.3.5
       '@types/base-64': ~1.0.0
-      '@types/heft-jest': 1.0.2
       '@types/sql.js': ~1.4.2
-      '@typescript-eslint/eslint-plugin': ^5.18.0
-      '@typescript-eslint/parser': ^5.18.0
       base-64: ~1.0.0
       eslint: ^8.13.0
       prettier: 2.6.2
       sql.js: ~1.6.1
       tslib: ~2.4.0
       typescript: ^4.7.2
+      vitest: ~0.12.9
     dependencies:
       '@jonasb/datadata-database-adapter-sqlite-core': link:../database-adapter-sqlite-core
       tslib: 2.4.0
@@ -706,19 +705,18 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
+      '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.45.5
-      '@rushstack/heft-jest-plugin': 0.3.5_@rushstack+heft@0.45.5
       '@types/base-64': 1.0.0
-      '@types/heft-jest': 1.0.2
       '@types/sql.js': 1.4.3
-      '@typescript-eslint/eslint-plugin': 5.18.0_f634834830b3cce5385c59ca2d60ec0b
-      '@typescript-eslint/parser': 5.18.0_eslint@8.13.0+typescript@4.7.2
       base-64: 1.0.0
       eslint: 8.13.0
       prettier: 2.6.2
       sql.js: 1.6.2
       typescript: 4.7.2
+      vitest: 0.12.9
 
   ../../libraries/database-adapter-test-integration:
     specifiers:
