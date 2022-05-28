@@ -11,11 +11,11 @@ import type {
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
 import type { DatabasePagingInfo, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
 import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import type { CursorNativeType } from './OpaqueCursor';
-import { toOpaqueCursor } from './OpaqueCursor';
-import { resolvePagingCursors } from './Paging';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { CursorNativeType } from './OpaqueCursor.js';
+import { toOpaqueCursor } from './OpaqueCursor.js';
+import { resolvePagingCursors } from './Paging.js';
 
 // id and updated are included for order by
 export type SearchAdminEntitiesItem = Pick<

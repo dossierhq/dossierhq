@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { AdvisoryLocksTable } from '../DatabaseSchema';
-import { queryMany } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
+import { queryMany } from '../QueryFunctions.js';
 
 const QUERY =
   'DELETE FROM advisory_locks WHERE renewed_at + lease_duration <= NOW() RETURNING name';

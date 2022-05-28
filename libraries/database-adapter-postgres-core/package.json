@@ -2,11 +2,17 @@
   "name": "@jonasb/datadata-database-adapter-postgres-core",
   "version": "0.1.11",
   "description": "",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/cjs/index.js"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test && ./deno-build.js",
     "build:watch": "heft build --watch",
@@ -29,6 +35,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-core-vitest": "workspace:*",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
     "@rushstack/heft": "~0.45.5",

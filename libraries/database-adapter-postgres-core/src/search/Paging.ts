@@ -1,9 +1,9 @@
 import type { ErrorType, Result } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabasePagingInfo } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { CursorNativeType } from './OpaqueCursor';
-import { fromOpaqueCursor } from './OpaqueCursor';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { CursorNativeType } from './OpaqueCursor.js';
+import { fromOpaqueCursor } from './OpaqueCursor.js';
 
 export interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;

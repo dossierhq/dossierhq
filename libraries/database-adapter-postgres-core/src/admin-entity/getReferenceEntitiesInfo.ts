@@ -4,9 +4,9 @@ import type {
   DatabaseAdminEntityGetReferenceEntityInfoPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable } from '../DatabaseSchema';
-import { queryMany } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { EntitiesTable } from '../DatabaseSchema.js';
+import { queryMany } from '../QueryFunctions.js';
 
 export async function adminEntityGetReferenceEntitiesInfo(
   databaseAdapter: PostgresDatabaseAdapter,

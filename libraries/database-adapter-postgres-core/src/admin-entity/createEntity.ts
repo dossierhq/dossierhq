@@ -5,11 +5,15 @@ import {
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import { UniqueConstraints, type EntitiesTable, type EntityVersionsTable } from '../DatabaseSchema';
-import { queryNone, queryOne } from '../QueryFunctions';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils';
-import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
+import {
+  UniqueConstraints,
+  type EntitiesTable,
+  type EntityVersionsTable,
+} from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryNone, queryOne } from '../QueryFunctions.js';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
+import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
 export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,

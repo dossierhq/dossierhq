@@ -4,10 +4,10 @@ import type {
   DatabaseAdminEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { queryMany } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { queryMany } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityGetMultiple(
   databaseAdapter: PostgresDatabaseAdapter,

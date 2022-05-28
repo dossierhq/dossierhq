@@ -3,10 +3,10 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { PostgresDatabaseAdapter } from '..';
-import type { AdvisoryLocksTable } from '../DatabaseSchema';
-import { UniqueConstraints } from '../DatabaseSchema';
-import { queryOne } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
+import { UniqueConstraints } from '../DatabaseSchema.js';
+import { queryOne } from '../QueryFunctions.js';
 
 export async function advisoryLockAcquire(
   databaseAdapter: PostgresDatabaseAdapter,

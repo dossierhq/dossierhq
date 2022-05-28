@@ -1,7 +1,8 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter, PostgresTransaction } from '.';
+import type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
+import type { PostgresTransaction } from './PostgresTransaction.js';
 
 interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;

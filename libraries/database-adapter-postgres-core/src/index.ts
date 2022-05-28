@@ -1,4 +1,4 @@
-export * as DatabaseSchema from './DatabaseSchema';
-export { createPostgresDatabaseAdapterAdapter } from './PostgresDatabaseAdapter';
-export type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter';
-export type { PostgresTransaction } from './PostgresTransaction';
+export * as DatabaseSchema from './DatabaseSchema.js';
+export { createPostgresDatabaseAdapterAdapter } from './PostgresDatabaseAdapter.js';
+export type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
+export type { PostgresTransaction } from './PostgresTransaction.js';

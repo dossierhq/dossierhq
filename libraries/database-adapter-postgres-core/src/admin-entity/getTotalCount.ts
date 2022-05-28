@@ -1,9 +1,9 @@
 import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import { queryOne } from '../QueryFunctions';
-import { totalAdminEntitiesQuery } from '../search/QueryGenerator';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryOne } from '../QueryFunctions.js';
+import { totalAdminEntitiesQuery } from '../search/QueryGenerator.js';
 
 export async function adminEntitySearchTotalCount(
   databaseAdapter: PostgresDatabaseAdapter,

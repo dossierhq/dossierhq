@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
-import { queryNone } from '../QueryFunctions';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryNone } from '../QueryFunctions.js';
 
 export async function schemaUpdateSpecification(
   adapter: PostgresDatabaseAdapter,

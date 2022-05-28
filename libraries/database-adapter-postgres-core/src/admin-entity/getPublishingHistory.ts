@@ -11,13 +11,13 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type {
   EntitiesTable,
   EntityPublishingEventsTable,
   EntityVersionsTable,
-} from '../DatabaseSchema';
-import { queryMany, queryNoneOrOne } from '../QueryFunctions';
+} from '../DatabaseSchema.js';
+import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function adminEntityPublishingHistoryGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
