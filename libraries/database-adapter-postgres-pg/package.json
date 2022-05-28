@@ -2,11 +2,17 @@
   "name": "@jonasb/datadata-database-adapter-postgres-pg",
   "version": "0.1.11",
   "description": "",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/cjs/index.js"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
@@ -32,13 +38,13 @@
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-core-vitest": "workspace:*",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.45.5",
     "@types/pg": "^8.6.1",
     "@types/uuid": "~8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
     "dotenv": "^16.0.0",
     "eslint": "^8.13.0",
     "prettier": "2.6.2",
