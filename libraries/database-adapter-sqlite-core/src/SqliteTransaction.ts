@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk } from '@jonasb/datadata-core';
 import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { Database } from './QueryFunctions';
-import { queryNone } from './QueryFunctions';
+import type { Database } from './QueryFunctions.js';
+import { queryNone } from './QueryFunctions.js';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
 export interface SqliteTransaction extends Transaction {

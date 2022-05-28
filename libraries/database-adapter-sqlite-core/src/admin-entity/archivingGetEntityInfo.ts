@@ -5,10 +5,10 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { EntitiesTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNoneOrOne } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { EntitiesTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNoneOrOne } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityArchivingGetEntityInfo(
   database: Database,

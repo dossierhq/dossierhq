@@ -8,14 +8,14 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { EntitiesUniqueNameConstraint } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils';
-import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
-import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
+import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,

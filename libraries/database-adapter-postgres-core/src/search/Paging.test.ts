@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { createMockAdapter, resolvePaging } from '../test/TestUtils';
-import { toOpaqueCursor } from './OpaqueCursor';
-import { resolvePagingCursors } from './Paging';
+import { toOpaqueCursor } from './OpaqueCursor.js';
+import { resolvePagingCursors } from './Paging.js';
 
 describe('resolvePagingCursors()', () => {
   test('undefined', () => {

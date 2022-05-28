@@ -5,9 +5,9 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNoneOrOne } from '../QueryFunctions';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function publishedEntityGetOne(
   database: Database,

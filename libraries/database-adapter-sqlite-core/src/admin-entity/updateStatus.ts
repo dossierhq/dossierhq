@@ -6,9 +6,9 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { Database } from '../QueryFunctions';
-import { queryNone } from '../QueryFunctions';
-import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone } from '../QueryFunctions.js';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityUpdateStatus(
   database: Database,

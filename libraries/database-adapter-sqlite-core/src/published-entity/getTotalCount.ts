@@ -6,9 +6,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { Database } from '../QueryFunctions';
-import { queryOne } from '../QueryFunctions';
-import { totalPublishedEntitiesQuery } from '../search/QueryGenerator';
+import type { Database } from '../QueryFunctions.js';
+import { queryOne } from '../QueryFunctions.js';
+import { totalPublishedEntitiesQuery } from '../search/QueryGenerator.js';
 
 export async function publishedEntitySearchTotalCount(
   database: Database,

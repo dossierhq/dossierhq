@@ -11,10 +11,10 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { Database } from '../QueryFunctions';
-import { queryMany } from '../QueryFunctions';
-import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
-import { samplePublishedEntitiesQuery } from '../search/QueryGenerator';
+import type { Database } from '../QueryFunctions.js';
+import { queryMany } from '../QueryFunctions.js';
+import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
+import { samplePublishedEntitiesQuery } from '../search/QueryGenerator.js';
 
 export async function publishedEntitySampleEntities(
   database: Database,

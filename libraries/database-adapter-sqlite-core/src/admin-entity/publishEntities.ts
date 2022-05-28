@@ -9,11 +9,11 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryMany, queryNone, queryNoneOrOne } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
-import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryMany, queryNone, queryNoneOrOne } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityPublishGetVersionInfo(
   database: Database,

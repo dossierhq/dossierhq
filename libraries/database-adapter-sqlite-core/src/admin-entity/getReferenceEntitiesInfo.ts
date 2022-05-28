@@ -5,9 +5,9 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { EntitiesTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryMany } from '../QueryFunctions';
+import type { EntitiesTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryMany } from '../QueryFunctions.js';
 
 export async function adminEntityGetReferenceEntitiesInfo(
   database: Database,

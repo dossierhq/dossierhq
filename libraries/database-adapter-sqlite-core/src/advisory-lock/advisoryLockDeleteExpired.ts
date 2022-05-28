@@ -2,9 +2,9 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { AdvisoryLocksTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryMany } from '../QueryFunctions';
+import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryMany } from '../QueryFunctions.js';
 
 export async function advisoryLockDeleteExpired(
   database: Database,

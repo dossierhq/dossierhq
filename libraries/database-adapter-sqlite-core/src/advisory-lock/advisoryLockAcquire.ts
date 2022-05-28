@@ -3,9 +3,9 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import { AdvisoryLocksUniqueNameConstraint } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNone } from '../QueryFunctions';
+import { AdvisoryLocksUniqueNameConstraint } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone } from '../QueryFunctions.js';
 
 export async function advisoryLockAcquire(
   database: Database,

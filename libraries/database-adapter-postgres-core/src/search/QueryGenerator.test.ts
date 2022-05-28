@@ -9,7 +9,7 @@ import {
 import { expectErrorResult } from '@jonasb/datadata-core-vitest';
 import { describe, expect, test } from 'vitest';
 import { createMockAdapter, resolvePaging } from '../test/TestUtils';
-import { toOpaqueCursor } from './OpaqueCursor';
+import { toOpaqueCursor } from './OpaqueCursor.js';
 import {
   sampleAdminEntitiesQuery,
   samplePublishedEntitiesQuery,
