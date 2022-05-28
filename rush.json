@@ -469,6 +469,10 @@
     {
       "packageName": "@jonasb/datadata-template-library",
       "projectFolder": "templates/library"
+    },
+    {
+      "packageName": "@jonasb/datadata-template-tool",
+      "projectFolder": "templates/tool"
     }
 
     // {
