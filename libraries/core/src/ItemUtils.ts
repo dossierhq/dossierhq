@@ -1,19 +1,22 @@
+import { assertExhaustive } from './Asserts.js';
+import type {
+  AdminSchema,
+  FieldSpecification,
+  FieldValueTypeMap,
+  PublishedSchema,
+} from './Schema.js';
+import { FieldType, RichTextBlockType } from './Schema.js';
 import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
-  AdminSchema,
   EntityLike,
   EntityReference,
-  FieldSpecification,
-  FieldValueTypeMap,
   PublishedEntity,
-  PublishedSchema,
   RichText,
   RichTextBlock,
   ValueItem,
-} from '.';
-import { assertExhaustive, FieldType, RichTextBlockType } from '.';
+} from './Types.js';
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(

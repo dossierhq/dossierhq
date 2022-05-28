@@ -1,3 +1,40 @@
+import { assertExhaustive } from './Asserts.js';
+import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from './ErrorResult.js';
+import { ErrorType, notOk, ok } from './ErrorResult.js';
+import type {
+  JsonAdminEntity,
+  JsonAdminEntityCreatePayload,
+  JsonAdminEntityUpdatePayload,
+  JsonAdminEntityUpsertPayload,
+  JsonConnection,
+  JsonEdge,
+  JsonEntityHistory,
+  JsonPublishingHistory,
+  JsonPublishingResult,
+  JsonResult,
+} from './JsonUtils.js';
+import {
+  convertJsonAdminEntity,
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonEntityHistory,
+  convertJsonPublishingHistory,
+  convertJsonPublishingResult,
+  convertJsonResult,
+} from './JsonUtils.js';
+import type {
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdatePayload,
+} from './Schema.js';
+import type {
+  ClientContext,
+  ContextProvider,
+  Middleware,
+  Operation,
+  OperationWithoutCallbacks,
+} from './SharedClient.js';
+import { executeOperationPipeline } from './SharedClient.js';
 import type {
   AdminEntity,
   AdminEntityArchivePayload,
@@ -12,8 +49,6 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminQuery,
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
   AdminSearchQuery,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
@@ -25,43 +60,9 @@ import type {
   EntitySamplingOptions,
   EntitySamplingPayload,
   EntityVersionReference,
-  ErrorFromResult,
-  JsonResult,
-  OkFromResult,
   Paging,
-  PromiseResult,
   PublishingHistory,
-  Result,
-  SchemaSpecificationUpdatePayload,
-} from '.';
-import { assertExhaustive, convertJsonResult, ErrorType, notOk, ok } from '.';
-import type {
-  JsonAdminEntity,
-  JsonAdminEntityCreatePayload,
-  JsonAdminEntityUpdatePayload,
-  JsonAdminEntityUpsertPayload,
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonPublishingHistory,
-  JsonPublishingResult,
-} from './JsonUtils';
-import {
-  convertJsonAdminEntity,
-  convertJsonConnection,
-  convertJsonEdge,
-  convertJsonEntityHistory,
-  convertJsonPublishingHistory,
-  convertJsonPublishingResult,
-} from './JsonUtils';
-import type {
-  ClientContext,
-  ContextProvider,
-  Middleware,
-  Operation,
-  OperationWithoutCallbacks,
-} from './SharedClient';
-import { executeOperationPipeline } from './SharedClient';
+} from './Types.js';
 
 export interface AdminClient {
   getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, ErrorType.Generic>;

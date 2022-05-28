@@ -1,24 +1,23 @@
 import { Temporal } from '@js-temporal/polyfill';
+import type { ErrorType, Result } from './ErrorResult.js';
+import { createErrorResult, ok } from './ErrorResult.js';
 import type {
   AdminEntity,
   AdminEntityCreatePayload,
   AdminEntityInfo,
+  AdminEntityPublishingPayload,
   AdminEntityUpdatePayload,
   AdminEntityUpsertPayload,
   Connection,
   Edge,
-  PublishedEntity,
   EntityHistory,
-  PublishedEntityInfo,
-  AdminEntityPublishingPayload,
   EntityVersionInfo,
-  ErrorType,
   PageInfo,
+  PublishedEntity,
+  PublishedEntityInfo,
   PublishingEvent,
   PublishingHistory,
-  Result,
-} from '.';
-import { createErrorResult, ok } from '.';
+} from './Types.js';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
   pageInfo: PageInfo;

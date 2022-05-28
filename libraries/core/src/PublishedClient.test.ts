@@ -1,23 +1,23 @@
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test, vi } from 'vitest';
+import { expectOkResult, expectResultValue } from './CoreTestUtils.js';
+import { ok } from './ErrorResult.js';
+import { convertJsonResult } from './JsonUtils.js';
+import { NoOpLogger } from './Logger.js';
 import type {
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
-  PublishedEntity,
-} from '.';
+} from './PublishedClient.js';
 import {
   convertJsonPublishedClientResult,
-  convertJsonResult,
   convertPublishedClientOperationToJson,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
-  NoOpLogger,
-  ok,
   PublishedClientOperationName,
-} from '.';
-import { expectOkResult, expectResultValue } from './CoreTestUtils';
-import type { ClientContext } from './SharedClient';
+} from './PublishedClient.js';
+import type { ClientContext } from './SharedClient.js';
+import type { PublishedEntity } from './Types.js';
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   publishedClient: PublishedClient

@@ -1,5 +1,6 @@
-import type { EntityReference, Result, ErrorType, Location, RichText, ValueItem } from '.';
-import { notOk, ok } from '.';
+import type { ErrorType, Result } from './ErrorResult.js';
+import { notOk, ok } from './ErrorResult.js';
+import type { EntityReference, Location, RichText, ValueItem } from './Types.js';
 
 export interface AdminEntityTypeSpecification {
   name: string;

@@ -1,22 +1,22 @@
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test, vi } from 'vitest';
-import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
+import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from './AdminClient.js';
 import {
   AdminClientOperationName,
-  AdminEntityStatus,
-  assertIsDefined,
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
-  convertJsonResult,
-  copyEntity,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-  NoOpLogger,
-  ok,
-  PublishingEventKind,
-} from '.';
-import { expectOkResult, expectResultValue } from './CoreTestUtils';
-import type { ClientContext } from './SharedClient';
+} from './AdminClient.js';
+import { assertIsDefined } from './Asserts.js';
+import { expectOkResult, expectResultValue } from './CoreTestUtils.js';
+import { ok } from './ErrorResult.js';
+import { copyEntity } from './ItemUtils.js';
+import { convertJsonResult } from './JsonUtils.js';
+import { NoOpLogger } from './Logger.js';
+import type { ClientContext } from './SharedClient.js';
+import type { AdminEntity } from './Types.js';
+import { AdminEntityStatus, PublishingEventKind } from './Types.js';
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient

@@ -5,14 +5,14 @@ export {
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
   type AdminClient,
-} from './AdminClient';
+} from './AdminClient.js';
 export type {
   AdminClientJsonOperation,
   AdminClientMiddleware,
   AdminClientOperation,
-} from './AdminClient';
-export { withAdvisoryLock } from './AdvisoryLockUtils';
-export { assertExhaustive, assertIsDefined } from './Asserts';
+} from './AdminClient.js';
+export { withAdvisoryLock } from './AdvisoryLockUtils.js';
+export { assertExhaustive, assertIsDefined } from './Asserts.js';
 export {
   createErrorResult,
   createErrorResultFromError,
@@ -20,7 +20,7 @@ export {
   ErrorType,
   notOk,
   ok,
-} from './ErrorResult';
+} from './ErrorResult.js';
 export type {
   ErrorFromResult,
   ErrorResult,
@@ -28,13 +28,13 @@ export type {
   OkResult,
   PromiseResult,
   Result,
-} from './ErrorResult';
+} from './ErrorResult.js';
 export {
   AdminItemTraverseNodeType,
   traverseAdminItem,
   traverseAdminItemField,
-} from './ItemTraverser';
-export type { AdminItemTraverseNode } from './ItemTraverser';
+} from './ItemTraverser.js';
+export type { AdminItemTraverseNode } from './ItemTraverser.js';
 export {
   copyEntity,
   isBooleanField,
@@ -68,15 +68,15 @@ export {
   visitFieldRecursively,
   visitItemRecursively,
   visitorPathToString,
-} from './ItemUtils';
-export type { ItemValuePath } from './ItemUtils';
+} from './ItemUtils.js';
+export type { ItemValuePath } from './ItemUtils.js';
 export {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
   convertJsonResult,
-} from './JsonUtils';
+} from './JsonUtils.js';
 export type {
   JsonConnection,
   JsonEdge,
@@ -84,25 +84,29 @@ export type {
   JsonEntityVersionInfo,
   JsonPublishingHistory,
   JsonResult,
-} from './JsonUtils';
-export { createConsoleLogger, NoOpLogger } from './Logger';
-export type { Logger } from './Logger';
-export { getAllNodesForConnection, getAllPagesForConnection, getPagingInfo } from './PagingUtils';
-export type { PagingInfo } from './PagingUtils';
+} from './JsonUtils.js';
+export { createConsoleLogger, NoOpLogger } from './Logger.js';
+export type { Logger } from './Logger.js';
+export {
+  getAllNodesForConnection,
+  getAllPagesForConnection,
+  getPagingInfo,
+} from './PagingUtils.js';
+export type { PagingInfo } from './PagingUtils.js';
 export {
   convertJsonPublishedClientResult,
   convertPublishedClientOperationToJson,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
   PublishedClientOperationName,
-} from './PublishedClient';
+} from './PublishedClient.js';
 export type {
   PublishedClient,
   PublishedClientJsonOperation,
   PublishedClientMiddleware,
   PublishedClientOperation,
-} from './PublishedClient';
-export { AdminSchema, FieldType, PublishedSchema, RichTextBlockType } from './Schema';
+} from './PublishedClient.js';
+export { AdminSchema, FieldType, PublishedSchema, RichTextBlockType } from './Schema.js';
 export type {
   AdminEntityTypeSpecification,
   AdminEntityTypeSpecificationUpdate,
@@ -116,15 +120,15 @@ export type {
   PublishedSchemaSpecification,
   PublishedValueTypeSpecification,
   SchemaSpecificationUpdatePayload,
-} from './Schema';
-export { LoggingClientMiddleware } from './SharedClient';
-export type { ClientContext, ContextProvider } from './SharedClient';
+} from './Schema.js';
+export { LoggingClientMiddleware } from './SharedClient.js';
+export type { ClientContext, ContextProvider } from './SharedClient.js';
 export {
   AdminEntityStatus,
   AdminQueryOrder,
   PublishedQueryOrder,
   PublishingEventKind,
-} from './Types';
+} from './Types.js';
 export type {
   AdminEntity,
   AdminEntityArchivePayload,
@@ -167,9 +171,9 @@ export type {
   RichText,
   RichTextBlock,
   ValueItem,
-} from './Types';
+} from './Types.js';
 export {
   buildUrlWithUrlQuery,
   decodeUrlQueryStringifiedParam,
   stringifyUrlQueryParams,
-} from './UrlQueryUtils';
+} from './UrlQueryUtils.js';

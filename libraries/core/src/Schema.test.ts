@@ -1,6 +1,7 @@
-import { describe, test, expect } from 'vitest';
-import { ErrorType, FieldType, RichTextBlockType, AdminSchema } from '.';
-import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils';
+import { describe, expect, test } from 'vitest';
+import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils.js';
+import { ErrorType } from './ErrorResult.js';
+import { AdminSchema, FieldType, RichTextBlockType } from './Schema.js';
 
 describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
