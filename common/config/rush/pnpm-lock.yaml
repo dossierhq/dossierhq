@@ -462,33 +462,6 @@ importers:
       typescript: 4.7.2
       vitest: 0.12.9
 
-  ../../libraries/core-jest:
-    specifiers:
-      '@jonasb/datadata-core': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
-      '@rushstack/heft': ~0.45.5
-      '@rushstack/heft-jest-plugin': ~0.3.5
-      '@types/heft-jest': 1.0.2
-      '@typescript-eslint/eslint-plugin': ^5.18.0
-      '@typescript-eslint/parser': ^5.18.0
-      eslint: ^8.13.0
-      prettier: 2.6.2
-      tslib: ~2.4.0
-      typescript: ^4.7.2
-    dependencies:
-      '@jonasb/datadata-core': link:../core
-      '@js-temporal/polyfill': 0.4.0
-      tslib: 2.4.0
-    devDependencies:
-      '@rushstack/heft': 0.45.5
-      '@rushstack/heft-jest-plugin': 0.3.5_@rushstack+heft@0.45.5
-      '@types/heft-jest': 1.0.2
-      '@typescript-eslint/eslint-plugin': 5.18.0_f634834830b3cce5385c59ca2d60ec0b
-      '@typescript-eslint/parser': 5.18.0_eslint@8.13.0+typescript@4.7.2
-      eslint: 8.13.0
-      prettier: 2.6.2
-      typescript: 4.7.2
-
   ../../libraries/core-vitest:
     specifiers:
       '@jonasb/datadata-core': workspace:*

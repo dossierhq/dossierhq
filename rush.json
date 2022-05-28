@@ -381,11 +381,6 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-core-jest",
-      "projectFolder": "libraries/core-jest",
-      "versionPolicyName": "DataDataFramework"
-    },
-    {
       "packageName": "@jonasb/datadata-core-vitest",
       "projectFolder": "libraries/core-vitest",
       "versionPolicyName": "DataDataFramework"
