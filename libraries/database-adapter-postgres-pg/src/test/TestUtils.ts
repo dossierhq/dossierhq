@@ -20,7 +20,7 @@ import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
 import { expect, test } from 'vitest';
-import { createPostgresAdapter } from '..';
+import { createPostgresAdapter } from '../PgDatabaseAdapter.js';
 
 export function registerTestSuite(testSuite: TestSuite): void {
   for (const [testName, testFunction] of Object.entries(testSuite)) {
