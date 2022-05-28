@@ -5,48 +5,52 @@ import type {
   Session,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
+import type { SpyInstanceFn } from 'vitest';
+import { vi } from 'vitest';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import { SessionContextImpl } from '../Context';
+import type { SessionContext } from '../Context.js';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+  Parameters<TFn>,
+  ReturnType<TFn>
+> &
+  TFn;
 
 interface MockDatabaseAdapter extends DatabaseAdapter {
-  adminEntityCreate: jest.MockedFunction<DatabaseAdapter['adminEntityCreate']>;
-  adminEntityGetOne: jest.MockedFunction<DatabaseAdapter['adminEntityGetOne']>;
-  adminEntityPublishGetUnpublishedReferencedEntities: jest.MockedFunction<
+  adminEntityCreate: MockedFunction<DatabaseAdapter['adminEntityCreate']>;
+  adminEntityGetOne: MockedFunction<DatabaseAdapter['adminEntityGetOne']>;
+  adminEntityPublishGetUnpublishedReferencedEntities: MockedFunction<
     DatabaseAdapter['adminEntityPublishGetUnpublishedReferencedEntities']
   >;
-  adminEntityPublishGetVersionInfo: jest.MockedFunction<
+  adminEntityPublishGetVersionInfo: MockedFunction<
     DatabaseAdapter['adminEntityPublishGetVersionInfo']
   >;
-  adminEntityPublishingCreateEvents: jest.MockedFunction<
+  adminEntityPublishingCreateEvents: MockedFunction<
     DatabaseAdapter['adminEntityPublishingCreateEvents']
   >;
-  adminEntityPublishUpdateEntity: jest.MockedFunction<
-    DatabaseAdapter['adminEntityPublishUpdateEntity']
-  >;
-  adminEntitySampleEntities: jest.MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
-  adminEntitySearchEntities: jest.MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
-  adminEntitySearchTotalCount: jest.MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
-  advisoryLockAcquire: jest.MockedFunction<DatabaseAdapter['advisoryLockAcquire']>;
-  advisoryLockDeleteExpired: jest.MockedFunction<DatabaseAdapter['advisoryLockDeleteExpired']>;
-  advisoryLockRelease: jest.MockedFunction<DatabaseAdapter['advisoryLockRelease']>;
-  advisoryLockRenew: jest.MockedFunction<DatabaseAdapter['advisoryLockRenew']>;
-  authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
-  publishedEntitySampleEntities: jest.MockedFunction<
-    DatabaseAdapter['publishedEntitySampleEntities']
-  >;
-  publishedEntitySearchEntities: jest.MockedFunction<
-    DatabaseAdapter['publishedEntitySearchEntities']
-  >;
-  publishedEntitySearchTotalCount: jest.MockedFunction<
+  adminEntityPublishUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityPublishUpdateEntity']>;
+  adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
+  adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
+  adminEntitySearchTotalCount: MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
+  advisoryLockAcquire: MockedFunction<DatabaseAdapter['advisoryLockAcquire']>;
+  advisoryLockDeleteExpired: MockedFunction<DatabaseAdapter['advisoryLockDeleteExpired']>;
+  advisoryLockRelease: MockedFunction<DatabaseAdapter['advisoryLockRelease']>;
+  advisoryLockRenew: MockedFunction<DatabaseAdapter['advisoryLockRenew']>;
+  authCreateSession: MockedFunction<DatabaseAdapter['authCreateSession']>;
+  publishedEntitySampleEntities: MockedFunction<DatabaseAdapter['publishedEntitySampleEntities']>;
+  publishedEntitySearchEntities: MockedFunction<DatabaseAdapter['publishedEntitySearchEntities']>;
+  publishedEntitySearchTotalCount: MockedFunction<
     DatabaseAdapter['publishedEntitySearchTotalCount']
   >;
-  schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
-  schemaUpdateSpecification: jest.MockedFunction<DatabaseAdapter['schemaUpdateSpecification']>;
-  withRootTransaction: jest.MockedFunction<DatabaseAdapter['withRootTransaction']>;
+  schemaGetSpecification: MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
+  schemaUpdateSpecification: MockedFunction<DatabaseAdapter['schemaUpdateSpecification']>;
+  withRootTransaction: MockedFunction<DatabaseAdapter['withRootTransaction']>;
 }
 
 interface MockAuthorizationAdapter extends AuthorizationAdapter {
-  resolveAuthorizationKeys: jest.MockedFunction<AuthorizationAdapter['resolveAuthorizationKeys']>;
+  resolveAuthorizationKeys: MockedFunction<AuthorizationAdapter['resolveAuthorizationKeys']>;
 }
 
 export function createMockTransactionContext(logger: Logger | null = null): TransactionContext {
@@ -58,7 +62,7 @@ export function createMockTransactionContext(logger: Logger | null = null): Tran
     get transaction() {
       return null;
     },
-    withTransaction: jest.fn(),
+    withTransaction: vi.fn(),
   };
   return context;
 }
@@ -88,44 +92,45 @@ export function createMockSessionContext({
 
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
-    adminEntityArchivingGetEntityInfo: jest.fn(),
-    adminEntityUpdateStatus: jest.fn(),
-    adminEntityCreate: jest.fn(),
-    adminEntityGetOne: jest.fn(),
-    adminEntityGetMultiple: jest.fn(),
-    adminEntityGetEntityName: jest.fn(),
-    adminEntityGetReferenceEntitiesInfo: jest.fn(),
-    adminEntityHistoryGetEntityInfo: jest.fn(),
-    adminEntityHistoryGetVersionsInfo: jest.fn(),
-    adminEntityPublishGetUnpublishedReferencedEntities: jest.fn(),
-    adminEntityPublishGetVersionInfo: jest.fn(),
-    adminEntityPublishingCreateEvents: jest.fn(),
-    adminEntityPublishingHistoryGetEntityInfo: jest.fn(),
-    adminEntityPublishingHistoryGetEvents: jest.fn(),
-    adminEntityPublishUpdateEntity: jest.fn(),
-    adminEntitySampleEntities: jest.fn(),
-    adminEntitySearchEntities: jest.fn(),
-    adminEntitySearchTotalCount: jest.fn(),
-    adminEntityUpdateEntity: jest.fn(),
-    adminEntityUpdateGetEntityInfo: jest.fn(),
-    adminEntityUnpublishGetEntitiesInfo: jest.fn(),
-    adminEntityUnpublishEntities: jest.fn(),
-    adminEntityUnpublishGetPublishedReferencedEntities: jest.fn(),
-    advisoryLockAcquire: jest.fn(),
-    advisoryLockDeleteExpired: jest.fn(),
-    advisoryLockRelease: jest.fn(),
-    advisoryLockRenew: jest.fn(),
-    authCreateSession: jest.fn(),
-    disconnect: jest.fn(),
-    publishedEntityGetOne: jest.fn(),
-    publishedEntityGetEntities: jest.fn(),
-    publishedEntitySampleEntities: jest.fn(),
-    publishedEntitySearchEntities: jest.fn(),
-    publishedEntitySearchTotalCount: jest.fn(),
-    schemaGetSpecification: jest.fn(),
-    schemaUpdateSpecification: jest.fn(),
-    withNestedTransaction: jest.fn(),
-    withRootTransaction: jest.fn(),
+    adminEntityArchivingGetEntityInfo: vi.fn(),
+    adminEntityUpdateStatus: vi.fn(),
+    adminEntityCreate: vi.fn(),
+    adminEntityGetOne: vi.fn(),
+    adminEntityGetMultiple: vi.fn(),
+    adminEntityGetEntityName: vi.fn(),
+    adminEntityGetReferenceEntitiesInfo: vi.fn(),
+    adminEntityHistoryGetEntityInfo: vi.fn(),
+    adminEntityHistoryGetVersionsInfo: vi.fn(),
+    adminEntityPublishGetUnpublishedReferencedEntities: vi.fn(),
+    adminEntityPublishGetVersionInfo: vi.fn(),
+    adminEntityPublishingCreateEvents: vi.fn(),
+    adminEntityPublishingHistoryGetEntityInfo: vi.fn(),
+    adminEntityPublishingHistoryGetEvents: vi.fn(),
+    adminEntityPublishUpdateEntity: vi.fn(),
+    adminEntitySampleEntities: vi.fn(),
+    adminEntitySearchEntities: vi.fn(),
+    adminEntitySearchTotalCount: vi.fn(),
+    adminEntityUpdateEntity: vi.fn(),
+    adminEntityUpdateGetEntityInfo: vi.fn(),
+    adminEntityUnpublishGetEntitiesInfo: vi.fn(),
+    adminEntityUnpublishEntities: vi.fn(),
+    adminEntityUnpublishGetPublishedReferencedEntities: vi.fn(),
+    advisoryLockAcquire: vi.fn(),
+    advisoryLockDeleteExpired: vi.fn(),
+    advisoryLockRelease: vi.fn(),
+    advisoryLockRenew: vi.fn(),
+    authCreateSession: vi.fn(),
+    disconnect: vi.fn(),
+    publishedEntityGetOne: vi.fn(),
+    publishedEntityGetEntities: vi.fn(),
+    publishedEntitySampleEntities: vi.fn(),
+    publishedEntitySearchEntities: vi.fn(),
+    publishedEntitySearchTotalCount: vi.fn(),
+    schemaGetSpecification: vi.fn(),
+    schemaUpdateSpecification: vi.fn(),
+    withNestedTransaction: vi.fn(),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    withRootTransaction: vi.fn<any, any>(),
   };
 
   adapter.withRootTransaction.mockImplementation((context, childContextFactory, callback) => {
@@ -140,7 +145,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
 
 export function createMockAuthorizationAdapter(): MockAuthorizationAdapter {
   const adapter: MockAuthorizationAdapter = {
-    resolveAuthorizationKeys: jest.fn(),
+    resolveAuthorizationKeys: vi.fn(),
   };
   return adapter;
 }
@@ -151,7 +156,7 @@ export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
   const calls: Array<unknown[]> = [];
   for (const methodName of Object.keys(databaseAdapter).sort() as (keyof MockDatabaseAdapter)[]) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    for (const args of (databaseAdapter[methodName] as jest.MockedFunction<any>).mock.calls) {
+    for (const args of (databaseAdapter[methodName] as MockedFunction<any>).mock.calls) {
       // remove first arg (normally context)
       calls.push([methodName, ...args.slice(1)]);
     }

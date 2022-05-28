@@ -1,13 +1,14 @@
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from '../test/AdditionalTestUtils';
-import { adminTestSchema } from '../test/TestSchema';
+} from '../test/AdditionalTestUtils.js';
+import { adminTestSchema } from '../test/TestSchema.js';
 import { adminPublishEntities } from './adminPublishEntities';
 
 describe('Admin adminPublishEntities', () => {
@@ -37,15 +38,11 @@ describe('Admin adminPublishEntities', () => {
         })
       )
     );
-    databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(
-      Promise.resolve(ok({ updatedAt: now }))
-    );
+    databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(ok({ updatedAt: now }));
     databaseAdapter.adminEntityPublishGetUnpublishedReferencedEntities.mockResolvedValueOnce(
-      Promise.resolve(ok([]))
+      ok([])
     );
-    databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(
-      Promise.resolve(ok(undefined))
-    );
+    databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(ok(undefined));
 
     const result = await adminPublishEntities(
       adminTestSchema,
@@ -65,52 +62,52 @@ describe('Admin adminPublishEntities', () => {
     ]);
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "adminEntityPublishGetUnpublishedReferencedEntities",
-          Object {
-            "entityInternalId": 999,
-            "entityVersionInternalId": 888,
-          },
-        ],
-        Array [
-          "adminEntityPublishGetVersionInfo",
-          Object {
-            "id": "123",
-            "version": 5,
-          },
-        ],
-        Array [
-          "adminEntityPublishUpdateEntity",
-          Object {
-            "entityInternalId": 999,
-            "entityVersionInternalId": 888,
-            "fullTextSearchText": "Title",
-            "status": "published",
-          },
-        ],
-        Array [
-          "adminEntityPublishingCreateEvents",
-          Object {
-            "kind": "publish",
-            "references": Array [
-              Object {
-                "entityInternalId": 999,
-                "entityVersionInternalId": 888,
-              },
-            ],
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
+        [
+          [
+            "adminEntityPublishGetUnpublishedReferencedEntities",
+            {
+              "entityInternalId": 999,
+              "entityVersionInternalId": 888,
             },
-          },
-        ],
-        Array [
-          "withRootTransaction",
-          [Function],
-          [Function],
-        ],
-      ]
-    `);
+          ],
+          [
+            "adminEntityPublishGetVersionInfo",
+            {
+              "id": "123",
+              "version": 5,
+            },
+          ],
+          [
+            "adminEntityPublishUpdateEntity",
+            {
+              "entityInternalId": 999,
+              "entityVersionInternalId": 888,
+              "fullTextSearchText": "Title",
+              "status": "published",
+            },
+          ],
+          [
+            "adminEntityPublishingCreateEvents",
+            {
+              "kind": "publish",
+              "references": [
+                {
+                  "entityInternalId": 999,
+                  "entityVersionInternalId": 888,
+                },
+              ],
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+            },
+          ],
+          [
+            "withRootTransaction",
+            [Function],
+            [Function],
+          ],
+        ]
+      `);
   });
 });

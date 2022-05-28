@@ -11,26 +11,27 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '.';
-import { adminArchiveEntity } from './admin-entity/adminArchiveEntity';
-import { adminCreateEntity } from './admin-entity/adminCreateEntity';
-import { adminGetEntities } from './admin-entity/adminGetEntities';
-import { adminGetEntity } from './admin-entity/adminGetEntity';
-import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory';
-import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory';
-import { adminGetTotalCount } from './admin-entity/adminGetTotalCount';
-import { adminPublishEntities } from './admin-entity/adminPublishEntities';
-import { adminSampleEntities } from './admin-entity/adminSampleEntities';
-import { adminSearchEntities } from './admin-entity/adminSearchEntities';
-import { adminUnarchiveEntity } from './admin-entity/adminUnarchiveEntity';
-import { adminUnpublishEntities } from './admin-entity/adminUnpublishEntities';
-import { adminUpdateEntity } from './admin-entity/adminUpdateEntity';
-import { adminUpsertEntity } from './admin-entity/adminUpsertEntity';
-import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock';
-import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock';
-import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock';
-import { updateSchemaSpecification } from './Schema';
-import type { ServerImpl } from './Server';
+import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
+import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
+import { adminGetEntities } from './admin-entity/adminGetEntities.js';
+import { adminGetEntity } from './admin-entity/adminGetEntity.js';
+import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory.js';
+import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory.js';
+import { adminGetTotalCount } from './admin-entity/adminGetTotalCount.js';
+import { adminPublishEntities } from './admin-entity/adminPublishEntities.js';
+import { adminSampleEntities } from './admin-entity/adminSampleEntities.js';
+import { adminSearchEntities } from './admin-entity/adminSearchEntities.js';
+import { adminUnarchiveEntity } from './admin-entity/adminUnarchiveEntity.js';
+import { adminUnpublishEntities } from './admin-entity/adminUnpublishEntities.js';
+import { adminUpdateEntity } from './admin-entity/adminUpdateEntity.js';
+import { adminUpsertEntity } from './admin-entity/adminUpsertEntity.js';
+import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock.js';
+import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
+import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
+import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+import type { SessionContext } from './Context.js';
+import { updateSchemaSpecification } from './Schema.js';
+import type { ServerImpl } from './Server.js';
 
 export function createServerAdminClient({
   context,

@@ -9,9 +9,10 @@ import type {
 } from '@jonasb/datadata-core';
 import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { adminCreateEntity } from './adminCreateEntity';
-import { adminUpdateEntity } from './adminUpdateEntity';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { adminCreateEntity } from './adminCreateEntity.js';
+import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 export async function adminUpsertEntity(
   schema: AdminSchema,

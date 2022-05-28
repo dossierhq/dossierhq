@@ -7,9 +7,11 @@ import type {
   PublishedQuery,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, ResolvedAuthKey, SessionContext } from '..';
-import { authResolveAuthorizationKeys } from '../Auth';
-import { Randomizer } from '../utils/Randomizer';
+import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import { authResolveAuthorizationKeys } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { Randomizer } from '../utils/Randomizer.js';
 
 const MAX_SEED = 2147483647;
 const SAMPLING_DEFAULT_COUNT = 25;

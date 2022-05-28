@@ -1,6 +1,7 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import { describe, expect, test } from 'vitest';
 import { getSchemaSpecification } from './Schema';
 import {
   createMockDatabaseAdapter,
@@ -20,12 +21,12 @@ describe('AdminSchema getSchema', () => {
     expectResultValue(result, { entityTypes: [], valueTypes: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "schemaGetSpecification",
-        ],
-      ]
-    `);
+        [
+          [
+            "schemaGetSpecification",
+          ],
+        ]
+      `);
   });
 
   test('Small schema', async () => {
@@ -42,11 +43,11 @@ describe('AdminSchema getSchema', () => {
     expectResultValue(result, schemaSpec);
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "schemaGetSpecification",
-        ],
-      ]
-    `);
+        [
+          [
+            "schemaGetSpecification",
+          ],
+        ]
+      `);
   });
 });

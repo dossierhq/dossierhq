@@ -13,9 +13,10 @@ import {
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
-import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
+import { authVerifyAuthorizationKey } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 
 interface EntityInfoToBeUnpublished {
   effect: 'unpublished';

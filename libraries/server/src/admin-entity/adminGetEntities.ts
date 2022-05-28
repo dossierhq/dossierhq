@@ -11,9 +11,10 @@ import type {
   DatabaseAdapter,
   DatabaseAdminEntityGetOnePayload,
 } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
-import { decodeAdminEntity } from '../EntityCodec';
+import { authVerifyAuthorizationKey } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { decodeAdminEntity } from '../EntityCodec.js';
 
 export async function adminGetEntities(
   schema: AdminSchema,

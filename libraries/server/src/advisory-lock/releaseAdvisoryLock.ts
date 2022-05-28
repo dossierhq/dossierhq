@@ -1,7 +1,7 @@
 import type { AdvisoryLockReleasePayload, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { SessionContext } from '..';
+import type { SessionContext } from '../Context.js';
 
 export async function releaseAdvisoryLock(
   databaseAdapter: DatabaseAdapter,

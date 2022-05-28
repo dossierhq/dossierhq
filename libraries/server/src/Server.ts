@@ -19,13 +19,13 @@ import {
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '.';
-import { authCreateSession, verifyAuthKeysFormat } from './Auth';
-import type { InternalContext } from './Context';
-import { InternalContextImpl, SessionContextImpl } from './Context';
-import { getSchemaSpecification } from './Schema';
-import { createServerAdminClient } from './ServerAdminClient';
-import { createServerPublishedClient } from './ServerPublishedClient';
+import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
+import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+import type { InternalContext, SessionContext } from './Context.js';
+import { InternalContextImpl, SessionContextImpl } from './Context.js';
+import { getSchemaSpecification } from './Schema.js';
+import { createServerAdminClient } from './ServerAdminClient.js';
+import { createServerPublishedClient } from './ServerPublishedClient.js';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';

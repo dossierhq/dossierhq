@@ -44,9 +44,9 @@ import type {
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
 } from '@jonasb/datadata-database-adapter';
-import type { SessionContext } from '.';
-import { ensureRequired } from './Assertions';
-import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
+import { ensureRequired } from './Assertions.js';
+import type { SessionContext } from './Context.js';
+import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 
 export interface EncodeAdminEntityResult {
   type: string;

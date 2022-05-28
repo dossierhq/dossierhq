@@ -1,6 +1,7 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { ResolvedAuthKey, SessionContext } from '.';
+import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import type { SessionContext } from './Context.js';
 
 export interface AuthorizationAdapter {
   resolveAuthorizationKeys(

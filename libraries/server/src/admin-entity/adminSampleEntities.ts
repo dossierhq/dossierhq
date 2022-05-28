@@ -8,10 +8,11 @@ import type {
   PromiseResult,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, ResolvedAuthKey, SessionContext } from '..';
-import { decodeAdminEntity } from '../EntityCodec';
-import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities';
+import type { DatabaseAdapter, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
+import { decodeAdminEntity } from '../EntityCodec.js';
+import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities.js';
 
 export async function adminSampleEntities(
   schema: AdminSchema,

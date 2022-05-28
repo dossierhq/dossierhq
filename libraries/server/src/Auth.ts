@@ -6,8 +6,9 @@ import type {
   ResolvedAuthKey,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '.';
-import { ensureRequired } from './Assertions';
+import { ensureRequired } from './Assertions.js';
+import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+import type { SessionContext } from './Context.js';
 
 export async function authCreateSession(
   databaseAdapter: DatabaseAdapter,

@@ -1,7 +1,8 @@
 import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authResolveAuthorizationKeys } from '../Auth';
+import { authResolveAuthorizationKeys } from '../Auth.js';
+import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
+import type { SessionContext } from '../Context.js';
 
 export async function adminGetTotalCount(
   schema: AdminSchema,
