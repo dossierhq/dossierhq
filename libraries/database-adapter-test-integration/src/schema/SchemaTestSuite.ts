@@ -1,8 +1,8 @@
 import type { AdminClient } from '@jonasb/datadata-core';
 import { AdminSchema } from '@jonasb/datadata-core';
-import type { TestFunctionInitializer, TestSuite } from '..';
-import { assertOkResult } from '../Asserts';
-import { buildSuite } from '../Builder';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
+import { assertOkResult } from '../Asserts.js';
+import { buildSuite } from '../Builder.js';
 
 export function createSchemaTestSuite<TCleanup>(
   initializer: TestFunctionInitializer<{ client: AdminClient }, TCleanup>

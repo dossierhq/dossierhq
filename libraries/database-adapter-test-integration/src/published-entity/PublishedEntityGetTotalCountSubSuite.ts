@@ -1,7 +1,7 @@
-import { assertResultValue } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import { publishedClientForMainPrincipal } from '../shared-entity/TestClients';
-import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
+import { assertResultValue } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import { publishedClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetTotalCountSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getTotalCount_minimal,

@@ -15,8 +15,8 @@ import {
 } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
 import { v5 as uuidv5 } from 'uuid';
-import { assertOkResult, assertSame } from '../Asserts';
-import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from './TestClients';
+import { assertOkResult, assertSame } from '../Asserts.js';
+import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from './TestClients.js';
 
 const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;

@@ -1,20 +1,20 @@
 import { copyEntity } from '@jonasb/datadata-core';
-import { assertOkResult } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
+import { assertOkResult } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
 import {
   adminToPublishedEntity,
   REFERENCES_CREATE,
   TITLE_ONLY_CREATE,
-} from '../shared-entity/Fixtures';
+} from '../shared-entity/Fixtures.js';
 import {
   assertSampledEntities,
   assertSampledEntitiesArePartOfExpected,
-} from '../shared-entity/SampleTestUtils';
+} from '../shared-entity/SampleTestUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients';
-import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
+} from '../shared-entity/TestClients.js';
+import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const SampleEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   sampleEntities_minimal,

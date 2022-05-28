@@ -1,13 +1,13 @@
 import { copyEntity, ErrorType } from '@jonasb/datadata-core';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
+import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
   sessionForMainPrincipal,
-} from '../shared-entity/TestClients';
+} from '../shared-entity/TestClients.js';
 
 export const GetEntityHistorySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntityHistory_minimal,

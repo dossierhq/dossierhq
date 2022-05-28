@@ -1,14 +1,14 @@
 import type { ErrorType, PublishedEntity } from '@jonasb/datadata-core';
 import { copyEntity, notOk, ok } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures';
+import { assertOkResult, assertResultValue } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
   publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients';
-import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
+} from '../shared-entity/TestClients.js';
+import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntities_minimal,

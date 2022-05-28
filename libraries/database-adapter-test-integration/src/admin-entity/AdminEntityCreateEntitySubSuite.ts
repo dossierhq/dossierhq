@@ -6,8 +6,8 @@ import {
   assertOkResult,
   assertResultValue,
   assertTruthy,
-} from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
+} from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
 import {
   LOCATIONS_ADMIN_ENTITY,
   LOCATIONS_CREATE,
@@ -15,8 +15,8 @@ import {
   REFERENCES_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
-} from '../shared-entity/Fixtures';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+} from '../shared-entity/Fixtures.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,

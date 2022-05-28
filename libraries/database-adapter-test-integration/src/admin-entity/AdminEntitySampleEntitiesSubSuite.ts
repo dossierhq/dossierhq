@@ -1,20 +1,24 @@
 import type { BoundingBox } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
-import { assertEquals, assertOkResult, assertTruthy } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import {
+  LOCATIONS_CREATE,
+  REFERENCES_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures.js';
 import {
   boundingBoxBelowCenter,
   boundingBoxCenter,
   randomBoundingBox,
-} from '../shared-entity/LocationTestUtils';
+} from '../shared-entity/LocationTestUtils.js';
 import {
   assertSampledEntities,
   assertSampledEntitiesArePartOfExpected,
   countEntityStatuses,
-} from '../shared-entity/SampleTestUtils';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+} from '../shared-entity/SampleTestUtils.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const SampleEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   sampleEntities_minimal,

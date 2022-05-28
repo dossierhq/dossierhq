@@ -1,8 +1,8 @@
 import { ErrorType } from '@jonasb/datadata-core';
-import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts';
-import type { UnboundTestFunction } from '../Builder';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
-import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite';
+import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite.js';
 
 export const AdvisoryLockAcquireSubSuite: UnboundTestFunction<AdvisoryLockTestContext>[] = [
   acquireLock_minimal,

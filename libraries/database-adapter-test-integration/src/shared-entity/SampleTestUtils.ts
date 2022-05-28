@@ -7,7 +7,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus } from '@jonasb/datadata-core';
-import { assertEquals, assertOkResult, assertTruthy } from '../Asserts';
+import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
 
 export function countEntityStatuses(entities: AdminEntity[]): Record<AdminEntityStatus, number> {
   const result = {

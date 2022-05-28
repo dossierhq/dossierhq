@@ -736,12 +736,12 @@ importers:
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
+      '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@jonasb/eslint-config-datadata-generic': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
       '@types/uuid': ~8.3.4
-      '@typescript-eslint/eslint-plugin': ^5.18.0
-      '@typescript-eslint/parser': ^5.18.0
       eslint: ^8.13.0
       prettier: 2.6.2
       tslib: ~2.4.0
@@ -755,10 +755,10 @@ importers:
       tslib: 2.4.0
       uuid: 8.3.2
     devDependencies:
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
+      '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.45.5
       '@types/uuid': 8.3.4
-      '@typescript-eslint/eslint-plugin': 5.18.0_f634834830b3cce5385c59ca2d60ec0b
-      '@typescript-eslint/parser': 5.18.0_eslint@8.13.0+typescript@4.7.2
       eslint: 8.13.0
       prettier: 2.6.2
       typescript: 4.7.2
