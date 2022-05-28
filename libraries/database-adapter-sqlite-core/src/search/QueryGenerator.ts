@@ -11,12 +11,12 @@ import type {
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
 import type { DatabasePagingInfo, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { ColumnValue } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import type { CursorNativeType } from './OpaqueCursor';
-import { toOpaqueCursor } from './OpaqueCursor';
-import { resolvePagingCursors } from './Paging';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
+import type { CursorNativeType } from './OpaqueCursor.js';
+import { toOpaqueCursor } from './OpaqueCursor.js';
+import { resolvePagingCursors } from './Paging.js';
 
 // id and updated_seq are included for order by
 export type SearchAdminEntitiesItem = Pick<

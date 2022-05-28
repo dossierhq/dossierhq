@@ -1,1 +1,1 @@
-export { createSqlJsAdapter } from './SqlJsAdapter';
+export { createSqlJsAdapter } from './SqlJsAdapter.js';

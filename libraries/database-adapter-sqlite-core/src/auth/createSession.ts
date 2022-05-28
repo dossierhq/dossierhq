@@ -6,11 +6,11 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
-import type { SubjectsTable } from '../DatabaseSchema';
-import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
-import { createSession } from '../utils/SessionUtils';
+import type { SubjectsTable } from '../DatabaseSchema.js';
+import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { createSession } from '../utils/SessionUtils.js';
 
 export async function authCreateSession(
   database: Database,

@@ -9,13 +9,13 @@ import {
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNone, queryOne } from '../QueryFunctions';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils';
-import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
-import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone, queryOne } from '../QueryFunctions.js';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
+import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminCreateEntity(
   database: Database,

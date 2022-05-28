@@ -1,7 +1,7 @@
 import type { AdminSchemaSpecification, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { Database } from '../QueryFunctions';
-import { queryNone } from '../QueryFunctions';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone } from '../QueryFunctions.js';
 
 export async function schemaUpdateSpecification(
   database: Database,

@@ -6,11 +6,11 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { Database } from '../QueryFunctions';
-import { queryMany } from '../QueryFunctions';
-import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
-import { sampleAdminEntitiesQuery } from '../search/QueryGenerator';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { Database } from '../QueryFunctions.js';
+import { queryMany } from '../QueryFunctions.js';
+import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
+import { sampleAdminEntitiesQuery } from '../search/QueryGenerator.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntitySampleEntities(
   database: Database,

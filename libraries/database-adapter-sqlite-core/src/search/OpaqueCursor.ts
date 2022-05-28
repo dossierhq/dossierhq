@@ -1,6 +1,6 @@
 import type { ErrorType, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Database } from '../QueryFunctions';
+import type { Database } from '../QueryFunctions.js';
 
 export type CursorNativeType = 'int' | 'string';
 

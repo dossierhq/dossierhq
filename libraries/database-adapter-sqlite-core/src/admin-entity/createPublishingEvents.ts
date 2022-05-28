@@ -5,9 +5,9 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { Database } from '../QueryFunctions';
-import { queryNone } from '../QueryFunctions';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils';
+import type { Database } from '../QueryFunctions.js';
+import { queryNone } from '../QueryFunctions.js';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 
 export async function adminEntityPublishingCreateEvents(
   database: Database,

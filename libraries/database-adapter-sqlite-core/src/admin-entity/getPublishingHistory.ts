@@ -16,9 +16,9 @@ import type {
   EntitiesTable,
   EntityPublishingEventsTable,
   EntityVersionsTable,
-} from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryMany, queryNoneOrOne } from '../QueryFunctions';
+} from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function adminEntityPublishingHistoryGetEntityInfo(
   database: Database,

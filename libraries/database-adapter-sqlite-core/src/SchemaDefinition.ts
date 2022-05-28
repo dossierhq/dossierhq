@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { Database, QueryOrQueryAndValues } from './QueryFunctions';
-import { migrate } from './SchemaMigrator';
+import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
+import { migrate } from './SchemaMigrator.js';
 
 //TODO enable strict tables when sqlite 3.37+ https://www.sqlite.org/stricttables.html
 //TODO optimize fts indices

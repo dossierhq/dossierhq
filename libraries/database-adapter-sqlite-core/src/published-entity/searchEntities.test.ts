@@ -1,5 +1,5 @@
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
-import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
+import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import {
   createMockContext,
   createMockInnerAndOuterAdapter,

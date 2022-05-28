@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { Database, QueryOrQueryAndValues } from './QueryFunctions';
-import { queryNone, queryOne } from './QueryFunctions';
+import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
+import { queryNone, queryOne } from './QueryFunctions.js';
 
 /** Migrates the database to the latest version.
  *

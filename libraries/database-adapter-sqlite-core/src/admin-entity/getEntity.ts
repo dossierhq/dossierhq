@@ -11,10 +11,10 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
-import type { Database } from '../QueryFunctions';
-import { queryNoneOrOne } from '../QueryFunctions';
-import { resolveEntityStatus } from '../utils/CodecUtils';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { Database } from '../QueryFunctions.js';
+import { queryNoneOrOne } from '../QueryFunctions.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminGetEntity(
   database: Database,
