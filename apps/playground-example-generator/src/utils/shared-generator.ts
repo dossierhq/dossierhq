@@ -1,15 +1,14 @@
-import {
+import type {
   AdminClientMiddleware,
   AdminSchemaSpecificationUpdate,
   ClientContext,
-  createConsoleLogger,
-  LoggingClientMiddleware,
-  NoOpLogger,
 } from '@jonasb/datadata-core';
+import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@jonasb/datadata-core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { writeFile } from 'fs/promises';
-import initSqlJs, { Database } from 'sql.js';
+import type { Database } from 'sql.js';
+import initSqlJs from 'sql.js';
 
 export async function createDatabase() {
   const SQL = await initSqlJs();

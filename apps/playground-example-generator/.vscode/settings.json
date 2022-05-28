@@ -9,6 +9,7 @@
     "rushstack",
     "Starships",
     "starwars",
+    "undici",
     "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",

@@ -1,7 +1,12 @@
-import { AdminClient, AdminSchemaSpecificationUpdate, FieldType } from '@jonasb/datadata-core';
-import { fetchJsonCached } from '../utils/fetchUtils';
-import { createAdapterAndServer, createDatabase, exportDatabase } from '../utils/shared-generator';
+import type { AdminClient, AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import { FieldType } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
+import { fetchJsonCached } from '../utils/fetchUtils.js';
+import {
+  createAdapterAndServer,
+  createDatabase,
+  exportDatabase,
+} from '../utils/shared-generator.js';
 
 const UUID_NAMESPACE = 'b0a4c16c-8feb-4a68-9d43-98f96719eee5';
 
