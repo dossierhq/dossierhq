@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm run build-app",
+    "build": "npm run prettier:check && npm run ts:check && npm run eslint:check && npm run test && npm run build-app",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
@@ -16,9 +16,9 @@
     "start:sqlite": "cp node_modules/graphql-voyager/dist/voyager.worker.js public/ && DATABASE_SQLITE_FILE=data/database.sqlite next dev --port 3001",
     "start:built": "next start",
     "start:cli": "env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' npx ts-node cli.ts",
-    "test": "jest",
-    "test:update-snapshot": "jest --updateSnapshot",
-    "test:watch": "jest --watch",
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch",
     "ts:check": "tsc --noEmit",
     "ts:check:watch": "tsc --noEmit --watch",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
@@ -54,16 +54,14 @@
   "devDependencies": {
     "@jonasb/datadata-postgres": "workspace:*",
     "@types/debug": "~4.1.7",
-    "@types/jest": "~27.5.0",
-    "@types/node": "^17.0.23",
     "@types/react": "~18.0.0",
     "@types/sqlite3": "~3.1.8",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "eslint": "^8.13.0",
     "eslint-config-next": "~12.1.4",
-    "jest": "~28.1.0",
     "prettier": "2.6.2",
     "ts-node": "^10.7.0",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.2",
+    "vitest": "~0.12.9"
   }
 }

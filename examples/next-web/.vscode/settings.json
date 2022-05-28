@@ -7,7 +7,8 @@
     "graphiql",
     "jonasb",
     "postgres",
-    "unpublish"
+    "unpublish",
+    "vitest"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
