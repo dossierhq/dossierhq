@@ -1,4 +1,5 @@
 import { NoOpLogger, ok } from '@jonasb/datadata-core';
+import { describe, expect, test } from 'vitest';
 import { Mutex } from './MutexUtils';
 
 const context = { logger: NoOpLogger };

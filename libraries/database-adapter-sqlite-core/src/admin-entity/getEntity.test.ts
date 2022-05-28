@@ -1,6 +1,7 @@
 import { AdminEntityStatus } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import {
   createMockContext,
   createMockInnerAndOuterAdapter,
@@ -48,8 +49,8 @@ describe('adminGetEntity', () => {
       fieldValues: { title: 'Title' },
     });
     expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
             FROM entities e, entity_versions ev
             WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id",
@@ -99,8 +100,8 @@ describe('adminGetEntity', () => {
       fieldValues: { title: 'Title' },
     });
     expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
           FROM entities e, entity_versions ev
           WHERE e.uuid = ?1
