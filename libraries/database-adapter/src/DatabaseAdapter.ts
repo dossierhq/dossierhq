@@ -16,7 +16,8 @@ import type {
   PublishingEvent,
 } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
-import type { ResolvedAuthKey, Session, Transaction, TransactionContext } from '.';
+import type { ResolvedAuthKey, Session } from './Session.js';
+import type { Transaction, TransactionContext } from './TransactionContext.js';
 
 export interface DatabasePagingInfo extends PagingInfo {
   after: string | null;

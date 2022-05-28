@@ -28,15 +28,15 @@ export type {
   DatabasePublishedEntitySearchPayloadEntity,
   DatabaseResolvedEntityReference,
   DatabaseResolvedEntityVersionReference,
-} from './DatabaseAdapter';
-export { PostgresQueryBuilder, SqliteQueryBuilder } from './QueryBuilder';
-export type { ResolvedAuthKey, Session } from './Session';
+} from './DatabaseAdapter.js';
+export { PostgresQueryBuilder, SqliteQueryBuilder } from './QueryBuilder.js';
+export type { ResolvedAuthKey, Session } from './Session.js';
 export {
   buildPostgresSqlQuery,
   buildSqliteSqlQuery,
   createPostgresSqlQuery,
   createSqliteSqlQuery,
   DEFAULT,
-} from './SqlQueryBuilder';
-export { TransactionContextImpl } from './TransactionContext';
-export type { Context, Transaction, TransactionContext } from './TransactionContext';
+} from './SqlQueryBuilder.js';
+export { TransactionContextImpl } from './TransactionContext.js';
+export type { Context, Transaction, TransactionContext } from './TransactionContext.js';
