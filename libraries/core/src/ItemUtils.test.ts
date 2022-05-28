@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import type { EntityLike, FieldSpecification, RichText, RichTextBlock, ValueItem } from '.';
 import {
   AdminSchema,
@@ -136,7 +137,7 @@ describe('visitItemRecursively()', () => {
       ...callbacks,
       initialVisitContext: undefined,
     });
-    expect(calls).toMatchInlineSnapshot(`Array []`);
+    expect(calls).toMatchInlineSnapshot('[]');
   });
 
   test('all field types', () => {
@@ -187,39 +188,39 @@ describe('visitItemRecursively()', () => {
       initialVisitContext: undefined,
     });
     expect(calls).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.string",
           "value": "Hello string",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bar",
           "path": "fields.bar",
-          "value": Object {
+          "value": {
             "id": "bar id 1",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "location",
           "path": "fields.location",
-          "value": Object {
+          "value": {
             "lat": 55.60498,
             "lng": 13.003822,
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "valueOne",
           "path": "fields.valueOne",
-          "value": Object {
-            "bar": Object {
+          "value": {
+            "bar": {
               "id": "bar id 2",
             },
             "string": "value string",
@@ -227,24 +228,24 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "valueOne",
           "path": "fields.valueOne",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.valueOne.string",
           "value": "value string",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bar",
           "path": "fields.valueOne.bar",
-          "value": Object {
+          "value": {
             "id": "bar id 2",
           },
           "visitContext": undefined,
@@ -311,91 +312,91 @@ describe('visitItemRecursively()', () => {
       initialVisitContext: undefined,
     });
     expect(calls).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "enterList",
           "fieldName": "strings",
           "length": 2,
           "path": "fields.strings",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "strings",
           "path": "fields.strings[0]",
           "value": "Hello string",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "strings",
           "path": "fields.strings[1]",
           "value": "World string",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "locations",
           "length": 1,
           "path": "fields.locations",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "locations",
           "path": "fields.locations[0]",
-          "value": Object {
+          "value": {
             "lat": 55.60498,
             "lng": 13.003822,
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "bars",
           "length": 2,
           "path": "fields.bars",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bars",
           "path": "fields.bars[0]",
-          "value": Object {
+          "value": {
             "id": "bar id 1",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bars",
           "path": "fields.bars[1]",
-          "value": Object {
+          "value": {
             "id": "bar id 2",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "valueOnes",
           "length": 2,
           "path": "fields.valueOnes",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "valueOnes",
           "path": "fields.valueOnes[0]",
-          "value": Object {
-            "bars": Array [
-              Object {
+          "value": {
+            "bars": [
+              {
                 "id": "bar id 3",
               },
-              Object {
+              {
                 "id": "bar id 4",
               },
             ],
-            "strings": Array [
+            "strings": [
               "One",
               "Two",
             ],
@@ -403,72 +404,72 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "valueOnes",
           "path": "fields.valueOnes[0]",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "strings",
           "length": 2,
           "path": "fields.valueOnes[0].strings",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "strings",
           "path": "fields.valueOnes[0].strings[0]",
           "value": "One",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "strings",
           "path": "fields.valueOnes[0].strings[1]",
           "value": "Two",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "bars",
           "length": 2,
           "path": "fields.valueOnes[0].bars",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bars",
           "path": "fields.valueOnes[0].bars[0]",
-          "value": Object {
+          "value": {
             "id": "bar id 3",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bars",
           "path": "fields.valueOnes[0].bars[1]",
-          "value": Object {
+          "value": {
             "id": "bar id 4",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "valueOnes",
           "path": "fields.valueOnes[1]",
-          "value": Object {
-            "bars": Array [
-              Object {
+          "value": {
+            "bars": [
+              {
                 "id": "bar id 5",
               },
-              Object {
+              {
                 "id": "bar id 6",
               },
             ],
-            "strings": Array [
+            "strings": [
               "First",
               "Second",
             ],
@@ -476,54 +477,54 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "valueOnes",
           "path": "fields.valueOnes[1]",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "strings",
           "length": 2,
           "path": "fields.valueOnes[1].strings",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "strings",
           "path": "fields.valueOnes[1].strings[0]",
           "value": "First",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "strings",
           "path": "fields.valueOnes[1].strings[1]",
           "value": "Second",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterList",
           "fieldName": "bars",
           "length": 2,
           "path": "fields.valueOnes[1].bars",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bars",
           "path": "fields.valueOnes[1].bars[0]",
-          "value": Object {
+          "value": {
             "id": "bar id 5",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bars",
           "path": "fields.valueOnes[1].bars[1]",
-          "value": Object {
+          "value": {
             "id": "bar id 6",
           },
           "visitContext": undefined,
@@ -563,27 +564,27 @@ describe('visitItemRecursively()', () => {
       initialVisitContext: undefined,
     });
     expect(calls).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "visitField",
           "fieldName": "body",
           "path": "fields.body",
-          "value": Object {
-            "blocks": Array [
-              Object {
-                "data": Object {
+          "value": {
+            "blocks": [
+              {
+                "data": {
                   "text": "Hello world",
                 },
                 "type": "paragraph",
               },
-              Object {
-                "data": Object {
+              {
+                "data": {
                   "value": "Random",
                 },
                 "type": "randomType",
               },
-              Object {
-                "data": Object {
+              {
+                "data": {
                   "id": "bar id",
                 },
                 "type": "entity",
@@ -592,14 +593,14 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterRichText",
           "fieldName": "body",
           "path": "fields.body",
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
+          "blockData": {
             "text": "Hello world",
           },
           "blockType": "paragraph",
@@ -607,9 +608,9 @@ describe('visitItemRecursively()', () => {
           "path": "fields.body[0]",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
+          "blockData": {
             "value": "Random",
           },
           "blockType": "randomType",
@@ -617,9 +618,9 @@ describe('visitItemRecursively()', () => {
           "path": "fields.body[1]",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
+          "blockData": {
             "id": "bar id",
           },
           "blockType": "entity",
@@ -680,23 +681,23 @@ describe('visitItemRecursively()', () => {
       initialVisitContext: undefined,
     });
     expect(calls).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "visitField",
           "fieldName": "body",
           "path": "fields.body",
-          "value": Object {
-            "blocks": Array [
-              Object {
-                "data": Object {
-                  "bar": Object {
+          "value": {
+            "blocks": [
+              {
+                "data": {
+                  "bar": {
                     "id": "bar id",
                   },
-                  "child": Object {
+                  "child": {
                     "string": "Nested",
                     "type": "ValueOne",
                   },
-                  "location": Object {
+                  "location": {
                     "lat": 55.60498,
                     "lng": 13.003822,
                   },
@@ -709,22 +710,22 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterRichText",
           "fieldName": "body",
           "path": "fields.body",
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
-            "bar": Object {
+          "blockData": {
+            "bar": {
               "id": "bar id",
             },
-            "child": Object {
+            "child": {
               "string": "Nested",
               "type": "ValueOne",
             },
-            "location": Object {
+            "location": {
               "lat": 55.60498,
               "lng": 13.003822,
             },
@@ -736,55 +737,55 @@ describe('visitItemRecursively()', () => {
           "path": "fields.body[0]",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "body",
           "path": "fields.body",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.body[0].string",
           "value": "Hello",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "location",
           "path": "fields.body[0].location",
-          "value": Object {
+          "value": {
             "lat": 55.60498,
             "lng": 13.003822,
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bar",
           "path": "fields.body[0].bar",
-          "value": Object {
+          "value": {
             "id": "bar id",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "child",
           "path": "fields.body[0].child",
-          "value": Object {
+          "value": {
             "string": "Nested",
             "type": "ValueOne",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "child",
           "path": "fields.body[0].child",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.body[0].child.string",
@@ -833,22 +834,22 @@ describe('visitItemRecursively()', () => {
       initialVisitContext: undefined,
     });
     expect(calls).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "enterList",
           "fieldName": "bodyList",
           "length": 2,
           "path": "fields.bodyList",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bodyList",
           "path": "fields.bodyList[0]",
-          "value": Object {
-            "blocks": Array [
-              Object {
-                "data": Object {
+          "value": {
+            "blocks": [
+              {
+                "data": {
                   "text": "First rich text item",
                 },
                 "type": "paragraph",
@@ -857,14 +858,14 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterRichText",
           "fieldName": "bodyList",
           "path": "fields.bodyList[0]",
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
+          "blockData": {
             "text": "First rich text item",
           },
           "blockType": "paragraph",
@@ -872,20 +873,20 @@ describe('visitItemRecursively()', () => {
           "path": "fields.bodyList[0][0]",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "bodyList",
           "path": "fields.bodyList[1]",
-          "value": Object {
-            "blocks": Array [
-              Object {
-                "data": Object {
+          "value": {
+            "blocks": [
+              {
+                "data": {
                   "text": "Second rich text item",
                 },
                 "type": "paragraph",
               },
-              Object {
-                "data": Object {
+              {
+                "data": {
                   "text": "Second block in second rich text item",
                 },
                 "type": "paragraph",
@@ -894,14 +895,14 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterRichText",
           "fieldName": "bodyList",
           "path": "fields.bodyList[1]",
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
+          "blockData": {
             "text": "Second rich text item",
           },
           "blockType": "paragraph",
@@ -909,9 +910,9 @@ describe('visitItemRecursively()', () => {
           "path": "fields.bodyList[1][0]",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitRichTextBlock",
-          "blockData": Object {
+          "blockData": {
             "text": "Second block in second rich text item",
           },
           "blockType": "paragraph",
@@ -969,18 +970,18 @@ describe('visitItemRecursively()', () => {
       initialVisitContext: undefined,
     });
     expect(calls).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "visitField",
           "fieldName": "valueOne",
           "path": "fields.valueOne",
-          "value": Object {
+          "value": {
             "string": "root",
             "type": "ValueOne",
-            "valueOne": Object {
+            "valueOne": {
               "string": "root->valueOne",
               "type": "ValueOne",
-              "valueOne": Object {
+              "valueOne": {
                 "string": "root->valueOne->valueOne",
                 "type": "ValueOne",
               },
@@ -988,63 +989,63 @@ describe('visitItemRecursively()', () => {
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "valueOne",
           "path": "fields.valueOne",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.valueOne.string",
           "value": "root",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "valueOne",
           "path": "fields.valueOne.valueOne",
-          "value": Object {
+          "value": {
             "string": "root->valueOne",
             "type": "ValueOne",
-            "valueOne": Object {
+            "valueOne": {
               "string": "root->valueOne->valueOne",
               "type": "ValueOne",
             },
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "valueOne",
           "path": "fields.valueOne.valueOne",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.valueOne.valueOne.string",
           "value": "root->valueOne",
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "valueOne",
           "path": "fields.valueOne.valueOne.valueOne",
-          "value": Object {
+          "value": {
             "string": "root->valueOne->valueOne",
             "type": "ValueOne",
           },
           "visitContext": undefined,
         },
-        Object {
+        {
           "action": "enterValueItem",
           "fieldName": "valueOne",
           "path": "fields.valueOne.valueOne.valueOne",
           "type": "ValueOne",
         },
-        Object {
+        {
           "action": "visitField",
           "fieldName": "string",
           "path": "fields.valueOne.valueOne.valueOne.string",

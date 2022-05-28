@@ -1,9 +1,10 @@
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test, vi } from 'vitest';
 import type {
-  PublishedEntity,
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
+  PublishedEntity,
 } from '.';
 import {
   convertJsonPublishedClientResult,
@@ -47,10 +48,7 @@ function createJsonConvertingPublishedClientsForOperation<
     operation: PublishedClientOperation<TName>
   ) => Promise<void>
 ) {
-  const operationHandlerMock = jest.fn<
-    Promise<void>,
-    [TContext, PublishedClientOperation<TName>]
-  >();
+  const operationHandlerMock = vi.fn<[TContext, PublishedClientOperation<TName>], Promise<void>>();
   operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
 
   const innerMiddleware: PublishedClientMiddleware<TContext> = async (context, operation) => {
@@ -103,12 +101,12 @@ describe('PublishedClient forward operation over JSON', () => {
       }
 
       expect(result.value).toMatchInlineSnapshot(`
-        Array [
+        [
           OkResult {
-            "value": Object {
-              "fields": Object {},
+            "value": {
+              "fields": {},
               "id": "1234",
-              "info": Object {
+              "info": {
                 "authKey": "none",
                 "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
@@ -117,10 +115,10 @@ describe('PublishedClient forward operation over JSON', () => {
             },
           },
           OkResult {
-            "value": Object {
-              "fields": Object {},
+            "value": {
+              "fields": {},
               "id": "5678",
-              "info": Object {
+              "info": {
                 "authKey": "none",
                 "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
@@ -133,23 +131,23 @@ describe('PublishedClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Array [
-                Object {
+          {
+            "args": [
+              [
+                {
                   "id": "1234",
                 },
-                Object {
+                {
                   "id": "5678",
                 },
               ],
@@ -179,10 +177,10 @@ describe('PublishedClient forward operation over JSON', () => {
     if (expectOkResult(result)) {
       expect(result.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "fields": Object {},
+        {
+          "fields": {},
           "id": "1234",
-          "info": Object {
+          "info": {
             "authKey": "none",
             "createdAt": "2021-08-17T07:51:25.56Z",
             "name": "Foo name",
@@ -193,19 +191,19 @@ describe('PublishedClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
+          {
+            "args": [
+              {
                 "id": "1234",
               },
             ],
@@ -232,25 +230,25 @@ describe('PublishedClient forward operation over JSON', () => {
     const result = await publishedClient.getSchemaSpecification();
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "entityTypes": Array [],
-          "valueTypes": Array [],
+        {
+          "entityTypes": [],
+          "valueTypes": [],
         }
       `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [],
+          {
+            "args": [],
             "modifies": false,
             "name": "getSchemaSpecification",
             "next": [Function],
@@ -278,20 +276,20 @@ describe('PublishedClient forward operation over JSON', () => {
     expectResultValue(result, 123);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "boundingBox": Object {
+          {
+            "args": [
+              {
+                "boundingBox": {
                   "maxLat": 1,
                   "maxLng": 21,
                   "minLat": 0,
@@ -341,27 +339,27 @@ describe('PublishedClient forward operation over JSON', () => {
       expect(result.value.items[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "boundingBox": Object {
+          {
+            "args": [
+              {
+                "boundingBox": {
                   "maxLat": 1,
                   "maxLng": 21,
                   "minLat": 0,
                   "minLng": 20,
                 },
               },
-              Object {
+              {
                 "count": 10,
               },
             ],
@@ -437,27 +435,27 @@ describe('PublishedClient forward operation over JSON', () => {
       expect(result.value?.edges[0].node.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "boundingBox": Object {
+          {
+            "args": [
+              {
+                "boundingBox": {
                   "maxLat": 1,
                   "maxLng": 21,
                   "minLat": 0,
                   "minLng": 20,
                 },
               },
-              Object {
+              {
                 "after": "cursor",
                 "first": 100,
               },
@@ -487,18 +485,18 @@ describe('PublishedClient forward operation over JSON', () => {
     expectResultValue(result, null);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
+          {
+            "args": [
               null,
               null,
             ],

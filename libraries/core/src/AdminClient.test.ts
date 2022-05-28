@@ -1,4 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test, vi } from 'vitest';
 import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
 import {
   AdminClientOperationName,
@@ -46,7 +47,7 @@ function createJsonConvertingAdminClientsForOperation<
     operation: AdminClientOperation<TName>
   ) => Promise<void>
 ) {
-  const operationHandlerMock = jest.fn<Promise<void>, [TContext, AdminClientOperation<TName>]>();
+  const operationHandlerMock = vi.fn<[TContext, AdminClientOperation<TName>], Promise<void>>();
   operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
 
   const innerMiddleware: AdminClientMiddleware<TContext> = async (context, operation) => {
@@ -101,20 +102,20 @@ describe('AdminClient forward operation over JSON', () => {
     });
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
+          {
+            "args": [
               "lock-name",
-              Object {
+              {
                 "leaseDuration": 100,
               },
             ],
@@ -155,19 +156,19 @@ describe('AdminClient forward operation over JSON', () => {
     expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
+          {
+            "args": [
+              {
                 "id": "1234",
               },
             ],
@@ -214,12 +215,12 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
+        {
           "effect": "createdAndPublished",
-          "entity": Object {
-            "fields": Object {},
+          "entity": {
+            "fields": {},
             "id": "1234",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
@@ -234,28 +235,28 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "fields": Object {},
+          {
+            "args": [
+              {
+                "fields": {},
                 "id": "1234",
-                "info": Object {
+                "info": {
                   "authKey": "none",
                   "name": "Name",
                   "type": "FooType",
                 },
               },
-              Object {
+              {
                 "publish": true,
               },
             ],
@@ -290,12 +291,12 @@ describe('AdminClient forward operation over JSON', () => {
       }
 
       expect(result.value).toMatchInlineSnapshot(`
-        Array [
+        [
           OkResult {
-            "value": Object {
-              "fields": Object {},
+            "value": {
+              "fields": {},
               "id": "1234",
-              "info": Object {
+              "info": {
                 "authKey": "none",
                 "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
@@ -307,10 +308,10 @@ describe('AdminClient forward operation over JSON', () => {
             },
           },
           OkResult {
-            "value": Object {
-              "fields": Object {},
+            "value": {
+              "fields": {},
               "id": "5678",
-              "info": Object {
+              "info": {
                 "authKey": "none",
                 "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
@@ -326,23 +327,23 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Array [
-                Object {
+          {
+            "args": [
+              [
+                {
                   "id": "1234",
                 },
-                Object {
+                {
                   "id": "5678",
                 },
               ],
@@ -373,10 +374,10 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "fields": Object {},
+        {
+          "fields": {},
           "id": "1234",
-          "info": Object {
+          "info": {
             "authKey": "none",
             "createdAt": "2021-08-17T07:51:25.56Z",
             "name": "Foo name",
@@ -390,19 +391,19 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
+          {
+            "args": [
+              {
                 "id": "1234",
               },
             ],
@@ -443,10 +444,10 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value.versions[0].createdAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
+        {
           "id": "1234",
-          "versions": Array [
-            Object {
+          "versions": [
+            {
               "createdAt": "2021-08-17T07:51:25.56Z",
               "createdBy": "123-456",
               "published": true,
@@ -458,19 +459,19 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
+          {
+            "args": [
+              {
                 "id": "1234",
               },
             ],
@@ -511,9 +512,9 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value.events[0].publishedAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "events": Array [
-            Object {
+        {
+          "events": [
+            {
               "kind": "publish",
               "publishedAt": "2021-08-17T07:51:25.56Z",
               "publishedBy": "123-456",
@@ -526,19 +527,19 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
+          {
+            "args": [
+              {
                 "id": "1234",
               },
             ],
@@ -564,25 +565,25 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.getSchemaSpecification();
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "entityTypes": Array [],
-          "valueTypes": Array [],
+        {
+          "entityTypes": [],
+          "valueTypes": [],
         }
       `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [],
+          {
+            "args": [],
             "modifies": false,
             "name": "getSchemaSpecification",
             "next": [Function],
@@ -609,20 +610,20 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, 123);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "boundingBox": Object {
+          {
+            "args": [
+              {
+                "boundingBox": {
                   "maxLat": 1,
                   "maxLng": 21,
                   "minLat": 0,
@@ -681,24 +682,24 @@ describe('AdminClient forward operation over JSON', () => {
     expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Array [
-                Object {
+          {
+            "args": [
+              [
+                {
                   "id": "1234",
                   "version": 0,
                 },
-                Object {
+                {
                   "id": "4321",
                   "version": 1,
                 },
@@ -728,18 +729,18 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, { name: 'lock-name' });
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
+          {
+            "args": [
               "lock-name",
               123,
             ],
@@ -767,18 +768,18 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, { name: 'lock-name', handle: 123 });
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
+          {
+            "args": [
               "lock-name",
               123,
             ],
@@ -828,27 +829,27 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "boundingBox": Object {
+          {
+            "args": [
+              {
+                "boundingBox": {
                   "maxLat": 1,
                   "maxLng": 21,
                   "minLat": 0,
                   "minLng": 20,
                 },
               },
-              Object {
+              {
                 "count": 10,
                 "seed": 1234,
               },
@@ -931,27 +932,27 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "boundingBox": Object {
+          {
+            "args": [
+              {
+                "boundingBox": {
                   "maxLat": 1,
                   "maxLng": 21,
                   "minLat": 0,
                   "minLng": 20,
                 },
               },
-              Object {
+              {
                 "after": "cursor",
                 "first": 100,
               },
@@ -980,18 +981,18 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, null);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
+          {
+            "args": [
               null,
               null,
             ],
@@ -1032,19 +1033,19 @@ describe('AdminClient forward operation over JSON', () => {
     expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
+          {
+            "args": [
+              {
                 "id": "1234",
               },
             ],
@@ -1096,23 +1097,23 @@ describe('AdminClient forward operation over JSON', () => {
     expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Array [
-                Object {
+          {
+            "args": [
+              [
+                {
                   "id": "1234",
                 },
-                Object {
+                {
                   "id": "4321",
                 },
               ],
@@ -1159,12 +1160,12 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
+        {
           "effect": "updatedAndPublished",
-          "entity": Object {
-            "fields": Object {},
+          "entity": {
+            "fields": {},
             "id": "1234",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
@@ -1179,23 +1180,23 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "fields": Object {},
+          {
+            "args": [
+              {
+                "fields": {},
                 "id": "1234",
               },
-              Object {
+              {
                 "publish": true,
               },
             ],
@@ -1223,31 +1224,31 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.updateSchemaSpecification({ entityTypes: [], valueTypes: [] });
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
+        {
           "effect": "updated",
-          "schemaSpecification": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "schemaSpecification": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         }
       `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "entityTypes": Array [],
-                "valueTypes": Array [],
+          {
+            "args": [
+              {
+                "entityTypes": [],
+                "valueTypes": [],
               },
             ],
             "modifies": true,
@@ -1293,12 +1294,12 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
+        {
           "effect": "created",
-          "entity": Object {
-            "fields": Object {},
+          "entity": {
+            "fields": {},
             "id": "1234",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
@@ -1313,28 +1314,28 @@ describe('AdminClient forward operation over JSON', () => {
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "logger": Object {
+      [
+        [
+          {
+            "logger": {
               "debug": [Function],
               "error": [Function],
               "info": [Function],
               "warn": [Function],
             },
           },
-          Object {
-            "args": Array [
-              Object {
-                "fields": Object {},
+          {
+            "args": [
+              {
+                "fields": {},
                 "id": "1234",
-                "info": Object {
+                "info": {
                   "authKey": "none",
                   "name": "Name",
                   "type": "FooType",
                 },
               },
-              Object {
+              {
                 "publish": true,
               },
             ],

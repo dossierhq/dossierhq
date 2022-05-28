@@ -1,4 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill';
+import { expect } from 'vitest';
 import type { ErrorType, OkResult, Result } from '.';
 
 export function expectOkResult<TOk, TError extends ErrorType>(

@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest';
 import { ErrorType, FieldType, RichTextBlockType, AdminSchema } from '.';
 import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils';
 

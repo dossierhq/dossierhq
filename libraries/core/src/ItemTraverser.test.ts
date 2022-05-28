@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import type { AdminItemTraverseNode } from '.';
 import {
   AdminItemTraverseNodeType,
@@ -61,18 +62,18 @@ describe('traverseAdminItem', () => {
       traverseAdminItem(schema, ['entity'], { info: { type: 'Foo' }, fields: {} })
     );
     expect(nodes).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "path": "entity.fields.string",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "string",
@@ -80,25 +81,25 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.stringList",
           "type": "field",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "twoStrings",
             "type": "ValueType",
-            "valueTypes": Array [
+            "valueTypes": [
               "TwoStrings",
             ],
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "twoStrings",
@@ -106,17 +107,17 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.richText",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "richText",
             "type": "RichText",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "richText",
@@ -136,18 +137,18 @@ describe('traverseAdminItem', () => {
       })
     );
     expect(nodes).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "path": "entity.fields.string",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "string",
@@ -155,21 +156,21 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.stringList",
           "type": "field",
-          "value": Array [
+          "value": [
             "string1",
             "string2",
           ],
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "list": true,
             "name": "stringList",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "stringList",
@@ -178,13 +179,13 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "string1",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "list": true,
             "name": "stringList",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "stringList",
@@ -193,20 +194,20 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "string2",
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "twoStrings",
             "type": "ValueType",
-            "valueTypes": Array [
+            "valueTypes": [
               "TwoStrings",
             ],
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "twoStrings",
@@ -214,17 +215,17 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.richText",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "richText",
             "type": "RichText",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "richText",
@@ -241,42 +242,42 @@ describe('traverseAdminItem', () => {
       traverseAdminItem(schema, ['valueItem'], { type: 'TwoStrings' })
     );
     expect(nodes).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "path": "valueItem",
           "type": "valueItem",
-          "valueItem": Object {
+          "valueItem": {
             "type": "TwoStrings",
           },
         },
-        Object {
+        {
           "path": "valueItem.string1",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string1",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "valueItem",
             "string1",
           ],
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "valueItem.string2",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string2",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "valueItem",
             "string2",
           ],
@@ -299,18 +300,18 @@ describe('traverseAdminItem', () => {
       })
     );
     expect(nodes).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "path": "entity.fields.string",
           "type": "field",
           "value": "string1",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "string",
@@ -318,21 +319,21 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "string1",
         },
-        Object {
+        {
           "path": "entity.fields.stringList",
           "type": "field",
-          "value": Array [
+          "value": [
             "string2.1",
             "string2.2",
           ],
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "list": true,
             "name": "stringList",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "stringList",
@@ -341,13 +342,13 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "string2.1",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "list": true,
             "name": "stringList",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "stringList",
@@ -356,55 +357,55 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "string2.2",
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings",
           "type": "field",
-          "value": Object {
+          "value": {
             "string1": "two-1",
             "string2": "two-2",
             "type": "TwoStrings",
           },
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "twoStrings",
             "type": "ValueType",
-            "valueTypes": Array [
+            "valueTypes": [
               "TwoStrings",
             ],
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "twoStrings",
           ],
           "type": "fieldItem",
-          "value": Object {
+          "value": {
             "string1": "two-1",
             "string2": "two-2",
             "type": "TwoStrings",
           },
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings",
           "type": "valueItem",
-          "valueItem": Object {
+          "valueItem": {
             "string1": "two-1",
             "string2": "two-2",
             "type": "TwoStrings",
           },
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings.string1",
           "type": "field",
           "value": "two-1",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string1",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "twoStrings",
@@ -413,17 +414,17 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "two-1",
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings.string2",
           "type": "field",
           "value": "two-2",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string2",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "twoStrings",
@@ -432,17 +433,17 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "two-2",
         },
-        Object {
+        {
           "path": "entity.fields.richText",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "richText",
             "type": "RichText",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "richText",
@@ -471,18 +472,18 @@ describe('traverseAdminItem', () => {
       })
     );
     expect(nodes).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "path": "entity.fields.string",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "string",
@@ -490,25 +491,25 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.stringList",
           "type": "field",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.twoStrings",
           "type": "field",
           "value": undefined,
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "twoStrings",
             "type": "ValueType",
-            "valueTypes": Array [
+            "valueTypes": [
               "TwoStrings",
             ],
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "twoStrings",
@@ -516,13 +517,13 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": undefined,
         },
-        Object {
+        {
           "path": "entity.fields.richText",
           "type": "field",
-          "value": Object {
-            "blocks": Array [
-              Object {
-                "data": Object {
+          "value": {
+            "blocks": [
+              {
+                "data": {
                   "string1": "two-1",
                   "string2": "two-2",
                   "type": "TwoStrings",
@@ -532,21 +533,21 @@ describe('traverseAdminItem', () => {
             ],
           },
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "richText",
             "type": "RichText",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "richText",
           ],
           "type": "fieldItem",
-          "value": Object {
-            "blocks": Array [
-              Object {
-                "data": Object {
+          "value": {
+            "blocks": [
+              {
+                "data": {
                   "string1": "two-1",
                   "string2": "two-2",
                   "type": "TwoStrings",
@@ -556,26 +557,26 @@ describe('traverseAdminItem', () => {
             ],
           },
         },
-        Object {
+        {
           "path": "entity.fields.richText.blocks[0].data",
           "type": "valueItem",
-          "valueItem": Object {
+          "valueItem": {
             "string1": "two-1",
             "string2": "two-2",
             "type": "TwoStrings",
           },
         },
-        Object {
+        {
           "path": "entity.fields.richText.blocks[0].data.string1",
           "type": "field",
           "value": "two-1",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string1",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "richText",
@@ -587,17 +588,17 @@ describe('traverseAdminItem', () => {
           "type": "fieldItem",
           "value": "two-1",
         },
-        Object {
+        {
           "path": "entity.fields.richText.blocks[0].data.string2",
           "type": "field",
           "value": "two-2",
         },
-        Object {
-          "fieldSpec": Object {
+        {
+          "fieldSpec": {
             "name": "string2",
             "type": "String",
           },
-          "path": Array [
+          "path": [
             "entity",
             "fields",
             "richText",

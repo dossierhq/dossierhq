@@ -1,3 +1,4 @@
+import { describe, test } from 'vitest';
 import { ErrorType, NoOpLogger, ok } from '.';
 import { expectErrorResult, expectResultValue } from './CoreTestUtils';
 import type {

@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import type { Result } from '.';
 import { createErrorResultFromError, ErrorType, notOk, ok } from '.';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils';
@@ -16,8 +17,8 @@ describe('createErrorResultFromError()', () => {
       'Unexpected exception: Error: Generic error message'
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "Unexpected error",
           [Error: Generic error message],
         ],
@@ -37,8 +38,8 @@ describe('createErrorResultFromError()', () => {
       'Unexpected exception: Error: Generic error message'
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "Unexpected error",
           [Error: Generic error message],
         ],
@@ -53,7 +54,7 @@ describe('createErrorResultFromError()', () => {
       notOk.Conflict('Conflict error message').toError()
     );
     expectErrorResult(actual, ErrorType.Conflict, 'Conflict error message');
-    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
+    expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
   });
 
   test('From ErrorResultError with supported type', () => {
@@ -63,7 +64,7 @@ describe('createErrorResultFromError()', () => {
         ErrorType.Conflict,
       ]);
     expectErrorResult(actual, ErrorType.Conflict, 'Conflict error message');
-    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
+    expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
   });
 
   test('From ErrorResultError with unsupported type', () => {
@@ -79,7 +80,7 @@ describe('createErrorResultFromError()', () => {
       ErrorType.Generic,
       'Unexpected error: BadRequest: Bad request error message'
     );
-    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
+    expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
   });
 });
 
@@ -128,8 +129,8 @@ describe('notOk', () => {
       'Unexpected exception: Error: Hello world'
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "Unexpected error",
           [Error: Hello world],
         ],
@@ -144,6 +145,6 @@ describe('notOk', () => {
       ErrorType.Generic,
       'Unexpected exception: 123'
     );
-    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
+    expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
   });
 });
