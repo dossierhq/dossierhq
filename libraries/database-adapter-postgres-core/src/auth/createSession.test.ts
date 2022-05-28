@@ -1,4 +1,6 @@
-import { expectResultValue } from '@jonasb/datadata-core-jest';
+/* eslint-disable no-useless-escape */
+import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import { describe, expect, test } from 'vitest';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { authCreateSession } from './createSession';
 
@@ -16,26 +18,26 @@ describe('authCreateSession', () => {
       session: { subjectId: '4321' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "SELECT s.id, s.uuid FROM subjects s, principals p
-          WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id",
+          WHERE p.provider = \$1 AND p.identifier = \$2 AND p.subjects_id = s.id",
           "test",
           "hello",
         ],
-        Array [
+        [
           "BEGIN",
         ],
-        Array [
+        [
           "INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid",
         ],
-        Array [
-          "INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)",
+        [
+          "INSERT INTO principals (provider, identifier, subjects_id) VALUES (\$1, \$2, \$3)",
           "test",
           "hello",
           123,
         ],
-        Array [
+        [
           "COMMIT",
         ],
       ]
@@ -55,10 +57,10 @@ describe('authCreateSession', () => {
       session: { subjectId: '4321' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "SELECT s.id, s.uuid FROM subjects s, principals p
-          WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id",
+          WHERE p.provider = \$1 AND p.identifier = \$2 AND p.subjects_id = s.id",
           "test",
           "hello",
         ],

@@ -21,7 +21,8 @@
     "sqljs",
     "Unpublish",
     "Upsert",
-    "uuidv"
+    "uuidv",
+    "vitest"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
