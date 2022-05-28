@@ -5,6 +5,7 @@ import {
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
+import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils';
 import { initializeSqlite3Server } from './Sqlite3TestUtils';
 
