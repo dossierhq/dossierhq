@@ -1,5 +1,5 @@
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import path from 'path';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import * as path from 'node:path';
 import { fetch } from 'undici';
 
 export async function fetchTextCached(url: string, cachePath: string) {
