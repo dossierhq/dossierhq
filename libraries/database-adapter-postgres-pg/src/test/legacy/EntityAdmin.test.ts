@@ -12,9 +12,10 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import {
   createPostgresTestServerAndClient,
   expectEntityHistoryVersions,

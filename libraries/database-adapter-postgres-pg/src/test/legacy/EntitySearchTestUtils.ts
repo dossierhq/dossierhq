@@ -12,6 +12,7 @@ import type {
   PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
+import { expect } from 'vitest';
 
 export async function ensureEntityCount(
   client: AdminClient,

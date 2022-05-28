@@ -6,8 +6,9 @@ import type {
   PublishedEntity,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, FieldType, RichTextBlockType } from '@jonasb/datadata-core';
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils';
 import {
   countSearchResultWithEntity,
