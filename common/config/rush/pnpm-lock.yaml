@@ -907,7 +907,6 @@ importers:
   ../../rigs/heft-node-rig:
     specifiers:
       '@rushstack/heft': ~0.45.5
-      '@rushstack/heft-jest-plugin': ~0.3.5
       eslint: ^8.13.0
       typescript: ^4.7.2
     dependencies:
@@ -915,7 +914,6 @@ importers:
       typescript: 4.7.2
     devDependencies:
       '@rushstack/heft': 0.45.5
-      '@rushstack/heft-jest-plugin': 0.3.5_@rushstack+heft@0.45.5
 
   ../../stack/eslint-config-generic:
     specifiers:
