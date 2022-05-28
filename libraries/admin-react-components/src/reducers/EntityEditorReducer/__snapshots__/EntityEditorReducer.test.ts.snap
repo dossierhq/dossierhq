@@ -1,27 +1,27 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`AddDraftAction add already open Foo 1`] = `
-Object {
+exports[`AddDraftAction > add already open Foo 1`] = `
+{
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 2,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -32,12 +32,12 @@ Object {
         ],
         "name": "Foo",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "foo": null,
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo",
@@ -54,12 +54,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -67,35 +67,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`AddDraftAction add new Foo 1`] = `
-Object {
+exports[`AddDraftAction > add new Foo 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -114,12 +114,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -127,27 +127,27 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`DeleteDraftAction add/delete Foo 1`] = `
-Object {
+exports[`DeleteDraftAction > add/delete Foo 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": null,
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [],
+  "drafts": [],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -155,35 +155,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -202,12 +202,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -215,35 +215,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 2`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 2`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -262,12 +262,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -275,35 +275,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 3`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 3`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -322,12 +322,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -335,20 +335,20 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 4`] = `
-Object {
-  "fields": Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 4`] = `
+{
+  "fields": {
     "title": null,
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-  "info": Object {
+  "info": {
     "authKey": "none",
     "name": "Foo name",
     "type": "Foo",
@@ -356,28 +356,28 @@ Object {
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 5`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 5`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -396,12 +396,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -409,35 +409,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 6`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 6`] = `
+{
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 2,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -448,12 +448,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": null,
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -470,12 +470,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -483,35 +483,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -530,12 +530,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -543,35 +543,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 2`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 2`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -590,12 +590,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -603,35 +603,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 3`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 3`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -650,12 +650,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -663,35 +663,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 4`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 4`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -710,12 +710,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -723,20 +723,20 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 5`] = `
-Object {
-  "fields": Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 5`] = `
+{
+  "fields": {
     "title": "Foo title",
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-  "info": Object {
+  "info": {
     "authKey": "none",
     "name": "Foo name",
     "type": "Foo",
@@ -744,28 +744,28 @@ Object {
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 6`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 6`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -784,12 +784,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -797,35 +797,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 7`] = `
-Object {
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 7`] = `
+{
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 2,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -836,12 +836,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Foo title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -858,12 +858,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -871,35 +871,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -910,12 +910,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Existing title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -932,12 +932,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -945,35 +945,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 2`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 2`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -984,12 +984,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Existing title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1006,12 +1006,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1019,47 +1019,47 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 3`] = `
-Object {
-  "fields": Object {
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 3`] = `
+{
+  "fields": {
     "title": "New title",
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-  "info": Object {
+  "info": {
     "type": "Foo",
   },
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 4`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 4`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1070,12 +1070,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Existing title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1092,12 +1092,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1105,35 +1105,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 5`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 5`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1144,12 +1144,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "New title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1166,12 +1166,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1179,35 +1179,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, simulate publish 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1218,12 +1218,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Existing title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1240,12 +1240,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1253,35 +1253,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing entity, simulate publish 2`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 2`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1292,12 +1292,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Existing title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1314,12 +1314,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1327,22 +1327,22 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing, get schema 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing, get schema 1`] = `
+{
   "activeEntityEditorScrollSignal": 0,
   "activeEntityId": null,
   "activeEntityMenuScrollSignal": 0,
-  "drafts": Array [],
-  "pendingSchemaActions": Array [
+  "drafts": [],
+  "pendingSchemaActions": [
     AddDraftAction {
-      "selector": Object {
+      "selector": {
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
       },
     },
@@ -1352,13 +1352,13 @@ Object {
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing, get schema 2`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
+{
   "activeEntityEditorScrollSignal": 0,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 0,
-  "drafts": Array [
-    Object {
+  "drafts": [
+    {
       "draft": null,
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -1368,12 +1368,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1381,35 +1381,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open existing, get schema 3`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1420,12 +1420,12 @@ Object {
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": null,
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1442,12 +1442,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1455,57 +1455,57 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open first entity, open second entity: 1 Initial 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open first entity, open second entity > 1 Initial 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "foo",
               "type": "EntityType",
             },
-            "normalizedValue": Object {
+            "normalizedValue": {
               "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
             },
             "status": "",
-            "value": Object {
+            "value": {
               "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
             },
           },
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
-          "foo": Object {
+      "entity": {
+        "fields": {
+          "foo": {
             "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
           },
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1522,12 +1522,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
@@ -1535,57 +1535,57 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open first entity, open second entity: 2 After AddDraft 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open first entity, open second entity > 2 After AddDraft 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "foo",
               "type": "EntityType",
             },
-            "normalizedValue": Object {
+            "normalizedValue": {
               "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
             },
             "status": "",
-            "value": Object {
+            "value": {
               "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
             },
           },
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
-          "foo": Object {
+      "entity": {
+        "fields": {
+          "foo": {
             "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
           },
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1599,7 +1599,7 @@ Object {
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
       "status": "",
     },
-    Object {
+    {
       "draft": null,
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -1609,12 +1609,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
@@ -1622,57 +1622,57 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`EntityEditorReducer scenarios open first entity, open second entity: 3 After UpdateEntity 1`] = `
-Object {
+exports[`EntityEditorReducer scenarios > open first entity, open second entity > 3 After UpdateEntity 1`] = `
+{
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
   "activeEntityMenuScrollSignal": 2,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "foo",
               "type": "EntityType",
             },
-            "normalizedValue": Object {
+            "normalizedValue": {
               "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
             },
             "status": "",
-            "value": Object {
+            "value": {
               "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
             },
           },
         ],
         "name": "Foo name#123456",
       },
-      "entity": Object {
-        "fields": Object {
-          "foo": Object {
+      "entity": {
+        "fields": {
+          "foo": {
             "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
           },
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name#123456",
@@ -1686,22 +1686,22 @@ Object {
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
       "status": "",
     },
-    Object {
-      "draft": Object {
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "foo",
               "type": "EntityType",
             },
@@ -1712,12 +1712,12 @@ Object {
         ],
         "name": "Foo 2",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "foo": null,
         },
         "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo 2",
@@ -1734,12 +1734,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "foo",
               "type": "EntityType",
             },
@@ -1747,28 +1747,28 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`SetActiveEntityAction add two entities, set active to first 1`] = `
-Object {
+exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
+{
   "activeEntityEditorScrollSignal": 3,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 3,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [],
+          "fields": [],
           "name": "Foo",
         },
-        "fields": Array [],
+        "fields": [],
         "name": "",
       },
       "entity": null,
@@ -1776,15 +1776,15 @@ Object {
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
       "status": "",
     },
-    Object {
-      "draft": Object {
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [],
+          "fields": [],
           "name": "Bar",
         },
-        "fields": Array [],
+        "fields": [],
         "name": "",
       },
       "entity": null,
@@ -1795,48 +1795,48 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [],
+          "fields": [],
           "name": "Foo",
         },
-        Object {
+        {
           "adminOnly": false,
-          "fields": Array [],
+          "fields": [],
           "name": "Bar",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`SetAuthKeyAction set authKey of new draft 1`] = `
-Object {
+exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "subject",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1855,12 +1855,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1868,35 +1868,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`SetFieldAction set title field of new draft 1`] = `
-Object {
+exports[`SetFieldAction > set title field of new draft 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1915,12 +1915,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1928,35 +1928,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`SetNameAction set name of new draft 1`] = `
-Object {
+exports[`SetNameAction > set name of new draft 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": null,
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -1975,12 +1975,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -1988,35 +1988,35 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "changed",
 }
 `;
 
-exports[`UpdateEntityAction add draft, update entity 1`] = `
-Object {
+exports[`UpdateEntityAction > add draft, update entity 1`] = `
+{
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 1,
-  "drafts": Array [
-    Object {
-      "draft": Object {
+  "drafts": [
+    {
+      "draft": {
         "authKey": "none",
-        "entitySpec": Object {
+        "entitySpec": {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
           ],
           "name": "Foo",
         },
-        "fields": Array [
-          Object {
-            "fieldSpec": Object {
+        "fields": [
+          {
+            "fieldSpec": {
               "name": "title",
               "type": "String",
             },
@@ -2027,12 +2027,12 @@ Object {
         ],
         "name": "Foo name",
       },
-      "entity": Object {
-        "fields": Object {
+      "entity": {
+        "fields": {
           "title": "Title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
           "name": "Foo name",
@@ -2049,12 +2049,12 @@ Object {
   ],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [
-        Object {
+    "spec": {
+      "entityTypes": [
+        {
           "adminOnly": false,
-          "fields": Array [
-            Object {
+          "fields": [
+            {
               "name": "title",
               "type": "String",
             },
@@ -2062,36 +2062,36 @@ Object {
           "name": "Foo",
         },
       ],
-      "valueTypes": Array [],
+      "valueTypes": [],
     },
   },
   "status": "",
 }
 `;
 
-exports[`UpdateEntityAction add draft, update entity 2`] = `
-Object {
-  "fields": Object {
+exports[`UpdateEntityAction > add draft, update entity 2`] = `
+{
+  "fields": {
     "title": "Title",
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-  "info": Object {
+  "info": {
     "type": "Foo",
   },
 }
 `;
 
-exports[`UpdateSchemaSpecificationAction add empty schema 1`] = `
-Object {
+exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
+{
   "activeEntityEditorScrollSignal": 0,
   "activeEntityId": null,
   "activeEntityMenuScrollSignal": 0,
-  "drafts": Array [],
+  "drafts": [],
   "pendingSchemaActions": null,
   "schema": AdminSchema {
-    "spec": Object {
-      "entityTypes": Array [],
-      "valueTypes": Array [],
+    "spec": {
+      "entityTypes": [],
+      "valueTypes": [],
     },
   },
   "status": "",

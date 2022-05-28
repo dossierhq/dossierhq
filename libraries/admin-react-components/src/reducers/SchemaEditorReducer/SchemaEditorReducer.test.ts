@@ -1,4 +1,5 @@
 import { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import { describe, expect, test } from 'vitest';
 import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
 import {
   getSchemaSpecificationUpdateFromEditorState,
@@ -22,19 +23,19 @@ describe('initializeSchemaEditorState', () => {
   test('no args', () => {
     const state = initializeSchemaEditorState();
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": null,
         "schemaWillBeUpdatedDueToSave": false,
         "status": "uninitialized",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 });
 
@@ -49,40 +50,40 @@ describe('AddTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Foo",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Foo",
             "status": "new",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Foo",
           },
         ],
@@ -100,26 +101,26 @@ describe('AddTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "value",
           "typeName": "Foo",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "value",
             "name": "Foo",
             "status": "new",
@@ -129,11 +130,11 @@ describe('AddTypeAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Foo",
           },
         ],
@@ -154,53 +155,53 @@ describe('AddTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Bar",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Bar",
             "status": "new",
           },
-          Object {
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Foo",
             "status": "",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Bar",
           },
         ],
@@ -221,21 +222,21 @@ describe('AddTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "value",
           "typeName": "Bar",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
@@ -243,17 +244,17 @@ describe('AddTypeAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "value",
             "name": "Bar",
             "status": "new",
           },
-          Object {
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "value",
             "name": "Foo",
             "status": "",
@@ -263,11 +264,11 @@ describe('AddTypeAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Bar",
           },
         ],
@@ -286,52 +287,52 @@ describe('AddTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Anaconda",
         },
         "activeSelectorEditorScrollSignal": 2,
         "activeSelectorMenuScrollSignal": 2,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Anaconda",
             "status": "new",
           },
-          Object {
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "ZooKeeper",
             "status": "new",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Anaconda",
           },
-          Object {
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "ZooKeeper",
           },
         ],
@@ -350,33 +351,33 @@ describe('AddTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "value",
           "typeName": "Anaconda",
         },
         "activeSelectorEditorScrollSignal": 2,
         "activeSelectorMenuScrollSignal": 2,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "value",
             "name": "Anaconda",
             "status": "new",
           },
-          Object {
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "value",
             "name": "ZooKeeper",
             "status": "new",
@@ -386,16 +387,16 @@ describe('AddTypeAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Anaconda",
           },
-          Object {
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "ZooKeeper",
           },
         ],
@@ -417,15 +418,15 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -439,30 +440,30 @@ describe('AddFieldAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -487,18 +488,18 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
@@ -506,11 +507,11 @@ describe('AddFieldAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -527,12 +528,12 @@ describe('AddFieldAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -560,22 +561,22 @@ describe('AddFieldAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "title",
                 "required": false,
                 "status": "",
                 "type": "String",
               },
-              Object {
+              {
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -589,12 +590,12 @@ describe('AddFieldAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "title",
                     "type": "String",
                   },
@@ -602,27 +603,27 @@ describe('AddFieldAction', () => {
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
-              Object {
+              {
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -650,19 +651,19 @@ describe('AddFieldAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "title",
                     "type": "String",
                   },
@@ -674,18 +675,18 @@ describe('AddFieldAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "title",
                 "required": false,
                 "status": "",
                 "type": "String",
               },
-              Object {
+              {
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -702,17 +703,17 @@ describe('AddFieldAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
-              Object {
+              {
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -748,16 +749,16 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
-                "entityTypes": Array [
+            "fields": [
+              {
+                "entityTypes": [
                   "Foo",
                 ],
                 "list": false,
@@ -773,31 +774,31 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
-                "entityTypes": Array [
+            "fields": [
+              {
+                "entityTypes": [
                   "Foo",
                 ],
                 "name": "foo",
@@ -835,18 +836,18 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
@@ -854,17 +855,17 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "foo",
                 "required": false,
                 "status": "new",
                 "type": "ValueType",
-                "valueTypes": Array [
+                "valueTypes": [
                   "Foo",
                 ],
               },
@@ -878,16 +879,16 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "foo",
                 "required": false,
                 "type": "ValueType",
-                "valueType": Array [
+                "valueType": [
                   "Foo",
                 ],
               },
@@ -917,15 +918,15 @@ describe('ChangeFieldRequiredAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "bar",
                 "required": true,
@@ -939,30 +940,30 @@ describe('ChangeFieldRequiredAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "bar",
                 "required": true,
                 "type": "String",
@@ -994,15 +995,15 @@ describe('ChangeFieldTypeAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1016,30 +1017,30 @@ describe('ChangeFieldTypeAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1070,18 +1071,18 @@ describe('ChangeFieldTypeAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
@@ -1089,11 +1090,11 @@ describe('ChangeFieldTypeAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1110,12 +1111,12 @@ describe('ChangeFieldTypeAction', () => {
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "valueTypes": Array [
-          Object {
+      {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1146,16 +1147,16 @@ describe('ChangeFieldTypeAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
-                "entityTypes": Array [],
+            "fields": [
+              {
+                "entityTypes": [],
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -1169,31 +1170,31 @@ describe('ChangeFieldTypeAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
-                "entityTypes": Array [],
+            "fields": [
+              {
+                "entityTypes": [],
                 "name": "bar",
                 "required": false,
                 "type": "EntityType",
@@ -1223,21 +1224,21 @@ describe('ChangeFieldTypeAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "bar",
                 "required": false,
                 "status": "new",
                 "type": "ValueType",
-                "valueTypes": Array [],
+                "valueTypes": [],
               },
             ],
             "kind": "entity",
@@ -1246,34 +1247,34 @@ describe('ChangeFieldTypeAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "bar",
                 "required": false,
                 "type": "ValueType",
-                "valueType": Array [],
+                "valueType": [],
               },
             ],
             "name": "Foo",
@@ -1298,40 +1299,40 @@ describe('ChangeTypeAdminOnlyAction', () => {
       new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true)
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Foo",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": true,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Foo",
             "status": "new",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": true,
-            "fields": Array [],
+            "fields": [],
             "name": "Foo",
           },
         ],
@@ -1356,15 +1357,15 @@ describe('DeleteFieldAction', () => {
       new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "title",
                 "required": false,
@@ -1378,12 +1379,12 @@ describe('DeleteFieldAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "title",
                     "type": "String",
                   },
@@ -1391,16 +1392,16 @@ describe('DeleteFieldAction', () => {
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 });
 
@@ -1416,24 +1417,24 @@ describe('DeleteTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
 
     expect(state.status).toBe(''); // should be reset
   });
@@ -1449,24 +1450,24 @@ describe('DeleteTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
     expect(state.status).toBe(''); // should be reset
   });
 });
@@ -1490,22 +1491,22 @@ describe('RenameFieldAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "title",
                 "required": false,
                 "status": "",
                 "type": "String",
               },
-              Object {
+              {
                 "list": false,
                 "name": "baz",
                 "required": false,
@@ -1519,12 +1520,12 @@ describe('RenameFieldAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "title",
                     "type": "String",
                   },
@@ -1532,27 +1533,27 @@ describe('RenameFieldAction', () => {
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
-              Object {
+              {
                 "name": "baz",
                 "required": false,
                 "type": "String",
@@ -1581,40 +1582,40 @@ describe('RenameTypeAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Bar",
         },
         "activeSelectorEditorScrollSignal": 2,
         "activeSelectorMenuScrollSignal": 2,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Bar",
             "status": "new",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      Object {
-        "entityTypes": Array [
-          Object {
+      {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "name": "Bar",
           },
         ],
@@ -1636,41 +1637,41 @@ describe('SetActiveSelectorAction', () => {
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, false)
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Foo",
         },
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Foo",
             "status": "",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 
   test('set to type with editor scroll', () => {
@@ -1685,41 +1686,41 @@ describe('SetActiveSelectorAction', () => {
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, true)
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "Foo",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "Foo",
             "status": "",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "Foo",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 });
 
@@ -1732,24 +1733,24 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [],
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 
   test('one entity type', () => {
@@ -1770,15 +1771,15 @@ describe('UpdateSchemaSpecificationAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "title",
                 "required": false,
@@ -1792,12 +1793,12 @@ describe('UpdateSchemaSpecificationAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "title",
                     "type": "String",
                   },
@@ -1805,16 +1806,16 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "TitleOnly",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 
   test('one value type', () => {
@@ -1835,19 +1836,19 @@ describe('UpdateSchemaSpecificationAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [],
+        "entityTypes": [],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [],
-            "valueTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [],
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "title",
                     "type": "String",
                   },
@@ -1859,11 +1860,11 @@ describe('UpdateSchemaSpecificationAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "title",
                 "required": false,
@@ -1879,7 +1880,7 @@ describe('UpdateSchemaSpecificationAction', () => {
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 
   test('entity type field', () => {
@@ -1906,16 +1907,16 @@ describe('UpdateSchemaSpecificationAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
-                "entityTypes": Array [
+            "fields": [
+              {
+                "entityTypes": [
                   "Foo",
                 ],
                 "list": false,
@@ -1931,13 +1932,13 @@ describe('UpdateSchemaSpecificationAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
-                    "entityTypes": Array [
+                "fields": [
+                  {
+                    "entityTypes": [
                       "Foo",
                     ],
                     "name": "reference",
@@ -1947,12 +1948,12 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "EntityReference",
               },
             ],
-            "valueTypes": Array [
-              Object {
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
-                    "entityTypes": Array [
+                "fields": [
+                  {
+                    "entityTypes": [
                       "Foo",
                     ],
                     "name": "reference",
@@ -1966,12 +1967,12 @@ describe('UpdateSchemaSpecificationAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
-                "entityTypes": Array [
+            "fields": [
+              {
+                "entityTypes": [
                   "Foo",
                 ],
                 "list": false,
@@ -1989,7 +1990,7 @@ describe('UpdateSchemaSpecificationAction', () => {
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 
   test('value type field', () => {
@@ -2016,21 +2017,21 @@ describe('UpdateSchemaSpecificationAction', () => {
     );
 
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeSelector": null,
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "valueItem",
                 "required": false,
                 "status": "",
                 "type": "ValueType",
-                "valueTypes": Array [
+                "valueTypes": [
                   "ValueItem",
                 ],
               },
@@ -2041,15 +2042,15 @@ describe('UpdateSchemaSpecificationAction', () => {
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "valueItem",
                     "type": "ValueType",
-                    "valueTypes": Array [
+                    "valueTypes": [
                       "ValueItem",
                     ],
                   },
@@ -2057,14 +2058,14 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "EntityWithValueItem",
               },
             ],
-            "valueTypes": Array [
-              Object {
+            "valueTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [
-                  Object {
+                "fields": [
+                  {
                     "name": "valueItem",
                     "type": "ValueType",
-                    "valueTypes": Array [
+                    "valueTypes": [
                       "ValueItem",
                     ],
                   },
@@ -2076,17 +2077,17 @@ describe('UpdateSchemaSpecificationAction', () => {
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [
-          Object {
+        "valueTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [
-              Object {
+            "fields": [
+              {
                 "list": false,
                 "name": "valueItem",
                 "required": false,
                 "status": "",
                 "type": "ValueType",
-                "valueTypes": Array [
+                "valueTypes": [
                   "ValueItem",
                 ],
               },
@@ -2099,7 +2100,7 @@ describe('UpdateSchemaSpecificationAction', () => {
       }
     `);
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
 });
 
@@ -2125,37 +2126,37 @@ describe('SchemaEditorReducer scenarios', () => {
     );
 
     expect(afterSaveState).toMatchInlineSnapshot(`
-      Object {
-        "activeSelector": Object {
+      {
+        "activeSelector": {
           "kind": "entity",
           "typeName": "NewType",
         },
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": Array [
-          Object {
+        "entityTypes": [
+          {
             "adminOnly": false,
-            "fields": Array [],
+            "fields": [],
             "kind": "entity",
             "name": "NewType",
             "status": "",
           },
         ],
         "schema": AdminSchema {
-          "spec": Object {
-            "entityTypes": Array [
-              Object {
+          "spec": {
+            "entityTypes": [
+              {
                 "adminOnly": false,
-                "fields": Array [],
+                "fields": [],
                 "name": "NewType",
               },
             ],
-            "valueTypes": Array [],
+            "valueTypes": [],
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
         "status": "",
-        "valueTypes": Array [],
+        "valueTypes": [],
       }
     `);
   });

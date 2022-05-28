@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`SearchEntityState scenarios From sampling -> set paging -> loading -> loaded: 1 - initial 1`] = `
-Object {
+exports[`SearchEntityState scenarios > From sampling -> set paging -> loading -> loaded > 1 - initial 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -21,14 +21,14 @@ Object {
     },
   ],
   "entitiesScrollToTopSignal": 1,
-  "entitySamples": Object {
-    "items": Array [
-      Object {
-        "fields": Object {
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -42,10 +42,10 @@ Object {
   "entitySamplesError": undefined,
   "loadingState": "",
   "paging": undefined,
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
-  "sampling": Object {
+  "restrictEntityTypes": [],
+  "sampling": {
     "count": 1,
     "seed": 123,
   },
@@ -54,18 +54,18 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios From sampling -> set paging -> loading -> loaded: 2 - loading 1`] = `
-Object {
+exports[`SearchEntityState scenarios > From sampling -> set paging -> loading -> loaded > 2 - loading 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -78,31 +78,31 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "first-page",
-  "paging": Object {
+  "paging": {
     "first": 1,
   },
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": null,
 }
 `;
 
-exports[`SearchEntityState scenarios From sampling -> set paging -> loading -> loaded: 3 - loaded 1`] = `
-Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
+exports[`SearchEntityState scenarios > From sampling -> set paging -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
         "cursor": "cursor-2",
         "node": OkResult {
-          "value": Object {
-            "fields": Object {
+          "value": {
+            "fields": {
               "title": "Title 2",
             },
             "id": "2",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2022-03-19T07:51:25.56Z",
               "name": "Entity 2",
@@ -112,7 +112,7 @@ Object {
         },
       },
     ],
-    "pageInfo": Object {
+    "pageInfo": {
       "endCursor": "cursor-2",
       "hasNextPage": true,
       "hasPreviousPage": false,
@@ -120,14 +120,14 @@ Object {
     },
   },
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -140,31 +140,31 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "",
-  "paging": Object {
+  "paging": {
     "first": 1,
   },
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios From searching -> set sampling -> loading -> loaded: 1 - initial 1`] = `
-Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
+exports[`SearchEntityState scenarios > From searching -> set sampling -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
         "cursor": "cursor-1",
         "node": OkResult {
-          "value": Object {
-            "fields": Object {
+          "value": {
+            "fields": {
               "title": "Title 1",
             },
             "id": "1",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2022-03-19T07:51:25.56Z",
               "name": "Entity 1",
@@ -174,7 +174,7 @@ Object {
         },
       },
     ],
-    "pageInfo": Object {
+    "pageInfo": {
       "endCursor": "cursor-1",
       "hasNextPage": true,
       "hasPreviousPage": false,
@@ -182,14 +182,14 @@ Object {
     },
   },
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -202,32 +202,32 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "",
-  "paging": Object {
+  "paging": {
     "first": 1,
   },
-  "query": Object {
+  "query": {
     "order": "name",
   },
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios From searching -> set sampling -> loading -> loaded: 2 - loading 1`] = `
-Object {
+exports[`SearchEntityState scenarios > From searching -> set sampling -> loading -> loaded > 2 - loading 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -241,10 +241,10 @@ Object {
   "entitySamplesError": undefined,
   "loadingState": "sample",
   "paging": undefined,
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
-  "sampling": Object {
+  "restrictEntityTypes": [],
+  "sampling": {
     "count": 1,
     "seed": 123,
   },
@@ -253,18 +253,18 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios From searching -> set sampling -> loading -> loaded: 3 - loaded 1`] = `
-Object {
+exports[`SearchEntityState scenarios > From searching -> set sampling -> loading -> loaded > 3 - loaded 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -274,14 +274,14 @@ Object {
     },
   ],
   "entitiesScrollToTopSignal": 1,
-  "entitySamples": Object {
-    "items": Array [
-      Object {
-        "fields": Object {
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -295,10 +295,10 @@ Object {
   "entitySamplesError": undefined,
   "loadingState": "",
   "paging": undefined,
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
-  "sampling": Object {
+  "restrictEntityTypes": [],
+  "sampling": {
     "count": 1,
     "seed": 123,
   },
@@ -307,19 +307,19 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Next page -> loading -> loaded: 1 - initial 1`] = `
-Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
+exports[`SearchEntityState scenarios > Next page -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
         "cursor": "cursor-1",
         "node": OkResult {
-          "value": Object {
-            "fields": Object {
+          "value": {
+            "fields": {
               "title": "Title 1",
             },
             "id": "1",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2022-03-19T07:51:25.56Z",
               "name": "Entity 1",
@@ -329,7 +329,7 @@ Object {
         },
       },
     ],
-    "pageInfo": Object {
+    "pageInfo": {
       "endCursor": "cursor-1",
       "hasNextPage": true,
       "hasPreviousPage": false,
@@ -337,14 +337,14 @@ Object {
     },
   },
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -357,32 +357,32 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "",
-  "paging": Object {
+  "paging": {
     "first": 1,
   },
-  "query": Object {
+  "query": {
     "order": "name",
   },
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios Next page -> loading -> loaded: 2 - loading 1`] = `
-Object {
+exports[`SearchEntityState scenarios > Next page -> loading -> loaded > 2 - loading 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -395,33 +395,33 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "next-page",
-  "paging": Object {
+  "paging": {
     "after": "cursor-1",
   },
-  "query": Object {
+  "query": {
     "order": "name",
   },
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios Next page -> loading -> loaded: 3 - loaded 1`] = `
-Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
+exports[`SearchEntityState scenarios > Next page -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
         "cursor": "cursor-2",
         "node": OkResult {
-          "value": Object {
-            "fields": Object {
+          "value": {
+            "fields": {
               "title": "Title 2",
             },
             "id": "2",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2022-03-19T07:51:25.56Z",
               "name": "Entity 2",
@@ -431,7 +431,7 @@ Object {
         },
       },
     ],
-    "pageInfo": Object {
+    "pageInfo": {
       "endCursor": "cursor-2",
       "hasNextPage": false,
       "hasPreviousPage": true,
@@ -439,14 +439,14 @@ Object {
     },
   },
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -459,33 +459,33 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "",
-  "paging": Object {
+  "paging": {
     "after": "cursor-1",
   },
-  "query": Object {
+  "query": {
     "order": "name",
   },
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios Refresh: 1 - initial 1`] = `
-Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
+exports[`SearchEntityState scenarios > Refresh > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
         "cursor": "cursor-1",
         "node": OkResult {
-          "value": Object {
-            "fields": Object {
+          "value": {
+            "fields": {
               "title": "Title 1",
             },
             "id": "1",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2022-03-19T07:51:25.56Z",
               "name": "Entity 1",
@@ -495,7 +495,7 @@ Object {
         },
       },
     ],
-    "pageInfo": Object {
+    "pageInfo": {
       "endCursor": "cursor-1",
       "hasNextPage": true,
       "hasPreviousPage": false,
@@ -503,14 +503,14 @@ Object {
     },
   },
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -523,33 +523,33 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "",
-  "paging": Object {
+  "paging": {
     "first": 1,
   },
-  "query": Object {
+  "query": {
     "order": "name",
   },
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios Refresh: 2 - loaded 1`] = `
-Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
+exports[`SearchEntityState scenarios > Refresh > 2 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
         "cursor": "cursor-2",
         "node": OkResult {
-          "value": Object {
-            "fields": Object {
+          "value": {
+            "fields": {
               "title": "Title 2",
             },
             "id": "2",
-            "info": Object {
+            "info": {
               "authKey": "none",
               "createdAt": "2022-03-19T07:51:25.56Z",
               "name": "Entity 2",
@@ -559,7 +559,7 @@ Object {
         },
       },
     ],
-    "pageInfo": Object {
+    "pageInfo": {
       "endCursor": "cursor-2",
       "hasNextPage": true,
       "hasPreviousPage": false,
@@ -567,14 +567,14 @@ Object {
     },
   },
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -587,32 +587,32 @@ Object {
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "loadingState": "",
-  "paging": Object {
+  "paging": {
     "first": 1,
   },
-  "query": Object {
+  "query": {
     "order": "name",
   },
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
+  "restrictEntityTypes": [],
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
 }
 `;
 
-exports[`SearchEntityState scenarios Sampling -> change seed -> loading -> loaded: 1 - initial 1`] = `
-Object {
+exports[`SearchEntityState scenarios > Sampling -> change seed -> loading -> loaded > 1 - initial 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -622,14 +622,14 @@ Object {
     },
   ],
   "entitiesScrollToTopSignal": 1,
-  "entitySamples": Object {
-    "items": Array [
-      Object {
-        "fields": Object {
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -643,10 +643,10 @@ Object {
   "entitySamplesError": undefined,
   "loadingState": "",
   "paging": undefined,
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
-  "sampling": Object {
+  "restrictEntityTypes": [],
+  "sampling": {
     "count": 1,
     "seed": 123,
   },
@@ -655,18 +655,18 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Sampling -> change seed -> loading -> loaded: 2 - loading 1`] = `
-Object {
+exports[`SearchEntityState scenarios > Sampling -> change seed -> loading -> loaded > 2 - loading 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 1",
         },
         "id": "1",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 1",
@@ -680,10 +680,10 @@ Object {
   "entitySamplesError": undefined,
   "loadingState": "sample",
   "paging": undefined,
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
-  "sampling": Object {
+  "restrictEntityTypes": [],
+  "sampling": {
     "count": 1,
     "seed": 456,
   },
@@ -692,18 +692,18 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Sampling -> change seed -> loading -> loaded: 3 - loaded 1`] = `
-Object {
+exports[`SearchEntityState scenarios > Sampling -> change seed -> loading -> loaded > 3 - loaded 1`] = `
+{
   "connection": undefined,
   "connectionError": undefined,
-  "entities": Array [
+  "entities": [
     OkResult {
-      "value": Object {
-        "fields": Object {
+      "value": {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -713,14 +713,14 @@ Object {
     },
   ],
   "entitiesScrollToTopSignal": 2,
-  "entitySamples": Object {
-    "items": Array [
-      Object {
-        "fields": Object {
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
           "title": "Title 2",
         },
         "id": "2",
-        "info": Object {
+        "info": {
           "authKey": "none",
           "createdAt": "2022-03-19T07:51:25.56Z",
           "name": "Entity 2",
@@ -734,10 +734,10 @@ Object {
   "entitySamplesError": undefined,
   "loadingState": "",
   "paging": undefined,
-  "query": Object {},
+  "query": {},
   "requestedCount": 1,
-  "restrictEntityTypes": Array [],
-  "sampling": Object {
+  "restrictEntityTypes": [],
+  "sampling": {
     "count": 1,
     "seed": 456,
   },

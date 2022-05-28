@@ -7,6 +7,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, ok } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer';
 import {
   initializeSearchEntityState,
@@ -70,7 +71,7 @@ function reduceSearchEntityStateActions(
 describe('initializeSearchEntityState', () => {
   test('default', () => {
     expect(initializeSearchEntityState({})).toMatchInlineSnapshot(`
-      Object {
+      {
         "connection": undefined,
         "connectionError": undefined,
         "entities": null,
@@ -78,12 +79,12 @@ describe('initializeSearchEntityState', () => {
         "entitySamples": undefined,
         "entitySamplesError": undefined,
         "loadingState": "",
-        "paging": Object {},
-        "query": Object {
+        "paging": {},
+        "query": {
           "order": "name",
         },
         "requestedCount": 25,
-        "restrictEntityTypes": Array [],
+        "restrictEntityTypes": [],
         "sampling": undefined,
         "text": "",
         "totalCount": null,
@@ -94,32 +95,32 @@ describe('initializeSearchEntityState', () => {
   test('restrict entity types', () => {
     expect(initializeSearchEntityState({ restrictEntityTypes: ['Foo', 'Bar'] }))
       .toMatchInlineSnapshot(`
-      Object {
-        "connection": undefined,
-        "connectionError": undefined,
-        "entities": null,
-        "entitiesScrollToTopSignal": 0,
-        "entitySamples": undefined,
-        "entitySamplesError": undefined,
-        "loadingState": "",
-        "paging": Object {},
-        "query": Object {
-          "entityTypes": Array [
+        {
+          "connection": undefined,
+          "connectionError": undefined,
+          "entities": null,
+          "entitiesScrollToTopSignal": 0,
+          "entitySamples": undefined,
+          "entitySamplesError": undefined,
+          "loadingState": "",
+          "paging": {},
+          "query": {
+            "entityTypes": [
+              "Foo",
+              "Bar",
+            ],
+            "order": "name",
+          },
+          "requestedCount": 25,
+          "restrictEntityTypes": [
             "Foo",
             "Bar",
           ],
-          "order": "name",
-        },
-        "requestedCount": 25,
-        "restrictEntityTypes": Array [
-          "Foo",
-          "Bar",
-        ],
-        "sampling": undefined,
-        "text": "",
-        "totalCount": null,
-      }
-    `);
+          "sampling": undefined,
+          "text": "",
+          "totalCount": null,
+        }
+      `);
   });
 });
 

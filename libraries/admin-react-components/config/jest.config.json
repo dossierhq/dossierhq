@@ -1,6 +1,0 @@
-{
-  "extends": "@rushstack/heft-jest-plugin/includes/jest-shared.config.json",
-  "globalSetup": "../src/test/setup.ts",
-  "globalTeardown": "../src/test/teardown.ts",
-  "testEnvironment": "jsdom"
-}
