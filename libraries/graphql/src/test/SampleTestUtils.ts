@@ -1,5 +1,6 @@
 import type { AdminEntity, PublishedEntity } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
+import { expect } from 'vitest';
 
 export function expectSampledEntitiesArePartOfExpected(
   actualResult: { seed: number; totalCount: number; items: { id: string }[] } | undefined,

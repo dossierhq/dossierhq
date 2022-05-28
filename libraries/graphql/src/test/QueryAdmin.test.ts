@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import type {
   AdminClient,
   AdminEntity,
@@ -12,9 +13,10 @@ import {
   ok,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import { expectOkResult } from '@jonasb/datadata-core-jest';
+import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils';
@@ -480,12 +482,12 @@ describe('adminEntity()', () => {
       });
       const errorStrings = result.errors?.map(printError);
       expect(errorStrings).toMatchInlineSnapshot(`
-        Array [
+        [
           "NotFound: No such entity or version
 
         GraphQL request:33:13
         32 |             }
-        33 |             third: adminEntity(id: $id, version: $version3) {
+        33 |             third: adminEntity(id: \$id, version: \$version3) {
            |             ^
         34 |               id",
         ]
@@ -1633,11 +1635,11 @@ describe('entityHistory()', () => {
       variableValues: { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' },
     });
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "entityHistory": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such entity],
         ],
       }
@@ -1668,11 +1670,11 @@ describe('entityHistory()', () => {
         variableValues: { id },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "entityHistory": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: NotAuthorized: Wrong authKey provided],
           ],
         }
@@ -1745,11 +1747,11 @@ describe('publishingHistory()', () => {
       variableValues: { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' },
     });
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "publishingHistory": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such entity],
         ],
       }
@@ -1780,11 +1782,11 @@ describe('publishingHistory()', () => {
         variableValues: { id },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "publishingHistory": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: NotAuthorized: Wrong authKey provided],
           ],
         }

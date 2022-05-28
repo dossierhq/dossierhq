@@ -10,10 +10,11 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
@@ -1184,11 +1185,11 @@ describe('create*Entity()', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "createMutationFooEntity": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
         ],
       }
@@ -1217,11 +1218,11 @@ describe('create*Entity()', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "createMutationFooEntity": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: BadRequest: Unsupported version for create: 1],
         ],
       }
@@ -1781,11 +1782,11 @@ describe('update*Entity()', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "updateMutationFooEntity": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
           ],
         }
@@ -1831,11 +1832,11 @@ describe('update*Entity()', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "updateMutationFooEntity": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: BadRequest: New authKey none doesn’t correspond to previous authKey subject],
           ],
         }
@@ -2128,11 +2129,11 @@ describe('upsert*Entity()', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "upsertMutationFooEntity": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
         ],
       }
@@ -2214,11 +2215,11 @@ describe('publishEntities()', () => {
       variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] },
     });
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "publishEntities": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such entities: 635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3],
         ],
       }
@@ -2343,11 +2344,11 @@ describe('unpublishEntities()', () => {
       variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }] },
     });
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "unpublishEntities": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such entities: 635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3],
         ],
       }
@@ -2467,11 +2468,11 @@ describe('archiveEntity()', () => {
         variableValues: { id },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "archiveEntity": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: NotAuthorized: Wrong authKey provided],
           ],
         }
@@ -2562,11 +2563,11 @@ describe('unarchiveEntity()', () => {
       variableValues: { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' },
     });
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "unarchiveEntity": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such entity],
         ],
       }
@@ -2597,11 +2598,11 @@ describe('unarchiveEntity()', () => {
         variableValues: { id },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "unarchiveEntity": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: NotAuthorized: Wrong authKey provided],
           ],
         }

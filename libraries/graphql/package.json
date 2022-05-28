@@ -2,13 +2,19 @@
   "name": "@jonasb/datadata-graphql",
   "version": "0.1.11",
   "description": "",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/index.js"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft test --clean",
+    "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
@@ -17,11 +23,9 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "heft test",
-    "test:update-snapshot": "heft test --update-snapshots",
-    "test:watch": "heft test --watch",
-    "ts:check": "tsc --noEmit",
-    "ts:check:watch": "tsc --noEmit --watch",
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
@@ -32,27 +36,25 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-core-jest": "workspace:*",
+    "@jonasb/datadata-core-vitest": "workspace:*",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.45.5",
-    "@rushstack/heft-jest-plugin": "~0.3.5",
-    "@types/heft-jest": "1.0.2",
     "@types/uuid": "~8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
     "dotenv": "^16.0.0",
     "eslint": "^8.13.0",
     "prettier": "2.6.2",
     "typescript": "^4.7.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vitest": "~0.12.9"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
     "graphql": "~16.5.0",
-    "graphql-type-json": "~0.3.2",
     "tslib": "~2.4.0"
   }
 }

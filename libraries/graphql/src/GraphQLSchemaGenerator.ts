@@ -48,7 +48,6 @@ import {
   GraphQLString,
   Kind,
 } from 'graphql';
-import { GraphQLJSON } from 'graphql-type-json';
 import {
   loadAdminEntities,
   loadAdminEntity,
@@ -75,6 +74,7 @@ import {
 } from './NameGenerator';
 import { TypeRepository } from './TypeRepository';
 import { seemsLikeATemporalInstant } from './Utils';
+import { GraphQLJSON } from './vendor/GraphQLScalar';
 
 export interface SessionGraphQLContext {
   adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
