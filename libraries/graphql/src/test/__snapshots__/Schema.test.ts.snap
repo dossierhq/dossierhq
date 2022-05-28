@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`Admin only entity and value schema spec Generated QL schema (admin only) 1`] = `
+exports[`Admin only entity and value schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -396,7 +396,7 @@ type Mutation {
 }"
 `;
 
-exports[`Admin only entity and value schema spec Generated QL schema (published only) 1`] = `
+exports[`Admin only entity and value schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -529,7 +529,7 @@ type Query {
 }"
 `;
 
-exports[`Admin only entity and value schema spec Generated QL schema 1`] = `
+exports[`Admin only entity and value schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -1014,7 +1014,7 @@ type Mutation {
 }"
 `;
 
-exports[`Empty schema spec Generated QL schema (admin only) 1`] = `
+exports[`Empty schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -1031,7 +1031,7 @@ scalar Instant
 type Query"
 `;
 
-exports[`Empty schema spec Generated QL schema (published only) 1`] = `
+exports[`Empty schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -1048,7 +1048,7 @@ scalar Instant
 type Query"
 `;
 
-exports[`Empty schema spec Generated QL schema 1`] = `
+exports[`Empty schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -1065,7 +1065,7 @@ scalar Instant
 type Query"
 `;
 
-exports[`List of strings, booleans, locations and references schema spec Generated QL schema (admin only) 1`] = `
+exports[`List of strings, booleans, locations and references schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -1426,7 +1426,7 @@ type Mutation {
 }"
 `;
 
-exports[`List of strings, booleans, locations and references schema spec Generated QL schema (published only) 1`] = `
+exports[`List of strings, booleans, locations and references schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -1555,7 +1555,7 @@ type Query {
 }"
 `;
 
-exports[`List of strings, booleans, locations and references schema spec Generated QL schema 1`] = `
+exports[`List of strings, booleans, locations and references schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -2001,7 +2001,7 @@ type Mutation {
 }"
 `;
 
-exports[`Multiple references with entityTypes schema spec Generated QL schema (admin only) 1`] = `
+exports[`Multiple references with entityTypes schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -2414,7 +2414,7 @@ type Mutation {
 }"
 `;
 
-exports[`Multiple references with entityTypes schema spec Generated QL schema (published only) 1`] = `
+exports[`Multiple references with entityTypes schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -2561,7 +2561,7 @@ type Query {
 }"
 `;
 
-exports[`Multiple references with entityTypes schema spec Generated QL schema 1`] = `
+exports[`Multiple references with entityTypes schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -3077,7 +3077,7 @@ type Mutation {
 }"
 `;
 
-exports[`One empty entity type schema spec Generated QL schema (admin only) 1`] = `
+exports[`One empty entity type schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -3381,7 +3381,7 @@ type Mutation {
 }"
 `;
 
-exports[`One empty entity type schema spec Generated QL schema (published only) 1`] = `
+exports[`One empty entity type schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -3496,7 +3496,7 @@ type Query {
 }"
 `;
 
-exports[`One empty entity type schema spec Generated QL schema 1`] = `
+exports[`One empty entity type schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -3871,7 +3871,7 @@ type Mutation {
 }"
 `;
 
-exports[`Required fields schema spec Generated QL schema (admin only) 1`] = `
+exports[`Required fields schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -4210,7 +4210,7 @@ type Mutation {
 }"
 `;
 
-exports[`Required fields schema spec Generated QL schema (published only) 1`] = `
+exports[`Required fields schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -4345,7 +4345,7 @@ type Query {
 }"
 `;
 
-exports[`Required fields schema spec Generated QL schema 1`] = `
+exports[`Required fields schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -4775,7 +4775,7 @@ type Mutation {
 }"
 `;
 
-exports[`Rich text schema spec Generated QL schema (admin only) 1`] = `
+exports[`Rich text schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -5091,7 +5091,7 @@ type Mutation {
 }"
 `;
 
-exports[`Rich text schema spec Generated QL schema (published only) 1`] = `
+exports[`Rich text schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -5211,7 +5211,7 @@ type Query {
 }"
 `;
 
-exports[`Rich text schema spec Generated QL schema 1`] = `
+exports[`Rich text schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -5603,7 +5603,7 @@ type Mutation {
 }"
 `;
 
-exports[`Two entity types with reference schema spec Generated QL schema (admin only) 1`] = `
+exports[`Two entity types with reference schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -5976,7 +5976,7 @@ type Mutation {
 }"
 `;
 
-exports[`Two entity types with reference schema spec Generated QL schema (published only) 1`] = `
+exports[`Two entity types with reference schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -6110,7 +6110,7 @@ type Query {
 }"
 `;
 
-exports[`Two entity types with reference schema spec Generated QL schema 1`] = `
+exports[`Two entity types with reference schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -6573,7 +6573,7 @@ type Mutation {
 }"
 `;
 
-exports[`Value type schema spec Generated QL schema (admin only) 1`] = `
+exports[`Value type schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -6996,7 +6996,7 @@ type Mutation {
 }"
 `;
 
-exports[`Value type schema spec Generated QL schema (published only) 1`] = `
+exports[`Value type schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -7162,7 +7162,7 @@ type Query {
 }"
 `;
 
-exports[`Value type schema spec Generated QL schema 1`] = `
+exports[`Value type schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }

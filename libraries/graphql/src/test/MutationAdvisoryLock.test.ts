@@ -1,7 +1,8 @@
 import { ok } from '@jonasb/datadata-core';
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
@@ -87,11 +88,11 @@ describe('acquireAdvisoryLock()', () => {
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
+        {
+          "data": {
             "acquireAdvisoryLock": null,
           },
-          "errors": Array [
+          "errors": [
             [GraphQLError: Conflict: Lock with name 'Already locked' already exists],
           ],
         }
@@ -129,11 +130,11 @@ describe('renewAdvisoryLock()', () => {
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "renewAdvisoryLock": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such name or handle exists],
         ],
       }
@@ -170,11 +171,11 @@ describe('releaseAdvisoryLock()', () => {
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
+      {
+        "data": {
           "releaseAdvisoryLock": null,
         },
-        "errors": Array [
+        "errors": [
           [GraphQLError: NotFound: No such name or handle exists],
         ],
       }

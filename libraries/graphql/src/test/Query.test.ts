@@ -1,8 +1,9 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { FieldType, notOk, ok, PublishedSchema, RichTextBlockType } from '@jonasb/datadata-core';
-import { expectOkResult } from '@jonasb/datadata-core-jest';
+import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
