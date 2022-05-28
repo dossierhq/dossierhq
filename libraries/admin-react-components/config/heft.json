@@ -7,6 +7,5 @@
       "actionId": "defaultClean",
       "globsToDelete": ["lib", "temp", "*.build.log", "*.build.error.log", "storybook-static"]
     }
-  ],
-  "heftPlugins": [{ "plugin": "@rushstack/heft-jest-plugin" }]
+  ]
 }

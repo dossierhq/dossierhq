@@ -1,54 +1,54 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`reduceEntityEditorState AddDraftAction new entity 1`] = `
-Object {
+exports[`reduceEntityEditorState > AddDraftAction new entity 1`] = `
+{
   "activeEntityId": "e4e78fce-1089-41b8-9b6b-440d2e044061",
-  "drafts": Array [
-    Object {
-      "entity": Object {
+  "drafts": [
+    {
+      "entity": {
         "authKey": null,
-        "fields": Array [
-          Object {
+        "fields": [
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
-          Object {
+          {
             "initialValue": null,
             "value": null,
           },
@@ -68,15 +68,15 @@ Object {
 }
 `;
 
-exports[`reduceEntityEditorState UpdateEntityAction 1`] = `
-Object {
+exports[`reduceEntityEditorState > UpdateEntityAction 1`] = `
+{
   "activeEntityId": "cb228716-d3dd-444f-9a77-80443d436339",
-  "drafts": Array [
-    Object {
-      "entity": Object {
+  "drafts": [
+    {
+      "entity": {
         "authKey": "none",
-        "fields": Array [
-          Object {
+        "fields": [
+          {
             "initialValue": "Hello",
             "value": "Hello",
           },

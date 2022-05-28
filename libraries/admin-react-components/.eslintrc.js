@@ -6,12 +6,9 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:jest-dom/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'plugin:storybook/recommended',
-    'plugin:testing-library/dom',
-    'plugin:testing-library/react',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,16 +16,9 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    '@rushstack/eslint-plugin',
-    '@typescript-eslint',
-    'jest-dom',
-    'react',
-    'testing-library',
-  ],
+  plugins: ['@typescript-eslint', 'react'],
   reportUnusedDisableDirectives: true,
   rules: {
-    '@rushstack/hoist-jest-mock': ['error'],
     '@typescript-eslint/consistent-type-imports': ['warn'],
     '@typescript-eslint/no-parameter-properties': ['error'],
     '@typescript-eslint/no-unused-vars': [
@@ -41,8 +31,6 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    // TODO reevaluate when actually running tests
-    'testing-library/no-unnecessary-act': ['off'],
   },
   settings: { react: { version: 'detect' } },
 };

@@ -7,6 +7,7 @@ import {
   FieldType,
 } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
+import { describe, expect, test } from 'vitest';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
   EntityEditorActions,
@@ -31,11 +32,11 @@ describe('initializeEntityEditorState', () => {
   test('no args', () => {
     const state = initializeEntityEditorState();
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeEntityEditorScrollSignal": 0,
         "activeEntityId": null,
         "activeEntityMenuScrollSignal": 0,
-        "drafts": Array [],
+        "drafts": [],
         "pendingSchemaActions": null,
         "schema": null,
         "status": "",
@@ -49,14 +50,14 @@ describe('initializeEntityEditorState', () => {
       actions: [new EntityEditorActions.AddDraft({ id })],
     });
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeEntityEditorScrollSignal": 0,
         "activeEntityId": null,
         "activeEntityMenuScrollSignal": 0,
-        "drafts": Array [],
-        "pendingSchemaActions": Array [
+        "drafts": [],
+        "pendingSchemaActions": [
           AddDraftAction {
-            "selector": Object {
+            "selector": {
               "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
             },
           },
@@ -73,14 +74,14 @@ describe('initializeEntityEditorState', () => {
       actions: [new EntityEditorActions.AddDraft({ id, newType: 'Foo' })],
     });
     expect(state).toMatchInlineSnapshot(`
-      Object {
+      {
         "activeEntityEditorScrollSignal": 0,
         "activeEntityId": null,
         "activeEntityMenuScrollSignal": 0,
-        "drafts": Array [],
-        "pendingSchemaActions": Array [
+        "drafts": [],
+        "pendingSchemaActions": [
           AddDraftAction {
-            "selector": Object {
+            "selector": {
               "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
               "newType": "Foo",
             },

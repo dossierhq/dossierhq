@@ -17,7 +17,8 @@
     "unpublish",
     "upsert",
     "upserted",
-    "uuidv"
+    "uuidv",
+    "vitest"
   ],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
