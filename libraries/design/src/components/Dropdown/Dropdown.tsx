@@ -39,7 +39,6 @@ export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownIte
   useWindowClick(triggerRef, handleClose, active);
   useKeyHandler(['Escape'], handleClose, active);
 
-  // eslint-disable-next-line testing-library/render-result-naming-convention
   const trigger = renderTrigger(triggerRef, handleOpen);
 
   return (
