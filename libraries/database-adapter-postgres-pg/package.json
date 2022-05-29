@@ -14,7 +14,7 @@
   },
   "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && ./generate-package-json.sh",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",

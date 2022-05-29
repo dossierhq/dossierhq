@@ -2,11 +2,15 @@
   "name": "@jonasb/datadata-heft-node-rig",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "build": ""
   },
   "author": "",
   "license": "ISC",
+  "bin": {
+    "post-process-build": "./scripts/post-process-build.js"
+  },
   "dependencies": {
     "typescript": "^4.7.2",
     "eslint": "^8.13.0"
