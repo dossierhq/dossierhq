@@ -1,2 +1,3 @@
-.next/
-public/voyager.worker.js
+/.next/
+/coverage/
+/public/voyager.worker.js
