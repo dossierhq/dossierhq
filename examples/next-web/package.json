@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "npm run prettier:check && npm run ts:check && npm run eslint:check && npm run test && npm run build-app",
+    "clean": "rm -rf .next/ && rm -f datadata-examples-next-web.build.log tsconfig.tsbuildinfo",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
