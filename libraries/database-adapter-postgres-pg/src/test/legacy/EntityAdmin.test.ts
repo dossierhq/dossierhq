@@ -3269,7 +3269,7 @@ describe('archiveEntity()', () => {
             id,
             events: [
               {
-                kind: PublishingEventKind.Archive,
+                kind: PublishingEventKind.archive,
                 publishedAt,
                 publishedBy: context.session.subjectId,
                 version: null,
@@ -3408,13 +3408,13 @@ describe('unarchiveEntity()', () => {
             id,
             events: [
               {
-                kind: PublishingEventKind.Archive,
+                kind: PublishingEventKind.archive,
                 publishedAt: publishedAt0,
                 publishedBy: context.session.subjectId,
                 version: null,
               },
               {
-                kind: PublishingEventKind.Unarchive,
+                kind: PublishingEventKind.unarchive,
                 publishedAt: publishedAt1,
                 publishedBy: context.session.subjectId,
                 version: null,
@@ -3537,7 +3537,7 @@ describe('getPublishingHistory()', () => {
           id,
           events: [
             {
-              kind: PublishingEventKind.Publish,
+              kind: PublishingEventKind.publish,
               publishedAt,
               publishedBy: context.session.subjectId,
               version: 0,
@@ -3582,13 +3582,13 @@ describe('getPublishingHistory()', () => {
           id,
           events: [
             {
-              kind: PublishingEventKind.Publish,
+              kind: PublishingEventKind.publish,
               publishedAt: publishedAt0,
               publishedBy: context.session.subjectId,
               version: 0,
             },
             {
-              kind: PublishingEventKind.Unpublish,
+              kind: PublishingEventKind.unpublish,
               publishedAt: publishedAt1,
               publishedBy: context.session.subjectId,
               version: null,

@@ -49,8 +49,9 @@ async function loadFixtures(adminClient: AdminClient): PromiseResult<void, Error
     //TODO how do I check the published version?
     if (
       typeof publishedVersion === 'number' &&
-      ![AdminEntityStatus.published, AdminEntityStatus.modified].includes(
-        upsertResult.value.entity.info.status
+      !(
+        upsertResult.value.entity.info.status === AdminEntityStatus.published ||
+        upsertResult.value.entity.info.status === AdminEntityStatus.modified
       )
     ) {
       const publishResult = await adminClient.publishEntities([{ id, version: publishedVersion }]);

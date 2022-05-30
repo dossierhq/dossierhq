@@ -51,8 +51,10 @@ export class ReadOnlyEntityRepository {
 
   getMainPrincipalPublishedEntities(authKeys?: string[]): PublishedEntity[] {
     const adminEntities = this.getMainPrincipalAdminEntities(authKeys);
-    const publishedOnly = adminEntities.filter((it) =>
-      [AdminEntityStatus.published, AdminEntityStatus.modified].includes(it.info.status)
+    const publishedOnly = adminEntities.filter(
+      (it) =>
+        it.info.status === AdminEntityStatus.published ||
+        it.info.status === AdminEntityStatus.modified
     );
     //TODO invalid since it always return the latest version
     const publishedEntities: PublishedEntity[] = publishedOnly.map((it) => ({
@@ -160,11 +162,10 @@ async function createEntity(
   const upsertResult = await adminClient.upsertEntity(
     copyEntity(READONLY_UPSERT, { id, info: { authKey } }),
     {
-      publish: [
-        AdminEntityStatus.withdrawn,
-        AdminEntityStatus.modified,
-        AdminEntityStatus.published,
-      ].includes(status),
+      publish:
+        status === AdminEntityStatus.withdrawn ||
+        status === AdminEntityStatus.modified ||
+        status === AdminEntityStatus.published,
     }
   );
   if (upsertResult.isError()) return upsertResult;

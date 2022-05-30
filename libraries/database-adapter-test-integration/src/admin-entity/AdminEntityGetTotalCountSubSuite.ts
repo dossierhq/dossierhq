@@ -142,7 +142,10 @@ async function getTotalCount_statusDraftArchived({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) => [AdminEntityStatus.draft, AdminEntityStatus.archived].includes(it.info.status));
+    .filter(
+      (it) =>
+        it.info.status === AdminEntityStatus.draft || it.info.status === AdminEntityStatus.archived
+    );
   const result = await adminClientForMainPrincipal(server).getTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
@@ -156,8 +159,10 @@ async function getTotalCount_statusModifiedPublished({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) =>
-      [AdminEntityStatus.modified, AdminEntityStatus.published].includes(it.info.status)
+    .filter(
+      (it) =>
+        it.info.status === AdminEntityStatus.modified ||
+        it.info.status === AdminEntityStatus.published
     );
   const result = await adminClientForMainPrincipal(server).getTotalCount({
     entityTypes: ['ReadOnly'],

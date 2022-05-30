@@ -496,7 +496,7 @@ describe('AdminClient forward operation over JSON', () => {
             id: reference.id,
             events: [
               {
-                kind: PublishingEventKind.Publish,
+                kind: PublishingEventKind.publish,
                 publishedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
                 publishedBy: '123-456',
                 version: 0,

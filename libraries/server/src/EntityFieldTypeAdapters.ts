@@ -12,7 +12,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }
 
-const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Boolean], boolean> = {
+const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
   encodeData: (prefix: string, data) =>
     typeof data === 'boolean'
       ? ok(data)
@@ -23,7 +23,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Boolean], boole
   getReferenceUUIDs: (_x) => null,
 };
 
-const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.EntityType], string> = {
+const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.EntityType], string> = {
   encodeData: (prefix: string, x) => {
     if (Array.isArray(x)) {
       return notOk.BadRequest(`${prefix}: expected reference, got list`);
@@ -40,7 +40,10 @@ const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.EntityType],
   getReferenceUUIDs: (x) => (x ? [x.id] : null),
 };
 
-const locationCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Location], [number, number]> = {
+const locationCodec: FieldTypeAdapter<
+  FieldValueTypeMap[typeof FieldType.Location],
+  [number, number]
+> = {
   encodeData: (prefix: string, data) => {
     if (Array.isArray(data)) {
       return notOk.BadRequest(`${prefix}: expected location, got list`);
@@ -64,7 +67,7 @@ const locationCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Location], [nu
   getReferenceUUIDs: (_data) => null,
 };
 
-const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string> = {
+const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
   encodeData: (prefix: string, x) =>
     typeof x === 'string'
       ? ok(x)
@@ -73,7 +76,7 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string>
   getReferenceUUIDs: (_x) => null,
 };
 
-const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unknown> = {
+const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueType], unknown> = {
   encodeData: (_prefix, _data) => {
     throw new Error('Should not be used');
   },

@@ -132,14 +132,15 @@ async function collectEntityInfo(
         resolvedAuthKey: it.resolvedAuthKey,
       };
 
-      return [AdminEntityStatus.modified, AdminEntityStatus.published].includes(it.status)
-        ? { effect: 'unpublished', ...shared }
-        : {
-            effect: 'none',
-            ...shared,
-            status: it.status,
-            updatedAt: it.updatedAt,
-          };
+      if (it.status === AdminEntityStatus.modified || it.status === AdminEntityStatus.published) {
+        return { effect: 'unpublished', ...shared };
+      }
+      return {
+        effect: 'none',
+        ...shared,
+        status: it.status,
+        updatedAt: it.updatedAt,
+      };
     })
   );
 }

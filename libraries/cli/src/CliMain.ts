@@ -98,9 +98,8 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Unpublish entity',
       enabled:
         !!state.currentEntity &&
-        [AdminEntityStatus.published, AdminEntityStatus.modified].includes(
-          state.currentEntity.publishState
-        ),
+        (state.currentEntity.publishState === AdminEntityStatus.published ||
+          state.currentEntity.publishState === AdminEntityStatus.modified),
       action: async () => {
         assertIsDefined(state.currentEntity);
         const publishState = await CliEntityAdmin.unpublishEntity(
@@ -117,9 +116,8 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Archive entity',
       enabled:
         !!state.currentEntity &&
-        [AdminEntityStatus.draft, AdminEntityStatus.withdrawn].includes(
-          state.currentEntity.publishState
-        ),
+        (state.currentEntity.publishState === AdminEntityStatus.draft ||
+          state.currentEntity.publishState === AdminEntityStatus.withdrawn),
       action: async () => {
         assertIsDefined(state.currentEntity);
         const publishState = await CliEntityAdmin.archiveEntity(

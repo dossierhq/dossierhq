@@ -36,22 +36,24 @@ export interface PublishedValueTypeSpecification {
   fields: FieldSpecification[];
 }
 
-export enum FieldType {
-  Boolean = 'Boolean',
+export const FieldType = {
+  Boolean: 'Boolean',
   //TODO rename to Entity?
-  EntityType = 'EntityType',
-  Location = 'Location',
-  RichText = 'RichText',
-  String = 'String',
+  EntityType: 'EntityType',
+  Location: 'Location',
+  RichText: 'RichText',
+  String: 'String',
   //TODO rename to ValueItem?
-  ValueType = 'ValueType',
-}
+  ValueType: 'ValueType',
+} as const;
+export type FieldType = keyof typeof FieldType;
 
-export enum RichTextBlockType {
-  entity = 'entity',
-  valueItem = 'valueItem',
-  paragraph = 'paragraph',
-}
+export const RichTextBlockType = {
+  entity: 'entity',
+  valueItem: 'valueItem',
+  paragraph: 'paragraph',
+} as const;
+export type RichTextBlockType = keyof typeof RichTextBlockType;
 
 export interface FieldSpecification {
   name: string;

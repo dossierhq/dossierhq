@@ -80,7 +80,7 @@ function createPublishActions(
   const { status } = entity.info;
 
   let publishActionsIds: Array<PublishingActionId> = [];
-  if ([AdminEntityStatus.draft, AdminEntityStatus.withdrawn].includes(status)) {
+  if (status === AdminEntityStatus.draft || status === AdminEntityStatus.withdrawn) {
     publishActionsIds = ['publish', 'archive'];
   } else if (status === AdminEntityStatus.published) {
     publishActionsIds = ['unpublish'];

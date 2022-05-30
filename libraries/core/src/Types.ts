@@ -63,18 +63,19 @@ export interface ValueItem {
   [fieldName: string]: unknown;
 }
 
-export enum AdminEntityStatus {
+export const AdminEntityStatus = {
   /** The entity has never been published. */
-  draft = 'draft',
+  draft: 'draft',
   /** The entity is currently published and has no pending changes. */
-  published = 'published',
+  published: 'published',
   /** The entity is currently published but has changes that are not published. */
-  modified = 'modified',
+  modified: 'modified',
   /** The entity has previously been published, but is unpublished. */
-  withdrawn = 'withdrawn',
+  withdrawn: 'withdrawn',
   /** The entity is archived. */
-  archived = 'archived',
-}
+  archived: 'archived',
+} as const;
+export type AdminEntityStatus = keyof typeof AdminEntityStatus;
 
 export interface AdminEntity {
   /** UUID */
@@ -179,12 +180,13 @@ export interface PublishingHistory {
   events: PublishingEvent[];
 }
 
-export enum PublishingEventKind {
-  Publish = 'publish',
-  Unpublish = 'unpublish',
-  Archive = 'archive',
-  Unarchive = 'unarchive',
-}
+export const PublishingEventKind = {
+  publish: 'publish',
+  unpublish: 'unpublish',
+  archive: 'archive',
+  unarchive: 'unarchive',
+} as const;
+export type PublishingEventKind = keyof typeof PublishingEventKind;
 
 export interface PublishingEvent {
   kind: PublishingEventKind;
@@ -205,11 +207,12 @@ export type AdminEntityUnarchivePayload = AdminEntityPublishingPayload<'unarchiv
 export type AdminEntityPublishPayload = AdminEntityPublishingPayload<'published' | 'none'>;
 export type AdminEntityUnpublishPayload = AdminEntityPublishingPayload<'unpublished' | 'none'>;
 
-export enum AdminQueryOrder {
-  createdAt = 'createdAt',
-  updatedAt = 'updatedAt',
-  name = 'name',
-}
+export const AdminQueryOrder = {
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+} as const;
+export type AdminQueryOrder = keyof typeof AdminQueryOrder;
 
 export interface AdminQuery {
   authKeys?: string[];
@@ -226,10 +229,11 @@ export interface AdminSearchQuery extends AdminQuery {
   reverse?: boolean;
 }
 
-export enum PublishedQueryOrder {
-  createdAt = 'createdAt',
-  name = 'name',
-}
+export const PublishedQueryOrder = {
+  createdAt: 'createdAt',
+  name: 'name',
+} as const;
+export type PublishedQueryOrder = keyof typeof PublishedQueryOrder;
 
 export interface PublishedQuery {
   authKeys?: string[];

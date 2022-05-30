@@ -125,7 +125,7 @@ describe('convertJsonPublishingHistory()', () => {
       id: '123',
       events: [
         {
-          kind: PublishingEventKind.Publish,
+          kind: PublishingEventKind.publish,
           publishedAt: Temporal.Now.instant(),
           publishedBy: '4321',
           version: 0,

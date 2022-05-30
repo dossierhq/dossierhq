@@ -2189,7 +2189,7 @@ describe('publishEntities()', () => {
         id,
         events: [
           {
-            kind: PublishingEventKind.Publish,
+            kind: PublishingEventKind.publish,
             publishedAt: Temporal.Instant.from(updatedAt),
             publishedBy: server.subjectId,
             version: 0,
@@ -2311,13 +2311,13 @@ describe('unpublishEntities()', () => {
           id,
           events: [
             {
-              kind: PublishingEventKind.Publish,
+              kind: PublishingEventKind.publish,
               publishedAt: publishedAt0,
               publishedBy: server.subjectId,
               version: 0,
             },
             {
-              kind: PublishingEventKind.Unpublish,
+              kind: PublishingEventKind.unpublish,
               publishedAt: Temporal.Instant.from(updatedAt),
               publishedBy: server.subjectId,
               version: null,
@@ -2434,7 +2434,7 @@ describe('archiveEntity()', () => {
         id,
         events: [
           {
-            kind: PublishingEventKind.Archive,
+            kind: PublishingEventKind.archive,
             publishedAt: Temporal.Instant.from(updatedAt),
             publishedBy: server.subjectId,
             version: null,
@@ -2531,13 +2531,13 @@ describe('unarchiveEntity()', () => {
           id,
           events: [
             {
-              kind: PublishingEventKind.Archive,
+              kind: PublishingEventKind.archive,
               publishedAt: publishedAt0,
               publishedBy: server.subjectId,
               version: null,
             },
             {
-              kind: PublishingEventKind.Unarchive,
+              kind: PublishingEventKind.unarchive,
               publishedAt: Temporal.Instant.from(updatedAt),
               publishedBy: server.subjectId,
               version: null,
