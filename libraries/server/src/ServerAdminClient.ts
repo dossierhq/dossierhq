@@ -55,7 +55,7 @@ export function createServerAdminClient({
         const {
           args: [name, options],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.acquireAdvisoryLock>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.acquireAdvisoryLock>;
         resolve(await acquireAdvisoryLock(databaseAdapter, context, name, options));
         break;
       }
@@ -63,7 +63,7 @@ export function createServerAdminClient({
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.archiveEntity>;
         resolve(
           await adminArchiveEntity(databaseAdapter, authorizationAdapter, context, reference)
         );
@@ -73,7 +73,7 @@ export function createServerAdminClient({
         const {
           args: [entity, options],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.createEntity>;
         resolve(
           await adminCreateEntity(
             serverImpl.getAdminSchema(),
@@ -90,7 +90,7 @@ export function createServerAdminClient({
         const {
           args: [references],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
         resolve(
           await adminGetEntities(
             serverImpl.getAdminSchema(),
@@ -106,7 +106,7 @@ export function createServerAdminClient({
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntity>;
         resolve(
           await adminGetEntity(
             serverImpl.getAdminSchema(),
@@ -122,7 +122,7 @@ export function createServerAdminClient({
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntityHistory>;
         resolve(
           await adminGetEntityHistory(databaseAdapter, authorizationAdapter, context, reference)
         );
@@ -132,15 +132,16 @@ export function createServerAdminClient({
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getPublishingHistory>;
         resolve(
           await adminGetPublishingHistory(databaseAdapter, authorizationAdapter, context, reference)
         );
         break;
       }
       case AdminClientOperationName.getSchemaSpecification: {
-        const { resolve } =
-          operation as AdminClientOperation<AdminClientOperationName.getSchemaSpecification>;
+        const { resolve } = operation as AdminClientOperation<
+          typeof AdminClientOperationName.getSchemaSpecification
+        >;
         const schema = serverImpl.getAdminSchema();
         resolve(ok(schema.spec));
         break;
@@ -149,7 +150,7 @@ export function createServerAdminClient({
         const {
           args: [query],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getTotalCount>;
         resolve(
           await adminGetTotalCount(
             serverImpl.getAdminSchema(),
@@ -165,7 +166,7 @@ export function createServerAdminClient({
         const {
           args: [references],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.publishEntities>;
         resolve(
           await adminPublishEntities(
             serverImpl.getAdminSchema(),
@@ -181,7 +182,7 @@ export function createServerAdminClient({
         const {
           args: [name, handle],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.releaseAdvisoryLock>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.releaseAdvisoryLock>;
         resolve(await releaseAdvisoryLock(databaseAdapter, context, name, handle));
         break;
       }
@@ -189,7 +190,7 @@ export function createServerAdminClient({
         const {
           args: [name, handle],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.renewAdvisoryLock>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.renewAdvisoryLock>;
         resolve(await renewAdvisoryLock(databaseAdapter, context, name, handle));
         break;
       }
@@ -197,7 +198,7 @@ export function createServerAdminClient({
         const {
           args: [query, options],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.sampleEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.sampleEntities>;
         resolve(
           await adminSampleEntities(
             serverImpl.getAdminSchema(),
@@ -214,7 +215,7 @@ export function createServerAdminClient({
         const {
           args: [query, paging],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.searchEntities>;
         resolve(
           await adminSearchEntities(
             serverImpl.getAdminSchema(),
@@ -231,7 +232,7 @@ export function createServerAdminClient({
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.unarchiveEntity>;
         resolve(
           await adminUnarchiveEntity(databaseAdapter, authorizationAdapter, context, reference)
         );
@@ -241,7 +242,7 @@ export function createServerAdminClient({
         const {
           args: [references],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.unpublishEntities>;
         resolve(
           await adminUnpublishEntities(databaseAdapter, authorizationAdapter, context, references)
         );
@@ -251,7 +252,7 @@ export function createServerAdminClient({
         const {
           args: [entity, options],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.updateEntity>;
         resolve(
           await adminUpdateEntity(
             serverImpl.getAdminSchema(),
@@ -268,7 +269,9 @@ export function createServerAdminClient({
         const {
           args: [schemaSpec],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.updateSchemaSpecification>;
+        } = operation as AdminClientOperation<
+          typeof AdminClientOperationName.updateSchemaSpecification
+        >;
         const result = await updateSchemaSpecification(databaseAdapter, context, schemaSpec);
         if (result.isOk()) {
           serverImpl.setAdminSchema(result.value.schemaSpecification);
@@ -280,7 +283,7 @@ export function createServerAdminClient({
         const {
           args: [entity, options],
           resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.upsertEntity>;
         resolve(
           await adminUpsertEntity(
             serverImpl.getAdminSchema(),

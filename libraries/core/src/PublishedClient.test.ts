@@ -39,7 +39,7 @@ function createForwardingMiddleware<TContext extends ClientContext>(
 
 function createJsonConvertingPublishedClientsForOperation<
   TContext extends ClientContext,
-  TName extends PublishedClientOperationName
+  TName extends keyof typeof PublishedClientOperationName
 >(
   context: TContext,
   operationName: TName,

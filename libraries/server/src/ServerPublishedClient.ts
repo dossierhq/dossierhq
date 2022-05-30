@@ -42,7 +42,7 @@ export function createServerPublishedClient({
         const {
           args: [references],
           resolve,
-        } = operation as PublishedClientOperation<PublishedClientOperationName.getEntities>;
+        } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntities>;
         resolve(
           await publishedGetEntities(
             serverImpl.getPublishedSchema(),
@@ -58,7 +58,7 @@ export function createServerPublishedClient({
         const {
           args: [reference],
           resolve,
-        } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
+        } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntity>;
         resolve(
           await publishedGetEntity(
             serverImpl.getPublishedSchema(),
@@ -71,8 +71,9 @@ export function createServerPublishedClient({
         break;
       }
       case PublishedClientOperationName.getSchemaSpecification: {
-        const { resolve } =
-          operation as PublishedClientOperation<PublishedClientOperationName.getSchemaSpecification>;
+        const { resolve } = operation as PublishedClientOperation<
+          typeof PublishedClientOperationName.getSchemaSpecification
+        >;
         const schema = serverImpl.getPublishedSchema();
         resolve(ok(schema.spec));
         break;
@@ -81,7 +82,9 @@ export function createServerPublishedClient({
         const {
           args: [query],
           resolve,
-        } = operation as PublishedClientOperation<PublishedClientOperationName.getTotalCount>;
+        } = operation as PublishedClientOperation<
+          typeof PublishedClientOperationName.getTotalCount
+        >;
         resolve(
           await publishedGetTotalCount(
             serverImpl.getPublishedSchema(),
@@ -97,7 +100,9 @@ export function createServerPublishedClient({
         const {
           args: [query, options],
           resolve,
-        } = operation as PublishedClientOperation<PublishedClientOperationName.sampleEntities>;
+        } = operation as PublishedClientOperation<
+          typeof PublishedClientOperationName.sampleEntities
+        >;
         resolve(
           await publishedSampleEntities(
             serverImpl.getPublishedSchema(),
@@ -114,7 +119,9 @@ export function createServerPublishedClient({
         const {
           args: [query, paging],
           resolve,
-        } = operation as PublishedClientOperation<PublishedClientOperationName.searchEntities>;
+        } = operation as PublishedClientOperation<
+          typeof PublishedClientOperationName.searchEntities
+        >;
         resolve(
           await publishedSearchEntities(
             serverImpl.getPublishedSchema(),

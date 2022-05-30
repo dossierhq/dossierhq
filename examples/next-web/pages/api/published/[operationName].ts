@@ -18,7 +18,7 @@ import {
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
 interface RequestQuery {
-  operationName: PublishedClientOperationName;
+  operationName: keyof typeof PublishedClientOperationName;
   operation?: string;
 }
 
