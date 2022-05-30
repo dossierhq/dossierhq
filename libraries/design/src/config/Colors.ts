@@ -42,3 +42,9 @@ export function toColorClassName(color: Color | undefined): string | undefined {
   if (!colorName) return undefined;
   return `is-${colorName}`;
 }
+
+export function toBackgroundColorClassName(color: Color | undefined): string | undefined {
+  const colorName = resolveBulmaColor(color);
+  if (!colorName) return undefined;
+  return `has-background-${colorName}`;
+}
