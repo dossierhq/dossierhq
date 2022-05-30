@@ -5,6 +5,7 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
+  assertOkResult,
   FieldType,
   ok,
   PublishingEventKind,
@@ -2307,6 +2308,7 @@ describe('unpublishEntities()', () => {
       const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
+        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
         expectResultValue(historyResult, {
           id,
           events: [
@@ -2318,12 +2320,13 @@ describe('unpublishEntities()', () => {
             },
             {
               kind: PublishingEventKind.unpublish,
-              publishedAt: Temporal.Instant.from(updatedAt),
+              publishedAt: publishedAt1,
               publishedBy: server.subjectId,
               version: null,
             },
           ],
         });
+        expect(publishedAt1).toEqual(Temporal.Instant.from(updatedAt));
       }
     }
   });
@@ -2430,17 +2433,20 @@ describe('archiveEntity()', () => {
       });
 
       const historyResult = await adminClient.getPublishingHistory({ id });
+      assertOkResult(historyResult);
+      const publishedAt0 = historyResult.value.events[0]?.publishedAt;
       expectResultValue(historyResult, {
         id,
         events: [
           {
             kind: PublishingEventKind.archive,
-            publishedAt: Temporal.Instant.from(updatedAt),
+            publishedAt: publishedAt0,
             publishedBy: server.subjectId,
             version: null,
           },
         ],
       });
+      expect(publishedAt0).toEqual(Temporal.Instant.from(updatedAt));
     }
   });
 
@@ -2527,6 +2533,7 @@ describe('unarchiveEntity()', () => {
       const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
+        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
         expectResultValue(historyResult, {
           id,
           events: [
@@ -2538,12 +2545,14 @@ describe('unarchiveEntity()', () => {
             },
             {
               kind: PublishingEventKind.unarchive,
-              publishedAt: Temporal.Instant.from(updatedAt),
+              publishedAt: publishedAt1,
               publishedBy: server.subjectId,
               version: null,
             },
           ],
         });
+
+        expect(publishedAt1).toEqual(Temporal.Instant.from(updatedAt));
       }
     }
   });

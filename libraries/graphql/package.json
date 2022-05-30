@@ -17,8 +17,6 @@
     "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno cjs-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
-    "db:cli": "./scripts/db-cli.sh",
-    "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
@@ -38,21 +36,22 @@
   "devDependencies": {
     "@jonasb/datadata-core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
-    "@jonasb/datadata-postgres": "workspace:*",
+    "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.45.5",
+    "@types/sqlite3": "~3.1.8",
     "@types/uuid": "~8.3.4",
     "dotenv": "^16.0.0",
     "eslint": "^8.16.0",
     "prettier": "2.6.2",
+    "sqlite3": "jonasb/node-sqlite3#3.36.0",
     "typescript": "^4.7.2",
     "uuid": "^8.3.2",
     "vitest": "~0.13.0"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
     "graphql": "~16.5.0",
     "tslib": "~2.4.0"
