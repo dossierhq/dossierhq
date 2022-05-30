@@ -39,6 +39,16 @@ async function addCommonJsPackageJson(basePath) {
   });
 }
 
+async function addEsmJsPackageJson(basePath) {
+  const packageJson = `{
+  "type": "module"
+}
+`;
+  await fs.writeFile(path.join(basePath, "package.json"), packageJson, {
+    encoding: "utf-8",
+  });
+}
+
 async function main(args) {
   for (const arg of args) {
     switch (arg) {
@@ -47,6 +57,9 @@ async function main(args) {
         break;
       case "cjs-package-json":
         await addCommonJsPackageJson("lib/cjs");
+        break;
+      case "esm-package-json":
+        await addEsmJsPackageJson("lib/esm");
         break;
       default:
         throw new Error(`Invalid command (${arg})`);

@@ -1,8 +1,6 @@
 /.heft/
 /coverage/
 /lib/
-/lib-cjs/
 /storybook-static/
 /temp/
 /CHANGELOG.md
-/tsconfig.json

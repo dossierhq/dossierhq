@@ -2,15 +2,20 @@
   "name": "@jonasb/datadata-admin-react-components",
   "version": "0.1.14",
   "description": "",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "exports": {
-    ".": "./lib/index.js",
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    },
     "./icons.css": "./lib/icons.css",
     "./main.css": "./lib/main.css"
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build esm-package-json && cp src/*.css lib/",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -19,10 +24,10 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "start-storybook -p 6006 --no-open",
+    "storybook:build": "build-storybook --quiet",
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch",
-    "storybook:build": "build-storybook --quiet",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
@@ -35,6 +40,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
     "@rushstack/heft": "~0.45.5",
