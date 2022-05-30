@@ -1,0 +1,17 @@
+{
+  "name": "@jonasb/datadata-core-vitest",
+  "entries": [
+    {
+      "version": "0.1.12",
+      "tag": "@jonasb/datadata-core-vitest_v0.1.12",
+      "date": "Mon, 30 May 2022 11:14:25 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "First release."
+          }
+        ]
+      }
+    }
+  ]
+}

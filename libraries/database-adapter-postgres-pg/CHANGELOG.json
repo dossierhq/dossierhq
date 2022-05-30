@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-database-adapter-postgres-pg",
   "entries": [
     {
+      "version": "0.1.12",
+      "tag": "@jonasb/datadata-database-adapter-postgres-pg_v0.1.12",
+      "date": "Mon, 30 May 2022 11:14:25 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Output ESM and CJS."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.11",
       "tag": "@jonasb/datadata-database-adapter-postgres-pg_v0.1.11",
       "date": "Tue, 24 May 2022 15:02:06 GMT",
