@@ -188,3 +188,45 @@ httpStatusToErrorType.set(500, ErrorType.Generic);
 
 const errorTypeToHttpStatus = new Map<ErrorType, number>();
 httpStatusToErrorType.forEach((errorType, status) => errorTypeToHttpStatus.set(errorType, status));
+
+// ASSERTIONS
+
+class AssertionError extends Error {
+  actual: unknown;
+  expected: unknown;
+
+  constructor(actual: unknown, expected: unknown, message: string) {
+    super(message);
+    this.name = 'AssertionError';
+    this.actual = actual;
+    this.expected = expected;
+  }
+}
+
+export function assertOkResult<TOk, TError extends ErrorType>(
+  actual: Result<unknown, ErrorType>
+): asserts actual is OkResult<TOk, TError> {
+  if (actual.isError()) {
+    throw new AssertionError(
+      actual,
+      undefined,
+      `Expected ok, got error ${actual.error}: ${actual.message}`
+    );
+  }
+}
+
+export function assertErrorResultType(
+  actual: Result<unknown, ErrorType>,
+  expectedErrorType: ErrorType
+): asserts actual is ErrorResult<unknown, ErrorType> {
+  if (!actual.isError()) {
+    throw new AssertionError('ok', expectedErrorType, `Expected error, but was ok`);
+  }
+  if (actual.error !== expectedErrorType) {
+    throw new AssertionError(
+      actual.error,
+      expectedErrorType,
+      `Expected error type ${expectedErrorType} but was ${actual.error} (message: ${actual.message})`
+    );
+  }
+}

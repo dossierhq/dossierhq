@@ -14,6 +14,8 @@ export type {
 export { withAdvisoryLock } from './AdvisoryLockUtils.js';
 export { assertExhaustive, assertIsDefined } from './Asserts.js';
 export {
+  assertErrorResultType,
+  assertOkResult,
   createErrorResult,
   createErrorResultFromError,
   ErrorResultError,
