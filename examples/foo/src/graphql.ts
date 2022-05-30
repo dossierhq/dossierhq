@@ -1,5 +1,11 @@
 import 'dotenv/config';
-import { AdminSchema, ok, PublishedSchema, notOk } from '@jonasb/datadata-core';
+import {
+  AdminSchema,
+  createConsoleLogger,
+  notOk,
+  ok,
+  PublishedSchema,
+} from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { Server } from '@jonasb/datadata-server';
@@ -7,7 +13,7 @@ import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import type { IncomingHttpHeaders } from 'http';
-import { initializeServer } from './server';
+import { initializeServer, updateSchema } from './server';
 
 type GraphQlMiddleware = ReturnType<typeof graphqlHTTP>;
 
@@ -39,7 +45,7 @@ async function createSessionContext(server: Server, headers: IncomingHttpHeaders
   return sessionResult;
 }
 
-async function startServer(server: Server, schema: AdminSchema, port: number) {
+function startExpressServer(server: Server, schema: AdminSchema, port: number) {
   const gqlSchema = new GraphQLSchemaGenerator({
     adminSchema: schema,
     publishedSchema: new PublishedSchema(schema.toPublishedSchema()),
@@ -68,32 +74,30 @@ async function startServer(server: Server, schema: AdminSchema, port: number) {
       })
     )
   );
-  app.listen(port);
+  const expressServer = app.listen(port);
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
   console.log(
     'Tip: Provide headers in "Request Headers": { "insecure-auth-provider": "test", "insecure-auth-identifier": "john-smith" }'
   );
+  return expressServer;
 }
 
 async function main(port: number) {
-  const serverResult = await initializeServer();
-  if (serverResult.isError()) throw serverResult.toError();
-  const server = serverResult.value;
-  try {
-    const sessionResult = await server.createSession({
-      provider: 'sys',
-      identifier: 'schemaloader',
-      defaultAuthKeys: [],
+  const logger = createConsoleLogger(console);
+  const serverResult = await initializeServer(logger);
+  const server = serverResult.valueOrThrow();
+
+  const schema = await updateSchema(server);
+  const expressServer = startExpressServer(server, schema, port);
+
+  process.on('SIGINT', () => {
+    logger.warn('SIGINT signal received: closing HTTP server');
+    expressServer.close(() => {
+      logger.warn('HTTP server closed');
+      server.shutdown().then(() => logger.warn('datadata server closed'));
+      process.exit(1);
     });
-    if (sessionResult.isError()) throw sessionResult.toError();
-    const schemaResult = await server
-      .createAdminClient(sessionResult.value.context)
-      .getSchemaSpecification();
-    if (schemaResult.isError()) throw schemaResult.toError();
-    await startServer(server, new AdminSchema(schemaResult.value), port);
-  } finally {
-    await server.shutdown();
-  }
+  });
 }
 
 if (require.main === module) {

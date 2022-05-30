@@ -49,10 +49,6 @@ function grant_access_for_user {
   create_database "datadata-examples-deno"
   grant_access_for_user "datadata-examples-deno" "examplesdenouser"
 
-  create_user "examplesfoouser" "examplesfoopass"
-  create_database "datadata-examples-foo"
-  grant_access_for_user "datadata-examples-foo" "examplesfoouser"
-
   create_user "examplesnextwebuser" "examplesnextwebpass"
   create_database "datadata-examples-next-web"
   grant_access_for_user "datadata-examples-next-web" "examplesnextwebuser"
