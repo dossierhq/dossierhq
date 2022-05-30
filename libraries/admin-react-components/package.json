@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-admin-react-components",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
