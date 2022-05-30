@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-database-adapter
 
-This log was last generated on Tue, 24 May 2022 15:02:06 GMT and should not be manually modified.
+This log was last generated on Mon, 30 May 2022 11:14:25 GMT and should not be manually modified.
+
+## 0.1.12
+Mon, 30 May 2022 11:14:25 GMT
+
+### Updates
+
+- Output ESM and CJS.
 
 ## 0.1.11
 Tue, 24 May 2022 15:02:06 GMT
