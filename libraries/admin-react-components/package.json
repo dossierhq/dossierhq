@@ -10,12 +10,18 @@
         "default": "./lib/cjs/index.js"
       }
     },
-    "./icons.css": "./lib/icons.css",
-    "./main.css": "./lib/main.css"
+    "./icons.css": {
+      "import": "./lib/esm/icons.css",
+      "require": "./lib/cjs/icons.css"
+    },
+    "./main.css": {
+      "import": "./lib/esm/main.css",
+      "require": "./lib/cjs/main.css"
+    }
   },
   "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build esm-package-json && cp src/*.css lib/",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build esm-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
