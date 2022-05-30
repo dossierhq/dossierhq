@@ -295,9 +295,8 @@ async function testArchiveEntity(adminClient: AdminClient, options: BenchPressOp
         if (referencedOrgResult.isError()) return false;
 
         if (
-          [AdminEntityStatus.published, AdminEntityStatus.modified].includes(
-            referencedOrgResult.value.info.status
-          )
+          referencedOrgResult.value.info.status === AdminEntityStatus.published ||
+          referencedOrgResult.value.info.status === AdminEntityStatus.modified
         ) {
           // Need to find another Person
           continue;

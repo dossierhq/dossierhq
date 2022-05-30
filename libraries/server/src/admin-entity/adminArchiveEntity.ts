@@ -40,7 +40,7 @@ export async function adminArchiveEntity(
     }
 
     // Step 3: Check status
-    if ([AdminEntityStatus.modified, AdminEntityStatus.published].includes(status)) {
+    if (status === AdminEntityStatus.modified || status === AdminEntityStatus.published) {
       return notOk.BadRequest('Entity is published');
     }
     if (status === AdminEntityStatus.archived) {

@@ -22,7 +22,7 @@ import type {
 export function isBooleanField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.Boolean] | null {
+): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean && !fieldSpec.list;
 }
 
@@ -30,7 +30,7 @@ export function isBooleanField(
 export function isBooleanListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.Boolean]> | null {
+): value is Array<FieldValueTypeMap[typeof FieldType.Boolean]> | null {
   return fieldSpec.type === FieldType.Boolean && !!fieldSpec.list;
 }
 
@@ -38,7 +38,7 @@ export function isBooleanListField(
 export function isBooleanItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.Boolean] | null {
+): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean;
 }
 
@@ -46,7 +46,7 @@ export function isBooleanItemField(
 export function isEntityTypeField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.EntityType] | null {
+): value is FieldValueTypeMap[typeof FieldType.EntityType] | null {
   return fieldSpec.type === FieldType.EntityType && !fieldSpec.list;
 }
 
@@ -54,7 +54,7 @@ export function isEntityTypeField(
 export function isEntityTypeListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.EntityType]> | null {
+): value is Array<FieldValueTypeMap[typeof FieldType.EntityType]> | null {
   return fieldSpec.type === FieldType.EntityType && !!fieldSpec.list;
 }
 
@@ -62,7 +62,7 @@ export function isEntityTypeListField(
 export function isEntityTypeItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.EntityType] | null {
+): value is FieldValueTypeMap[typeof FieldType.EntityType] | null {
   return fieldSpec.type === FieldType.EntityType;
 }
 
@@ -70,7 +70,7 @@ export function isEntityTypeItemField(
 export function isLocationField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.Location] | null {
+): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location && !fieldSpec.list;
 }
 
@@ -78,7 +78,7 @@ export function isLocationField(
 export function isLocationListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.Location]> | null {
+): value is Array<FieldValueTypeMap[typeof FieldType.Location]> | null {
   return fieldSpec.type === FieldType.Location && !!fieldSpec.list;
 }
 
@@ -86,7 +86,7 @@ export function isLocationListField(
 export function isLocationItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.Location] | null {
+): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location;
 }
 
@@ -94,7 +94,7 @@ export function isLocationItemField(
 export function isStringField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.String] | null {
+): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String && !fieldSpec.list;
 }
 
@@ -102,7 +102,7 @@ export function isStringField(
 export function isStringListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.String]> | null {
+): value is Array<FieldValueTypeMap[typeof FieldType.String]> | null {
   return fieldSpec.type === FieldType.String && !!fieldSpec.list;
 }
 
@@ -110,7 +110,7 @@ export function isStringListField(
 export function isStringItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.String] | null {
+): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String;
 }
 
@@ -118,7 +118,7 @@ export function isStringItemField(
 export function isRichTextField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.RichText] | null {
+): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText && !fieldSpec.list;
 }
 
@@ -126,7 +126,7 @@ export function isRichTextField(
 export function isRichTextListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.RichText]> | null {
+): value is Array<FieldValueTypeMap[typeof FieldType.RichText]> | null {
   return fieldSpec.type === FieldType.RichText && !!fieldSpec.list;
 }
 
@@ -134,7 +134,7 @@ export function isRichTextListField(
 export function isRichTextItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.RichText] | null {
+): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText;
 }
 
@@ -142,7 +142,7 @@ export function isRichTextItemField(
 export function isValueTypeField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.ValueType] | null {
+): value is FieldValueTypeMap[typeof FieldType.ValueType] | null {
   return fieldSpec.type === FieldType.ValueType && !fieldSpec.list;
 }
 
@@ -150,7 +150,7 @@ export function isValueTypeField(
 export function isValueTypeListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.ValueType]> | null {
+): value is Array<FieldValueTypeMap[typeof FieldType.ValueType]> | null {
   return fieldSpec.type === FieldType.ValueType && !!fieldSpec.list;
 }
 
@@ -158,25 +158,25 @@ export function isValueTypeListField(
 export function isValueTypeItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.ValueType] | null {
+): value is FieldValueTypeMap[typeof FieldType.ValueType] | null {
   return fieldSpec.type === FieldType.ValueType;
 }
 
 export function isRichTextEntityBlock(
   block: RichTextBlock
-): block is RichTextBlock<RichTextBlockType.entity, EntityReference | null> {
+): block is RichTextBlock<typeof RichTextBlockType.entity, EntityReference | null> {
   return block.type === RichTextBlockType.entity;
 }
 
 export function isRichTextParagraphBlock(
   block: RichTextBlock
-): block is RichTextBlock<RichTextBlockType.paragraph, { text: string }> {
+): block is RichTextBlock<typeof RichTextBlockType.paragraph, { text: string }> {
   return block.type === RichTextBlockType.paragraph;
 }
 
 export function isRichTextValueItemBlock(
   block: RichTextBlock
-): block is RichTextBlock<RichTextBlockType.valueItem, ValueItem | null> {
+): block is RichTextBlock<typeof RichTextBlockType.valueItem, ValueItem | null> {
   return block.type === RichTextBlockType.valueItem;
 }
 
