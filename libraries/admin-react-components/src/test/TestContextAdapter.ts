@@ -12,7 +12,6 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
-  AdminSchema,
   buildUrlWithUrlQuery,
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
@@ -22,14 +21,12 @@ import {
   createBasePublishedClient,
   createConsoleLogger,
   LoggingClientMiddleware,
-  NoOpLogger,
   notOk,
   ok,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import type { AdminDataDataContextAdapter } from '..';
-import { LegacyDataDataContextValue } from '../contexts/LegacyDataDataContext';
 import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
 import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
 
@@ -46,26 +43,6 @@ export const DISPLAY_AUTH_KEYS = [
 const AUTH_KEYS_HEADER = {
   'DataData-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
 };
-
-export async function createContextValue2(
-  swrConfig: SwrConfigRef,
-  middleware: AdminClientMiddleware<BackendContext>[] = []
-): PromiseResult<LegacyDataDataContextValue, ErrorType.Generic> {
-  const adminClient = createBackendAdminClient(swrConfig, middleware);
-  //TODO add a schema React context so we don't need to fetch here
-  const schemaResult = await adminClient.getSchemaSpecification();
-  if (schemaResult.isError()) return schemaResult;
-  const schema = new AdminSchema(schemaResult.value);
-  return ok(
-    new LegacyDataDataContextValue(
-      new TestContextAdapter(),
-      adminClient,
-      schema,
-      NoOpLogger,
-      DISPLAY_AUTH_KEYS
-    )
-  );
-}
 
 export function createBackendAdminClient(
   swrConfig: SwrConfigRef,
