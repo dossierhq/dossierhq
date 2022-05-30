@@ -1,8 +1,8 @@
 import React from 'react';
-import { Column } from '../Column/Column';
-import type { IconName } from '../Icon/Icon';
-import { Icon } from '../Icon/Icon';
-import { Text } from '../Text/Text';
+import { Column } from '../Column/Column.js';
+import type { IconName } from '../Icon/Icon.js';
+import { Icon } from '../Icon/Icon.js';
+import { Text } from '../Text/Text.js';
 
 export interface EmptyStateMessageProps {
   icon: IconName;

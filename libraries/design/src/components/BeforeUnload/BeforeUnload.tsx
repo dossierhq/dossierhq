@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useWindowEventListener } from '../../hooks/useWindowEventListener';
+import { useWindowEventListener } from '../../hooks/useWindowEventListener.js';
 
 interface Props {
   message: string;

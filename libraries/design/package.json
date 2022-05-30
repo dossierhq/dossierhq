@@ -2,14 +2,20 @@
   "name": "@jonasb/datadata-design",
   "version": "0.1.14",
   "description": "",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/index.js",
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    },
     "./main.css": "./lib/main.css"
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && (npm run css:build 2>&1)",
+    "build": "npm run prettier:check && heft build --clean && (npm run css:build 2>&1) && post-process-build cjs-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "css:build": "sass src/styles/main.scss lib/main.css",
@@ -17,11 +23,9 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "echo Empty for now",
-    "ts:check": "tsc --noEmit",
-    "ts:check:watch": "tsc --noEmit --watch",
     "start": "start-storybook -p 6007 --no-open",
     "storybook:build": "build-storybook --quiet",
+    "test": "",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
@@ -33,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@rushstack/heft": "~0.45.5",
     "@storybook/addon-actions": "^6.4.21",
     "@storybook/addon-essentials": "^6.4.21",

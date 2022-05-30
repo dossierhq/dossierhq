@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react';
 import React from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
-import type { TextStyle } from '../../utils/TextStylePropsUtils';
-import { toTextStyleClassName } from '../../utils/TextStylePropsUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
+import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
 
 export interface TextProps {
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

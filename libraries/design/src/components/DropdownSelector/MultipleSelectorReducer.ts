@@ -1,5 +1,5 @@
 import type { Reducer } from 'react';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 
 export interface MultipleSelectorItem<TId extends string = string> {
   id: TId;

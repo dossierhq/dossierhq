@@ -1,6 +1,6 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TabContainerProps {
   small?: boolean;

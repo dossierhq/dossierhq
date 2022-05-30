@@ -1,6 +1,6 @@
 import type { FunctionComponent, MouseEvent, ReactNode, Ref } from 'react';
 import React, { forwardRef } from 'react';
-import { Tag } from '../Tag/Tag';
+import { Tag } from '../Tag/Tag.js';
 
 export interface TagInputProps {
   ref?: Ref<HTMLDivElement>;

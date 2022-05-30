@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useRef } from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
-import { toSizeClassName } from '../../utils/LayoutPropsUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
+import { toSizeClassName } from '../../utils/LayoutPropsUtils.js';
 
 export interface DialogProps {
   show: boolean;

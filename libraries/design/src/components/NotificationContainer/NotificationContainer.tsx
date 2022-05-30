@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import React, { useCallback, useRef, useState } from 'react';
-import type { NotificationInfo } from '../../contexts/NotificationContext';
-import { NotificationContext } from '../../contexts/NotificationContext';
-import { toClassName } from '../../utils/ClassNameUtils';
+import type { NotificationInfo } from '../../contexts/NotificationContext.js';
+import { NotificationContext } from '../../contexts/NotificationContext.js';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface NotificationContainerProps {
   children: ReactNode;
