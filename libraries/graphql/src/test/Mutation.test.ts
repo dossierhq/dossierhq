@@ -145,7 +145,7 @@ mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!, $publish: Boolea
 `;
 
 beforeAll(async () => {
-  server = await setUpServerWithSession(schemaSpecification);
+  server = await setUpServerWithSession(schemaSpecification, 'data/mutation.sqlite');
   schema = new GraphQLSchemaGenerator({
     adminSchema: server.schema,
     publishedSchema: null,

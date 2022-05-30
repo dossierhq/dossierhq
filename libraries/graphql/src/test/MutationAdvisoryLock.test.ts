@@ -12,7 +12,10 @@ let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
 beforeAll(async () => {
-  server = await setUpServerWithSession({});
+  server = await setUpServerWithSession(
+    { entityTypes: [{ name: 'Placeholder', fields: [] }] },
+    'data/advisory-lock.sqlite'
+  );
   schema = new GraphQLSchemaGenerator({
     adminSchema: server.schema,
     publishedSchema: null,
