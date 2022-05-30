@@ -1,7 +1,8 @@
 import { toClassName } from './ClassNameUtils.js';
 import type { FlexContainerProps } from './FlexboxUtils.js';
 
-type SpacingValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type SpacingValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export const SpacingValues = [0, 1, 2, 3, 4, 5, 6] as const;
 
 export interface SpacingProps extends MarginProps, PaddingProps, GapProps {}
 
@@ -81,14 +82,14 @@ export function toSpacingClassName({
     valueClassName('m-', margin),
     valueClassName('ml-', marginLeft),
     valueClassName('mt-', marginTop),
-    valueClassName('mt-', marginRight),
+    valueClassName('mr-', marginRight),
     valueClassName('mb-', marginBottom),
     valueClassName('mx-', marginHorizontal),
     valueClassName('my-', marginVertical),
     valueClassName('p-', padding),
     valueClassName('pl-', paddingLeft),
     valueClassName('pt-', paddingTop),
-    valueClassName('pt-', paddingRight),
+    valueClassName('pr-', paddingRight),
     valueClassName('pb-', paddingBottom),
     valueClassName('px-', paddingHorizontal),
     valueClassName('py-', paddingVertical),
