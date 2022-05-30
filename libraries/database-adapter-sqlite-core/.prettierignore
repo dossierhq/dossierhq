@@ -1,3 +1,5 @@
+/.heft
+/.rush
 /coverage/
 /lib/
 /temp/

@@ -17,7 +17,7 @@ export async function adminEntityHistoryGetEntityInfo(
   reference: EntityReference
 ): PromiseResult<
   DatabaseAdminEntityHistoryGetEntityInfoPayload,
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<
     Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'auth_key' | 'resolved_auth_key'>
@@ -46,7 +46,7 @@ export async function adminEntityHistoryGetVersionsInfo(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
-): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<EntityVersionsTable, 'id' | 'version' | 'created_at'> & {
       created_by_uuid: string;

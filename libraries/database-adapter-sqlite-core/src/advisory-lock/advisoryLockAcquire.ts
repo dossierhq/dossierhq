@@ -13,7 +13,10 @@ export async function advisoryLockAcquire(
   name: string,
   handle: number,
   leaseDuration: number
-): PromiseResult<{ acquiredAt: Temporal.Instant }, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<
+  { acquiredAt: Temporal.Instant },
+  typeof ErrorType.Conflict | typeof ErrorType.Generic
+> {
   const now = Temporal.Now.instant();
   const expires_at = now.epochMilliseconds + leaseDuration;
 

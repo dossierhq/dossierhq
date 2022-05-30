@@ -17,7 +17,9 @@ export function usePublishedTotalCount(
   query: PublishedQuery | undefined
 ): {
   totalCount: number | undefined;
-  totalCountError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  totalCountError:
+    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
+    | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {

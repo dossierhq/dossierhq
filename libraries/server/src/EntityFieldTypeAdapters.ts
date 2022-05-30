@@ -7,7 +7,7 @@ import type {
 } from '@jonasb/datadata-core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
-  encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, ErrorType.BadRequest>;
+  encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, typeof ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }

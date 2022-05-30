@@ -25,7 +25,10 @@ export async function adminCreateEntity(
   options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityCreatePayload,
-  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const resolvedResult = resolveCreateEntity(schema, entity);
   if (resolvedResult.isError()) {

@@ -232,96 +232,102 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     childContextFactory: (transaction: Transaction) => TransactionContext,
     callback: (context: TransactionContext) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError | ErrorType.Generic>;
+  ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 
   withNestedTransaction<TOk, TError extends ErrorType>(
     context: TransactionContext,
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError | ErrorType.Generic>;
+  ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 
   adminEntityArchivingGetEntityInfo(
     context: TransactionContext,
     reference: EntityReference
   ): PromiseResult<
     DatabaseAdminEntityArchivingEntityInfoPayload,
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   adminEntityCreate(
     context: TransactionContext,
     randomNameGenerator: (name: string) => string,
     entity: DatabaseAdminEntityCreateEntityArg
-  ): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabaseAdminEntityCreatePayload,
+    typeof ErrorType.Conflict | typeof ErrorType.Generic
+  >;
 
   adminEntityGetEntityName(
     context: TransactionContext,
     reference: EntityReference
-  ): PromiseResult<string, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<string, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
 
   adminEntityGetOne(
     context: TransactionContext,
     reference: EntityReference | EntityVersionReference
-  ): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabaseAdminEntityGetOnePayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
 
   adminEntityGetMultiple(
     context: TransactionContext,
     references: EntityReference[]
-  ): PromiseResult<DatabaseAdminEntityGetOnePayload[], ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityGetOnePayload[], typeof ErrorType.Generic>;
 
   adminEntityGetReferenceEntitiesInfo(
     context: TransactionContext,
     references: EntityReference[]
-  ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic>;
 
   adminEntityHistoryGetEntityInfo(
     context: TransactionContext,
     reference: EntityReference
   ): PromiseResult<
     DatabaseAdminEntityHistoryGetEntityInfoPayload,
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   adminEntityHistoryGetVersionsInfo(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference
-  ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], typeof ErrorType.Generic>;
 
   adminEntityPublishGetVersionInfo(
     context: TransactionContext,
     reference: EntityVersionReference
   ): PromiseResult<
     DatabaseAdminEntityPublishGetVersionInfoPayload,
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   adminEntityPublishUpdateEntity(
     context: TransactionContext,
     values: DatabaseAdminEntityPublishUpdateEntityArg
-  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
 
   adminEntityPublishGetUnpublishedReferencedEntities(
     context: TransactionContext,
     reference: DatabaseResolvedEntityVersionReference
-  ): PromiseResult<EntityReference[], ErrorType.Generic>;
+  ): PromiseResult<EntityReference[], typeof ErrorType.Generic>;
 
   adminEntityPublishingCreateEvents(
     context: TransactionContext,
     event: DatabaseAdminEntityPublishingCreateEventArg
-  ): PromiseResult<void, ErrorType.Generic>;
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityPublishingHistoryGetEntityInfo(
     context: TransactionContext,
     reference: EntityReference
   ): PromiseResult<
     DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   adminEntityPublishingHistoryGetEvents(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference
-  ): PromiseResult<PublishingEvent[], ErrorType.Generic>;
+  ): PromiseResult<PublishingEvent[], typeof ErrorType.Generic>;
 
   adminEntitySampleEntities(
     schema: AdminSchema,
@@ -330,7 +336,10 @@ export interface DatabaseAdapter {
     offset: number,
     limit: number,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabaseAdminEntityPayload[], ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabaseAdminEntityPayload[],
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   adminEntitySearchEntities(
     schema: AdminSchema,
@@ -338,70 +347,76 @@ export interface DatabaseAdapter {
     query: AdminSearchQuery | undefined,
     paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabaseAdminEntitySearchPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   adminEntitySearchTotalCount(
     schema: AdminSchema,
     context: TransactionContext,
     query: AdminQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   adminEntityUpdateGetEntityInfo(
     context: TransactionContext,
     reference: EntityReference
   ): PromiseResult<
     DatabaseEntityUpdateGetEntityInfoPayload,
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   adminEntityUpdateEntity(
     context: TransactionContext,
     randomNameGenerator: (name: string) => string,
     entity: DatabaseEntityUpdateEntityArg
-  ): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic>;
+  ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntityUpdateStatus(
     context: TransactionContext,
     status: AdminEntityStatus,
     reference: DatabaseResolvedEntityReference
-  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
 
   adminEntityUnpublishGetEntitiesInfo(
     context: TransactionContext,
     references: EntityReference[]
   ): PromiseResult<
     DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   adminEntityUnpublishEntities(
     context: TransactionContext,
     status: AdminEntityStatus,
     references: DatabaseResolvedEntityReference[]
-  ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic>;
 
   adminEntityUnpublishGetPublishedReferencedEntities(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference
-  ): PromiseResult<EntityReference[], ErrorType.Generic>;
+  ): PromiseResult<EntityReference[], typeof ErrorType.Generic>;
 
   advisoryLockAcquire(
     context: TransactionContext,
     name: string,
     handle: number,
     leaseDuration: number
-  ): PromiseResult<{ acquiredAt: Temporal.Instant }, ErrorType.Conflict | ErrorType.Generic>;
+  ): PromiseResult<
+    { acquiredAt: Temporal.Instant },
+    typeof ErrorType.Conflict | typeof ErrorType.Generic
+  >;
 
   advisoryLockDeleteExpired(
     context: TransactionContext
-  ): PromiseResult<{ name: string }[], ErrorType.Generic>;
+  ): PromiseResult<{ name: string }[], typeof ErrorType.Generic>;
 
   advisoryLockRelease(
     context: TransactionContext,
     name: string,
     handle: number
-  ): PromiseResult<void, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<void, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
 
   advisoryLockRenew(
     context: TransactionContext,
@@ -409,24 +424,27 @@ export interface DatabaseAdapter {
     handle: number
   ): PromiseResult<
     { acquiredAt: Temporal.Instant; renewedAt: Temporal.Instant },
-    ErrorType.NotFound | ErrorType.Generic
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   authCreateSession(
     context: TransactionContext,
     provider: string,
     identifier: string
-  ): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic>;
+  ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
 
   publishedEntityGetOne(
     context: TransactionContext,
     reference: EntityReference
-  ): PromiseResult<DatabasePublishedEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabasePublishedEntityGetOnePayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
 
   publishedEntityGetEntities(
     context: TransactionContext,
     references: EntityReference[]
-  ): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic>;
+  ): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic>;
 
   publishedEntitySampleEntities(
     schema: PublishedSchema,
@@ -435,7 +453,10 @@ export interface DatabaseAdapter {
     offset: number,
     limit: number,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabasePublishedEntityPayload[], ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabasePublishedEntityPayload[],
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   publishedEntitySearchEntities(
     schema: PublishedSchema,
@@ -443,21 +464,24 @@ export interface DatabaseAdapter {
     query: PublishedSearchQuery | undefined,
     paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    DatabasePublishedEntitySearchPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   publishedEntitySearchTotalCount(
     schema: PublishedSchema,
     context: TransactionContext,
     query: PublishedQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   schemaGetSpecification(
     context: TransactionContext
-  ): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic>;
+  ): PromiseResult<AdminSchemaSpecification | null, typeof ErrorType.Generic>;
 
   schemaUpdateSpecification(
     context: TransactionContext,
     schemaSpec: AdminSchemaSpecification
-  ): PromiseResult<void, ErrorType.Generic>;
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 }

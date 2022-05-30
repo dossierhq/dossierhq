@@ -8,7 +8,7 @@ import { queryOne } from '../QueryFunctions.js';
 export async function getEntitiesUpdatedSeq(
   database: Database,
   context: TransactionContext
-): PromiseResult<number, ErrorType.Generic> {
+): PromiseResult<number, typeof ErrorType.Generic> {
   const result = await queryOne<Pick<SequencesTable, 'value'>>(
     database,
     context,

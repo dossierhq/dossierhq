@@ -1,5 +1,14 @@
 {
-  "cSpell.words": ["datadata", "Graphi", "graphiql", "jonasb", "starwars", "vite", "vitejs"],
+  "cSpell.words": [
+    "codemirror",
+    "datadata",
+    "Graphi",
+    "graphiql",
+    "jonasb",
+    "starwars",
+    "vite",
+    "vitejs"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,

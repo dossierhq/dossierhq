@@ -25,7 +25,7 @@ export async function adminEntityPublishingHistoryGetEntityInfo(
   reference: EntityReference
 ): PromiseResult<
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<Pick<EntitiesTable, 'id' | 'auth_key' | 'resolved_auth_key'>>(
     databaseAdapter,
@@ -53,7 +53,7 @@ export async function adminEntityPublishingHistoryGetEvents(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
-): PromiseResult<PublishingEvent[], ErrorType.Generic> {
+): PromiseResult<PublishingEvent[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<EntityVersionsTable, 'version'> &
       Pick<EntityPublishingEventsTable, 'published_at' | 'kind'> & {

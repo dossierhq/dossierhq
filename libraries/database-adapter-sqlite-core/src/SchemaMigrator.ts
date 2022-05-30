@@ -13,7 +13,7 @@ export async function migrate(
   database: Database,
   context: TransactionContext,
   schemaVersionGenerator: (version: number) => QueryOrQueryAndValues[] | null
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   const initialVersionResult = await queryOne<{ user_version: number }>(
     database,
     context,
@@ -41,7 +41,7 @@ async function migrateVersion(
   context: TransactionContext,
   version: number,
   statements: QueryOrQueryAndValues[]
-): PromiseResult<undefined, ErrorType.Generic> {
+): PromiseResult<undefined, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
     const { logger } = context;
     logger.info(`Starting migration of database schema to version=${version}...`);

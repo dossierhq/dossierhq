@@ -27,7 +27,10 @@ import { LoginContext } from '../contexts/LoginContext';
 import { ServerContext } from '../contexts/ServerContext';
 import { UserContext } from '../contexts/UserContext';
 
-type SessionResult = Result<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
+type SessionResult = Result<
+  CreateSessionPayload,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+>;
 
 const uninitializedSession = notOk.Generic('Uninitialized user');
 
@@ -45,7 +48,9 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   swrConfigRef.current = { cache, mutate };
 
   const login = useCallback(
-    async (userId: string): PromiseResult<void, ErrorType.BadRequest | ErrorType.Generic> => {
+    async (
+      userId: string
+    ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> => {
       assertIsDefined(server);
       const user = users.find((it) => it.id === userId);
       assertIsDefined(user);

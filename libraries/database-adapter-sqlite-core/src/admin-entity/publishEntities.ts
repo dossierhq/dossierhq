@@ -21,7 +21,7 @@ export async function adminEntityPublishGetVersionInfo(
   reference: EntityVersionReference
 ): PromiseResult<
   DatabaseAdminEntityPublishGetVersionInfoPayload,
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<
     Pick<EntityVersionsTable, 'id' | 'entities_id' | 'fields'> &
@@ -78,7 +78,7 @@ export async function adminEntityPublishUpdateEntity(
   database: Database,
   context: TransactionContext,
   values: DatabaseAdminEntityPublishUpdateEntityArg
-): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
@@ -149,7 +149,7 @@ export async function adminEntityPublishGetUnpublishedReferencedEntities(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityVersionReference
-): PromiseResult<EntityReference[], ErrorType.Generic> {
+): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid
            FROM entity_version_references evr, entities e

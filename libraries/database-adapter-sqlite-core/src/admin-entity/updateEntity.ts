@@ -21,7 +21,10 @@ export async function adminEntityUpdateGetEntityInfo(
   database: Database,
   context: TransactionContext,
   reference: EntityReference
-): PromiseResult<DatabaseEntityUpdateGetEntityInfoPayload, ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseEntityUpdateGetEntityInfoPayload,
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
+> {
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,
@@ -80,7 +83,7 @@ export async function adminEntityUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg
-): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
   const now = Temporal.Now.instant();
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {

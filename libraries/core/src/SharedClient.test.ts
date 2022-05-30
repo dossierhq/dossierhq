@@ -19,7 +19,7 @@ interface TestClientOperationReturnOk {
 }
 
 interface TestClientOperationReturnError {
-  [TestClientOperationName.foo]: ErrorType.BadRequest | ErrorType.Generic;
+  [TestClientOperationName.foo]: typeof ErrorType.BadRequest | typeof ErrorType.Generic;
 }
 
 enum TestClientOperationName {

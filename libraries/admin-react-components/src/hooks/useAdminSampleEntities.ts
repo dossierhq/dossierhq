@@ -21,7 +21,9 @@ export function useAdminSampleEntities(
   options: EntitySamplingOptions | undefined
 ): {
   entitySamples: EntitySamplingPayload<AdminEntity> | undefined;
-  entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  entitySamplesError:
+    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
+    | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {

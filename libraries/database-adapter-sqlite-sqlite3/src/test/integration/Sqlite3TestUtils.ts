@@ -39,7 +39,7 @@ export async function initializeSqlite3Server(filename: string | ':memory:', mod
 async function createSqlite3TestAdapter(
   filename: string | ':memory:',
   mode?: number
-): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const context = { logger: NoOpLogger };
   const databaseResult = await createDatabase(context, Database, {
     filename,

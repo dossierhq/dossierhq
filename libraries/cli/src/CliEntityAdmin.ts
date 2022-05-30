@@ -79,7 +79,10 @@ export async function selectEntity(
   _defaultValue: EntityReference | null
 ): PromiseResult<
   AdminEntity,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const { adminClient } = context;
   const { query, paging } = await configureQuery(context, initialQuery);
@@ -451,7 +454,7 @@ export async function editFieldValueItem(
   context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: ValueItem | null
-): PromiseResult<ValueItem, ErrorType.BadRequest> {
+): PromiseResult<ValueItem, typeof ErrorType.BadRequest> {
   //TODO which error type
   const valueItem = defaultValue
     ? { ...defaultValue }

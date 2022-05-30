@@ -20,7 +20,10 @@ export async function publishedGetEntity(
   reference: EntityReference
 ): PromiseResult<
   PublishedEntity,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const result = await databaseAdapter.publishedEntityGetOne(context, reference);
   if (result.isError()) {

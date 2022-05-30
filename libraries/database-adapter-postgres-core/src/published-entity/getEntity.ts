@@ -12,7 +12,10 @@ export async function publishedEntityGetOne(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   reference: EntityReference
-): PromiseResult<DatabasePublishedEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<
+  DatabasePublishedEntityGetOnePayload,
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
+> {
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,

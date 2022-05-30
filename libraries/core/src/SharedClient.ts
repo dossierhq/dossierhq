@@ -12,7 +12,7 @@ export type ContextProvider<TContext extends ClientContext> = () => PromiseResul
   ErrorType
 >;
 
-export interface Operation<TName, TArgs, TOk, TError extends ErrorType | ErrorType.Generic> {
+export interface Operation<TName, TArgs, TOk, TError extends ErrorType | typeof ErrorType.Generic> {
   readonly name: TName;
   readonly args: TArgs;
   readonly modifies: boolean;
@@ -33,7 +33,7 @@ export async function executeOperationPipeline<
   TName,
   TArgs,
   TOk,
-  TError extends ErrorType.Generic,
+  TError extends typeof ErrorType.Generic,
   TOp extends Operation<TName, TArgs, TOk, TError>
 >(
   context: TContext,
@@ -53,7 +53,7 @@ async function executeOperationMiddleware<
   TName,
   TArgs,
   TOk,
-  TError extends ErrorType.Generic,
+  TError extends typeof ErrorType.Generic,
   TOp extends Operation<TName, TArgs, TOk, TError>
 >(
   context: TContext,
@@ -94,7 +94,7 @@ async function executeOperationMiddleware<
 export async function LoggingClientMiddleware<
   TContext extends ClientContext,
   TOk,
-  TError extends ErrorType.Generic,
+  TError extends typeof ErrorType.Generic,
   TOp extends Operation<unknown, unknown, TOk, TError>
 >(context: TContext, operation: TOp): Promise<void> {
   const { logger } = context;

@@ -22,7 +22,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
   references: EntityReference[]
 ): PromiseResult<
   DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryMany<
     Pick<EntitiesTable, 'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at'>
@@ -63,7 +63,7 @@ export async function adminEntityUnpublishEntities(
   context: TransactionContext,
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[]
-): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'updated_at'>>(
     databaseAdapter,
     context,
@@ -96,7 +96,7 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
-): PromiseResult<EntityReference[], ErrorType.Generic> {
+): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(databaseAdapter, context, {
     text: `SELECT e.uuid
        FROM entity_version_references evr, entity_versions ev, entities e

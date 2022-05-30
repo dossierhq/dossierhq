@@ -14,7 +14,7 @@ export async function adminEntityUpdateStatus(
   context: TransactionContext,
   status: AdminEntityStatus,
   reference: DatabaseResolvedEntityReference
-): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const result = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
     text: `UPDATE entities SET
         archived = $1,

@@ -12,7 +12,7 @@ export interface PublishedDataDataContextValue {
   publishedClient: PublishedClient;
   logger: Logger;
   schema: PublishedSchema | undefined;
-  schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
+  schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
   authKeys: DisplayAuthKey[];
 }
 

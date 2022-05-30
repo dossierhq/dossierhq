@@ -15,7 +15,7 @@ export async function adminEntityArchivingGetEntityInfo(
   reference: EntityReference
 ): PromiseResult<
   DatabaseAdminEntityArchivingEntityInfoPayload,
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<
     Pick<

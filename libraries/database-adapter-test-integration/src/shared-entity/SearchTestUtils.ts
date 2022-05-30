@@ -105,12 +105,12 @@ export function assertPublishedEntityConnectionToMatchSlice(
 export function assertSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >,
   actualEntities: TItem[]
 ): asserts result is OkResult<
   Connection<Edge<TItem, ErrorType>> | null,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   assertOkResult(result);
   if (actualEntities.length === 0) {
@@ -144,17 +144,26 @@ export async function countSearchResultWithEntity(
   client: AdminClient,
   query: AdminSearchQuery,
   entityId: string
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+>;
 export async function countSearchResultWithEntity(
   client: PublishedClient,
   query: PublishedSearchQuery,
   entityId: string
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+>;
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
   query: AdminSearchQuery | PublishedSearchQuery,
   entityId: string
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
   let matchCount = 0;
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
@@ -179,7 +188,7 @@ export async function countSearchResultStatuses(
   query: AdminSearchQuery
 ): PromiseResult<
   Record<AdminEntityStatus, number>,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const result = {
     [AdminEntityStatus.draft]: 0,

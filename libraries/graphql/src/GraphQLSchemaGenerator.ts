@@ -77,8 +77,8 @@ import { seemsLikeATemporalInstant } from './Utils';
 import { GraphQLJSON } from './vendor/GraphQLScalar';
 
 export interface SessionGraphQLContext {
-  adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
-  publishedClient: Result<PublishedClient, ErrorType.NotAuthenticated>;
+  adminClient: Result<AdminClient, typeof ErrorType.NotAuthenticated>;
+  publishedClient: Result<PublishedClient, typeof ErrorType.NotAuthenticated>;
 }
 
 function fieldConfigWithArgs<TSource, TContext, TArgs>(

@@ -15,7 +15,10 @@ export async function publishedGetTotalCount(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: PublishedQuery | undefined
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,

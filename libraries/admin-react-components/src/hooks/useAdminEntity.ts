@@ -15,7 +15,7 @@ export function useAdminEntity(
   reference: EntityReference | EntityVersionReference | undefined
 ): {
   entity: AdminEntity | undefined;
-  entityError: ErrorResult<unknown, ErrorType.Generic> | undefined;
+  entityError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => fetchEntity(adminClient, JSON.parse(paramsJson)),

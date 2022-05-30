@@ -49,7 +49,10 @@ export async function adminPublishEntities(
   references: EntityVersionReference[]
 ): PromiseResult<
   AdminEntityPublishPayload[],
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
   if (uniqueIdCheck.isError()) {
@@ -117,7 +120,10 @@ async function collectVersionsInfo(
   references: EntityVersionReference[]
 ): PromiseResult<
   (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const missingReferences: EntityVersionReference[] = [];
   const adminOnlyEntityIds: string[] = [];
@@ -204,7 +210,7 @@ function verifyFieldValuesAndCollectInformation(
   reference: EntityReference,
   type: string,
   entityFields: Record<string, unknown>
-): Result<{ fullTextSearchText: string }, ErrorType.BadRequest | ErrorType.Generic> {
+): Result<{ fullTextSearchText: string }, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const entity: EntityLike = {
     info: { type },
     fields: entityFields,
@@ -239,7 +245,7 @@ async function publishEntitiesAndCollectResult(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[]
-): PromiseResult<AdminEntityPublishPayload[], ErrorType.Generic> {
+): PromiseResult<AdminEntityPublishPayload[], typeof ErrorType.Generic> {
   const result: AdminEntityPublishPayload[] = [];
   for (const versionInfo of versionsInfo) {
     const { status } = versionInfo;
@@ -268,7 +274,7 @@ async function ensureReferencedEntitiesArePublished(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   publishVersionsInfo: VersionInfoToBePublished[]
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const referenceErrorMessages: string[] = [];
   for (const { uuid, entityInternalId, entityVersionInternalId } of publishVersionsInfo) {
     const unpublishedReferencesResult =
@@ -299,7 +305,7 @@ async function createPublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   publishVersionsInfo: VersionInfoToBePublished[]
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   if (publishVersionsInfo.length === 0) {
     return ok(undefined);
   }

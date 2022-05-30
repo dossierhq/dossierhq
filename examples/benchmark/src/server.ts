@@ -25,7 +25,7 @@ export type DatabaseAdapterSelector =
 export async function initializeServer(adapterSelector: DatabaseAdapterSelector) {
   const databaseAdapterResult: Result<
     Sqlite3DatabaseAdapter,
-    ErrorType.BadRequest | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > =
     'sqliteDatabasePath' in adapterSelector
       ? await createSqliteDatabaseAdapter(adapterSelector.sqliteDatabasePath)
@@ -55,7 +55,7 @@ export async function initializeServer(adapterSelector: DatabaseAdapterSelector)
 
 async function createPostgresDatabaseAdapter(
   connectionString: string
-): PromiseResult<PgDatabaseAdapter, ErrorType.Generic> {
+): PromiseResult<PgDatabaseAdapter, typeof ErrorType.Generic> {
   // delete database to have consistent results
   const client = new Client({ connectionString });
   await client.connect();

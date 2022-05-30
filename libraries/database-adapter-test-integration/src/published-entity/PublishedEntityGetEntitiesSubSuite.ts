@@ -38,13 +38,13 @@ async function getEntities_minimal({ adminClient, publishedClient }: PublishedEn
 
   const getResult = await publishedClient.getEntities([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
-    ok<PublishedEntity, ErrorType.Generic>(
+    ok<PublishedEntity, typeof ErrorType.Generic>(
       copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
         id: id1,
         info: { name: name1, createdAt: createdAt1 },
       })
     ),
-    ok<PublishedEntity, ErrorType.Generic>(
+    ok<PublishedEntity, typeof ErrorType.Generic>(
       copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
         id: id2,
         info: { name: name2, createdAt: createdAt2 },
@@ -87,7 +87,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
   ]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
-    ok<PublishedEntity, ErrorType.Generic>(
+    ok<PublishedEntity, typeof ErrorType.Generic>(
       copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
         id: id2,
         info: { name: name2, createdAt: createdAt2, authKey: 'subject' },
@@ -114,7 +114,7 @@ async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTest
   ]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    ok<PublishedEntity, ErrorType.Generic>(
+    ok<PublishedEntity, typeof ErrorType.Generic>(
       copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } })
     ),
   ]);

@@ -13,7 +13,9 @@ export function usePublishedEntity(
   reference: EntityReference | undefined
 ): {
   entity: PublishedEntity | undefined;
-  entityError: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic> | undefined;
+  entityError:
+    | ErrorResult<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic>
+    | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, id: string) => fetchEntity(publishedClient, { id }),

@@ -118,7 +118,7 @@ const VERSIONS: QueryOrQueryAndValues[][] = [
 export async function migrateDatabaseIfNecessary(
   database: Database,
   context: TransactionContext
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   return await migrate(database, context, (version) => {
     return VERSIONS[version] ?? null;
   });

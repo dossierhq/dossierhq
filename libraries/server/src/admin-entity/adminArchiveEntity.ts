@@ -17,7 +17,10 @@ export async function adminArchiveEntity(
   reference: EntityReference
 ): PromiseResult<
   AdminEntityArchivePayload,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
     // Step 1: Get entity info

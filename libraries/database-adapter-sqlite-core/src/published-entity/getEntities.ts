@@ -14,7 +14,7 @@ export async function publishedEntityGetEntities(
   database: Database,
   context: TransactionContext,
   references: EntityReference[]
-): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic> {
+): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
   const qb =
     new SqliteQueryBuilder(`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.fields
     FROM entities e, entity_versions ev WHERE`);

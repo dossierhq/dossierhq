@@ -24,7 +24,10 @@ export async function adminUpdateEntity(
   options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityUpdatePayload,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   return await context.withTransaction(async (context) => {
     const entityInfoResult = await databaseAdapter.adminEntityUpdateGetEntityInfo(context, {

@@ -14,14 +14,17 @@ export async function advisoryLockAcquire(
   name: string,
   handle: number,
   leaseDuration: number
-): PromiseResult<{ acquiredAt: Temporal.Instant }, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<
+  { acquiredAt: Temporal.Instant },
+  typeof ErrorType.Conflict | typeof ErrorType.Generic
+> {
   const query = buildPostgresSqlQuery(({ sql }) => {
     sql`INSERT INTO advisory_locks (name, handle, lease_duration)
         VALUES (${name}, ${handle}, make_interval(secs => ${leaseDuration / 1000}))
         RETURNING acquired_at`;
   });
 
-  const result = await queryOne<Pick<AdvisoryLocksTable, 'acquired_at'>, ErrorType.Conflict>(
+  const result = await queryOne<Pick<AdvisoryLocksTable, 'acquired_at'>, typeof ErrorType.Conflict>(
     databaseAdapter,
     context,
     query,

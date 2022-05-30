@@ -25,7 +25,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
   references: EntityReference[]
 ): PromiseResult<
   DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const qb = new SqliteQueryBuilder(
     'SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE'
@@ -68,7 +68,7 @@ export async function adminEntityUnpublishEntities(
   context: TransactionContext,
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[]
-): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
@@ -115,7 +115,7 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
-): PromiseResult<EntityReference[], ErrorType.Generic> {
+): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid
        FROM entity_version_references evr, entity_versions ev, entities e

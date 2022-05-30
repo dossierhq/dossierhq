@@ -12,7 +12,7 @@ export async function adminEntityGetReferenceEntitiesInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   references: EntityReference[]
-): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
     databaseAdapter,
     context,

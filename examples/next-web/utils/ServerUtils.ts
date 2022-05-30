@@ -20,7 +20,7 @@ export async function getSessionContextForRequest(
   req: NextApiRequest
 ): PromiseResult<
   { adminClient: AdminClient; publishedClient: PublishedClient },
-  ErrorType.NotAuthenticated
+  typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
   const defaultAuthKeys = getDefaultAuthKeysFromHeaders(req);

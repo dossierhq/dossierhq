@@ -17,7 +17,10 @@ export async function adminGetEntityHistory(
   reference: EntityReference
 ): PromiseResult<
   EntityHistory,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const entityInfoResult = await databaseAdapter.adminEntityHistoryGetEntityInfo(
     context,

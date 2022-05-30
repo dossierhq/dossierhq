@@ -13,7 +13,7 @@ export async function adminEntityPublishingCreateEvents(
   database: Database,
   context: TransactionContext,
   event: DatabaseAdminEntityPublishingCreateEventArg
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   const now = Temporal.Now.instant();
   const qb = new SqliteQueryBuilder(
     'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, published_at, kind) VALUES'

@@ -11,14 +11,20 @@ interface AdvisoryLockHelperOptions extends AdvisoryLockOptions {
 
 type AdvisoryLockHelperStatus =
   | { active: true; renewError: null }
-  | { active: false; renewError: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic> };
+  | {
+      active: false;
+      renewError: ErrorResult<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
+    };
 
 export async function withAdvisoryLock<TOk, TError extends ErrorType>(
   adminClient: AdminClient,
   name: string,
   options: AdvisoryLockHelperOptions,
   callback: (status: AdvisoryLockHelperStatus) => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError | ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<
+  TOk,
+  TError | typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
+> {
   // Acquire lock
   const { acquireInterval, renewInterval, ...acquireOptions } = options;
   const acquireResult = await acquireLockWithRetry(
@@ -75,7 +81,7 @@ async function acquireLockWithRetry(
   name: string,
   options: AdvisoryLockOptions,
   acquireInterval: number
-): PromiseResult<AdvisoryLockPayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<AdvisoryLockPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const result = await adminClient.acquireAdvisoryLock(name, options);

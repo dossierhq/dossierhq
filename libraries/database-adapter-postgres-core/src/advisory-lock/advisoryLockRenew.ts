@@ -14,7 +14,7 @@ export async function advisoryLockRenew(
   handle: number
 ): PromiseResult<
   { acquiredAt: Temporal.Instant; renewedAt: Temporal.Instant },
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const query = buildPostgresSqlQuery(({ sql }) => {
     sql`UPDATE advisory_locks SET renewed_at = NOW() WHERE name = ${name} AND handle = ${handle} RETURNING acquired_at, renewed_at`;

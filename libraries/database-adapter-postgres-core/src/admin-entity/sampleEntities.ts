@@ -19,7 +19,10 @@ export async function adminEntitySampleEntities(
   offset: number,
   limit: number,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<DatabaseAdminEntityPayload[], ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAdminEntityPayload[],
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const sqlQueryResult = sampleAdminEntitiesQuery(schema, query, offset, limit, resolvedAuthKeys);
   if (sqlQueryResult.isError()) return sqlQueryResult;
 

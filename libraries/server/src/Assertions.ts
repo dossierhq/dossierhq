@@ -3,7 +3,7 @@ import { notOk, ok } from '@jonasb/datadata-core';
 
 export function ensureRequired(
   parameters: Record<string, unknown>
-): Result<true, ErrorType.BadRequest> {
+): Result<true, typeof ErrorType.BadRequest> {
   const missing: string[] = [];
   for (const [parameter, value] of Object.entries(parameters)) {
     if (!value) {

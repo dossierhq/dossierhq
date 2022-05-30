@@ -11,7 +11,7 @@ import type { Database } from 'sql.js';
 export async function createSqlJsAdapter(
   context: Context,
   database: Database
-): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
       database.close();

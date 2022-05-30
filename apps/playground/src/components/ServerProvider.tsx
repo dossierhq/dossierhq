@@ -37,7 +37,7 @@ export function ServerProvider({ children }: Props) {
 
 async function initializeServer(
   database: Database
-): PromiseResult<Server, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   try {
     const adapterResult = await createSqlJsAdapter({ logger: SERVER_LOGGER }, database);
     if (adapterResult.isError()) return adapterResult;

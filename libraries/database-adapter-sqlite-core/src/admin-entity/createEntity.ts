@@ -22,7 +22,10 @@ export async function adminCreateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg
-): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAdminEntityCreatePayload,
+  typeof ErrorType.Conflict | typeof ErrorType.Generic
+> {
   const createEntityRowResult = await createEntityRow(
     database,
     context,
@@ -117,7 +120,7 @@ async function createEntityRow(
     entity.name,
     randomNameGenerator,
     async (context, name, nameConflictErrorMessage) => {
-      const createResult = await queryOne<Pick<EntitiesTable, 'id'>, ErrorType.Conflict>(
+      const createResult = await queryOne<Pick<EntitiesTable, 'id'>, typeof ErrorType.Conflict>(
         database,
         context,
         {

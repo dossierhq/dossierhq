@@ -21,7 +21,7 @@ export async function createDatabase(
     mode?: number;
     journalMode?: 'wal';
   }
-): PromiseResult<Database, ErrorType.Generic> {
+): PromiseResult<Database, typeof ErrorType.Generic> {
   try {
     const database = await doCreateDatabase(DatabaseClass, filename, mode);
     if (journalMode === 'wal') {
@@ -78,7 +78,7 @@ export function closeDatabase(db: Database) {
 async function enableJournalModeWAL(
   context: Context,
   database: Database
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   try {
     await queryAll(database, 'PRAGMA journal_mode=WAL');
     return ok(undefined);

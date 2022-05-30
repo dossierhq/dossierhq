@@ -25,7 +25,10 @@ export async function adminEntitySearchEntities(
   query: AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAdminEntitySearchPayload,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const sqlQueryResult = searchAdminEntitiesQuery(
     database,
     schema,

@@ -46,7 +46,7 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
 
 export async function createMockInnerAndOuterAdapter(): PromiseResult<
   { innerAdapter: MockedSqliteDatabaseAdapter; outerAdapter: DatabaseAdapter },
-  ErrorType.BadRequest | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const innerAdapter = createMockInnerAdapter();
   const result = await createSqliteDatabaseAdapterAdapter({ logger: NoOpLogger }, innerAdapter);

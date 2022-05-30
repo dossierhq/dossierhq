@@ -21,7 +21,7 @@ interface Sqlite3Error {
 export async function createSqlite3Adapter(
   context: Context,
   database: Database
-): PromiseResult<Sqlite3DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<Sqlite3DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
       await closeDatabase(database);

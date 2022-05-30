@@ -6,7 +6,7 @@ import { CACHE_KEYS } from '../../utils/CacheUtils';
 
 export function usePublishedSchema(publishedClient: PublishedClient): {
   schema: PublishedSchema | undefined;
-  schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
+  schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback((_action: string) => fetchSchema(publishedClient), [publishedClient]);
   const { data, error } = useSWR(CACHE_KEYS.publishedSchema, fetcher);

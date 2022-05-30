@@ -8,7 +8,7 @@ export async function releaseAdvisoryLock(
   context: SessionContext,
   name: string,
   handle: number
-): PromiseResult<AdvisoryLockReleasePayload, ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<AdvisoryLockReleasePayload, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
   const { logger } = context;
   const result = await databaseAdapter.advisoryLockRelease(context, name, handle);
   if (result.isError()) return result;

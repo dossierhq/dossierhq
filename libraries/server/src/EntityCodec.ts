@@ -213,7 +213,7 @@ export function decodeAdminEntityFields(
 export function resolveCreateEntity(
   schema: AdminSchema,
   entity: AdminEntityCreate
-): Result<AdminEntityCreate, ErrorType.BadRequest> {
+): Result<AdminEntityCreate, typeof ErrorType.BadRequest> {
   if (!entity.info.type) {
     return notOk.BadRequest('Missing entity.info.type');
   }
@@ -262,7 +262,7 @@ export function resolveUpdateEntity(
   schema: AdminSchema,
   entity: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload
-): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
+): Result<{ changed: boolean; entity: AdminEntity }, typeof ErrorType.BadRequest> {
   if (entity.info?.type && entity.info.type !== entityInfo.type) {
     return notOk.BadRequest(
       `New type ${entity.info.type} doesn’t correspond to previous type ${entityInfo.type}`
@@ -337,7 +337,7 @@ export function resolveUpdateEntity(
 function checkForUnsupportedFields(
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntityCreate | AdminEntityUpdate
-): Result<void, ErrorType.BadRequest> {
+): Result<void, typeof ErrorType.BadRequest> {
   if (!entity.fields) {
     return ok(undefined);
   }
@@ -357,7 +357,7 @@ export async function encodeAdminEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntity | AdminEntityCreate
-): PromiseResult<EncodeAdminEntityResult, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const assertion = ensureRequired({
     'entity.info.type': entity.info.type,
     'entity.info.name': entity.info.name,
@@ -421,7 +421,7 @@ function encodeFieldItemOrList(
   fieldSpec: FieldSpecification,
   prefix: string,
   data: unknown
-): Result<unknown, ErrorType.BadRequest> {
+): Result<unknown, typeof ErrorType.BadRequest> {
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
   if (fieldSpec.list) {
     if (!Array.isArray(data)) {
@@ -458,7 +458,7 @@ function encodeValueItemField(
   fieldSpec: FieldSpecification,
   prefix: string,
   data: ValueItem | null
-): Result<unknown, ErrorType.BadRequest> {
+): Result<unknown, typeof ErrorType.BadRequest> {
   if (Array.isArray(data)) {
     return notOk.BadRequest(`${prefix}: expected single value, got list`);
   }
@@ -518,7 +518,7 @@ function encodeRichTextField(
   fieldSpec: FieldSpecification,
   prefix: string,
   data: RichText | null
-): Result<unknown, ErrorType.BadRequest> {
+): Result<unknown, typeof ErrorType.BadRequest> {
   if (Array.isArray(data)) {
     return notOk.BadRequest(`${prefix}: expected single value, got list`);
   }
@@ -667,7 +667,10 @@ async function resolveRequestedEntityReferences(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   requestedReferences: RequestedReference[]
-): PromiseResult<DatabaseResolvedEntityReference[], ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseResolvedEntityReference[],
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const allUUIDs = new Set<string>();
   requestedReferences.forEach(({ uuids }) => uuids.forEach((uuid) => allUUIDs.add(uuid)));
 

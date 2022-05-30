@@ -19,7 +19,7 @@ const defaultPagingCount = 25;
 
 export function resolvePagingInfo(
   paging: Paging | undefined
-): Result<DatabasePagingInfo, ErrorType.BadRequest> {
+): Result<DatabasePagingInfo, typeof ErrorType.BadRequest> {
   const pagingResult = getPagingInfo(paging);
   if (pagingResult.isError()) return pagingResult;
 
@@ -74,7 +74,7 @@ export async function sharedSearchEntities<
   searchResult: TSearchResult,
   hasMoreOppositeDirection: boolean,
   decoder: (schema: TSchema, values: TSearchResult['entities'][0]) => TEntity
-): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
+): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
   if (entities.length === 0) {
     return ok(null);
