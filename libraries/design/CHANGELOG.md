@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-design
 
-This log was last generated on Mon, 30 May 2022 11:14:25 GMT and should not be manually modified.
+This log was last generated on Mon, 30 May 2022 15:28:33 GMT and should not be manually modified.
+
+## 0.1.13
+Mon, 30 May 2022 15:28:33 GMT
+
+### Updates
+
+- Add icons and spacing storybook pages
 
 ## 0.1.12
 Mon, 30 May 2022 11:14:25 GMT
