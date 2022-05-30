@@ -5,6 +5,7 @@ import type {
   BlockToolData,
 } from '@editorjs/editorjs';
 import type { FieldSpecification, ValueItem } from '@jonasb/datadata-core';
+import { toSpacingClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -62,7 +63,7 @@ class ValueItemTool implements BlockTool {
 
   render(): HTMLElement {
     const wrapper = document.createElement('div');
-    wrapper.className = 'dd-py-1';
+    wrapper.className = toSpacingClassName({ paddingVertical: 1 });
     ReactDOM.render(
       <Wrapper
         {...this.#config}

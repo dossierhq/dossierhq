@@ -83,7 +83,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   return (
     <div
       id={id}
-      className="dd-text-body1 dd-rich-text dd-px-1"
+      className="rich-text-editor"
       data-editorinitialized={initialized ? 'true' : 'false'}
     />
   );

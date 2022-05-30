@@ -7,7 +7,10 @@ const meta: Meta<MapContainerProps> = {
   title: 'Shared/MapContainer',
   component: MapContainer,
   args: {
-    className: 'dd-position-fixed dd-inset-0', //TODO switch to new design class name
+    style: {
+      width: '100%',
+      height: '100vh',
+    },
   },
   parameters: { layout: 'fullscreen' },
 };

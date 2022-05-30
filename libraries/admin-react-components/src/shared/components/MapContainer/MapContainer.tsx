@@ -1,7 +1,7 @@
 import type { BoundingBox, Location } from '@jonasb/datadata-core';
 import type { Map } from 'leaflet';
 import { Icon } from 'leaflet';
-import type { FunctionComponent } from 'react';
+import type { CSSProperties, FunctionComponent } from 'react';
 import React, { useEffect, useRef } from 'react';
 import {
   MapContainer as LeafletMapContainer,
@@ -27,6 +27,7 @@ const currentMarkerIcon = new Icon({
 
 export interface MapContainerProps {
   className?: string;
+  style?: CSSProperties;
   center?: Location | null;
   resetSignal?: unknown;
   zoom?: number | null;
@@ -52,6 +53,7 @@ interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
 
 export const MapContainer: MapContainerComponent = ({
   className,
+  style,
   center,
   resetSignal,
   zoom,
@@ -77,6 +79,7 @@ export const MapContainer: MapContainerComponent = ({
     <LeafletMapContainer
       ref={mapRef}
       className={className}
+      style={style}
       center={center ?? defaultCenter}
       zoom={zoom ?? defaultZoom}
       scrollWheelZoom
