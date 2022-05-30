@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter",
+      "comment": "Output ESM and CJS.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter"
+}
