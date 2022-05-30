@@ -2186,17 +2186,20 @@ describe('publishEntities()', () => {
       });
 
       const historyResult = await adminClient.getPublishingHistory({ id });
+      assertOkResult(historyResult);
+      const publishedAt0 = historyResult.value.events[0]?.publishedAt;
       expectResultValue(historyResult, {
         id,
         events: [
           {
             kind: PublishingEventKind.publish,
-            publishedAt: Temporal.Instant.from(updatedAt),
+            publishedAt: publishedAt0,
             publishedBy: server.subjectId,
             version: 0,
           },
         ],
       });
+      expect(publishedAt0).toEqual(Temporal.Instant.from(updatedAt));
     }
   });
 
