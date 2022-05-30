@@ -281,6 +281,7 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
+      '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
@@ -330,6 +331,7 @@ importers:
     devDependencies:
       '@babel/core': 7.17.9
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../database-adapter-sqlite-sqlite3
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.4.0
       '@rushstack/heft': 0.45.5
