@@ -1,13 +1,15 @@
 import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
-import { AdminSchema } from '@jonasb/datadata-core';
+import { AdminSchema, createConsoleLogger } from '@jonasb/datadata-core';
 import SchemaSpec from './schema.json';
 import { initializeServer } from './server';
 
+const logger = createConsoleLogger(console);
+
 async function main() {
-  const serverResult = await initializeServer();
-  if (serverResult.isError()) throw serverResult.toError();
-  const server = serverResult.value;
+  const serverResult = await initializeServer(logger);
+  const server = serverResult.valueOrThrow();
+
   try {
     const sessionResult = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
     if (sessionResult.isError()) throw sessionResult.toError();

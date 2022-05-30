@@ -28,6 +28,5 @@ function set_user_superuser {
   set_user_superuser "servertestuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesbenchmarkuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesdenouser" "$SUPER_OR_NO_SUPERUSER"
-  set_user_superuser "examplesfoouser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesnextwebuser" "$SUPER_OR_NO_SUPERUSER"
 )
