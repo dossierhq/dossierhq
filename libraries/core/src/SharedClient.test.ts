@@ -10,6 +10,11 @@ import type {
 } from './SharedClient.js';
 import { executeOperationPipeline } from './SharedClient.js';
 
+const TestClientOperationName = {
+  foo: 'foo',
+} as const;
+type TestClientOperationName = keyof typeof TestClientOperationName;
+
 interface TestClientOperationArguments {
   [TestClientOperationName.foo]: [string];
 }
@@ -20,10 +25,6 @@ interface TestClientOperationReturnOk {
 
 interface TestClientOperationReturnError {
   [TestClientOperationName.foo]: typeof ErrorType.BadRequest | typeof ErrorType.Generic;
-}
-
-enum TestClientOperationName {
-  foo = 'foo',
 }
 
 type TestClientOperation<TName extends TestClientOperationName> = Operation<
@@ -56,7 +57,7 @@ describe('executeOperationPipeline()', () => {
             const {
               args: [firstArg],
               resolve,
-            } = operation as TestClientOperation<TestClientOperationName.foo>;
+            } = operation as TestClientOperation<typeof TestClientOperationName.foo>;
             resolve(ok({ item: firstArg }));
           }
         },
@@ -72,7 +73,9 @@ describe('executeOperationPipeline()', () => {
       [
         async (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
-            const { resolve } = operation as TestClientOperation<TestClientOperationName.foo>;
+            const { resolve } = operation as TestClientOperation<
+              typeof TestClientOperationName.foo
+            >;
             const result = await operation.next();
             resolve(ok({ item: `[[[${result.isOk() ? result.value.item : result}]]]` }));
           }
@@ -82,7 +85,7 @@ describe('executeOperationPipeline()', () => {
             const {
               args: [firstArg],
               resolve,
-            } = operation as TestClientOperation<TestClientOperationName.foo>;
+            } = operation as TestClientOperation<typeof TestClientOperationName.foo>;
             resolve(ok({ item: firstArg }));
           }
         },

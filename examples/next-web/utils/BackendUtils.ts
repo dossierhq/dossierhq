@@ -12,13 +12,16 @@ import { buildUrlWithUrlQuery, notOk, ok, stringifyUrlQueryParams } from '@jonas
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
-  admin: (operationName: AdminClientOperationName, operation?: AdminClientJsonOperation): string =>
+  admin: (
+    operationName: keyof typeof AdminClientOperationName,
+    operation?: AdminClientJsonOperation
+  ): string =>
     buildUrlWithUrlQuery(
       `${baseUrl}/admin/${operationName}`,
       stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
     ),
   published: (
-    operationName: PublishedClientOperationName,
+    operationName: keyof typeof PublishedClientOperationName,
     operation?: PublishedClientJsonOperation
   ): string =>
     buildUrlWithUrlQuery(

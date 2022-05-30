@@ -79,14 +79,15 @@ export interface PublishedClient {
   >;
 }
 
-export enum PublishedClientOperationName {
-  getEntities = 'getEntities',
-  getEntity = 'getEntity',
-  getSchemaSpecification = 'getSchemaSpecification',
-  getTotalCount = 'getTotalCount',
-  sampleEntities = 'sampleEntities',
-  searchEntities = 'searchEntities',
-}
+export const PublishedClientOperationName = {
+  getEntities: 'getEntities',
+  getEntity: 'getEntity',
+  getSchemaSpecification: 'getSchemaSpecification',
+  getTotalCount: 'getTotalCount',
+  sampleEntities: 'sampleEntities',
+  searchEntities: 'searchEntities',
+} as const;
+type PublishedClientOperationName = keyof typeof PublishedClientOperationName;
 
 type MethodParameters<T extends keyof PublishedClient> = Parameters<PublishedClient[T]>;
 type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
@@ -171,7 +172,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   getEntity(
     reference: EntityReference
-  ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.getEntity]> {
+  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntity]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getEntity,
       args: [reference],
@@ -181,7 +182,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   getEntities(
     references: EntityReference[]
-  ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.getEntities]> {
+  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntities]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getEntities,
       args: [references],
@@ -190,7 +191,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getSchemaSpecification(): Promise<
-    PublishedClientOperationReturn[PublishedClientOperationName.getSchemaSpecification]
+    PublishedClientOperationReturn[typeof PublishedClientOperationName.getSchemaSpecification]
   > {
     return this.executeOperation({
       name: PublishedClientOperationName.getSchemaSpecification,
@@ -201,7 +202,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   getTotalCount(
     query?: PublishedQuery
-  ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.getTotalCount]> {
+  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getTotalCount]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getTotalCount,
       args: [query],
@@ -226,7 +227,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   searchEntities(
     query?: PublishedSearchQuery,
     paging?: Paging
-  ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.searchEntities]> {
+  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.searchEntities]> {
     return this.executeOperation({
       name: PublishedClientOperationName.searchEntities,
       args: [query, paging],
@@ -294,12 +295,12 @@ export async function executePublishedClientOperationFromJson<
   switch (operationName) {
     case PublishedClientOperationName.getEntities: {
       const [references] =
-        operation as PublishedClientOperationArguments[PublishedClientOperationName.getEntities];
+        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntities];
       return await publishedClient.getEntities(references);
     }
     case PublishedClientOperationName.getEntity: {
       const [reference] =
-        operation as PublishedClientOperationArguments[PublishedClientOperationName.getEntity];
+        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntity];
       return await publishedClient.getEntity(reference);
     }
     case PublishedClientOperationName.getSchemaSpecification: {
@@ -307,17 +308,17 @@ export async function executePublishedClientOperationFromJson<
     }
     case PublishedClientOperationName.getTotalCount: {
       const [query] =
-        operation as PublishedClientOperationArguments[PublishedClientOperationName.getTotalCount];
+        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.getTotalCount];
       return await publishedClient.getTotalCount(query);
     }
     case PublishedClientOperationName.sampleEntities: {
       const [query, options] =
-        operation as PublishedClientOperationArguments[PublishedClientOperationName.sampleEntities];
+        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.sampleEntities];
       return await publishedClient.sampleEntities(query, options);
     }
     case PublishedClientOperationName.searchEntities: {
       const [query, paging] =
-        operation as PublishedClientOperationArguments[PublishedClientOperationName.searchEntities];
+        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.searchEntities];
       return await publishedClient.searchEntities(query, paging);
     }
     default:
@@ -336,7 +337,9 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
   const { value } = jsonResult;
   switch (operationName) {
     case PublishedClientOperationName.getEntities: {
-      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntities> = ok(
+      const result: MethodReturnTypeWithoutPromise<
+        typeof PublishedClientOperationName.getEntities
+      > = ok(
         (value as JsonResult<JsonPublishedEntity, typeof ErrorType.NotFound>[]).map(
           (jsonItemResult) => {
             const itemResult = convertJsonResult(jsonItemResult);
@@ -347,9 +350,8 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case PublishedClientOperationName.getEntity: {
-      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntity> = ok(
-        convertJsonPublishedEntity(value as JsonPublishedEntity)
-      );
+      const result: MethodReturnTypeWithoutPromise<typeof PublishedClientOperationName.getEntity> =
+        ok(convertJsonPublishedEntity(value as JsonPublishedEntity));
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case PublishedClientOperationName.getSchemaSpecification:
@@ -358,21 +360,23 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case PublishedClientOperationName.sampleEntities: {
       const payload = value as EntitySamplingPayload<JsonPublishedEntity>;
-      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.sampleEntities> =
-        ok({
-          ...payload,
-          items: payload.items.map((it) => convertJsonPublishedEntity(it)),
-        });
+      const result: MethodReturnTypeWithoutPromise<
+        typeof PublishedClientOperationName.sampleEntities
+      > = ok({
+        ...payload,
+        items: payload.items.map((it) => convertJsonPublishedEntity(it)),
+      });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case PublishedClientOperationName.searchEntities: {
-      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.searchEntities> =
-        ok(
-          convertJsonConnection(
-            value as JsonConnection<JsonEdge<JsonPublishedEntity, ErrorType>> | null,
-            convertJsonPublishedEntityEdge
-          )
-        );
+      const result: MethodReturnTypeWithoutPromise<
+        typeof PublishedClientOperationName.searchEntities
+      > = ok(
+        convertJsonConnection(
+          value as JsonConnection<JsonEdge<JsonPublishedEntity, ErrorType>> | null,
+          convertJsonPublishedEntityEdge
+        )
+      );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     default:

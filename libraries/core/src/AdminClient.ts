@@ -232,27 +232,28 @@ export interface AdminClient {
   >;
 }
 
-export enum AdminClientOperationName {
-  acquireAdvisoryLock = 'acquireAdvisoryLock',
-  archiveEntity = 'archiveEntity',
-  createEntity = 'createEntity',
-  getEntities = 'getEntities',
-  getEntity = 'getEntity',
-  getEntityHistory = 'getEntityHistory',
-  getPublishingHistory = 'getPublishingHistory',
-  getSchemaSpecification = 'getSchemaSpecification',
-  getTotalCount = 'getTotalCount',
-  publishEntities = 'publishEntities',
-  releaseAdvisoryLock = 'releaseAdvisoryLock',
-  renewAdvisoryLock = 'renewAdvisoryLock',
-  sampleEntities = 'sampleEntities',
-  searchEntities = 'searchEntities',
-  unarchiveEntity = 'unarchiveEntity',
-  unpublishEntities = 'unpublishEntities',
-  updateEntity = 'updateEntity',
-  updateSchemaSpecification = 'updateSchemaSpecification',
-  upsertEntity = 'upsertEntity',
-}
+export const AdminClientOperationName = {
+  acquireAdvisoryLock: 'acquireAdvisoryLock',
+  archiveEntity: 'archiveEntity',
+  createEntity: 'createEntity',
+  getEntities: 'getEntities',
+  getEntity: 'getEntity',
+  getEntityHistory: 'getEntityHistory',
+  getPublishingHistory: 'getPublishingHistory',
+  getSchemaSpecification: 'getSchemaSpecification',
+  getTotalCount: 'getTotalCount',
+  publishEntities: 'publishEntities',
+  releaseAdvisoryLock: 'releaseAdvisoryLock',
+  renewAdvisoryLock: 'renewAdvisoryLock',
+  sampleEntities: 'sampleEntities',
+  searchEntities: 'searchEntities',
+  unarchiveEntity: 'unarchiveEntity',
+  unpublishEntities: 'unpublishEntities',
+  updateEntity: 'updateEntity',
+  updateSchemaSpecification: 'updateSchemaSpecification',
+  upsertEntity: 'upsertEntity',
+} as const;
+type AdminClientOperationName = keyof typeof AdminClientOperationName;
 
 type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
 type MethodReturnType<T extends keyof AdminClient> = PromiseResult<
@@ -389,7 +390,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   getEntity(
     reference: EntityReference | EntityVersionReference
-  ): MethodReturnType<AdminClientOperationName.getEntity> {
+  ): MethodReturnType<typeof AdminClientOperationName.getEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.getEntity,
       args: [reference],
@@ -399,7 +400,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   getEntities(
     references: EntityReference[]
-  ): MethodReturnType<AdminClientOperationName.getEntities> {
+  ): MethodReturnType<typeof AdminClientOperationName.getEntities> {
     return this.executeOperation({
       name: AdminClientOperationName.getEntities,
       args: [references],
@@ -424,7 +425,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   searchEntities(
     query?: AdminSearchQuery,
     paging?: Paging
-  ): MethodReturnType<AdminClientOperationName.searchEntities> {
+  ): MethodReturnType<typeof AdminClientOperationName.searchEntities> {
     return this.executeOperation({
       name: AdminClientOperationName.searchEntities,
       args: [query, paging],
@@ -432,7 +433,9 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  getTotalCount(query?: AdminQuery): MethodReturnType<AdminClientOperationName.getTotalCount> {
+  getTotalCount(
+    query?: AdminQuery
+  ): MethodReturnType<typeof AdminClientOperationName.getTotalCount> {
     return this.executeOperation({
       name: AdminClientOperationName.getTotalCount,
       args: [query],
@@ -443,7 +446,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   createEntity(
     entity: AdminEntityCreate,
     options: AdminEntityMutationOptions | undefined
-  ): MethodReturnType<AdminClientOperationName.createEntity> {
+  ): MethodReturnType<typeof AdminClientOperationName.createEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.createEntity,
       args: [entity, options],
@@ -454,7 +457,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   updateEntity(
     entity: AdminEntityUpdate,
     options: AdminEntityMutationOptions | undefined
-  ): MethodReturnType<AdminClientOperationName.updateEntity> {
+  ): MethodReturnType<typeof AdminClientOperationName.updateEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.updateEntity,
       args: [entity, options],
@@ -465,7 +468,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   upsertEntity(
     entity: AdminEntityUpsert,
     options: AdminEntityMutationOptions | undefined
-  ): MethodReturnType<AdminClientOperationName.upsertEntity> {
+  ): MethodReturnType<typeof AdminClientOperationName.upsertEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.upsertEntity,
       args: [entity, options],
@@ -475,7 +478,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   getEntityHistory(
     reference: EntityReference
-  ): MethodReturnType<AdminClientOperationName.getEntityHistory> {
+  ): MethodReturnType<typeof AdminClientOperationName.getEntityHistory> {
     return this.executeOperation({
       name: AdminClientOperationName.getEntityHistory,
       args: [reference],
@@ -485,7 +488,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   publishEntities(
     references: EntityVersionReference[]
-  ): MethodReturnType<AdminClientOperationName.publishEntities> {
+  ): MethodReturnType<typeof AdminClientOperationName.publishEntities> {
     return this.executeOperation({
       name: AdminClientOperationName.publishEntities,
       args: [references],
@@ -495,7 +498,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   unpublishEntities(
     references: EntityReference[]
-  ): MethodReturnType<AdminClientOperationName.unpublishEntities> {
+  ): MethodReturnType<typeof AdminClientOperationName.unpublishEntities> {
     return this.executeOperation({
       name: AdminClientOperationName.unpublishEntities,
       args: [references],
@@ -505,7 +508,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   archiveEntity(
     reference: EntityReference
-  ): MethodReturnType<AdminClientOperationName.archiveEntity> {
+  ): MethodReturnType<typeof AdminClientOperationName.archiveEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.archiveEntity,
       args: [reference],
@@ -515,7 +518,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   unarchiveEntity(
     reference: EntityReference
-  ): MethodReturnType<AdminClientOperationName.unarchiveEntity> {
+  ): MethodReturnType<typeof AdminClientOperationName.unarchiveEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.unarchiveEntity,
       args: [reference],
@@ -525,7 +528,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   getPublishingHistory(
     reference: EntityReference
-  ): MethodReturnType<AdminClientOperationName.getPublishingHistory> {
+  ): MethodReturnType<typeof AdminClientOperationName.getPublishingHistory> {
     return this.executeOperation({
       name: AdminClientOperationName.getPublishingHistory,
       args: [reference],
@@ -640,37 +643,37 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
   switch (operationName) {
     case AdminClientOperationName.acquireAdvisoryLock: {
       const [name, options] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.acquireAdvisoryLock];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.acquireAdvisoryLock];
       return await adminClient.acquireAdvisoryLock(name, options);
     }
     case AdminClientOperationName.archiveEntity: {
       const [reference] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.archiveEntity];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.archiveEntity];
       return await adminClient.archiveEntity(reference);
     }
     case AdminClientOperationName.createEntity: {
       const [entity, options] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.createEntity];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.createEntity];
       return await adminClient.createEntity(entity, options);
     }
     case AdminClientOperationName.getEntities: {
       const [references] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.getEntities];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.getEntities];
       return await adminClient.getEntities(references);
     }
     case AdminClientOperationName.getEntity: {
       const [reference] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.getEntity];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.getEntity];
       return await adminClient.getEntity(reference);
     }
     case AdminClientOperationName.getEntityHistory: {
       const [reference] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.getEntityHistory];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.getEntityHistory];
       return await adminClient.getEntityHistory(reference);
     }
     case AdminClientOperationName.getPublishingHistory: {
       const [reference] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.getPublishingHistory];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.getPublishingHistory];
       return await adminClient.getPublishingHistory(reference);
     }
     case AdminClientOperationName.getSchemaSpecification: {
@@ -678,57 +681,57 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
     }
     case AdminClientOperationName.getTotalCount: {
       const [query] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.getTotalCount];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.getTotalCount];
       return await adminClient.getTotalCount(query);
     }
     case AdminClientOperationName.publishEntities: {
       const [references] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.publishEntities];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.publishEntities];
       return await adminClient.publishEntities(references);
     }
     case AdminClientOperationName.releaseAdvisoryLock: {
       const [name, handle] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.releaseAdvisoryLock];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.releaseAdvisoryLock];
       return await adminClient.releaseAdvisoryLock(name, handle);
     }
     case AdminClientOperationName.renewAdvisoryLock: {
       const [name, handle] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.renewAdvisoryLock];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.renewAdvisoryLock];
       return await adminClient.renewAdvisoryLock(name, handle);
     }
     case AdminClientOperationName.sampleEntities: {
       const [query, options] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.sampleEntities];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.sampleEntities];
       return await adminClient.sampleEntities(query, options);
     }
     case AdminClientOperationName.searchEntities: {
       const [query, paging] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.searchEntities];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.searchEntities];
       return await adminClient.searchEntities(query, paging);
     }
     case AdminClientOperationName.unarchiveEntity: {
       const [reference] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.unarchiveEntity];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.unarchiveEntity];
       return await adminClient.unarchiveEntity(reference);
     }
     case AdminClientOperationName.unpublishEntities: {
       const [references] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.unpublishEntities];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.unpublishEntities];
       return await adminClient.unpublishEntities(references);
     }
     case AdminClientOperationName.updateEntity: {
       const [entity, options] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.updateEntity];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.updateEntity];
       return await adminClient.updateEntity(entity, options);
     }
     case AdminClientOperationName.updateSchemaSpecification: {
       const [schemaSpec] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.updateSchemaSpecification];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.updateSchemaSpecification];
       return await adminClient.updateSchemaSpecification(schemaSpec);
     }
     case AdminClientOperationName.upsertEntity: {
       const [entity, options] =
-        operation as AdminClientOperationArguments[AdminClientOperationName.upsertEntity];
+        operation as AdminClientOperationArguments[typeof AdminClientOperationName.upsertEntity];
       return await adminClient.upsertEntity(entity, options);
     }
     default:
@@ -747,58 +750,65 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
   const { value } = jsonResult;
   switch (operationName) {
     case AdminClientOperationName.acquireAdvisoryLock: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.acquireAdvisoryLock> =
-        ok(value as AdvisoryLockPayload);
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.acquireAdvisoryLock
+      > = ok(value as AdvisoryLockPayload);
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.archiveEntity: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.archiveEntity> = ok(
-        convertJsonPublishingResult(
-          value as JsonPublishingResult<AdminEntityArchivePayload['effect']>
-        )
-      );
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.archiveEntity> =
+        ok(
+          convertJsonPublishingResult(
+            value as JsonPublishingResult<AdminEntityArchivePayload['effect']>
+          )
+        );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.createEntity: {
       const valueTyped = value as JsonAdminEntityCreatePayload;
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.createEntity> = ok({
-        ...valueTyped,
-        entity: convertJsonAdminEntity(valueTyped.entity),
-      });
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.createEntity> =
+        ok({
+          ...valueTyped,
+          entity: convertJsonAdminEntity(valueTyped.entity),
+        });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.getEntities: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getEntities> = ok(
-        (value as JsonResult<JsonAdminEntity, typeof ErrorType.NotFound>[]).map(
-          (jsonItemResult) => {
-            const itemResult = convertJsonResult(jsonItemResult);
-            return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
-          }
-        )
-      );
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntities> =
+        ok(
+          (value as JsonResult<JsonAdminEntity, typeof ErrorType.NotFound>[]).map(
+            (jsonItemResult) => {
+              const itemResult = convertJsonResult(jsonItemResult);
+              return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
+            }
+          )
+        );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.getEntity: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getEntity> = ok(
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
         convertJsonAdminEntity(value as JsonAdminEntity)
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.getEntityHistory: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getEntityHistory> = ok(
-        convertJsonEntityHistory(value as JsonEntityHistory)
-      );
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.getEntityHistory
+      > = ok(convertJsonEntityHistory(value as JsonEntityHistory));
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.getPublishingHistory: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getPublishingHistory> =
-        ok(convertJsonPublishingHistory(value as JsonPublishingHistory));
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.getPublishingHistory
+      > = ok(convertJsonPublishingHistory(value as JsonPublishingHistory));
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.publishEntities: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.publishEntities> = ok(
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.publishEntities
+      > = ok(
         (value as JsonPublishingResult<AdminEntityPublishPayload['effect']>[]).map(
           convertJsonPublishingResult
         )
@@ -808,35 +818,40 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.getTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.releaseAdvisoryLock: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.releaseAdvisoryLock> =
-        ok(value as AdvisoryLockReleasePayload);
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.releaseAdvisoryLock
+      > = ok(value as AdvisoryLockReleasePayload);
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.renewAdvisoryLock: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.renewAdvisoryLock> = ok(
-        value as AdvisoryLockPayload
-      );
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.renewAdvisoryLock
+      > = ok(value as AdvisoryLockPayload);
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.sampleEntities: {
       const payload = value as EntitySamplingPayload<JsonAdminEntity>;
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.sampleEntities> = ok({
-        ...payload,
-        items: payload.items.map((it) => convertJsonAdminEntity(it)),
-      });
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.sampleEntities> =
+        ok({
+          ...payload,
+          items: payload.items.map((it) => convertJsonAdminEntity(it)),
+        });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.searchEntities: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.searchEntities> = ok(
-        convertJsonConnection(
-          value as JsonConnection<JsonEdge<JsonAdminEntity, ErrorType>> | null,
-          convertJsonAdminEntityEdge
-        )
-      );
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.searchEntities> =
+        ok(
+          convertJsonConnection(
+            value as JsonConnection<JsonEdge<JsonAdminEntity, ErrorType>> | null,
+            convertJsonAdminEntityEdge
+          )
+        );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.unarchiveEntity: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.unarchiveEntity> = ok(
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.unarchiveEntity
+      > = ok(
         convertJsonPublishingResult(
           value as JsonPublishingResult<AdminEntityUnarchivePayload['effect']>
         )
@@ -844,7 +859,9 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.unpublishEntities: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.unpublishEntities> = ok(
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.unpublishEntities
+      > = ok(
         (value as JsonPublishingResult<AdminEntityUnpublishPayload['effect']>[]).map(
           convertJsonPublishingResult
         )
@@ -853,20 +870,22 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     }
     case AdminClientOperationName.updateEntity: {
       const valueTyped = value as JsonAdminEntityUpdatePayload;
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.updateEntity> = ok({
-        ...valueTyped,
-        entity: convertJsonAdminEntity(valueTyped.entity),
-      });
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.updateEntity> =
+        ok({
+          ...valueTyped,
+          entity: convertJsonAdminEntity(valueTyped.entity),
+        });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.updateSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.upsertEntity: {
       const valueTyped = value as JsonAdminEntityUpsertPayload;
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.upsertEntity> = ok({
-        ...valueTyped,
-        entity: convertJsonAdminEntity(valueTyped.entity),
-      });
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.upsertEntity> =
+        ok({
+          ...valueTyped,
+          entity: convertJsonAdminEntity(valueTyped.entity),
+        });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     default:
