@@ -45,7 +45,7 @@
     "dotenv": "^16.0.0",
     "eslint": "^8.16.0",
     "prettier": "2.6.2",
-    "sqlite3": "jonasb/node-sqlite3#3.36.0",
+    "sqlite3": "~5.0.8",
     "typescript": "^4.7.2",
     "uuid": "^8.3.2",
     "vitest": "~0.13.0"
