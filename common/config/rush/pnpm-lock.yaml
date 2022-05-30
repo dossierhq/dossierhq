@@ -106,7 +106,6 @@ importers:
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@rushstack/heft': ~0.45.5
-      '@types/node': ^17.0.23
       '@types/pg': ^8.6.1
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ^5.26.0
@@ -133,7 +132,6 @@ importers:
     devDependencies:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@rushstack/heft': 0.45.5
-      '@types/node': 17.0.23
       '@types/pg': 8.6.1
       '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 5.26.0_3e687f93547efbf7d61b629ca4d69a5c
