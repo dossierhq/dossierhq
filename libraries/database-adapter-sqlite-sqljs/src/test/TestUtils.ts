@@ -9,7 +9,7 @@ import { createSqlJsAdapter } from '..';
 
 export async function createSqlJsTestAdapter(): PromiseResult<
   DatabaseAdapter,
-  ErrorType.BadRequest | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const SQL = await initSqlJs();
   const db = new SQL.Database();

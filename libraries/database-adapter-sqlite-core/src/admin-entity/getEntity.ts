@@ -20,7 +20,10 @@ export async function adminGetEntity(
   database: Database,
   context: TransactionContext,
   reference: EntityReference | EntityVersionReference
-): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAdminEntityGetOnePayload,
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
+> {
   const result =
     'version' in reference
       ? await getEntityWithVersion(database, context, reference)

@@ -29,9 +29,13 @@ export interface SearchEntityState {
   text: string;
 
   connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined;
-  connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  connectionError:
+    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
+    | undefined;
   entitySamples: EntitySamplingPayload<AdminEntity | PublishedEntity> | undefined;
-  entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  entitySamplesError:
+    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
+    | undefined;
   totalCount: number | null;
 
   // null until first loaded

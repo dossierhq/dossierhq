@@ -12,7 +12,7 @@ export async function adminEntityPublishingCreateEvents(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   event: DatabaseAdminEntityPublishingCreateEventArg
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   const qb = new PostgresQueryBuilder(
     'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
   );

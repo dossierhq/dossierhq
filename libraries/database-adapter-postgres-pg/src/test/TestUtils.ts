@@ -35,7 +35,7 @@ export function createPostgresTestAdapter(): DatabaseAdapter {
 
 export async function createPostgresTestServerAndClient(): PromiseResult<
   { server: Server; context: SessionContext },
-  ErrorType.BadRequest | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const serverResult = await createServer({
     databaseAdapter: createPostgresTestAdapter(),
@@ -100,7 +100,7 @@ export function expectEntityHistoryVersions(
 export function expectSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >,
   actualEntities: TItem[]
 ): void {

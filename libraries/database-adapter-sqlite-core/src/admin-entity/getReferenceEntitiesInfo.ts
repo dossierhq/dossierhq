@@ -13,7 +13,7 @@ export async function adminEntityGetReferenceEntitiesInfo(
   database: Database,
   context: TransactionContext,
   references: EntityReference[]
-): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic> {
   const qb = new SqliteQueryBuilder('SELECT id, uuid, type FROM entities WHERE');
   qb.addQuery(`uuid IN ${qb.addValueList(references.map(({ id }) => id))}`);
 

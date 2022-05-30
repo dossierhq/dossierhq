@@ -31,8 +31,8 @@ async function getEntities_minimal({ client }: AdminEntityTestContext) {
 
   const getResult = await client.getEntities([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
-    ok<AdminEntity, ErrorType.Generic>(create1Result.value.entity),
-    ok<AdminEntity, ErrorType.Generic>(create2Result.value.entity),
+    ok<AdminEntity, typeof ErrorType.Generic>(create1Result.value.entity),
+    ok<AdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
 }
 
@@ -54,7 +54,7 @@ async function getEntities_getLatestVersion({ server }: AdminEntityTestContext) 
 
   const result = await adminClient.getEntities([{ id }]);
   assertOkResult(result);
-  assertResultValue(result, [ok<AdminEntity, ErrorType.Generic>(updateResult.value.entity)]);
+  assertResultValue(result, [ok<AdminEntity, typeof ErrorType.Generic>(updateResult.value.entity)]);
 }
 
 async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEntityTestContext) {
@@ -77,7 +77,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEnt
   const getResult = await adminClientMain.getEntities([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
-    ok<AdminEntity, ErrorType.Generic>(create2Result.value.entity),
+    ok<AdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
 }
 
@@ -95,6 +95,6 @@ async function getEntities_oneMissingOneExisting({ server }: AdminEntityTestCont
   ]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    ok<AdminEntity, ErrorType.Generic>(createResult.value.entity),
+    ok<AdminEntity, typeof ErrorType.Generic>(createResult.value.entity),
   ]);
 }

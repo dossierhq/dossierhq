@@ -12,7 +12,7 @@ export async function publishedEntityGetEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   references: EntityReference[]
-): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic> {
+): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<
       EntitiesTable,

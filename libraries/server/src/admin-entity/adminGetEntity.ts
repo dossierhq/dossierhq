@@ -21,7 +21,10 @@ export async function adminGetEntity(
   reference: EntityReference | EntityVersionReference
 ): PromiseResult<
   AdminEntity,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const getResult = await databaseAdapter.adminEntityGetOne(context, reference);
   if (getResult.isError()) {

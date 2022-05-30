@@ -10,7 +10,10 @@ export async function adminGetTotalCount(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminQuery | undefined
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,

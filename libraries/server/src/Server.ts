@@ -33,13 +33,13 @@ export interface CreateSessionPayload {
 }
 
 export interface Server {
-  shutdown(): PromiseResult<void, ErrorType.Generic>;
+  shutdown(): PromiseResult<void, typeof ErrorType.Generic>;
   createSession(params: {
     provider: string;
     identifier: string;
     defaultAuthKeys: readonly string[];
     logger?: Logger;
-  }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
+  }): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
   createAdminClient(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[]
@@ -61,7 +61,7 @@ export class ServerImpl {
     this.#logger = logger ?? NoOpLogger;
   }
 
-  async shutdown(): PromiseResult<void, ErrorType.Generic> {
+  async shutdown(): PromiseResult<void, typeof ErrorType.Generic> {
     if (this.#databaseAdapter) {
       this.#logger.info('Shutting down database adapter');
       await this.#databaseAdapter.disconnect();
@@ -72,7 +72,7 @@ export class ServerImpl {
     return notOk.Generic('Trying to shutdown twice');
   }
 
-  async reloadSchema(context: InternalContext): PromiseResult<void, ErrorType.Generic> {
+  async reloadSchema(context: InternalContext): PromiseResult<void, typeof ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
     const result = await getSchemaSpecification(this.#databaseAdapter, context);
     if (result.isError()) {
@@ -110,7 +110,7 @@ export class ServerImpl {
     session: Readonly<Session>,
     defaultAuthKeys: readonly string[],
     logger: Logger | undefined
-  ): Result<SessionContext, ErrorType.BadRequest> {
+  ): Result<SessionContext, typeof ErrorType.BadRequest> {
     assertIsDefined(this.#databaseAdapter);
 
     const verifyResult = verifyAuthKeysFormat(defaultAuthKeys);
@@ -135,7 +135,7 @@ export async function createServer({
   databaseAdapter: DatabaseAdapter;
   authorizationAdapter: AuthorizationAdapter;
   logger?: Logger;
-}): PromiseResult<Server, ErrorType.Generic> {
+}): PromiseResult<Server, typeof ErrorType.Generic> {
   const serverImpl = new ServerImpl({
     databaseAdapter,
     logger: serverLogger,
@@ -154,7 +154,10 @@ export async function createServer({
       identifier,
       defaultAuthKeys,
       logger: sessionLogger,
-    }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
+    }): PromiseResult<
+      CreateSessionPayload,
+      typeof ErrorType.BadRequest | typeof ErrorType.Generic
+    > => {
       const sessionResult = await authCreateSession(
         databaseAdapter,
         authContext,

@@ -22,11 +22,11 @@ export async function ensureEntityCount(
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
   void,
-  | ErrorType.BadRequest
-  | ErrorType.Conflict
-  | ErrorType.NotFound
-  | ErrorType.NotAuthorized
-  | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const countResult = await client.getTotalCount({
     authKeys: [authKey],
@@ -58,11 +58,11 @@ export async function ensureEntityWithStatus(
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
   void,
-  | ErrorType.BadRequest
-  | ErrorType.Conflict
-  | ErrorType.NotFound
-  | ErrorType.NotAuthorized
-  | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const countResult = await client.getTotalCount({
     entityTypes: [entityType],
@@ -127,7 +127,7 @@ export async function getAllEntities(
   query: AdminSearchQuery
 ): PromiseResult<
   AdminEntity[],
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const entities: AdminEntity[] = [];
   for await (const pageResult of getAllPagesForConnection({ first: 100 }, (currentPaging) =>
@@ -185,17 +185,26 @@ export async function countSearchResultWithEntity(
   client: AdminClient,
   query: AdminSearchQuery,
   entityId: string
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+>;
 export async function countSearchResultWithEntity(
   client: PublishedClient,
   query: PublishedSearchQuery,
   entityId: string
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+>;
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
   query: AdminSearchQuery | PublishedSearchQuery,
   entityId: string
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+): PromiseResult<
+  number,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
   let matchCount = 0;
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>

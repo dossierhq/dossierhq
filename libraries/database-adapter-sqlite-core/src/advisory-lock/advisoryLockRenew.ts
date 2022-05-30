@@ -14,7 +14,7 @@ export async function advisoryLockRenew(
   handle: number
 ): PromiseResult<
   { acquiredAt: Temporal.Instant; renewedAt: Temporal.Instant },
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const now = Temporal.Now.instant();
 

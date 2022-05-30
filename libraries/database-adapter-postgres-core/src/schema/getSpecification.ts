@@ -8,7 +8,7 @@ import { queryNoneOrOne } from '../QueryFunctions.js';
 export async function schemaGetSpecification(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext
-): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic> {
+): PromiseResult<AdminSchemaSpecification | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
     adapter,
     context,

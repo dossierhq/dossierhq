@@ -13,7 +13,7 @@ export async function adminEntityGetMultiple(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   references: EntityReference[]
-): PromiseResult<DatabaseAdminEntityGetOnePayload[], ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityGetOnePayload[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<
       EntitiesTable,

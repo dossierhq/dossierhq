@@ -20,7 +20,7 @@ export async function publishEntityAfterMutation(
   reference: EntityVersionReference
 ): PromiseResult<
   AdminEntityPublishPayload,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const publishResult = await adminPublishEntities(
     schema,

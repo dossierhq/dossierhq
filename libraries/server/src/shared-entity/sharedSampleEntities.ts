@@ -23,15 +23,15 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   options: EntitySamplingOptions | undefined,
   getTotal: (
     authKeys: ResolvedAuthKey[]
-  ) => PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>,
+  ) => PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
   sampleEntities: (
     offset: number,
     limit: number,
     authKeys: ResolvedAuthKey[]
-  ) => PromiseResult<TEntity[], ErrorType.BadRequest | ErrorType.Generic>
+  ) => PromiseResult<TEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic>
 ): PromiseResult<
   EntitySamplingPayload<TEntity>,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const seed = options?.seed ?? Math.floor(Math.random() * MAX_SEED);
 

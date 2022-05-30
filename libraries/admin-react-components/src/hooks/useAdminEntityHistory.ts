@@ -17,7 +17,10 @@ export function useAdminEntityHistory(
   entityHistoryError:
     | ErrorResult<
         unknown,
-        ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+        | typeof ErrorType.BadRequest
+        | typeof ErrorType.NotFound
+        | typeof ErrorType.NotAuthorized
+        | typeof ErrorType.Generic
       >
     | undefined;
 } {

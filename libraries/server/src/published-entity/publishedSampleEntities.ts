@@ -23,11 +23,11 @@ export async function publishedSampleEntities(
   options: EntitySamplingOptions | undefined
 ): PromiseResult<
   EntitySamplingPayload<PublishedEntity>,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   function getTotal(
     authKeys: ResolvedAuthKey[]
-  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic> {
+  ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
     return databaseAdapter.publishedEntitySearchTotalCount(schema, context, query, authKeys);
   }
 
@@ -35,7 +35,7 @@ export async function publishedSampleEntities(
     offset: number,
     limit: number,
     authKeys: ResolvedAuthKey[]
-  ): PromiseResult<PublishedEntity[], ErrorType.BadRequest | ErrorType.Generic> {
+  ): PromiseResult<PublishedEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
     const sampleResult = await databaseAdapter.publishedEntitySampleEntities(
       schema,
       context,

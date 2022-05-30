@@ -20,7 +20,10 @@ export async function adminCreateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg
-): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAdminEntityCreatePayload,
+  typeof ErrorType.Conflict | typeof ErrorType.Generic
+> {
   const createEntityRowResult = await createEntityRow(
     databaseAdapter,
     context,
@@ -112,7 +115,7 @@ async function createEntityRow(
       qb.addQuery('RETURNING id, uuid, created_at, updated_at');
       const createResult = await queryOne<
         Pick<EntitiesTable, 'id' | 'uuid' | 'created_at' | 'updated_at'>,
-        ErrorType.Conflict
+        typeof ErrorType.Conflict
       >(databaseAdapter, context, qb.build(), (error) => {
         if (
           databaseAdapter.isUniqueViolationOfConstraint(error, UniqueConstraints.entities_name_key)

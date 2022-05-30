@@ -17,7 +17,10 @@ export async function adminGetPublishingHistory(
   reference: EntityReference
 ): PromiseResult<
   PublishingHistory,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const entityInfoResult = await databaseAdapter.adminEntityPublishingHistoryGetEntityInfo(
     context,

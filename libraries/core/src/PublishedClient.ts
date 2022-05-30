@@ -30,13 +30,16 @@ import type {
 } from './Types.js';
 
 export interface PublishedClient {
-  getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, ErrorType.Generic>;
+  getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
     reference: EntityReference
   ): PromiseResult<
     PublishedEntity,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   getEntities(
@@ -44,9 +47,12 @@ export interface PublishedClient {
   ): PromiseResult<
     Result<
       PublishedEntity,
-      ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+      | typeof ErrorType.BadRequest
+      | typeof ErrorType.NotFound
+      | typeof ErrorType.NotAuthorized
+      | typeof ErrorType.Generic
     >[],
-    ErrorType.Generic
+    typeof ErrorType.Generic
   >;
 
   sampleEntities(
@@ -54,7 +60,7 @@ export interface PublishedClient {
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<PublishedEntity>,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   searchEntities(
@@ -62,12 +68,15 @@ export interface PublishedClient {
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<PublishedEntity, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   getTotalCount(
     query?: PublishedQuery
-  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+  ): PromiseResult<
+    number,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+  >;
 }
 
 export enum PublishedClientOperationName {
@@ -205,7 +214,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<PublishedEntity>,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
       name: PublishedClientOperationName.sampleEntities,
@@ -328,10 +337,12 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
   switch (operationName) {
     case PublishedClientOperationName.getEntities: {
       const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntities> = ok(
-        (value as JsonResult<JsonPublishedEntity, ErrorType.NotFound>[]).map((jsonItemResult) => {
-          const itemResult = convertJsonResult(jsonItemResult);
-          return itemResult.isOk() ? itemResult.map(convertJsonPublishedEntity) : itemResult;
-        })
+        (value as JsonResult<JsonPublishedEntity, typeof ErrorType.NotFound>[]).map(
+          (jsonItemResult) => {
+            const itemResult = convertJsonResult(jsonItemResult);
+            return itemResult.isOk() ? itemResult.map(convertJsonPublishedEntity) : itemResult;
+          }
+        )
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }

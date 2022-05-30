@@ -23,7 +23,10 @@ export async function publishedEntitySampleEntities(
   offset: number,
   limit: number,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<DatabasePublishedEntityPayload[], ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  DatabasePublishedEntityPayload[],
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const sqlQueryResult = samplePublishedEntitiesQuery(
     schema,
     query,

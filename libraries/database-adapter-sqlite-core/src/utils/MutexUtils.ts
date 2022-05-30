@@ -24,7 +24,7 @@ export class Mutex {
   async withLock<TOk, TError extends ErrorType>(
     context: Context,
     worker: () => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError | ErrorType.Generic> {
+  ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
     const unlock = await this.#lock();
     try {
       return await worker();

@@ -7,7 +7,7 @@ import { createMockLogger } from './test/MockLogger.js';
 describe('createErrorResultFromError()', () => {
   test('From generic error', () => {
     const logger = createMockLogger();
-    const actual: Result<unknown, ErrorType.Generic> = createErrorResultFromError(
+    const actual: Result<unknown, typeof ErrorType.Generic> = createErrorResultFromError(
       { logger },
       new Error('Generic error message')
     );
@@ -28,7 +28,7 @@ describe('createErrorResultFromError()', () => {
 
   test('From generic error with expected types', () => {
     const logger = createMockLogger();
-    const actual: Result<unknown, ErrorType.NotFound | ErrorType.Generic> =
+    const actual: Result<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic> =
       createErrorResultFromError({ logger }, new Error('Generic error message'), [
         ErrorType.NotFound,
       ]);
@@ -59,7 +59,7 @@ describe('createErrorResultFromError()', () => {
 
   test('From ErrorResultError with supported type', () => {
     const logger = createMockLogger();
-    const actual: Result<unknown, ErrorType.Conflict | ErrorType.Generic> =
+    const actual: Result<unknown, typeof ErrorType.Conflict | typeof ErrorType.Generic> =
       createErrorResultFromError({ logger }, notOk.Conflict('Conflict error message').toError(), [
         ErrorType.Conflict,
       ]);
@@ -69,7 +69,7 @@ describe('createErrorResultFromError()', () => {
 
   test('From ErrorResultError with unsupported type', () => {
     const logger = createMockLogger();
-    const actual: Result<unknown, ErrorType.Conflict | ErrorType.Generic> =
+    const actual: Result<unknown, typeof ErrorType.Conflict | typeof ErrorType.Generic> =
       createErrorResultFromError(
         { logger },
         notOk.BadRequest('Bad request error message').toError(),
@@ -86,15 +86,16 @@ describe('createErrorResultFromError()', () => {
 
 describe('ErrorResult', () => {
   test('assign error results with compatible ErrorTypes but incompatible TOk types', () => {
-    const a: Result<number, ErrorType.BadRequest> = notOk.BadRequest('Hello');
-    const b: Result<{ foo: number }, ErrorType.BadRequest> = a;
+    const a: Result<number, typeof ErrorType.BadRequest> = notOk.BadRequest('Hello');
+    const b: Result<{ foo: number }, typeof ErrorType.BadRequest> = a;
     expectErrorResult(b, ErrorType.BadRequest, 'Hello');
   });
 
   test('isErrorType() narrows error type union', () => {
-    const a: Result<number, ErrorType.BadRequest | ErrorType.Conflict> = notOk.Conflict('Hello');
+    const a: Result<number, typeof ErrorType.BadRequest | typeof ErrorType.Conflict> =
+      notOk.Conflict('Hello');
     if (a.isError() && a.isErrorType(ErrorType.Conflict)) {
-      const b: Result<number, ErrorType.Conflict> = a;
+      const b: Result<number, typeof ErrorType.Conflict> = a;
       expectErrorResult(b, ErrorType.Conflict, 'Hello');
     }
   });
@@ -102,18 +103,22 @@ describe('ErrorResult', () => {
 
 describe('OkResult', () => {
   test('map(number => string)', () => {
-    const result: Result<number, ErrorType.Conflict> = ok(123);
-    const mappedResult: Result<string, ErrorType.Conflict> = result.map((value) => String(value));
+    const result: Result<number, typeof ErrorType.Conflict> = ok(123);
+    const mappedResult: Result<string, typeof ErrorType.Conflict> = result.map((value) =>
+      String(value)
+    );
     if (expectOkResult(mappedResult)) {
       expect(mappedResult.value).toBe('123');
     }
   });
 
   test('map(object => object)', () => {
-    const result: Result<{ foo: 'bar' }, ErrorType.Conflict> = ok({ foo: 'bar' });
-    const mappedResult: Result<{ baz: string }, ErrorType.Conflict> = result.map(({ foo }) => ({
-      baz: foo.toUpperCase(),
-    }));
+    const result: Result<{ foo: 'bar' }, typeof ErrorType.Conflict> = ok({ foo: 'bar' });
+    const mappedResult: Result<{ baz: string }, typeof ErrorType.Conflict> = result.map(
+      ({ foo }) => ({
+        baz: foo.toUpperCase(),
+      })
+    );
     if (expectOkResult(mappedResult)) {
       expect(mappedResult.value).toEqual({ baz: 'BAR' });
     }

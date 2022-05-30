@@ -19,7 +19,7 @@ export function fromOpaqueCursor(
   database: Database,
   type: CursorNativeType,
   cursor: string
-): Result<unknown, ErrorType.BadRequest> {
+): Result<unknown, typeof ErrorType.BadRequest> {
   switch (type) {
     case 'int': {
       const decoded = database.adapter.decodeCursor(cursor);

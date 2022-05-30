@@ -23,7 +23,7 @@ export function fromOpaqueCursor(
   databaseAdapter: PostgresDatabaseAdapter,
   type: CursorNativeType,
   cursor: string
-): Result<unknown, ErrorType.BadRequest> {
+): Result<unknown, typeof ErrorType.BadRequest> {
   switch (type) {
     case 'int': {
       const decoded = databaseAdapter.base64Decode(cursor);

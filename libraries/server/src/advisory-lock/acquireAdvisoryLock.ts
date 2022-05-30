@@ -17,7 +17,7 @@ export async function acquireAdvisoryLock(
   options: AdvisoryLockOptions
 ): PromiseResult<
   AdvisoryLockPayload,
-  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.Conflict | typeof ErrorType.Generic
 > {
   const { logger } = context;
 

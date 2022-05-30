@@ -9,7 +9,7 @@ import { queryMany } from '../QueryFunctions.js';
 export async function advisoryLockDeleteExpired(
   database: Database,
   context: TransactionContext
-): PromiseResult<{ name: string }[], ErrorType.Generic> {
+): PromiseResult<{ name: string }[], typeof ErrorType.Generic> {
   const now = Temporal.Now.instant();
 
   const query = buildSqliteSqlQuery(({ sql }) => {

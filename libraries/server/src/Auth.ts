@@ -15,7 +15,10 @@ export async function authCreateSession(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAuthCreateSessionPayload,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) {
     return assertion;
@@ -24,7 +27,7 @@ export async function authCreateSession(
   return await databaseAdapter.authCreateSession(context, provider, identifier);
 }
 
-function verifyAuthKeyFormat(authKey: string): Result<void, ErrorType.BadRequest> {
+function verifyAuthKeyFormat(authKey: string): Result<void, typeof ErrorType.BadRequest> {
   if (!authKey) {
     return notOk.BadRequest('No authKey provided');
   }
@@ -43,7 +46,7 @@ function verifyAuthKeyFormat(authKey: string): Result<void, ErrorType.BadRequest
 
 export function verifyAuthKeysFormat(
   authKeys: Readonly<string[]>
-): Result<void, ErrorType.BadRequest> {
+): Result<void, typeof ErrorType.BadRequest> {
   for (const authKey of authKeys) {
     const result = verifyAuthKeyFormat(authKey);
     if (result.isError()) return result;
@@ -57,7 +60,7 @@ export async function authResolveAuthorizationKey(
   authKey: string
 ): PromiseResult<
   ResolvedAuthKey,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const verifyResult = verifyAuthKeyFormat(authKey);
   if (verifyResult.isError()) return verifyResult;
@@ -80,7 +83,7 @@ export async function authResolveAuthorizationKeys(
   requestedAuthKeys: string[] | undefined
 ): PromiseResult<
   ResolvedAuthKey[],
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const expectedAuthKeys =
     requestedAuthKeys && requestedAuthKeys.length > 0 ? requestedAuthKeys : context.defaultAuthKeys;
@@ -98,7 +101,10 @@ export async function authVerifyAuthorizationKey(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   actualAuthKey: ResolvedAuthKey
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+): PromiseResult<
+  void,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
   const resolveResult = await authResolveAuthorizationKeys(authorizationAdapter, context, [
     actualAuthKey.authKey,
   ]);

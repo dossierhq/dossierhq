@@ -25,9 +25,12 @@ export async function adminGetEntities(
 ): PromiseResult<
   Result<
     AdminEntity,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >[],
-  ErrorType.Generic
+  typeof ErrorType.Generic
 > {
   if (references.length === 0) {
     return ok([]);
@@ -40,7 +43,10 @@ export async function adminGetEntities(
 
   const result: Result<
     AdminEntity,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >[] = [];
   for (const reference of references) {
     const entityMain = entityInfoResult.value.find((it) => it.id === reference.id);
@@ -58,7 +64,10 @@ async function mapItem(
   values: DatabaseAdminEntityGetOnePayload | undefined
 ): PromiseResult<
   AdminEntity,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   if (!values) {
     return notOk.NotFound('No such entity');

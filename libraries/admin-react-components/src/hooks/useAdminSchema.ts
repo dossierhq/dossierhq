@@ -6,7 +6,7 @@ import { CACHE_KEYS } from '../utils/CacheUtils';
 
 export function useAdminSchema(adminClient: AdminClient): {
   schema: AdminSchema | undefined;
-  schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
+  schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback((_action: string) => fetchSchema(adminClient), [adminClient]);
   const { data, error } = useSWR(CACHE_KEYS.adminSchema, fetcher);

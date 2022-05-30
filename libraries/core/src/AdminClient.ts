@@ -65,17 +65,23 @@ import type {
 } from './Types.js';
 
 export interface AdminClient {
-  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, ErrorType.Generic>;
+  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
   updateSchemaSpecification(
     schemaSpec: AdminSchemaSpecificationUpdate
-  ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    SchemaSpecificationUpdatePayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   getEntity(
     reference: EntityReference | EntityVersionReference
   ): PromiseResult<
     AdminEntity,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   getEntities(
@@ -83,9 +89,12 @@ export interface AdminClient {
   ): PromiseResult<
     Result<
       AdminEntity,
-      ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+      | typeof ErrorType.BadRequest
+      | typeof ErrorType.NotFound
+      | typeof ErrorType.NotAuthorized
+      | typeof ErrorType.Generic
     >[],
-    ErrorType.Generic
+    typeof ErrorType.Generic
   >;
 
   sampleEntities(
@@ -93,7 +102,7 @@ export interface AdminClient {
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<AdminEntity>,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   searchEntities(
@@ -101,19 +110,25 @@ export interface AdminClient {
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<AdminEntity, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   getTotalCount(
     query?: AdminQuery
-  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+  ): PromiseResult<
+    number,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+  >;
 
   createEntity(
     entity: AdminEntityCreate,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
     AdminEntityCreatePayload,
-    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   updateEntity(
@@ -121,7 +136,10 @@ export interface AdminClient {
     options?: AdminEntityMutationOptions
   ): PromiseResult<
     AdminEntityUpdatePayload,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   upsertEntity(
@@ -129,49 +147,67 @@ export interface AdminClient {
     options?: AdminEntityMutationOptions
   ): PromiseResult<
     AdminEntityUpsertPayload,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   getEntityHistory(
     reference: EntityReference
   ): PromiseResult<
     EntityHistory,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   publishEntities(
     references: EntityVersionReference[]
   ): PromiseResult<
     AdminEntityPublishPayload[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   unpublishEntities(
     references: EntityReference[]
   ): PromiseResult<
     AdminEntityUnpublishPayload[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   archiveEntity(
     reference: EntityReference
   ): PromiseResult<
     AdminEntityArchivePayload,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   unarchiveEntity(
     reference: EntityReference
   ): PromiseResult<
     AdminEntityUnarchivePayload,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   getPublishingHistory(
     reference: EntityReference
   ): PromiseResult<
     PublishingHistory,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >;
 
   acquireAdvisoryLock(
@@ -179,18 +215,21 @@ export interface AdminClient {
     options: AdvisoryLockOptions
   ): PromiseResult<
     AdvisoryLockPayload,
-    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.Conflict | typeof ErrorType.Generic
   >;
 
   renewAdvisoryLock(
     name: string,
     handle: number
-  ): PromiseResult<AdvisoryLockPayload, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
 
   releaseAdvisoryLock(
     name: string,
     handle: number
-  ): PromiseResult<AdvisoryLockReleasePayload, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    AdvisoryLockReleasePayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
 }
 
 export enum AdminClientOperationName {
@@ -327,7 +366,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     this.pipeline = pipeline;
   }
 
-  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, ErrorType.Generic> {
+  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.getSchemaSpecification,
       args: [],
@@ -337,7 +376,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   updateSchemaSpecification(
     schemaSpec: AdminSchemaSpecificationUpdate
-  ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
+  ): PromiseResult<
+    SchemaSpecificationUpdatePayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  > {
     return this.executeOperation({
       name: AdminClientOperationName.updateSchemaSpecification,
       args: [schemaSpec],
@@ -370,7 +412,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<AdminEntity>,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
       name: AdminClientOperationName.sampleEntities,
@@ -496,7 +538,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     options: AdvisoryLockOptions
   ): PromiseResult<
     AdvisoryLockPayload,
-    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.Conflict | typeof ErrorType.Generic
   > {
     return this.executeOperation({
       name: AdminClientOperationName.acquireAdvisoryLock,
@@ -508,7 +550,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   renewAdvisoryLock(
     name: string,
     handle: number
-  ): PromiseResult<AdvisoryLockPayload, ErrorType.NotFound | ErrorType.Generic> {
+  ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.renewAdvisoryLock,
       args: [name, handle],
@@ -519,7 +561,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   releaseAdvisoryLock(
     name: string,
     handle: number
-  ): PromiseResult<AdvisoryLockReleasePayload, ErrorType.NotFound | ErrorType.Generic> {
+  ): PromiseResult<
+    AdvisoryLockReleasePayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  > {
     return this.executeOperation({
       name: AdminClientOperationName.releaseAdvisoryLock,
       args: [name, handle],
@@ -724,10 +769,12 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     }
     case AdminClientOperationName.getEntities: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getEntities> = ok(
-        (value as JsonResult<JsonAdminEntity, ErrorType.NotFound>[]).map((jsonItemResult) => {
-          const itemResult = convertJsonResult(jsonItemResult);
-          return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
-        })
+        (value as JsonResult<JsonAdminEntity, typeof ErrorType.NotFound>[]).map(
+          (jsonItemResult) => {
+            const itemResult = convertJsonResult(jsonItemResult);
+            return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
+          }
+        )
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }

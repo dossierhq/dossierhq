@@ -42,7 +42,10 @@ export async function adminUnpublishEntities(
   references: EntityReference[]
 ): PromiseResult<
   AdminEntityUnpublishPayload[],
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
   if (uniqueIdCheck.isError()) {
@@ -116,7 +119,7 @@ async function collectEntityInfo(
   references: EntityReference[]
 ): PromiseResult<
   (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
-  ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await databaseAdapter.adminEntityUnpublishGetEntitiesInfo(context, references);
   if (result.isError()) {
@@ -150,7 +153,7 @@ async function unpublishEntitiesAndCollectResult(
   context: SessionContext,
   entitiesInfo: (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
   unpublishEntitiesInfo: EntityInfoToBeUnpublished[]
-): PromiseResult<AdminEntityUnpublishPayload[], ErrorType.Generic> {
+): PromiseResult<AdminEntityUnpublishPayload[], typeof ErrorType.Generic> {
   const unpublishResult = await databaseAdapter.adminEntityUnpublishEntities(
     context,
     AdminEntityStatus.withdrawn,
@@ -190,7 +193,7 @@ async function ensureReferencedEntitiesAreNotPublished(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   unpublishEntitiesInfo: EntityInfoToBeUnpublished[]
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const referenceErrorMessages: string[] = [];
   for (const { id, entityInternalId } of unpublishEntitiesInfo) {
     const result = await databaseAdapter.adminEntityUnpublishGetPublishedReferencedEntities(
@@ -219,7 +222,7 @@ async function createUnpublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   unpublishEntityInfo: EntityInfoToBeUnpublished[]
-): PromiseResult<void, ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   if (unpublishEntityInfo.length === 0) {
     return ok(undefined);
   }

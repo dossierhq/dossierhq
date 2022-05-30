@@ -11,7 +11,7 @@ export async function adminEntitySearchTotalCount(
   context: TransactionContext,
   query: AdminQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);
   if (sqlQuery.isError()) {
     return sqlQuery;

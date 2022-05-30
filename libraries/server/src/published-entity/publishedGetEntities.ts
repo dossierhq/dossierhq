@@ -34,9 +34,12 @@ export async function publishedGetEntities(
 ): PromiseResult<
   Result<
     PublishedEntity,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >[],
-  ErrorType.Generic
+  typeof ErrorType.Generic
 > {
   if (references.length === 0) {
     return ok([]);
@@ -48,7 +51,10 @@ export async function publishedGetEntities(
 
   const result: Result<
     PublishedEntity,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
   >[] = [];
   for (const reference of references) {
     const entityMain = entitiesInfoResult.value.find((it) => it.id === reference.id);
@@ -66,7 +72,10 @@ async function mapItem(
   values: DatabasePublishedEntityGetOnePayload | undefined
 ): PromiseResult<
   PublishedEntity,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   if (!values) {
     return notOk.NotFound('No such entity');

@@ -75,7 +75,7 @@ export interface SqliteDatabaseAdapter {
 export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
   sqliteAdapter: SqliteDatabaseAdapter
-): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const database: Database = { mutex: new Mutex(), adapter: sqliteAdapter };
 
   const outerAdapter = createOuterAdapter(database);
@@ -148,7 +148,7 @@ function createOuterAdapter(database: Database): DatabaseAdapter {
 async function checkAdapterValidity(
   database: Database,
   context: TransactionContext
-): PromiseResult<void, ErrorType.Generic | ErrorType.BadRequest> {
+): PromiseResult<void, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
   const result = await queryOne<{ version: string }>(
     database,
     context,

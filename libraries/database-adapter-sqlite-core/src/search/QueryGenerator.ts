@@ -51,7 +51,7 @@ export function searchPublishedEntitiesQuery(
   query: PublishedSearchQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[]
-): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
+): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, typeof ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(database, schema, query, paging, authKeys, true);
 }
 
@@ -61,7 +61,7 @@ export function searchAdminEntitiesQuery(
   query: AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[]
-): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
+): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, typeof ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(database, schema, query, paging, authKeys, false);
 }
 
@@ -74,7 +74,7 @@ function sharedSearchEntitiesQuery<
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
   published: boolean
-): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {
+): Result<SharedEntitiesQuery<TItem>, typeof ErrorType.BadRequest> {
   const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
     database,
     query?.order,
@@ -202,7 +202,7 @@ export function sampleAdminEntitiesQuery(
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[]
-): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   return sampleEntitiesQuery(schema, query, offset, limit, authKeys, false);
 }
 
@@ -212,7 +212,7 @@ export function samplePublishedEntitiesQuery(
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[]
-): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   return sampleEntitiesQuery(schema, query, offset, limit, authKeys, true);
 }
 
@@ -223,7 +223,7 @@ function sampleEntitiesQuery(
   limit: number,
   authKeys: ResolvedAuthKey[],
   published: boolean
-): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   const qb = new SqliteQueryBuilder('SELECT');
 
   addEntityQuerySelectColumn(qb, query, published);
@@ -242,7 +242,7 @@ export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   authKeys: ResolvedAuthKey[],
   query: AdminQuery | undefined
-): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, false);
 }
 
@@ -250,7 +250,7 @@ export function totalPublishedEntitiesQuery(
   schema: PublishedSchema,
   authKeys: ResolvedAuthKey[],
   query: PublishedQuery | undefined
-): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, true);
 }
 
@@ -259,7 +259,7 @@ function totalCountQuery(
   authKeys: ResolvedAuthKey[],
   query: AdminQuery | PublishedQuery | undefined,
   published: boolean
-): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   const qb = new SqliteQueryBuilder('SELECT');
   if (query?.boundingBox) {
     qb.addQuery('COUNT(DISTINCT e.id)');
@@ -331,7 +331,7 @@ function addQueryFilters(
   authKeys: ResolvedAuthKey[],
   published: boolean,
   linkToEntityVersion: boolean
-): Result<void, ErrorType.BadRequest> {
+): Result<void, typeof ErrorType.BadRequest> {
   if (linkToEntityVersion) {
     if (published) {
       qb.addQuery('AND e.published_entity_versions_id = ev.id');
@@ -418,7 +418,7 @@ function addQueryFilters(
 function getFilterEntityTypes(
   schema: PublishedSchema | AdminSchema,
   query: PublishedQuery | AdminQuery | undefined
-): Result<string[], ErrorType.BadRequest> {
+): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
   }

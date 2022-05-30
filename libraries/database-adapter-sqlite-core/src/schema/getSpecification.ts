@@ -12,7 +12,7 @@ import { queryNoneOrOne } from '../QueryFunctions.js';
 export async function schemaGetSpecification(
   database: Database,
   context: TransactionContext
-): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic> {
+): PromiseResult<AdminSchemaSpecification | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
     database,
     context,

@@ -15,7 +15,7 @@ export async function adminEntityUpdateStatus(
   context: TransactionContext,
   status: AdminEntityStatus,
   reference: DatabaseResolvedEntityReference
-): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const now = Temporal.Now.instant();
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedReqResult.isError()) return updatedReqResult;

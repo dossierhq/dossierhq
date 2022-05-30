@@ -27,7 +27,7 @@ export function registerTestSuite(
 
 export async function initializeIntegrationTestServer(): PromiseResult<
   Server,
-  ErrorType.BadRequest | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const serverResult = await createServer({
     databaseAdapter: createDotenvAdapter(),

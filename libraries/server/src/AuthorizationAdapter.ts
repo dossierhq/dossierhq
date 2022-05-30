@@ -9,7 +9,7 @@ export interface AuthorizationAdapter {
     authKeys: readonly string[]
   ): PromiseResult<
     ResolvedAuthKey[],
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 }
 
@@ -19,7 +19,7 @@ export const NoneAndSubjectAuthorizationAdapter: AuthorizationAdapter = {
     authKeys: readonly string[]
   ): PromiseResult<
     ResolvedAuthKey[],
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     const result: ResolvedAuthKey[] = [];
     for (const authKey of authKeys) {

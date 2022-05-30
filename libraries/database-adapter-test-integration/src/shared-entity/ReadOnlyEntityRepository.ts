@@ -73,14 +73,14 @@ export class ReadOnlyEntityRepository {
 
 let createEntitiesPromise: PromiseResult<
   ReadOnlyEntityRepository,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > | null = null;
 
 export async function createReadOnlyEntityRepository(
   server: Server
 ): PromiseResult<
   ReadOnlyEntityRepository,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   // Wrap in a promise to use the same result for all instances running in the same process
   if (!createEntitiesPromise) {
@@ -93,7 +93,7 @@ async function doCreateReadOnlyEntityRepository(
   server: Server
 ): PromiseResult<
   ReadOnlyEntityRepository,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const adminClientMain = adminClientForMainPrincipal(server);
   const adminClientSecondary = adminClientForSecondaryPrincipal(server);
@@ -146,7 +146,10 @@ async function createEntity(
   status: AdminEntityStatus
 ): PromiseResult<
   AdminEntity,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.Generic
 > {
   // Check if it already exists (to save some time)
   const getResult = await adminClient.getEntity({ id });

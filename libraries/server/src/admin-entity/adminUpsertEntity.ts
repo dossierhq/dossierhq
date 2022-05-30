@@ -23,7 +23,7 @@ export async function adminUpsertEntity(
   options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityUpsertPayload,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const nameResult = await databaseAdapter.adminEntityGetEntityName(context, { id: entity.id });
 
@@ -37,7 +37,7 @@ export async function adminUpsertEntity(
       options
     );
   } else if (nameResult.isError()) {
-    return nameResult as ErrorResult<unknown, ErrorType.Generic>;
+    return nameResult as ErrorResult<unknown, typeof ErrorType.Generic>;
   }
 
   let entityUpdate: AdminEntityUpdate = entity;
@@ -75,7 +75,7 @@ async function createNewEntity(
   options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityUpsertPayload,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const createResult = await adminCreateEntity(
     schema,

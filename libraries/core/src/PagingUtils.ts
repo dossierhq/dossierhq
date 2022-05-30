@@ -9,7 +9,7 @@ export interface PagingInfo {
 
 export function getPagingInfo(
   paging: Paging | undefined
-): Result<PagingInfo, ErrorType.BadRequest> {
+): Result<PagingInfo, typeof ErrorType.BadRequest> {
   const result = validatePaging(paging);
   if (result.isError()) {
     return result;

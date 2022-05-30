@@ -1,18 +1,19 @@
 import type { Logger } from './Logger.js';
 
-export enum ErrorType {
+export const ErrorType = {
   /** Corresponds to 400 Bad Request */
-  BadRequest = 'BadRequest',
+  BadRequest: 'BadRequest',
   /** Corresponds to 409 Conflict */
-  Conflict = 'Conflict',
+  Conflict: 'Conflict',
   /** Corresponds to 401 Unauthenticated */
-  NotAuthenticated = 'NotAuthenticated',
+  NotAuthenticated: 'NotAuthenticated',
   /** Corresponds to 403 Forbidden */
-  NotAuthorized = 'NotAuthorized',
+  NotAuthorized: 'NotAuthorized',
   /** Corresponds to 404 Not Found */
-  NotFound = 'NotFound',
-  Generic = 'Generic',
-}
+  NotFound: 'NotFound',
+  Generic: 'Generic',
+} as const;
+export type ErrorType = keyof typeof ErrorType;
 
 export type Result<TOk, TError extends ErrorType> =
   | OkResult<TOk, TError>
@@ -116,11 +117,11 @@ export function createErrorResult<TError extends ErrorType>(
   return new ErrorResult<unknown, TError>(error, message);
 }
 
-export function createErrorResultFromError<TError extends ErrorType | ErrorType.Generic>(
+export function createErrorResultFromError<TError extends ErrorType | typeof ErrorType.Generic>(
   context: { logger: Logger },
   error: ErrorResultError | unknown,
   expectedErrorTypes: TError[] | null = null
-): ErrorResult<unknown, TError | ErrorType.Generic> {
+): ErrorResult<unknown, TError | typeof ErrorType.Generic> {
   // For some reason instanceof ErrorResultError doesn't always work, due to Next.js compilation?
   if (
     error instanceof ErrorResultError ||
@@ -129,7 +130,7 @@ export function createErrorResultFromError<TError extends ErrorType | ErrorType.
     const e = error as ErrorResultError;
     const errorResult = new ErrorResult(e.errorType, e.errorMessage);
     if (!expectedErrorTypes || expectedErrorTypes.includes(e.errorType as TError)) {
-      return errorResult as ErrorResult<unknown, TError | ErrorType.Generic>;
+      return errorResult as ErrorResult<unknown, TError | typeof ErrorType.Generic>;
     }
     return notOk.GenericUnexpectedError(errorResult);
   }
@@ -145,20 +146,20 @@ export const notOk = {
     const errorType = httpStatusToErrorType.get(status) ?? ErrorType.Generic;
     return createErrorResult(errorType, message);
   },
-  BadRequest: (message: string): ErrorResult<unknown, ErrorType.BadRequest> =>
+  BadRequest: (message: string): ErrorResult<unknown, typeof ErrorType.BadRequest> =>
     createErrorResult(ErrorType.BadRequest, message),
-  Conflict: (message: string): ErrorResult<unknown, ErrorType.Conflict> =>
+  Conflict: (message: string): ErrorResult<unknown, typeof ErrorType.Conflict> =>
     createErrorResult(ErrorType.Conflict, message),
-  Generic: (message: string): ErrorResult<unknown, ErrorType.Generic> =>
+  Generic: (message: string): ErrorResult<unknown, typeof ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, message),
   GenericUnexpectedError: (
     result: ErrorResult<unknown, ErrorType>
-  ): ErrorResult<unknown, ErrorType.Generic> =>
+  ): ErrorResult<unknown, typeof ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, `Unexpected error: ${result.error}: ${result.message}`),
   GenericUnexpectedException: (
     context: { logger: Logger },
     error: unknown
-  ): ErrorResult<unknown, ErrorType.Generic> => {
+  ): ErrorResult<unknown, typeof ErrorType.Generic> => {
     if (error instanceof Error) {
       //TODO need to decide how to pass errors to Logger
       context.logger.error('Unexpected error', error);
@@ -169,11 +170,11 @@ export const notOk = {
     }
     return createErrorResult(ErrorType.Generic, `Unexpected exception: ${error}`);
   },
-  NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
+  NotAuthenticated: (message: string): ErrorResult<unknown, typeof ErrorType.NotAuthenticated> =>
     createErrorResult(ErrorType.NotAuthenticated, message),
-  NotAuthorized: (message: string): ErrorResult<unknown, ErrorType.NotAuthorized> =>
+  NotAuthorized: (message: string): ErrorResult<unknown, typeof ErrorType.NotAuthorized> =>
     createErrorResult(ErrorType.NotAuthorized, message),
-  NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
+  NotFound: (message: string): ErrorResult<unknown, typeof ErrorType.NotFound> =>
     createErrorResult(ErrorType.NotFound, message),
 };
 

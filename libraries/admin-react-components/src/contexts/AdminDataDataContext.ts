@@ -22,7 +22,7 @@ export interface AdminDataDataContextValue {
   adminClient: AdminClient;
   logger: Logger;
   schema: AdminSchema | undefined;
-  schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
+  schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
   authKeys: DisplayAuthKey[];
 }
 

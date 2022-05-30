@@ -15,7 +15,7 @@ function getCursor(
   cursorType: CursorNativeType,
   paging: DatabasePagingInfo,
   key: 'after' | 'before'
-): Result<unknown, ErrorType.BadRequest> {
+): Result<unknown, typeof ErrorType.BadRequest> {
   const cursor = paging[key];
   if (cursor) {
     return fromOpaqueCursor(database, cursorType, cursor);
@@ -27,7 +27,7 @@ export function resolvePagingCursors<TCursor>(
   database: Database,
   cursorType: CursorNativeType,
   paging: DatabasePagingInfo
-): Result<ResolvedPagingCursors<TCursor>, ErrorType.BadRequest> {
+): Result<ResolvedPagingCursors<TCursor>, typeof ErrorType.BadRequest> {
   const after = getCursor(database, cursorType, paging, 'after');
   const before = getCursor(database, cursorType, paging, 'before');
 

@@ -11,7 +11,7 @@ import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-datab
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext
-): PromiseResult<AdminSchemaSpecification, ErrorType.Generic> {
+): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
   const { logger } = context;
   logger.info('Loading schema');
   const result = await databaseAdapter.schemaGetSpecification(context);
@@ -36,7 +36,10 @@ export async function updateSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   schemaSpec: AdminSchemaSpecificationUpdate
-): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  SchemaSpecificationUpdatePayload,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   return await context.withTransaction(async (context) => {
     const previousSpecificationResult = await getSchemaSpecification(databaseAdapter, context);
     if (previousSpecificationResult.isError()) {

@@ -17,7 +17,7 @@ export interface TestServerWithSession {
   adminClientOther: AdminClient;
   publishedClient: PublishedClient;
   subjectId: string;
-  tearDown: () => PromiseResult<void, ErrorType.Generic>;
+  tearDown: () => PromiseResult<void, typeof ErrorType.Generic>;
 }
 
 export async function setUpServerWithSession(

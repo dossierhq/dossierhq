@@ -9,7 +9,7 @@ export async function adminEntityGetEntityName(
   database: Database,
   context: TransactionContext,
   reference: EntityReference
-): PromiseResult<string, ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<string, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<EntitiesTable, 'name'>>(database, context, {
     text: 'SELECT e.name FROM entities e WHERE e.uuid = ?1',
     values: [reference.id],

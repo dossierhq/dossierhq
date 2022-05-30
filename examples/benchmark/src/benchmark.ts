@@ -85,7 +85,10 @@ async function randomReference(
   query?: AdminQuery
 ): PromiseResult<
   EntityReference,
-  ErrorType.NotFound | ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const result = await randomAdminEntity(adminClient, query);
   if (result.isError()) return result;
@@ -97,7 +100,10 @@ async function randomAdminEntity(
   query?: AdminQuery
 ): PromiseResult<
   AdminEntity,
-  ErrorType.NotFound | ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
 > {
   const result = await adminClient.sampleEntities(query, { count: 1 });
   if (result.isError()) return result;

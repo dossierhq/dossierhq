@@ -28,7 +28,7 @@ export async function adminSearchEntities(
   paging: Paging | undefined
 ): PromiseResult<
   Connection<Edge<AdminEntity, ErrorType>> | null,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const pagingResult = resolvePagingInfo(paging);
   if (pagingResult.isError()) return pagingResult;

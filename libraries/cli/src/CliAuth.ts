@@ -7,7 +7,7 @@ export async function veryInsecureCreateSession(
   server: Server,
   defaultProvider: string,
   defaultIdentifier: string
-): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const { provider, identifier } = await inquirer.prompt([
     {
       name: 'provider',

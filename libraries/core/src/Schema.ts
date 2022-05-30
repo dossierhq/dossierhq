@@ -110,7 +110,7 @@ export class AdminSchema {
     this.spec = spec;
   }
 
-  validate(): Result<void, ErrorType.BadRequest> {
+  validate(): Result<void, typeof ErrorType.BadRequest> {
     const usedNames = new Set();
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
       const isValueType = this.spec.valueTypes.includes(typeSpec);
@@ -250,7 +250,7 @@ export class AdminSchema {
 
   mergeWith(
     other: AdminSchemaSpecificationUpdate
-  ): Result<AdminSchemaSpecification, ErrorType.BadRequest> {
+  ): Result<AdminSchemaSpecification, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],

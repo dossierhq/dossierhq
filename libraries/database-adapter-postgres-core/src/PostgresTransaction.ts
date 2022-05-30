@@ -13,7 +13,7 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
   context: TransactionContext,
   childContextFactory: (transaction: Transaction) => TransactionContext,
   callback: (context: TransactionContext) => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError | ErrorType.Generic> {
+): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');
   }
@@ -41,7 +41,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
   context: TransactionContext,
   transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError | ErrorType.Generic> {
+): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   //TODO need mutex to ensure not called from other "contexts" in the same transaction?
   const pgTransaction = transaction as PostgresTransaction;
   const savePointName = `nested${pgTransaction.savePointCount++}`;
@@ -51,7 +51,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
     return notOk.GenericUnexpectedException(context, error);
   }
 
-  let result: Result<TOk, TError | ErrorType.Generic>;
+  let result: Result<TOk, TError | typeof ErrorType.Generic>;
   try {
     result = await callback();
   } catch (error) {

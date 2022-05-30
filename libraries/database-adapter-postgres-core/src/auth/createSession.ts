@@ -15,7 +15,7 @@ export async function authCreateSession(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
   const firstGetResult = await getSubject(adapter, context, provider, identifier);
   if (firstGetResult.isError()) {
     return firstGetResult;
@@ -59,7 +59,7 @@ async function getSubject(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<DatabaseAuthCreateSessionPayload | null, ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
     text: `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
@@ -79,7 +79,10 @@ async function createSubject(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAuthCreateSessionPayload,
+  typeof ErrorType.Conflict | typeof ErrorType.Generic
+> {
   return await context.withTransaction(async (context) => {
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
       adapter,

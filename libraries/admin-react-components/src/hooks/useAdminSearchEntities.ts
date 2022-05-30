@@ -23,7 +23,9 @@ export function useAdminSearchEntities(
   paging?: Paging
 ): {
   connection: Connection<Edge<AdminEntity, ErrorType>> | null | undefined;
-  connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  connectionError:
+    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
+    | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {
