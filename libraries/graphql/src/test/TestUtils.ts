@@ -15,8 +15,6 @@ import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datada
 import { Database } from 'sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 
-const SQLITE_DATABASE_PATH = 'data/database.sqlite';
-
 export interface TestServerWithSession {
   schema: AdminSchema;
   adminClient: AdminClient;
@@ -27,17 +25,19 @@ export interface TestServerWithSession {
 }
 
 export async function setUpServerWithSession(
-  schemaSpecification: AdminSchemaSpecificationUpdate
+  schemaSpecification: AdminSchemaSpecificationUpdate,
+  databasePath: string
 ): Promise<TestServerWithSession> {
-  return await setUpRealServerWithSession(schemaSpecification);
+  return await setUpRealServerWithSession(schemaSpecification, databasePath);
 }
 
 async function setUpRealServerWithSession(
-  schemaSpecification: AdminSchemaSpecificationUpdate
+  schemaSpecification: AdminSchemaSpecificationUpdate,
+  databasePath: string
 ): Promise<TestServerWithSession> {
   const serverContext = { logger: NoOpLogger };
   const databaseResult = await createDatabase(serverContext, Database, {
-    filename: SQLITE_DATABASE_PATH,
+    filename: databasePath,
     journalMode: 'wal',
   });
   assertOkResult(databaseResult);
@@ -69,12 +69,11 @@ async function setUpRealServerWithSession(
   const adminClientOther = server.createAdminClient(() => sessionOtherResult);
   const publishedClient = server.createPublishedClient(context);
 
-  await adminClient.updateSchemaSpecification(schemaSpecification);
-
-  const schemaResult = await adminClient.getSchemaSpecification();
+  const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
+  assertOkResult(schemaResult);
 
   return {
-    schema: new AdminSchema(schemaResult.valueOrThrow()),
+    schema: new AdminSchema(schemaResult.value.schemaSpecification),
     adminClient,
     adminClientOther,
     publishedClient,

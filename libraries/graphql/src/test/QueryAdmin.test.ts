@@ -66,7 +66,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
 };
 
 beforeAll(async () => {
-  server = await setUpServerWithSession(schemaSpecification);
+  server = await setUpServerWithSession(schemaSpecification, 'data/query-admin.sqlite');
   schema = new GraphQLSchemaGenerator({
     adminSchema: server.schema,
     publishedSchema: null,
