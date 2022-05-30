@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Replace typescript enums with const {}",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
