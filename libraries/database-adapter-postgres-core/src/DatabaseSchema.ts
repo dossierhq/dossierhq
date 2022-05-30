@@ -1,12 +1,13 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 
-export enum UniqueConstraints {
-  advisory_locks_name_key = 'advisory_locks_name_key',
-  entities_name_key = 'entities_name_key',
-  entities_uuid_key = 'entities_uuid_key',
-  principals_provider_identifier_key = 'principals_provider_identifier_key',
-}
+export const UniqueConstraints = {
+  advisory_locks_name_key: 'advisory_locks_name_key',
+  entities_name_key: 'entities_name_key',
+  entities_uuid_key: 'entities_uuid_key',
+  principals_provider_identifier_key: 'principals_provider_identifier_key',
+} as const;
+export type UniqueConstraints = keyof typeof UniqueConstraints;
 
 export interface AdvisoryLocksTable {
   id: number;
