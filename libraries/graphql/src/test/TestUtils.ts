@@ -5,11 +5,17 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined } from '@jonasb/datadata-core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
+import { AdminSchema, assertOkResult, NoOpLogger } from '@jonasb/datadata-core';
+import {
+  createDatabase,
+  createSqlite3Adapter,
+} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import type { AuthorizationAdapter } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import { Database } from 'sqlite3';
 import { v4 as uuidv4 } from 'uuid';
+
+const SQLITE_DATABASE_PATH = 'data/database.sqlite';
 
 export interface TestServerWithSession {
   schema: AdminSchema;
@@ -26,21 +32,30 @@ export async function setUpServerWithSession(
   return await setUpRealServerWithSession(schemaSpecification);
 }
 
-async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecificationUpdate) {
-  const url = process.env.DATABASE_URL;
-  assertIsDefined(url);
+async function setUpRealServerWithSession(
+  schemaSpecification: AdminSchemaSpecificationUpdate
+): Promise<TestServerWithSession> {
+  const serverContext = { logger: NoOpLogger };
+  const databaseResult = await createDatabase(serverContext, Database, {
+    filename: SQLITE_DATABASE_PATH,
+    journalMode: 'wal',
+  });
+  assertOkResult(databaseResult);
+  const adapterResult = await createSqlite3Adapter(serverContext, databaseResult.value);
+
   const serverResult = await createServer({
-    databaseAdapter: createPostgresAdapter({ connectionString: url }),
+    databaseAdapter: adapterResult.valueOrThrow(),
     authorizationAdapter: createTestAuthorizationAdapter(),
   });
-  if (serverResult.isError()) throw serverResult.toError();
+  assertOkResult(serverResult);
   const server = serverResult.value;
+
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'identifier',
     defaultAuthKeys: ['none'],
   });
-  if (sessionResult.isError()) throw serverResult.toError();
+  assertOkResult(sessionResult);
   const { context } = sessionResult.value;
   const subjectId = context.session.subjectId;
 
@@ -57,10 +72,9 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   await adminClient.updateSchemaSpecification(schemaSpecification);
 
   const schemaResult = await adminClient.getSchemaSpecification();
-  if (schemaResult.isError()) throw schemaResult.toError();
 
   return {
-    schema: new AdminSchema(schemaResult.value),
+    schema: new AdminSchema(schemaResult.valueOrThrow()),
     adminClient,
     adminClientOther,
     publishedClient,
