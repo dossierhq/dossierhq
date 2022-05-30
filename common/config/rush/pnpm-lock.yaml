@@ -172,7 +172,6 @@ importers:
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ^5.26.0
       '@typescript-eslint/parser': ^5.26.0
-      dotenv: ^16.0.0
       eslint: ^8.16.0
       express: ~4.18.1
       express-graphql: ~0.12.0
@@ -186,7 +185,6 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
-      dotenv: 16.0.0
       express: 4.18.1
       express-graphql: 0.12.0
       sqlite3: 5.0.8
@@ -283,9 +281,8 @@ importers:
       '@babel/core': ^7.17.9
       '@editorjs/editorjs': ~2.24.3
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
@@ -334,8 +331,7 @@ importers:
       tslib: 2.4.0
     devDependencies:
       '@babel/core': 7.17.9
-      '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
-      '@jonasb/datadata-postgres': link:../postgres
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../database-adapter-sqlite-sqlite3
       '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.4.0
       '@rushstack/heft': 0.45.5
@@ -787,7 +783,6 @@ importers:
       '@rushstack/heft': ~0.45.5
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~8.3.4
-      dotenv: ^16.0.0
       eslint: ^8.16.0
       graphql: ~16.5.0
       prettier: 2.6.2
@@ -810,7 +805,6 @@ importers:
       '@rushstack/heft': 0.45.5
       '@types/sqlite3': 3.1.8
       '@types/uuid': 8.3.4
-      dotenv: 16.0.0
       eslint: 8.16.0
       prettier: 2.6.2
       sqlite3: 5.0.8
