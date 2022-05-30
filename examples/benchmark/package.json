@@ -31,7 +31,7 @@
     "benchpress": "workspace:*",
     "dotenv": "^16.0.0",
     "pg": "^8.7.1",
-    "sqlite3": "jonasb/node-sqlite3#3.36.0",
+    "sqlite3": "~5.0.8",
     "tslib": "~2.4.0"
   },
   "devDependencies": {
