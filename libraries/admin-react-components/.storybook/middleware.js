@@ -7,22 +7,30 @@ const {
   LoggingClientMiddleware,
 } = require('@jonasb/datadata-core');
 const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@jonasb/datadata-server');
-const { createPostgresAdapter } = require('@jonasb/datadata-database-adapter-postgres-pg');
-// @ts-ignore
+const {
+  createDatabase,
+  createSqlite3Adapter,
+} = require('@jonasb/datadata-database-adapter-sqlite-sqlite3');
+const { Database } = require('sqlite3');
 const bodyParser = require('body-parser');
 const schemaJson = require('../src/test/schema.json');
+
+const SQLITE_DATABASE_PATH = 'data/arc.sqlite';
 
 let serverResultSingleton = null;
 
 async function getServer() {
   if (!serverResultSingleton) {
-    const databaseAdapter = createPostgresAdapter({
-      connectionString: process.env.STORYBOOK_ADMIN_REACT_COMPONENTS_DATABASE_URL,
+    const logger = createConsoleLogger(console);
+    const databaseResult = await createDatabase({ logger }, Database, {
+      filename: SQLITE_DATABASE_PATH,
+      journalMode: 'wal',
     });
 
-    const logger = createConsoleLogger(console);
+    const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.valueOrThrow());
+
     const result = await createServer({
-      databaseAdapter,
+      databaseAdapter: adapterResult.valueOrThrow(),
       logger,
       authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
     });

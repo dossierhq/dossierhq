@@ -24,7 +24,6 @@ function set_user_superuser {
 
   SUPER_OR_NO_SUPERUSER="$1"
 
-  set_user_superuser "arctestuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "servertestuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesbenchmarkuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesdenouser" "$SUPER_OR_NO_SUPERUSER"

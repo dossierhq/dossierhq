@@ -13,8 +13,6 @@
     "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
-    "db:cli": "./scripts/db-cli.sh",
-    "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "icons:update": "scripts/generate-icons.mjs",
@@ -36,8 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
-    "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
-    "@jonasb/datadata-postgres": "workspace:*",
+    "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
     "@rushstack/heft": "~0.45.5",
