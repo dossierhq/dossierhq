@@ -1,10 +1,10 @@
 import type { CSSProperties, FunctionComponent, ReactNode } from 'react';
 import React from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
-import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils';
-import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils';
-import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils';
-import { toSpacingClassName } from '../../utils/LayoutPropsUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
+import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
+import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
+import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 
 export interface HoverRevealContainerProps extends FlexContainerProps, GapProps {
   children: ReactNode;

@@ -705,6 +705,7 @@ importers:
       '@fortawesome/fontawesome-svg-core': ~6.1.1
       '@fortawesome/free-solid-svg-icons': ~6.1.1
       '@fortawesome/react-fontawesome': ~0.1.18
+      '@jonasb/datadata-heft-node-rig': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
       '@storybook/addon-actions': ^6.4.21
@@ -745,6 +746,7 @@ importers:
       tslib: 2.4.0
     devDependencies:
       '@babel/core': 7.17.9
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.45.5
       '@storybook/addon-actions': 6.4.21_d95fb4425592b041c52d23fed774482b
       '@storybook/addon-essentials': 6.4.21_abf52b9348966f506a8b122a11682bdb

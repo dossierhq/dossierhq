@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import React from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
-import type { TextStyle } from '../../utils/TextStylePropsUtils';
-import { toTextStyleClassName } from '../../utils/TextStylePropsUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
+import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
 
 export interface TextAreaProps {
   className?: string;

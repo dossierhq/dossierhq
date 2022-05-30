@@ -5,7 +5,7 @@
       "actionKind": "deleteGlobs",
       "heftEvent": "clean",
       "actionId": "defaultClean",
-      "globsToDelete": ["lib", "temp", "*.build.log", "*.build.error.log", "storybook-static"]
+      "globsToDelete": ["lib", "temp", "*.build.log", "*.build.error.log"]
     }
   ]
 }

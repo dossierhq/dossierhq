@@ -5,7 +5,7 @@ import type {
   SelectHTMLAttributes,
 } from 'react';
 import React from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface SelectDisplayProps {
   fullWidth?: boolean;

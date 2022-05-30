@@ -1,6 +1,6 @@
 import type { CSSProperties, FunctionComponent, ReactNode } from 'react';
 import React from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface HoverRevealStackProps {
   children: ReactNode;
