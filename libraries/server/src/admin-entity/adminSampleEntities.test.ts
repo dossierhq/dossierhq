@@ -9,7 +9,7 @@ import {
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
 import { adminTestSchema } from '../test/TestSchema.js';
-import { adminSampleEntities } from './adminSampleEntities';
+import { adminSampleEntities } from './adminSampleEntities.js';
 
 describe('Admin adminSampleEntities', () => {
   test('No result', async () => {

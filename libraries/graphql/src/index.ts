@@ -1,3 +1,3 @@
-export type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
+export type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 
-export { GraphQLSchemaGenerator } from './GraphQLSchemaGenerator';
+export { GraphQLSchemaGenerator } from './GraphQLSchemaGenerator.js';

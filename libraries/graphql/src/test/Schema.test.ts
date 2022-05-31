@@ -2,7 +2,7 @@ import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { AdminSchema, FieldType, PublishedSchema } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { describe, expect, test } from 'vitest';
-import { GraphQLSchemaGenerator } from '..';
+import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 
 function buildSchema(
   schemaSpec: AdminSchemaSpecification,

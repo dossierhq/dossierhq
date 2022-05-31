@@ -6,8 +6,8 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
-import { registerTestSuite } from '../TestUtils';
-import { initializeSqlJsServer } from './SqlJsTestUtils';
+import { registerTestSuite } from '../TestUtils.js';
+import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 
 let server: Server | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;

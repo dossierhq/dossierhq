@@ -1,7 +1,7 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { AdminSchema, FieldType, RichTextBlockType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import { forTest } from './EntityCodec';
+import { forTest } from './EntityCodec.js';
 
 const { collectDataFromEntity } = forTest;
 

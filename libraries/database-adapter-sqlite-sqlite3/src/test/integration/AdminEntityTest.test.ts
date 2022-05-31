@@ -6,8 +6,8 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
-import { registerTestSuite } from '../TestUtils';
-import { initializeSqlite3Server } from './Sqlite3TestUtils';
+import { registerTestSuite } from '../TestUtils.js';
+import { initializeSqlite3Server } from './Sqlite3TestUtils.js';
 
 let server: Server | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;

@@ -21,14 +21,14 @@ import {
   expectEntityHistoryVersions,
   expectSearchResultEntities,
   insecureTestUuidv4,
-} from '../TestUtils';
+} from '../TestUtils.js';
 import {
   countSearchResultWithEntity,
   ensureEntityCount,
   ensureEntityWithStatus,
   getAllEntities,
   randomBoundingBox,
-} from './EntitySearchTestUtils';
+} from './EntitySearchTestUtils.js';
 
 let server: Server;
 let context: SessionContext;

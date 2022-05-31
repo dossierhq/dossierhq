@@ -3,8 +3,8 @@ import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
-import { adminGetEntity } from './getEntity';
+import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils.js';
+import { adminGetEntity } from './getEntity.js';
 
 describe('adminGetEntity', () => {
   test('Get latest version', async () => {

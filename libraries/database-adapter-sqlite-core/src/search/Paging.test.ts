@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { createMockDatabase, resolvePaging } from '../test/TestUtils';
+import { createMockDatabase, resolvePaging } from '../test/TestUtils.js';
 import { toOpaqueCursor } from './OpaqueCursor.js';
 import { resolvePagingCursors } from './Paging.js';
 

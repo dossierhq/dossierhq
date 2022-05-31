@@ -9,14 +9,14 @@ import { AdminEntityStatus, FieldType, RichTextBlockType } from '@jonasb/datadat
 import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils';
+import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils.js';
 import {
   countSearchResultWithEntity,
   ensureEntityCount,
   expectConnectionToMatchSlice,
   getAllEntities,
   randomBoundingBox,
-} from './EntitySearchTestUtils';
+} from './EntitySearchTestUtils.js';
 
 //TODO consider moving this test back to server or even to core
 

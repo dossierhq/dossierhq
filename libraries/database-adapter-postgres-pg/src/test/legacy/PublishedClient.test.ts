@@ -2,7 +2,7 @@ import { ErrorType } from '@jonasb/datadata-core';
 import { expectErrorResult } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { afterAll, beforeAll, describe, test } from 'vitest';
-import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
+import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils.js';
 
 let server: Server;
 let context: SessionContext;

@@ -9,7 +9,7 @@ import {
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
 import { publishedTestSchema } from '../test/TestSchema.js';
-import { publishedSampleEntities } from './publishedSampleEntities';
+import { publishedSampleEntities } from './publishedSampleEntities.js';
 
 describe('Published publishedSampleEntities', () => {
   test('No result', async () => {

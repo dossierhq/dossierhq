@@ -7,7 +7,7 @@ import {
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
-import { createPostgresTestAdapter, registerTestSuite } from '../TestUtils';
+import { createPostgresTestAdapter, registerTestSuite } from '../TestUtils.js';
 
 let server: Server | null = null;
 

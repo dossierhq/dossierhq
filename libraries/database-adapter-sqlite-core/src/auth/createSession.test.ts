@@ -4,7 +4,7 @@ import {
   createMockContext,
   createMockInnerAndOuterAdapter,
   getQueryCalls,
-} from '../test/TestUtils';
+} from '../test/TestUtils.js';
 
 describe('authCreateSession', () => {
   test('Create new principal', async () => {

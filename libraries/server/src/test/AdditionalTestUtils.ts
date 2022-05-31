@@ -8,7 +8,7 @@ import type {
 import type { SpyInstanceFn } from 'vitest';
 import { vi } from 'vitest';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
-import { SessionContextImpl } from '../Context';
+import { SessionContextImpl } from '../Context.js';
 import type { SessionContext } from '../Context.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -33,8 +33,8 @@ import {
   visitFieldRecursively,
 } from '@jonasb/datadata-core';
 import type { GraphQLResolveInfo } from 'graphql';
-import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
-import { getAdminClient, getPublishedClient } from './Utils';
+import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
+import { getAdminClient, getPublishedClient } from './Utils.js';
 
 interface Connection<T extends Edge<unknown>> {
   pageInfo: PageInfo;

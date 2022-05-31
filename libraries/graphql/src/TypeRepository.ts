@@ -6,7 +6,7 @@ import type {
   GraphQLOutputType,
 } from 'graphql';
 import { GraphQLEnumType, isEnumType, isInputType, isInterfaceType, isOutputType } from 'graphql';
-import { toAdminTypeName, toAdminValueInputTypeName, toEnumName } from './NameGenerator';
+import { toAdminTypeName, toAdminValueInputTypeName, toEnumName } from './NameGenerator.js';
 
 export class TypeRepository {
   #types: GraphQLNamedType[] = [];

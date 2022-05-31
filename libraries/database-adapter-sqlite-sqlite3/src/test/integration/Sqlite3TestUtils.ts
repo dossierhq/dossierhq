@@ -7,8 +7,8 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import { createServer } from '@jonasb/datadata-server';
 import { Database } from 'sqlite3';
-import { createSqlite3Adapter } from '../../Sqlite3Adapter';
-import { createDatabase } from '../../SqliteUtils';
+import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';
+import { createDatabase } from '../../SqliteUtils.js';
 
 export async function initializeSqlite3Server(filename: string | ':memory:', mode?: number) {
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, mode);

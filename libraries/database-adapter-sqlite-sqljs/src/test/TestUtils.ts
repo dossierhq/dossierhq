@@ -5,7 +5,7 @@ import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integrati
 import * as base64 from 'base-64';
 import initSqlJs from 'sql.js';
 import { test } from 'vitest';
-import { createSqlJsAdapter } from '..';
+import { createSqlJsAdapter } from '../SqlJsAdapter.js';
 
 export async function createSqlJsTestAdapter(): PromiseResult<
   DatabaseAdapter,

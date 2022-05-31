@@ -8,7 +8,7 @@ import {
 } from '@jonasb/datadata-core';
 import { expectErrorResult } from '@jonasb/datadata-core-vitest';
 import { describe, expect, test } from 'vitest';
-import { createMockAdapter, resolvePaging } from '../test/TestUtils';
+import { createMockAdapter, resolvePaging } from '../test/TestUtils.js';
 import { toOpaqueCursor } from './OpaqueCursor.js';
 import {
   sampleAdminEntitiesQuery,
@@ -17,7 +17,7 @@ import {
   searchPublishedEntitiesQuery,
   totalAdminEntitiesQuery,
   totalPublishedEntitiesQuery,
-} from './QueryGenerator';
+} from './QueryGenerator.js';
 
 const schema = new AdminSchema({
   entityTypes: [

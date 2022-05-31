@@ -1,9 +1,8 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '.';
-import type { ColumnValue } from './SqliteDatabaseAdapter';
-import type { Mutex } from './utils/MutexUtils';
+import type { ColumnValue, SqliteDatabaseAdapter } from './SqliteDatabaseAdapter.js';
+import type { Mutex } from './utils/MutexUtils.js';
 
 interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | typeof ErrorType.Generic>;

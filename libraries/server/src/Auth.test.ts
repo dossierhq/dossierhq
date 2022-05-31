@@ -1,12 +1,12 @@
 import { ErrorType, ok } from '@jonasb/datadata-core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import { describe, expect, test } from 'vitest';
-import { authCreateSession, verifyAuthKeysFormat } from './Auth';
+import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import {
   createMockDatabaseAdapter,
   createMockTransactionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from './test/AdditionalTestUtils';
+} from './test/AdditionalTestUtils.js';
 
 describe('Auth authCreateSession', () => {
   test('Success', async () => {

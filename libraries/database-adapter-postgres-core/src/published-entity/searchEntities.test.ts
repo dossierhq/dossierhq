@@ -9,8 +9,8 @@ import {
   createTestAdminSchema,
   getQueryCalls,
   resolvePaging,
-} from '../test/TestUtils';
-import { publishedEntitySearchEntities } from './searchEntities';
+} from '../test/TestUtils.js';
+import { publishedEntitySearchEntities } from './searchEntities.js';
 
 function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
   return {

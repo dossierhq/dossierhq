@@ -2,12 +2,12 @@ import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { describe, expect, test } from 'vitest';
-import { getSchemaSpecification } from './Schema';
+import { getSchemaSpecification } from './Schema.js';
 import {
   createMockDatabaseAdapter,
   createMockTransactionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from './test/AdditionalTestUtils';
+} from './test/AdditionalTestUtils.js';
 
 describe('AdminSchema getSchema', () => {
   test('No schema', async () => {

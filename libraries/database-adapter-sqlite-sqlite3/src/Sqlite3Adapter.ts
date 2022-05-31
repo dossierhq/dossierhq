@@ -7,7 +7,7 @@ import type {
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
 import type { Database } from 'sqlite3';
-import { closeDatabase, queryAll } from './SqliteUtils';
+import { closeDatabase, queryAll } from './SqliteUtils.js';
 
 export type Sqlite3DatabaseAdapter = DatabaseAdapter;
 

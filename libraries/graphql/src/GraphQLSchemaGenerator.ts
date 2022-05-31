@@ -59,8 +59,8 @@ import {
   loadPublishingHistory,
   loadSearchEntities,
   loadVersionHistory,
-} from './DataLoaders';
-import * as Mutations from './Mutations';
+} from './DataLoaders.js';
+import * as Mutations from './Mutations.js';
 import {
   toAdminCreateInputTypeName,
   toAdminCreatePayloadTypeName,
@@ -71,10 +71,10 @@ import {
   toAdminUpsertPayloadTypeName,
   toAdminValueInputTypeName,
   toPublishedTypeName,
-} from './NameGenerator';
-import { TypeRepository } from './TypeRepository';
-import { seemsLikeATemporalInstant } from './Utils';
-import { GraphQLJSON } from './vendor/GraphQLScalar';
+} from './NameGenerator.js';
+import { TypeRepository } from './TypeRepository.js';
+import { seemsLikeATemporalInstant } from './Utils.js';
+import { GraphQLJSON } from './vendor/GraphQLScalar.js';
 
 export interface SessionGraphQLContext {
   adminClient: Result<AdminClient, typeof ErrorType.NotAuthenticated>;
