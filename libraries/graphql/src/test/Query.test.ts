@@ -4,10 +4,10 @@ import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import type { SessionGraphQLContext } from '..';
-import { GraphQLSchemaGenerator } from '..';
-import type { TestServerWithSession } from './TestUtils';
-import { setUpServerWithSession } from './TestUtils';
+import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
+import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
+import type { TestServerWithSession } from './TestUtils.js';
+import { setUpServerWithSession } from './TestUtils.js';
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;

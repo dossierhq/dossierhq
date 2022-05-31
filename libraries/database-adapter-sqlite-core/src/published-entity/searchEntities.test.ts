@@ -1,4 +1,5 @@
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import { describe, expect, test } from 'vitest';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import {
   createMockContext,
@@ -6,8 +7,7 @@ import {
   createTestAdminSchema,
   getQueryCalls,
   resolvePaging,
-} from '../test/TestUtils';
-import { describe, expect, test } from 'vitest';
+} from '../test/TestUtils.js';
 
 function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
   return {

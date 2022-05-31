@@ -5,7 +5,7 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
-import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils';
+import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
 let server: Server | null = null;
 

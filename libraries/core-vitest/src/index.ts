@@ -1,2 +1,2 @@
-export { expectErrorResult, expectOkResult, expectResultValue } from './ExpectResult';
-export { createMockLogger } from './MockLogger';
+export { expectErrorResult, expectOkResult, expectResultValue } from './ExpectResult.js';
+export { createMockLogger } from './MockLogger.js';

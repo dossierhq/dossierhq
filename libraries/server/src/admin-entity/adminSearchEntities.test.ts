@@ -10,7 +10,7 @@ import {
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
 import { adminTestSchema } from '../test/TestSchema.js';
-import { adminSearchEntities } from './adminSearchEntities';
+import { adminSearchEntities } from './adminSearchEntities.js';
 
 describe('Admin adminSearchEntities', () => {
   test('Minimal (no results)', async () => {

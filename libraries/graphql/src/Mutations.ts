@@ -17,9 +17,9 @@ import type {
   EntityReference,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
-import type { SessionGraphQLContext } from '.';
-import { buildResolversForAdminEntity } from './DataLoaders';
-import { getAdminClient } from './Utils';
+import { buildResolversForAdminEntity } from './DataLoaders.js';
+import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
+import { getAdminClient } from './Utils.js';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,

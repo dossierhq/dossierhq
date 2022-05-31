@@ -7,7 +7,7 @@ import {
   createTestAdminSchema,
   getQueryCalls,
   resolvePaging,
-} from '../test/TestUtils';
+} from '../test/TestUtils.js';
 
 function createEntityDbRow(id: number): SearchAdminEntitiesItem {
   return {

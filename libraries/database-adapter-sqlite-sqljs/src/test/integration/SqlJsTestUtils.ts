@@ -3,7 +3,7 @@ import {
   IntegrationTestSchemaSpecifciationUpdate,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import { createServer } from '@jonasb/datadata-server';
-import { createSqlJsTestAdapter } from '../TestUtils';
+import { createSqlJsTestAdapter } from '../TestUtils.js';
 
 export async function initializeSqlJsServer() {
   const databaseAdapterResult = await createSqlJsTestAdapter();

@@ -2,7 +2,7 @@ import { ErrorType, ok } from '@jonasb/datadata-core';
 import { expectErrorResult } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
+import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils.js';
 
 //TODO consider moving this test back to server or even to core
 

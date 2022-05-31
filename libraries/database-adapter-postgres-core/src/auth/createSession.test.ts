@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-escape */
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { describe, expect, test } from 'vitest';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
-import { authCreateSession } from './createSession';
+import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils.js';
+import { authCreateSession } from './createSession.js';
 
 describe('authCreateSession', () => {
   test('Create new principal', async () => {

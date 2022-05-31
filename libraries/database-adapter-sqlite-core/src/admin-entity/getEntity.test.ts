@@ -6,7 +6,7 @@ import {
   createMockContext,
   createMockInnerAndOuterAdapter,
   getQueryCalls,
-} from '../test/TestUtils';
+} from '../test/TestUtils.js';
 
 describe('adminGetEntity', () => {
   test('Get latest version', async () => {
