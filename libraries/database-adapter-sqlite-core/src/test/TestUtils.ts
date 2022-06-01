@@ -70,7 +70,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const query: MockedFunction<QueryFn> = vi.fn<any, any>();
   query.mockImplementation(async (query, _values) => {
-    if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.35.0' }];
+    if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.37.0' }];
     if (query === 'PRAGMA user_version') return [{ user_version: 999 }]; // high number to avoid migrations
     return [];
   });
