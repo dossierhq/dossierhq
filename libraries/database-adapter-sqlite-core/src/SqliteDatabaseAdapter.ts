@@ -61,7 +61,8 @@ import { Mutex } from './utils/MutexUtils.js';
 
 export type ColumnValue = number | string | Uint8Array | null;
 
-const minimumSupportedVersion = { major: 3, minor: 35, patch: 0 };
+// For https://www.sqlite.org/stricttables.html
+const minimumSupportedVersion = { major: 3, minor: 37, patch: 0 };
 
 export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
