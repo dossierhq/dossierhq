@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { describe, expect, test } from 'vitest';
 import { createPostgresSqlQuery, createSqliteSqlQuery, DEFAULT } from './SqlQueryBuilder.js';
 
@@ -21,7 +20,7 @@ describe('createPostgresSqlQuery', () => {
 
     expect(query).toMatchInlineSnapshot(`
       {
-        "text": "SELECT * FROM foo WHERE id = \$1 AND name = \$2",
+        "text": "SELECT * FROM foo WHERE id = $1 AND name = $2",
         "values": [
           123,
           "Hello world",
@@ -49,7 +48,7 @@ describe('createPostgresSqlQuery', () => {
 
     expect(query).toMatchInlineSnapshot(`
       {
-        "text": "INSERT INTO foo (bar, baz) VALUES (\$1, \$1)",
+        "text": "INSERT INTO foo (bar, baz) VALUES ($1, $1)",
         "values": [
           "Hello",
         ],
@@ -66,7 +65,7 @@ describe('createPostgresSqlQuery', () => {
 
     expect(query).toMatchInlineSnapshot(`
       {
-        "text": "INSERT INTO foo (bar, baz) VALUES (\$1, \$2), (\$1, \$3)",
+        "text": "INSERT INTO foo (bar, baz) VALUES ($1, $2), ($1, $3)",
         "values": [
           "Hello",
           1,
