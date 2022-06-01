@@ -17,7 +17,7 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sql.js": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "sql.js": "~1.6.1",
+    "sql.js": "~1.7.0",
     "tslib": "~2.4.0",
     "undici": "~5.3.0",
     "uuid": "^8.3.2"
