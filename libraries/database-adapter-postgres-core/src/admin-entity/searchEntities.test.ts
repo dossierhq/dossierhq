@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
@@ -46,7 +45,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = \$1 ORDER BY e.id LIMIT \$2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "none",
           26,
         ],

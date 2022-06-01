@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import type {
   AdminClient,
   AdminEntity,
@@ -487,7 +486,7 @@ describe('adminEntity()', () => {
 
         GraphQL request:33:13
         32 |             }
-        33 |             third: adminEntity(id: \$id, version: \$version3) {
+        33 |             third: adminEntity(id: $id, version: $version3) {
            |             ^
         34 |               id",
         ]

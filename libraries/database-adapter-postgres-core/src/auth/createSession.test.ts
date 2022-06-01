@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import { describe, expect, test } from 'vitest';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils.js';
@@ -21,7 +20,7 @@ describe('authCreateSession', () => {
       [
         [
           "SELECT s.id, s.uuid FROM subjects s, principals p
-          WHERE p.provider = \$1 AND p.identifier = \$2 AND p.subjects_id = s.id",
+          WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id",
           "test",
           "hello",
         ],
@@ -32,7 +31,7 @@ describe('authCreateSession', () => {
           "INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid",
         ],
         [
-          "INSERT INTO principals (provider, identifier, subjects_id) VALUES (\$1, \$2, \$3)",
+          "INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)",
           "test",
           "hello",
           123,
@@ -60,7 +59,7 @@ describe('authCreateSession', () => {
       [
         [
           "SELECT s.id, s.uuid FROM subjects s, principals p
-          WHERE p.provider = \$1 AND p.identifier = \$2 AND p.subjects_id = s.id",
+          WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id",
           "test",
           "hello",
         ],

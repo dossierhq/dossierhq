@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { describe, expect, test } from 'vitest';
 import { PostgresQueryBuilder, SqliteQueryBuilder } from './QueryBuilder.js';
 
@@ -7,7 +6,7 @@ describe('PostgresQueryBuilder', () => {
     const qb = new PostgresQueryBuilder('SELECT * FROM foo WHERE a = $1', ['first']);
     expect(qb.build()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT * FROM foo WHERE a = \$1",
+        "text": "SELECT * FROM foo WHERE a = $1",
         "values": [
           "first",
         ],
@@ -20,7 +19,7 @@ describe('PostgresQueryBuilder', () => {
     qb.addQuery(`WHERE a = ${qb.addValue('first')}`);
     expect(qb.build()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT * FROM foo WHERE a = \$1",
+        "text": "SELECT * FROM foo WHERE a = $1",
         "values": [
           "first",
         ],
@@ -56,7 +55,7 @@ describe('PostgresQueryBuilder', () => {
     qb.addQuery(`(${qb.addValue(3)})`);
     expect(qb.build()).toMatchInlineSnapshot(`
       {
-        "text": "INSERT INTO foo (a) VALUES (\$1), (\$2), (\$3)",
+        "text": "INSERT INTO foo (a) VALUES ($1), ($2), ($3)",
         "values": [
           1,
           2,
@@ -74,7 +73,7 @@ describe('PostgresQueryBuilder', () => {
     qb.addQuery(')');
     expect(qb.build()).toMatchInlineSnapshot(`
       {
-        "text": "INSERT INTO foo (a, b, c) VALUES (\$1, \$2, \$3)",
+        "text": "INSERT INTO foo (a, b, c) VALUES ($1, $2, $3)",
         "values": [
           1,
           2,
