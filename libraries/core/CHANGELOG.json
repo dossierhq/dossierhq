@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-core",
   "entries": [
     {
+      "version": "0.1.15",
+      "tag": "@jonasb/datadata-core_v0.1.15",
+      "date": "Thu, 02 Jun 2022 21:27:42 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.14",
       "tag": "@jonasb/datadata-core_v0.1.14",
       "date": "Mon, 30 May 2022 18:59:49 GMT",
