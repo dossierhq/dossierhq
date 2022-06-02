@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Use new map (requires importing css files from @jonasb/datadata-leaflet. Fix bug when sampling entities on map. Export CJS/ESM.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}
