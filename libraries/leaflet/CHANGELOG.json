@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-leaflet",
   "entries": [
     {
+      "version": "0.1.16",
+      "tag": "@jonasb/datadata-leaflet_v0.1.16",
+      "date": "Thu, 02 Jun 2022 22:03:43 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Export some utilities"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.15",
       "tag": "@jonasb/datadata-leaflet_v0.1.15",
       "date": "Thu, 02 Jun 2022 21:27:42 GMT",
