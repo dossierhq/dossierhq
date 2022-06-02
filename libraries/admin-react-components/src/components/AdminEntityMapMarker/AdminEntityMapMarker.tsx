@@ -1,7 +1,8 @@
 import type { AdminEntity, Location } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
+import { MapContainer } from '@jonasb/datadata-leaflet';
 import React from 'react';
-import { MapContainer, StatusTag } from '../..';
+import { StatusTag } from '../..';
 
 interface Props {
   entity: AdminEntity;

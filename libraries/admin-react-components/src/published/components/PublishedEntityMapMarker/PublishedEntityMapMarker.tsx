@@ -1,7 +1,7 @@
 import type { Location, PublishedEntity } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
+import { MapContainer } from '@jonasb/datadata-leaflet';
 import React from 'react';
-import { MapContainer } from '../../..';
 
 export function PublishedEntityMapMarker({
   entity,

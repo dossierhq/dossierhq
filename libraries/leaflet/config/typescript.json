@@ -1,0 +1,7 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/typescript.schema.json",
+  "extends": "../node_modules/@jonasb/datadata-heft-node-rig/profiles/library-react/config/typescript.json",
+  "staticAssetsToCopy": {
+    "fileExtensions": [".css"]
+  }
+}

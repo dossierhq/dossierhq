@@ -8,6 +8,7 @@ import {
   Text,
   toSizeClassName,
 } from '@jonasb/datadata-design';
+import { MapContainer } from '@jonasb/datadata-leaflet';
 import React, {
   useCallback,
   useContext,
@@ -25,7 +26,6 @@ import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/
 import {
   EntityMap,
   initializeSearchEntityState,
-  MapContainer,
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../shared';

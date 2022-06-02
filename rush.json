@@ -444,6 +444,11 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-leaflet",
+      "projectFolder": "libraries/leaflet",
+      "versionPolicyName": "DataDataFramework"
+    },
+    {
       "packageName": "@jonasb/datadata-postgres",
       "projectFolder": "libraries/postgres",
       "versionPolicyName": "DataDataFramework"
