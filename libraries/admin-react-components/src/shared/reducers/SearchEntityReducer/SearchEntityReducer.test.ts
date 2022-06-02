@@ -156,6 +156,23 @@ describe('SearchEntityStateActions.SetQuery', () => {
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
   });
+
+  test('Does not reset paging when changing bounding box and not sampling', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState({
+        actions: [new SearchEntityStateActions.SetSampling({ count: 10, seed: 123 }, false)],
+      }),
+      new SearchEntityStateActions.SetQuery(
+        { boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 11.62, maxLng: 16.25 } },
+        { partial: true, resetPagingIfModifying: true }
+      )
+    );
+    expect(state.query).toEqual({
+      boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 11.62, maxLng: 16.25 },
+    });
+    expect(state.paging).toBeUndefined();
+    expect(state.sampling).toEqual({ count: 10, seed: 123 });
+  });
 });
 
 describe('SearchEntityStateActions.SetPaging', () => {
