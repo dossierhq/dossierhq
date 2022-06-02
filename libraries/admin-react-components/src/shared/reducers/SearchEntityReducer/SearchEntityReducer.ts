@@ -229,7 +229,7 @@ class SetQueryAction implements SearchEntityStateAction {
       return state;
     }
 
-    if (this.resetPagingIfModifying) {
+    if (this.resetPagingIfModifying && !sampling) {
       paging = {};
       loadingState = 'first-page';
     }
