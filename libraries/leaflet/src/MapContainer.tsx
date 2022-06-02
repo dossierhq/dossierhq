@@ -1,5 +1,5 @@
 import type { Map } from 'leaflet';
-import { control, Icon } from 'leaflet';
+import { control } from 'leaflet';
 import 'leaflet.locatecontrol';
 import type { CSSProperties, FunctionComponent } from 'react';
 import * as React from 'react';
@@ -14,46 +14,11 @@ import {
 } from 'react-leaflet';
 import type { BoundingBox, Location } from './CoreTypes.js';
 import { toLatLngLiteral } from './CoreTypes.js';
-
-export interface ZoomMetrics {
-  pixelToLat: number;
-  pixelToLng: number;
-}
-
-const transparentImage =
-  'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+import type { MarkerColor } from './MarkerUtils.js';
+import { getMarkerIcon } from './MarkerUtils.js';
+import type { ZoomMetrics } from './Types.js';
 
 const defaultZoom = 13;
-
-const markerIcon = new Icon({
-  iconUrl: transparentImage,
-  className: 'icon-map-marker',
-  iconSize: [22, 28],
-  iconAnchor: [11, 27],
-});
-
-const currentMarkerIcon = new Icon({
-  iconUrl: transparentImage,
-  className: 'icon-map-marker-current',
-  iconSize: [22, 28],
-  iconAnchor: [11, 27],
-});
-
-const markerIconStats = (() => {
-  let maxLeft = 0;
-  let maxRight = 0;
-  let maxTop = 0;
-  let maxBottom = 0;
-  for (const icon of [markerIcon, currentMarkerIcon]) {
-    const [width, height] = icon.options.iconSize;
-    const [x, y] = icon.options.iconAnchor;
-    maxLeft = Math.max(maxLeft, x);
-    maxRight = Math.max(maxRight, width - x);
-    maxTop = Math.max(maxTop, y);
-    maxBottom = Math.max(maxBottom, height - y);
-  }
-  return { maxLeft, maxRight, maxTop, maxBottom };
-})();
 
 export interface MapContainerProps {
   className?: string;
@@ -76,7 +41,7 @@ interface LocateControlProps {
 }
 
 interface MarkerProps {
-  color?: 'default' | 'current';
+  color?: MarkerColor;
   location: Location;
   tooltip?: JSX.Element | string | null;
   onClick?: () => void;
@@ -226,7 +191,7 @@ function MapContainerMarker({ color, location, tooltip, onClick }: MarkerProps) 
   return (
     <Marker
       position={[location.lat, location.lng]}
-      icon={color === 'current' ? currentMarkerIcon : markerIcon}
+      icon={getMarkerIcon(color)}
       eventHandlers={onClick ? { click: onClick } : undefined}
     >
       {tooltip ? <Tooltip>{tooltip}</Tooltip> : null}
@@ -245,21 +210,9 @@ function EditLocationMarker({ value, onChange }: EditLocationMarkerProps): JSX.E
       });
     },
   });
-  return value ? <Marker position={[value.lat, value.lng]} icon={markerIcon} /> : null;
+  return value ? (
+    <Marker position={[value.lat, value.lng]} icon={getMarkerIcon('current')} />
+  ) : null;
 }
 MapContainer.EditLocationMarker = EditLocationMarker;
 MapContainer.EditLocationMarker.displayName = 'MapContainer.EditLocationMarker';
-
-export function expandBoundingBoxForMarkers(
-  boundingBox: BoundingBox,
-  zoomMetrics: ZoomMetrics
-): BoundingBox {
-  const { maxLeft, maxRight, maxTop, maxBottom } = markerIconStats;
-  const result = {
-    minLat: boundingBox.minLat - zoomMetrics.pixelToLat * maxTop,
-    maxLat: boundingBox.maxLat + zoomMetrics.pixelToLat * maxBottom,
-    minLng: boundingBox.minLng - zoomMetrics.pixelToLat * maxLeft,
-    maxLng: boundingBox.maxLng + zoomMetrics.pixelToLat * maxRight,
-  };
-  return result;
-}
