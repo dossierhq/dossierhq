@@ -22,7 +22,6 @@ export type {
   EntityTypeSelectorState,
 } from './components/EntityTypeSelector/EntityTypeSelector';
 export { EntityTypeTagSelector } from './components/EntityTypeTagSelector/EntityTypeTagSelector';
-export { MapContainer } from './components/MapContainer/MapContainer';
 export { SampleEntitiesOptionsCount } from './components/SampleEntitiesOptionsCount/SampleEntitiesOptionsCount';
 export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons/SearchEntityPagingButtons';
 export { SearchEntityPagingCount } from './components/SearchEntityPagingCount/SearchEntityPagingCount';

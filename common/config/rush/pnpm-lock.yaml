@@ -12,6 +12,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sql.js': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
+      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@types/codemirror': ~5.60.5
       '@types/react': ~18.0.0
@@ -39,6 +40,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
+      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       '@jonasb/datadata-server': link:../../libraries/server
       graphiql: 1.9.3_eb254dc1525e8924d082cfabd5c2296b
       graphql: 16.5.0
@@ -213,6 +215,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
+      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@types/debug': ~4.1.7
@@ -250,6 +253,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
+      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       '@jonasb/datadata-server': link:../../libraries/server
       debug: 4.3.4
       graphql: 16.5.0
@@ -282,6 +286,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
+      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
@@ -310,7 +315,6 @@ importers:
       prettier: 2.6.2
       react: ~18.1.0
       react-dom: ~18.1.0
-      react-leaflet: ~4.0.0
       svgo: ~2.8.0
       swr: ~1.3.0
       tslib: ~2.4.0
@@ -321,11 +325,11 @@ importers:
       '@editorjs/editorjs': 2.24.3
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
+      '@jonasb/datadata-leaflet': link:../leaflet
       leaflet: 1.8.0
       lodash: 4.17.21
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      react-leaflet: 4.0.0_fb85b8de45cf8c3e28a257845956bbe4
       swr: 1.3.0_react@18.1.0
       tslib: 2.4.0
     devDependencies:
@@ -813,6 +817,43 @@ importers:
       typescript: 4.7.2
       uuid: 8.3.2
       vitest: 0.13.1
+
+  ../../libraries/leaflet:
+    specifiers:
+      '@jonasb/datadata-heft-node-rig': workspace:*
+      '@jonasb/eslint-config-datadata-generic': workspace:*
+      '@rushstack/heft': ~0.45.5
+      '@types/leaflet': ~1.7.9
+      '@types/leaflet.locatecontrol': ~0.74.0
+      '@types/react': ~18.0.0
+      eslint: ^8.16.0
+      leaflet: ~1.8.0
+      leaflet.locatecontrol: ~0.76.1
+      mini-svg-data-uri: ~1.4.4
+      prettier: 2.6.2
+      react: ~18.1.0
+      react-leaflet: ~4.0.0
+      svgo: ~2.8.0
+      tslib: ~2.4.0
+      typescript: ^4.7.2
+    dependencies:
+      leaflet: 1.8.0
+      leaflet.locatecontrol: 0.76.1
+      react: 18.1.0
+      react-leaflet: 4.0.0_leaflet@1.8.0+react@18.1.0
+      tslib: 2.4.0
+    devDependencies:
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
+      '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
+      '@rushstack/heft': 0.45.5
+      '@types/leaflet': 1.7.9
+      '@types/leaflet.locatecontrol': 0.74.0
+      '@types/react': 18.0.0
+      eslint: 8.16.0
+      mini-svg-data-uri: 1.4.4
+      prettier: 2.6.2
+      svgo: 2.8.0
+      typescript: 4.7.2
 
   ../../libraries/postgres:
     specifiers:
@@ -3297,7 +3338,7 @@ packages:
     resolution: {integrity: sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==}
     dev: true
 
-  /@react-leaflet/core/2.0.0_fb85b8de45cf8c3e28a257845956bbe4:
+  /@react-leaflet/core/2.0.0_leaflet@1.8.0+react@18.1.0:
     resolution: {integrity: sha512-SQQ5DCQIaLzvslN6wCXs5OWqtlvk1Ubv2n5d7zTM8SDl9hM5Rr2wVy7/nOCIY958D75/ovhq6ZoSvT7GLCX6sg==}
     peerDependencies:
       leaflet: ^1.8.0
@@ -3306,7 +3347,6 @@ packages:
     dependencies:
       leaflet: 1.8.0
       react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /@rollup/pluginutils/4.2.0:
@@ -5071,6 +5111,12 @@ packages:
       indefinite-observable: 1.0.2
     dev: false
 
+  /@types/leaflet.locatecontrol/0.74.0:
+    resolution: {integrity: sha512-FxJcd5/8CvjQARz86QY+ZquKORvaFZYObYFC0fK/N/4kXTD8dhS+KUxjZCPVz54K/jWkiOvzHV2xqfxnPKf/Iw==}
+    dependencies:
+      '@types/leaflet': 1.7.9
+    dev: true
+
   /@types/leaflet/1.7.9:
     resolution: {integrity: sha512-H8vPgD49HKzqM41ArHGZM70g/tfhp8W+JcPxfnF+5H/Xvp+xiP+KQOUNWU8U89fqS1Jj3cpRY/+nbnaHFzwnFA==}
     dependencies:
@@ -6557,7 +6603,7 @@ packages:
       unpipe: 1.0.0
 
   /boolbase/1.0.0:
-    resolution: {integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=}
+    resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
     dev: true
 
   /boxen/5.1.2:
@@ -10902,6 +10948,10 @@ packages:
       dotenv-expand: 5.1.0
     dev: true
 
+  /leaflet.locatecontrol/0.76.1:
+    resolution: {integrity: sha512-qA92Mxs2N1jgVx+EdmxtDrdzFD+f2llPJbqaKvmW1epZMSIvD6KNsBjpQYUIxz4XtJkOleqRSwWQcrm5P5NnYw==}
+    dev: false
+
   /leaflet/1.8.0:
     resolution: {integrity: sha512-gwhMjFCQiYs3x/Sf+d49f10ERXaEFCPr+nVTryhAW8DWbMGqJqt9G4XuIaHmFW08zYvhgdzqXGr8AlW8v8dQkA==}
     dev: false
@@ -12926,17 +12976,16 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: true
 
-  /react-leaflet/4.0.0_fb85b8de45cf8c3e28a257845956bbe4:
+  /react-leaflet/4.0.0_leaflet@1.8.0+react@18.1.0:
     resolution: {integrity: sha512-qJJvoCNe12XHSWVUwhXYmMObPoSYy8h/hn0aDNvcBuq3O8zmVI5S2RdabhaDg/iWMCJ2jbCWZWtIU5VtztO9sg==}
     peerDependencies:
       leaflet: ^1.8.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 2.0.0_fb85b8de45cf8c3e28a257845956bbe4
+      '@react-leaflet/core': 2.0.0_leaflet@1.8.0+react@18.1.0
       leaflet: 1.8.0
       react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /react-lifecycles-compat/3.0.4:

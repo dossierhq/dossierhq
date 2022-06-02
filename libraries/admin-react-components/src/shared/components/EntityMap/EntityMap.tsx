@@ -7,11 +7,14 @@ import type {
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
+import { MapContainer } from '@jonasb/datadata-leaflet';
 import type { Dispatch, ReactNode } from 'react';
 import React, { useCallback } from 'react';
 import { SearchEntityStateActions } from '../..';
 import type { SearchEntityState, SearchEntityStateAction } from '../../..';
-import { MapContainer } from '../../..';
+
+//TODO make configurable through a context. also max bounds
+const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;
 
 export interface EntityMapProps<TEntity> {
   className?: string;
@@ -52,10 +55,11 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
   return (
     <MapContainer
       className={className}
-      center={center}
+      center={center ?? defaultCenter}
       resetSignal={resetSignal}
       onBoundingBoxChanged={handleBoundingBoxChange}
     >
+      <MapContainer.LocateControl />
       {schema && entities
         ? entities.map((entityResult) => {
             if (entityResult.isError()) {
