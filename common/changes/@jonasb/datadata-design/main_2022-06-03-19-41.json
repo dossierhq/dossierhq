@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Change how import of icons are made to appease Next JS",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
