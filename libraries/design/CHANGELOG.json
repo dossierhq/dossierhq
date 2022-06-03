@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-design",
   "entries": [
     {
+      "version": "0.1.17",
+      "tag": "@jonasb/datadata-design_v0.1.17",
+      "date": "Fri, 03 Jun 2022 19:47:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Change how import of icons are made to appease Next JS"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.16",
       "tag": "@jonasb/datadata-design_v0.1.16",
       "date": "Thu, 02 Jun 2022 22:03:43 GMT",
