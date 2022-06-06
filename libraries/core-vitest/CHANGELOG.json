@@ -2,6 +2,12 @@
   "name": "@jonasb/datadata-core-vitest",
   "entries": [
     {
+      "version": "0.1.20",
+      "tag": "@jonasb/datadata-core-vitest_v0.1.20",
+      "date": "Mon, 06 Jun 2022 22:23:03 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.19",
       "tag": "@jonasb/datadata-core-vitest_v0.1.19",
       "date": "Mon, 06 Jun 2022 15:26:55 GMT",
