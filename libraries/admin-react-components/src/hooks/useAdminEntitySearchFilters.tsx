@@ -3,7 +3,11 @@ import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb
 import isEqual from 'lodash/isEqual';
 import type { Dispatch } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { AdminDataDataContext, initializeStatusSelectorState, reduceStatusSelectorState } from '..';
+import { AdminDataDataContext } from '..';
+import {
+  initializeStatusSelectorState,
+  reduceStatusSelectorState,
+} from '../components/StatusSelector/StatusSelector.js';
 import {
   initializeAuthKeySelectorState,
   reduceAuthKeySelectorState,

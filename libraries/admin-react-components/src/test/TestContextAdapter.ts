@@ -26,7 +26,7 @@ import {
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
-import type { AdminDataDataContextAdapter } from '..';
+import type { AdminDataDataContextAdapter } from '../contexts/AdminDataDataContext.js';
 import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
 import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
 

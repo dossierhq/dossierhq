@@ -1,6 +1,9 @@
 import { Field, TagSelector } from '@jonasb/datadata-design';
 import React from 'react';
-import type { StatusSelectorDispatch, StatusSelectorState } from '../..';
+import type {
+  StatusSelectorDispatch,
+  StatusSelectorState,
+} from '../StatusSelector/StatusSelector.js';
 
 interface Props {
   state: StatusSelectorState;
