@@ -8,8 +8,9 @@ import {
   toSizeClassName,
 } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
-import { PublishedDataDataContext, PublishedEntityMapMarker } from '../../published/index.js';
 import {
   EntityMap,
   initializeSearchEntityState,

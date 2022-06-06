@@ -19,11 +19,9 @@ import {
   SearchOrSampleEntitiesButtons,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../..';
-import {
-  PublishedDataDataContext,
-  PublishedEntityList,
-  PublishedEntityMapMarker,
-} from '../../published';
+import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
+import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 
 export interface PublishedEntityListScreenProps {

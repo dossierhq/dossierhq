@@ -2,7 +2,8 @@ import type { EntityReference } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import React, { useCallback, useContext } from 'react';
-import { PublishedDataDataContext, usePublishedEntity } from '../../published/index.js';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import type { FieldDisplayProps } from './FieldDisplay';
 
 type Props = FieldDisplayProps<EntityReference>;

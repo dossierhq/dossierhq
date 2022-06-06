@@ -2,7 +2,8 @@ import type { EntityReference } from '@jonasb/datadata-core';
 import { FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
 import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';
-import { PublishedDataDataContext, usePublishedEntity } from '../../published';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 
 export interface PublishedEntityDetailScreenProps {
   header?: React.ReactNode;
