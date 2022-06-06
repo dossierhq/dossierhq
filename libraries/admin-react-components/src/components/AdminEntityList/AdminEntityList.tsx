@@ -3,7 +3,7 @@ import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { EmptyStateMessage, InstantDisplay, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import { AdminDataDataContext, StatusTag } from '../..';
+import { AdminDataDataContext } from '../..';
 import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
   SearchEntityState,
@@ -11,6 +11,7 @@ import type {
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
+import { StatusTag } from '../StatusTag/StatusTag.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
