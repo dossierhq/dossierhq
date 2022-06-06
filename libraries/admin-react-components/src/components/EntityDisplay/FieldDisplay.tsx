@@ -13,6 +13,7 @@ import {
   isValueTypeField,
   isValueTypeListField,
 } from '@jonasb/datadata-core';
+import { Text } from '@jonasb/datadata-design';
 import React from 'react';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
@@ -29,6 +30,15 @@ export interface FieldDisplayProps<T> {
 
 export function FieldDisplay({ value, ...props }: FieldDisplayProps<unknown>) {
   const { fieldSpec } = props;
+
+  if (value === null) {
+    return (
+      <Text textStyle="body1">
+        <em>Empty</em>
+      </Text>
+    );
+  }
+
   let display;
   if (isBooleanField(fieldSpec, value)) {
     display = <BooleanFieldDisplay {...props} value={value} />;
