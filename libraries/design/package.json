@@ -2,7 +2,6 @@
   "name": "@jonasb/datadata-design",
   "version": "0.1.17",
   "description": "",
-  "type": "module",
   "exports": {
     ".": {
       "import": "./lib/esm/index.js",
@@ -15,7 +14,7 @@
   },
   "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && (npm run css:build 2>&1) && post-process-build cjs-package-json",
+    "build": "npm run prettier:check && heft build --clean && (npm run css:build 2>&1) && post-process-build esm-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "css:build": "sass src/styles/main.scss lib/main.css",
