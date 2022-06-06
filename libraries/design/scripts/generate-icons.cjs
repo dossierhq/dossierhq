@@ -35,9 +35,10 @@ function loadIcons() {
   const result = [];
   for (const [name, iconSource] of Object.entries(iconSources)) {
     const [width, height, _ligatures, _unicode, svgPathData] = iconSource.icon;
+    // TODO use fixed color for now. Background SVG images don't pickup the currentColor. In order to support different colors we need to apply css filter or css mask
     result.push({
       name,
-      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><path fill="currentColor" d="${svgPathData}"/></svg>`,
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><path fill="#4a4a4a" d="${svgPathData}"/></svg>`,
     });
   }
   result.sort((a, b) => a.name.localeCompare(b.name));
