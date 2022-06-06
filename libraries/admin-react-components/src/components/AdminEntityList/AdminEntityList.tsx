@@ -3,8 +3,14 @@ import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { EmptyStateMessage, InstantDisplay, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../..';
-import { AuthKeyTag, AdminDataDataContext, SearchEntityStateActions, StatusTag } from '../..';
+import { AdminDataDataContext, StatusTag } from '../..';
+import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 
 interface Props {
   searchEntityState: SearchEntityState;

@@ -12,7 +12,7 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React from 'react';
-import type { DisplayAuthKey } from '../..';
+import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag';
 
 export interface AuthKeyItem extends MultipleSelectorItem {

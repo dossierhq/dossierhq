@@ -23,12 +23,12 @@ import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContex
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
 import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/EntityDraftTraverser';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
-  EntityMap,
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-} from '../../shared';
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
 import { EntityDraftMapMarker } from './EntityDraftMapMarker';
 import { initializeLocationState, reduceLocation } from './LocationReducer';

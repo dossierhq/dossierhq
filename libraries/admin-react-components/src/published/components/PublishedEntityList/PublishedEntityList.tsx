@@ -3,8 +3,13 @@ import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../../..';
-import { AuthKeyTag, SearchEntityStateActions } from '../../..';
+import { AuthKeyTag } from '../../../shared/components/AuthKeyTag/AuthKeyTag.js';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import { PublishedDataDataContext } from '../../contexts/PublishedDataDataContext.js';
 
 interface Props {

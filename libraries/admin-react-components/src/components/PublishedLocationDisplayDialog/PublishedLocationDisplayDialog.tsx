@@ -11,12 +11,12 @@ import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
+import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
-  EntityMap,
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-} from '../../shared';
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface PublishedLocationDisplayDialogProps {
   show: boolean;

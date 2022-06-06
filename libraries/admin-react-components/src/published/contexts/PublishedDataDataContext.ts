@@ -6,7 +6,7 @@ import type {
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
-import type { DisplayAuthKey } from '../..';
+import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 
 export interface PublishedDataDataContextValue {
   publishedClient: PublishedClient;

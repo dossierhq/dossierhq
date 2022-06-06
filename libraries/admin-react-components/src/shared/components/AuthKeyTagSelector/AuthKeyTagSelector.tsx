@@ -1,6 +1,9 @@
 import { Field, TagSelector } from '@jonasb/datadata-design';
 import React from 'react';
-import type { AuthKeySelectorDispatch, AuthKeySelectorState } from '../..';
+import type {
+  AuthKeySelectorDispatch,
+  AuthKeySelectorState,
+} from '../AuthKeySelector/AuthKeySelector.js';
 
 interface Props {
   state: AuthKeySelectorState;

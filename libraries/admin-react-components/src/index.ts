@@ -33,5 +33,6 @@ export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScr
 export { PublishedEntityDetailScreen } from './screens/PublishedEntityDetailScreen/PublishedEntityDetailScreen';
 export { PublishedEntityListScreen } from './screens/PublishedEntityListScreen/PublishedEntityListScreen';
 export { SchemaEditorScreen } from './screens/SchemaEditorScreen/SchemaEditorScreen';
-export * from './shared';
+export type { EntitySearchStateUrlQuery } from './shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
+export type { DisplayAuthKey } from './shared/types/DisplayAuthKey.js';
 export { createCachingAdminMiddleware, type SwrConfigRef } from './utils/CachingAdminMiddleware';

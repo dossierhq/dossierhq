@@ -2,8 +2,11 @@ import { Input } from '@jonasb/datadata-design';
 import debounce from 'lodash/debounce';
 import type { Dispatch } from 'react';
 import React, { useMemo, useState } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../..';
-import { SearchEntityStateActions } from '../..';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface Props {
   searchEntityState: SearchEntityState;

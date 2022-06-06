@@ -1,24 +1,28 @@
 import type { AdminEntity } from '@jonasb/datadata-core';
 import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../..';
 import {
   AdminDataDataContext,
   AdminEntityList,
   AdminEntityMapMarker,
-  AuthKeyTagSelector,
-  EntityMap,
-  EntityTypeTagSelector,
-  initializeSearchEntityStateFromUrlQuery,
-  reduceSearchEntityState,
-  SearchEntityStateActions,
-  SearchOrSampleEntitiesButtons,
   StatusTagSelector,
   useAdminLoadEntitySearch,
-  useSynchronizeUrlQueryAndSearchEntityState,
 } from '../..';
 import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
+import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
+import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
+import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
+import {
+  reduceSearchEntityState,
+  SearchEntityStateActions,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import type { EntitySearchStateUrlQuery } from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
+import {
+  initializeSearchEntityStateFromUrlQuery,
+  useSynchronizeUrlQueryAndSearchEntityState,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 
 export interface AdminEntityListScreenProps {
   header?: React.ReactNode;

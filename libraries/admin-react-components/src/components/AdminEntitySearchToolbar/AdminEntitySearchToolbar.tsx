@@ -2,18 +2,17 @@ import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb
 import { IconButton } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEventHandler } from 'react';
 import React, { useContext } from 'react';
-import {
-  AdminDataDataContext,
-  AdminTypePicker,
-  AuthKeySelector,
-  EntityTypeSelector,
-  SearchEntitySearchInput,
-  StatusSelector,
-} from '../..';
-import type { StatusItem } from '../StatusSelector/StatusSelector';
-import type { SearchEntityState, SearchEntityStateAction } from '../../shared';
+import { AdminDataDataContext, AdminTypePicker, StatusSelector } from '../..';
 import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector';
+import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector';
 import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector';
+import { EntityTypeSelector } from '../../shared/components/EntityTypeSelector/EntityTypeSelector';
+import { SearchEntitySearchInput } from '../../shared/components/SearchEntitySearchInput/SearchEntitySearchInput.js';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import type { StatusItem } from '../StatusSelector/StatusSelector';
 
 interface Props {
   showMap: boolean;
