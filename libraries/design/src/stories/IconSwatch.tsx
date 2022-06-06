@@ -1,6 +1,6 @@
 import React from 'react';
 import type { IconName, IconProps } from '../components/Icon/Icon.js';
-import { icons } from '../components/Icon/Icon.js';
+import { ICON_NAMES } from '../components/NewIcon/NewIcon.js';
 import { Icon, Table } from '../components/index.js';
 
 const sizes = ['small', '', 'medium', 'large'] as const;
@@ -22,13 +22,15 @@ export function AllIconSwatches(): JSX.Element {
   return (
     <Table>
       <Table.Head>
-        <Table.Header>Name</Table.Header>
-        {sizes.map((size, i) => (
-          <Table.Header key={i}>{`Size: ${size}`}</Table.Header>
-        ))}
+        <Table.Row>
+          <Table.Header>Name</Table.Header>
+          {sizes.map((size, i) => (
+            <Table.Header key={i}>{`Size: ${size}`}</Table.Header>
+          ))}
+        </Table.Row>
       </Table.Head>
       <Table.Body>
-        {Object.keys(icons).map((icon) => (
+        {ICON_NAMES.map((icon) => (
           <IconSwatch key={icon} icon={icon as IconName} />
         ))}
       </Table.Body>

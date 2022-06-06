@@ -1,5 +1,6 @@
 @import './bulma.scss';
 @import './colors.scss';
+@import './icons.scss';
 
 tr.is-sticky-row :is(td, th),
 :not(tr).is-sticky-row {
@@ -137,4 +138,21 @@ tr.is-sticky-row :is(td, th),
 .hover-reveal-container:hover > .item,
 .hover-reveal-container > .item.is-visible {
   visibility: visible;
+}
+
+.icon-asset {
+  height: 1em;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.icon-asset-s {
+  font-size: 0.875em;
+}
+.icon-asset-m {
+  font-size: 1.25em;
+}
+.icon-asset-l {
+  font-size: 2em;
 }

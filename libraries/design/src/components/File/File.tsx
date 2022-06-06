@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ChangeEventHandler } from 'react';
 import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import { icons } from '../Icon/Icon.js';
+import { IconAsset } from '../NewIcon/NewIcon.js';
 
 export interface FileProps {
   className?: string;
@@ -18,7 +17,7 @@ export function File({ className, accept, boxed, onChange }: FileProps): JSX.Ele
         <input className="file-input" type="file" accept={accept} onChange={onChange} />
         <span className="file-cta">
           <span className="file-icon">
-            <FontAwesomeIcon icon={icons['upload']} />
+            <IconAsset icon="upload" />
           </span>
           <span className="file-label">Choose a file…</span>
         </span>
