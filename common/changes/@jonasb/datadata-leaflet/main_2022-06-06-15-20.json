@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-leaflet",
+      "comment": "Fix icon name clash",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-leaflet"
+}
