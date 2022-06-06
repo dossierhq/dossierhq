@@ -2,6 +2,12 @@
   "name": "@jonasb/datadata-leaflet",
   "entries": [
     {
+      "version": "0.1.18",
+      "tag": "@jonasb/datadata-leaflet_v0.1.18",
+      "date": "Mon, 06 Jun 2022 14:27:59 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.17",
       "tag": "@jonasb/datadata-leaflet_v0.1.17",
       "date": "Fri, 03 Jun 2022 19:47:15 GMT",

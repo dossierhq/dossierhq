@@ -1,6 +1,11 @@
 # Change Log - @jonasb/datadata-core-vitest
 
-This log was last generated on Fri, 03 Jun 2022 19:47:15 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 14:27:59 GMT and should not be manually modified.
+
+## 0.1.18
+Mon, 06 Jun 2022 14:27:59 GMT
+
+_Version update only_
 
 ## 0.1.17
 Fri, 03 Jun 2022 19:47:15 GMT
