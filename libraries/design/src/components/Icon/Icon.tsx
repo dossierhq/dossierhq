@@ -1,24 +1,3 @@
-import {
-  faArrowDownShortWide,
-  faChevronDown,
-  faChevronUp,
-  faDownload,
-  faFastBackward,
-  faFastForward,
-  faLocationPin,
-  faMapMarkedAlt,
-  faPlusSquare,
-  faSearch,
-  faShuffle,
-  faSortDown,
-  faSortUp,
-  faStepBackward,
-  faStepForward,
-  faThList,
-  faUpload,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { CSSProperties } from 'react';
 import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
@@ -31,28 +10,28 @@ export interface IconProps {
   size?: 'small' | '' | 'medium' | 'large';
 }
 
-export const icons = {
-  add: faPlusSquare,
-  chevronDown: faChevronDown,
-  chevronUp: faChevronUp,
-  close: faXmark,
-  download: faDownload,
-  first: faFastBackward,
-  last: faFastForward,
-  list: faThList,
-  location: faLocationPin,
-  map: faMapMarkedAlt,
-  next: faStepForward,
-  orderAsc: faSortDown,
-  orderDesc: faSortUp,
-  ordered: faArrowDownShortWide,
-  previous: faStepBackward,
-  search: faSearch,
-  shuffle: faShuffle,
-  upload: faUpload,
-};
+export const ICON_NAMES = [
+  'add',
+  'chevronDown',
+  'chevronUp',
+  'close',
+  'download',
+  'first',
+  'last',
+  'list',
+  'location',
+  'map',
+  'next',
+  'orderAsc',
+  'orderDesc',
+  'ordered',
+  'previous',
+  'search',
+  'shuffle',
+  'upload',
+] as const;
 
-export type IconName = keyof typeof icons;
+export type IconName = typeof ICON_NAMES[number];
 
 const containerSize = {
   small: 'is-small',
@@ -60,22 +39,15 @@ const containerSize = {
   large: 'is-large',
 };
 
-const iconSize = {
-  small: 'sm',
-  medium: 'lg',
-  large: '2x',
-} as const;
+const assetSize = { small: 'icon-asset-s', medium: 'icon-asset-m', large: 'icon-asset-l' } as const;
 
 export function Icon({ className, style, icon, text, size }: IconProps): JSX.Element {
-  const iconImage = icon ? icons[icon] : null;
   const bulmaIcon = (
     <span
       className={toClassName('icon', size && containerSize[size], !text && className)}
       style={text ? undefined : style}
     >
-      {iconImage ? (
-        <FontAwesomeIcon icon={iconImage} size={size ? iconSize[size] : undefined} />
-      ) : null}
+      <IconAsset icon={icon} size={size} />
     </span>
   );
   if (text) {
@@ -86,4 +58,14 @@ export function Icon({ className, style, icon, text, size }: IconProps): JSX.Ele
     );
   }
   return bulmaIcon;
+}
+
+export function IconAsset({
+  icon,
+  size,
+}: {
+  icon?: IconName | null;
+  size?: 'small' | '' | 'medium' | 'large';
+}) {
+  return <span className={toClassName(`icon-asset icon-${icon}`, size && assetSize[size])} />;
 }

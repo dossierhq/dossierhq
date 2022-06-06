@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { IconProps } from './Icon.js';
-import { Icon } from './Icon.js';
+import type { IconProps } from './Icon.jsx';
+import { Icon } from './Icon.jsx';
 
 interface StoryProps extends IconProps {
   prefixText?: string;
