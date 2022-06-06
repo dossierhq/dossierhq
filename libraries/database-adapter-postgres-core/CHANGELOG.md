@@ -1,6 +1,11 @@
 # Change Log - @jonasb/datadata-database-adapter-postgres-core
 
-This log was last generated on Mon, 06 Jun 2022 15:26:55 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 22:23:03 GMT and should not be manually modified.
+
+## 0.1.20
+Mon, 06 Jun 2022 22:23:03 GMT
+
+_Version update only_
 
 ## 0.1.19
 Mon, 06 Jun 2022 15:26:55 GMT

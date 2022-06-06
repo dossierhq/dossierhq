@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-admin-react-components
 
-This log was last generated on Mon, 06 Jun 2022 15:26:55 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 22:23:03 GMT and should not be manually modified.
+
+## 0.1.20
+Mon, 06 Jun 2022 22:23:03 GMT
+
+### Updates
+
+- New published UI. Clean up exports.
 
 ## 0.1.19
 Mon, 06 Jun 2022 15:26:55 GMT
