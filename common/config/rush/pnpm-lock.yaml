@@ -733,11 +733,13 @@ importers:
       eslint-plugin-react-hooks: ~4.5.0
       eslint-plugin-storybook: ~0.5.12
       lodash: ~4.17.21
+      mini-svg-data-uri: ~1.4.4
       prettier: 2.6.2
       react: ~18.1.0
       react-dom: ~18.1.0
       sass: ~1.50.0
       sass-loader: ~12.6.0
+      svgo: ~2.8.0
       tslib: ~2.4.0
       typescript: ^4.7.2
     dependencies:
@@ -772,9 +774,11 @@ importers:
       eslint-plugin-react: 7.30.0_eslint@8.16.0
       eslint-plugin-react-hooks: 4.5.0_eslint@8.16.0
       eslint-plugin-storybook: 0.5.12_eslint@8.16.0+typescript@4.7.2
+      mini-svg-data-uri: 1.4.4
       prettier: 2.6.2
       sass: 1.50.0
       sass-loader: 12.6.0_sass@1.50.0
+      svgo: 2.8.0
       typescript: 4.7.2
 
   ../../libraries/graphql:

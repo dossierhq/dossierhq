@@ -1,4 +1,23 @@
-import * as svgIcons from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowDownShortWide,
+  faChevronDown,
+  faChevronUp,
+  faDownload,
+  faFastBackward,
+  faFastForward,
+  faLocationPin,
+  faMapMarkedAlt,
+  faPlusSquare,
+  faSearch,
+  faShuffle,
+  faSortDown,
+  faSortUp,
+  faStepBackward,
+  faStepForward,
+  faThList,
+  faUpload,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { CSSProperties } from 'react';
 import React from 'react';
@@ -13,24 +32,24 @@ export interface IconProps {
 }
 
 export const icons = {
-  add: svgIcons.faPlusSquare,
-  chevronDown: svgIcons.faChevronDown,
-  chevronUp: svgIcons.faChevronUp,
-  close: svgIcons.faXmark,
-  download: svgIcons.faDownload,
-  first: svgIcons.faFastBackward,
-  last: svgIcons.faFastForward,
-  list: svgIcons.faThList,
-  location: svgIcons.faLocationPin,
-  map: svgIcons.faMapMarkedAlt,
-  next: svgIcons.faStepForward,
-  orderAsc: svgIcons.faSortDown,
-  orderDesc: svgIcons.faSortUp,
-  ordered: svgIcons.faArrowDownShortWide,
-  previous: svgIcons.faStepBackward,
-  search: svgIcons.faSearch,
-  shuffle: svgIcons.faShuffle,
-  upload: svgIcons.faUpload,
+  add: faPlusSquare,
+  chevronDown: faChevronDown,
+  chevronUp: faChevronUp,
+  close: faXmark,
+  download: faDownload,
+  first: faFastBackward,
+  last: faFastForward,
+  list: faThList,
+  location: faLocationPin,
+  map: faMapMarkedAlt,
+  next: faStepForward,
+  orderAsc: faSortDown,
+  orderDesc: faSortUp,
+  ordered: faArrowDownShortWide,
+  previous: faStepBackward,
+  search: faSearch,
+  shuffle: faShuffle,
+  upload: faUpload,
 };
 
 export type IconName = keyof typeof icons;
