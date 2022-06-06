@@ -1,19 +1,20 @@
 import type { Location, PublishedEntity } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
+import type { MarkerColor } from '@jonasb/datadata-leaflet';
 import React from 'react';
 
-export function PublishedEntityMapMarker({
-  entity,
-  location,
-  onClick,
-}: {
+interface Props {
+  color?: MarkerColor;
   entity: PublishedEntity;
   location: Location;
-  onClick: () => void;
-}) {
+  onClick?: () => void;
+}
+
+export function PublishedEntityMapMarker({ color, entity, location, onClick }: Props) {
   return (
     <MapContainer.Marker
+      color={color}
       location={location}
       tooltip={
         <Column>

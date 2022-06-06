@@ -1,4 +1,4 @@
-import type { PublishedEntity, PublishedQuery, PublishedSearchQuery } from '@jonasb/datadata-core';
+import type { PublishedEntity } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
@@ -20,12 +20,11 @@ import {
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../..';
 import {
+  PublishedDataDataContext,
   PublishedEntityList,
   PublishedEntityMapMarker,
-  PublishedDataDataContext,
-  useLoadPublishedSampleEntities,
-  useLoadPublishedSearchEntitiesAndTotalCount,
 } from '../../published';
+import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 
 export interface PublishedEntityListScreenProps {
   header?: React.ReactNode;
@@ -109,17 +108,7 @@ export function PublishedEntityListScreen({
   );
 
   // load search/total or sampling
-  useLoadPublishedSearchEntitiesAndTotalCount(
-    searchEntityState.paging ? (searchEntityState.query as PublishedSearchQuery) : undefined,
-    searchEntityState.paging,
-    dispatchSearchEntityState
-  );
-
-  useLoadPublishedSampleEntities(
-    searchEntityState.sampling ? (searchEntityState.query as PublishedQuery) : undefined,
-    searchEntityState.sampling,
-    dispatchSearchEntityState
-  );
+  usePublishedLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
