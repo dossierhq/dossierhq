@@ -1,7 +1,7 @@
 import type { ClientContext, PublishedClientMiddleware } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
-import { PublishedDataDataProvider } from '..';
 import { createBackendPublishedClient, DISPLAY_AUTH_KEYS } from '../../test/TestContextAdapter';
+import { PublishedDataDataProvider } from '../components/PublishedDataDataProvider/PublishedDataDataProvider.js';
 
 interface Props {
   publishedClientMiddleware?: PublishedClientMiddleware<ClientContext>[];
