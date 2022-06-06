@@ -172,8 +172,8 @@ function LocateControl({ outsideMapBoundsMsg, showPopup, title }: LocateControlP
     if (title) strings.title = title;
 
     const locateControl = control.locate({
-      icon: 'icon-location leaflet-icon',
-      iconLoading: 'icon-location leaflet-icon is-pulsing',
+      icon: 'icon-map-location leaflet-icon',
+      iconLoading: 'icon-map-location leaflet-icon is-pulsing',
       showPopup,
       strings,
     });
