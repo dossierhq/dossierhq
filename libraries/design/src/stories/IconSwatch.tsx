@@ -1,6 +1,6 @@
 import React from 'react';
 import type { IconName, IconProps } from '../components/Icon/Icon.js';
-import { ICON_NAMES } from '../components/NewIcon/NewIcon.js';
+import { ICON_NAMES } from '../components/Icon/Icon.jsx';
 import { Icon, Table } from '../components/index.js';
 
 const sizes = ['small', '', 'medium', 'large'] as const;

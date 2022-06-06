@@ -708,9 +708,7 @@ importers:
     specifiers:
       '@babel/core': ^7.17.9
       '@creativebulma/bulma-badge': ~1.0.1
-      '@fortawesome/fontawesome-svg-core': ~6.1.1
       '@fortawesome/free-solid-svg-icons': ~6.1.1
-      '@fortawesome/react-fontawesome': ~0.1.18
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.45.5
@@ -744,9 +742,7 @@ importers:
       typescript: ^4.7.2
     dependencies:
       '@creativebulma/bulma-badge': 1.0.1
-      '@fortawesome/fontawesome-svg-core': 6.1.1
       '@fortawesome/free-solid-svg-icons': 6.1.1
-      '@fortawesome/react-fontawesome': 0.1.18_3a4aa64e1b793e119583fa1b1a3cd25b
       '@js-temporal/polyfill': 0.4.0
       lodash: 4.17.21
       react: 18.1.0
@@ -2669,31 +2665,12 @@ packages:
     requiresBuild: true
     dev: false
 
-  /@fortawesome/fontawesome-svg-core/6.1.1:
-    resolution: {integrity: sha512-NCg0w2YIp81f4V6cMGD9iomfsIj7GWrqmsa0ZsPh59G7PKiGN1KymZNxmF00ssuAlo/VZmpK6xazsGOwzKYUMg==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
-    dev: false
-
   /@fortawesome/free-solid-svg-icons/6.1.1:
     resolution: {integrity: sha512-0/5exxavOhI/D4Ovm2r3vxNojGZioPwmFrKg0ZUH69Q68uFhFPs6+dhAToh6VEQBntxPRYPuT5Cg1tpNa9JUPg==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.1.1
-    dev: false
-
-  /@fortawesome/react-fontawesome/0.1.18_3a4aa64e1b793e119583fa1b1a3cd25b:
-    resolution: {integrity: sha512-RwLIB4TZw0M9gvy5u+TusAA0afbwM4JQIimNH/j3ygd6aIvYPQLqXMhC9ErY26J23rDPyDZldIfPq/HpTTJ/tQ==}
-    peerDependencies:
-      '@fortawesome/fontawesome-svg-core': ~1 || ~6
-      react: '>=16.x'
-    dependencies:
-      '@fortawesome/fontawesome-svg-core': 6.1.1
-      prop-types: 15.8.1
-      react: 18.1.0
     dev: false
 
   /@gar/promisify/1.1.2:
@@ -12713,6 +12690,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: true
 
   /property-information/5.6.0:
     resolution: {integrity: sha512-YUHSPk+A30YPv+0Qf8i9Mbfe/C0hdPXk1s1jPVToV8pk8BQtpw10ct89Eo7OWkutrwqvT0eicAxlOg3dOAu8JA==}
