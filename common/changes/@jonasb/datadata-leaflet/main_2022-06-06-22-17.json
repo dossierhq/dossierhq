@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-leaflet",
+      "comment": "Export MarkerColor",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-leaflet"
+}
