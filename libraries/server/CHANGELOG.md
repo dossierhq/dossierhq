@@ -1,6 +1,11 @@
 # Change Log - @jonasb/datadata-server
 
-This log was last generated on Mon, 06 Jun 2022 14:27:59 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 15:26:55 GMT and should not be manually modified.
+
+## 0.1.19
+Mon, 06 Jun 2022 15:26:55 GMT
+
+_Version update only_
 
 ## 0.1.18
 Mon, 06 Jun 2022 14:27:59 GMT

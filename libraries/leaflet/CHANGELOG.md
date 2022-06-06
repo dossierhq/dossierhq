@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-leaflet
 
-This log was last generated on Mon, 06 Jun 2022 14:27:59 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 15:26:55 GMT and should not be manually modified.
+
+## 0.1.19
+Mon, 06 Jun 2022 15:26:55 GMT
+
+### Updates
+
+- Fix icon name clash
 
 ## 0.1.18
 Mon, 06 Jun 2022 14:27:59 GMT
