@@ -3,8 +3,6 @@ export { PublishedEntityList } from './components/PublishedEntityList/PublishedE
 export { PublishedEntityMapMarker } from './components/PublishedEntityMapMarker/PublishedEntityMapMarker';
 export { PublishedDataDataContext } from './contexts/PublishedDataDataContext';
 export type { PublishedDataDataContextValue } from './contexts/PublishedDataDataContext';
-export { useLoadPublishedSampleEntities } from './hooks/useLoadPublishedSampleEntities';
-export { useLoadPublishedSearchEntitiesAndTotalCount } from './hooks/useLoadPublishedSearchEntitiesAndTotalCount';
 export { usePublishedEntity } from './hooks/usePublishedEntity';
 export { usePublishedSchema } from './hooks/usePublishedSchema';
 export { usePublishedSearchEntities } from './hooks/usePublishedSearchEntities';
