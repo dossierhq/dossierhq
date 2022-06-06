@@ -2,7 +2,7 @@ import type { ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import React, { Fragment, useContext } from 'react';
-import { PublishedDataDataContext } from '../../published/index.js';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import type { FieldDisplayProps } from './FieldDisplay';
 import { FieldDisplay } from './FieldDisplay';
 

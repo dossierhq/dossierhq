@@ -3,9 +3,9 @@ import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import { PublishedDataDataContext } from '../..';
 import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../../..';
 import { AuthKeyTag, SearchEntityStateActions } from '../../..';
+import { PublishedDataDataContext } from '../../contexts/PublishedDataDataContext.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
