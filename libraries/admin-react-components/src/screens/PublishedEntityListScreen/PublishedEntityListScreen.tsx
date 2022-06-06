@@ -1,28 +1,34 @@
 import type { PublishedEntity } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../..';
-import {
-  AuthKeySelector,
-  AuthKeyTagSelector,
-  EntityMap,
-  EntityTypeSelector,
-  EntityTypeTagSelector,
-  initializeAuthKeySelectorState,
-  initializeEntityTypeSelectorState,
-  initializeSearchEntityStateFromUrlQuery,
-  reduceAuthKeySelectorState,
-  reduceEntityTypeSelectorState,
-  reduceSearchEntityState,
-  SearchEntitySearchInput,
-  SearchEntityStateActions,
-  SearchOrSampleEntitiesButtons,
-  useSynchronizeUrlQueryAndSearchEntityState,
-} from '../..';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
+import {
+  AuthKeySelector,
+  initializeAuthKeySelectorState,
+  reduceAuthKeySelectorState,
+} from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
+import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
+import {
+  EntityTypeSelector,
+  initializeEntityTypeSelectorState,
+  reduceEntityTypeSelectorState,
+} from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
+import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
+import { SearchEntitySearchInput } from '../../shared/components/SearchEntitySearchInput/SearchEntitySearchInput.js';
+import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
+import {
+  reduceSearchEntityState,
+  SearchEntityStateActions,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import type { EntitySearchStateUrlQuery } from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
+import {
+  initializeSearchEntityStateFromUrlQuery,
+  useSynchronizeUrlQueryAndSearchEntityState,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 
 export interface PublishedEntityListScreenProps {
   header?: React.ReactNode;

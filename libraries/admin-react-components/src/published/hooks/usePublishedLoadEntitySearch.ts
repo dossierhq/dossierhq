@@ -1,8 +1,11 @@
 import type { PublishedQuery, PublishedSearchQuery } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../shared/index.js';
-import { SearchEntityStateActions } from '../../shared/index.js';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { PublishedDataDataContext } from '../contexts/PublishedDataDataContext.js';
 import { usePublishedSampleEntities } from './usePublishedSampleEntities.js';
 import { usePublishedSearchEntities } from './usePublishedSearchEntities.js';

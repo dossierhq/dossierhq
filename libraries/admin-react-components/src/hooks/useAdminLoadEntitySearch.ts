@@ -1,14 +1,12 @@
 import type { AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import type { SearchEntityStateAction } from '..';
-import {
-  AdminDataDataContext,
-  SearchEntityStateActions,
-  useAdminSearchEntities,
-  useAdminTotalCount,
-} from '..';
-import type { SearchEntityState } from '../shared';
+import { AdminDataDataContext, useAdminSearchEntities, useAdminTotalCount } from '..';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { useAdminSampleEntities } from './useAdminSampleEntities';
 
 export function useAdminLoadEntitySearch(

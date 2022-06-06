@@ -7,7 +7,8 @@ import type {
   Logger,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
-import type { DisplayAuthKey, EditorJsToolSettings } from '..';
+import type { EditorJsToolSettings } from '..';
+import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
 export interface AdminDataDataContextAdapter {
   getEditorJSConfig(

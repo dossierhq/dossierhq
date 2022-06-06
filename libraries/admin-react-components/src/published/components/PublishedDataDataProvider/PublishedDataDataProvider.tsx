@@ -1,7 +1,7 @@
 import type { Logger, PublishedClient } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
-import type { DisplayAuthKey } from '../../../';
+import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import type { PublishedDataDataContextValue } from '../../contexts/PublishedDataDataContext.js';
 import { PublishedDataDataContext } from '../../contexts/PublishedDataDataContext.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';

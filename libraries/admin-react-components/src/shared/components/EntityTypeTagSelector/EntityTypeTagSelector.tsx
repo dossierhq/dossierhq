@@ -1,6 +1,9 @@
 import { Field, TagSelector } from '@jonasb/datadata-design';
 import React from 'react';
-import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from '../..';
+import type {
+  EntityTypeSelectorDispatch,
+  EntityTypeSelectorState,
+} from '../EntityTypeSelector/EntityTypeSelector.js';
 
 interface Props {
   state: EntityTypeSelectorState;

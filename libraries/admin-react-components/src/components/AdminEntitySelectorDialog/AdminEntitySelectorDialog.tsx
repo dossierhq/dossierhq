@@ -10,15 +10,15 @@ import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
+import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
+import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
+import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 import {
-  AuthKeyTagSelector,
-  EntityMap,
-  EntityTypeTagSelector,
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-  SearchOrSampleEntitiesButtons,
-} from '../../shared';
+} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminEntityList } from '../AdminEntityList/AdminEntityList';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
 import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar';

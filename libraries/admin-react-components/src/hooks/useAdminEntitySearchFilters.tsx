@@ -3,16 +3,17 @@ import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb
 import isEqual from 'lodash/isEqual';
 import type { Dispatch } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import { AdminDataDataContext, initializeStatusSelectorState, reduceStatusSelectorState } from '..';
 import {
-  AdminDataDataContext,
   initializeAuthKeySelectorState,
-  initializeStatusSelectorState,
   reduceAuthKeySelectorState,
-  reduceStatusSelectorState,
-  SearchEntityStateActions,
-} from '..';
-import type { SearchEntityState, SearchEntityStateAction } from '../shared';
+} from '../shared/components/AuthKeySelector/AuthKeySelector.js';
 import type { EntityTypeItem } from '../shared/components/EntityTypeSelector/EntityTypeSelector';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 export function useAdminEntitySearchFilters(
   searchEntityState: SearchEntityState,

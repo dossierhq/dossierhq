@@ -1,8 +1,12 @@
 import type { Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../..';
-import { ConnectionPagingCount, SearchEntityStateActions } from '../..';
+import type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { ConnectionPagingCount } from '../ConnectionPagingCount/ConnectionPagingCount.js';
 
 export function SearchEntityPagingCount({
   searchEntityState,
