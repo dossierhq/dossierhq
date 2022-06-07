@@ -47,7 +47,7 @@ interface FullscreenContainerColumnsProps {
 
 interface FullscreenContainerColumnProps extends PaddingProps, GapProps, FlexContainerProps {
   width?: keyof typeof COLUMN_WIDTHS;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface FullscreenContainerScrollableColumnProps
