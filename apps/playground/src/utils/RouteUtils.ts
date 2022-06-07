@@ -33,9 +33,9 @@ export const ROUTE = {
     route: 'published-entities',
     url: '/published-entities',
   },
-  publishedEntityDetails: {
-    route: 'published-entities/:entityId',
-    url: (entityId: string) => `/published-entities/${entityId}`,
+  publishedEntityDisplay: {
+    route: 'published-entities/display',
+    url: (entityId: string) => `/published-entities/display?id=${entityId}`,
   },
   schema: {
     route: 'schema',

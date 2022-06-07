@@ -2,16 +2,16 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { foo1Id } from '../../test/EntityFixtures';
 import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
-import type { PublishedEntityDetailScreenProps } from './PublishedEntityDetailScreen';
-import { PublishedEntityDetailScreen } from './PublishedEntityDetailScreen';
+import type { PublishedEntityDisplayScreenProps } from './PublishedEntityDisplayScreen';
+import { PublishedEntityDisplayScreen } from './PublishedEntityDisplayScreen';
 
-type StoryProps = Omit<PublishedEntityDetailScreenProps, 'urlSearchParams'> & {
+type StoryProps = Omit<PublishedEntityDisplayScreenProps, 'urlSearchParams'> & {
   initialUrlSearchParams?: URLSearchParams;
 };
 
-const meta: Meta<PublishedEntityDetailScreenProps> = {
-  title: 'Screens/PublishedEntityDetailScreen',
-  component: PublishedEntityDetailScreen,
+const meta: Meta<PublishedEntityDisplayScreenProps> = {
+  title: 'Screens/PublishedEntityDisplayScreen',
+  component: PublishedEntityDisplayScreen,
   argTypes: {},
   args: {},
   parameters: { layout: 'fullscreen' },
@@ -29,7 +29,7 @@ function Wrapper({ initialUrlSearchParams, ...props }: StoryProps) {
 
   return (
     <PublishedLoadContextProvider>
-      <PublishedEntityDetailScreen
+      <PublishedEntityDisplayScreen
         {...props}
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={onUrlSearchParamsChange}

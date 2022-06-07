@@ -12,7 +12,7 @@ import { GraphiQLRoute } from './routes/GraphiQLRoute';
 import { IndexRoute } from './routes/IndexRoute';
 import { LoginRoute } from './routes/LoginRoute';
 import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute';
-import { PublishedEntityDetailsRoute } from './routes/PublishedEntityDetailsRoute';
+import { PublishedEntityDisplayRoute } from './routes/PublishedEntityDisplayRoute';
 import { ROUTE } from './utils/RouteUtils';
 
 const users: User[] = [
@@ -39,8 +39,8 @@ export default function App() {
                     element={<PublishedEntitiesRoute />}
                   />
                   <Route
-                    path={ROUTE.publishedEntityDetails.route}
-                    element={<PublishedEntityDetailsRoute />}
+                    path={ROUTE.publishedEntityDisplay.route}
+                    element={<PublishedEntityDisplayRoute />}
                   />
                   <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
                   <Route path={ROUTE.graphiql.route} element={<GraphiQLRoute />} />
