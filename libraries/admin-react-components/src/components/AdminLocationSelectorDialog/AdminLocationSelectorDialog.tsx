@@ -39,6 +39,7 @@ interface AdminLocationSelectorDialogProps {
   value: Location | null;
   onChange: (location: Location | null) => void;
   onClose: () => void;
+  onItemClick?: (item: AdminEntity | EntityEditorDraftState) => void;
 }
 
 export function AdminLocationSelectorDialog({
@@ -47,6 +48,7 @@ export function AdminLocationSelectorDialog({
   value,
   onClose,
   onChange,
+  onItemClick,
 }: AdminLocationSelectorDialogProps) {
   return (
     <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
@@ -57,7 +59,7 @@ export function AdminLocationSelectorDialog({
           </FullscreenContainer.Item>
           <IconButton icon="close" color="white" onClick={onClose} />
         </FullscreenContainer.Row>
-        {show ? <Content value={value} onChange={onChange} /> : null}
+        {show ? <Content value={value} onChange={onChange} onItemClick={onItemClick} /> : null}
       </FullscreenContainer>
     </Dialog>
   );
@@ -66,9 +68,11 @@ export function AdminLocationSelectorDialog({
 function Content({
   value,
   onChange,
+  onItemClick,
 }: {
   value: Location | null;
   onChange: (location: Location | null) => void;
+  onItemClick?: (item: AdminEntity | EntityEditorDraftState) => void;
 }) {
   const { schema } = useContext(AdminDataDataContext);
   const entityEditorState = useContext(EntityEditorStateContext);
@@ -149,7 +153,12 @@ function Content({
           {...{ schema, searchEntityState, dispatchSearchEntityState }}
           filterEntity={filterEntity}
           renderEntityMarker={(key, entity, location) => (
-            <AdminEntityMapMarker key={key} entity={entity} location={location} />
+            <AdminEntityMapMarker
+              key={key}
+              entity={entity}
+              location={location}
+              onClick={onItemClick ? () => onItemClick(entity) : undefined}
+            />
           )}
           center={value}
           resetSignal={resetSignal}
@@ -159,6 +168,7 @@ function Content({
               key={index}
               draftState={marker.draftState}
               location={marker.location}
+              onClick={onItemClick ? () => onItemClick(marker.draftState) : undefined}
             />
           ))}
           <MapContainer.EditLocationMarker value={value} onChange={onChange} />

@@ -1,6 +1,9 @@
-import type { Location } from '@jonasb/datadata-core';
+import type { AdminEntity, Location } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
+import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { AdminLocationSelectorDialog } from '../AdminLocationSelectorDialog/AdminLocationSelectorDialog';
 import type { FieldEditorProps } from './FieldEditor';
 
@@ -11,6 +14,14 @@ export function LocationFieldEditor({ value, onChange }: Props) {
   const handleShowSelector = useCallback(() => setShowSelector(true), [setShowSelector]);
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   const handleClose = useCallback(() => setShowSelector(false), [setShowSelector]);
+
+  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  const handleItemClick = useCallback(
+    (item: AdminEntity | EntityEditorDraftState) => {
+      dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: item.id }));
+    },
+    [dispatchEntityEditorState]
+  );
 
   return (
     <>
@@ -37,6 +48,7 @@ export function LocationFieldEditor({ value, onChange }: Props) {
           value={value}
           onClose={handleClose}
           onChange={onChange}
+          onItemClick={handleItemClick}
         />
       ) : null}
     </>
