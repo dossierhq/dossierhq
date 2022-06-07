@@ -6,7 +6,7 @@ import {
   Text,
   useWindowEventListener,
 } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
@@ -89,9 +89,16 @@ export function PublishedEntityDisplayScreen({
               {entityIds.length === 0 ? (
                 <EmptyStateMessage icon="add" title="No active entities" message="Open an entity" />
               ) : (
-                entityIds.map((entityId) => <EntityRows key={entityId} entityId={entityId} />)
+                entityIds.map((entityId) => (
+                  <EntityRows
+                    key={entityId}
+                    entityId={entityId}
+                    dispatchEntityDisplayState={dispatchEntityDisplayState}
+                  />
+                ))
               )}
             </FullscreenContainer.ScrollableColumn>
+            <FullscreenContainer.Column width="3/12" />
           </FullscreenContainer.Columns>
           {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
         </FullscreenContainer>
@@ -100,15 +107,27 @@ export function PublishedEntityDisplayScreen({
   );
 }
 
-function EntityRows({ entityId }: { entityId: string }) {
+function EntityRows({
+  entityId,
+  dispatchEntityDisplayState,
+}: {
+  entityId: string;
+  dispatchEntityDisplayState: Dispatch<EntityDisplayStateAction>;
+}) {
   const { publishedClient, schema } = useContext(PublishedDataDataContext);
   const { entity, entityError: _ } = usePublishedEntity(publishedClient, { id: entityId });
+
+  const handleClick = useCallback(
+    (_event: MouseEvent) =>
+      dispatchEntityDisplayState(new EntityDisplayActions.SetActiveEntity(entityId, true, false)),
+    [dispatchEntityDisplayState, entityId]
+  );
 
   if (!schema || !entity) return null;
   return (
     <>
       <FullscreenContainer.Row id={`${entityId}-header`} sticky>
-        <Level>
+        <Level paddingHorizontal={3}>
           <Level.Left>
             <Level.Item>
               <Text textStyle="headline4">
@@ -121,7 +140,16 @@ function EntityRows({ entityId }: { entityId: string }) {
           </Level.Left>
         </Level>
       </FullscreenContainer.Row>
-      <EntityDisplay schema={schema} entity={entity} />
+      <FullscreenContainer.Row
+        gap={2}
+        paddingVertical={4}
+        paddingHorizontal={3}
+        marginBottom={4}
+        data-entityid={entityId}
+        onClick={handleClick}
+      >
+        <EntityDisplay schema={schema} entity={entity} />
+      </FullscreenContainer.Row>
     </>
   );
 }
