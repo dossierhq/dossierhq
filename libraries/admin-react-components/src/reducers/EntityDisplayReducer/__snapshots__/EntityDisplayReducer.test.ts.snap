@@ -1,0 +1,53 @@
+// Vitest Snapshot v1
+
+exports[`AddEntityAction > add existing id 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "cf05e3cc-ccda-4ff3-a46b-c02ac9659798",
+  "activeEntityMenuScrollSignal": 1,
+  "entityIds": [
+    "cf05e3cc-ccda-4ff3-a46b-c02ac9659798",
+  ],
+}
+`;
+
+exports[`AddEntityAction > add new id 1`] = `
+{
+  "activeEntityEditorScrollSignal": 0,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 0,
+  "entityIds": [
+    "cf05e3cc-ccda-4ff3-a46b-c02ac9659798",
+  ],
+}
+`;
+
+exports[`RemoveEntityAction > add/delete Foo 1`] = `
+{
+  "activeEntityEditorScrollSignal": 0,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 0,
+  "entityIds": [],
+}
+`;
+
+exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "entityIds": [
+    "619725d7-e583-4544-8bb0-23fc3c2870c0",
+    "9516465b-935a-4cc7-8b97-ccaca81bbe9a",
+  ],
+}
+`;
+
+exports[`initializeEntityDisplayState > no args 1`] = `
+{
+  "activeEntityEditorScrollSignal": 0,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 0,
+  "entityIds": [],
+}
+`;

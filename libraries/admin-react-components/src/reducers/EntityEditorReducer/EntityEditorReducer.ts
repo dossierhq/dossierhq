@@ -276,22 +276,19 @@ class SetActiveEntityAction implements EntityEditorStateAction {
     if (!state.drafts.some((it) => it.id === this.id)) {
       throw new Error(`No draft with id '${this.id}`);
     }
-    let {
-      activeEntityMenuScrollSignal: activeSelectorMenuScrollSignal,
-      activeEntityEditorScrollSignal: activeSelectorEditorScrollSignal,
-    } = state;
+    let { activeEntityMenuScrollSignal, activeEntityEditorScrollSignal } = state;
     if (this.increaseMenuScrollSignal) {
-      activeSelectorMenuScrollSignal += 1;
+      activeEntityMenuScrollSignal += 1;
     }
     if (this.increaseEditorScrollSignal) {
-      activeSelectorEditorScrollSignal += 1;
+      activeEntityEditorScrollSignal += 1;
     }
 
     return {
       ...state,
       activeEntityId: this.id,
-      activeEntityMenuScrollSignal: activeSelectorMenuScrollSignal,
-      activeEntityEditorScrollSignal: activeSelectorEditorScrollSignal,
+      activeEntityMenuScrollSignal,
+      activeEntityEditorScrollSignal,
     };
   }
 }
