@@ -28,14 +28,9 @@ const Template: Story<StoryProps> = (args) => {
   return Wrapper(args);
 };
 
-function Wrapper({
-  initialUrlSearchParams: initialUrlQuery,
-  showUrl,
-  header,
-  ...props
-}: StoryProps) {
+function Wrapper({ initialUrlSearchParams, showUrl, header, ...props }: StoryProps) {
   const [urlSearchParams, onUrlSearchParamsChange] = useState<URLSearchParams>(
-    initialUrlQuery ?? new URLSearchParams()
+    initialUrlSearchParams ?? new URLSearchParams()
   );
   const displayUrl = useMemo(() => decodeURI(urlSearchParams.toString()), [urlSearchParams]);
   return (

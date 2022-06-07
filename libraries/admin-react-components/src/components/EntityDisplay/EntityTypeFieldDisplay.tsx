@@ -2,26 +2,27 @@ import type { EntityReference } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import React, { useCallback, useContext } from 'react';
+import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
+import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import type { FieldDisplayProps } from './FieldDisplay';
 
 type Props = FieldDisplayProps<EntityReference>;
 
 export function EntityTypeFieldDisplay({ value }: Props) {
   const { publishedClient } = useContext(PublishedDataDataContext);
+  const dispatchEntityDisplayState = useContext(EntityDisplayDispatchContext);
   const { entity, entityError: _error } = usePublishedEntity(publishedClient, value ?? undefined);
 
   const handleEntityClick = useCallback(
     (event: MouseEvent) => {
       event.preventDefault();
       if (!value) return;
-      // // open entity asynchronously to not fight with the "click to activate entity" functionality
-      // setTimeout(() =>
-      //   dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id }))
-      // );
+      // open entity asynchronously to not fight with the "click to activate entity" functionality
+      setTimeout(() => dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(value.id)));
     },
-    [value]
+    [dispatchEntityDisplayState, value]
   );
 
   return entity ? (
