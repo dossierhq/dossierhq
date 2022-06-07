@@ -23,6 +23,7 @@ interface PublishedLocationDisplayDialogProps {
   title: string;
   value: Location;
   onClose: () => void;
+  onEntityClick?: (entity: PublishedEntity) => void;
 }
 
 export function PublishedLocationDisplayDialog({
@@ -30,6 +31,7 @@ export function PublishedLocationDisplayDialog({
   title,
   value,
   onClose,
+  onEntityClick,
 }: PublishedLocationDisplayDialogProps) {
   return (
     <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
@@ -40,13 +42,19 @@ export function PublishedLocationDisplayDialog({
           </FullscreenContainer.Item>
           <IconButton icon="close" color="white" onClick={onClose} />
         </FullscreenContainer.Row>
-        {show ? <Content value={value} /> : null}
+        {show ? <Content value={value} onEntityClick={onEntityClick} /> : null}
       </FullscreenContainer>
     </Dialog>
   );
 }
 
-function Content({ value }: { value: Location }) {
+function Content({
+  value,
+  onEntityClick,
+}: {
+  value: Location;
+  onEntityClick?: (entity: PublishedEntity) => void;
+}) {
   const { schema } = useContext(PublishedDataDataContext);
 
   // Reset signal
@@ -83,6 +91,7 @@ function Content({ value }: { value: Location }) {
               color={
                 location.lat === value.lat && location.lng === value.lng ? 'current' : undefined
               }
+              onClick={onEntityClick ? () => onEntityClick(entity) : undefined}
             />
           )}
           center={value}
