@@ -1,7 +1,12 @@
 import type { PublishedEntity } from '@jonasb/datadata-core';
-import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
+import {
+  Dialog,
+  FullscreenContainer,
+  IconButton,
+  Text,
+  toSizeClassName,
+} from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
-import { PublishedEntitySearchToolbar } from '../../components/PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
@@ -12,35 +17,55 @@ import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
 import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 import {
+  initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import type { EntitySearchStateUrlQuery } from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
-import {
-  initializeSearchEntityStateFromUrlQuery,
-  useSynchronizeUrlQueryAndSearchEntityState,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
+import { PublishedEntitySearchToolbar } from '../PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 
-export interface PublishedEntityListScreenProps {
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
-  urlQuery?: EntitySearchStateUrlQuery;
-  onUrlQueryChanged?: (urlQuery: EntitySearchStateUrlQuery) => void;
-  onOpenEntity: (entity: PublishedEntity) => void;
+interface PublishedEntitySelectorDialogProps {
+  show: boolean;
+  title: string;
+  entityTypes?: string[] | undefined;
+  onClose: () => void;
+  onItemClick: (item: PublishedEntity) => void;
 }
 
-export function PublishedEntityListScreen({
-  header,
-  footer,
-  urlQuery,
-  onUrlQueryChanged,
-  onOpenEntity,
-}: PublishedEntityListScreenProps): JSX.Element | null {
+export function PublishedEntitySelectorDialog({
+  show,
+  title,
+  entityTypes,
+  onClose,
+  onItemClick,
+}: PublishedEntitySelectorDialogProps) {
+  return (
+    <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
+      <FullscreenContainer card height="100%">
+        <FullscreenContainer.Row flexDirection="row" alignItems="center">
+          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+            <Text textStyle="headline5">{title}</Text>
+          </FullscreenContainer.Item>
+          <IconButton icon="close" color="white" onClick={onClose} />
+        </FullscreenContainer.Row>
+        {show ? <Content entityTypes={entityTypes} onItemClick={onItemClick} /> : null}
+      </FullscreenContainer>
+    </Dialog>
+  );
+}
+
+function Content({
+  entityTypes,
+  onItemClick,
+}: {
+  entityTypes: string[] | undefined;
+  onItemClick: (item: PublishedEntity) => void;
+}) {
   const { schema } = useContext(PublishedDataDataContext);
+
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    urlQuery,
-    initializeSearchEntityStateFromUrlQuery
+    { restrictEntityTypes: entityTypes },
+    initializeSearchEntityState
   );
 
   const {
@@ -51,7 +76,6 @@ export function PublishedEntityListScreen({
   } = usePublishedEntitySearchFilters(searchEntityState, dispatchSearchEntityState);
 
   // map or list
-
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
 
   const handleToggleShowMap = useCallback(() => {
@@ -66,24 +90,11 @@ export function PublishedEntityListScreen({
     setShowMap(!showMap);
   }, [showMap]);
 
-  // sync url <-> search entity state
-  useSynchronizeUrlQueryAndSearchEntityState(
-    urlQuery,
-    onUrlQueryChanged,
-    searchEntityState,
-    dispatchSearchEntityState
-  );
-
   // load search/total or sampling
   usePublishedLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
 
-  // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
-
-  const isEmpty = searchEntityState.entities?.length === 0;
-
   return (
-    <FullscreenContainer>
-      {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
+    <>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <PublishedEntitySearchToolbar
           {...{
@@ -91,9 +102,9 @@ export function PublishedEntityListScreen({
             searchEntityState,
             entityTypeFilterState,
             authKeyFilterState,
-            dispatchAuthKeyFilterState,
-            dispatchEntityTypeFilterState,
             dispatchSearchEntityState,
+            dispatchEntityTypeFilterState,
+            dispatchAuthKeyFilterState,
             onToggleMapClick: handleToggleShowMap,
           }}
         />
@@ -108,7 +119,7 @@ export function PublishedEntityListScreen({
                 key={key}
                 entity={entity}
                 location={location}
-                onClick={() => onOpenEntity(entity)}
+                onClick={() => onItemClick(entity)}
               />
             )}
           />
@@ -116,22 +127,26 @@ export function PublishedEntityListScreen({
       ) : (
         <FullscreenContainer.ScrollableRow
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
-          shadows="bottom"
         >
-          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
-            <EntityTypeTagSelector
-              state={entityTypeFilterState}
-              dispatch={dispatchEntityTypeFilterState}
-            />
-            <AuthKeyTagSelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState} />
+          <FullscreenContainer.Row>
+            <FullscreenContainer.Item paddingHorizontal={3}>
+              <EntityTypeTagSelector
+                state={entityTypeFilterState}
+                dispatch={dispatchEntityTypeFilterState}
+              />
+              <AuthKeyTagSelector
+                state={authKeyFilterState}
+                dispatch={dispatchAuthKeyFilterState}
+              />
+            </FullscreenContainer.Item>
             <PublishedEntityList
-              {...{ searchEntityState, dispatchSearchEntityState }}
-              onItemClick={onOpenEntity}
+              {...{ searchEntityState, dispatchSearchEntityState, onItemClick }}
             />
           </FullscreenContainer.Row>
         </FullscreenContainer.ScrollableRow>
       )}
       <FullscreenContainer.Row
+        paddingHorizontal={2}
         paddingVertical={2}
         columnGap={2}
         flexDirection="row"
@@ -139,7 +154,6 @@ export function PublishedEntityListScreen({
       >
         <SearchOrSampleEntitiesButtons {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
-      {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
-    </FullscreenContainer>
+    </>
   );
 }
