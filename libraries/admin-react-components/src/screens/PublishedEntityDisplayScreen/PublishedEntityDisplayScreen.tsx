@@ -1,14 +1,18 @@
+import type { PublishedEntity } from '@jonasb/datadata-core';
 import {
+  Button,
   EmptyStateMessage,
   findAscendantHTMLElement,
   FullscreenContainer,
   Level,
   Text,
+  toFlexItemClassName,
   useWindowEventListener,
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback, useContext, useEffect, useReducer } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';
+import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayStateContext } from '../../contexts/EntityDisplayStateContext.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
@@ -59,6 +63,14 @@ export function PublishedEntityDisplayScreen({
     dispatchEntityDisplayState
   );
 
+  const [showEntitySelector, setShowEntitySelector] = useState(false);
+  const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
+  const handleEntitySelectorClose = useCallback(() => setShowEntitySelector(false), []);
+  const handleOpenEntityClick = useCallback((entity: PublishedEntity) => {
+    dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)),
+      setShowEntitySelector(false);
+  }, []);
+
   useFocusedEntity(entityDisplayState, dispatchEntityDisplayState);
 
   const menuScrollToId = activeEntityId ? `${activeEntityId}-menuItem` : undefined;
@@ -77,6 +89,13 @@ export function PublishedEntityDisplayScreen({
               scrollToId={menuScrollToId}
               scrollToIdSignal={activeEntityMenuScrollSignal}
             >
+              <Button
+                className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+                iconLeft="search"
+                onClick={handleShowEntitySelector}
+              >
+                Open
+              </Button>
               <EntityDisplayMenu
                 entityDisplayState={entityDisplayState}
                 dispatchEntityDisplayState={dispatchEntityDisplayState}
@@ -101,6 +120,12 @@ export function PublishedEntityDisplayScreen({
             <FullscreenContainer.Column width="3/12" />
           </FullscreenContainer.Columns>
           {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
+          <PublishedEntitySelectorDialog
+            show={showEntitySelector}
+            title="Select entity"
+            onClose={handleEntitySelectorClose}
+            onItemClick={handleOpenEntityClick}
+          />
         </FullscreenContainer>
       </EntityDisplayStateContext.Provider>
     </EntityDisplayDispatchContext.Provider>
