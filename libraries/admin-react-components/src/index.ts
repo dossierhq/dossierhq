@@ -9,7 +9,7 @@ export { PublishedDataDataProvider } from './published/components/PublishedDataD
 export { PublishedDataDataContext } from './published/contexts/PublishedDataDataContext.js';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen';
 export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen';
-export { PublishedEntityDetailScreen } from './screens/PublishedEntityDetailScreen/PublishedEntityDetailScreen';
+export { PublishedEntityDisplayScreen } from './screens/PublishedEntityDisplayScreen/PublishedEntityDisplayScreen';
 export { PublishedEntityListScreen } from './screens/PublishedEntityListScreen/PublishedEntityListScreen';
 export { SchemaEditorScreen } from './screens/SchemaEditorScreen/SchemaEditorScreen';
 export type { EntitySearchStateUrlQuery } from './shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';

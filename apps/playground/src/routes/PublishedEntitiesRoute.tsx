@@ -31,7 +31,7 @@ export function PublishedEntitiesRoute() {
   );
 
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => navigate(ROUTE.publishedEntityDetails.url(entity.id)),
+    (entity: PublishedEntity) => navigate(ROUTE.publishedEntityDisplay.url(entity.id)),
     []
   );
 

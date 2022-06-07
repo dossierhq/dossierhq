@@ -11,7 +11,7 @@ import { NavBar } from '../NavBar/NavBar';
 export default function PublishedEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => router.push(urls.publishedEntityDetail(entity)),
+    (entity: PublishedEntity) => router.push(urls.publishedEntityDisplay([entity.id])),
     [router]
   );
   const handleUrlQueryChanged = useCallback(

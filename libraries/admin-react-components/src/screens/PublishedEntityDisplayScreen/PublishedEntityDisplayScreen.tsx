@@ -27,19 +27,19 @@ import {
 } from '../../reducers/EntityDisplayReducer/EntityDisplayUrlSynchronizer.js';
 import { EntityDisplayMenu } from './EntityDisplayMenu.js';
 
-export interface PublishedEntityDetailScreenProps {
+export interface PublishedEntityDisplayScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
 }
 
-export function PublishedEntityDetailScreen({
+export function PublishedEntityDisplayScreen({
   header,
   footer,
   urlSearchParams,
   onUrlSearchParamsChange,
-}: PublishedEntityDetailScreenProps): JSX.Element | null {
+}: PublishedEntityDisplayScreenProps): JSX.Element | null {
   const [entityDisplayState, dispatchEntityDisplayState] = useReducer(
     reduceEntityDisplayState,
     urlSearchParams,
