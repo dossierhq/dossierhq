@@ -220,7 +220,6 @@ importers:
       '@types/react': ~18.0.0
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ^5.26.0
-      debug: ~4.3.4
       eslint: ^8.16.0
       eslint-config-next: ~12.1.4
       graphql: ~16.5.0
@@ -249,7 +248,6 @@ importers:
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       '@jonasb/datadata-server': link:../../libraries/server
-      debug: 4.3.4
       graphql: 16.5.0
       graphql-voyager: 1.0.0-rc.31_848219f0cf1d3f9b60adbc86dd0d8bf5
       leaflet: 1.8.0
