@@ -22,7 +22,7 @@
     "playground-example-generator": "workspace:*",
     "react": "~18.1.0",
     "react-dom": "~18.1.0",
-    "react-router-dom": "~6.2.2",
+    "react-router-dom": "~6.3.0",
     "sql.js": "~1.7.0",
     "swr": "~1.3.0"
   },
