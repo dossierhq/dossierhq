@@ -32,7 +32,7 @@ async function main(prTitle) {
   await makeDependencyConsistent(
     projectDirectory,
     dependency,
-    version[0],
+    versions[0],
     devDependencyVersion
   );
 }
