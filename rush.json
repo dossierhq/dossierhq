@@ -473,6 +473,10 @@
     {
       "packageName": "@jonasb/datadata-template-tool",
       "projectFolder": "templates/tool"
+    },
+    {
+      "packageName": "@jonasb/datadata-all-dependencies",
+      "projectFolder": "tools/all-dependencies"
     }
 
     // {
