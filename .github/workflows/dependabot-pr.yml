@@ -21,7 +21,6 @@ jobs:
       - name: Make dependencies consistent
         run: |
           which node
-          (cd "tools/all-dependencies/" && npm run build)
           ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
       - name: Git status
         run: |
