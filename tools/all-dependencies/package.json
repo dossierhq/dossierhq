@@ -18,7 +18,7 @@
     "@editorjs/list": "~1.7.0",
     "@editorjs/quote": "~2.4.0",
     "@editorjs/underline": "~1.0.0",
-    "@faker-js/faker": "~6.0.0-alpha.5",
+    "@faker-js/faker": "~7.2.0",
     "@fortawesome/free-solid-svg-icons": "~6.1.1",
     "@js-temporal/polyfill": "~0.4.0",
     "@rushstack/eslint-patch": "~1.1.3",
