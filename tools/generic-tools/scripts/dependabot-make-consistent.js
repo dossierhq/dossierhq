@@ -13,21 +13,26 @@ async function main(prTitle) {
   const packageJson = JSON.parse(await fs.readFile(packageJsonPath));
   const dependencyVersion = packageJson.dependencies?.[dependency];
   const devDependencyVersion = packageJson.devDependencies?.[dependency];
-  if (!dependencyVersion && !devDependencyVersion) {
+  const optionalDependencyVersion =
+    packageJson.optionalDependencies?.[dependency];
+  const versions = [
+    dependencyVersion,
+    devDependencyVersion,
+    optionalDependencyVersion,
+  ].filter((it) => it);
+  if (versions.length === 0) {
     throw new Error(
       `Can't find dependency ${dependency} in ${packageJsonPath}`
     );
-  } else if (dependencyVersion && devDependencyVersion) {
+  } else if (versions.length !== 1) {
     throw new Error(
-      `Dependency ${dependency} is in both dependencies and devDependencies in ${filename}`
+      `Dependency ${dependency} is in both defined multiple times in ${filename}`
     );
   }
-  const version = dependencyVersion ?? devDependencyVersion;
-
   await makeDependencyConsistent(
     projectDirectory,
     dependency,
-    version,
+    version[0],
     devDependencyVersion
   );
 }
