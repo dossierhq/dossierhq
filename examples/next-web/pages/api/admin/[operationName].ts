@@ -1,39 +1,53 @@
-import type { AdminClientJsonOperation, AdminClientOperationName } from '@jonasb/datadata-core';
-import { notOk } from '@jonasb/datadata-core';
+import type {
+  AdminClientJsonOperation,
+  AdminClientOperationName,
+  ErrorType,
+  Result,
+} from '@jonasb/datadata-core';
 import {
   decodeUrlQueryStringifiedParam,
   executeAdminClientOperationFromJson,
+  notOk,
+  ok,
 } from '@jonasb/datadata-core';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { AdminOperationRequest } from '../../../types/RequestTypes';
-import { handleGet, handlePut, sendMethodNotAllowedError } from '../../../utils/HandlerUtils';
+import { handleRequest, sendMethodNotAllowedError } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
 export default async function adminOperationHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  if (req.method === 'GET') {
-    await handleGet(req, res, async () => {
-      const operation: AdminClientJsonOperation | undefined = decodeUrlQueryStringifiedParam(
-        'operation',
-        req.query
-      );
-      if (!operation) return notOk.BadRequest('Missing operation query');
-      return executeAdminOperation(req, operation);
-    });
-  } else if (req.method === 'PUT') {
-    await handlePut(req, res, async (body: AdminOperationRequest) => {
-      return executeAdminOperation(req, body);
+  if (req.method === 'GET' || req.method === 'PUT') {
+    await handleRequest(res, async () => {
+      return executeAdminOperation(req);
     });
   } else {
     sendMethodNotAllowedError(res, ['GET', 'PUT']);
   }
 }
 
-async function executeAdminOperation(req: NextApiRequest, operation: AdminClientJsonOperation) {
+function getOperation(
+  req: NextApiRequest
+): Result<AdminClientJsonOperation, typeof ErrorType.BadRequest> {
+  let operation: AdminClientJsonOperation | undefined;
+  if (req.method === 'GET') {
+    operation = decodeUrlQueryStringifiedParam('operation', req.query);
+  } else {
+    operation = req.body;
+  }
+  if (!operation) {
+    return notOk.BadRequest('Missing operation');
+  }
+  return ok(operation);
+}
+
+async function executeAdminOperation(req: NextApiRequest) {
   const { operationName } = req.query;
   if (typeof operationName !== 'string') return notOk.BadRequest('Operation name not provided');
+
+  const operationResult = getOperation(req);
+  if (operationResult.isError()) return operationResult;
 
   const { server } = await getServerConnection();
   const authResult = await getSessionContextForRequest(server, req);
@@ -43,7 +57,7 @@ async function executeAdminOperation(req: NextApiRequest, operation: AdminClient
   const result = await executeAdminClientOperationFromJson(
     adminClient,
     operationName as keyof typeof AdminClientOperationName,
-    operation
+    operationResult.value
   );
   return result;
 }

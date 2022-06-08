@@ -4,7 +4,7 @@ import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { handlePostWithoutLocation } from '../../utils/HandlerUtils';
+import { handleRequest, sendMethodNotAllowedError } from '../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../utils/ServerUtils';
 
 let graphQLSchema: GraphQLSchema | null = null;
@@ -13,7 +13,12 @@ export default async function graphQlHandler(
   req: NextApiRequest,
   res: NextApiResponse<ExecutionResult>
 ): Promise<void> {
-  await handlePostWithoutLocation(req, res, async () => {
+  if (req.method !== 'POST') {
+    sendMethodNotAllowedError(res, ['POST']);
+    return;
+  }
+
+  await handleRequest(res, async () => {
     const { server, schema } = await getServerConnection();
     const authResult = await getSessionContextForRequest(server, req);
     if (authResult.isError()) return authResult;
