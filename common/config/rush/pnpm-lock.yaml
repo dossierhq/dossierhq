@@ -216,7 +216,6 @@ importers:
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@types/debug': ~4.1.7
       '@types/react': ~18.0.0
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ^5.26.0
@@ -258,7 +257,6 @@ importers:
       swr: 1.3.0_react@18.1.0
     devDependencies:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
-      '@types/debug': 4.1.7
       '@types/react': 18.0.0
       '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 5.26.0_eslint@8.16.0+typescript@4.7.2
@@ -4903,12 +4901,6 @@ packages:
       '@types/node': 17.0.23
     dev: true
 
-  /@types/debug/4.1.7:
-    resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
-    dependencies:
-      '@types/ms': 0.7.31
-    dev: true
-
   /@types/emscripten/1.39.5:
     resolution: {integrity: sha512-DIOOg+POSrYl+OlNRHQuIEqCd8DCtynG57H862UCce16nXJX7J8eWxNGgOcf8Eyge8zXeSs27mz1UcFu8L/L7g==}
     dev: true
@@ -5048,10 +5040,6 @@ packages:
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
-    dev: true
-
-  /@types/ms/0.7.31:
-    resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
   /@types/node-fetch/2.5.12:
