@@ -9,7 +9,7 @@ import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import { Database } from 'sqlite3';
-import SchemaSpec from './schema.json';
+import { schemaSpecification } from './schema';
 
 const validKeys: readonly string[] = ['none', 'subject'];
 
@@ -69,7 +69,7 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
       });
       if (schemaLoaderSession.isError()) throw schemaLoaderSession.toError();
       const client = server.createAdminClient(schemaLoaderSession.value.context);
-      const updateSchemaResult = await client.updateSchemaSpecification(SchemaSpec);
+      const updateSchemaResult = await client.updateSchemaSpecification(schemaSpecification);
       if (updateSchemaResult.isError()) {
         throw updateSchemaResult.toError();
       }

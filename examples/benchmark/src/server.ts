@@ -16,7 +16,7 @@ import {
 import fs from 'fs/promises';
 import { Client } from 'pg';
 import { Database } from 'sqlite3';
-import schemaSpecification from './schema.json';
+import { schemaSpecification } from './schema.js';
 
 export type DatabaseAdapterSelector =
   | { postgresConnectionString: string }

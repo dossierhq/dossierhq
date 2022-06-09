@@ -1,7 +1,6 @@
-import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
 import { AdminSchema, createConsoleLogger } from '@jonasb/datadata-core';
-import SchemaSpec from './schema.json';
+import { schemaSpecification } from './schema';
 import { initializeServer } from './server';
 
 const logger = createConsoleLogger(console);
@@ -15,7 +14,7 @@ async function main() {
     if (sessionResult.isError()) throw sessionResult.toError();
     const { context } = sessionResult.value;
     const adminClient = server.createAdminClient(context);
-    const schemaResult = await adminClient.updateSchemaSpecification(SchemaSpec);
+    const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
     if (schemaResult.isError()) throw schemaResult.toError();
 
     const cliContext: CliContext = {

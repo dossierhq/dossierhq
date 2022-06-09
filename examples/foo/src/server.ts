@@ -10,7 +10,7 @@ import {
   Server,
 } from '@jonasb/datadata-server';
 import { Database } from 'sqlite3';
-import SchemaSpec from './schema.json';
+import { schemaSpecification } from './schema';
 
 const SQLITE3_DATABASE = 'data/foo.sqlite';
 
@@ -41,7 +41,7 @@ export async function updateSchema(server: Server) {
 
   const adminClient = server.createAdminClient(() => sessionResult);
 
-  const schemaResult = await adminClient.updateSchemaSpecification(SchemaSpec);
+  const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
   return new AdminSchema(schemaResult.valueOrThrow().schemaSpecification);
 }
 
