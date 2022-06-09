@@ -15,7 +15,7 @@ export function DatabaseInfoMessage({ className }: Props) {
 
   const handleDownloadOnClick = useCallback(() => {
     if (database) downloadDatabase(database);
-  }, []);
+  }, [database]);
 
   return (
     <Message className={className}>

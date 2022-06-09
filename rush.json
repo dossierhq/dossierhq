@@ -467,6 +467,10 @@
       "projectFolder": "stack/eslint-config-generic"
     },
     {
+      "packageName": "@jonasb/eslint-config-datadata-react",
+      "projectFolder": "stack/eslint-config-react"
+    },
+    {
       "packageName": "@jonasb/datadata-template-library",
       "projectFolder": "templates/library"
     },

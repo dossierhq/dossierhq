@@ -1,8 +1,6 @@
-import {
-  EntitySearchStateUrlQuery,
-  PublishedEntityListScreen,
-} from '@jonasb/datadata-admin-react-components';
-import { PublishedEntity } from '@jonasb/datadata-core';
+import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-components';
+import type { PublishedEntity } from '@jonasb/datadata-core';
 import { useCallback, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
@@ -24,15 +22,14 @@ export function PublishedEntitiesRoute() {
   }, [searchParams]);
 
   const handleUrlQueryChanged = useCallback(
-    (urlQuery: EntitySearchStateUrlQuery) => {
-      setSearchParams(urlQuery as EntitySearchStateUrlQueryRecord);
-    },
+    (urlQuery: EntitySearchStateUrlQuery) =>
+      setSearchParams(urlQuery as EntitySearchStateUrlQueryRecord),
     [setSearchParams]
   );
 
   const handleEntityOpen = useCallback(
     (entity: PublishedEntity) => navigate(ROUTE.publishedEntityDisplay.url(entity.id)),
-    []
+    [navigate]
   );
 
   return (

@@ -1,11 +1,14 @@
-import { ErrorType, notOk, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { notOk } from '@jonasb/datadata-core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
-import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { useContext, useEffect, useState } from 'react';
-import { Database } from 'sql.js';
+import type { Database } from 'sql.js';
 import { SERVER_LOGGER } from '../config/LoggerConfig';
 import { DatabaseContext } from '../contexts/DatabaseContext';
-import { ServerContext, ServerContextValue } from '../contexts/ServerContext';
+import type { ServerContextValue } from '../contexts/ServerContext';
+import { ServerContext } from '../contexts/ServerContext';
 
 interface Props {
   children: React.ReactNode;

@@ -7,7 +7,8 @@ import {
   toSpacingClassName,
 } from '@jonasb/datadata-design';
 import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
-import { ChangeEvent, useCallback, useContext } from 'react';
+import type { ChangeEvent } from 'react';
+import { useCallback, useContext } from 'react';
 import { DatabaseContext } from '../contexts/DatabaseContext';
 import { loadDatabaseFromUrl, resetDatabase, uploadDatabase } from '../utils/DatabaseUtils';
 
@@ -19,13 +20,16 @@ export function ChangeDatabaseMessage({ className }: Props) {
   const { database, createDatabase } = useContext(DatabaseContext);
   const { showNotification } = useContext(NotificationContext);
 
-  const handleFileChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      uploadDatabase(file, createDatabase, showNotification);
-      event.target.files = null;
-    }
-  }, []);
+  const handleFileChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files.length > 0) {
+        const file = event.target.files[0];
+        uploadDatabase(file, createDatabase, showNotification);
+        event.target.files = null;
+      }
+    },
+    [createDatabase, showNotification]
+  );
 
   return (
     <Message className={className} color="warning">
@@ -61,7 +65,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
           Load Star Wars
         </Button>
         <Text textStyle="headline5">Upload new database</Text>
-        <p>You can upload a database that you've downloaded from the Playground before.</p>
+        <p>You can upload a database that you’ve downloaded from the Playground before.</p>
         <File
           className={toSpacingClassName({ marginTop: 2 })}
           accept=".sqlite, application/x-sqlite3"

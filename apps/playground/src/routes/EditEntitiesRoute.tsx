@@ -8,9 +8,10 @@ export function EditEntitiesRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [hasChanges, setHasChanges] = useState(false);
 
-  const handleSearchParamsChange = useCallback((searchParams: URLSearchParams) => {
-    setSearchParams(searchParams, { replace: true });
-  }, []);
+  const handleSearchParamsChange = useCallback(
+    (searchParams: URLSearchParams) => setSearchParams(searchParams, { replace: true }),
+    [setSearchParams]
+  );
 
   useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', hasChanges);
 

@@ -2,9 +2,12 @@ import {
   AdminDataDataContext,
   PublishedDataDataContext,
 } from '@jonasb/datadata-admin-react-components';
-import { AdminSchema, ok, PublishedSchema } from '@jonasb/datadata-core';
-import { GraphQLSchemaGenerator, SessionGraphQLContext } from '@jonasb/datadata-graphql';
-import GraphiQL, { FetcherOpts, FetcherParams } from 'graphiql';
+import type { AdminSchema, PublishedSchema } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
+import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
+import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
+import type { FetcherOpts, FetcherParams } from 'graphiql';
+import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 import { graphql } from 'graphql';
 import { useCallback, useContext, useMemo } from 'react';

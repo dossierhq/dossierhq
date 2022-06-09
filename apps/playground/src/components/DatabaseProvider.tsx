@@ -1,6 +1,7 @@
 import { BeforeUnload } from '@jonasb/datadata-design';
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Database, SqlJsStatic } from 'sql.js';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { Database, SqlJsStatic } from 'sql.js';
 import initSqlJs from 'sql.js/dist/sql-wasm';
 import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
 import { DatabaseContext } from '../contexts/DatabaseContext';
@@ -23,7 +24,7 @@ export function DatabaseProvider({ children }: Props) {
     if (startedInitialDatabase.current) return;
     startedInitialDatabase.current = true;
     createDatabase(null);
-  }, []);
+  }, [createDatabase]);
 
   return (
     <DatabaseContext.Provider value={{ database, createDatabase }}>

@@ -1,4 +1,4 @@
-import { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 
 export type LoginContextValue = (

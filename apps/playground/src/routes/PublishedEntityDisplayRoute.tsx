@@ -6,9 +6,10 @@ import { NavBar } from '../components/NavBar';
 export function PublishedEntityDisplayRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSearchParamsChange = useCallback((searchParams: URLSearchParams) => {
-    setSearchParams(searchParams, { replace: true });
-  }, []);
+  const handleSearchParamsChange = useCallback(
+    (searchParams: URLSearchParams) => setSearchParams(searchParams, { replace: true }),
+    [setSearchParams]
+  );
 
   return (
     <PublishedEntityDisplayScreen

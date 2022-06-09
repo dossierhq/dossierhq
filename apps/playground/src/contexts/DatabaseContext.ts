@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Database } from 'sql.js';
+import type { Database } from 'sql.js';
 
 export interface DatabaseContextValue {
   database: Database | null;

@@ -18,13 +18,13 @@ export function LoginRoute() {
       executedLoginRef.current = true;
       login(userId);
     }
-  }, []);
+  }, [login, userId]);
 
   useEffect(() => {
     if (currentUserId === userId) {
       navigate(ROUTE.index.url);
     }
-  }, [currentUserId]);
+  }, [currentUserId, navigate, userId]);
 
   return (
     <FullscreenContainer>
