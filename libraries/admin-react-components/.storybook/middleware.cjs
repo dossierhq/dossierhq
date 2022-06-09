@@ -13,7 +13,7 @@ const {
 } = require('@jonasb/datadata-database-adapter-sqlite-sqlite3');
 const { Database } = require('sqlite3');
 const bodyParser = require('body-parser');
-const schemaJson = require('../src/test/schema.json');
+const schemaSpecification = require('../src/test/schema.cjs');
 
 const SQLITE_DATABASE_PATH = 'data/arc.sqlite';
 
@@ -44,7 +44,7 @@ async function getServer() {
         defaultAuthKeys: ['none'],
       });
       const adminClient = server.createAdminClient(() => sessionResult);
-      const schemaResult = await adminClient.updateSchemaSpecification(schemaJson);
+      const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
       if (schemaResult.isError()) {
         serverResultSingleton = schemaResult;
       }

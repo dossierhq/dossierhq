@@ -58,7 +58,7 @@ export type RichTextBlockType = keyof typeof RichTextBlockType;
 export interface FieldSpecification {
   name: string;
   /** The type of the field, only values from {@link FieldType} as accepted. */
-  type: FieldType | string;
+  type: FieldType;
   list?: boolean;
   required?: boolean;
   isName?: boolean;

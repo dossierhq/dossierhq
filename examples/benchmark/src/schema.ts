@@ -1,0 +1,60 @@
+import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+
+export const schemaSpecification: AdminSchemaSpecificationUpdate = {
+  entityTypes: [
+    {
+      name: 'Organization',
+      fields: [
+        {
+          name: 'name',
+          type: 'String',
+          isName: true,
+        },
+        {
+          name: 'organizationNumber',
+          type: 'String',
+        },
+        {
+          name: 'address',
+          type: 'ValueType',
+          valueTypes: ['PostalAddress'],
+        },
+        {
+          name: 'web',
+          type: 'String',
+        },
+      ],
+    },
+    {
+      name: 'Person',
+      fields: [
+        {
+          name: 'name',
+          type: 'String',
+          isName: true,
+        },
+        {
+          name: 'address',
+          type: 'ValueType',
+          valueTypes: ['PostalAddress'],
+        },
+        {
+          name: 'organization',
+          type: 'EntityType',
+          entityTypes: ['Organization'],
+        },
+      ],
+    },
+  ],
+  valueTypes: [
+    {
+      name: 'PostalAddress',
+      fields: [
+        { name: 'address1', type: 'String', required: true },
+        { name: 'address2', type: 'String' },
+        { name: 'zip', type: 'String', required: true },
+        { name: 'city', type: 'String', required: true },
+      ],
+    },
+  ],
+};
