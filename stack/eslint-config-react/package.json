@@ -1,0 +1,22 @@
+{
+  "name": "@jonasb/eslint-config-datadata-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rushstack/eslint-patch": "~1.1.3",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint-plugin-react": "~7.30.0",
+    "eslint-plugin-react-hooks": "~4.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "typescript": "^4.7.2"
+  }
+}

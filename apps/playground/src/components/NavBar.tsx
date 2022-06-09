@@ -1,5 +1,6 @@
 import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
-import { ReactNode, useContext, useState } from 'react';
+import type { ReactNode} from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import { ROUTE } from '../utils/RouteUtils';

@@ -1,9 +1,8 @@
 import type { Blocker, History, Transition } from 'history';
-import { ContextType, useCallback, useContext, useEffect } from 'react';
-import {
-  Navigator as BaseNavigator,
-  UNSAFE_NavigationContext as NavigationContext,
-} from 'react-router-dom';
+import type { ContextType } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
+import type { Navigator as BaseNavigator } from 'react-router-dom';
+import { UNSAFE_NavigationContext as NavigationContext } from 'react-router-dom';
 
 // TODO replace this when react-router supports Prompt again: https://github.com/remix-run/react-router/issues/8139
 // can probably remove the history dependency too

@@ -3,23 +3,21 @@ import {
   createCachingAdminMiddleware,
   PublishedDataDataProvider,
 } from '@jonasb/datadata-admin-react-components';
-import {
+import type {
   AdminClientMiddleware,
-  assertIsDefined,
   ClientContext,
   ErrorType,
-  LoggingClientMiddleware,
-  notOk,
-  ok,
   PromiseResult,
   PublishedClientMiddleware,
   Result,
 } from '@jonasb/datadata-core';
+import { assertIsDefined, LoggingClientMiddleware, notOk, ok } from '@jonasb/datadata-core';
 import { NotificationContext } from '@jonasb/datadata-design';
-import { CreateSessionPayload, Server } from '@jonasb/datadata-server';
+import type { CreateSessionPayload, Server } from '@jonasb/datadata-server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Cache, useSWRConfig } from 'swr';
-import { ScopedMutator } from 'swr/dist/types';
+import type { Cache } from 'swr';
+import { useSWRConfig } from 'swr';
+import type { ScopedMutator } from 'swr/dist/types';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig';
 import { ContextAdapter } from '../config/ContextAdapter';
 import { SESSION_LOGGER } from '../config/LoggerConfig';
@@ -68,14 +66,14 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
       showNotification({ color: 'success', message: `Logged in as ${user.name}` });
       return ok(undefined);
     },
-    [server]
+    [server, setCurrentUserId, showNotification, users]
   );
 
   useEffect(() => {
     if (server) {
       login(users[0].id);
     }
-  }, [server]);
+  }, [login, server, users]);
 
   const args = useMemo(() => {
     if (!server) return null;
@@ -114,6 +112,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function loginUser(server: Server, userId: string, cache: Cache<any>, mutate: ScopedMutator) {
   const result = await server.createSession({
     provider: 'sys',

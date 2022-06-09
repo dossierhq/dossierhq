@@ -1,4 +1,4 @@
-import {
+import type {
   AdminDataDataContextAdapter,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
