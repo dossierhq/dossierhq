@@ -1,5 +1,4 @@
 import { AdminEntityStatus, ErrorType, ok } from '@jonasb/datadata-core';
-
 import { expectErrorResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
