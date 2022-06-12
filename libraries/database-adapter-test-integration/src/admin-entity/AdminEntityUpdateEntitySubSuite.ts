@@ -5,6 +5,7 @@ import {
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
+  STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
@@ -18,6 +19,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
+  updateEntity_withMultilineField,
   updateEntity_withTwoReferences,
   updateEntity_withMultipleLocations,
   updateEntity_errorInvalidId,
@@ -282,6 +284,39 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ client }: AdminE
     effect: 'none',
     entity: createResult.value.entity,
   });
+}
+
+async function updateEntity_withMultilineField({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(STRINGS_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+  const updateResult = await client.updateEntity({ id, fields: { multiline: 'one\ntwo\nthree!' } });
+  assertOkResult(updateResult);
+  const {
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.value;
+
+  const expectedEntity = copyEntity(createResult.value.entity, {
+    info: {
+      updatedAt,
+      version: 1,
+    },
+    fields: {
+      multiline: 'one\ntwo\nthree!',
+    },
+  });
+
+  assertResultValue(updateResult, {
+    effect: 'updated',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext) {

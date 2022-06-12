@@ -54,6 +54,29 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { any: null, anyList: null, titleOnly: null },
 };
 
+export const STRINGS_CREATE: Readonly<AdminEntityCreate> = {
+  info: {
+    type: 'Strings',
+    name: 'Strings name',
+    authKey: 'none',
+  },
+  fields: { multiline: 'Hello\nWorld' },
+};
+
+export const STRINGS_ADMIN_ENTITY: Readonly<AdminEntity> = {
+  id: 'REPLACE',
+  info: {
+    type: 'Strings',
+    name: 'Strings name',
+    version: 0,
+    authKey: 'none',
+    status: AdminEntityStatus.draft,
+    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+  },
+  fields: { multiline: 'Hello\nWorld' },
+};
+
 export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {
   info: {
     type: 'TitleOnly',
