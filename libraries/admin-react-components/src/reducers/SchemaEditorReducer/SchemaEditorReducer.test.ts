@@ -929,64 +929,12 @@ describe('ChangeFieldMultilineAction', () => {
         true
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "list": false,
-                "multiline": true,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "schema": AdminSchema {
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "multiline": true,
-                "name": "bar",
-                "required": false,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].multiline).toBe(true);
+    expect(schemaUpdate?.entityTypes?.[0].fields[0].multiline).toBe(true);
   });
 });
 
