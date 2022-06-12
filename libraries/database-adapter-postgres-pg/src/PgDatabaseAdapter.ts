@@ -6,7 +6,10 @@ import type {
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
 import { Temporal } from '@js-temporal/polyfill';
 import type { PoolClient, PoolConfig } from 'pg';
-import { DatabaseError, Pool, types as PgTypes } from 'pg';
+import * as PG from 'pg';
+
+// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
+const { types: PgTypes, DatabaseError, Pool } = (PG as unknown as { default: typeof PG }).default;
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
