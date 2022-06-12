@@ -111,6 +111,23 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Boolean (i.e. non-String) with multiline', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'boolean', type: FieldType.Boolean, multiline: true }],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.boolean: Field with type Boolean shouldn’t specify multiline'
+    );
+  });
+
   test('Error: Reference to invalid entity type', () => {
     expectErrorResult(
       new AdminSchema({
