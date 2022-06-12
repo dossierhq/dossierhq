@@ -38,6 +38,7 @@ export interface SchemaFieldDraft {
   type: FieldType;
   list: boolean;
   required: boolean;
+  multiline?: boolean;
   entityTypes?: string[];
   valueTypes?: string[];
 }
@@ -221,6 +222,7 @@ class AddFieldAction extends TypeAction {
       name: this.fieldName,
       status: 'new',
       type: FieldType.String,
+      multiline: false,
       list: false,
       required: false,
     };
@@ -265,6 +267,23 @@ class ChangeFieldAllowedValueTypesAction extends FieldAction {
   }
 }
 
+class ChangeFieldMultilineAction extends FieldAction {
+  multiline: boolean;
+
+  constructor(fieldSelector: SchemaFieldSelector, multiline: boolean) {
+    super(fieldSelector);
+    this.multiline = multiline;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.multiline === this.multiline) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, multiline: this.multiline };
+  }
+}
+
 class ChangeFieldRequiredAction extends FieldAction {
   required: boolean;
 
@@ -298,6 +317,12 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     const newFieldDraft = { ...fieldDraft, type: this.fieldType, list: this.list };
+
+    if (this.fieldType === FieldType.String) {
+      newFieldDraft.multiline = !!newFieldDraft.multiline;
+    } else {
+      delete newFieldDraft.multiline;
+    }
 
     if (this.fieldType === FieldType.EntityType) {
       newFieldDraft.entityTypes = [];
@@ -513,6 +538,9 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           list: !!fieldSpec.list,
           required: !!fieldSpec.required,
         };
+        if (fieldSpec.type === FieldType.String) {
+          fieldDraft.multiline = !!fieldSpec.multiline;
+        }
         if (fieldSpec.type === FieldType.EntityType) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
         }
@@ -530,6 +558,7 @@ export const SchemaEditorActions = {
   AddField: AddFieldAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
+  ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
@@ -576,6 +605,7 @@ function getTypeUpdateFromEditorState(
       type: draftField.type,
       required: draftField.required,
       ...(draftField.list ? { list: draftField.list } : undefined),
+      ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
       ...(draftField.type === FieldType.EntityType
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
