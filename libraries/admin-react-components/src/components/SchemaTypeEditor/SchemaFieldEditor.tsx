@@ -65,6 +65,7 @@ export function SchemaFieldEditor({
 }: Props) {
   const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
+  const canChangeMultiline = fieldDraft.status === 'new';
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
@@ -139,6 +140,31 @@ export function SchemaFieldEditor({
             </Field>
           </Field.BodyColumn>
         </Field>
+        {fieldDraft.type === FieldType.String ? (
+          <Field horizontal>
+            <Field.LabelColumn />
+            <Field.BodyColumn>
+              <Field>
+                <Field.Control>
+                  <Checkbox
+                    disabled={!canChangeMultiline}
+                    checked={fieldDraft.multiline}
+                    onChange={(event) =>
+                      dispatchSchemaEditorState(
+                        new SchemaEditorActions.ChangeFieldMultiline(
+                          fieldSelector,
+                          event.target.checked
+                        )
+                      )
+                    }
+                  >
+                    Multiline
+                  </Checkbox>
+                </Field.Control>
+              </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
         {fieldDraft.type === FieldType.EntityType ? (
           <Field horizontal>
             <Field.LabelColumn>

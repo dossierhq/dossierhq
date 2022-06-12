@@ -428,6 +428,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "status": "new",
@@ -464,6 +465,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -513,6 +515,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "status": "new",
@@ -534,6 +537,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -571,6 +575,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "status": "",
@@ -578,6 +583,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "list": false,
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "status": "new",
@@ -619,11 +625,13 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
               {
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -681,6 +689,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "status": "",
@@ -688,6 +697,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "list": false,
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "status": "new",
@@ -709,11 +719,13 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
               {
+                "multiline": false,
                 "name": "bar",
                 "required": false,
                 "type": "String",
@@ -901,6 +913,83 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
   });
 });
 
+describe('ChangeFieldMultilineAction', () => {
+  test('make new multiline field in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldMultiline(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        true
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      {
+        "activeSelector": null,
+        "activeSelectorEditorScrollSignal": 0,
+        "activeSelectorMenuScrollSignal": 0,
+        "entityTypes": [
+          {
+            "adminOnly": false,
+            "fields": [
+              {
+                "list": false,
+                "multiline": true,
+                "name": "bar",
+                "required": false,
+                "status": "new",
+                "type": "String",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": {
+            "entityTypes": [
+              {
+                "adminOnly": false,
+                "fields": [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": [],
+          },
+        },
+        "schemaWillBeUpdatedDueToSave": false,
+        "status": "changed",
+        "valueTypes": [],
+      }
+    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      {
+        "entityTypes": [
+          {
+            "adminOnly": false,
+            "fields": [
+              {
+                "multiline": true,
+                "name": "bar",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
 describe('ChangeFieldRequiredAction', () => {
   test('make new field required in existing entity type', () => {
     const state = reduceSchemaEditorStateActions(
@@ -928,6 +1017,7 @@ describe('ChangeFieldRequiredAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "bar",
                 "required": true,
                 "status": "new",
@@ -964,6 +1054,7 @@ describe('ChangeFieldRequiredAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "multiline": false,
                 "name": "bar",
                 "required": true,
                 "type": "String",
@@ -1367,6 +1458,7 @@ describe('DeleteFieldAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "status": "",
@@ -1501,6 +1593,7 @@ describe('RenameFieldAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "status": "",
@@ -1508,6 +1601,7 @@ describe('RenameFieldAction', () => {
               },
               {
                 "list": false,
+                "multiline": false,
                 "name": "baz",
                 "required": false,
                 "status": "new",
@@ -1549,11 +1643,13 @@ describe('RenameFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
               {
+                "multiline": false,
                 "name": "baz",
                 "required": false,
                 "type": "String",
@@ -1781,6 +1877,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "status": "",
@@ -1866,6 +1963,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "fields": [
               {
                 "list": false,
+                "multiline": false,
                 "name": "title",
                 "required": false,
                 "status": "",
