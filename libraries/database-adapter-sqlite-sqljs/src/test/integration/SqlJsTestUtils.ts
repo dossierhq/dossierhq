@@ -1,6 +1,6 @@
 import {
   createTestAuthorizationAdapter,
-  IntegrationTestSchemaSpecifciationUpdate,
+  IntegrationTestSchema,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import { createServer } from '@jonasb/datadata-server';
 import { createSqlJsTestAdapter } from '../TestUtils.js';
@@ -25,9 +25,7 @@ export async function initializeSqlJsServer() {
   });
   const client = server.createAdminClient(() => sessionResult);
 
-  const schemaResult = await client.updateSchemaSpecification(
-    IntegrationTestSchemaSpecifciationUpdate
-  );
+  const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
 
   return createServerResult;

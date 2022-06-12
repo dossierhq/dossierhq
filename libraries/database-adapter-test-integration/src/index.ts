@@ -1,7 +1,7 @@
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite.js';
 export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite.js';
 export { createAuthTestSuite } from './auth/AuthTestSuite.js';
-export { IntegrationTestSchemaSpecifciationUpdate } from './IntegrationTestSchemaSpecifciationUpdate.js';
+export { IntegrationTestSchema } from './IntegrationTestSchema.js';
 export { createPublishedEntityTestSuite } from './published-entity/PublishedEntityTestSuite.js';
 export { createSchemaTestSuite } from './schema/SchemaTestSuite.js';
 export {

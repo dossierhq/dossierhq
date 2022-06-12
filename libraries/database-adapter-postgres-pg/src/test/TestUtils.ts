@@ -13,7 +13,7 @@ import { createMockLogger, expectOkResult, expectResultValue } from '@jonasb/dat
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
-  IntegrationTestSchemaSpecifciationUpdate,
+  IntegrationTestSchema,
   type TestSuite,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
@@ -75,9 +75,7 @@ export async function initializeIntegrationTestServer() {
       defaultAuthKeys: ['none'],
     })
   );
-  const schemaResult = await client.updateSchemaSpecification(
-    IntegrationTestSchemaSpecifciationUpdate
-  );
+  const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) {
     return schemaResult;
   }
