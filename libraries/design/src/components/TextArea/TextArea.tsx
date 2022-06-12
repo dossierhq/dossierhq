@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { ChangeEventHandler, CSSProperties } from 'react';
 import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
@@ -11,6 +11,8 @@ export interface TextAreaProps {
   readOnly?: boolean;
   textStyle?: TextStyle;
   defaultValue?: string;
+  value?: string;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
 export function TextArea({
@@ -20,6 +22,8 @@ export function TextArea({
   style,
   textStyle,
   defaultValue,
+  value,
+  onChange,
 }: TextAreaProps) {
   return (
     <textarea
@@ -32,6 +36,8 @@ export function TextArea({
       readOnly={readOnly}
       style={style}
       defaultValue={defaultValue}
+      value={value}
+      onChange={onChange}
     />
   );
 }
