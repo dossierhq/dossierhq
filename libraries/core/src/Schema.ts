@@ -62,6 +62,8 @@ export interface FieldSpecification {
   list?: boolean;
   required?: boolean;
   isName?: boolean;
+  /** Applicable when type is String */
+  multiline?: boolean;
   /** Applicable when type is EntityType or RichText */
   entityTypes?: string[];
   /** Applicable when type is ValueType or RichText */
@@ -130,6 +132,12 @@ export class AdminSchema {
         if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(
             `${typeSpec.name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
+          );
+        }
+
+        if ('multiline' in fieldSpec && fieldSpec.type !== FieldType.String) {
+          return notOk.BadRequest(
+            `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify multiline`
           );
         }
 
