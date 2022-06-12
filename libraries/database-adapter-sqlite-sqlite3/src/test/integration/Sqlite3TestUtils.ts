@@ -3,7 +3,7 @@ import { NoOpLogger } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
-  IntegrationTestSchemaSpecifciationUpdate,
+  IntegrationTestSchema,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import { createServer } from '@jonasb/datadata-server';
 import { Database } from 'sqlite3';
@@ -28,9 +28,7 @@ export async function initializeSqlite3Server(filename: string | ':memory:', mod
   });
   const client = server.createAdminClient(() => sessionResult);
 
-  const schemaResult = await client.updateSchemaSpecification(
-    IntegrationTestSchemaSpecifciationUpdate
-  );
+  const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
 
   return createServerResult;

@@ -4,7 +4,7 @@ import { createServer } from "@jonasb/datadata-server";
 import { createDotenvAdapter } from "../ServerUtils.ts";
 import {
   createTestAuthorizationAdapter,
-  IntegrationTestSchemaSpecifciationUpdate,
+  IntegrationTestSchema,
   TestSuite,
 } from "@jonasb/datadata-database-adapter-test-integration";
 
@@ -44,7 +44,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
   const client = server.createAdminClient(() => sessionResult);
 
   const schemaResult = await client.updateSchemaSpecification(
-    IntegrationTestSchemaSpecifciationUpdate,
+    IntegrationTestSchema,
   );
   if (schemaResult.isError()) return schemaResult;
 

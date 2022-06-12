@@ -1,6 +1,6 @@
 import { FieldType, type AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 
-export const IntegrationTestSchemaSpecifciationUpdate: AdminSchemaSpecificationUpdate = {
+export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Locations',
