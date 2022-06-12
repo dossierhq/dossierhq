@@ -20,7 +20,7 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
         { name: 'director', type: FieldType.String, required: true },
         { name: 'producers', type: FieldType.String, list: true, required: true },
         { name: 'releaseDate', type: FieldType.String, required: true },
-        { name: 'openingCrawl', type: FieldType.String, required: true },
+        { name: 'openingCrawl', type: FieldType.String, required: true, multiline: true },
         {
           name: 'characters',
           type: FieldType.EntityType,
