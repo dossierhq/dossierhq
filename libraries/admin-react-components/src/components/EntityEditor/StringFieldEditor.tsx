@@ -1,16 +1,21 @@
-import { Input } from '@jonasb/datadata-design';
+import { Input, TextArea } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
 import React, { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor';
 
 type Props = FieldEditorProps<string>;
 
-export function StringFieldEditor({ value, onChange }: Props) {
+export function StringFieldEditor({ fieldSpec, value, onChange }: Props) {
   const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onChange(event.target.value);
     },
     [onChange]
   );
-  return <Input value={value ?? ''} onChange={handleChange} />;
+
+  return fieldSpec.multiline ? (
+    <TextArea value={value ?? ''} onChange={handleChange} />
+  ) : (
+    <Input value={value ?? ''} onChange={handleChange} />
+  );
 }
