@@ -435,7 +435,7 @@ function encodeFieldItemOrList(
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeRichTextField(schema, fieldSpec, prefix, decodedItem);
       } else {
-        encodedItemResult = fieldAdapter.encodeData(prefix, decodedItem);
+        encodedItemResult = fieldAdapter.encodeData(fieldSpec, prefix, decodedItem);
       }
       if (encodedItemResult.isError()) {
         return encodedItemResult;
@@ -450,7 +450,7 @@ function encodeFieldItemOrList(
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(schema, fieldSpec, prefix, data);
   }
-  return fieldAdapter.encodeData(prefix, data);
+  return fieldAdapter.encodeData(fieldSpec, prefix, data);
 }
 
 function encodeValueItemField(
@@ -565,7 +565,7 @@ function encodeRichTextField(
       encodedBlockData = encodeResult.value;
     } else if (isRichTextEntityBlock(block) && data) {
       const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
-      const encodeResult = adapter.encodeData(blockPrefix, block.data);
+      const encodeResult = adapter.encodeData(fieldSpec, blockPrefix, block.data);
       if (encodeResult.isError()) {
         return encodeResult;
       }
