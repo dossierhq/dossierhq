@@ -13,6 +13,8 @@ import {
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
+  STRINGS_ADMIN_ENTITY,
+  STRINGS_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
@@ -25,6 +27,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
+  createEntity_withMultilineField,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
   createEntity_errorMultilineStringInTitle,
@@ -177,6 +180,33 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
 
   assertResultValue(createResult, {
     effect: 'createdAndPublished',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
+}
+
+async function createEntity_withMultilineField({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { multiline: 'one\ntwo\nthree' } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(STRINGS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { multiline: 'one\ntwo\nthree' },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
     entity: expectedEntity,
   });
 
