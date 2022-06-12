@@ -34,6 +34,8 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
   adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
   adminEntitySearchTotalCount: MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
+  adminEntityUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityUpdateEntity']>;
+  adminEntityUpdateGetEntityInfo: MockedFunction<DatabaseAdapter['adminEntityUpdateGetEntityInfo']>;
   advisoryLockAcquire: MockedFunction<DatabaseAdapter['advisoryLockAcquire']>;
   advisoryLockDeleteExpired: MockedFunction<DatabaseAdapter['advisoryLockDeleteExpired']>;
   advisoryLockRelease: MockedFunction<DatabaseAdapter['advisoryLockRelease']>;

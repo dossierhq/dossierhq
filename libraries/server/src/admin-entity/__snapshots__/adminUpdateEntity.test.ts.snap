@@ -1,0 +1,38 @@
+// Vitest Snapshot v1
+
+exports[`Admin adminUpdateEntity > Minimal 1`] = `
+[
+  [
+    "adminEntityUpdateEntity",
+    [Function],
+    {
+      "changeName": true,
+      "entityInternalId": "internal-123",
+      "fieldValues": {
+        "title": "Updated title",
+      },
+      "fullTextSearchText": "Updated title",
+      "locations": [],
+      "name": "Updated name",
+      "referenceIds": [],
+      "session": {
+        "subjectId": "subject-id",
+        "subjectInternalId": 123,
+      },
+      "status": "draft",
+      "version": 1,
+    },
+  ],
+  [
+    "adminEntityUpdateGetEntityInfo",
+    {
+      "id": "123",
+    },
+  ],
+  [
+    "withRootTransaction",
+    [Function],
+    [Function],
+  ],
+]
+`;
