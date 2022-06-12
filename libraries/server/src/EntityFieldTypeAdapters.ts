@@ -7,13 +7,17 @@ import type {
 } from '@jonasb/datadata-core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
-  encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, typeof ErrorType.BadRequest>;
+  encodeData(
+    fieldSpec: FieldSpecification,
+    prefix: string,
+    decodedData: TDecoded
+  ): Result<TEncoded, typeof ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
-  encodeData: (prefix: string, data) =>
+  encodeData: (_fieldSpec: FieldSpecification, prefix: string, data) =>
     typeof data === 'boolean'
       ? ok(data)
       : notOk.BadRequest(
@@ -24,7 +28,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.EntityType], string> = {
-  encodeData: (prefix: string, x) => {
+  encodeData: (_fieldSpec: FieldSpecification, prefix: string, x) => {
     if (Array.isArray(x)) {
       return notOk.BadRequest(`${prefix}: expected reference, got list`);
     }
@@ -44,7 +48,7 @@ const locationCodec: FieldTypeAdapter<
   FieldValueTypeMap[typeof FieldType.Location],
   [number, number]
 > = {
-  encodeData: (prefix: string, data) => {
+  encodeData: (_fieldSpec: FieldSpecification, prefix: string, data) => {
     if (Array.isArray(data)) {
       return notOk.BadRequest(`${prefix}: expected location, got list`);
     }
@@ -68,10 +72,17 @@ const locationCodec: FieldTypeAdapter<
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (prefix: string, x) =>
-    typeof x === 'string'
-      ? ok(x)
-      : notOk.BadRequest(`${prefix}: expected string, got ${Array.isArray(x) ? 'list' : typeof x}`),
+  encodeData: (fieldSpec: FieldSpecification, prefix: string, data) => {
+    if (typeof data !== 'string') {
+      return notOk.BadRequest(
+        `${prefix}: expected string, got ${Array.isArray(data) ? 'list' : typeof data}`
+      );
+    }
+    if (!fieldSpec.multiline && data.includes('\n')) {
+      return notOk.BadRequest(`${prefix}: multiline string not allowed`);
+    }
+    return ok(data);
+  },
   decodeData: (x) => x,
   getReferenceUUIDs: (_x) => null,
 };

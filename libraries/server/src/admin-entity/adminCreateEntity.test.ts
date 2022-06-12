@@ -136,4 +136,35 @@ describe('Admin adminCreateEntity', () => {
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
     ).toMatchInlineSnapshot('[]');
   });
+
+  test('Error: Create with newline in single line string field', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const authorizationAdapter = createMockAuthorizationAdapter();
+    const context = createMockSessionContext({ databaseAdapter });
+
+    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+    );
+
+    const result = await adminCreateEntity(
+      adminTestSchema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      {
+        info: { type: 'TitleOnly', name: 'TitleOnly', authKey: 'none' },
+        fields: { title: 'Hello\nWorld\n' },
+      },
+      undefined
+    );
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity.fields.title: multiline string not allowed'
+    );
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchInlineSnapshot('[]');
+  });
 });

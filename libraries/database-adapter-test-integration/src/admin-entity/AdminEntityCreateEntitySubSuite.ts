@@ -27,6 +27,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishWithSubjectAuthKey,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
+  createEntity_errorMultilineStringInTitle,
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
@@ -275,6 +276,21 @@ async function createEntity_withMultipleLocations({ client }: AdminEntityTestCon
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function createEntity_errorMultilineStringInTitle({ client }: AdminEntityTestContext) {
+  const id = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Hello\nWorld\n' } })
+  );
+  assertErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    'entity.fields.title: multiline string not allowed'
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
 async function createEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {
