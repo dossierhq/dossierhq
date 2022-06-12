@@ -1,30 +1,23 @@
+import 'dotenv/config';
+//
 import { faker } from '@faker-js/faker';
-import {
+import type {
   AdminClient,
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityStatus,
   AdminEntityUpdate,
   AdminQuery,
-  assertIsDefined,
-  copyEntity,
   EntityReference,
   ErrorType,
-  notOk,
-  ok,
   PromiseResult,
   Result,
 } from '@jonasb/datadata-core';
-import {
-  BenchPressOptions,
-  BenchPressResult,
-  fileTimestamp,
-  reportResult,
-  runTest,
-} from 'benchpress';
-import 'dotenv/config';
-import path from 'path';
-import { DatabaseAdapterSelector, initializeServer } from './server';
+import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@jonasb/datadata-core';
+import type { BenchPressOptions, BenchPressResult } from 'benchpress';
+import { fileTimestamp, reportResult, runTest } from 'benchpress';
+import * as path from 'node:path';
+import type { DatabaseAdapterSelector } from './server.js';
+import { initializeServer } from './server.js';
 
 const outputFolder = path.join(process.cwd(), 'output');
 
