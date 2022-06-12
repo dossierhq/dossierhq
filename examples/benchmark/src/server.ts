@@ -1,4 +1,5 @@
-import { ErrorType, NoOpLogger, ok, PromiseResult, Result } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
+import { NoOpLogger, ok } from '@jonasb/datadata-core';
 import {
   createPostgresAdapter,
   type PgDatabaseAdapter,
@@ -8,15 +9,17 @@ import {
   createSqlite3Adapter,
   type Sqlite3DatabaseAdapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import {
-  AuthorizationAdapter,
-  createServer,
-  NoneAndSubjectAuthorizationAdapter,
-} from '@jonasb/datadata-server';
-import fs from 'fs/promises';
-import { Client } from 'pg';
-import { Database } from 'sqlite3';
+import type { AuthorizationAdapter } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import * as fs from 'node:fs/promises';
+import * as PG from 'pg';
+import * as Sqlite from 'sqlite3';
 import { schemaSpecification } from './schema.js';
+
+// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
+const { Client: PGClient } = (PG as unknown as { default: typeof PG }).default;
+// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
+const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
 
 export type DatabaseAdapterSelector =
   | { postgresConnectionString: string }
@@ -57,7 +60,7 @@ async function createPostgresDatabaseAdapter(
   connectionString: string
 ): PromiseResult<PgDatabaseAdapter, typeof ErrorType.Generic> {
   // delete database to have consistent results
-  const client = new Client({ connectionString });
+  const client = new PGClient({ connectionString });
   await client.connect();
   const {
     rows: [{ count }],
@@ -81,7 +84,7 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
   }
 
   const context = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(context, Database, {
+  const databaseResult = await createDatabase(context, SqliteDatabase, {
     filename: databasePath,
     journalMode: 'wal',
   });
