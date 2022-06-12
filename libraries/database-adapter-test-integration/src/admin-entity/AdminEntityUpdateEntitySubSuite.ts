@@ -23,6 +23,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_errorInvalidId,
   updateEntity_errorDifferentType,
   updateEntity_errorTryingToChangeAuthKey,
+  updateEntity_errorMultilineStringInTitle,
   updateEntity_errorPublishWithoutRequiredTitle,
   updateEntity_errorInvalidField,
 ];
@@ -423,6 +424,24 @@ async function updateEntity_errorTryingToChangeAuthKey({ client }: AdminEntityTe
     updateResult,
     ErrorType.BadRequest,
     'New authKey subject doesn’t correspond to previous authKey none'
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, createResult.value.entity);
+}
+
+async function updateEntity_errorMultilineStringInTitle({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity({ id, fields: { title: 'Hello\nWorld' } });
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'entity.fields.title: multiline string not allowed'
   );
 
   const getResult = await client.getEntity({ id });
