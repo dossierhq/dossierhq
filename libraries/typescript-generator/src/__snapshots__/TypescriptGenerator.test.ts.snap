@@ -9,6 +9,10 @@ export interface AdminBooleansFields {
 }
 
 export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields>;
+
+export function isAdminBooleans(entity: AdminEntity | AdminBooleans): entity is AdminBooleans {
+  return entity.info.type === 'Booleans';
+}
 "
 `;
 
@@ -21,6 +25,10 @@ export interface AdminEntityTypesFields {
 }
 
 export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields>;
+
+export function isAdminEntityTypes(entity: AdminEntity | AdminEntityTypes): entity is AdminEntityTypes {
+  return entity.info.type === 'EntityTypes';
+}
 "
 `;
 
@@ -31,6 +39,10 @@ export interface AdminFooFields {
 }
 
 export type AdminFoo = AdminEntity<'Foo', AdminFooFields>;
+
+export function isAdminFoo(entity: AdminEntity | AdminFoo): entity is AdminFoo {
+  return entity.info.type === 'Foo';
+}
 "
 `;
 
@@ -43,6 +55,10 @@ export interface AdminLocationsFields {
 }
 
 export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
+
+export function isAdminLocations(entity: AdminEntity | AdminLocations): entity is AdminLocations {
+  return entity.info.type === 'Locations';
+}
 "
 `;
 
@@ -55,6 +71,10 @@ export interface AdminRichTextsFields {
 }
 
 export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
+
+export function isAdminRichTexts(entity: AdminEntity | AdminRichTexts): entity is AdminRichTexts {
+  return entity.info.type === 'RichTexts';
+}
 "
 `;
 
@@ -67,6 +87,10 @@ export interface AdminStringsFields {
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
+
+export function isAdminStrings(entity: AdminEntity | AdminStrings): entity is AdminStrings {
+  return entity.info.type === 'Strings';
+}
 "
 `;
 
@@ -81,6 +105,10 @@ export interface AdminValueTypesFields {
 }
 
 export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields>;
+
+export function isAdminValueTypes(entity: AdminEntity | AdminValueTypes): entity is AdminValueTypes {
+  return entity.info.type === 'ValueTypes';
+}
 "
 `;
 

@@ -16,6 +16,10 @@ export interface AdminFilmFields {
 
 export type AdminFilm = AdminEntity<'Film', AdminFilmFields>;
 
+export function isAdminFilm(entity: AdminEntity | AdminFilm): entity is AdminFilm {
+  return entity.info.type === 'Film';
+}
+
 export interface AdminPersonFields {
   name: string | null;
   gender: string | null;
@@ -30,6 +34,10 @@ export interface AdminPersonFields {
 
 export type AdminPerson = AdminEntity<'Person', AdminPersonFields>;
 
+export function isAdminPerson(entity: AdminEntity | AdminPerson): entity is AdminPerson {
+  return entity.info.type === 'Person';
+}
+
 export interface AdminPlanetFields {
   name: string | null;
   climate: Array<string> | null;
@@ -43,6 +51,10 @@ export interface AdminPlanetFields {
 }
 
 export type AdminPlanet = AdminEntity<'Planet', AdminPlanetFields>;
+
+export function isAdminPlanet(entity: AdminEntity | AdminPlanet): entity is AdminPlanet {
+  return entity.info.type === 'Planet';
+}
 
 export interface AdminSpeciesFields {
   name: string | null;
@@ -60,6 +72,10 @@ export interface AdminSpeciesFields {
 
 export type AdminSpecies = AdminEntity<'Species', AdminSpeciesFields>;
 
+export function isAdminSpecies(entity: AdminEntity | AdminSpecies): entity is AdminSpecies {
+  return entity.info.type === 'Species';
+}
+
 export interface AdminStarshipFields {
   starshipClass: string | null;
   mglt: string | null;
@@ -68,6 +84,10 @@ export interface AdminStarshipFields {
 }
 
 export type AdminStarship = AdminEntity<'Starship', AdminStarshipFields>;
+
+export function isAdminStarship(entity: AdminEntity | AdminStarship): entity is AdminStarship {
+  return entity.info.type === 'Starship';
+}
 
 export interface AdminTransportFields {
   name: string | null;
@@ -84,9 +104,17 @@ export interface AdminTransportFields {
 
 export type AdminTransport = AdminEntity<'Transport', AdminTransportFields>;
 
+export function isAdminTransport(entity: AdminEntity | AdminTransport): entity is AdminTransport {
+  return entity.info.type === 'Transport';
+}
+
 export interface AdminVehicleFields {
   vehicleClass: string | null;
   pilots: Array<EntityReference> | null;
 }
 
 export type AdminVehicle = AdminEntity<'Vehicle', AdminVehicleFields>;
+
+export function isAdminVehicle(entity: AdminEntity | AdminVehicle): entity is AdminVehicle {
+  return entity.info.type === 'Vehicle';
+}
