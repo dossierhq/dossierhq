@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-typescript-generator",
+      "comment": "Add isAdminEntityType()/assertIsAdminEntityType()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-typescript-generator"
+}
