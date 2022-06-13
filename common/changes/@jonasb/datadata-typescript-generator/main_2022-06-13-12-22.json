@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-typescript-generator",
+      "comment": "Generate correct typescript",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-typescript-generator"
+}
