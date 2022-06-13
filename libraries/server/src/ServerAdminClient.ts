@@ -2,6 +2,7 @@ import type {
   AdminClient,
   AdminClientMiddleware,
   AdminClientOperation,
+  AdminEntityCreate,
   ContextProvider,
 } from '@jonasb/datadata-core';
 import {
@@ -80,7 +81,7 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity,
+            entity as AdminEntityCreate,
             options
           )
         );

@@ -120,11 +120,11 @@ export interface AdminClient {
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  createEntity(
-    entity: AdminEntityCreate,
+  createEntity<T extends AdminEntity<string, object> = AdminEntity>(
+    entity: AdminEntityCreate<T>,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
-    AdminEntityCreatePayload,
+    AdminEntityCreatePayload<T>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -443,15 +443,27 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  createEntity(
-    entity: AdminEntityCreate,
+  createEntity<T extends AdminEntity<string, object> = AdminEntity>(
+    entity: AdminEntityCreate<T>,
     options: AdminEntityMutationOptions | undefined
-  ): MethodReturnType<typeof AdminClientOperationName.createEntity> {
+  ): PromiseResult<
+    AdminEntityCreatePayload<T>,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  > {
     return this.executeOperation({
       name: AdminClientOperationName.createEntity,
       args: [entity, options],
       modifies: true,
-    });
+    }) as PromiseResult<
+      AdminEntityCreatePayload<T>,
+      | typeof ErrorType.BadRequest
+      | typeof ErrorType.Conflict
+      | typeof ErrorType.NotAuthorized
+      | typeof ErrorType.Generic
+    >;
   }
 
   updateEntity(
