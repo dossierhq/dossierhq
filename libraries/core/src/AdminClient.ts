@@ -131,11 +131,11 @@ export interface AdminClient {
     | typeof ErrorType.Generic
   >;
 
-  updateEntity(
-    entity: AdminEntityUpdate,
+  updateEntity<T extends AdminEntity<string, object> = AdminEntity>(
+    entity: AdminEntityUpdate<T>,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
-    AdminEntityUpdatePayload,
+    AdminEntityUpdatePayload<T>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -466,15 +466,27 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     >;
   }
 
-  updateEntity(
-    entity: AdminEntityUpdate,
+  updateEntity<T extends AdminEntity<string, object> = AdminEntity>(
+    entity: AdminEntityUpdate<T>,
     options: AdminEntityMutationOptions | undefined
-  ): MethodReturnType<typeof AdminClientOperationName.updateEntity> {
+  ): PromiseResult<
+    AdminEntityUpdatePayload<T>,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  > {
     return this.executeOperation({
       name: AdminClientOperationName.updateEntity,
       args: [entity, options],
       modifies: true,
-    });
+    }) as PromiseResult<
+      AdminEntityUpdatePayload<T>,
+      | typeof ErrorType.BadRequest
+      | typeof ErrorType.NotFound
+      | typeof ErrorType.NotAuthorized
+      | typeof ErrorType.Generic
+    >;
   }
 
   upsertEntity(

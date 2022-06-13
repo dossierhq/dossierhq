@@ -15,7 +15,13 @@ import { copyEntity } from './ItemUtils.js';
 import { convertJsonResult } from './JsonUtils.js';
 import { NoOpLogger } from './Logger.js';
 import type { ClientContext } from './SharedClient.js';
-import type { AdminEntity, AdminEntityCreate, AdminEntityCreatePayload } from './Types.js';
+import type {
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityCreatePayload,
+  AdminEntityUpdate,
+  AdminEntityUpdatePayload,
+} from './Types.js';
 import { AdminEntityStatus, PublishingEventKind } from './Types.js';
 
 interface FooFields {
@@ -112,6 +118,27 @@ describe('Custom AdminEntity types', () => {
       entity: createDummyEntity({}),
     };
     const _fooEntity: AdminFooEntity = fooCreatePayload.entity;
+  });
+
+  test('AdminFooEntity update', async () => {
+    const adminClient = createBaseAdminClient({
+      context: { logger: NoOpLogger },
+      pipeline: [],
+    });
+
+    const fooUpdate: AdminEntityUpdate<AdminFooEntity> = {
+      id: '123',
+      info: { type: 'FooType', name: 'Foo name', authKey: 'none' },
+      fields: { title: 'bar value' },
+    };
+
+    const _returnedPayload = await adminClient.updateEntity<AdminFooEntity>(fooUpdate);
+
+    const fooUpdatePayload: AdminEntityUpdatePayload<AdminFooEntity> = {
+      effect: 'updated',
+      entity: createDummyEntity({}),
+    };
+    const _fooEntity: AdminFooEntity = fooUpdatePayload.entity;
   });
 });
 

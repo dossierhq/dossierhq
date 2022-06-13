@@ -127,22 +127,22 @@ export interface AdminEntityCreatePayload<T extends AdminEntity<string, object> 
   entity: T;
 }
 
-export interface AdminEntityUpdate {
+export interface AdminEntityUpdate<T extends AdminEntity<string, object> = AdminEntity> {
   id: string;
   info?: {
     name?: string;
     /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
-    type?: string;
+    type?: T['info']['type'];
     version?: number;
     /** If provided, has to be the same as the existing authKey, i.e. there's no way to change the authKey of an entity */
     authKey?: string;
   };
-  fields: Record<string, unknown>;
+  fields: Partial<T['fields']>;
 }
 
-export interface AdminEntityUpdatePayload {
+export interface AdminEntityUpdatePayload<T extends AdminEntity<string, object> = AdminEntity> {
   effect: 'updated' | 'updatedAndPublished' | 'published' | 'none';
-  entity: AdminEntity;
+  entity: T;
 }
 
 export interface AdminEntityUpsert {
