@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean",
+    "build": "./scripts/generate-typescript.ts && npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/datadata-typescript-generator": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.45.5",
     "@types/sql.js": "~1.4.2",

@@ -1,59 +1,12 @@
 import { faker } from '@faker-js/faker';
-import type {
-  AdminClient,
-  AdminSchemaSpecificationUpdate,
-  EntityReference,
-  Location,
-} from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import type { AdminClient, EntityReference, Location } from '@jonasb/datadata-core';
 import {
   createAdapterAndServer,
   createDatabase,
   exportDatabase,
 } from '../utils/shared-generator.js';
-
-const SCHEMA: AdminSchemaSpecificationUpdate = {
-  entityTypes: [
-    {
-      name: 'PlaceOfBusiness',
-      fields: [
-        { name: 'name', type: FieldType.String, isName: true, required: true },
-        { name: 'address', type: FieldType.ValueType, valueTypes: ['Address'] },
-        { name: 'slogan', type: FieldType.String, required: true },
-        { name: 'description', type: FieldType.String, multiline: true, required: true },
-      ],
-    },
-    {
-      name: 'Review',
-      fields: [
-        { name: 'reviewer', type: FieldType.EntityType, entityTypes: ['Reviewer'], required: true },
-        {
-          name: 'placeOfBusiness',
-          type: FieldType.EntityType,
-          entityTypes: ['PlaceOfBusiness'],
-          required: true,
-        },
-        { name: 'review', type: FieldType.String, required: true },
-      ],
-    },
-    {
-      name: 'Reviewer',
-      fields: [{ name: 'name', type: FieldType.String, isName: true, required: true }],
-    },
-  ],
-  valueTypes: [
-    {
-      name: 'Address',
-      fields: [
-        { name: 'location', type: FieldType.Location, required: true },
-        { name: 'line1', type: FieldType.String, required: true },
-        { name: 'line2', type: FieldType.String },
-        { name: 'zip', type: FieldType.String, required: true },
-        { name: 'city', type: FieldType.String, required: true },
-      ],
-    },
-  ],
-};
+import type { AdminPlaceOfBusiness, AdminReview, AdminReviewer } from './schema-types.js';
+import { SCHEMA } from './schema.js';
 
 function* generateLocation(): Generator<Location, void> {
   let lat = 55.6;
@@ -76,7 +29,7 @@ async function createPlaceOfBusiness(
   const city = faker.address.city();
   const location = locationGenerator.next().value;
   return (
-    await adminClient.createEntity(
+    await adminClient.createEntity<AdminPlaceOfBusiness>(
       {
         info: { type: 'PlaceOfBusiness', authKey: 'none', name },
         fields: {
@@ -100,7 +53,7 @@ async function createPlaceOfBusiness(
 async function createReviewer(adminClient: AdminClient) {
   const name = faker.internet.userName();
   return (
-    await adminClient.createEntity(
+    await adminClient.createEntity<AdminReviewer>(
       {
         info: { type: 'Reviewer', authKey: 'none', name },
         fields: { name },
@@ -116,7 +69,7 @@ async function createReview(
   reviewer: EntityReference
 ) {
   return (
-    await adminClient.createEntity(
+    await adminClient.createEntity<AdminReview>(
       {
         info: { type: 'Review', authKey: 'none', name: 'Review' },
         fields: {
