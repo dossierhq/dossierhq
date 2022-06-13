@@ -1,8 +1,8 @@
 #!/usr/bin/env -S deno run -q --allow-run=npx --allow-write=./src/reviews/schema-types.ts,./src/starwars/schema-types.ts
 import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
-import { SCHEMA as REVIEWS_SCHEMA } from '../src/reviews/SCHEMA.ts';
-import { SCHEMA as STARWARS_SCHEMA } from '../src/starwars/SCHEMA.ts';
+import { SCHEMA as REVIEWS_SCHEMA } from '../src/reviews/schema.ts';
+import { SCHEMA as STARWARS_SCHEMA } from '../src/starwars/schema.ts';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
   const schema = new AdminSchema(
