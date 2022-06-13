@@ -1,5 +1,4 @@
-import type { AdminClient, AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import type { AdminClient } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import { fetchJsonCached } from '../utils/fetchUtils.js';
 import {
@@ -7,134 +6,18 @@ import {
   createDatabase,
   exportDatabase,
 } from '../utils/shared-generator.js';
+import type {
+  AdminFilm,
+  AdminPerson,
+  AdminPlanet,
+  AdminSpecies,
+  AdminStarship,
+  AdminTransport,
+  AdminVehicle,
+} from './schema-types.js';
+import { SCHEMA } from './schema.js';
 
 const UUID_NAMESPACE = 'b0a4c16c-8feb-4a68-9d43-98f96719eee5';
-
-const SCHEMA: AdminSchemaSpecificationUpdate = {
-  entityTypes: [
-    {
-      name: 'Film',
-      fields: [
-        { name: 'title', type: FieldType.String, required: true },
-        { name: 'episodeId', type: FieldType.String, required: true },
-        { name: 'director', type: FieldType.String, required: true },
-        { name: 'producers', type: FieldType.String, list: true, required: true },
-        { name: 'releaseDate', type: FieldType.String, required: true },
-        { name: 'openingCrawl', type: FieldType.String, required: true, multiline: true },
-        {
-          name: 'characters',
-          type: FieldType.EntityType,
-          list: true,
-          entityTypes: ['Person'],
-          required: true,
-        },
-        {
-          name: 'starships',
-          type: FieldType.EntityType,
-          list: true,
-          entityTypes: ['Starship'],
-          required: true,
-        },
-        {
-          name: 'vehicles',
-          type: FieldType.EntityType,
-          list: true,
-          entityTypes: ['Vehicle'],
-          required: true,
-        },
-        {
-          name: 'planets',
-          type: FieldType.EntityType,
-          list: true,
-          entityTypes: ['Planet'],
-          required: true,
-        },
-        {
-          name: 'species',
-          type: FieldType.EntityType,
-          list: true,
-          entityTypes: ['Species'],
-          required: true,
-        },
-      ],
-    },
-    {
-      name: 'Person',
-      fields: [
-        { name: 'name', type: FieldType.String, required: true },
-        { name: 'gender', type: FieldType.String, required: true },
-        { name: 'skinColors', type: FieldType.String, list: true, required: true },
-        { name: 'hairColors', type: FieldType.String, list: true, required: true },
-        { name: 'eyeColors', type: FieldType.String, list: true, required: true },
-        { name: 'height', type: FieldType.String, required: true },
-        { name: 'mass', type: FieldType.String, required: true },
-        { name: 'homeworld', type: FieldType.EntityType, entityTypes: ['Planet'], required: true },
-        { name: 'birthYear', type: FieldType.String, required: true },
-      ],
-    },
-    {
-      name: 'Planet',
-      fields: [
-        { name: 'name', type: FieldType.String, required: true },
-        { name: 'climate', type: FieldType.String, list: true, required: true },
-        { name: 'surfaceWater', type: FieldType.String, required: true },
-        { name: 'diameter', type: FieldType.String, required: true },
-        { name: 'terrain', type: FieldType.String, list: true, required: true },
-        { name: 'gravity', type: FieldType.String, required: true },
-        { name: 'rotationPeriod', type: FieldType.String, required: true },
-        { name: 'orbitalPeriod', type: FieldType.String, required: true },
-        { name: 'population', type: FieldType.String, required: true },
-      ],
-    },
-    {
-      name: 'Species',
-      fields: [
-        { name: 'name', type: FieldType.String, required: true },
-        { name: 'classification', type: FieldType.String, required: true },
-        { name: 'designation', type: FieldType.String, required: true },
-        { name: 'skinColors', type: FieldType.String, list: true, required: true },
-        { name: 'hairColors', type: FieldType.String, list: true, required: true },
-        { name: 'eyeColors', type: FieldType.String, list: true, required: true },
-        { name: 'language', type: FieldType.String, required: true },
-        { name: 'averageLifespan', type: FieldType.String, required: true },
-        { name: 'averageHeight', type: FieldType.String, required: true },
-        { name: 'people', type: FieldType.EntityType, list: true, entityTypes: ['Person'] },
-        { name: 'homeworld', type: FieldType.EntityType, entityTypes: ['Planet'] },
-      ],
-    },
-    {
-      name: 'Starship',
-      fields: [
-        { name: 'starshipClass', type: FieldType.String, required: true },
-        { name: 'mglt', type: FieldType.String, required: true },
-        { name: 'hyperdriveRating', type: FieldType.String, required: true },
-        { name: 'pilots', type: FieldType.EntityType, list: true, entityTypes: ['Person'] },
-      ],
-    },
-    {
-      name: 'Transport',
-      fields: [
-        { name: 'name', type: FieldType.String, required: true },
-        { name: 'model', type: FieldType.String, required: true },
-        { name: 'manufacturers', type: FieldType.String, list: true, required: true },
-        { name: 'consumables', type: FieldType.String, required: true },
-        { name: 'cargoCapacity', type: FieldType.String, required: true },
-        { name: 'crew', type: FieldType.String, required: true },
-        { name: 'passengers', type: FieldType.String, required: true },
-        { name: 'maxAtmospheringSpeed', type: FieldType.String, required: true },
-        { name: 'length', type: FieldType.String, required: true },
-        { name: 'costInCredits', type: FieldType.String, required: true },
-      ],
-    },
-    {
-      name: 'Vehicle',
-      fields: [
-        { name: 'vehicleClass', type: FieldType.String, required: true },
-        { name: 'pilots', type: FieldType.EntityType, list: true, entityTypes: ['Person'] },
-      ],
-    },
-  ],
-};
 
 async function downloadFile(filename: string) {
   return await fetchJsonCached(
@@ -162,7 +45,7 @@ async function createFilms(adminClient: AdminClient) {
   const filmsData = await downloadFile('films.json');
   for (const film of filmsData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminFilm>(
         {
           id: uuidForEntity('film', film.pk),
           info: { type: 'Film', authKey: 'none', name: film.fields.title },
@@ -190,7 +73,7 @@ async function createPeople(adminClient: AdminClient) {
   const peopleData = await downloadFile('people.json');
   for (const person of peopleData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminPerson>(
         {
           id: uuidForEntity('person', person.pk),
           info: { type: 'Person', authKey: 'none', name: person.fields.name },
@@ -216,7 +99,7 @@ async function createPlanets(adminClient: AdminClient) {
   const planetsData = await downloadFile('planets.json');
   for (const planet of planetsData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminPlanet>(
         {
           id: uuidForEntity('planet', planet.pk),
           info: { type: 'Planet', authKey: 'none', name: planet.fields.name },
@@ -242,7 +125,7 @@ async function createSpecies(adminClient: AdminClient) {
   const speciesData = await downloadFile('species.json');
   for (const species of speciesData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminSpecies>(
         {
           id: uuidForEntity('species', species.pk),
           info: { type: 'Species', authKey: 'none', name: species.fields.name },
@@ -272,7 +155,7 @@ async function createStarships(adminClient: AdminClient) {
   const starshipsData = await downloadFile('starships.json');
   for (const starship of starshipsData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminStarship>(
         {
           id: uuidForEntity('starship', starship.pk),
           info: { type: 'Starship', authKey: 'none', name: starship.fields.starship_class },
@@ -293,7 +176,7 @@ async function createTransports(adminClient: AdminClient) {
   const transportsData = await downloadFile('transport.json');
   for (const transport of transportsData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminTransport>(
         {
           id: uuidForEntity('transport', transport.pk),
           info: { type: 'Transport', authKey: 'none', name: transport.fields.name },
@@ -320,7 +203,7 @@ async function createVehicles(adminClient: AdminClient) {
   const vehiclesData = await downloadFile('vehicles.json');
   for (const vehicle of vehiclesData) {
     (
-      await adminClient.createEntity(
+      await adminClient.createEntity<AdminVehicle>(
         {
           id: uuidForEntity('vehicle', vehicle.pk),
           info: { type: 'Vehicle', authKey: 'none', name: vehicle.fields.vehicle_class },
