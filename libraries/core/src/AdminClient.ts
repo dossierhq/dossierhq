@@ -142,11 +142,11 @@ export interface AdminClient {
     | typeof ErrorType.Generic
   >;
 
-  upsertEntity(
-    entity: AdminEntityUpsert,
+  upsertEntity<T extends AdminEntity<string, object> = AdminEntity>(
+    entity: AdminEntityUpsert<T>,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
-    AdminEntityUpsertPayload,
+    AdminEntityUpsertPayload<T>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
@@ -489,15 +489,21 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     >;
   }
 
-  upsertEntity(
-    entity: AdminEntityUpsert,
+  upsertEntity<T extends AdminEntity<string, object> = AdminEntity>(
+    entity: AdminEntityUpsert<T>,
     options: AdminEntityMutationOptions | undefined
-  ): MethodReturnType<typeof AdminClientOperationName.upsertEntity> {
+  ): PromiseResult<
+    AdminEntityUpsertPayload<T>,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+  > {
     return this.executeOperation({
       name: AdminClientOperationName.upsertEntity,
       args: [entity, options],
       modifies: true,
-    });
+    }) as PromiseResult<
+      AdminEntityUpsertPayload<T>,
+      typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+    >;
   }
 
   getEntityHistory(
