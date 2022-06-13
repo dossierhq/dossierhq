@@ -1,0 +1,48 @@
+{
+  "name": "@jonasb/datadata-typescript-generator",
+  "version": "0.1.11",
+  "description": "",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
+  "types": "./lib/esm/index.d.ts",
+  "scripts": {
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno cjs-package-json",
+    "build:watch": "heft build --watch",
+    "clean": "heft clean",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git",
+    "directory": "libraries/typescript-generator"
+  },
+  "devDependencies": {
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
+    "@rushstack/heft": "~0.45.5",
+    "eslint": "^8.16.0",
+    "prettier": "2.6.2",
+    "typescript": "^4.7.2",
+    "vitest": "~0.14.1"
+  },
+  "dependencies": {
+    "@jonasb/datadata-core": "workspace:*",
+    "tslib": "~2.4.0"
+  }
+}
