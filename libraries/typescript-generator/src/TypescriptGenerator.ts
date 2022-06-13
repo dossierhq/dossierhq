@@ -34,7 +34,7 @@ function generateAdminEntityType(
   const fieldsName = `Admin${entitySpec.name}Fields`;
   paragraphs.push(`export interface ${fieldsName} {`);
   for (const fieldSpec of entitySpec.fields) {
-    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec)},`);
+    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec)};`);
   }
   paragraphs.push(`}`);
   paragraphs.push('');
