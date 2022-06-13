@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-typescript-generator",
-  "version": "0.1.11",
+  "version": "0.1.22",
   "description": "",
   "type": "module",
   "exports": {
