@@ -15,8 +15,13 @@ import { copyEntity } from './ItemUtils.js';
 import { convertJsonResult } from './JsonUtils.js';
 import { NoOpLogger } from './Logger.js';
 import type { ClientContext } from './SharedClient.js';
-import type { AdminEntity } from './Types.js';
+import type { AdminEntity, AdminEntityCreate, AdminEntityCreatePayload } from './Types.js';
 import { AdminEntityStatus, PublishingEventKind } from './Types.js';
+
+interface FooFields {
+  title: string | null;
+}
+type AdminFooEntity = AdminEntity<'FooType', FooFields>;
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient
@@ -65,8 +70,12 @@ function createJsonConvertingAdminClientsForOperation<
   return { adminClient: outerAdminClient, operationHandlerMock };
 }
 
-function createDummyEntity(changes: Parameters<typeof copyEntity>[1]): AdminEntity {
-  return copyEntity<AdminEntity>(
+function createDummyEntity(changes: {
+  id?: string;
+  info?: Partial<AdminFooEntity['info']>;
+  fields?: Partial<AdminFooEntity['fields']>;
+}): AdminFooEntity {
+  return copyEntity<AdminFooEntity>(
     {
       id: '123',
       info: {
@@ -78,11 +87,33 @@ function createDummyEntity(changes: Parameters<typeof copyEntity>[1]): AdminEnti
         createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
         updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
       },
-      fields: {},
+      fields: { title: 'Foo title' },
     },
     changes
   );
 }
+
+describe('Custom AdminEntity types', () => {
+  test('AdminFooEntity creation', async () => {
+    const adminClient = createBaseAdminClient({
+      context: { logger: NoOpLogger },
+      pipeline: [],
+    });
+
+    const fooCreate: AdminEntityCreate<AdminFooEntity> = {
+      info: { type: 'FooType', name: 'Foo name', authKey: 'none' },
+      fields: { title: 'bar value' },
+    };
+
+    const _returnedPayload = await adminClient.createEntity<AdminFooEntity>(fooCreate);
+
+    const fooCreatePayload: AdminEntityCreatePayload<AdminFooEntity> = {
+      effect: 'created',
+      entity: createDummyEntity({}),
+    };
+    const _fooEntity: AdminFooEntity = fooCreatePayload.entity;
+  });
+});
 
 describe('AdminClient forward operation over JSON', () => {
   test('acquireAdvisoryLock', async () => {
@@ -196,7 +227,7 @@ describe('AdminClient forward operation over JSON', () => {
               info: {
                 status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
               },
-            }),
+            }) as unknown as AdminEntity,
           })
         );
       }
@@ -218,7 +249,9 @@ describe('AdminClient forward operation over JSON', () => {
         {
           "effect": "createdAndPublished",
           "entity": {
-            "fields": {},
+            "fields": {
+              "title": "Foo title",
+            },
             "id": "1234",
             "info": {
               "authKey": "none",
@@ -276,7 +309,9 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.getEntities,
       async (_context, operation) => {
         const [references] = operation.args;
-        operation.resolve(ok(references.map(({ id }) => ok(createDummyEntity({ id })))));
+        operation.resolve(
+          ok(references.map(({ id }) => ok(createDummyEntity({ id }) as unknown as AdminEntity)))
+        );
       }
     );
 
@@ -294,7 +329,9 @@ describe('AdminClient forward operation over JSON', () => {
         [
           OkResult {
             "value": {
-              "fields": {},
+              "fields": {
+                "title": "Foo title",
+              },
               "id": "1234",
               "info": {
                 "authKey": "none",
@@ -309,7 +346,9 @@ describe('AdminClient forward operation over JSON', () => {
           },
           OkResult {
             "value": {
-              "fields": {},
+              "fields": {
+                "title": "Foo title",
+              },
               "id": "5678",
               "info": {
                 "authKey": "none",
@@ -364,7 +403,7 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.getEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
-        operation.resolve(ok(createDummyEntity({ id: reference.id })));
+        operation.resolve(ok(createDummyEntity({ id: reference.id }) as unknown as AdminEntity));
       }
     );
 
@@ -375,7 +414,9 @@ describe('AdminClient forward operation over JSON', () => {
 
       expect(result.value).toMatchInlineSnapshot(`
         {
-          "fields": {},
+          "fields": {
+            "title": "Foo title",
+          },
           "id": "1234",
           "info": {
             "authKey": "none",
@@ -1142,7 +1183,7 @@ describe('AdminClient forward operation over JSON', () => {
               info: {
                 status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
               },
-            }),
+            }) as unknown as AdminEntity,
           })
         );
       }
@@ -1163,7 +1204,9 @@ describe('AdminClient forward operation over JSON', () => {
         {
           "effect": "updatedAndPublished",
           "entity": {
-            "fields": {},
+            "fields": {
+              "title": "Foo title",
+            },
             "id": "1234",
             "info": {
               "authKey": "none",
@@ -1275,7 +1318,7 @@ describe('AdminClient forward operation over JSON', () => {
               info: {
                 status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
               },
-            }),
+            }) as unknown as AdminEntity,
           })
         );
       }
@@ -1297,7 +1340,9 @@ describe('AdminClient forward operation over JSON', () => {
         {
           "effect": "created",
           "entity": {
-            "fields": {},
+            "fields": {
+              "title": "Foo title",
+            },
             "id": "1234",
             "info": {
               "authKey": "none",

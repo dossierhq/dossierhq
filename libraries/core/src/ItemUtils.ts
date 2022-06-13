@@ -439,7 +439,9 @@ function doVisitFieldRecursively<TVisitContext>(
   }
 }
 
-export function copyEntity<T extends AdminEntity | AdminEntityCreate | PublishedEntity>(
+export function copyEntity<
+  T extends AdminEntity<string, object> | AdminEntityCreate | PublishedEntity
+>(
   entity: T,
   changes: { id?: string; info?: Partial<T['info']>; fields?: Partial<T['fields']> }
 ): T {
@@ -454,9 +456,10 @@ export function copyEntity<T extends AdminEntity | AdminEntityCreate | Published
     }
   }
   if (changes.fields) {
-    copy.fields = { ...entity.fields };
+    const fieldsCopy = { ...entity.fields };
+    copy.fields = fieldsCopy;
     for (const [key, value] of Object.entries(changes.fields)) {
-      copy.fields[key] = value;
+      fieldsCopy[key] = value;
     }
   }
   return copy;

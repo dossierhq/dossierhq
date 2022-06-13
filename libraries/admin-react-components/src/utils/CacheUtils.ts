@@ -37,7 +37,10 @@ export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSch
   }
 }
 
-export function updateCacheEntity(mutate: ScopedMutator, entity: AdminEntity) {
+export function updateCacheEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  mutate: ScopedMutator,
+  entity: T
+) {
   const key = CACHE_KEYS.adminEntity({ id: entity.id });
   mutate(key, entity);
 }

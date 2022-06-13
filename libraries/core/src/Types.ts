@@ -77,15 +77,18 @@ export const AdminEntityStatus = {
 } as const;
 export type AdminEntityStatus = keyof typeof AdminEntityStatus;
 
-export interface AdminEntity {
+export interface AdminEntity<
+  TType extends string = string,
+  TFields extends object = Record<string, unknown>
+> {
   /** UUID */
   id: string;
-  info: AdminEntityInfo;
-  fields: Record<string, unknown>;
+  info: AdminEntityInfo<TType>;
+  fields: TFields;
 }
 
-export interface AdminEntityInfo {
-  type: string;
+export interface AdminEntityInfo<TType extends string = string> {
+  type: TType;
   name: string;
   version: number;
   authKey: string;
@@ -102,12 +105,12 @@ export interface AdminEntityMutationOptions {
   publish?: boolean;
 }
 
-export interface AdminEntityCreate {
+export interface AdminEntityCreate<T extends AdminEntity<string, object> = AdminEntity> {
   /** UUID. If not provided a new random id will be created */
   id?: string;
   info: {
     /** The entity type */
-    type: string;
+    type: T['info']['type'];
     /** The name of the entity.
      *
      * The name needs to be unique, so if it clashes with an existing entity a random suffix will be
@@ -116,12 +119,12 @@ export interface AdminEntityCreate {
     version?: 0;
     authKey: string;
   };
-  fields: Record<string, unknown>;
+  fields: Partial<T['fields']>;
 }
 
-export interface AdminEntityCreatePayload {
+export interface AdminEntityCreatePayload<T extends AdminEntity<string, object> = AdminEntity> {
   effect: 'created' | 'createdAndPublished' | 'none';
-  entity: AdminEntity;
+  entity: T;
 }
 
 export interface AdminEntityUpdate {
