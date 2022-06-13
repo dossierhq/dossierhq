@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-typescript-generator",
+      "comment": "First release. Supports generating types for AdminEntity",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-typescript-generator"
+}
