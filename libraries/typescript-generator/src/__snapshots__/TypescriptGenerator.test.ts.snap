@@ -1,0 +1,87 @@
+// Vitest Snapshot v1
+
+exports[`generateTypescriptForSchema > Booleans 1`] = `
+"import type { AdminEntity } from '@jonasb/datadata-core';
+
+export interface AdminBooleansFields {
+  boolean: boolean | null,
+  booleanList: Array<boolean> | null,
+}
+
+export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > EntityTypes 1`] = `
+"import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
+
+export interface AdminEntityTypesFields {
+  entityType: EntityReference | null,
+  entityTypeList: Array<EntityReference> | null,
+}
+
+export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
+"import type { AdminEntity } from '@jonasb/datadata-core';
+
+export interface AdminFooFields {
+}
+
+export type AdminFoo = AdminEntity<'Foo', AdminFooFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > Locations 1`] = `
+"import type { AdminEntity, Location } from '@jonasb/datadata-core';
+
+export interface AdminLocationsFields {
+  location: Location | null,
+  locationList: Array<Location> | null,
+}
+
+export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > RichTexts 1`] = `
+"import type { AdminEntity, RichText } from '@jonasb/datadata-core';
+
+export interface AdminRichTextsFields {
+  richText: RichText | null,
+  richTextList: Array<RichText> | null,
+}
+
+export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > Strings 1`] = `
+"import type { AdminEntity } from '@jonasb/datadata-core';
+
+export interface AdminStringsFields {
+  string: string | null,
+  stringList: Array<string> | null,
+}
+
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > ValueTypes 1`] = `
+"import type { AdminEntity, ValueItem } from '@jonasb/datadata-core';
+
+export interface AdminValueTypesFields {
+  valueType: ValueItem | null,
+  valueTypeBar: ValueItem | null,
+  valueTypeList: Array<ValueItem> | null,
+  valueTypeListBar: Array<ValueItem> | null,
+}
+
+export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields>;
+"
+`;
+
+exports[`generateTypescriptForSchema > empty 1`] = `""`;
