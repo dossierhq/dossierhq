@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-typescript-generator",
   "entries": [
     {
+      "version": "0.1.24",
+      "tag": "@jonasb/datadata-typescript-generator_v0.1.24",
+      "date": "Mon, 13 Jun 2022 22:58:05 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add isAdminEntityType()/assertIsAdminEntityType()"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.23",
       "tag": "@jonasb/datadata-typescript-generator_v0.1.23",
       "date": "Mon, 13 Jun 2022 21:34:43 GMT",
