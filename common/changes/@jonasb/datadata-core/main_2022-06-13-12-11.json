@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Enable typing AdminEntity harder. Support multiline for String fields. Remove support for transparent json support of schema spec.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}

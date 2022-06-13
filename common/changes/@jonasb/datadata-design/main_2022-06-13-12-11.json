@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Support value/onChange for TextArea",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}

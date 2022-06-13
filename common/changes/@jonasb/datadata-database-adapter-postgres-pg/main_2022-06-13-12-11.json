@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+      "comment": "Support ESM projects",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-postgres-pg"
+}
