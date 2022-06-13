@@ -51,6 +51,17 @@ function generateAdminEntityType(
   paragraphs.push(`  return entity.info.type === '${entitySpec.name}';`);
   paragraphs.push(`}`);
 
+  paragraphs.push('');
+  paragraphs.push(
+    `export function assertIsAdmin${entitySpec.name}(entity: AdminEntity | Admin${entitySpec.name}): asserts entity is Admin${entitySpec.name} {`
+  );
+  paragraphs.push(`  if (entity.info.type !== '${entitySpec.name}') {`);
+  paragraphs.push(
+    `    throw new Error('Expected info.type = ${entitySpec.name} (but was ' + entity.info.type + ')');`
+  );
+  paragraphs.push(`  }`);
+  paragraphs.push(`}`);
+
   return paragraphs;
 }
 
