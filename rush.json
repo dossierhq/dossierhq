@@ -459,6 +459,11 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-typescript-generator",
+      "projectFolder": "libraries/typescript-generator",
+      "versionPolicyName": "DataDataFramework"
+    },
+    {
       "packageName": "@jonasb/datadata-heft-node-rig",
       "projectFolder": "rigs/heft-node-rig"
     },

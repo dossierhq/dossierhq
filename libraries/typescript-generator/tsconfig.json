@@ -1,0 +1,4 @@
+{
+  "extends": "./node_modules/@jonasb/datadata-heft-node-rig/profiles/default/tsconfig-base.json",
+  "compilerOptions": {}
+}
