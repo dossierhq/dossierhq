@@ -20,6 +20,12 @@ export function isAdminFilm(entity: AdminEntity | AdminFilm): entity is AdminFil
   return entity.info.type === 'Film';
 }
 
+export function assertIsAdminFilm(entity: AdminEntity | AdminFilm): asserts entity is AdminFilm {
+  if (entity.info.type !== 'Film') {
+    throw new Error('Expected info.type = Film (but was ' + entity.info.type + ')');
+  }
+}
+
 export interface AdminPersonFields {
   name: string | null;
   gender: string | null;
@@ -38,6 +44,14 @@ export function isAdminPerson(entity: AdminEntity | AdminPerson): entity is Admi
   return entity.info.type === 'Person';
 }
 
+export function assertIsAdminPerson(
+  entity: AdminEntity | AdminPerson
+): asserts entity is AdminPerson {
+  if (entity.info.type !== 'Person') {
+    throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');
+  }
+}
+
 export interface AdminPlanetFields {
   name: string | null;
   climate: Array<string> | null;
@@ -54,6 +68,14 @@ export type AdminPlanet = AdminEntity<'Planet', AdminPlanetFields>;
 
 export function isAdminPlanet(entity: AdminEntity | AdminPlanet): entity is AdminPlanet {
   return entity.info.type === 'Planet';
+}
+
+export function assertIsAdminPlanet(
+  entity: AdminEntity | AdminPlanet
+): asserts entity is AdminPlanet {
+  if (entity.info.type !== 'Planet') {
+    throw new Error('Expected info.type = Planet (but was ' + entity.info.type + ')');
+  }
 }
 
 export interface AdminSpeciesFields {
@@ -76,6 +98,14 @@ export function isAdminSpecies(entity: AdminEntity | AdminSpecies): entity is Ad
   return entity.info.type === 'Species';
 }
 
+export function assertIsAdminSpecies(
+  entity: AdminEntity | AdminSpecies
+): asserts entity is AdminSpecies {
+  if (entity.info.type !== 'Species') {
+    throw new Error('Expected info.type = Species (but was ' + entity.info.type + ')');
+  }
+}
+
 export interface AdminStarshipFields {
   starshipClass: string | null;
   mglt: string | null;
@@ -87,6 +117,14 @@ export type AdminStarship = AdminEntity<'Starship', AdminStarshipFields>;
 
 export function isAdminStarship(entity: AdminEntity | AdminStarship): entity is AdminStarship {
   return entity.info.type === 'Starship';
+}
+
+export function assertIsAdminStarship(
+  entity: AdminEntity | AdminStarship
+): asserts entity is AdminStarship {
+  if (entity.info.type !== 'Starship') {
+    throw new Error('Expected info.type = Starship (but was ' + entity.info.type + ')');
+  }
 }
 
 export interface AdminTransportFields {
@@ -108,6 +146,14 @@ export function isAdminTransport(entity: AdminEntity | AdminTransport): entity i
   return entity.info.type === 'Transport';
 }
 
+export function assertIsAdminTransport(
+  entity: AdminEntity | AdminTransport
+): asserts entity is AdminTransport {
+  if (entity.info.type !== 'Transport') {
+    throw new Error('Expected info.type = Transport (but was ' + entity.info.type + ')');
+  }
+}
+
 export interface AdminVehicleFields {
   vehicleClass: string | null;
   pilots: Array<EntityReference> | null;
@@ -117,4 +163,12 @@ export type AdminVehicle = AdminEntity<'Vehicle', AdminVehicleFields>;
 
 export function isAdminVehicle(entity: AdminEntity | AdminVehicle): entity is AdminVehicle {
   return entity.info.type === 'Vehicle';
+}
+
+export function assertIsAdminVehicle(
+  entity: AdminEntity | AdminVehicle
+): asserts entity is AdminVehicle {
+  if (entity.info.type !== 'Vehicle') {
+    throw new Error('Expected info.type = Vehicle (but was ' + entity.info.type + ')');
+  }
 }

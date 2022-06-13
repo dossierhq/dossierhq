@@ -13,6 +13,12 @@ export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields>;
 export function isAdminBooleans(entity: AdminEntity | AdminBooleans): entity is AdminBooleans {
   return entity.info.type === 'Booleans';
 }
+
+export function assertIsAdminBooleans(entity: AdminEntity | AdminBooleans): asserts entity is AdminBooleans {
+  if (entity.info.type !== 'Booleans') {
+    throw new Error('Expected info.type = Booleans (but was ' + entity.info.type + ')');
+  }
+}
 "
 `;
 
@@ -29,6 +35,12 @@ export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields
 export function isAdminEntityTypes(entity: AdminEntity | AdminEntityTypes): entity is AdminEntityTypes {
   return entity.info.type === 'EntityTypes';
 }
+
+export function assertIsAdminEntityTypes(entity: AdminEntity | AdminEntityTypes): asserts entity is AdminEntityTypes {
+  if (entity.info.type !== 'EntityTypes') {
+    throw new Error('Expected info.type = EntityTypes (but was ' + entity.info.type + ')');
+  }
+}
 "
 `;
 
@@ -42,6 +54,12 @@ export type AdminFoo = AdminEntity<'Foo', AdminFooFields>;
 
 export function isAdminFoo(entity: AdminEntity | AdminFoo): entity is AdminFoo {
   return entity.info.type === 'Foo';
+}
+
+export function assertIsAdminFoo(entity: AdminEntity | AdminFoo): asserts entity is AdminFoo {
+  if (entity.info.type !== 'Foo') {
+    throw new Error('Expected info.type = Foo (but was ' + entity.info.type + ')');
+  }
 }
 "
 `;
@@ -59,6 +77,12 @@ export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
 export function isAdminLocations(entity: AdminEntity | AdminLocations): entity is AdminLocations {
   return entity.info.type === 'Locations';
 }
+
+export function assertIsAdminLocations(entity: AdminEntity | AdminLocations): asserts entity is AdminLocations {
+  if (entity.info.type !== 'Locations') {
+    throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
+  }
+}
 "
 `;
 
@@ -75,6 +99,12 @@ export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
 export function isAdminRichTexts(entity: AdminEntity | AdminRichTexts): entity is AdminRichTexts {
   return entity.info.type === 'RichTexts';
 }
+
+export function assertIsAdminRichTexts(entity: AdminEntity | AdminRichTexts): asserts entity is AdminRichTexts {
+  if (entity.info.type !== 'RichTexts') {
+    throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
+  }
+}
 "
 `;
 
@@ -90,6 +120,12 @@ export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
 
 export function isAdminStrings(entity: AdminEntity | AdminStrings): entity is AdminStrings {
   return entity.info.type === 'Strings';
+}
+
+export function assertIsAdminStrings(entity: AdminEntity | AdminStrings): asserts entity is AdminStrings {
+  if (entity.info.type !== 'Strings') {
+    throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
+  }
 }
 "
 `;
@@ -108,6 +144,12 @@ export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields>;
 
 export function isAdminValueTypes(entity: AdminEntity | AdminValueTypes): entity is AdminValueTypes {
   return entity.info.type === 'ValueTypes';
+}
+
+export function assertIsAdminValueTypes(entity: AdminEntity | AdminValueTypes): asserts entity is AdminValueTypes {
+  if (entity.info.type !== 'ValueTypes') {
+    throw new Error('Expected info.type = ValueTypes (but was ' + entity.info.type + ')');
+  }
 }
 "
 `;
