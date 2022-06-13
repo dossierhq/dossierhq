@@ -21,6 +21,8 @@ import type {
   AdminEntityCreatePayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
+  AdminEntityUpsert,
+  AdminEntityUpsertPayload,
 } from './Types.js';
 import { AdminEntityStatus, PublishingEventKind } from './Types.js';
 
@@ -139,6 +141,27 @@ describe('Custom AdminEntity types', () => {
       entity: createDummyEntity({}),
     };
     const _fooEntity: AdminFooEntity = fooUpdatePayload.entity;
+  });
+
+  test('AdminFooEntity upsert', async () => {
+    const adminClient = createBaseAdminClient({
+      context: { logger: NoOpLogger },
+      pipeline: [],
+    });
+
+    const fooUpsert: AdminEntityUpsert<AdminFooEntity> = {
+      id: '123',
+      info: { type: 'FooType', name: 'Foo name', authKey: 'none' },
+      fields: { title: 'bar value' },
+    };
+
+    const _returnedPayload = await adminClient.upsertEntity<AdminFooEntity>(fooUpsert);
+
+    const fooUpsertPayload: AdminEntityUpsertPayload<AdminFooEntity> = {
+      effect: 'updated',
+      entity: createDummyEntity({}),
+    };
+    const _fooEntity: AdminFooEntity = fooUpsertPayload.entity;
   });
 });
 

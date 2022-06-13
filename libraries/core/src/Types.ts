@@ -145,17 +145,17 @@ export interface AdminEntityUpdatePayload<T extends AdminEntity<string, object> 
   entity: T;
 }
 
-export interface AdminEntityUpsert {
+export interface AdminEntityUpsert<T extends AdminEntity<string, object> = AdminEntity> {
   id: string;
   info: {
     name: string;
-    type: string;
+    type: T['info']['type'];
     authKey: string;
   };
-  fields: Record<string, unknown>;
+  fields: Partial<T['fields']>;
 }
 
-export interface AdminEntityUpsertPayload {
+export interface AdminEntityUpsertPayload<T extends AdminEntity<string, object> = AdminEntity> {
   effect:
     | 'created'
     | 'createdAndPublished'
@@ -163,7 +163,7 @@ export interface AdminEntityUpsertPayload {
     | 'updatedAndPublished'
     | 'published'
     | 'none';
-  entity: AdminEntity;
+  entity: T;
 }
 
 export interface EntityHistory {
