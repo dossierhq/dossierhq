@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Support deeper typing of update an",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
