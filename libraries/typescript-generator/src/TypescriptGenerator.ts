@@ -38,10 +38,18 @@ function generateAdminEntityType(
   }
   paragraphs.push(`}`);
   paragraphs.push('');
+
   context.coreImports.add('AdminEntity');
   paragraphs.push(
     `export type Admin${entitySpec.name} = AdminEntity<'${entitySpec.name}', ${fieldsName}>;`
   );
+
+  paragraphs.push('');
+  paragraphs.push(
+    `export function isAdmin${entitySpec.name}(entity: AdminEntity | Admin${entitySpec.name}): entity is Admin${entitySpec.name} {`
+  );
+  paragraphs.push(`  return entity.info.type === '${entitySpec.name}';`);
+  paragraphs.push(`}`);
 
   return paragraphs;
 }
