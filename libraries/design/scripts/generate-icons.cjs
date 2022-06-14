@@ -18,6 +18,8 @@ const iconSources = {
   download: solidSvgIcons.faDownload,
   first: solidSvgIcons.faFastBackward,
   last: solidSvgIcons.faFastForward,
+  linkFrom: solidSvgIcons.faArrowRightFromBracket,
+  linkTo: solidSvgIcons.faArrowRightToBracket,
   list: solidSvgIcons.faThList,
   location: solidSvgIcons.faLocationPin,
   map: solidSvgIcons.faMapMarkedAlt,
