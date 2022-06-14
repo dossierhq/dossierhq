@@ -4,6 +4,18 @@ import { FieldType } from '@jonasb/datadata-core';
 export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
+      name: 'PersonalNote',
+      fields: [
+        { name: 'note', type: FieldType.RichText },
+        {
+          name: 'placeOfBusiness',
+          type: FieldType.EntityType,
+          entityTypes: ['PlaceOfBusiness'],
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'PlaceOfBusiness',
       fields: [
         { name: 'name', type: FieldType.String, isName: true, required: true },
