@@ -14,6 +14,7 @@ export interface ButtonProps {
   iconLeft?: IconName;
   iconRight?: IconName;
   color?: Color;
+  title?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
@@ -21,6 +22,7 @@ export interface ButtonProps {
 
 export interface ButtonGroupProps {
   centered?: boolean;
+  hasAddons?: boolean;
   children: ReactNode;
 }
 
@@ -37,6 +39,7 @@ const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
       iconRight,
       color,
       style,
+      title,
       onClick,
       onMouseDown,
       children,
@@ -48,6 +51,7 @@ const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
         ref={ref}
         className={toClassName('button', toColorClassName(color), className)}
         style={style}
+        title={title}
         onClick={onClick}
         onMouseDown={onMouseDown}
         disabled={disabled}
@@ -63,7 +67,11 @@ ButtonWithRef.displayName = 'Button';
 
 export const Button = ButtonWithRef as ButtonComponent;
 
-Button.Group = ({ centered, children }: ButtonGroupProps) => {
-  return <div className={toClassName('buttons', centered && 'is-centered')}>{children}</div>;
+Button.Group = ({ centered, hasAddons, children }: ButtonGroupProps) => {
+  return (
+    <div className={toClassName('buttons', centered && 'is-centered', hasAddons && 'has-addons')}>
+      {children}
+    </div>
+  );
 };
 Button.Group.displayName = 'Button.Group';
