@@ -1,4 +1,25 @@
-import type { AdminEntity, EntityReference, ValueItem } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityReference, RichText, ValueItem } from '@jonasb/datadata-core';
+
+export interface AdminPersonalNoteFields {
+  note: RichText | null;
+  placeOfBusiness: EntityReference | null;
+}
+
+export type AdminPersonalNote = AdminEntity<'PersonalNote', AdminPersonalNoteFields>;
+
+export function isAdminPersonalNote(
+  entity: AdminEntity | AdminPersonalNote
+): entity is AdminPersonalNote {
+  return entity.info.type === 'PersonalNote';
+}
+
+export function assertIsAdminPersonalNote(
+  entity: AdminEntity | AdminPersonalNote
+): asserts entity is AdminPersonalNote {
+  if (entity.info.type !== 'PersonalNote') {
+    throw new Error('Expected info.type = PersonalNote (but was ' + entity.info.type + ')');
+  }
+}
 
 export interface AdminPlaceOfBusinessFields {
   name: string | null;
