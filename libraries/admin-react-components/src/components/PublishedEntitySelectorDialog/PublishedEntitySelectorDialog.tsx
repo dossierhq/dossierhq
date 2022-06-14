@@ -1,4 +1,4 @@
-import type { PublishedEntity } from '@jonasb/datadata-core';
+import type { EntityReference, PublishedEntity } from '@jonasb/datadata-core';
 import {
   Dialog,
   FullscreenContainer,
@@ -6,7 +6,7 @@ import {
   Text,
   toSizeClassName,
 } from '@jonasb/datadata-design';
-import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
@@ -26,7 +26,9 @@ import { PublishedEntitySearchToolbar } from '../PublishedEntitySearchToolbar/Pu
 interface PublishedEntitySelectorDialogProps {
   show: boolean;
   title: string;
-  entityTypes?: string[] | undefined;
+  entityTypes?: string[];
+  linksFrom?: EntityReference;
+  linksTo?: EntityReference;
   onClose: () => void;
   onItemClick: (item: PublishedEntity) => void;
 }
@@ -35,6 +37,8 @@ export function PublishedEntitySelectorDialog({
   show,
   title,
   entityTypes,
+  linksFrom,
+  linksTo,
   onClose,
   onItemClick,
 }: PublishedEntitySelectorDialogProps) {
@@ -47,7 +51,14 @@ export function PublishedEntitySelectorDialog({
           </FullscreenContainer.Item>
           <IconButton icon="close" color="white" onClick={onClose} />
         </FullscreenContainer.Row>
-        {show ? <Content entityTypes={entityTypes} onItemClick={onItemClick} /> : null}
+        {show ? (
+          <Content
+            entityTypes={entityTypes}
+            linksFrom={linksFrom}
+            linksTo={linksTo}
+            onItemClick={onItemClick}
+          />
+        ) : null}
       </FullscreenContainer>
     </Dialog>
   );
@@ -55,16 +66,20 @@ export function PublishedEntitySelectorDialog({
 
 function Content({
   entityTypes,
+  linksFrom,
+  linksTo,
   onItemClick,
 }: {
   entityTypes: string[] | undefined;
+  linksFrom: EntityReference | undefined;
+  linksTo: EntityReference | undefined;
   onItemClick: (item: PublishedEntity) => void;
 }) {
   const { schema } = useContext(PublishedDataDataContext);
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    { restrictEntityTypes: entityTypes },
+    { restrictEntityTypes: entityTypes, restrictLinksFrom: linksFrom, restrictLinksTo: linksTo },
     initializeSearchEntityState
   );
 

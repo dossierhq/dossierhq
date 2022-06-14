@@ -30,6 +30,7 @@ import {
   useSynchronizeUrlQueryAndEntityDisplayState,
 } from '../../reducers/EntityDisplayReducer/EntityDisplayUrlSynchronizer.js';
 import { EntityDisplayMenu } from './EntityDisplayMenu.js';
+import { PublishedEntityLinks } from './PublishedEntityLinks.js';
 
 export interface PublishedEntityDisplayScreenProps {
   header?: React.ReactNode;
@@ -148,6 +149,12 @@ function EntityRows({
     [dispatchEntityDisplayState, entityId]
   );
 
+  const handleLinkedItemClick = useCallback(
+    (entity: PublishedEntity) =>
+      dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)),
+    [dispatchEntityDisplayState]
+  );
+
   if (!schema || !entity) return null;
   return (
     <>
@@ -173,6 +180,10 @@ function EntityRows({
         data-entityid={entityId}
         onClick={handleClick}
       >
+        <PublishedEntityLinks
+          entityReference={{ id: entityId }}
+          onItemClick={handleLinkedItemClick}
+        />
         <EntityDisplay schema={schema} entity={entity} />
       </FullscreenContainer.Row>
     </>
