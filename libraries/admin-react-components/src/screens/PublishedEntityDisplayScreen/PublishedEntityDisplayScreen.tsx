@@ -70,6 +70,7 @@ export function PublishedEntityDisplayScreen({
   const handleOpenEntityClick = useCallback((entity: PublishedEntity) => {
     dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)),
       setShowEntitySelector(false);
+    setShowEntitySelector(false);
   }, []);
 
   useFocusedEntity(entityDisplayState, dispatchEntityDisplayState);
