@@ -21,34 +21,36 @@ let serverResultSingleton = null;
 
 async function getServer() {
   if (!serverResultSingleton) {
-    const logger = createConsoleLogger(console);
-    const databaseResult = await createDatabase({ logger }, Database, {
-      filename: SQLITE_DATABASE_PATH,
-      journalMode: 'wal',
-    });
-
-    const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.valueOrThrow());
-
-    const result = await createServer({
-      databaseAdapter: adapterResult.valueOrThrow(),
-      logger,
-      authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
-    });
-    serverResultSingleton = result;
-
-    if (result.isOk()) {
-      const server = result.value;
-      const sessionResult = server.createSession({
-        provider: 'sys',
-        identifier: 'schemaLoader',
-        defaultAuthKeys: ['none'],
+    serverResultSingleton = (async () => {
+      const logger = createConsoleLogger(console);
+      const databaseResult = await createDatabase({ logger }, Database, {
+        filename: SQLITE_DATABASE_PATH,
+        journalMode: 'wal',
       });
-      const adminClient = server.createAdminClient(() => sessionResult);
-      const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
-      if (schemaResult.isError()) {
-        serverResultSingleton = schemaResult;
+      if (databaseResult.isError()) return databaseResult;
+
+      const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value);
+      if (adapterResult.isError()) return adapterResult;
+
+      const serverResult = await createServer({
+        databaseAdapter: adapterResult.value,
+        logger,
+        authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
+      });
+
+      if (serverResult.isOk()) {
+        const server = serverResult.value;
+        const sessionResult = server.createSession({
+          provider: 'sys',
+          identifier: 'schemaLoader',
+          defaultAuthKeys: ['none'],
+        });
+        const adminClient = server.createAdminClient(() => sessionResult);
+        const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
+        if (schemaResult.isError()) return schemaResult;
       }
-    }
+      return serverResult;
+    })();
   }
   return serverResultSingleton;
 }
