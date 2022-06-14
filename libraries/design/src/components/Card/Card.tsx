@@ -1,5 +1,4 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
-import React from 'react';
 import type { DropdownItem } from '../Dropdown/Dropdown.js';
 import { Dropdown } from '../Dropdown/Dropdown.js';
 import type { IconName } from '../Icon/Icon.js';

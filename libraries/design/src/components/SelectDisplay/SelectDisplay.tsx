@@ -4,7 +4,6 @@ import type {
   ReactNode,
   SelectHTMLAttributes,
 } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface SelectDisplayProps {

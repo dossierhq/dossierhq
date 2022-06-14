@@ -1,5 +1,4 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { Icon } from '../index.js';
 

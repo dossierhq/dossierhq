@@ -1,5 +1,4 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
-import React from 'react';
 import { toSizeClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
