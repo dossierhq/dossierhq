@@ -7,6 +7,7 @@ import {
   toSpacingClassName,
 } from '@jonasb/datadata-design';
 import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
+import reviewsUrl from 'playground-example-generator/dist/reviews.sqlite?url';
 import type { ChangeEvent } from 'react';
 import { useCallback, useContext } from 'react';
 import { DatabaseContext } from '../contexts/DatabaseContext';
@@ -63,6 +64,24 @@ export function ChangeDatabaseMessage({ className }: Props) {
           onClick={() => loadDatabaseFromUrl(starwarsUrl, createDatabase, showNotification)}
         >
           Load Star Wars
+        </Button>
+        <Text textStyle="headline5">Example: Reviews</Text>
+        <p>
+          An example database with fake information about places of business, reviewers, reviews and
+          personal notes.
+        </p>
+        <p>
+          The information is generated using{' '}
+          <a href="https://fakerjs.dev/" target="_blank" rel="noopener noreferrer">
+            Faker
+          </a>
+          .
+        </p>
+        <Button
+          className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
+          onClick={() => loadDatabaseFromUrl(reviewsUrl, createDatabase, showNotification)}
+        >
+          Load Reviews
         </Button>
         <Text textStyle="headline5">Upload new database</Text>
         <p>You can upload a database that you’ve downloaded from the Playground before.</p>
