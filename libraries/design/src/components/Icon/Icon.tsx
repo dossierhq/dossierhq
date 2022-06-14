@@ -18,6 +18,8 @@ export const ICON_NAMES = [
   'download',
   'first',
   'last',
+  'linkFrom',
+  'linkTo',
   'list',
   'location',
   'map',
