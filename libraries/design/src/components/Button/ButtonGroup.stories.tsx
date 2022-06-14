@@ -36,3 +36,14 @@ Centered.args = {
     </>
   ),
 };
+
+export const HasAddons = Template.bind({});
+HasAddons.args = {
+  hasAddons: true,
+  children: (
+    <>
+      <Button>Foo</Button>
+      <Button>Bar</Button>
+    </>
+  ),
+};

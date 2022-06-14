@@ -26,6 +26,9 @@ Primary.args = { color: 'primary' };
 export const Disabled = Template.bind({});
 Disabled.args = { disabled: true };
 
+export const Title = Template.bind({});
+Title.args = { title: 'Button title' };
+
 export const LeftIcon = Template.bind({});
 LeftIcon.args = { iconLeft: 'add' };
 
