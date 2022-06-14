@@ -150,8 +150,10 @@ function EntityRows({
   );
 
   const handleLinkedItemClick = useCallback(
-    (entity: PublishedEntity) =>
-      dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)),
+    (entity: PublishedEntity) => {
+      // open entity asynchronously to not fight with the "click to activate entity" functionality
+      setTimeout(() => dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)));
+    },
     [dispatchEntityDisplayState]
   );
 

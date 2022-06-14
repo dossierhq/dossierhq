@@ -14,7 +14,14 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
   const { publishedClient } = useContext(PublishedDataDataContext);
 
   const [showDialog, setShowDialog] = useState<'linksTo' | 'linksFrom' | ''>('');
-  const handleCloseDialog = useCallback(() => setShowDialog(''), [setShowDialog]);
+  const handleCloseDialog = useCallback(() => setShowDialog(''), []);
+  const handleItemClick = useCallback(
+    (item: PublishedEntity) => {
+      onItemClick(item);
+      handleCloseDialog();
+    },
+    [handleCloseDialog, onItemClick]
+  );
 
   const { totalCount: linksToTotal } = usePublishedTotalCount(publishedClient, {
     linksTo: entityReference,
@@ -50,7 +57,7 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
             linksFrom={showDialog === 'linksFrom' ? entityReference : undefined}
             linksTo={showDialog === 'linksTo' ? entityReference : undefined}
             onClose={handleCloseDialog}
-            onItemClick={onItemClick}
+            onItemClick={handleItemClick}
           />
         </Button.Group>
       </Field.Control>
