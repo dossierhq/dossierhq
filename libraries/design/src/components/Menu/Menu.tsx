@@ -1,5 +1,4 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import React from 'react';
 
 export interface MenuProps {
   children: ReactNode;

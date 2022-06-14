@@ -1,5 +1,4 @@
 import type { FunctionComponent } from 'react';
-import React from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';

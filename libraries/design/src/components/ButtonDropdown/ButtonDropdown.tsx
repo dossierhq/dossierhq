@@ -1,4 +1,3 @@
-import React from 'react';
 import type { DropdownItem, DropdownProps } from '../Dropdown/Dropdown.js';
 import { Dropdown } from '../Dropdown/Dropdown.js';
 import type { IconName } from '../index.js';
