@@ -16,7 +16,7 @@ export function AdminEntityLinks({ entityReference }: Props) {
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
 
   const [showDialog, setShowDialog] = useState<'linksTo' | 'linksFrom' | ''>('');
-  const handleCloseDialog = useCallback(() => setShowDialog(''), [setShowDialog]);
+  const handleCloseDialog = useCallback(() => setShowDialog(''), []);
 
   const { totalCount: linksToTotal } = useAdminTotalCount(adminClient, {
     linksTo: entityReference,
