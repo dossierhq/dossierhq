@@ -58,7 +58,7 @@ export function PublishedEntityList({
               <EmptyStateMessage
                 icon="search"
                 title="No matches"
-                message="No entities matches the query"
+                message="No entities match the query"
               />
             </Table.Cell>
           </Table.Row>
