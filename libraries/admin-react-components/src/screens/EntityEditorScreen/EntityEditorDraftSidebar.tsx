@@ -9,12 +9,13 @@ import {
   toFlexItemClassName,
 } from '@jonasb/datadata-design';
 import { Temporal } from '@js-temporal/polyfill';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory';
 import { useAdminPublishingHistory } from '../../hooks/useAdminPublishingHistory';
 import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import { AdminEntityLinks } from './AdminEntityLinks.js';
 
 interface Props {
   entityEditorState: EntityEditorState;
@@ -57,6 +58,7 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
             className={toFlexItemClassName({ alignSelf: 'flex-start' })}
             status={entity.info.status}
           />
+          <AdminEntityLinks entityReference={{ id: entity.id }} />
           <TabContainer small>
             {Object.keys(ActivityFilter).map((filter) => (
               <TabContainer.Item

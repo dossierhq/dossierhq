@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
 import {
   Dialog,
   FullscreenContainer,
@@ -6,7 +6,7 @@ import {
   Text,
   toSizeClassName,
 } from '@jonasb/datadata-design';
-import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
@@ -27,7 +27,9 @@ import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector';
 interface AdminEntitySelectorDialogProps {
   show: boolean;
   title: string;
-  entityTypes?: string[] | undefined;
+  entityTypes?: string[];
+  linksFrom?: EntityReference;
+  linksTo?: EntityReference;
   onClose: () => void;
   onItemClick: (item: AdminEntity) => void;
   onCreateItemClick?: (type: string) => void;
@@ -37,6 +39,8 @@ export function AdminEntitySelectorDialog({
   show,
   title,
   entityTypes,
+  linksFrom,
+  linksTo,
   onClose,
   onItemClick,
   onCreateItemClick,
@@ -53,6 +57,8 @@ export function AdminEntitySelectorDialog({
         {show ? (
           <Content
             entityTypes={entityTypes}
+            linksFrom={linksFrom}
+            linksTo={linksTo}
             onItemClick={onItemClick}
             onCreateItemClick={onCreateItemClick}
           />
@@ -64,10 +70,14 @@ export function AdminEntitySelectorDialog({
 
 function Content({
   entityTypes,
+  linksFrom,
+  linksTo,
   onItemClick,
   onCreateItemClick,
 }: {
   entityTypes: string[] | undefined;
+  linksFrom: EntityReference | undefined;
+  linksTo: EntityReference | undefined;
   onItemClick: (item: AdminEntity) => void;
   onCreateItemClick?: (type: string) => void;
 }) {
@@ -75,7 +85,7 @@ function Content({
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    { restrictEntityTypes: entityTypes },
+    { restrictEntityTypes: entityTypes, restrictLinksFrom: linksFrom, restrictLinksTo: linksTo },
     initializeSearchEntityState
   );
 
