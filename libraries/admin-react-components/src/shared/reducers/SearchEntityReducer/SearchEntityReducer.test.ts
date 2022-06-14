@@ -85,6 +85,8 @@ describe('initializeSearchEntityState', () => {
         },
         "requestedCount": 25,
         "restrictEntityTypes": [],
+        "restrictLinksFrom": null,
+        "restrictLinksTo": null,
         "sampling": undefined,
         "text": "",
         "totalCount": null,
@@ -116,11 +118,25 @@ describe('initializeSearchEntityState', () => {
             "Foo",
             "Bar",
           ],
+          "restrictLinksFrom": null,
+          "restrictLinksTo": null,
           "sampling": undefined,
           "text": "",
           "totalCount": null,
         }
       `);
+  });
+
+  test('restrict linksFrom', () => {
+    const state = initializeSearchEntityState({ restrictLinksFrom: { id: '123' } });
+    expect(state).toMatchSnapshot();
+    expect(state.query.linksFrom).toEqual({ id: '123' });
+  });
+
+  test('restrict linksTo', () => {
+    const state = initializeSearchEntityState({ restrictLinksTo: { id: '123' } });
+    expect(state).toMatchSnapshot();
+    expect(state.query.linksTo).toEqual({ id: '123' });
   });
 });
 

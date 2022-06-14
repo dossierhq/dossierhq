@@ -3,6 +3,7 @@ import type {
   AdminSearchQuery,
   Connection,
   Edge,
+  EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorResult,
@@ -21,6 +22,8 @@ const defaultRequestedCount = 25;
 
 export interface SearchEntityState {
   restrictEntityTypes: string[];
+  restrictLinksFrom: EntityReference | null;
+  restrictLinksTo: EntityReference | null;
 
   query: AdminSearchQuery | PublishedSearchQuery;
   paging: Paging | undefined;
@@ -51,12 +54,18 @@ export interface SearchEntityStateAction {
 export function initializeSearchEntityState({
   actions,
   restrictEntityTypes,
+  restrictLinksFrom,
+  restrictLinksTo,
 }: {
   actions?: SearchEntityStateAction[];
   restrictEntityTypes?: string[];
+  restrictLinksFrom?: EntityReference;
+  restrictLinksTo?: EntityReference;
 }): SearchEntityState {
   let state: SearchEntityState = {
     restrictEntityTypes: restrictEntityTypes ?? [],
+    restrictLinksFrom: restrictLinksFrom ?? null,
+    restrictLinksTo: restrictLinksTo ?? null,
     query: {},
     paging: {},
     sampling: undefined,
@@ -187,6 +196,13 @@ class SetQueryAction implements SearchEntityStateAction {
       } else {
         query.entityTypes = state.restrictEntityTypes;
       }
+    }
+
+    if (state.restrictLinksFrom) {
+      query.linksFrom = state.restrictLinksFrom;
+    }
+    if (state.restrictLinksTo) {
+      query.linksTo = state.restrictLinksTo;
     }
 
     // Sampling/paging

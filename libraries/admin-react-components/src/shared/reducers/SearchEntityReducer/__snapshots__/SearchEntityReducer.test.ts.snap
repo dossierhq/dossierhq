@@ -45,6 +45,8 @@ exports[`SearchEntityState scenarios > From sampling -> set paging -> loading ->
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": {
     "count": 1,
     "seed": 123,
@@ -84,6 +86,8 @@ exports[`SearchEntityState scenarios > From sampling -> set paging -> loading ->
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": null,
@@ -146,6 +150,8 @@ exports[`SearchEntityState scenarios > From sampling -> set paging -> loading ->
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -210,6 +216,8 @@ exports[`SearchEntityState scenarios > From searching -> set sampling -> loading
   },
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -244,6 +252,8 @@ exports[`SearchEntityState scenarios > From searching -> set sampling -> loading
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": {
     "count": 1,
     "seed": 123,
@@ -298,6 +308,8 @@ exports[`SearchEntityState scenarios > From searching -> set sampling -> loading
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": {
     "count": 1,
     "seed": 123,
@@ -365,6 +377,8 @@ exports[`SearchEntityState scenarios > Next page -> loading -> loaded > 1 - init
   },
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -403,6 +417,8 @@ exports[`SearchEntityState scenarios > Next page -> loading -> loaded > 2 - load
   },
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -467,6 +483,8 @@ exports[`SearchEntityState scenarios > Next page -> loading -> loaded > 3 - load
   },
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -531,6 +549,8 @@ exports[`SearchEntityState scenarios > Refresh > 1 - initial 1`] = `
   },
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -595,6 +615,8 @@ exports[`SearchEntityState scenarios > Refresh > 2 - loaded 1`] = `
   },
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
@@ -646,6 +668,8 @@ exports[`SearchEntityState scenarios > Sampling -> change seed -> loading -> loa
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": {
     "count": 1,
     "seed": 123,
@@ -683,6 +707,8 @@ exports[`SearchEntityState scenarios > Sampling -> change seed -> loading -> loa
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": {
     "count": 1,
     "seed": 456,
@@ -737,10 +763,68 @@ exports[`SearchEntityState scenarios > Sampling -> change seed -> loading -> loa
   "query": {},
   "requestedCount": 1,
   "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
   "sampling": {
     "count": 1,
     "seed": 456,
   },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`initializeSearchEntityState > restrict linksFrom 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": null,
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "paging": {},
+  "query": {
+    "linksFrom": {
+      "id": "123",
+    },
+    "order": "name",
+  },
+  "requestedCount": 25,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": {
+    "id": "123",
+  },
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`initializeSearchEntityState > restrict linksTo 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": null,
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "paging": {},
+  "query": {
+    "linksTo": {
+      "id": "123",
+    },
+    "order": "name",
+  },
+  "requestedCount": 25,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": {
+    "id": "123",
+  },
+  "sampling": undefined,
   "text": "",
   "totalCount": null,
 }
