@@ -70,7 +70,7 @@
     "svgo": "~2.8.0",
     "typescript": "^4.7.2",
     "uuid": "^8.3.2",
-    "vitest": "~0.14.1"
+    "vitest": "~0.15.1"
   },
   "dependencies": {
     "@editorjs/editorjs": "~2.24.3",
