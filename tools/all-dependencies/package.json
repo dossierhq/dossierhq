@@ -56,7 +56,7 @@
     "eslint-config-next": "~12.1.4",
     "eslint-plugin-import": "~2.26.0",
     "eslint-plugin-react": "~7.30.0",
-    "eslint-plugin-react-hooks": "~4.5.0",
+    "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.5.12",
     "express": "~4.18.1",
     "express-graphql": "~0.12.0",
@@ -91,7 +91,7 @@
     "undici": "~5.4.0",
     "uuid": "^8.3.2",
     "vite": "~2.9.12",
-    "vitest": "~0.14.1"
+    "vitest": "~0.15.1"
   },
   "dependencies": {
     "@microsoft/rush-lib": "~5.74.0"
