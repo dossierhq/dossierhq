@@ -52,7 +52,7 @@
     "@typescript-eslint/parser": "^5.26.0",
     "babel-loader": "^8.2.4",
     "bulma": "~0.9.3",
-    "eslint-plugin-react-hooks": "~4.5.0",
+    "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-react": "~7.30.0",
     "eslint-plugin-storybook": "~0.5.12",
     "eslint": "^8.16.0",
