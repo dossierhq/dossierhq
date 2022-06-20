@@ -12,6 +12,6 @@
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/eslint-patch": "~1.1.3",
     "eslint-plugin-react": "~7.30.0",
-    "eslint-plugin-react-hooks": "~4.5.0"
+    "eslint-plugin-react-hooks": "~4.6.0"
   }
 }
