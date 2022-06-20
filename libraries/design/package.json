@@ -68,7 +68,7 @@
     "@fortawesome/free-solid-svg-icons": "~6.1.1",
     "@js-temporal/polyfill": "~0.4.0",
     "lodash": "~4.17.21",
-    "react": "~18.1.0",
+    "react": "~18.2.0",
     "react-dom": "~18.1.0",
     "tslib": "~2.4.0"
   }
