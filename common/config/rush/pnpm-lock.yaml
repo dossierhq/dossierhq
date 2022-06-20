@@ -85,7 +85,7 @@ importers:
       sql.js: ~1.7.0
       tslib: ~2.4.0
       typescript: ^4.7.2
-      undici: ~5.4.0
+      undici: ~5.5.1
       uuid: ^8.3.2
     dependencies:
       '@faker-js/faker': 7.2.0
@@ -94,7 +94,7 @@ importers:
       '@jonasb/datadata-server': link:../../libraries/server
       sql.js: 1.7.0
       tslib: 2.4.0
-      undici: 5.4.0
+      undici: 5.5.1
       uuid: 8.3.2
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -1068,7 +1068,7 @@ importers:
       swr: ~1.3.0
       tslib: ~2.4.0
       typescript: ^4.7.2
-      undici: ~5.4.0
+      undici: ~5.5.1
       uuid: ^8.3.2
       vite: ~2.9.12
       vitest: ~0.14.1
@@ -1154,7 +1154,7 @@ importers:
       swr: 1.3.0_react@18.1.0
       tslib: 2.4.0
       typescript: 4.7.2
-      undici: 5.4.0
+      undici: 5.5.1
       uuid: 8.3.2
       vite: 2.9.12_sass@1.52.2
       vitest: 0.14.1_sass@1.52.2
@@ -7681,7 +7681,7 @@ packages:
       form-data-encoder: 1.7.2
       formdata-node: 4.3.2
       node-fetch: 2.6.7
-      undici: 5.4.0
+      undici: 5.5.1
       web-streams-polyfill: 3.2.1
     transitivePeerDependencies:
       - encoding
@@ -14717,8 +14717,8 @@ packages:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
-  /undici/5.4.0:
-    resolution: {integrity: sha512-A1SRXysDg7J+mVP46jF+9cKANw0kptqSFZ8tGyL+HBiv0K1spjxPX8Z4EGu+Eu6pjClJUBdnUPlxrOafR668/g==}
+  /undici/5.5.1:
+    resolution: {integrity: sha512-MEvryPLf18HvlCbLSzCW0U00IMftKGI5udnjrQbC5D4P0Hodwffhv+iGfWuJwg16Y/TK11ZFK8i+BPVW2z/eAw==}
     engines: {node: '>=12.18'}
 
   /unfetch/4.2.0:
