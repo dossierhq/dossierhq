@@ -22,7 +22,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jonasb/datadata-cli": "workspace:*",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",

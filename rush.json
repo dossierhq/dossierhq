@@ -371,11 +371,6 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-cli",
-      "projectFolder": "libraries/cli",
-      "versionPolicyName": "DataDataFramework"
-    },
-    {
       "packageName": "@jonasb/datadata-core",
       "projectFolder": "libraries/core",
       "versionPolicyName": "DataDataFramework"
