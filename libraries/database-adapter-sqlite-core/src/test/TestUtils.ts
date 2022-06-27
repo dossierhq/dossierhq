@@ -7,14 +7,14 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
-import type { SpyInstanceFn } from 'vitest';
+import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
 import { createSqliteDatabaseAdapterAdapter } from '../SqliteDatabaseAdapter.js';
 import { Mutex } from '../utils/MutexUtils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
   Parameters<TFn>,
   ReturnType<TFn>
 > &

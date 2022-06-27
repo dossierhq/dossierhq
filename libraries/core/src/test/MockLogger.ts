@@ -1,9 +1,9 @@
-import type { SpyInstanceFn } from 'vitest';
+import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { Logger } from '../Logger.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
   Parameters<TFn>,
   ReturnType<TFn>
 > &

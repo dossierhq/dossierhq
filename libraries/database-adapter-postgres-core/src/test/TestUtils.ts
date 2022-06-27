@@ -7,14 +7,14 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
-import type { SpyInstanceFn } from 'vitest';
+import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { UniqueConstraints } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { createPostgresDatabaseAdapterAdapter } from '../PostgresDatabaseAdapter.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
   Parameters<TFn>,
   ReturnType<TFn>
 > &
