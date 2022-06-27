@@ -1,8 +1,17 @@
 import type { ItemValuePath } from './ItemUtils.js';
-import { isItemValueItem, isRichTextItemField, isValueTypeItemField } from './ItemUtils.js';
-import type { AdminSchema, AdminValueTypeSpecification, FieldSpecification } from './Schema.js';
-import { RichTextBlockType } from './Schema.js';
-import type { EntityLike, ValueItem } from './Types.js';
+import {
+  isRichTextElementNode,
+  isRichTextItemField,
+  isRichTextValueItemNode,
+  isValueTypeItemField,
+} from './ItemUtils.js';
+import type {
+  AdminEntityTypeSpecification,
+  AdminSchema,
+  AdminValueTypeSpecification,
+  FieldSpecification,
+} from './Schema.js';
+import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
 
 export const AdminItemTraverseNodeType = {
   error: 'error',
@@ -45,52 +54,67 @@ interface AdminItemTraverseNodeValueItem {
   valueItem: ValueItem;
 }
 
-export function* traverseAdminItem(
+export function* traverseAdminEntity(
   schema: AdminSchema,
   path: ItemValuePath,
-  item: EntityLike | ValueItem
+  item: EntityLike
 ): Generator<AdminItemTraverseNode> {
-  let fieldSpecs;
-  let fields;
-  if (!isItemValueItem(item)) {
-    const entitySpec = schema.getEntityTypeSpecification(item.info.type);
-    if (!entitySpec) {
-      const errorNode: AdminItemTraverseNodeError = {
-        type: AdminItemTraverseNodeType.error,
-        path,
-        message: `Couldn't find spec for entity type ${item.info.type}`,
-      };
-      yield errorNode;
-      return;
-    }
-    fields = item.fields;
-    fieldSpecs = entitySpec.fields;
-    path = [...path, 'fields'];
-  } else {
-    const valueSpec = schema.getValueTypeSpecification(item.type);
-    if (!valueSpec) {
-      const errorNode: AdminItemTraverseNodeError = {
-        type: AdminItemTraverseNodeType.error,
-        path,
-        message: `Couldn't find spec for value type ${item.type}`,
-      };
-      yield errorNode;
-      return;
-    }
-
-    const valueItemNode: AdminItemTraverseNodeValueItem = {
-      type: AdminItemTraverseNodeType.valueItem,
+  const entitySpec = schema.getEntityTypeSpecification(item.info.type);
+  if (!entitySpec) {
+    const errorNode: AdminItemTraverseNodeError = {
+      type: AdminItemTraverseNodeType.error,
       path,
-      valueSpec,
-      valueItem: item,
+      message: `Couldn’t find spec for entity type ${item.info.type}`,
     };
-    yield valueItemNode;
+    yield errorNode;
+    return;
+  }
+  yield* traverseAdminItem(schema, [...path, 'fields'], entitySpec, item.fields);
+}
 
-    fields = item;
-    fieldSpecs = valueSpec.fields;
+export function* traverseAdminValueItem(
+  schema: AdminSchema,
+  path: ItemValuePath,
+  item: ValueItem
+): Generator<AdminItemTraverseNode> {
+  if (item.type === undefined) {
+    const errorNode: AdminItemTraverseNodeError = {
+      type: AdminItemTraverseNodeType.error,
+      path,
+      message: 'Missing type',
+    };
+    yield errorNode;
+    return;
+  }
+  const valueSpec = schema.getValueTypeSpecification(item.type);
+  if (!valueSpec) {
+    const errorNode: AdminItemTraverseNodeError = {
+      type: AdminItemTraverseNodeType.error,
+      path,
+      message: `Couldn’t find spec for value type ${item.type}`,
+    };
+    yield errorNode;
+    return;
   }
 
-  for (const fieldSpec of fieldSpecs) {
+  const valueItemNode: AdminItemTraverseNodeValueItem = {
+    type: AdminItemTraverseNodeType.valueItem,
+    path,
+    valueSpec,
+    valueItem: item,
+  };
+  yield valueItemNode;
+
+  yield* traverseAdminItem(schema, path, valueSpec, item);
+}
+
+function* traverseAdminItem(
+  schema: AdminSchema,
+  path: ItemValuePath,
+  typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+  fields: Record<string, unknown>
+): Generator<AdminItemTraverseNode> {
+  for (const fieldSpec of typeSpec.fields) {
     const fieldPath = [...path, fieldSpec.name];
     const fieldValue = fields?.[fieldSpec.name];
 
@@ -142,6 +166,16 @@ function* traverseItemFieldValue(
   fieldSpec: FieldSpecification,
   itemValue: unknown
 ): Generator<AdminItemTraverseNode> {
+  if (Array.isArray(itemValue)) {
+    const errorNode: AdminItemTraverseNodeError = {
+      type: AdminItemTraverseNodeType.error,
+      path,
+      message: `Expected single ${fieldSpec.type} got list`,
+    };
+    yield errorNode;
+    return;
+  }
+
   const fieldValueNode: AdminItemTraverseNodeFieldItem = {
     type: AdminItemTraverseNodeType.fieldItem,
     path,
@@ -151,14 +185,54 @@ function* traverseItemFieldValue(
   yield fieldValueNode;
 
   if (isValueTypeItemField(fieldSpec, itemValue) && itemValue) {
-    yield* traverseAdminItem(schema, path, itemValue);
+    yield* traverseAdminValueItem(schema, path, itemValue);
   } else if (isRichTextItemField(fieldSpec, itemValue) && itemValue) {
-    for (let i = 0; i < itemValue.blocks.length; i += 1) {
-      const blockPath = [...path, 'blocks', i];
-      const block = itemValue.blocks[i];
-      if (block.type === RichTextBlockType.valueItem && block.data) {
-        yield* traverseAdminItem(schema, [...blockPath, 'data'], block.data as ValueItem);
-      }
+    if (typeof itemValue !== 'object') {
+      const errorNode: AdminItemTraverseNodeError = {
+        type: AdminItemTraverseNodeType.error,
+        path,
+        message: `Expected object got ${typeof itemValue}`,
+      };
+      yield errorNode;
+      return;
+    }
+    const root = itemValue.root;
+    if (root === undefined) {
+      const errorNode: AdminItemTraverseNodeError = {
+        type: AdminItemTraverseNodeType.error,
+        path,
+        message: 'Missing root',
+      };
+      yield errorNode;
+      return;
+    }
+    yield* traverseRichTextNode(schema, path, root);
+  }
+}
+
+function* traverseRichTextNode(
+  schema: AdminSchema,
+  path: ItemValuePath,
+  node: RichTextNode
+): Generator<AdminItemTraverseNode> {
+  if (typeof node !== 'object') {
+    const errorNode: AdminItemTraverseNodeError = {
+      type: AdminItemTraverseNodeType.error,
+      path,
+      message: `Expected object got ${typeof node}`,
+    };
+    yield errorNode;
+    return;
+  }
+
+  if (isRichTextValueItemNode(node) && node.data) {
+    yield* traverseAdminValueItem(schema, [...path, 'data'], node.data);
+  }
+  if (isRichTextElementNode(node)) {
+    for (let i = 0; i < node.children.length; i += 1) {
+      const childPath = [...path, i];
+      const child = node.children[i];
+      yield* traverseRichTextNode(schema, childPath, child);
     }
   }
 }

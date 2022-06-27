@@ -1,7 +1,3 @@
-export type {
-  ToolConstructable as EditorJsToolConstructable,
-  ToolSettings as EditorJsToolSettings,
-} from '@editorjs/editorjs';
 export { AdminDataDataProvider } from './components/AdminDataDataProvider/AdminDataDataProvider';
 export { AdminDataDataContext } from './contexts/AdminDataDataContext';
 export type { AdminDataDataContextAdapter } from './contexts/AdminDataDataContext.js';

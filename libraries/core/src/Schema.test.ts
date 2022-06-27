@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils.js';
 import { ErrorType } from './ErrorResult.js';
-import { AdminSchema, FieldType, RichTextBlockType } from './Schema.js';
+import { AdminSchema, FieldType, RichTextNodeType } from './Schema.js';
 
 describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
@@ -209,7 +209,7 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.String,
-                richTextBlocks: [{ type: RichTextBlockType.paragraph }],
+                richTextBlocks: [{ type: RichTextNodeType.paragraph }],
               },
             ],
           },
@@ -233,8 +233,8 @@ describe('validate()', () => {
                 name: 'bar',
                 type: FieldType.RichText,
                 richTextBlocks: [
-                  { type: RichTextBlockType.paragraph },
-                  { type: RichTextBlockType.paragraph },
+                  { type: RichTextNodeType.paragraph },
+                  { type: RichTextNodeType.paragraph },
                 ],
               },
             ],
@@ -258,7 +258,7 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
-                richTextBlocks: [{ type: RichTextBlockType.entity }],
+                richTextBlocks: [{ type: RichTextNodeType.entity }],
               },
             ],
           },
@@ -282,8 +282,8 @@ describe('validate()', () => {
                 name: 'bar',
                 type: FieldType.RichText,
                 richTextBlocks: [
-                  { type: RichTextBlockType.paragraph },
-                  { type: RichTextBlockType.entity, inlineTypes: ['bold'] },
+                  { type: RichTextNodeType.paragraph },
+                  { type: RichTextNodeType.entity, inlineTypes: ['bold'] },
                 ],
               },
             ],

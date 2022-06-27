@@ -1,4 +1,10 @@
-import { RichTextBlockType } from '@jonasb/datadata-core';
+import {
+  createRichTextEntityNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
+} from '@jonasb/datadata-core';
 
 interface FixtureEntity {
   id: string;
@@ -60,7 +66,9 @@ export const entitiesFixture: FixtureEntity[] = [
         ],
         bar: { id: bar1Id },
         bars: [{ id: bar1Id }, { id: bar2Id }],
-        body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
+        body: createRichTextRootNode([
+          createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+        ]),
         annotatedBar: { type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
         annotatedBars: [
           { type: 'AnnotatedBar', annotation: 'First', bar: { id: bar1Id } },
@@ -86,26 +94,24 @@ export const entitiesFixture: FixtureEntity[] = [
     name: 'Baz 1',
     versions: [
       {
-        body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
-        bodyBar: { blocks: [{ type: RichTextBlockType.entity, data: { id: bar2Id } }] },
-        bodyNested: {
-          blocks: [
-            {
-              type: RichTextBlockType.valueItem,
-              data: { type: 'NestedValueItem', text: 'Hello nested', child: null },
-            },
-          ],
-        },
-        bodyItalicOnly: {
-          blocks: [
-            { type: RichTextBlockType.paragraph, data: { text: 'Text with <i>italic</i>' } },
-          ],
-        },
-        bodyNoInline: {
-          blocks: [
-            { type: RichTextBlockType.paragraph, data: { text: 'Text with no inline styles' } },
-          ],
-        },
+        body: createRichTextRootNode([
+          createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+        ]),
+        bodyBar: createRichTextRootNode([createRichTextEntityNode({ id: bar2Id })]),
+        bodyNested: createRichTextRootNode([
+          createRichTextValueItemNode({
+            type: 'NestedValueItem',
+            text: 'Hello nested',
+            child: null,
+          }),
+        ]),
+        bodyItalicOnly: createRichTextParagraphNode([
+          createRichTextTextNode('Text with '),
+          createRichTextTextNode('italic', { format: ['italic'] }),
+        ]),
+        bodyNoInline: createRichTextRootNode([
+          createRichTextParagraphNode([createRichTextTextNode('Text with no inline styles')]),
+        ]),
       },
     ],
   },

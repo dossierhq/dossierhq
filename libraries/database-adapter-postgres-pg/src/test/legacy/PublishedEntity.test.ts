@@ -5,7 +5,12 @@ import type {
   PublishedClient,
   PublishedEntity,
 } from '@jonasb/datadata-core';
-import { AdminEntityStatus, FieldType, RichTextBlockType } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  createRichTextRootNode,
+  createRichTextValueItemNode,
+  FieldType,
+} from '@jonasb/datadata-core';
 import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
@@ -318,18 +323,13 @@ describe('searchEntities() boundingBox', () => {
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: {
-          body: {
-            blocks: [
-              {
-                type: RichTextBlockType.valueItem,
-                data: {
-                  type: 'PublishedEntityStringedLocation',
-                  string: 'Hello location',
-                  location: center,
-                },
-              },
-            ],
-          },
+          body: createRichTextRootNode([
+            createRichTextValueItemNode({
+              type: 'PublishedEntityStringedLocation',
+              string: 'Hello location',
+              location: center,
+            }),
+          ]),
         },
       },
       { publish: true }

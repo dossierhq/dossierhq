@@ -7,9 +7,16 @@ import {
   visitItemRecursively,
   visitorPathToString,
 } from './ItemUtils.js';
+import {
+  createRichTextEntityNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
+} from './RichTextUtils.js';
 import type { FieldSpecification } from './Schema.js';
-import { AdminSchema, FieldType, RichTextBlockType } from './Schema.js';
-import type { EntityLike, RichText, RichTextBlock, ValueItem } from './Types.js';
+import { AdminSchema, FieldType } from './Schema.js';
+import type { EntityLike, RichText, RichTextNode, ValueItem } from './Types.js';
 
 const schema = new AdminSchema({
   entityTypes: [
@@ -62,18 +69,17 @@ function buildMockCallbacks<TVisitContext>() {
           visitContext,
         });
       },
-      visitRichTextBlock: (
+      visitRichTextNode: (
         path: Array<string | number>,
         fieldSpec: FieldSpecification,
-        block: RichTextBlock,
+        node: RichTextNode,
         visitContext: TVisitContext
       ) => {
         calls.push({
-          action: 'visitRichTextBlock',
+          action: 'visitRichTextNode',
           fieldName: fieldSpec.name,
           path: visitorPathToString(path),
-          blockType: block.type,
-          blockData: block.data,
+          nodeType: node.type,
           visitContext,
         });
       },
@@ -547,13 +553,10 @@ describe('visitItemRecursively()', () => {
     const entity: EntityLike = {
       info: { type: 'Foo' },
       fields: {
-        body: {
-          blocks: [
-            { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-            { type: 'randomType', data: { value: 'Random' } },
-            { type: RichTextBlockType.entity, data: { id: 'bar id' } },
-          ],
-        },
+        body: createRichTextRootNode([
+          createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+          createRichTextEntityNode({ id: 'bar id' }),
+        ]),
       },
     };
     visitItemRecursively({
@@ -569,26 +572,40 @@ describe('visitItemRecursively()', () => {
           "fieldName": "body",
           "path": "fields.body",
           "value": {
-            "blocks": [
-              {
-                "data": {
-                  "text": "Hello world",
+            "root": {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Hello world",
+                      "type": "text",
+                      "version": 1,
+                    },
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "paragraph",
+                  "version": 1,
                 },
-                "type": "paragraph",
-              },
-              {
-                "data": {
-                  "value": "Random",
+                {
+                  "reference": {
+                    "id": "bar id",
+                  },
+                  "type": "entity",
+                  "version": 1,
                 },
-                "type": "randomType",
-              },
-              {
-                "data": {
-                  "id": "bar id",
-                },
-                "type": "entity",
-              },
-            ],
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
           },
           "visitContext": undefined,
         },
@@ -598,33 +615,31 @@ describe('visitItemRecursively()', () => {
           "path": "fields.body",
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "text": "Hello world",
-          },
-          "blockType": "paragraph",
+          "action": "visitRichTextNode",
           "fieldName": "body",
+          "nodeType": "root",
+          "path": "fields.body",
+          "visitContext": undefined,
+        },
+        {
+          "action": "visitRichTextNode",
+          "fieldName": "body",
+          "nodeType": "paragraph",
           "path": "fields.body[0]",
           "visitContext": undefined,
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "value": "Random",
-          },
-          "blockType": "randomType",
+          "action": "visitRichTextNode",
           "fieldName": "body",
-          "path": "fields.body[1]",
+          "nodeType": "text",
+          "path": "fields.body[0][0]",
           "visitContext": undefined,
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "id": "bar id",
-          },
-          "blockType": "entity",
+          "action": "visitRichTextNode",
           "fieldName": "body",
-          "path": "fields.body[2]",
+          "nodeType": "entity",
+          "path": "fields.body[1]",
           "visitContext": undefined,
         },
       ]
@@ -657,20 +672,15 @@ describe('visitItemRecursively()', () => {
     const entity: EntityLike = {
       info: { type: 'Foo' },
       fields: {
-        body: {
-          blocks: [
-            {
-              type: RichTextBlockType.valueItem,
-              data: {
-                type: 'ValueOne',
-                string: 'Hello',
-                location: { lat: 55.60498, lng: 13.003822 },
-                bar: { id: 'bar id' },
-                child: { type: 'ValueOne', string: 'Nested' },
-              },
-            },
-          ],
-        },
+        body: createRichTextRootNode([
+          createRichTextValueItemNode({
+            type: 'ValueOne',
+            string: 'Hello',
+            location: { lat: 55.60498, lng: 13.003822 },
+            bar: { id: 'bar id' },
+            child: { type: 'ValueOne', string: 'Nested' },
+          }),
+        ]),
       },
     };
     visitItemRecursively({
@@ -686,26 +696,34 @@ describe('visitItemRecursively()', () => {
           "fieldName": "body",
           "path": "fields.body",
           "value": {
-            "blocks": [
-              {
-                "data": {
-                  "bar": {
-                    "id": "bar id",
-                  },
-                  "child": {
-                    "string": "Nested",
+            "root": {
+              "children": [
+                {
+                  "data": {
+                    "bar": {
+                      "id": "bar id",
+                    },
+                    "child": {
+                      "string": "Nested",
+                      "type": "ValueOne",
+                    },
+                    "location": {
+                      "lat": 55.60498,
+                      "lng": 13.003822,
+                    },
+                    "string": "Hello",
                     "type": "ValueOne",
                   },
-                  "location": {
-                    "lat": 55.60498,
-                    "lng": 13.003822,
-                  },
-                  "string": "Hello",
-                  "type": "ValueOne",
+                  "type": "valueItem",
+                  "version": 1,
                 },
-                "type": "valueItem",
-              },
-            ],
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
           },
           "visitContext": undefined,
         },
@@ -715,32 +733,18 @@ describe('visitItemRecursively()', () => {
           "path": "fields.body",
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "bar": {
-              "id": "bar id",
-            },
-            "child": {
-              "string": "Nested",
-              "type": "ValueOne",
-            },
-            "location": {
-              "lat": 55.60498,
-              "lng": 13.003822,
-            },
-            "string": "Hello",
-            "type": "ValueOne",
-          },
-          "blockType": "valueItem",
+          "action": "visitRichTextNode",
           "fieldName": "body",
-          "path": "fields.body[0]",
+          "nodeType": "root",
+          "path": "fields.body",
           "visitContext": undefined,
         },
         {
-          "action": "enterValueItem",
+          "action": "visitRichTextNode",
           "fieldName": "body",
-          "path": "fields.body",
-          "type": "ValueOne",
+          "nodeType": "valueItem",
+          "path": "fields.body[0]",
+          "visitContext": undefined,
         },
         {
           "action": "visitField",
@@ -811,18 +815,15 @@ describe('visitItemRecursively()', () => {
       info: { type: 'Foo' },
       fields: {
         bodyList: [
-          {
-            blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'First rich text item' } }],
-          },
-          {
-            blocks: [
-              { type: RichTextBlockType.paragraph, data: { text: 'Second rich text item' } },
-              {
-                type: RichTextBlockType.paragraph,
-                data: { text: 'Second block in second rich text item' },
-              },
-            ],
-          },
+          createRichTextRootNode([
+            createRichTextParagraphNode([createRichTextTextNode('First rich text item')]),
+          ]),
+          createRichTextRootNode([
+            createRichTextParagraphNode([createRichTextTextNode('Second rich text item')]),
+            createRichTextParagraphNode([
+              createRichTextTextNode('Second paragraph in second rich text item'),
+            ]),
+          ]),
         ],
       },
     };
@@ -846,14 +847,33 @@ describe('visitItemRecursively()', () => {
           "fieldName": "bodyList",
           "path": "fields.bodyList[0]",
           "value": {
-            "blocks": [
-              {
-                "data": {
-                  "text": "First rich text item",
+            "root": {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "First rich text item",
+                      "type": "text",
+                      "version": 1,
+                    },
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "paragraph",
+                  "version": 1,
                 },
-                "type": "paragraph",
-              },
-            ],
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
           },
           "visitContext": undefined,
         },
@@ -863,13 +883,24 @@ describe('visitItemRecursively()', () => {
           "path": "fields.bodyList[0]",
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "text": "First rich text item",
-          },
-          "blockType": "paragraph",
+          "action": "visitRichTextNode",
           "fieldName": "bodyList",
+          "nodeType": "root",
+          "path": "fields.bodyList[0]",
+          "visitContext": undefined,
+        },
+        {
+          "action": "visitRichTextNode",
+          "fieldName": "bodyList",
+          "nodeType": "paragraph",
           "path": "fields.bodyList[0][0]",
+          "visitContext": undefined,
+        },
+        {
+          "action": "visitRichTextNode",
+          "fieldName": "bodyList",
+          "nodeType": "text",
+          "path": "fields.bodyList[0][0][0]",
           "visitContext": undefined,
         },
         {
@@ -877,20 +908,51 @@ describe('visitItemRecursively()', () => {
           "fieldName": "bodyList",
           "path": "fields.bodyList[1]",
           "value": {
-            "blocks": [
-              {
-                "data": {
-                  "text": "Second rich text item",
+            "root": {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Second rich text item",
+                      "type": "text",
+                      "version": 1,
+                    },
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "paragraph",
+                  "version": 1,
                 },
-                "type": "paragraph",
-              },
-              {
-                "data": {
-                  "text": "Second block in second rich text item",
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Second paragraph in second rich text item",
+                      "type": "text",
+                      "version": 1,
+                    },
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "paragraph",
+                  "version": 1,
                 },
-                "type": "paragraph",
-              },
-            ],
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
           },
           "visitContext": undefined,
         },
@@ -900,23 +962,38 @@ describe('visitItemRecursively()', () => {
           "path": "fields.bodyList[1]",
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "text": "Second rich text item",
-          },
-          "blockType": "paragraph",
+          "action": "visitRichTextNode",
           "fieldName": "bodyList",
+          "nodeType": "root",
+          "path": "fields.bodyList[1]",
+          "visitContext": undefined,
+        },
+        {
+          "action": "visitRichTextNode",
+          "fieldName": "bodyList",
+          "nodeType": "paragraph",
           "path": "fields.bodyList[1][0]",
           "visitContext": undefined,
         },
         {
-          "action": "visitRichTextBlock",
-          "blockData": {
-            "text": "Second block in second rich text item",
-          },
-          "blockType": "paragraph",
+          "action": "visitRichTextNode",
           "fieldName": "bodyList",
+          "nodeType": "text",
+          "path": "fields.bodyList[1][0][0]",
+          "visitContext": undefined,
+        },
+        {
+          "action": "visitRichTextNode",
+          "fieldName": "bodyList",
+          "nodeType": "paragraph",
           "path": "fields.bodyList[1][1]",
+          "visitContext": undefined,
+        },
+        {
+          "action": "visitRichTextNode",
+          "fieldName": "bodyList",
+          "nodeType": "text",
+          "path": "fields.bodyList[1][1][0]",
           "visitContext": undefined,
         },
       ]

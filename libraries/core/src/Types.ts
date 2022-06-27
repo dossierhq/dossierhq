@@ -1,5 +1,13 @@
 import type { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, Result } from './ErrorResult.js';
+import type { RichTextNodeType } from './Schema.js';
+import type {
+  SerializedEditorState,
+  SerializedElementNode,
+  SerializedLexicalNode,
+  SerializedTextNode,
+  Spread,
+} from './third-party/Lexical.js';
 
 export interface PublishedEntity {
   id: string;
@@ -28,15 +36,33 @@ export interface EntityVersionReference {
   version: number;
 }
 
-export interface RichText {
-  blocks: RichTextBlock[];
-}
+export type RichText = SerializedEditorState;
 
-export interface RichTextBlock<Type extends string = string, Data = unknown> {
-  id?: string;
-  type: Type;
-  data: Data;
-}
+export type RichTextNode = SerializedLexicalNode;
+
+export type RichTextElementNode = SerializedElementNode;
+
+export type RichTextTextNode = SerializedTextNode;
+
+export type RichTextEntityNode = Spread<
+  {
+    type: typeof RichTextNodeType.entity;
+    //TODO remove support for null
+    reference: EntityReference | null;
+    version: 1;
+  },
+  RichTextNode
+>;
+
+export type RichTextValueItemNode = Spread<
+  {
+    type: typeof RichTextNodeType.valueItem;
+    //TODO remove support for null
+    data: ValueItem | null;
+    version: 1;
+  },
+  RichTextNode
+>;
 
 /** Geographic location using EPSG:4326/WGS 84 */
 export interface Location {

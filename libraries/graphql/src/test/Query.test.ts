@@ -1,5 +1,14 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import { FieldType, notOk, ok, PublishedSchema, RichTextBlockType } from '@jonasb/datadata-core';
+import {
+  createRichTextEntityNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  FieldType,
+  notOk,
+  ok,
+  PublishedSchema,
+} from '@jonasb/datadata-core';
 import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
@@ -230,11 +239,12 @@ describe('node()', () => {
 
   test('Query rich text', async () => {
     const { adminClient } = server;
+    const body = createRichTextRootNode([
+      createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+    ]);
     const createFooResult = await adminClient.createEntity({
       info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
-      fields: {
-        body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
-      },
+      fields: { body },
     });
     if (expectOkResult(createFooResult)) {
       const {
@@ -260,7 +270,7 @@ describe('node()', () => {
                 }
                 fields {
                   body {
-                    blocks
+                    root
                     entities {
                       id
                     }
@@ -280,10 +290,7 @@ describe('node()', () => {
             id: fooId,
             info: { name, authKey: 'none' },
             fields: {
-              body: {
-                blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }],
-                entities: [],
-              },
+              body: { ...body, entities: [] },
             },
           },
         },
@@ -307,15 +314,14 @@ describe('node()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
 
+      const body = createRichTextRootNode([
+        createRichTextEntityNode({ id: barId }),
+        createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+      ]);
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
         fields: {
-          body: {
-            blocks: [
-              { type: RichTextBlockType.entity, data: { id: barId } },
-              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-            ],
-          },
+          body,
         },
       });
       if (expectOkResult(createFooResult)) {
@@ -342,7 +348,7 @@ describe('node()', () => {
                   }
                   fields {
                     body {
-                      blocks
+                      root
                       entities {
                         id
                         info {
@@ -365,13 +371,7 @@ describe('node()', () => {
               id: fooId,
               info: { name, authKey: 'none' },
               fields: {
-                body: {
-                  blocks: [
-                    { type: 'entity', data: { id: barId } },
-                    { type: 'paragraph', data: { text: 'Hello world' } },
-                  ],
-                  entities: [{ id: barId, info: { name: barName } }],
-                },
+                body: { ...body, entities: [{ id: barId, info: { name: barName } }] },
               },
             },
           },

@@ -33,8 +33,9 @@ export type {
 } from './ErrorResult.js';
 export {
   AdminItemTraverseNodeType,
-  traverseAdminItem,
+  traverseAdminEntity,
   traverseAdminItemField,
+  traverseAdminValueItem,
 } from './ItemTraverser.js';
 export type { AdminItemTraverseNode } from './ItemTraverser.js';
 export {
@@ -54,12 +55,13 @@ export {
   isLocationField,
   isLocationItemField,
   isLocationListField,
-  isRichTextEntityBlock,
+  isRichTextElementNode,
+  isRichTextEntityNode,
   isRichTextField,
   isRichTextItemField,
   isRichTextListField,
-  isRichTextParagraphBlock,
-  isRichTextValueItemBlock,
+  isRichTextTextNode,
+  isRichTextValueItemNode,
   isStringField,
   isStringItemField,
   isStringListField,
@@ -72,6 +74,8 @@ export {
   visitorPathToString,
 } from './ItemUtils.js';
 export type { ItemValuePath } from './ItemUtils.js';
+export { validateTraverseNode } from './ItemValidator.js';
+export type { ValidationError } from './ItemValidator.js';
 export {
   convertJsonConnection,
   convertJsonEdge,
@@ -108,7 +112,15 @@ export type {
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient.js';
-export { AdminSchema, FieldType, PublishedSchema, RichTextBlockType } from './Schema.js';
+export {
+  createRichTextEntityNode,
+  createRichTextHeadingNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
+} from './RichTextUtils.js';
+export { AdminSchema, FieldType, PublishedSchema, RichTextNodeType } from './Schema.js';
 export type {
   AdminEntityTypeSpecification,
   AdminEntityTypeSpecificationUpdate,
@@ -171,7 +183,11 @@ export type {
   PublishingEvent,
   PublishingHistory,
   RichText,
-  RichTextBlock,
+  RichTextElementNode,
+  RichTextEntityNode,
+  RichTextNode,
+  RichTextTextNode,
+  RichTextValueItemNode,
   ValueItem,
 } from './Types.js';
 export {

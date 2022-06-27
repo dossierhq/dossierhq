@@ -6,10 +6,13 @@ import type {
 import {
   AdminEntityStatus,
   assertOkResult,
+  createRichTextEntityNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
   FieldType,
   ok,
   PublishingEventKind,
-  RichTextBlockType,
 } from '@jonasb/datadata-core';
 import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import { Temporal } from '@js-temporal/polyfill';
@@ -370,17 +373,16 @@ describe('create*Entity()', () => {
         entity: { id: barId },
       } = createBarResult.value;
 
+      const body = createRichTextRootNode([
+        createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+        createRichTextEntityNode({ id: barId }),
+      ]);
       const entity: AdminEntityCreate = {
         info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
         fields: {
           title: 'Foo title',
           summary: 'Foo summary',
-          body: {
-            blocks: [
-              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-              { type: RichTextBlockType.entity, data: { id: barId } },
-            ],
-          },
+          body,
         },
       };
 
@@ -405,7 +407,7 @@ describe('create*Entity()', () => {
                   title
                   summary
                   body {
-                    blocks
+                    root
                   }
                 }
               }
@@ -438,12 +440,7 @@ describe('create*Entity()', () => {
               fields: {
                 title: 'Foo title',
                 summary: 'Foo summary',
-                body: {
-                  blocks: [
-                    { type: 'paragraph', data: { text: 'Hello world' } },
-                    { type: 'entity', data: { id: barId } },
-                  ],
-                },
+                body,
               },
             },
           },
@@ -466,12 +463,10 @@ describe('create*Entity()', () => {
           ...emptyFooFields,
           title: 'Foo title',
           summary: 'Foo summary',
-          body: {
-            blocks: [
-              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-              { type: RichTextBlockType.entity, data: { id: barId } },
-            ],
-          },
+          body: createRichTextRootNode([
+            createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+            createRichTextEntityNode({ id: barId }),
+          ]),
         },
       });
     }

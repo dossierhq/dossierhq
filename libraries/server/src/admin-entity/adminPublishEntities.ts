@@ -14,7 +14,7 @@ import {
   ErrorType,
   notOk,
   ok,
-  traverseAdminItem,
+  traverseAdminEntity,
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -218,7 +218,7 @@ function verifyFieldValuesAndCollectInformation(
   //TODO create a FTS collector that works with traverseAdminItem
   const { fullTextSearchText } = collectDataFromEntity(schema, entity);
 
-  for (const node of traverseAdminItem(schema, [`entity(${reference.id})`], entity)) {
+  for (const node of traverseAdminEntity(schema, [`entity(${reference.id})`], entity)) {
     switch (node.type) {
       case AdminItemTraverseNodeType.error:
         return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);

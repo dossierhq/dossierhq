@@ -14,7 +14,6 @@ import type {
   PublishedSchema,
   Result,
   RichText,
-  RichTextBlock,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -22,18 +21,19 @@ import {
   FieldType,
   isFieldValueEqual,
   isLocationItemField,
-  isRichTextEntityBlock,
+  isRichTextEntityNode,
   isRichTextField,
   isRichTextItemField,
-  isRichTextParagraphBlock,
-  isRichTextValueItemBlock,
+  isRichTextTextNode,
+  isRichTextValueItemNode,
   isStringItemField,
   isValueTypeField,
   isValueTypeItemField,
   normalizeFieldValue,
   notOk,
   ok,
-  RichTextBlockType,
+  traverseAdminEntity,
+  validateTraverseNode,
   visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
@@ -55,12 +55,6 @@ export interface EncodeAdminEntityResult {
   referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
   fullTextSearchText: string[];
-}
-
-interface EncodedRichTextBlock {
-  id?: string;
-  t: string;
-  d: unknown;
 }
 
 interface RequestedReference {
@@ -114,7 +108,7 @@ function decodeFieldItemOrList(
         const decodedItem = decodeValueItemField(schema, fieldSpec, encodedItem);
         decodedItems.push(decodedItem);
       } else if (fieldSpec.type === FieldType.RichText) {
-        decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem));
+        decodedItems.push(decodeRichTextField(encodedItem));
       } else {
         decodedItems.push(fieldAdapter.decodeData(encodedItem));
       }
@@ -125,14 +119,14 @@ function decodeFieldItemOrList(
     return decodeValueItemField(schema, fieldSpec, fieldValue as ValueItem);
   }
   if (fieldSpec.type === FieldType.RichText) {
-    return decodeRichTextField(schema, fieldSpec, fieldValue as EncodedRichTextBlock[]);
+    return decodeRichTextField(fieldValue as RichText);
   }
   return fieldAdapter.decodeData(fieldValue);
 }
 
 function decodeValueItemField(
   schema: AdminSchema | PublishedSchema,
-  fieldSpec: FieldSpecification,
+  _fieldSpec: FieldSpecification,
   encodedValue: ValueItem
 ) {
   const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
@@ -149,25 +143,8 @@ function decodeValueItemField(
   return decodedValue;
 }
 
-function decodeRichTextField(
-  schema: AdminSchema | PublishedSchema,
-  fieldSpec: FieldSpecification,
-  encodedValue: EncodedRichTextBlock[]
-): RichText {
-  const decodedBlocks = encodedValue.map<RichTextBlock>((block) => {
-    const { id, t: type, d: encodedData } = block;
-    let decodedData = encodedData;
-    if (type === RichTextBlockType.valueItem && encodedData) {
-      decodedData = decodeValueItemField(schema, fieldSpec, encodedData as ValueItem);
-    } else if (type === RichTextBlockType.entity && encodedData) {
-      const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
-      decodedData = adapter.decodeData(encodedData);
-    }
-    const decodedBlock: RichTextBlock = { type, data: decodedData };
-    if (id !== undefined) decodedBlock.id = id;
-    return decodedBlock;
-  });
-  return { blocks: decodedBlocks };
+function decodeRichTextField(encodedValue: RichText): RichText {
+  return encodedValue;
 }
 
 export function decodeAdminEntity(
@@ -373,6 +350,19 @@ export async function encodeAdminEntity(
     return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
   }
 
+  // Validate entity fields
+  // TODO move all validation to this setup from the encoding
+  // TODO consider not encoding data and use it as is
+  const validateOptions = { validatePublish: false };
+  for (const node of traverseAdminEntity(schema, ['entity'], entity)) {
+    const validationError = validateTraverseNode(schema, node, validateOptions);
+    if (validationError) {
+      return notOk.BadRequest(
+        `${visitorPathToString(validationError.path)}: ${validationError.message}`
+      );
+    }
+  }
+
   const result: EncodeAdminEntityResult = {
     type,
     name,
@@ -433,7 +423,7 @@ function encodeFieldItemOrList(
       if (isValueTypeItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeValueItemField(schema, fieldSpec, prefix, decodedItem);
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
-        encodedItemResult = encodeRichTextField(schema, fieldSpec, prefix, decodedItem);
+        encodedItemResult = encodeRichTextField(decodedItem);
       } else {
         encodedItemResult = fieldAdapter.encodeData(fieldSpec, prefix, decodedItem);
       }
@@ -448,7 +438,7 @@ function encodeFieldItemOrList(
   if (isValueTypeField(fieldSpec, data)) {
     return encodeValueItemField(schema, fieldSpec, prefix, data);
   } else if (isRichTextField(fieldSpec, data)) {
-    return encodeRichTextField(schema, fieldSpec, prefix, data);
+    return encodeRichTextField(data);
   }
   return fieldAdapter.encodeData(fieldSpec, prefix, data);
 }
@@ -514,69 +504,9 @@ function encodeValueItemField(
 }
 
 function encodeRichTextField(
-  schema: AdminSchema,
-  fieldSpec: FieldSpecification,
-  prefix: string,
   data: RichText | null
-): Result<unknown, typeof ErrorType.BadRequest> {
-  if (Array.isArray(data)) {
-    return notOk.BadRequest(`${prefix}: expected single value, got list`);
-  }
-  if (typeof data !== 'object' || !data) {
-    return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
-  }
-  const { blocks, ...unexpectedData } = data;
-  if (!blocks) {
-    return notOk.BadRequest(`${prefix}: missing blocks`);
-  }
-  if (!Array.isArray(blocks)) {
-    return notOk.BadRequest(`${prefix}.blocks: expected array, got ${typeof blocks}`);
-  }
-
-  if (Object.keys(unexpectedData).length > 0) {
-    return notOk.BadRequest(`${prefix}: unexpected keys ${Object.keys(unexpectedData).join(', ')}`);
-  }
-
-  const encodedBlocks: EncodedRichTextBlock[] = [];
-  for (let i = 0; i < blocks.length; i += 1) {
-    const blockPrefix = `${prefix}[${i}]`;
-    const block = blocks[i];
-    const { id, type, data, ...unexpectedBlockData } = block;
-    if (
-      fieldSpec.richTextBlocks &&
-      fieldSpec.richTextBlocks.length > 0 &&
-      !fieldSpec.richTextBlocks.find((x) => x.type === type)
-    ) {
-      return notOk.BadRequest(`${blockPrefix}: rich text block of type ${type} is not allowed`);
-    }
-
-    if (Object.keys(unexpectedBlockData).length > 0) {
-      return notOk.BadRequest(
-        `${blockPrefix}: unexpected keys ${Object.keys(unexpectedBlockData).join(', ')}`
-      );
-    }
-
-    let encodedBlockData = data;
-    if (isRichTextValueItemBlock(block) && data) {
-      const encodeResult = encodeValueItemField(schema, fieldSpec, blockPrefix, block.data);
-      if (encodeResult.isError()) {
-        return encodeResult;
-      }
-      encodedBlockData = encodeResult.value;
-    } else if (isRichTextEntityBlock(block) && data) {
-      const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
-      const encodeResult = adapter.encodeData(fieldSpec, blockPrefix, block.data);
-      if (encodeResult.isError()) {
-        return encodeResult;
-      }
-      encodedBlockData = encodeResult.value;
-    }
-    const encodedBlock: EncodedRichTextBlock = { t: type, d: encodedBlockData };
-    if (id !== undefined) encodedBlock.id = id;
-    encodedBlocks.push(encodedBlock);
-  }
-
-  return ok(encodedBlocks);
+): Result<RichText | null, typeof ErrorType.BadRequest> {
+  return ok(data);
 }
 
 export function collectDataFromEntity(
@@ -614,53 +544,26 @@ export function collectDataFromEntity(
         fullTextSearchText.push(data);
       }
     },
-    visitRichTextBlock: (path, fieldSpec, block, _visitContext) => {
-      if (isRichTextEntityBlock(block) && block.data) {
+    visitRichTextNode: (path, fieldSpec, node, _visitContext) => {
+      if (isRichTextEntityNode(node) && node.reference) {
         requestedReferences.push({
           prefix: visitorPathToString(path),
-          uuids: [block.data.id],
+          uuids: [node.reference.id],
           entityTypes: fieldSpec.entityTypes,
         });
-      } else if (isRichTextParagraphBlock(block)) {
-        const text = block.data.text;
+      } else if (isRichTextTextNode(node)) {
+        const text = node.text;
         if (text) {
           fullTextSearchText.push(text);
         }
-      } else if (isRichTextValueItemBlock(block)) {
+      } else if (isRichTextValueItemNode(node)) {
         // skip since visitField will be called
-      } else {
-        extractFullTextValuesRecursively(block.data, fullTextSearchText);
       }
     },
     initialVisitContext: undefined,
   });
 
   return { requestedReferences, locations, fullTextSearchText };
-}
-
-function extractFullTextValuesRecursively(node: unknown, fullTextSearchText: string[]) {
-  if (!node) {
-    return;
-  }
-
-  switch (typeof node) {
-    case 'bigint':
-      fullTextSearchText.push(String(node));
-      break;
-    case 'number':
-      fullTextSearchText.push(String(node));
-      break;
-    case 'object':
-      if (node) {
-        Object.values(node).forEach((it) =>
-          extractFullTextValuesRecursively(it, fullTextSearchText)
-        );
-      }
-      break;
-    case 'string':
-      fullTextSearchText.push(node);
-      break;
-  }
 }
 
 async function resolveRequestedEntityReferences(

@@ -1,6 +1,10 @@
 import { faker } from '@faker-js/faker';
 import type { AdminClient, EntityReference, Location } from '@jonasb/datadata-core';
-import { RichTextBlockType } from '@jonasb/datadata-core';
+import {
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+} from '@jonasb/datadata-core';
 import {
   createAdapterAndServer,
   createDatabase,
@@ -96,22 +100,14 @@ async function createPersonalNote(adminClient: AdminClient, placeOfBusiness: Adm
         info: { type: 'PersonalNote', authKey: 'subject', name: 'Note: Alice' },
         fields: {
           placeOfBusiness: { id: placeOfBusiness.id },
-          note: {
-            blocks: [
-              {
-                id: '1',
-                type: RichTextBlockType.paragraph,
-                data: {
-                  text: `This is a personal note about ${placeOfBusiness.fields.name} that only Alice can see.`,
-                },
-              },
-              {
-                id: '2',
-                type: RichTextBlockType.paragraph,
-                data: { text: faker.lorem.text() },
-              },
-            ],
-          },
+          note: createRichTextRootNode([
+            createRichTextParagraphNode([
+              createRichTextTextNode(
+                `This is a personal note about ${placeOfBusiness.fields.name} that only Alice can see.`
+              ),
+            ]),
+            createRichTextParagraphNode([createRichTextTextNode(faker.lorem.text())]),
+          ]),
         },
       },
       { publish: true }

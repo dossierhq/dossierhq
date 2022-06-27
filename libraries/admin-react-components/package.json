@@ -73,11 +73,12 @@
     "vitest": "~0.15.1"
   },
   "dependencies": {
-    "@editorjs/editorjs": "~2.24.3",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
+    "@lexical/react": "~0.3.5",
     "leaflet": "~1.8.0",
+    "lexical": "~0.3.5",
     "lodash": "~4.17.21",
     "react": "~18.2.0",
     "react-dom": "~18.1.0",

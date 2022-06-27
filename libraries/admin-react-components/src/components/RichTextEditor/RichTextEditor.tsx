@@ -1,22 +1,17 @@
-import type { LogLevels, ToolSettings } from '@editorjs/editorjs';
-import EditorJS from '@editorjs/editorjs';
 import type { FieldSpecification, RichText } from '@jonasb/datadata-core';
-import { RichTextBlockType } from '@jonasb/datadata-core';
-import type { Dispatch } from 'react';
-import React, { useContext, useEffect, useId, useReducer, useState } from 'react';
-import type { AdminDataDataContextValue } from '../../contexts/AdminDataDataContext';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
-import type { EntityEditorStateAction } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import type { EntityToolConfig } from './EntityTool';
-import { createEntityToolFactory } from './EntityTool';
-import {
-  initializeRichTextState,
-  reduceRichTextState,
-  RichTextActions,
-} from './RichTextEditorReducer';
-import type { ValueItemToolConfig } from './ValueItemTool';
-import { createValueItemToolFactory } from './ValueItemTool';
+import { Button } from '@jonasb/datadata-design';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import type { LexicalEditor } from 'lexical/LexicalEditor.js';
+import type { EditorState } from 'lexical/LexicalEditorState.js';
+import debounce from 'lodash/debounce';
+import { useEffect, useMemo } from 'react';
+import { AdminEntityNode, INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
+import { EntityPlugin } from './EntityPlugin.js';
+import { RichTextEditorContext } from './RichTextEditorContext.js';
 
 interface Props {
   fieldSpec: FieldSpecification;
@@ -25,109 +20,51 @@ interface Props {
 }
 
 export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
-  const adminDataDataContext = useContext(AdminDataDataContext);
-  const entityEditorDispatchContext = useContext(EntityEditorDispatchContext);
-  const id = useId();
-  const [editor, setEditor] = useState<EditorJS | null>(null);
-  const [{ initialized, data, dataSetFromEditor }, dispatch] = useReducer(
-    reduceRichTextState,
-    { data: value },
-    initializeRichTextState
+  const debouncedHandleChange = useMemo(
+    () =>
+      debounce((editorState: EditorState) => {
+        const json = editorState.toJSON();
+        onChange(json);
+      }, 500),
+    [onChange]
   );
-
   useEffect(() => {
-    const { tools, inlineToolbar } = initializeTools(
-      adminDataDataContext,
-      entityEditorDispatchContext,
-      fieldSpec
-    );
-    setEditor(
-      new EditorJS({
-        holder: id,
-        data: data ?? undefined,
-        logLevel: 'WARN' as LogLevels,
-        minHeight: 0,
-        inlineToolbar,
-        tools,
-        onReady: () => dispatch(new RichTextActions.SetInitialized()),
-        onChange: (api) =>
-          api.saver
-            .save()
-            .then(({ blocks }) => dispatch(new RichTextActions.SetData({ blocks }, true)))
-            .catch(console.warn),
-      })
-    );
-    return () => editor?.destroy?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => debouncedHandleChange.cancel();
+  }, [debouncedHandleChange]);
 
-  useEffect(() => {
-    if (value !== data) {
-      dispatch(new RichTextActions.SetData(value, false));
-      if (value) {
-        editor?.render(value);
-      } else {
-        editor?.clear();
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
-
-  useEffect(() => {
-    if (dataSetFromEditor) {
-      onChange?.(data);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, dataSetFromEditor]);
+  const initialConfig = {
+    namespace: 'datadata',
+    onError: handleError,
+    nodes: [AdminEntityNode],
+    editorState: value
+      ? (editor: LexicalEditor) => {
+          const state = editor.parseEditorState(value);
+          editor.setEditorState(state);
+        }
+      : undefined,
+  };
 
   return (
-    <div
-      id={id}
-      className="rich-text-editor"
-      data-editorinitialized={initialized ? 'true' : 'false'}
-    />
+    <RichTextEditorContext.Provider value={{ fieldSpec }}>
+      <LexicalComposer initialConfig={initialConfig}>
+        <ToolbarPlugin />
+        <RichTextPlugin contentEditable={<ContentEditable />} placeholder="" />
+        <EntityPlugin />
+        <OnChangePlugin onChange={debouncedHandleChange} />
+      </LexicalComposer>
+    </RichTextEditorContext.Provider>
   );
 }
 
-function initializeTools(
-  adminDataDataContext: AdminDataDataContextValue,
-  entityEditorDispatchContext: Dispatch<EntityEditorStateAction>,
-  fieldSpec: FieldSpecification
-) {
-  const standardTools: { [toolName: string]: ToolSettings } = {};
-  const includeAll = !fieldSpec.richTextBlocks || fieldSpec.richTextBlocks.length === 0;
-
-  const paragraphInlineToolbar = fieldSpec.richTextBlocks?.find(
-    (it) => it.type === RichTextBlockType.paragraph
-  )?.inlineTypes;
-  standardTools[RichTextBlockType.paragraph] = {
-    inlineToolbar: paragraphInlineToolbar ? paragraphInlineToolbar : true,
-  } as ToolSettings;
-
-  if (includeAll || fieldSpec.richTextBlocks?.find((it) => it.type === RichTextBlockType.entity)) {
-    const config: EntityToolConfig = { fieldSpec };
-    standardTools[RichTextBlockType.entity] = {
-      class: createEntityToolFactory(adminDataDataContext, entityEditorDispatchContext),
-      config,
-    };
-  }
-
-  if (
-    includeAll ||
-    fieldSpec.richTextBlocks?.find((it) => it.type === RichTextBlockType.valueItem)
-  ) {
-    const config: ValueItemToolConfig = { fieldSpec };
-    standardTools[RichTextBlockType.valueItem] = {
-      class: createValueItemToolFactory(adminDataDataContext, entityEditorDispatchContext),
-      config,
-    };
-  }
-
-  const { tools, inlineToolbar } = adminDataDataContext.adapter.getEditorJSConfig(
-    fieldSpec,
-    standardTools,
-    ['bold', 'italic', 'link']
+function ToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  return (
+    <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, undefined)}>
+      Add entity
+    </Button>
   );
+}
 
-  return { tools, inlineToolbar };
+function handleError(error: Error) {
+  console.error(error);
 }
