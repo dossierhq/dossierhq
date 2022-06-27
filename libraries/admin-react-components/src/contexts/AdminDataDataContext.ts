@@ -3,20 +3,13 @@ import type {
   AdminSchema,
   ErrorResult,
   ErrorType,
-  FieldSpecification,
   Logger,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
-import type { EditorJsToolSettings } from '..';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
-export interface AdminDataDataContextAdapter {
-  getEditorJSConfig(
-    fieldSpec: FieldSpecification,
-    standardBlockTools: { [toolName: string]: EditorJsToolSettings },
-    standardInlineTools: string[]
-  ): { tools: { [toolName: string]: EditorJsToolSettings }; inlineToolbar: string[] };
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface AdminDataDataContextAdapter {}
 
 export interface AdminDataDataContextValue {
   adapter: AdminDataDataContextAdapter;

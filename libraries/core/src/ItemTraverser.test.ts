@@ -1,8 +1,13 @@
 import { describe, expect, test } from 'vitest';
 import type { AdminItemTraverseNode } from './ItemTraverser.js';
-import { AdminItemTraverseNodeType, traverseAdminItem } from './ItemTraverser.js';
+import {
+  AdminItemTraverseNodeType,
+  traverseAdminEntity,
+  traverseAdminValueItem,
+} from './ItemTraverser.js';
 import { visitorPathToString } from './ItemUtils.js';
-import { AdminSchema, FieldType, RichTextBlockType } from './Schema.js';
+import { createRichTextRootNode, createRichTextValueItemNode } from './RichTextUtils.js';
+import { AdminSchema, FieldType } from './Schema.js';
 
 const schema = new AdminSchema({
   entityTypes: [
@@ -51,10 +56,10 @@ function collectTraverseNodes(generator: Generator<AdminItemTraverseNode>) {
   return result;
 }
 
-describe('traverseAdminItem', () => {
+describe('traverseAdminEntity', () => {
   test('Empty Foo entity', () => {
     const nodes = collectTraverseNodes(
-      traverseAdminItem(schema, ['entity'], { info: { type: 'Foo' }, fields: {} })
+      traverseAdminEntity(schema, ['entity'], { info: { type: 'Foo' }, fields: {} })
     );
     expect(nodes).toMatchInlineSnapshot(`
       [
@@ -126,7 +131,7 @@ describe('traverseAdminItem', () => {
 
   test('Foo with two strings in list', () => {
     const nodes = collectTraverseNodes(
-      traverseAdminItem(schema, ['entity'], {
+      traverseAdminEntity(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: { stringList: ['string1', 'string2'] },
       })
@@ -232,60 +237,9 @@ describe('traverseAdminItem', () => {
     `);
   });
 
-  test('Empty TwoStrings value item', () => {
-    const nodes = collectTraverseNodes(
-      traverseAdminItem(schema, ['valueItem'], { type: 'TwoStrings' })
-    );
-    expect(nodes).toMatchInlineSnapshot(`
-      [
-        {
-          "path": "valueItem",
-          "type": "valueItem",
-          "valueItem": {
-            "type": "TwoStrings",
-          },
-        },
-        {
-          "path": "valueItem.string1",
-          "type": "field",
-          "value": undefined,
-        },
-        {
-          "fieldSpec": {
-            "name": "string1",
-            "type": "String",
-          },
-          "path": [
-            "valueItem",
-            "string1",
-          ],
-          "type": "fieldItem",
-          "value": undefined,
-        },
-        {
-          "path": "valueItem.string2",
-          "type": "field",
-          "value": undefined,
-        },
-        {
-          "fieldSpec": {
-            "name": "string2",
-            "type": "String",
-          },
-          "path": [
-            "valueItem",
-            "string2",
-          ],
-          "type": "fieldItem",
-          "value": undefined,
-        },
-      ]
-    `);
-  });
-
   test('Foo entity with TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
-      traverseAdminItem(schema, ['entity'], {
+      traverseAdminEntity(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
           string: 'string1',
@@ -452,17 +406,12 @@ describe('traverseAdminItem', () => {
 
   test('Foo entity with rich text with TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
-      traverseAdminItem(schema, ['entity'], {
+      traverseAdminEntity(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
-          richText: {
-            blocks: [
-              {
-                type: RichTextBlockType.valueItem,
-                data: { type: 'TwoStrings', string1: 'two-1', string2: 'two-2' },
-              },
-            ],
-          },
+          richText: createRichTextRootNode([
+            createRichTextValueItemNode({ type: 'TwoStrings', string1: 'two-1', string2: 'two-2' }),
+          ]),
         },
       })
     );
@@ -516,16 +465,24 @@ describe('traverseAdminItem', () => {
           "path": "entity.fields.richText",
           "type": "field",
           "value": {
-            "blocks": [
-              {
-                "data": {
-                  "string1": "two-1",
-                  "string2": "two-2",
-                  "type": "TwoStrings",
+            "root": {
+              "children": [
+                {
+                  "data": {
+                    "string1": "two-1",
+                    "string2": "two-2",
+                    "type": "TwoStrings",
+                  },
+                  "type": "valueItem",
+                  "version": 1,
                 },
-                "type": "valueItem",
-              },
-            ],
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
           },
         },
         {
@@ -540,20 +497,28 @@ describe('traverseAdminItem', () => {
           ],
           "type": "fieldItem",
           "value": {
-            "blocks": [
-              {
-                "data": {
-                  "string1": "two-1",
-                  "string2": "two-2",
-                  "type": "TwoStrings",
+            "root": {
+              "children": [
+                {
+                  "data": {
+                    "string1": "two-1",
+                    "string2": "two-2",
+                    "type": "TwoStrings",
+                  },
+                  "type": "valueItem",
+                  "version": 1,
                 },
-                "type": "valueItem",
-              },
-            ],
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
           },
         },
         {
-          "path": "entity.fields.richText.blocks[0].data",
+          "path": "entity.fields.richText[0].data",
           "type": "valueItem",
           "valueItem": {
             "string1": "two-1",
@@ -562,7 +527,7 @@ describe('traverseAdminItem', () => {
           },
         },
         {
-          "path": "entity.fields.richText.blocks[0].data.string1",
+          "path": "entity.fields.richText[0].data.string1",
           "type": "field",
           "value": "two-1",
         },
@@ -575,7 +540,6 @@ describe('traverseAdminItem', () => {
             "entity",
             "fields",
             "richText",
-            "blocks",
             0,
             "data",
             "string1",
@@ -584,7 +548,7 @@ describe('traverseAdminItem', () => {
           "value": "two-1",
         },
         {
-          "path": "entity.fields.richText.blocks[0].data.string2",
+          "path": "entity.fields.richText[0].data.string2",
           "type": "field",
           "value": "two-2",
         },
@@ -597,13 +561,65 @@ describe('traverseAdminItem', () => {
             "entity",
             "fields",
             "richText",
-            "blocks",
             0,
             "data",
             "string2",
           ],
           "type": "fieldItem",
           "value": "two-2",
+        },
+      ]
+    `);
+  });
+});
+
+describe('traverseAdminValueItem', () => {
+  test('Empty TwoStrings value item', () => {
+    const nodes = collectTraverseNodes(
+      traverseAdminValueItem(schema, ['valueItem'], { type: 'TwoStrings' })
+    );
+    expect(nodes).toMatchInlineSnapshot(`
+      [
+        {
+          "path": "valueItem",
+          "type": "valueItem",
+          "valueItem": {
+            "type": "TwoStrings",
+          },
+        },
+        {
+          "path": "valueItem.string1",
+          "type": "field",
+          "value": undefined,
+        },
+        {
+          "fieldSpec": {
+            "name": "string1",
+            "type": "String",
+          },
+          "path": [
+            "valueItem",
+            "string1",
+          ],
+          "type": "fieldItem",
+          "value": undefined,
+        },
+        {
+          "path": "valueItem.string2",
+          "type": "field",
+          "value": undefined,
+        },
+        {
+          "fieldSpec": {
+            "name": "string2",
+            "type": "String",
+          },
+          "path": [
+            "valueItem",
+            "string2",
+          ],
+          "type": "fieldItem",
+          "value": undefined,
         },
       ]
     `);

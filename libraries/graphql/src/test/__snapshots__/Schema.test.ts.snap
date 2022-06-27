@@ -163,7 +163,7 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -173,7 +173,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -455,7 +455,7 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -588,7 +588,7 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -782,12 +782,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -1219,7 +1219,7 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -1229,7 +1229,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -1478,7 +1478,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -1607,7 +1607,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -1795,12 +1795,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -2156,7 +2156,7 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -2166,7 +2166,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -2467,7 +2467,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -2614,7 +2614,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -2809,12 +2809,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -3230,7 +3230,7 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -3240,7 +3240,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -3432,7 +3432,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -3547,7 +3547,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -3721,12 +3721,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -4032,7 +4032,7 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -4042,7 +4042,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -4269,7 +4269,7 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -4404,7 +4404,7 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -4598,12 +4598,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -4928,7 +4928,7 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -4938,7 +4938,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -5142,7 +5142,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -5262,7 +5262,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -5441,12 +5441,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -5757,7 +5757,7 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -5767,7 +5767,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -6028,7 +6028,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -6162,7 +6162,7 @@ interface PublishedEntity implements Node {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -6355,12 +6355,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -6737,7 +6737,7 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
@@ -6747,7 +6747,7 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 scalar JSON
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {
@@ -7058,7 +7058,7 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -7224,7 +7224,7 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [PublishedEntity]
 }
 
@@ -7444,12 +7444,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  blocks: JSON!
+  root: JSON!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  blocks: JSON!
+  root: JSON!
 }
 
 type EntityVersionInfo {

@@ -280,7 +280,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: 'PublishedRichText',
         fields: {
-          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
+          root: { type: new GraphQLNonNull(GraphQLJSON) },
           entities: { type: new GraphQLList(this.getInterface('PublishedEntity')) },
         },
       })
@@ -679,7 +679,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: 'AdminRichText',
         fields: {
-          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
+          root: { type: new GraphQLNonNull(GraphQLJSON) },
           entities: { type: new GraphQLList(this.getInterface('AdminEntity')) },
         },
       })
@@ -690,7 +690,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLInputObjectType({
         name: 'AdminRichTextInput',
         fields: {
-          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
+          root: { type: new GraphQLNonNull(GraphQLJSON) },
         },
       })
     );

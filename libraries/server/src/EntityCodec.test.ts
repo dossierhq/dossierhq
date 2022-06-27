@@ -1,5 +1,14 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { AdminSchema, FieldType, RichTextBlockType } from '@jonasb/datadata-core';
+import {
+  AdminSchema,
+  createRichTextEntityNode,
+  createRichTextHeadingNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
+  FieldType,
+} from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
 import { forTest } from './EntityCodec.js';
 
@@ -130,24 +139,14 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {
-          richText: {
-            blocks: [
-              { type: RichTextBlockType.paragraph, data: { text: 'one one' } },
-              {
-                type: RichTextBlockType.valueItem,
-                data: { type: 'EntityCodecValueOne', string: 'one two' },
-              },
-              {
-                type: 'header',
-                data: { level: 3, text: 'Header text' },
-              },
-              {
-                type: 'random',
-                data: { foo: ['a', 'b'], bar: { z: 123 } },
-              },
-            ],
-          },
-          richTexts: [{ blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'two' } }] }],
+          richText: createRichTextRootNode([
+            createRichTextParagraphNode([createRichTextTextNode('one one')]),
+            createRichTextValueItemNode({ type: 'EntityCodecValueOne', string: 'one two' }),
+            createRichTextHeadingNode('h1', [createRichTextTextNode('Header text')]),
+          ]),
+          richTexts: [
+            createRichTextRootNode([createRichTextParagraphNode([createRichTextTextNode('two')])]),
+          ],
         },
       })
     ).toMatchInlineSnapshot(`
@@ -155,11 +154,7 @@ describe('collectDataFromEntity', () => {
         "fullTextSearchText": [
           "one one",
           "one two",
-          "3",
           "Header text",
-          "a",
-          "b",
-          "123",
           "two",
         ],
         "locations": [],
@@ -208,14 +203,12 @@ describe('collectDataFromEntity', () => {
         info: { type: 'EntityCodecFoo' },
         fields: {
           valueOne: { type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
-          richText: {
-            blocks: [
-              {
-                type: RichTextBlockType.valueItem,
-                data: { type: 'EntityCodecValueOne', location: { lat: 3, lng: 4 } },
-              },
-            ],
-          },
+          richText: createRichTextRootNode([
+            createRichTextValueItemNode({
+              type: 'EntityCodecValueOne',
+              location: { lat: 3, lng: 4 },
+            }),
+          ]),
         },
       })
     ).toMatchInlineSnapshot(`
@@ -322,15 +315,10 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {
-          richText: {
-            blocks: [
-              { type: RichTextBlockType.entity, data: { id: 'barId1' } },
-              {
-                type: RichTextBlockType.valueItem,
-                data: { type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } },
-              },
-            ],
-          },
+          richText: createRichTextRootNode([
+            createRichTextEntityNode({ id: 'barId1' }),
+            createRichTextValueItemNode({ type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } }),
+          ]),
         },
       })
     ).toMatchInlineSnapshot(`

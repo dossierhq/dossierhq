@@ -26,7 +26,7 @@ import {
   isEntityTypeField,
   isEntityTypeListField,
   isItemValueItem,
-  isRichTextEntityBlock,
+  isRichTextEntityNode,
   isRichTextField,
   isValueTypeField,
   isValueTypeListField,
@@ -275,7 +275,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     if (isRichTextField(fieldSpec, value) && value) {
       const ids = extractEntityIdsForRichTextField(schema, fieldSpec, value);
       fields[fieldSpec.name] = {
-        ...value,
+        root: value.root,
         entities:
           ids.length === 0
             ? []
@@ -320,9 +320,9 @@ function extractEntityIdsForRichTextField(
         entityIds.add(data.id);
       }
     },
-    visitRichTextBlock: (_path, _fieldSpec, block, _visitContext) => {
-      if (isRichTextEntityBlock(block) && block.data) {
-        entityIds.add(block.data.id);
+    visitRichTextNode: (_path, _fieldSpec, node, _visitContext) => {
+      if (isRichTextEntityNode(node) && node.reference) {
+        entityIds.add(node.reference.id);
       }
     },
     visitContext: undefined,

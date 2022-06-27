@@ -5,16 +5,19 @@ import type {
   FieldValueTypeMap,
   PublishedSchema,
 } from './Schema.js';
-import { FieldType, RichTextBlockType } from './Schema.js';
+import { FieldType, RichTextNodeType } from './Schema.js';
 import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
   EntityLike,
-  EntityReference,
   PublishedEntity,
   RichText,
-  RichTextBlock,
+  RichTextElementNode,
+  RichTextEntityNode,
+  RichTextNode,
+  RichTextTextNode,
+  RichTextValueItemNode,
   ValueItem,
 } from './Types.js';
 
@@ -162,22 +165,20 @@ export function isValueTypeItemField(
   return fieldSpec.type === FieldType.ValueType;
 }
 
-export function isRichTextEntityBlock(
-  block: RichTextBlock
-): block is RichTextBlock<typeof RichTextBlockType.entity, EntityReference | null> {
-  return block.type === RichTextBlockType.entity;
+export function isRichTextTextNode(node: RichTextNode): node is RichTextTextNode {
+  return node.type === RichTextNodeType.text;
 }
 
-export function isRichTextParagraphBlock(
-  block: RichTextBlock
-): block is RichTextBlock<typeof RichTextBlockType.paragraph, { text: string }> {
-  return block.type === RichTextBlockType.paragraph;
+export function isRichTextElementNode(node: RichTextNode): node is RichTextElementNode {
+  return 'children' in node;
 }
 
-export function isRichTextValueItemBlock(
-  block: RichTextBlock
-): block is RichTextBlock<typeof RichTextBlockType.valueItem, ValueItem | null> {
-  return block.type === RichTextBlockType.valueItem;
+export function isRichTextEntityNode(node: RichTextNode): node is RichTextEntityNode {
+  return node.type === RichTextNodeType.entity;
+}
+
+export function isRichTextValueItemNode(node: RichTextNode): node is RichTextValueItemNode {
+  return node.type === RichTextNodeType.valueItem;
 }
 
 export function isItemValueItem(
@@ -236,10 +237,10 @@ type VisitorVisitField<TVisitContext> = (
   data: unknown,
   visitContext: TVisitContext
 ) => void;
-type VisitorVisitRichTextBlock<TVisitContext> = (
+type VisitorVisitRichTextNode<TVisitContext> = (
   path: Array<string | number>,
   fieldSpec: FieldSpecification,
-  block: RichTextBlock,
+  node: RichTextNode,
   visitContext: TVisitContext
 ) => void;
 type VisitorEnterValueItem<TVisitContext> = (
@@ -263,7 +264,7 @@ type VisitorEnterRichText<TVisitContext> = (
 
 interface VisitorCallbacks<TVisitContext> {
   visitField: VisitorVisitField<TVisitContext>;
-  visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
+  visitRichTextNode: VisitorVisitRichTextNode<TVisitContext>;
   enterValueItem: VisitorEnterValueItem<TVisitContext> | undefined;
   enterList: VisitorEnterList<TVisitContext> | undefined;
   enterRichText: VisitorEnterRichText<TVisitContext> | undefined;
@@ -274,7 +275,7 @@ export function visitItemRecursively<TVisitContext>({
   item,
   path,
   visitField,
-  visitRichTextBlock,
+  visitRichTextNode,
   enterValueItem = undefined,
   enterList = undefined,
   enterRichText = undefined,
@@ -284,7 +285,7 @@ export function visitItemRecursively<TVisitContext>({
   item: EntityLike | ValueItem;
   path?: ItemValuePath;
   visitField: VisitorVisitField<TVisitContext>;
-  visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
+  visitRichTextNode: VisitorVisitRichTextNode<TVisitContext>;
   enterValueItem?: VisitorEnterValueItem<TVisitContext>;
   enterList?: VisitorEnterList<TVisitContext>;
   enterRichText?: VisitorEnterRichText<TVisitContext>;
@@ -294,7 +295,7 @@ export function visitItemRecursively<TVisitContext>({
     schema,
     path ?? [],
     item,
-    { visitField, visitRichTextBlock, enterValueItem, enterList, enterRichText },
+    { visitField, visitRichTextNode, enterValueItem, enterList, enterRichText },
     initialVisitContext
   );
 }
@@ -305,7 +306,7 @@ export function visitFieldRecursively<TVisitContext>({
   fieldSpec,
   value,
   visitField,
-  visitRichTextBlock,
+  visitRichTextNode,
   enterValueItem = undefined,
   enterList = undefined,
   enterRichText = undefined,
@@ -316,7 +317,7 @@ export function visitFieldRecursively<TVisitContext>({
   fieldSpec: FieldSpecification;
   value: unknown;
   visitField: VisitorVisitField<TVisitContext>;
-  visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
+  visitRichTextNode: VisitorVisitRichTextNode<TVisitContext>;
   enterValueItem?: VisitorEnterValueItem<TVisitContext>;
   enterList?: VisitorEnterList<TVisitContext>;
   enterRichText?: VisitorEnterRichText<TVisitContext>;
@@ -327,7 +328,7 @@ export function visitFieldRecursively<TVisitContext>({
     path,
     fieldSpec,
     value,
-    { visitField, visitRichTextBlock, enterValueItem, enterList, enterRichText },
+    { visitField, visitRichTextNode, enterValueItem, enterList, enterRichText },
     visitContext
   );
 }
@@ -405,7 +406,7 @@ function doVisitFieldRecursively<TVisitContext>(
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
 ) {
-  const { enterRichText, enterValueItem, visitField, visitRichTextBlock } = callbacks;
+  const { enterRichText, enterValueItem, visitField } = callbacks;
   visitField(path, fieldSpec, value, visitContext);
 
   if (isValueTypeItemField(fieldSpec, value) && value) {
@@ -420,21 +421,45 @@ function doVisitFieldRecursively<TVisitContext>(
     const richTextVisitContext = enterRichText
       ? enterRichText(path, fieldSpec, value, visitContext)
       : visitContext;
-    for (let i = 0; i < value.blocks.length; i += 1) {
-      const blockPath = [...path, i];
-      const block = value.blocks[i];
-      visitRichTextBlock(blockPath, fieldSpec, block, richTextVisitContext);
-      if (block.type === RichTextBlockType.valueItem && block.data) {
-        doVisitItemRecursively(
-          schema,
-          blockPath,
-          block.data as ValueItem,
-          callbacks,
-          enterValueItem
-            ? enterValueItem(path, fieldSpec, block.data as ValueItem, richTextVisitContext)
-            : richTextVisitContext
-        );
-      }
+
+    visitRichTextNodeRecursively(
+      schema,
+      fieldSpec,
+      path,
+      value.root,
+      callbacks,
+      richTextVisitContext
+    );
+  }
+}
+
+function visitRichTextNodeRecursively<TVisitContext>(
+  schema: AdminSchema | PublishedSchema,
+  fieldSpec: FieldSpecification,
+  path: ItemValuePath,
+  node: RichTextNode,
+  callbacks: VisitorCallbacks<TVisitContext>,
+  visitContext: TVisitContext
+) {
+  const { visitRichTextNode } = callbacks;
+  visitRichTextNode(path, fieldSpec, node, visitContext);
+
+  if (isRichTextValueItemNode(node) && node.data) {
+    doVisitItemRecursively(schema, path, node.data as ValueItem, callbacks, visitContext);
+  }
+
+  if (isRichTextElementNode(node)) {
+    for (let i = 0; i < node.children.length; i += 1) {
+      const childPath = [...path, i];
+      const childNode = node.children[i];
+      visitRichTextNodeRecursively(
+        schema,
+        fieldSpec,
+        childPath,
+        childNode,
+        callbacks,
+        visitContext
+      );
     }
   }
 }

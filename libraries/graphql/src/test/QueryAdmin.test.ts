@@ -6,11 +6,15 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
+  createRichTextEntityNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
   FieldType,
   getAllPagesForConnection,
   notOk,
   ok,
-  RichTextBlockType,
 } from '@jonasb/datadata-core';
 import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
@@ -556,12 +560,13 @@ describe('adminEntity()', () => {
 
   test('Query rich text field', async () => {
     const { adminClient } = server;
+    const body = createRichTextRootNode([
+      createRichTextParagraphNode([createRichTextTextNode('Hello foo world')]),
+    ]);
     const createFooResult = await adminClient.createEntity({
       info: { type: 'QueryAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: {
-        body: {
-          blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello foo world' } }],
-        },
+        body,
       },
     });
     if (expectOkResult(createFooResult)) {
@@ -587,7 +592,7 @@ describe('adminEntity()', () => {
               ... on AdminQueryAdminFoo {
                 fields {
                   body {
-                    blocks
+                    root
                     entities {
                       id
                     }
@@ -613,10 +618,7 @@ describe('adminEntity()', () => {
               version: 0,
             },
             fields: {
-              body: {
-                blocks: [{ type: 'paragraph', data: { text: 'Hello foo world' } }],
-                entities: [],
-              },
+              body: { ...body, entities: [] },
             },
           },
         },
@@ -648,18 +650,18 @@ describe('adminEntity()', () => {
         },
       } = createBar2Result.value;
 
+      const body = createRichTextRootNode([
+        createRichTextEntityNode({ id: bar1Id }),
+        createRichTextValueItemNode({
+          type: 'QueryAdminStringedBar',
+          text: 'Hello',
+          bar: { id: bar2Id },
+        }),
+      ]);
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryAdminFoo', name: 'Foo name', authKey: 'none' },
         fields: {
-          body: {
-            blocks: [
-              { type: RichTextBlockType.entity, data: { id: bar1Id } },
-              {
-                type: RichTextBlockType.valueItem,
-                data: { type: 'QueryAdminStringedBar', text: 'Hello', bar: { id: bar2Id } },
-              },
-            ],
-          },
+          body,
         },
       });
       if (expectOkResult(createFooResult)) {
@@ -685,7 +687,7 @@ describe('adminEntity()', () => {
                 ... on AdminQueryAdminFoo {
                   fields {
                     body {
-                      blocks
+                      root
                       entities {
                         id
                         info {
@@ -713,17 +715,7 @@ describe('adminEntity()', () => {
               },
               fields: {
                 body: {
-                  blocks: [
-                    { type: 'entity', data: { id: bar1Id } },
-                    {
-                      type: 'valueItem',
-                      data: {
-                        type: 'QueryAdminStringedBar',
-                        text: 'Hello',
-                        bar: { id: bar2Id },
-                      },
-                    },
-                  ],
+                  ...body,
                   entities: [
                     { id: bar1Id, info: { name: bar1Name } },
                     { id: bar2Id, info: { name: bar2Name } },

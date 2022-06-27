@@ -2,19 +2,8 @@
   COMPONENTS
 */
 
-.rich-text-editor {
-  border-radius: 0.5em;
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(209, 213, 219);
-}
-
 .nested-value-item-indentation {
   border-left: 3px solid lightgray;
   border-radius: 3px 0 0 3px;
   padding-left: 1rem;
-}
-
-.reset-editor-js a {
-  text-decoration: none;
 }

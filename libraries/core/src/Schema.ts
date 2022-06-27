@@ -48,12 +48,13 @@ export const FieldType = {
 } as const;
 export type FieldType = keyof typeof FieldType;
 
-export const RichTextBlockType = {
+export const RichTextNodeType = {
   entity: 'entity',
-  valueItem: 'valueItem',
   paragraph: 'paragraph',
+  text: 'text',
+  valueItem: 'valueItem',
 } as const;
-export type RichTextBlockType = keyof typeof RichTextBlockType;
+export type RichTextNodeType = keyof typeof RichTextNodeType;
 
 export interface FieldSpecification {
   name: string;
@@ -68,12 +69,13 @@ export interface FieldSpecification {
   entityTypes?: string[];
   /** Applicable when type is ValueType or RichText */
   valueTypes?: string[];
+  // TODO replace with rich text nodes. no such thing as inline
   /** Applicable when type is RichText. All block types are enabled if none are specified. The type
    * can either be a standard RichTextBlockType or any type that's enabled.
    * If inlineTypes isn't specified all inline types are enabled. If inlineTypes is an empty array,
    * no inline types are enabled.
    */
-  richTextBlocks?: { type: RichTextBlockType | string; inlineTypes?: string[] }[];
+  richTextBlocks?: { type: RichTextNodeType | string; inlineTypes?: string[] }[];
 }
 
 export interface FieldValueTypeMap {
@@ -191,7 +193,7 @@ export class AdminSchema {
           }
 
           const paragraph = fieldSpec.richTextBlocks.find(
-            (x) => x.type === RichTextBlockType.paragraph
+            (x) => x.type === RichTextNodeType.paragraph
           );
           if (!paragraph) {
             return notOk.BadRequest(
@@ -209,8 +211,8 @@ export class AdminSchema {
             usedRichTextBlockTypes.add(richTextBlock.type);
 
             if (
-              (richTextBlock.type === RichTextBlockType.entity ||
-                richTextBlock.type === RichTextBlockType.valueItem) &&
+              (richTextBlock.type === RichTextNodeType.entity ||
+                richTextBlock.type === RichTextNodeType.valueItem) &&
               richTextBlock.inlineTypes &&
               richTextBlock.inlineTypes.length > 0
             ) {

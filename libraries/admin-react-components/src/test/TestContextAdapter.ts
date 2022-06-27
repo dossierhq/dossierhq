@@ -178,15 +178,7 @@ export function createSlowPublishedMiddleware(): PublishedClientMiddleware<Clien
   };
 }
 
-export class TestContextAdapter implements AdminDataDataContextAdapter {
-  getEditorJSConfig: AdminDataDataContextAdapter['getEditorJSConfig'] = (
-    _fieldSpec,
-    standardBlockTools,
-    standardInlineTools
-  ) => {
-    return { tools: standardBlockTools, inlineToolbar: standardInlineTools };
-  };
-}
+export class TestContextAdapter implements AdminDataDataContextAdapter {}
 
 export async function ensureManyBarEntities(
   adminClient: AdminClient,

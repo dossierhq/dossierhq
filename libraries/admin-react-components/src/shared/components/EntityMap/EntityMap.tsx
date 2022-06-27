@@ -96,7 +96,7 @@ function extractEntityLocations(
         locations.push(data);
       }
     },
-    visitRichTextBlock: (_path, _fieldSpec, _block, _visitContext) => {
+    visitRichTextNode: (_path, _fieldSpec, _node, _visitContext) => {
       //empty
     },
     initialVisitContext: undefined,
