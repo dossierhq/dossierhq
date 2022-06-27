@@ -5,14 +5,14 @@ import type {
   Session,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { SpyInstanceFn } from 'vitest';
+import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import { SessionContextImpl } from '../Context.js';
 import type { SessionContext } from '../Context.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstanceFn<
+type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
   Parameters<TFn>,
   ReturnType<TFn>
 > &
