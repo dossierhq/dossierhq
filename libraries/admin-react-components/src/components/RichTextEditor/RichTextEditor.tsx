@@ -10,8 +10,10 @@ import type { EditorState } from 'lexical/LexicalEditorState.js';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo } from 'react';
 import { AdminEntityNode, INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
+import { AdminValueItemNode, INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
+import { ValueItemPlugin } from './ValueItemPlugin.js';
 
 interface Props {
   fieldSpec: FieldSpecification;
@@ -35,7 +37,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   const initialConfig = {
     namespace: 'datadata',
     onError: handleError,
-    nodes: [AdminEntityNode],
+    nodes: [AdminEntityNode, AdminValueItemNode],
     editorState: value
       ? (editor: LexicalEditor) => {
           const state = editor.parseEditorState(value);
@@ -50,6 +52,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
         <ToolbarPlugin />
         <RichTextPlugin contentEditable={<ContentEditable />} placeholder="" />
         <EntityPlugin />
+        <ValueItemPlugin />
         <OnChangePlugin onChange={debouncedHandleChange} />
       </LexicalComposer>
     </RichTextEditorContext.Provider>
@@ -59,9 +62,14 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
 function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   return (
-    <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, undefined)}>
-      Add entity
-    </Button>
+    <>
+      <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, undefined)}>
+        Add entity
+      </Button>
+      <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, undefined)}>
+        Add value item
+      </Button>
+    </>
   );
 }
 

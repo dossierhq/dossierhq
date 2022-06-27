@@ -4,6 +4,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import type { LexicalEditor } from 'lexical/LexicalEditor.js';
 import { PublishedEntityNode } from './PublishedEntityNode.js';
+import { PublishedValueItemNode } from './PublishedValueItemNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
@@ -15,7 +16,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
   const initialConfig = {
     namespace: 'datadata',
     onError: handleError,
-    nodes: [PublishedEntityNode],
+    nodes: [PublishedEntityNode, PublishedValueItemNode],
     readOnly: true,
     editorState: value
       ? (editor: LexicalEditor) => {
