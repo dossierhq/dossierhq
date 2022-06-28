@@ -27,6 +27,7 @@ const schema = new AdminSchema({
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
         { name: 'twoStrings', type: FieldType.ValueType, valueTypes: ['TwoStrings'] },
+        { name: 'richText', type: FieldType.RichText },
       ],
     },
   ],
@@ -1204,10 +1205,12 @@ describe('normalizeFieldValue()', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), [])).toBe(
       null
     ));
+
   test('[string, ""] => [string]', () =>
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), ['hello', ''])
     ).toEqual(['hello']));
+
   test('[string] => [string] (no change)', () => {
     const fieldValue = ['hello', 'world'];
     expect(
@@ -1223,6 +1226,7 @@ describe('normalizeFieldValue()', () => {
         string2: '',
       })
     ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null }));
+
   test('{string1:undefined} => {string1:null,string2:null}', () =>
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
@@ -1247,13 +1251,39 @@ describe('normalizeFieldValue()', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined)
     ).toBe(undefined));
+
   test('string[] undefined => undefined', () =>
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined)
     ).toBe(undefined));
+
   test('ValueItem: undefined => undefined', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined)
     ).toBe(undefined);
+  });
+
+  test('RichText: empty paragraph => null', () => {
+    expect(
+      normalizeFieldValue(
+        schema,
+        getEntityFieldSpec(schema, 'Foo', 'richText'),
+        createRichTextRootNode([createRichTextParagraphNode([])])
+      )
+    ).toBe(null);
+  });
+
+  test('RichText: let invalid rich text pass through (no root)', () => {
+    expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'richText'), {})).toEqual(
+      {}
+    );
+  });
+
+  test('RichText: let invalid rich text pass through (string in root)', () => {
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'richText'), {
+        root: 'hello world',
+      })
+    ).toEqual({ root: 'hello world' });
   });
 });

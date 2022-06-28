@@ -586,8 +586,28 @@ function normalizeFieldValueItem(
     case FieldType.Boolean:
     case FieldType.EntityType:
     case FieldType.Location:
-    case FieldType.RichText: // TODO normalize rich text value
       return value;
+    case FieldType.RichText: {
+      // TODO normalize rich text more?
+      // Don't fail on invalid rich text, just ignore it in this phase
+      const richText = value as RichText;
+      if (
+        typeof richText === 'object' &&
+        typeof richText.root === 'object' &&
+        Array.isArray(richText.root.children) &&
+        richText.root.children.length === 1
+      ) {
+        const onlyChild = richText.root.children[0];
+        if (
+          onlyChild.type === RichTextNodeType.paragraph &&
+          isRichTextElementNode(onlyChild) &&
+          onlyChild.children.length === 0
+        ) {
+          return null;
+        }
+      }
+      return value;
+    }
     case FieldType.String:
       //TODO support trimming of strings?
       return value ? value : null;
