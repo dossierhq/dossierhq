@@ -33,7 +33,7 @@
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "~0.45.5",
+    "@rushstack/heft": "~0.46.2",
     "@types/uuid": "~8.3.4",
     "eslint": "^8.16.0",
     "prettier": "2.7.1",

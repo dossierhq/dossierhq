@@ -45,7 +45,7 @@
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
-    "@rushstack/heft": "~0.45.5",
+    "@rushstack/heft": "~0.46.2",
     "@storybook/addon-actions": "^6.4.21",
     "@storybook/addon-essentials": "^6.4.21",
     "@storybook/addon-links": "^6.4.21",
