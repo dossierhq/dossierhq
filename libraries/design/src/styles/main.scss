@@ -162,6 +162,40 @@ tr.is-sticky-row :is(td, th),
   border-radius: 20%;
 }
 
+.rich-text {
+  .is-bold {
+    font-weight: bold;
+  }
+
+  .is-code {
+    font-family: monospace;
+  }
+
+  .is-italic {
+    font-style: italic;
+  }
+
+  .is-strike-through {
+    text-decoration: line-through;
+  }
+
+  .is-subscript {
+    vertical-align: sub;
+  }
+
+  .is-superscript {
+    vertical-align: super;
+  }
+
+  .is-underline {
+    text-decoration: underline;
+  }
+
+  .is-underline-strike-through {
+    text-decoration: underline line-through;
+  }
+}
+
 .rich-text-editor {
   // controls
   border: $control-border-width solid transparent;

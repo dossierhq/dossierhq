@@ -61,4 +61,15 @@ export { toFlexItemClassName } from './utils/FlexboxUtils.js';
 export { toSizeClassName, toSpacingClassName } from './utils/LayoutPropsUtils.js';
 export type { TextStyle } from './utils/TextStylePropsUtils.js';
 
-export const ClassName = { 'rich-text-editor': 'rich-text-editor' };
+export const ClassName = {
+  'rich-text': 'rich-text',
+  'is-bold': 'is-bold',
+  'is-code': 'is-code',
+  'is-italic': 'is-italic',
+  'is-strike-through': 'is-strike-through',
+  'is-subscript': 'is-subscript',
+  'is-superscript': 'is-superscript',
+  'is-underline': 'is-underline',
+  'is-underline-strike-through': 'is-underline-strike-through',
+  'rich-text-editor': 'rich-text-editor',
+};

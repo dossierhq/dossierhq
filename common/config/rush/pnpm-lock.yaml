@@ -271,6 +271,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.3.5
+      '@lexical/utils': ~0.3.5
       '@rushstack/heft': ~0.45.5
       '@storybook/addon-actions': ^6.4.21
       '@storybook/addon-essentials': ^6.4.21
@@ -309,6 +310,7 @@ importers:
       '@jonasb/datadata-design': link:../design
       '@jonasb/datadata-leaflet': link:../leaflet
       '@lexical/react': 0.3.5_b1b1bfa71ca4c683ff0996ebc98e5763
+      '@lexical/utils': 0.3.6_lexical@0.3.5
       leaflet: 1.8.0
       lexical: 0.3.5
       lodash: 4.17.21
@@ -3147,6 +3149,15 @@ packages:
       lexical: 0.3.5
     dev: false
 
+  /@lexical/list/0.3.6_lexical@0.3.5:
+    resolution: {integrity: sha512-bKbDIT3PcMv7P7Pfuxyphw1ZdyJMTwj4Beop6xppg5TXknytkTre6CK9tQhHiMkZMZxRqmHoDVvJRem1mffVAw==}
+    peerDependencies:
+      lexical: 0.3.6
+    dependencies:
+      '@lexical/utils': 0.3.6_lexical@0.3.5
+      lexical: 0.3.5
+    dev: false
+
   /@lexical/mark/0.3.5_lexical@0.3.5:
     resolution: {integrity: sha512-/SAuHi4768/IHc/ReJW2sLm0L1V08GU3P8EEdlxkdSXNqXTBBVtihX9jnVW0/X7OyrD6wxzyK+CeWL4gHeDukw==}
     peerDependencies:
@@ -3265,6 +3276,15 @@ packages:
       lexical: 0.3.5
     dev: false
 
+  /@lexical/table/0.3.6_lexical@0.3.5:
+    resolution: {integrity: sha512-S4+YfMFBgEht2ydIovi2YIRa88mS/ASNlBvU6lL1Yxir5aRBXJYiRWJl+fwVyX9lVZiLby3oK/XjUARO9Az8Wg==}
+    peerDependencies:
+      lexical: 0.3.6
+    dependencies:
+      '@lexical/utils': 0.3.6_lexical@0.3.5
+      lexical: 0.3.5
+    dev: false
+
   /@lexical/text/0.3.5_lexical@0.3.5:
     resolution: {integrity: sha512-q2QBchZKmS0INJYZrG7+G63aRYRE13gxcyur/sOzF0eHfYqfhJdwmnHpBkMKNeXoQoneKY2R5eLN34qYT2yFYw==}
     peerDependencies:
@@ -3280,6 +3300,16 @@ packages:
     dependencies:
       '@lexical/list': 0.3.5_lexical@0.3.5
       '@lexical/table': 0.3.5_lexical@0.3.5
+      lexical: 0.3.5
+    dev: false
+
+  /@lexical/utils/0.3.6_lexical@0.3.5:
+    resolution: {integrity: sha512-HW+0XSuvKhhXFzX/1jVNs0jahSoVSTzartl3BRZ3DNxcRkr4QQ7oT5NjQEAGsXAqd5PwRXfLJ8qtRtU8VJp/sQ==}
+    peerDependencies:
+      lexical: 0.3.6
+    dependencies:
+      '@lexical/list': 0.3.6_lexical@0.3.5
+      '@lexical/table': 0.3.6_lexical@0.3.5
       lexical: 0.3.5
     dev: false
 
