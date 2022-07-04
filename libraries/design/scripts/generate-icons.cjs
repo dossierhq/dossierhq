@@ -12,11 +12,14 @@ const config = {
 
 const iconSources = {
   add: solidSvgIcons.faPlusSquare,
+  bold: solidSvgIcons.faBold,
   chevronDown: solidSvgIcons.faChevronDown,
   chevronUp: solidSvgIcons.faChevronUp,
   close: solidSvgIcons.faXmark,
+  code: solidSvgIcons.faCode,
   download: solidSvgIcons.faDownload,
   first: solidSvgIcons.faFastBackward,
+  italic: solidSvgIcons.faItalic,
   last: solidSvgIcons.faFastForward,
   linkFrom: solidSvgIcons.faArrowRightFromBracket,
   linkTo: solidSvgIcons.faArrowRightToBracket,
@@ -30,6 +33,10 @@ const iconSources = {
   previous: solidSvgIcons.faStepBackward,
   search: solidSvgIcons.faSearch,
   shuffle: solidSvgIcons.faShuffle,
+  strikethrough: solidSvgIcons.faStrikethrough,
+  subscript: solidSvgIcons.faSubscript,
+  superscript: solidSvgIcons.faSuperscript,
+  underline: solidSvgIcons.faUnderline,
   upload: solidSvgIcons.faUpload,
 };
 

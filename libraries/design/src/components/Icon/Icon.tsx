@@ -12,11 +12,14 @@ export interface IconProps {
 
 export const ICON_NAMES = [
   'add',
+  'bold',
   'chevronDown',
   'chevronUp',
   'close',
+  'code',
   'download',
   'first',
+  'italic',
   'last',
   'linkFrom',
   'linkTo',
@@ -30,6 +33,10 @@ export const ICON_NAMES = [
   'previous',
   'search',
   'shuffle',
+  'strikethrough',
+  'subscript',
+  'superscript',
+  'underline',
   'upload',
 ] as const;
 
