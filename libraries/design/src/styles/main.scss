@@ -156,3 +156,8 @@ tr.is-sticky-row :is(td, th),
 .icon-asset-l {
   font-size: 2em;
 }
+
+.icon-toggled {
+  background-color: lighten($info, 30%);
+  border-radius: 20%;
+}

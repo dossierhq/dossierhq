@@ -1,15 +1,16 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
+import type { Color } from '../../config/Colors.js';
+import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { IconProps } from '../Icon/Icon.js';
 import type { IconName } from '../index.js';
 import { Button, Icon } from '../index.js';
-import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { Color } from '../../config/Colors.js';
-import type { IconProps } from '../Icon/Icon.js';
 
 export interface IconButtonProps {
   className?: string;
   color?: Color;
   disabled?: boolean;
   icon: IconName;
+  toggled?: boolean;
   size?: IconProps['size'];
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
@@ -31,6 +32,7 @@ export const IconButton: IconButtonComponent = ({
   disabled,
   icon,
   size,
+  toggled,
   onClick,
   onMouseDown,
 }: IconButtonProps) => {
@@ -42,7 +44,7 @@ export const IconButton: IconButtonComponent = ({
       onMouseDown={onMouseDown}
       disabled={disabled}
     >
-      <Icon icon={icon} size={size} />
+      <Icon className={toggled ? 'icon-toggled' : undefined} icon={icon} size={size} />
     </Button>
   );
 };
