@@ -24,6 +24,9 @@ Primary.args = { icon: 'add', color: 'primary' };
 export const Disabled = Template.bind({});
 Disabled.args = { disabled: true, icon: 'add' };
 
+export const Toggled = Template.bind({});
+Toggled.args = { toggled: true, icon: 'add' };
+
 export const Large = Template.bind({});
 Large.args = { icon: 'add', size: 'large' };
 
