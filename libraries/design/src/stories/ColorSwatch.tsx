@@ -28,7 +28,27 @@ export function ColorSwatch({ color }: ColorSwatchProps): JSX.Element {
           className={toBackgroundColorClassName(color)}
           ref={onRefChanged}
           style={{
-            width: '150px',
+            width: '50px',
+            height: '50px',
+          }}
+        />
+      </Table.Cell>
+      <Table.Cell>
+        <div
+          className={toBackgroundColorClassName(color, 'light')}
+          ref={onRefChanged}
+          style={{
+            width: '50px',
+            height: '50px',
+          }}
+        />
+      </Table.Cell>
+      <Table.Cell>
+        <div
+          className={toBackgroundColorClassName(color, 'dark')}
+          ref={onRefChanged}
+          style={{
+            width: '50px',
             height: '50px',
           }}
         />
@@ -45,6 +65,8 @@ export function AllColorSwatches() {
       <Table.Head>
         <Table.Header>Color</Table.Header>
         <Table.Header> </Table.Header>
+        <Table.Header>Light</Table.Header>
+        <Table.Header>Dark</Table.Header>
         <Table.Header>Background color</Table.Header>
         <Table.Header>Color</Table.Header>
       </Table.Head>

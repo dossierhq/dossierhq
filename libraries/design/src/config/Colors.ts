@@ -9,9 +9,14 @@ export const StatusColor = {
 export type StatusColor = typeof StatusColor[keyof typeof StatusColor];
 
 const BulmaColor = {
+  black: 'black',
   danger: 'danger',
+  dark: 'dark',
+  info: 'info',
   light: 'light',
+  link: 'link',
   primary: 'primary',
+  success: 'success',
   warning: 'warning',
   white: 'white',
 } as const;
@@ -43,8 +48,11 @@ export function toColorClassName(color: Color | undefined): string | undefined {
   return `is-${colorName}`;
 }
 
-export function toBackgroundColorClassName(color: Color | undefined): string | undefined {
+export function toBackgroundColorClassName(
+  color: Color | undefined,
+  variant?: 'dark' | 'light'
+): string | undefined {
   const colorName = resolveBulmaColor(color);
   if (!colorName) return undefined;
-  return `has-background-${colorName}`;
+  return `has-background-${colorName}${variant ? `-${variant}` : ''}`;
 }
