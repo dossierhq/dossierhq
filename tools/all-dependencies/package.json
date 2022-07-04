@@ -63,7 +63,7 @@
     "lexical": "~0.3.5",
     "lodash": "~4.17.21",
     "mini-svg-data-uri": "~1.4.4",
-    "next": "~12.1.4",
+    "next": "~12.2.0",
     "pg": "^8.7.1",
     "postgrator": "^7.1.0",
     "prettier": "2.7.1",
