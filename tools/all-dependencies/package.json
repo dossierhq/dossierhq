@@ -45,7 +45,7 @@
     "bulma": "~0.9.3",
     "dotenv": "^16.0.0",
     "eslint": "^8.16.0",
-    "eslint-config-next": "~12.1.4",
+    "eslint-config-next": "~12.2.0",
     "eslint-plugin-import": "~2.26.0",
     "eslint-plugin-react": "~7.30.0",
     "eslint-plugin-react-hooks": "~4.6.0",
