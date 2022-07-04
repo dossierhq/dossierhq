@@ -14,3 +14,4 @@ updates:
     directory: "/tools/all-dependencies/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
