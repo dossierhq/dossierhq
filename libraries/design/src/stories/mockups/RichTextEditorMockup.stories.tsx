@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import { ButtonDropdown, IconButton, Row, Text } from '../../index.js';
+import { ButtonDropdown, ClassName, IconButton, Row, Text, toClassName } from '../../index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ScreenProps {}
@@ -56,9 +56,14 @@ function Screen(): JSX.Element {
           Add value item
         </ButtonDropdown>
       </Row>
-      <div className="rich-text-editor" contentEditable>
+      <div
+        className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
+        contentEditable
+      >
         <Text textStyle="body1">
           Lorem <strong>ipsum</strong>.
+          <span className={ClassName['is-strike-through']}>Strikethrough</span>{' '}
+          <span className={ClassName['is-underline']}>Underline</span>
         </Text>
       </div>
     </>
