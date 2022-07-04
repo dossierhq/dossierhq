@@ -60,3 +60,5 @@ export { findAscendantElement, findAscendantHTMLElement } from './utils/DOMUtils
 export { toFlexItemClassName } from './utils/FlexboxUtils.js';
 export { toSizeClassName, toSpacingClassName } from './utils/LayoutPropsUtils.js';
 export type { TextStyle } from './utils/TextStylePropsUtils.js';
+
+export const ClassName = { 'rich-text-editor': 'rich-text-editor' };
