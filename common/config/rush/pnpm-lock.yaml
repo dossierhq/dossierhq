@@ -291,7 +291,7 @@ importers:
       eslint-plugin-import: ~2.26.0
       eslint-plugin-react: ~7.30.0
       eslint-plugin-react-hooks: ~4.6.0
-      eslint-plugin-storybook: ~0.5.12
+      eslint-plugin-storybook: ~0.6.0
       leaflet: ~1.8.0
       lexical: ~0.3.5
       lodash: ~4.17.21
@@ -343,7 +343,7 @@ importers:
       eslint-plugin-import: 2.26.0_eslint@8.16.0
       eslint-plugin-react: 7.30.0_eslint@8.16.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.16.0
-      eslint-plugin-storybook: 0.5.12_eslint@8.16.0+typescript@4.7.2
+      eslint-plugin-storybook: 0.6.0_eslint@8.16.0+typescript@4.7.2
       mini-svg-data-uri: 1.4.4
       prettier: 2.7.1
       svgo: 2.8.0
@@ -684,7 +684,7 @@ importers:
       eslint: ^8.16.0
       eslint-plugin-react: ~7.30.0
       eslint-plugin-react-hooks: ~4.6.0
-      eslint-plugin-storybook: ~0.5.12
+      eslint-plugin-storybook: ~0.6.0
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
       prettier: 2.7.1
@@ -724,7 +724,7 @@ importers:
       eslint: 8.16.0
       eslint-plugin-react: 7.30.0_eslint@8.16.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.16.0
-      eslint-plugin-storybook: 0.5.12_eslint@8.16.0+typescript@4.7.2
+      eslint-plugin-storybook: 0.6.0_eslint@8.16.0+typescript@4.7.2
       mini-svg-data-uri: 1.4.4
       prettier: 2.7.1
       sass: 1.53.0
@@ -988,7 +988,7 @@ importers:
       eslint-plugin-import: ~2.26.0
       eslint-plugin-react: ~7.30.0
       eslint-plugin-react-hooks: ~4.6.0
-      eslint-plugin-storybook: ~0.5.12
+      eslint-plugin-storybook: ~0.6.0
       express: ~4.18.1
       express-graphql: ~0.12.0
       graphiql: ~1.9.3
@@ -1066,7 +1066,7 @@ importers:
       eslint-plugin-import: 2.26.0_eslint@8.16.0
       eslint-plugin-react: 7.30.0_eslint@8.16.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.16.0
-      eslint-plugin-storybook: 0.5.12_eslint@8.16.0+typescript@4.7.2
+      eslint-plugin-storybook: 0.6.0_eslint@8.16.0+typescript@4.7.2
       express: 4.18.1
       express-graphql: 0.12.0_graphql@16.5.0
       graphiql: 1.9.3_86d170be1b0f4ad338191280c0e2e0d1
@@ -8869,8 +8869,8 @@ packages:
       semver: 6.3.0
       string.prototype.matchall: 4.0.7
 
-  /eslint-plugin-storybook/0.5.12_eslint@8.16.0+typescript@4.7.2:
-    resolution: {integrity: sha512-ojuNKnrZFrQpm5N5Lp8UR0VEn4HtLjlNn6nxQAYlmTsEXNigtId1XPuMbXAsvFcEmv3RTb5l+9tZgkhSURfACg==}
+  /eslint-plugin-storybook/0.6.0_eslint@8.16.0+typescript@4.7.2:
+    resolution: {integrity: sha512-B6SKZSm1LaDq+bvjd4LCBmNK42LKrr+9Wsy9d5imB6yKVBVt/XFDJ3UhXxVm4OjTlrMyI4I9mTAQ7Lw1EHVXSw==}
     engines: {node: 12.x || 14.x || >= 16}
     peerDependencies:
       eslint: '>=6'

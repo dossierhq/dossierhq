@@ -54,7 +54,7 @@
     "bulma": "~0.9.3",
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-react": "~7.30.0",
-    "eslint-plugin-storybook": "~0.5.12",
+    "eslint-plugin-storybook": "~0.6.0",
     "eslint": "^8.16.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.7.1",
