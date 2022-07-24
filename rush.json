@@ -422,6 +422,10 @@
       "projectFolder": "examples/benchmark"
     },
     {
+      "packageName": "datadata-examples-bun",
+      "projectFolder": "examples/bun"
+    },
+    {
       "packageName": "datadata-examples-deno",
       "projectFolder": "examples/deno"
     },
