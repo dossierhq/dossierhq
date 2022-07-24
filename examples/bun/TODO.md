@@ -1,0 +1,6 @@
+- [x] core.test.ts is working
+- [x] server.ts is working
+- [ ] Enable all integration tests
+- [ ] Run integration tests on npm run test
+- [ ] Run Typescript on 'build'
+- [ ] Document overriding sqlite version (mac)

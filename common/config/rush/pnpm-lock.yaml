@@ -153,12 +153,20 @@ importers:
   ../../examples/bun:
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
+      '@jonasb/datadata-database-adapter-test-integration': workspace:*
+      '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       bun-types: ~0.1.4
     dependencies:
       '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
+      '@jonasb/datadata-database-adapter-sqlite-core': link:../../libraries/database-adapter-sqlite-core
+      '@jonasb/datadata-server': link:../../libraries/server
       '@js-temporal/polyfill': 0.4.0
     devDependencies:
+      '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       bun-types: 0.1.4
 
   ../../examples/deno:
