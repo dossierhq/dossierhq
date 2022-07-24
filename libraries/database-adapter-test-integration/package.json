@@ -43,7 +43,7 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@js-temporal/polyfill": "~0.4.2",
+    "@js-temporal/polyfill": "~0.4.0",
     "tslib": "~2.4.0",
     "uuid": "^8.3.2"
   }
