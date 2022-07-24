@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
-    "types": ["bun-types"]
+    "module": "ES2022",
+    "target": "es2021",
+    "types": ["bun-types"],
+    "moduleResolution": "node"
   }
 }

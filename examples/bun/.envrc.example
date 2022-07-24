@@ -1,0 +1,3 @@
+source_up
+export DYLD_LIBRARY_PATH=/usr/local/Cellar/sqlite/3.37.2/lib
+
