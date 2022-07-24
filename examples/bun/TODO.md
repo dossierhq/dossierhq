@@ -2,5 +2,6 @@
 - [x] server.ts is working
 - [ ] Enable all integration tests
 - [ ] Run integration tests on npm run test
-- [ ] Run Typescript on 'build'
+- [ ] Run Typescript/eslint on 'build'
 - [ ] Document overriding sqlite version (mac)
+- [ ] Enable GitHub actions
