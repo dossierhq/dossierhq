@@ -44,6 +44,7 @@
     "babel-loader": "^8.2.4",
     "base-64": "~1.0.0",
     "bulma": "~0.9.3",
+    "bun-types": "~0.1.4",
     "dotenv": "^16.0.0",
     "eslint": "^8.16.0",
     "eslint-config-next": "~12.1.4",
