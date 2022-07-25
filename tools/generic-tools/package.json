@@ -8,7 +8,7 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "echo No build step",
+    "build": "",
     "db:ensure-dbs": "./scripts/db-ensure-databases.sh",
     "db:make-users:superuser": "./scripts/db-make-superuser.sh superuser",
     "db:make-users:no-superuser": "./scripts/db-make-superuser.sh no-superuser",
