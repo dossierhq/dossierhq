@@ -1,6 +1,6 @@
-import { Context } from "@jonasb/datadata-database-adapter";
-import { Database } from "bun:sqlite";
-import { createBunSqliteAdapter } from "./bun-adapter/BunSqliteAdapter";
+import { Context } from '@jonasb/datadata-database-adapter';
+import { Database } from 'bun:sqlite';
+import { createBunSqliteAdapter } from './bun-adapter/BunSqliteAdapter';
 
 export function createAdapter(context: Context, filename: string) {
   const database = Database.open(filename);
