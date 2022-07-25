@@ -15,7 +15,8 @@ export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[
   archiveEntity_errorPublishedEntity,
 ];
 
-async function archiveEntity_minimal({ client }: AdminEntityTestContext) {
+async function archiveEntity_minimal({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {

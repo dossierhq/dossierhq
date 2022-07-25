@@ -1,7 +1,6 @@
-import type { AdminClient } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
-import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import { buildSuite } from '../Builder.js';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository.js';
 import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite.js';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite.js';
@@ -20,7 +19,6 @@ import { UpsertEntitySubSuite } from './AdminEntityUpsertEntitySubSuite.js';
 
 export interface AdminEntityTestContext {
   server: Server;
-  client: AdminClient;
   readOnlyEntityRepository: ReadOnlyEntityRepository;
 }
 

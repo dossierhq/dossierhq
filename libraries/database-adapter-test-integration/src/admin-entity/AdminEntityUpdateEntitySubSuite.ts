@@ -8,6 +8,7 @@ import {
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -30,7 +31,8 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_errorInvalidField,
 ];
 
-async function updateEntity_minimal({ client }: AdminEntityTestContext) {
+async function updateEntity_minimal({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -63,7 +65,8 @@ async function updateEntity_minimal({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_noChange({ client }: AdminEntityTestContext) {
+async function updateEntity_noChange({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -79,7 +82,8 @@ async function updateEntity_noChange({ client }: AdminEntityTestContext) {
   });
 }
 
-async function updateEntity_minimalWithSubjectAuthKey({ client }: AdminEntityTestContext) {
+async function updateEntity_minimalWithSubjectAuthKey({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
@@ -119,8 +123,9 @@ async function updateEntity_minimalWithSubjectAuthKey({ client }: AdminEntityTes
 }
 
 async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
-  client,
+  server,
 }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
@@ -158,7 +163,8 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_updateAndPublishEntity({ client }: AdminEntityTestContext) {
+async function updateEntity_updateAndPublishEntity({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -196,8 +202,9 @@ async function updateEntity_updateAndPublishEntity({ client }: AdminEntityTestCo
 }
 
 async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
-  client,
+  server,
 }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
@@ -236,7 +243,8 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_noChangeAndPublishDraftEntity({ client }: AdminEntityTestContext) {
+async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -269,7 +277,8 @@ async function updateEntity_noChangeAndPublishDraftEntity({ client }: AdminEntit
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_noChangeAndPublishPublishedEntity({ client }: AdminEntityTestContext) {
+async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
@@ -286,7 +295,8 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ client }: AdminE
   });
 }
 
-async function updateEntity_withMultilineField({ client }: AdminEntityTestContext) {
+async function updateEntity_withMultilineField({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(STRINGS_CREATE);
   assertOkResult(createResult);
   const {
@@ -319,7 +329,8 @@ async function updateEntity_withMultilineField({ client }: AdminEntityTestContex
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext) {
+async function updateEntity_withTwoReferences({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(REFERENCES_CREATE);
   const createTitleOnly1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const createTitleOnly2Result = await client.createEntity(TITLE_ONLY_CREATE);
@@ -375,7 +386,8 @@ async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_withMultipleLocations({ client }: AdminEntityTestContext) {
+async function updateEntity_withMultipleLocations({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(LOCATIONS_CREATE);
 
   assertOkResult(createResult);
@@ -420,7 +432,8 @@ async function updateEntity_withMultipleLocations({ client }: AdminEntityTestCon
   assertResultValue(getResult, expectedEntity);
 }
 
-async function updateEntity_errorInvalidId({ client }: AdminEntityTestContext) {
+async function updateEntity_errorInvalidId({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const result = await client.updateEntity({
     id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
     info: { name: 'Updated name' },
@@ -429,7 +442,8 @@ async function updateEntity_errorInvalidId({ client }: AdminEntityTestContext) {
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
-async function updateEntity_errorDifferentType({ client }: AdminEntityTestContext) {
+async function updateEntity_errorDifferentType({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -443,7 +457,8 @@ async function updateEntity_errorDifferentType({ client }: AdminEntityTestContex
   );
 }
 
-async function updateEntity_errorTryingToChangeAuthKey({ client }: AdminEntityTestContext) {
+async function updateEntity_errorTryingToChangeAuthKey({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -465,7 +480,8 @@ async function updateEntity_errorTryingToChangeAuthKey({ client }: AdminEntityTe
   assertResultValue(getResult, createResult.value.entity);
 }
 
-async function updateEntity_errorMultilineStringInTitle({ client }: AdminEntityTestContext) {
+async function updateEntity_errorMultilineStringInTitle({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -483,7 +499,8 @@ async function updateEntity_errorMultilineStringInTitle({ client }: AdminEntityT
   assertResultValue(getResult, createResult.value.entity);
 }
 
-async function updateEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {
+async function updateEntity_errorPublishWithoutRequiredTitle({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -504,7 +521,8 @@ async function updateEntity_errorPublishWithoutRequiredTitle({ client }: AdminEn
   assertResultValue(getResult, createResult.value.entity);
 }
 
-async function updateEntity_errorInvalidField({ client }: AdminEntityTestContext) {
+async function updateEntity_errorInvalidField({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {

@@ -1,12 +1,12 @@
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
 } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unarchiveEntity_minimal,
@@ -14,7 +14,8 @@ export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext
   unarchiveEntity_errorWrongAuthKey,
 ];
 
-async function unarchiveEntity_minimal({ client }: AdminEntityTestContext) {
+async function unarchiveEntity_minimal({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {

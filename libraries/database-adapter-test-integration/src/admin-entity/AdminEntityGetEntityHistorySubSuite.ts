@@ -90,7 +90,8 @@ async function getEntityHistory_updateAndPublish({ server }: AdminEntityTestCont
   });
 }
 
-async function getEntityHistory_errorInvalidId({ client }: AdminEntityTestContext) {
+async function getEntityHistory_errorInvalidId({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const result = await client.getEntityHistory({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
