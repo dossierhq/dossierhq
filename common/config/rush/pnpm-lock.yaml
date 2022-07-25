@@ -157,9 +157,12 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@jonasb/eslint-config-datadata-generic': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       bun-types: ~0.1.4
+      eslint: ^8.16.0
       prettier: 2.7.1
+      typescript: ^4.7.2
     dependencies:
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
@@ -168,8 +171,11 @@ importers:
       '@js-temporal/polyfill': 0.4.0
     devDependencies:
       '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
+      '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       bun-types: 0.1.4
+      eslint: 8.16.0
       prettier: 2.7.1
+      typescript: 4.7.2
 
   ../../examples/deno:
     specifiers:

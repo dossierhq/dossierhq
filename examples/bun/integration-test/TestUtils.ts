@@ -1,8 +1,9 @@
-import { ErrorType, NoOpLogger, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { NoOpLogger } from '@jonasb/datadata-core';
+import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
-  TestSuite,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';

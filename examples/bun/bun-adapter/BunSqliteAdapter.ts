@@ -1,12 +1,12 @@
-import { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import {
+import type {
   ColumnValue,
-  createSqliteDatabaseAdapterAdapter,
   SqliteDatabaseAdapter,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
-import { Database } from 'bun:sqlite';
+import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
+import type { Database } from 'bun:sqlite';
 
 export type BunSqliteDatabaseAdapter = DatabaseAdapter;
 
@@ -37,11 +37,15 @@ export function createBunSqliteAdapter(
 
     encodeCursor(value) {
       //TODO how to convert base64 for bun.js?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return Buffer.from(value).toString('base64');
     },
 
     decodeCursor(value) {
       //TODO how to convert base64 for bun.js?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return Buffer.from(value, 'base64').toString('utf8');
     },
   };
@@ -58,7 +62,7 @@ function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
   return isSqlite3Error(error) && error.message === 'constraint failed';
 }
 
-function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
+function isUniqueViolationOfConstraint(error: unknown, _constraint: UniqueConstraint): boolean {
   return isSqlite3Error(error) && error.message === 'constraint failed';
   // TODO improve when bun returns better error messages
   // if (isSqlite3Error(error) && error.message.startsWith('constraint failed')) {
