@@ -1,7 +1,0 @@
-- [x] core.test.ts is working
-- [x] server.ts is working
-- [x] Enable all integration tests
-- [x] Run integration tests on npm run test
-- [x] Run Typescript/eslint on 'build'
-- [ ] Document overriding sqlite version (mac)
-- [ ] Enable GitHub actions
