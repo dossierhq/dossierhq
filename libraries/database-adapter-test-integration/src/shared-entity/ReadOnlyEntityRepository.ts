@@ -71,22 +71,32 @@ export class ReadOnlyEntityRepository {
   }
 }
 
-let createEntitiesPromise: PromiseResult<
-  ReadOnlyEntityRepository,
-  typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
-> | null = null;
+const createEntitiesPromises: Record<
+  string,
+  | PromiseResult<
+      ReadOnlyEntityRepository,
+      typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
+    >
+  | undefined
+> = {};
 
 export async function createReadOnlyEntityRepository(
-  server: Server
+  server: Server,
+  databaseName?: string
 ): PromiseResult<
   ReadOnlyEntityRepository,
   typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   // Wrap in a promise to use the same result for all instances running in the same process
-  if (!createEntitiesPromise) {
-    createEntitiesPromise = doCreateReadOnlyEntityRepository(server);
+  // If multiple databases (e.g. sqlite databases) are used in the same process, specify different
+  // names in the `databaseName` parameter
+  const resolvedName = databaseName ?? 'shared';
+  let promise = createEntitiesPromises[resolvedName];
+  if (!promise) {
+    promise = doCreateReadOnlyEntityRepository(server);
+    createEntitiesPromises[resolvedName] = promise;
   }
-  return createEntitiesPromise;
+  return promise;
 }
 
 async function doCreateReadOnlyEntityRepository(

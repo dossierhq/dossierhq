@@ -14,7 +14,7 @@ registerTestSuite(
       ).valueOrThrow();
 
       const readOnlyEntityRepository = (
-        await createReadOnlyEntityRepository(server)
+        await createReadOnlyEntityRepository(server, 'admin-entity')
       ).valueOrThrow();
 
       return [{ server, readOnlyEntityRepository }, { server }];

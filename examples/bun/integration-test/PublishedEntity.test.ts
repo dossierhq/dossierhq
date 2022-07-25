@@ -20,7 +20,7 @@ registerTestSuite(
       const { context } = sessionResult.valueOrThrow();
 
       const readOnlyEntityRepository = (
-        await createReadOnlyEntityRepository(server)
+        await createReadOnlyEntityRepository(server, 'published-entity')
       ).valueOrThrow();
 
       const adminClient = server.createAdminClient(context);
