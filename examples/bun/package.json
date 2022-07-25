@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "",
-    "test": "bun wiptest core.test.ts"
+    "test": "bun wiptest"
   },
   "author": "",
   "license": "ISC",

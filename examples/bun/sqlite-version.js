@@ -1,4 +1,5 @@
-import { Database } from "bun:sqlite";
+import { Database } from 'bun:sqlite';
 
-const db = Database.open(":memory:");
-console.log(db.prepare("SELECT sqlite_version()").all());
+const db = Database.open(':memory:');
+console.log(db.prepare('SELECT sqlite_version()').all());
+db.close();
