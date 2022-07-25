@@ -44,17 +44,11 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
     ): Promise<R[]> {
       let result: { rows: Record<string, unknown>[] };
       if (transaction) {
-        result = await getTransaction(transaction).queryObject(
-          query,
-          ...(values ?? []),
-        );
+        result = await getTransaction(transaction).queryObject(query, values);
       } else {
         const poolClient = await pool.connect();
         try {
-          result = await poolClient.queryObject<Record<string, unknown>>(
-            query,
-            ...(values ?? []),
-          );
+          result = await poolClient.queryObject(query, values);
         } finally {
           poolClient.release();
         }
