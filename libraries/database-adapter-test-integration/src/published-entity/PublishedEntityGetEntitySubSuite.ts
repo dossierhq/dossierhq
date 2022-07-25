@@ -18,10 +18,9 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_errorArchivedEntity,
 ];
 
-async function getEntity_withSubjectAuthKey({
-  adminClient,
-  publishedClient,
-}: PublishedEntityTestContext) {
+async function getEntity_withSubjectAuthKey({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true }
@@ -105,7 +104,8 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
   );
 }
 
-async function getEntity_errorInvalidId({ publishedClient }: PublishedEntityTestContext) {
+async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {
+  const publishedClient = publishedClientForMainPrincipal(server);
   const result = await publishedClient.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }

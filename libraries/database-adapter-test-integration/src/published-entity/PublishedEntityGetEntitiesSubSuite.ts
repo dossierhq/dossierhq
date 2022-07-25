@@ -18,7 +18,9 @@ export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext
   getEntities_errorArchivedEntity,
 ];
 
-async function getEntities_minimal({ adminClient, publishedClient }: PublishedEntityTestContext) {
+async function getEntities_minimal({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
   const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(create1Result);

@@ -12,21 +12,12 @@ registerTestSuite(
       const server = (
         await initializeIntegrationTestServer('databases/integration-test-published-entity.sqlite')
       ).valueOrThrow();
-      const sessionResult = await server.createSession({
-        provider: 'test',
-        identifier: 'id',
-        defaultAuthKeys: ['none'],
-      });
-      const { context } = sessionResult.valueOrThrow();
 
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server, 'published-entity')
       ).valueOrThrow();
 
-      const adminClient = server.createAdminClient(context);
-      const publishedClient = server.createPublishedClient(context);
-
-      return [{ server, adminClient, publishedClient, readOnlyEntityRepository }, { server }];
+      return [{ server, readOnlyEntityRepository }, { server }];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();
