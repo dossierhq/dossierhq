@@ -159,6 +159,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       bun-types: ~0.1.4
+      prettier: 2.7.1
     dependencies:
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
@@ -168,6 +169,7 @@ importers:
     devDependencies:
       '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       bun-types: 0.1.4
+      prettier: 2.7.1
 
   ../../examples/deno:
     specifiers:

@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "",
+    "build": "npm run prettier:check",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "test": "bun wiptest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
-    "bun-types": "~0.1.4"
+    "bun-types": "~0.1.4",
+    "prettier": "2.7.1"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",

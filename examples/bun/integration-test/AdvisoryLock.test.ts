@@ -1,17 +1,12 @@
-import { createAdvisoryLockTestSuite } from "@jonasb/datadata-database-adapter-test-integration";
-import type { Server } from "@jonasb/datadata-server";
-import {
-  initializeIntegrationTestServer,
-  registerTestSuite,
-} from "./TestUtils.js";
+import { createAdvisoryLockTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import type { Server } from '@jonasb/datadata-server';
+import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
 
 registerTestSuite(
   createAdvisoryLockTestSuite({
     before: async () => {
       const server = (
-        await initializeIntegrationTestServer(
-          "databases/integration-test-advisory-lock.sqlite"
-        )
+        await initializeIntegrationTestServer('databases/integration-test-advisory-lock.sqlite')
       ).valueOrThrow();
       return [{ server }, { server }];
     },
