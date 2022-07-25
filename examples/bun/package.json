@@ -9,7 +9,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "bun wiptest"
+    "test": "bun wiptest core.test.ts && bun wiptest integration-test/AdminEntity.test.ts && bun wiptest integration-test/AdvisoryLock.test.ts && bun wiptest integration-test/Auth.test.ts && bun wiptest integration-test/PublishedEntity.test.ts && bun wiptest integration-test/Schema.test.ts"
   },
   "author": "",
   "license": "ISC",
