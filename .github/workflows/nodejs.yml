@@ -34,6 +34,8 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: "1.23.3"
+      - name: Use bun
+        uses: antongolub/action-setup-bun@v1
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install
