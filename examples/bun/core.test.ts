@@ -1,4 +1,5 @@
-import { AdminEntity, AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { expect, test } from 'bun:test';
 

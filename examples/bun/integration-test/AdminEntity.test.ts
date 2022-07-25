@@ -2,7 +2,7 @@ import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import { Server } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
 
 registerTestSuite(
