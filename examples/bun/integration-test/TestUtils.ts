@@ -7,13 +7,15 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
-import { test } from 'bun:test';
+import { describe, it } from 'bun:test';
 import { createAdapter } from '../ServerUtils.js';
 
-export function registerTestSuite(testSuite: TestSuite): void {
-  for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction);
-  }
+export function registerTestSuite(suiteName: string, testSuite: TestSuite): void {
+  describe(suiteName, () => {
+    for (const [testName, testFunction] of Object.entries(testSuite)) {
+      it(testName, testFunction);
+    }
+  });
 }
 
 export async function initializeIntegrationTestServer(

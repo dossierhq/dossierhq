@@ -3,6 +3,7 @@ import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
 
 registerTestSuite(
+  'SchemaTest',
   createSchemaTestSuite({
     before: async () => {
       const server = (

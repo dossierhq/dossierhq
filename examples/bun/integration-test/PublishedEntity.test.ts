@@ -6,6 +6,7 @@ import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
 
 registerTestSuite(
+  'PublishedEntityTest',
   createPublishedEntityTestSuite({
     before: async () => {
       const server = (

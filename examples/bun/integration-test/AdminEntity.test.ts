@@ -6,6 +6,7 @@ import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
 
 registerTestSuite(
+  'AdminEntityTest',
   createAdminEntityTestSuite({
     before: async () => {
       const server = (
