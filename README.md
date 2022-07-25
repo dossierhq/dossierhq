@@ -6,6 +6,7 @@
 - `brew install pgcli` (optional, for Postgres access)
 - `brew install gnuplot` (for benchmarking)
 - `brew install graphviz` (for documentation)
+- `curl https://bun.sh/install | bash` (for [Bun](https://bun.sh/), needed by `examples/bun`)
 
 ## VS Code extensions
 
@@ -38,6 +39,7 @@
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
 - Upgrade individual dependencies in `tools/all-dependencies/`:
   - `rush add --package typescript@latest --dev --make-consistent` :
+- Upgrade dependencies in `examples/deno/config/import-map.json`
 
 ## Publish packages
 
