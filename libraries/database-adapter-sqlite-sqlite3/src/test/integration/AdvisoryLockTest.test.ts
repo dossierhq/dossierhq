@@ -20,6 +20,7 @@ afterAll(async () => {
 });
 
 registerTestSuite(
+  'AdvisoryLockTest',
   createAdvisoryLockTestSuite({
     before: async () => {
       assertIsDefined(server);
