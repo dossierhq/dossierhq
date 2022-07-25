@@ -1,12 +1,12 @@
 import { copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
 } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
@@ -16,7 +16,8 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
   getEntity_errorWrongAuthKey,
 ];
 
-async function getEntity_withSubjectAuthKey({ client }: AdminEntityTestContext) {
+async function getEntity_withSubjectAuthKey({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
@@ -45,12 +46,14 @@ async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {
   assertResultValue(result, updateResult.value.entity);
 }
 
-async function getEntity_errorInvalidId({ client }: AdminEntityTestContext) {
+async function getEntity_errorInvalidId({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const result = await client.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
-async function getEntity_errorInvalidVersion({ client }: AdminEntityTestContext) {
+async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
 
   assertOkResult(createResult);

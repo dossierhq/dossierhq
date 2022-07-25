@@ -1,12 +1,12 @@
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 import { REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
 } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   publishEntities_minimal,
@@ -20,7 +20,8 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_errorWrongAuthKey,
 ];
 
-async function publishEntities_minimal({ client }: AdminEntityTestContext) {
+async function publishEntities_minimal({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -50,7 +51,8 @@ async function publishEntities_minimal({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_authKeySubject({ client }: AdminEntityTestContext) {
+async function publishEntities_authKeySubject({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
@@ -82,7 +84,8 @@ async function publishEntities_authKeySubject({ client }: AdminEntityTestContext
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_oldVersion({ client }: AdminEntityTestContext) {
+async function publishEntities_oldVersion({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -112,7 +115,8 @@ async function publishEntities_oldVersion({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_twoEntitiesReferencingEachOther({ client }: AdminEntityTestContext) {
+async function publishEntities_twoEntitiesReferencingEachOther({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const create1Result = await client.createEntity(REFERENCES_CREATE);
   assertOkResult(create1Result);
   const {
@@ -159,7 +163,8 @@ async function publishEntities_twoEntitiesReferencingEachOther({ client }: Admin
   assertResultValue(getResult, expected1Entity);
 }
 
-async function publishEntities_publishAlreadyPublishedEntity({ client }: AdminEntityTestContext) {
+async function publishEntities_publishAlreadyPublishedEntity({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
@@ -217,7 +222,8 @@ async function publishEntities_errorDuplicateIds({ server }: AdminEntityTestCont
   );
 }
 
-async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntityTestContext) {
+async function publishEntities_errorMissingRequiredTitle({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } })
   );

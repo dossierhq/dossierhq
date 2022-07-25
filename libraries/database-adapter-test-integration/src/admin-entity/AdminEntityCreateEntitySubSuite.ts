@@ -18,6 +18,7 @@ import {
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -34,7 +35,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
-async function createEntity_minimal({ client }: AdminEntityTestContext) {
+async function createEntity_minimal({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -62,7 +64,8 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_withId({ client }: AdminEntityTestContext) {
+async function createEntity_withId({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
   const createResult = await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { id }));
   assertOkResult(createResult);
@@ -90,7 +93,8 @@ async function createEntity_withId({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
+async function createEntity_duplicateName({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const firstResult = await client.createEntity(TITLE_ONLY_CREATE);
   const secondResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(firstResult);
@@ -114,7 +118,8 @@ async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
   assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
 }
 
-async function createEntity_fiveInParallelWithSameName({ client }: AdminEntityTestContext) {
+async function createEntity_fiveInParallelWithSameName({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const results = await Promise.all(
     [1, 2, 3, 4, 5].map((num) =>
       client.createEntity(copyEntity(TITLE_ONLY_CREATE, { fields: { title: `Title ${num}` } }))
@@ -125,7 +130,8 @@ async function createEntity_fiveInParallelWithSameName({ client }: AdminEntityTe
   }
 }
 
-async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
+async function createEntity_publishMinimal({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
@@ -154,7 +160,8 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTestContext) {
+async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true }
@@ -187,7 +194,8 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_withMultilineField({ client }: AdminEntityTestContext) {
+async function createEntity_withMultilineField({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { multiline: 'one\ntwo\nthree' } })
   );
@@ -214,7 +222,8 @@ async function createEntity_withMultilineField({ client }: AdminEntityTestContex
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_withTwoReferences({ client }: AdminEntityTestContext) {
+async function createEntity_withTwoReferences({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createTitleOnly1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const createTitleOnly2Result = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnly1Result);
@@ -262,7 +271,8 @@ async function createEntity_withTwoReferences({ client }: AdminEntityTestContext
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_withMultipleLocations({ client }: AdminEntityTestContext) {
+async function createEntity_withMultipleLocations({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, {
       fields: {
@@ -308,7 +318,8 @@ async function createEntity_withMultipleLocations({ client }: AdminEntityTestCon
   assertResultValue(getResult, expectedEntity);
 }
 
-async function createEntity_errorMultilineStringInTitle({ client }: AdminEntityTestContext) {
+async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Hello\nWorld\n' } })
@@ -323,7 +334,8 @@ async function createEntity_errorMultilineStringInTitle({ client }: AdminEntityT
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
-async function createEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {
+async function createEntity_errorPublishWithoutRequiredTitle({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: null } }),

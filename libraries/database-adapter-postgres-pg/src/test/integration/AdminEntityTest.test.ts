@@ -27,16 +27,7 @@ registerTestSuite(
   createAdminEntityTestSuite({
     before: async () => {
       assertIsDefined(server);
-      const resolvedServer = server;
-
-      const sessionResult = resolvedServer.createSession({
-        provider: 'test',
-        identifier: 'id',
-        defaultAuthKeys: ['none'],
-      });
-      const client = resolvedServer.createAdminClient(() => sessionResult);
-      //TODO remove client
-      return [{ server, client, readOnlyEntityRepository }, undefined];
+      return [{ server, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty
