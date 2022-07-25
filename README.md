@@ -27,25 +27,17 @@
 
 ## Dependencies
 
-Run `rush add --package foo` instead of `npm install foo` (`rush add --package foo --dev` instead of `npm install --save-dev foo`).
-
-Check that the same versions of dependencies are used, run `rush check`.
+- Run `rush add --package foo` instead of `npm install foo` (`rush add --package foo --dev` instead of `npm install --save-dev foo`)
+- Run `cd tools/all-dependencies && npm run build`
+- Check that the same versions of dependencies are used, run `rush check`.
 
 ## Upgrade dependencies
 
 - Upgrade node version in `.nvmrc`
 - Upgrade deno version in Github Actions workflows (`deno-version`)
-- Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version`)
-- Either upgrade individual dependencies:
-  - `rush add --package typescript@latest --dev --make-consistent` in project where dependency exist, or:
-    - `./scripts/update-dependency.sh typescript "^4.3.5"`
-    - `rush check && rush update`
-- Or, upgrade all dependencies:
-  - `npm run upgrade-dependencies:all`
-  - `rush update --full`
-  - `rush check`
-- Exceptions:
-  - In `examples/next-web`: `"next": "~10.0.8", "next-transpile-modules": "~6.3.0"`, "Module parse failed: Unexpected token (1:7)". Reverted to `"next": "~10.0.6", "next-transpile-modules": "~6.1.0"`
+- Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
+- Upgrade individual dependencies in `tools/all-dependencies/`:
+  - `rush add --package typescript@latest --dev --make-consistent` :
 
 ## Publish packages
 
