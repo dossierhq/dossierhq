@@ -1,8 +1,10 @@
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import { test } from 'vitest';
+import { describe, it } from 'vitest';
 
-export function registerTestSuite(testSuite: TestSuite): void {
-  for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction);
-  }
+export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {
+  describe(testSuiteName, () => {
+    for (const [testName, testFunction] of Object.entries(testSuite)) {
+      it(testName, testFunction);
+    }
+  });
 }
