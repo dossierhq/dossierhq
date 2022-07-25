@@ -19,16 +19,12 @@ export function createBunSqliteAdapter(
       database.close();
     },
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
-      const statement = database.query(query);
-      const result = values ? statement.all(...values) : statement.all();
-
-      // TODO finalize statement
-      // TODO is the above better than  .prepare().all()?
-      // const statement = database.prepare(query, values);
-      // let result = statement.all();
+      const statement = database.prepare(query, values);
+      const result = statement.all();
+      statement.finalize();
 
       // BEGIN/COMMIT/RELEASE return 0, not []
-      if (typeof result === 'number') return [];
+      if (typeof result === 'number' && result === 0) return [];
       return result as R[];
     },
 

@@ -1,12 +1,10 @@
 export function encode(value: string) {
-  //TODO how to convert base64 for bun.js?
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return Buffer.from(value).toString('base64');
 }
 
 function decode(value: string) {
-  //TODO how to convert base64 for bun.js?
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return Buffer.from(value, 'base64').toString('utf8');
