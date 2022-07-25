@@ -31,17 +31,8 @@ registerTestSuite(
   createPublishedEntityTestSuite({
     before: async () => {
       assertIsDefined(server);
-      const sessionResult = await server.createSession({
-        provider: 'test',
-        identifier: 'id',
-        defaultAuthKeys: ['none'],
-      });
-      if (sessionResult.isError()) throw sessionResult.toError();
-      const { context } = sessionResult.value;
 
-      const adminClient = server.createAdminClient(context);
-      const publishedClient = server.createPublishedClient(context);
-      return [{ server, adminClient, publishedClient, readOnlyEntityRepository }, undefined];
+      return [{ server, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       //empty

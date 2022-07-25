@@ -12,22 +12,13 @@ registerTestSuite(
   createPublishedEntityTestSuite({
     before: async () => {
       const server = (await initializeIntegrationTestServer()).valueOrThrow();
-      const sessionResult = await server.createSession({
-        provider: "test",
-        identifier: "id",
-        defaultAuthKeys: ["none"],
-      });
-      const { context } = sessionResult.valueOrThrow();
 
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server)
       ).valueOrThrow();
 
-      const adminClient = server.createAdminClient(context);
-      const publishedClient = server.createPublishedClient(context);
-
       return [
-        { server, adminClient, publishedClient, readOnlyEntityRepository },
+        { server, readOnlyEntityRepository },
         { server },
       ];
     },
