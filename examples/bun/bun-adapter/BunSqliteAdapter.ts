@@ -36,17 +36,11 @@ export function createBunSqliteAdapter(
     isUniqueViolationOfConstraint,
 
     encodeCursor(value) {
-      //TODO how to convert base64 for bun.js?
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      return Buffer.from(value).toString('base64');
+      return btoa(unescape(encodeURIComponent(value)));
     },
 
     decodeCursor(value) {
-      //TODO how to convert base64 for bun.js?
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      return Buffer.from(value, 'base64').toString('utf8');
+      return decodeURIComponent(escape(atob(value)));
     },
   };
 
