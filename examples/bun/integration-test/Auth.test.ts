@@ -3,6 +3,7 @@ import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
 
 registerTestSuite(
+  'AuthTest',
   createAuthTestSuite({
     before: async () => {
       const server = (
