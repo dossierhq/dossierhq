@@ -167,3 +167,19 @@ edit entity	sqlite	74155ac3	74155ac3-sqlite-edit-entity	2.037823	0.95	1.36878	1.
 archive entity	sqlite	74155ac3	74155ac3-sqlite-archive-entity	1.222021	0.64	0.875088	1.145284	1.244482	1.340881	11.454338
 get admin entity	sqlite	74155ac3	74155ac3-sqlite-get-admin-entity	0.284323	0.39	0.213596	0.237097	0.259896	0.289496	7.100899
 search admin entities (any, first 50)	sqlite	74155ac3	74155ac3-sqlite-search-admin-entities-any-first-50	4.654271	1.21	4.160941	4.263939	6.058914	7.741189	18.170641
+create entity	postgres	9a9f4aed	9a9f4aed-postgres-create-entity	3.005749	0.92	1.9453	2.844199	4.009198	4.505298	9.505096
+create entity organization	postgres	9a9f4aed	9a9f4aed-postgres-create-entity-organization	2.291027	0.65	1.818299	2.121199	2.839999	3.380498	10.355693
+create entity person	postgres	9a9f4aed	9a9f4aed-postgres-create-entity-person	2.656465	0.58	1.878799	2.621298	2.739699	2.961898	12.108593
+create and publish entity	postgres	9a9f4aed	9a9f4aed-postgres-create-publish-entity	5.300985	1.23	4.395898	5.240497	5.666096	6.193397	35.002581
+edit entity	postgres	9a9f4aed	9a9f4aed-postgres-edit-entity	3.034711	0.65	2.475699	3.111698	3.283198	3.769297	12.078393
+archive entity	postgres	9a9f4aed	9a9f4aed-postgres-archive-entity	1.705377	0.49	1.550899	1.638599	1.711999	1.758299	10.387794
+get admin entity	postgres	9a9f4aed	9a9f4aed-postgres-get-admin-entity	0.645419	0.14	0.5873	0.633	0.655	0.664099	2.832198
+search admin entities (any, first 50)	postgres	9a9f4aed	9a9f4aed-postgres-search-admin-entities-any-first-50	5.310583	0.85	4.878998	5.084597	5.436397	7.272296	19.141692
+create entity	sqlite	9a9f4aed	9a9f4aed-sqlite-create-entity	1.845379	1.43	1.165899	1.600099	1.970699	2.867198	31.038387
+create entity organization	sqlite	9a9f4aed	9a9f4aed-sqlite-create-entity-organization	1.443373	0.70	1.132299	1.308899	1.529499	1.7824	11.703695
+create entity person	sqlite	9a9f4aed	9a9f4aed-sqlite-create-entity-person	1.751249	1.04	1.154599	1.638499	1.785	1.996299	23.711287
+create and publish entity	sqlite	9a9f4aed	9a9f4aed-sqlite-create-publish-entity	3.245264	1.06	2.535599	3.065598	3.448798	5.173697	16.638191
+edit entity	sqlite	9a9f4aed	9a9f4aed-sqlite-edit-entity	2.045388	1.18	1.470599	1.907899	2.097699	2.2528	27.748895
+archive entity	sqlite	9a9f4aed	9a9f4aed-sqlite-archive-entity	1.256595	0.60	0.879499	1.169099	1.321399	1.496999	10.109295
+get admin entity	sqlite	9a9f4aed	9a9f4aed-sqlite-get-admin-entity	0.26636	0.38	0.2159	0.236099	0.2547	0.2599	7.345397
+search admin entities (any, first 50)	sqlite	9a9f4aed	9a9f4aed-sqlite-search-admin-entities-any-first-50	4.610743	1.15	4.222498	4.306798	4.552598	7.032497	19.555791
