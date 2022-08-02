@@ -1,4 +1,11 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  copyEntity,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  ErrorType,
+} from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 import {
   assertErrorResult,
@@ -13,6 +20,8 @@ import {
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
+  RICH_TEXTS_ADMIN_ENTITY,
+  RICH_TEXTS_CREATE,
   STRINGS_ADMIN_ENTITY,
   STRINGS_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
@@ -29,6 +38,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_withMultilineField,
+  createEntity_withRichTextField,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
   createEntity_errorMultilineStringInTitle,
@@ -211,6 +221,41 @@ async function createEntity_withMultilineField({ server }: AdminEntityTestContex
     id,
     info: { name, createdAt, updatedAt },
     fields: { multiline: 'one\ntwo\nthree' },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
+}
+
+async function createEntity_withRichTextField({ server }: AdminEntityTestContext) {
+  const richText = createRichTextRootNode([
+    createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
+  ]);
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      fields: {
+        default: richText,
+      },
+    })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(RICH_TEXTS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { default: richText },
   });
 
   assertResultValue(createResult, {
