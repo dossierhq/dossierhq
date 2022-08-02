@@ -7,8 +7,15 @@ import type {
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals } from '../Asserts.js';
+import type {
+  AdminLocations,
+  AdminReferences,
+  AdminRichTexts,
+  AdminStrings,
+  AdminTitleOnly,
+} from '../SchemaTypes.js';
 
-export const LOCATIONS_CREATE: Readonly<AdminEntityCreate> = {
+export const LOCATIONS_CREATE: Readonly<AdminEntityCreate<AdminLocations>> = {
   info: {
     type: 'Locations',
     name: 'Locations name',
@@ -17,7 +24,7 @@ export const LOCATIONS_CREATE: Readonly<AdminEntityCreate> = {
   fields: {},
 };
 
-export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminEntity> = {
+export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
   id: 'REPLACE',
   info: {
     type: 'Locations',
@@ -31,7 +38,7 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { location: null, locationList: null },
 };
 
-export const REFERENCES_CREATE: Readonly<AdminEntityCreate> = {
+export const REFERENCES_CREATE: Readonly<AdminEntityCreate<AdminReferences>> = {
   info: {
     type: 'References',
     name: 'References name',
@@ -40,7 +47,7 @@ export const REFERENCES_CREATE: Readonly<AdminEntityCreate> = {
   fields: {},
 };
 
-export const REFERENCES_ADMIN_ENTITY: Readonly<AdminEntity> = {
+export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
   id: 'REPLACE',
   info: {
     type: 'References',
@@ -54,7 +61,7 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { any: null, anyList: null, titleOnly: null },
 };
 
-export const RICH_TEXTS_CREATE: Readonly<AdminEntityCreate> = {
+export const RICH_TEXTS_CREATE: Readonly<AdminEntityCreate<AdminRichTexts>> = {
   info: {
     type: 'RichTexts',
     name: 'RichTexts name',
@@ -63,7 +70,7 @@ export const RICH_TEXTS_CREATE: Readonly<AdminEntityCreate> = {
   fields: {},
 };
 
-export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminEntity> = {
+export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
   id: 'REPLACE',
   info: {
     type: 'RichTexts',
@@ -77,7 +84,7 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { default: null },
 };
 
-export const STRINGS_CREATE: Readonly<AdminEntityCreate> = {
+export const STRINGS_CREATE: Readonly<AdminEntityCreate<AdminStrings>> = {
   info: {
     type: 'Strings',
     name: 'Strings name',
@@ -86,7 +93,7 @@ export const STRINGS_CREATE: Readonly<AdminEntityCreate> = {
   fields: { multiline: 'Hello\nWorld' },
 };
 
-export const STRINGS_ADMIN_ENTITY: Readonly<AdminEntity> = {
+export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
   id: 'REPLACE',
   info: {
     type: 'Strings',
@@ -100,7 +107,7 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { multiline: 'Hello\nWorld' },
 };
 
-export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {
+export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate<AdminTitleOnly>> = {
   info: {
     type: 'TitleOnly',
     name: 'TitleOnly name',
@@ -109,7 +116,7 @@ export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {
   fields: { title: 'Title' },
 };
 
-export const TITLE_ONLY_UPSERT: Readonly<AdminEntityUpsert> = {
+export const TITLE_ONLY_UPSERT: Readonly<AdminEntityUpsert<AdminTitleOnly>> = {
   id: 'REPLACE',
   info: {
     type: 'TitleOnly',
@@ -119,7 +126,7 @@ export const TITLE_ONLY_UPSERT: Readonly<AdminEntityUpsert> = {
   fields: { title: 'Title' },
 };
 
-export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminEntity> = {
+export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {
   id: 'REPLACE',
   info: {
     type: 'TitleOnly',
@@ -133,6 +140,7 @@ export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { title: 'Title' },
 };
 
+//TODO generate typescript for published entity
 export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedEntity> = {
   id: 'REPLACE',
   info: {
