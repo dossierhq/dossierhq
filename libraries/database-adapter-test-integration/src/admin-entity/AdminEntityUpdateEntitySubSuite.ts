@@ -1,6 +1,8 @@
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminReferences } from '../SchemaTypes.js';
+import { assertIsAdminReferences } from '../SchemaTypes.js';
 import {
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
@@ -351,7 +353,7 @@ async function updateEntity_withTwoReferences({ server }: AdminEntityTestContext
     entity: { id: idTitleOnly2 },
   } = createTitleOnly2Result.value;
 
-  const updateResult = await client.updateEntity({
+  const updateResult = await client.updateEntity<AdminReferences>({
     id,
     fields: { any: { id: idTitleOnly1 }, titleOnly: { id: idTitleOnly2 } },
   });
@@ -383,7 +385,9 @@ async function updateEntity_withTwoReferences({ server }: AdminEntityTestContext
   });
 
   const getResult = await client.getEntity({ id });
-  assertResultValue(getResult, expectedEntity);
+  assertOkResult(getResult);
+  assertIsAdminReferences(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
 }
 
 async function updateEntity_withMultipleLocations({ server }: AdminEntityTestContext) {

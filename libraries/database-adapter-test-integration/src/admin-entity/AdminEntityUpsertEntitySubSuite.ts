@@ -1,8 +1,10 @@
 import type { AdminEntityUpsert } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminTitleOnly } from '../SchemaTypes.js';
+import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import {
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
@@ -23,7 +25,9 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 async function upsertEntity_minimalCreate({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
-  const upsertResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id }));
+  const upsertResult = await client.upsertEntity<AdminTitleOnly>(
+    copyEntity(TITLE_ONLY_UPSERT, { id })
+  );
   assertOkResult(upsertResult);
   const {
     entity: {
@@ -46,7 +50,9 @@ async function upsertEntity_minimalCreate({ server }: AdminEntityTestContext) {
   });
 
   const getResult = await client.getEntity({ id });
-  assertResultValue(getResult, expectedEntity);
+  assertOkResult(getResult);
+  assertIsAdminTitleOnly(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
 }
 
 async function upsertEntity_minimalUpdate({ server }: AdminEntityTestContext) {

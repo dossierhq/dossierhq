@@ -14,7 +14,7 @@
   },
   "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && post-process-build deno cjs-package-json",
+    "build": "./scripts/generate-typescript.ts && npm run prettier:check && heft build --clean && post-process-build deno cjs-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/datadata-typescript-generator": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.46.2",
     "@types/uuid": "~8.3.4",

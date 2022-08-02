@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/esm/index.js",
+    "@jonasb/datadata-typescript-generator": "../node_modules/@jonasb/datadata-typescript-generator/lib/esm/index.js",
+    "@js-temporal/polyfill": "https://cdn.skypack.dev/@js-temporal/polyfill@~0.4.0?dts"
+  }
+}
