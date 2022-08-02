@@ -54,6 +54,29 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminEntity> = {
   fields: { any: null, anyList: null, titleOnly: null },
 };
 
+export const RICH_TEXTS_CREATE: Readonly<AdminEntityCreate> = {
+  info: {
+    type: 'RichTexts',
+    name: 'RichTexts name',
+    authKey: 'none',
+  },
+  fields: {},
+};
+
+export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminEntity> = {
+  id: 'REPLACE',
+  info: {
+    type: 'RichTexts',
+    name: 'RichTexts name',
+    version: 0,
+    authKey: 'none',
+    status: AdminEntityStatus.draft,
+    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+  },
+  fields: { default: null },
+};
+
 export const STRINGS_CREATE: Readonly<AdminEntityCreate> = {
   info: {
     type: 'Strings',

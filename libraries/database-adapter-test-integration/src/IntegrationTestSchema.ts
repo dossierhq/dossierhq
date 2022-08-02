@@ -22,6 +22,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       ],
     },
     {
+      name: 'RichTexts',
+      fields: [{ name: 'default', type: FieldType.RichText }],
+    },
+    {
       name: 'Strings',
       fields: [{ name: 'multiline', type: FieldType.String, multiline: true }],
     },
