@@ -13,6 +13,7 @@ import type {
   AdminRichTexts,
   AdminStrings,
   AdminTitleOnly,
+  PublishedTitleOnly,
 } from '../SchemaTypes.js';
 
 export const LOCATIONS_CREATE: Readonly<AdminEntityCreate<AdminLocations>> = {
@@ -140,8 +141,7 @@ export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {
   fields: { title: 'Title' },
 };
 
-//TODO generate typescript for published entity
-export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedEntity> = {
+export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedTitleOnly> = {
   id: 'REPLACE',
   info: {
     type: 'TitleOnly',

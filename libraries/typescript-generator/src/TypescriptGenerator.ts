@@ -2,6 +2,8 @@ import type {
   AdminEntityTypeSpecification,
   AdminSchema,
   FieldSpecification,
+  PublishedEntityTypeSpecification,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
@@ -9,20 +11,37 @@ interface GeneratorContext {
   coreImports: Set<string>;
 }
 
-export function generateTypescriptForSchema(adminSchema: AdminSchema) {
+type GenerationOptions =
+  | { adminSchema: AdminSchema }
+  | { publishedSchema: PublishedSchema }
+  | { adminSchema: AdminSchema; publishedSchema: PublishedSchema };
+
+export function generateTypescriptForSchema(options: GenerationOptions) {
+  const adminSchema = 'adminSchema' in options ? options.adminSchema : null;
+  const publishedSchema = 'publishedSchema' in options ? options.publishedSchema : null;
+
   const context: GeneratorContext = { coreImports: new Set<string>() };
   const paragraphs: string[] = [];
-  for (const entitySpec of adminSchema.spec.entityTypes) {
-    paragraphs.push(...generateAdminEntityType(context, entitySpec));
+
+  if (adminSchema) {
+    for (const entitySpec of adminSchema.spec.entityTypes) {
+      paragraphs.push(...generateAdminEntityType(context, entitySpec));
+    }
   }
+  if (publishedSchema) {
+    for (const entitySpec of publishedSchema.spec.entityTypes) {
+      paragraphs.push(...generatePublishedEntityType(context, entitySpec));
+    }
+  }
+
   if (context.coreImports.size > 0) {
-    paragraphs.splice(
-      0,
-      0,
-      `import type { ${[...context.coreImports].sort().join(', ')} } from '@jonasb/datadata-core';`
-    );
+    const importStatement = `import type { ${[...context.coreImports]
+      .sort()
+      .join(', ')} } from '@jonasb/datadata-core';`;
+    // insert
+    paragraphs.splice(0, 0, importStatement);
   }
-  paragraphs.push('');
+  paragraphs.push(''); // final newline
   return paragraphs.join('\n');
 }
 
@@ -30,8 +49,25 @@ function generateAdminEntityType(
   context: GeneratorContext,
   entitySpec: AdminEntityTypeSpecification
 ) {
+  return generateEntityType(context, entitySpec, 'Admin');
+}
+
+function generatePublishedEntityType(
+  context: GeneratorContext,
+  entitySpec: PublishedEntityTypeSpecification
+) {
+  return generateEntityType(context, entitySpec, 'Published');
+}
+
+function generateEntityType(
+  context: GeneratorContext,
+  entitySpec: PublishedEntityTypeSpecification,
+  adminOrPublished: 'Admin' | 'Published'
+) {
   const paragraphs: string[] = [''];
-  const fieldsName = `Admin${entitySpec.name}Fields`;
+
+  // fields type
+  const fieldsName = `${adminOrPublished}${entitySpec.name}Fields`;
   paragraphs.push(`export interface ${fieldsName} {`);
   for (const fieldSpec of entitySpec.fields) {
     paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec)};`);
@@ -39,21 +75,24 @@ function generateAdminEntityType(
   paragraphs.push(`}`);
   paragraphs.push('');
 
-  context.coreImports.add('AdminEntity');
+  // entity type
+  const parentTypeName = `${adminOrPublished}Entity`;
+  const entityTypeName = `${adminOrPublished}${entitySpec.name}`;
+  context.coreImports.add(parentTypeName);
   paragraphs.push(
-    `export type Admin${entitySpec.name} = AdminEntity<'${entitySpec.name}', ${fieldsName}>;`
+    `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}>;`
   );
 
   paragraphs.push('');
   paragraphs.push(
-    `export function isAdmin${entitySpec.name}(entity: AdminEntity | Admin${entitySpec.name}): entity is Admin${entitySpec.name} {`
+    `export function is${entityTypeName}(entity: ${parentTypeName} | ${entityTypeName}): entity is ${entityTypeName} {`
   );
   paragraphs.push(`  return entity.info.type === '${entitySpec.name}';`);
   paragraphs.push(`}`);
 
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIsAdmin${entitySpec.name}(entity: AdminEntity | Admin${entitySpec.name}): asserts entity is Admin${entitySpec.name} {`
+    `export function assertIs${entityTypeName}(entity: ${parentTypeName} | ${entityTypeName}): asserts entity is ${entityTypeName} {`
   );
   paragraphs.push(`  if (entity.info.type !== '${entitySpec.name}') {`);
   paragraphs.push(

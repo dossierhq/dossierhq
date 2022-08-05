@@ -1,6 +1,8 @@
 import { copyEntity, ErrorType } from '@jonasb/datadata-core';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminTitleOnly } from '../SchemaTypes.js';
+import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
@@ -18,7 +20,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
 
 async function getEntity_withSubjectAuthKey({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity(
+  const createResult = await client.createEntity<AdminTitleOnly>(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
   assertOkResult(createResult);
@@ -27,7 +29,9 @@ async function getEntity_withSubjectAuthKey({ server }: AdminEntityTestContext) 
   } = createResult.value;
 
   const getResult = await client.getEntity({ id });
-  assertResultValue(getResult, createResult.value.entity);
+  assertOkResult(getResult);
+  assertIsAdminTitleOnly(getResult.value);
+  assertEquals(getResult.value, createResult.value.entity);
 }
 
 async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {

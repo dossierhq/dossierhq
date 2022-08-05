@@ -1,4 +1,10 @@
-import type { AdminEntity, EntityReference, Location, RichText } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  EntityReference,
+  Location,
+  PublishedEntity,
+  RichText,
+} from '@jonasb/datadata-core';
 
 export interface AdminLocationsFields {
   location: Location | null;
@@ -108,6 +114,129 @@ export function isAdminTitleOnly(entity: AdminEntity | AdminTitleOnly): entity i
 export function assertIsAdminTitleOnly(
   entity: AdminEntity | AdminTitleOnly
 ): asserts entity is AdminTitleOnly {
+  if (entity.info.type !== 'TitleOnly') {
+    throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedLocationsFields {
+  location: Location | null;
+  locationList: Array<Location> | null;
+}
+
+export type PublishedLocations = PublishedEntity<'Locations', PublishedLocationsFields>;
+
+export function isPublishedLocations(
+  entity: PublishedEntity | PublishedLocations
+): entity is PublishedLocations {
+  return entity.info.type === 'Locations';
+}
+
+export function assertIsPublishedLocations(
+  entity: PublishedEntity | PublishedLocations
+): asserts entity is PublishedLocations {
+  if (entity.info.type !== 'Locations') {
+    throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedReadOnlyFields {
+  message: string | null;
+}
+
+export type PublishedReadOnly = PublishedEntity<'ReadOnly', PublishedReadOnlyFields>;
+
+export function isPublishedReadOnly(
+  entity: PublishedEntity | PublishedReadOnly
+): entity is PublishedReadOnly {
+  return entity.info.type === 'ReadOnly';
+}
+
+export function assertIsPublishedReadOnly(
+  entity: PublishedEntity | PublishedReadOnly
+): asserts entity is PublishedReadOnly {
+  if (entity.info.type !== 'ReadOnly') {
+    throw new Error('Expected info.type = ReadOnly (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedReferencesFields {
+  any: EntityReference | null;
+  anyList: Array<EntityReference> | null;
+  titleOnly: EntityReference | null;
+}
+
+export type PublishedReferences = PublishedEntity<'References', PublishedReferencesFields>;
+
+export function isPublishedReferences(
+  entity: PublishedEntity | PublishedReferences
+): entity is PublishedReferences {
+  return entity.info.type === 'References';
+}
+
+export function assertIsPublishedReferences(
+  entity: PublishedEntity | PublishedReferences
+): asserts entity is PublishedReferences {
+  if (entity.info.type !== 'References') {
+    throw new Error('Expected info.type = References (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedRichTextsFields {
+  default: RichText | null;
+}
+
+export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields>;
+
+export function isPublishedRichTexts(
+  entity: PublishedEntity | PublishedRichTexts
+): entity is PublishedRichTexts {
+  return entity.info.type === 'RichTexts';
+}
+
+export function assertIsPublishedRichTexts(
+  entity: PublishedEntity | PublishedRichTexts
+): asserts entity is PublishedRichTexts {
+  if (entity.info.type !== 'RichTexts') {
+    throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedStringsFields {
+  multiline: string | null;
+}
+
+export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields>;
+
+export function isPublishedStrings(
+  entity: PublishedEntity | PublishedStrings
+): entity is PublishedStrings {
+  return entity.info.type === 'Strings';
+}
+
+export function assertIsPublishedStrings(
+  entity: PublishedEntity | PublishedStrings
+): asserts entity is PublishedStrings {
+  if (entity.info.type !== 'Strings') {
+    throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedTitleOnlyFields {
+  title: string | null;
+}
+
+export type PublishedTitleOnly = PublishedEntity<'TitleOnly', PublishedTitleOnlyFields>;
+
+export function isPublishedTitleOnly(
+  entity: PublishedEntity | PublishedTitleOnly
+): entity is PublishedTitleOnly {
+  return entity.info.type === 'TitleOnly';
+}
+
+export function assertIsPublishedTitleOnly(
+  entity: PublishedEntity | PublishedTitleOnly
+): asserts entity is PublishedTitleOnly {
   if (entity.info.type !== 'TitleOnly') {
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
   }
