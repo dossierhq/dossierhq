@@ -9,14 +9,18 @@ import type {
   Spread,
 } from './third-party/Lexical.js';
 
-export interface PublishedEntity {
+export interface PublishedEntity<
+  TType extends string = string,
+  TFields extends object = Record<string, unknown>
+> {
+  /** UUID */
   id: string;
-  info: PublishedEntityInfo;
-  fields: Record<string, unknown>;
+  info: PublishedEntityInfo<TType>;
+  fields: TFields;
 }
 
-export interface PublishedEntityInfo {
-  type: string;
+export interface PublishedEntityInfo<TType extends string = string> {
+  type: TType;
   name: string;
   authKey: string;
   createdAt: Temporal.Instant;

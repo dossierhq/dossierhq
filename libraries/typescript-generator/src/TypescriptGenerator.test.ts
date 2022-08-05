@@ -5,25 +5,27 @@ import { generateTypescriptForSchema } from './TypescriptGenerator.js';
 describe('generateTypescriptForSchema', () => {
   test('empty', () => {
     expect(
-      generateTypescriptForSchema(new AdminSchema({ entityTypes: [], valueTypes: [] }))
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({ entityTypes: [], valueTypes: [] }),
+      })
     ).toMatchSnapshot();
   });
 
   test('Foo (no fields)', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
           valueTypes: [],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 
   test('Booleans', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [
             {
               name: 'Booleans',
@@ -35,15 +37,15 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 
   test('EntityTypes', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [
             {
               name: 'EntityTypes',
@@ -55,15 +57,15 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 
   test('Locations', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [
             {
               name: 'Locations',
@@ -75,15 +77,15 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 
   test('RichTexts', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [
             {
               name: 'RichTexts',
@@ -95,15 +97,15 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 
   test('Strings', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [
             {
               name: 'Strings',
@@ -115,15 +117,15 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 
   test('ValueTypes', () => {
     expect(
-      generateTypescriptForSchema(
-        new AdminSchema({
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
           entityTypes: [
             {
               name: 'ValueTypes',
@@ -154,8 +156,8 @@ describe('generateTypescriptForSchema', () => {
               fields: [{ name: 'string', type: FieldType.String, required: true }],
             },
           ],
-        })
-      )
+        }),
+      })
     ).toMatchSnapshot();
   });
 });

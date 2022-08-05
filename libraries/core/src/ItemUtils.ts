@@ -465,7 +465,7 @@ function visitRichTextNodeRecursively<TVisitContext>(
 }
 
 export function copyEntity<
-  T extends AdminEntity<string, object> | AdminEntityCreate | PublishedEntity
+  T extends AdminEntity<string, object> | AdminEntityCreate | PublishedEntity<string, object>
 >(
   entity: T,
   changes: { id?: string; info?: Partial<T['info']>; fields?: Partial<T['fields']> }

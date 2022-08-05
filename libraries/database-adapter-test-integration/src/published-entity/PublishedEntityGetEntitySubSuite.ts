@@ -1,7 +1,13 @@
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures.js';
+import type { AdminTitleOnly } from '../SchemaTypes.js';
+import { assertIsPublishedTitleOnly } from '../SchemaTypes.js';
+import {
+  adminToPublishedEntity,
+  TITLE_ONLY_CREATE,
+  TITLE_ONLY_PUBLISHED_ENTITY,
+} from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
@@ -27,20 +33,11 @@ async function getEntity_withSubjectAuthKey({ server }: PublishedEntityTestConte
   );
   assertOkResult(createResult);
   const {
-    entity: {
-      id,
-      info: { name, createdAt },
-    },
+    entity: { id },
   } = createResult.value;
 
   const getResult = await publishedClient.getEntity({ id });
-  assertResultValue(
-    getResult,
-    copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
-      id,
-      info: { authKey: 'subject', name, createdAt },
-    })
-  );
+  assertResultValue(getResult, adminToPublishedEntity(createResult.value.entity));
 }
 
 async function getEntity_archivedThenPublished({ server }: PublishedEntityTestContext) {
@@ -61,15 +58,17 @@ async function getEntity_archivedThenPublished({ server }: PublishedEntityTestCo
   assertOkResult(publishResult);
 
   const getResult = await publishedClientForMainPrincipal(server).getEntity({ id });
-  assertResultValue(
-    getResult,
+  assertOkResult(getResult);
+  assertIsPublishedTitleOnly(getResult.value);
+  assertEquals(
+    getResult.value,
     copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } })
   );
 }
 
 async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const createResult = await adminClient.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -94,8 +93,10 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
   ]);
 
   const getResult = await publishedClientForMainPrincipal(server).getEntity({ id });
-  assertResultValue(
-    getResult,
+  assertOkResult(getResult);
+  assertIsPublishedTitleOnly(getResult.value);
+  assertEquals(
+    getResult.value,
     copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
       id,
       info: { name, createdAt },

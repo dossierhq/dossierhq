@@ -1,8 +1,8 @@
 import type { ErrorType, PublishedEntity } from '@jonasb/datadata-core';
 import { copyEntity, notOk, ok } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures.js';
+import { adminToPublishedEntity, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
@@ -26,33 +26,19 @@ async function getEntities_minimal({ server }: PublishedEntityTestContext) {
   assertOkResult(create1Result);
   assertOkResult(create2Result);
   const {
-    entity: {
-      id: id1,
-      info: { name: name1, createdAt: createdAt1 },
-    },
+    entity: { id: id1 },
   } = create1Result.value;
   const {
-    entity: {
-      id: id2,
-      info: { name: name2, createdAt: createdAt2 },
-    },
+    entity: { id: id2 },
   } = create2Result.value;
 
   const getResult = await publishedClient.getEntities([{ id: id1 }, { id: id2 }]);
-  assertResultValue(getResult, [
-    ok<PublishedEntity, typeof ErrorType.Generic>(
-      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
-        id: id1,
-        info: { name: name1, createdAt: createdAt1 },
-      })
-    ),
-    ok<PublishedEntity, typeof ErrorType.Generic>(
-      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
-        id: id2,
-        info: { name: name2, createdAt: createdAt2 },
-      })
-    ),
-  ]);
+  assertOkResult(getResult);
+  const [get1Result, get2Result] = getResult.value;
+  assertOkResult(get1Result);
+  assertOkResult(get2Result);
+  assertEquals(get1Result.value, adminToPublishedEntity(create1Result.value.entity));
+  assertEquals(get2Result.value, adminToPublishedEntity(create2Result.value.entity));
 }
 
 async function getEntities_none({ server }: PublishedEntityTestContext) {
@@ -77,10 +63,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
     entity: { id: id1 },
   } = create1Result.value;
   const {
-    entity: {
-      id: id2,
-      info: { name: name2, createdAt: createdAt2 },
-    },
+    entity: { id: id2 },
   } = create2Result.value;
 
   const getResult = await publishedClientForMainPrincipal(server).getEntities([
@@ -90,10 +73,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<PublishedEntity, typeof ErrorType.Generic>(
-      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
-        id: id2,
-        info: { name: name2, createdAt: createdAt2, authKey: 'subject' },
-      })
+      adminToPublishedEntity(create2Result.value.entity)
     ),
   ]);
 }
@@ -104,10 +84,7 @@ async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTest
   });
   assertOkResult(createResult);
   const {
-    entity: {
-      id,
-      info: { name, createdAt },
-    },
+    entity: { id },
   } = createResult.value;
 
   const getResult = await publishedClientForMainPrincipal(server).getEntities([
@@ -117,7 +94,7 @@ async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTest
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
     ok<PublishedEntity, typeof ErrorType.Generic>(
-      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } })
+      adminToPublishedEntity(createResult.value.entity)
     ),
   ]);
 }
