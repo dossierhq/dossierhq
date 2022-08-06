@@ -303,7 +303,7 @@ export class AdminSchema {
     return ok(schemaSpec);
   }
 
-  toPublishedSchema(): PublishedSchemaSpecification {
+  toPublishedSchema(): PublishedSchema {
     const spec: PublishedSchemaSpecification = {
       entityTypes: [],
       valueTypes: [],
@@ -322,7 +322,7 @@ export class AdminSchema {
       spec.valueTypes.push({ name: valueSpec.name, fields: valueSpec.fields });
     }
 
-    return spec;
+    return new PublishedSchema(spec);
   }
 }
 

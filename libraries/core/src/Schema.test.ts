@@ -355,7 +355,7 @@ describe('validate()', () => {
 
 describe('AdminSchema.toPublishedSchema()', () => {
   test('empty->empty', () => {
-    expect(new AdminSchema({ entityTypes: [], valueTypes: [] }).toPublishedSchema()).toEqual({
+    expect(new AdminSchema({ entityTypes: [], valueTypes: [] }).toPublishedSchema().spec).toEqual({
       entityTypes: [],
       valueTypes: [],
     });
@@ -370,7 +370,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         valueTypes: [
           { name: 'Bar', adminOnly: false, fields: [{ name: 'field1', type: FieldType.Location }] },
         ],
-      }).toPublishedSchema()
+      }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field1', type: FieldType.String }] }],
       valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
@@ -386,7 +386,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         valueTypes: [
           { name: 'Bar', adminOnly: true, fields: [{ name: 'field1', type: FieldType.Location }] },
         ],
-      }).toPublishedSchema()
+      }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [],
       valueTypes: [],

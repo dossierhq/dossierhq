@@ -5,7 +5,7 @@ import type {
   EntityReference,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
-import { copyEntity, PublishedSchema } from '@jonasb/datadata-core';
+import { copyEntity } from '@jonasb/datadata-core';
 import type { Cache } from 'swr';
 import type { ScopedMutator } from 'swr/dist/types';
 
@@ -31,7 +31,7 @@ export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSch
       mutate(CACHE_KEYS.adminSchema, adminSchema);
     }
     if (hasPublished) {
-      const publishedSchema = new PublishedSchema(adminSchema.toPublishedSchema());
+      const publishedSchema = adminSchema.toPublishedSchema();
       mutate(CACHE_KEYS.publishedSchema, publishedSchema);
     }
   }

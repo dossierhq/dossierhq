@@ -1,11 +1,6 @@
 import 'dotenv/config';
-import {
-  AdminSchema,
-  createConsoleLogger,
-  notOk,
-  ok,
-  PublishedSchema,
-} from '@jonasb/datadata-core';
+//
+import { AdminSchema, createConsoleLogger, notOk, ok } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { Server } from '@jonasb/datadata-server';
@@ -48,7 +43,7 @@ async function createSessionContext(server: Server, headers: IncomingHttpHeaders
 function startExpressServer(server: Server, schema: AdminSchema, port: number) {
   const gqlSchema = new GraphQLSchemaGenerator({
     adminSchema: schema,
-    publishedSchema: new PublishedSchema(schema.toPublishedSchema()),
+    publishedSchema: schema.toPublishedSchema(),
   }).buildSchema();
   const app = express();
   app.use(
