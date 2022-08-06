@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { AdminSchema, FieldType, PublishedSchema } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
@@ -13,7 +13,7 @@ function buildSchema(
 
   const generator = new GraphQLSchemaGenerator({
     adminSchema: admin ? adminSchema : null,
-    publishedSchema: published ? new PublishedSchema(adminSchema.toPublishedSchema()) : null,
+    publishedSchema: published ? adminSchema.toPublishedSchema() : null,
   });
   return generator.buildSchema();
 }

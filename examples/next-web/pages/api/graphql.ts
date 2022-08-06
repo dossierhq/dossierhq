@@ -32,7 +32,7 @@ export default async function graphQlHandler(
     if (!graphQLSchema) {
       graphQLSchema = new GraphQLSchemaGenerator({
         adminSchema: schema,
-        publishedSchema: new PublishedSchema(schema.toPublishedSchema()),
+        publishedSchema: schema.toPublishedSchema(),
       }).buildSchema();
     }
 

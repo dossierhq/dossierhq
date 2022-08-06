@@ -7,7 +7,6 @@ import {
   FieldType,
   notOk,
   ok,
-  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
@@ -54,7 +53,7 @@ beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification, 'data/query.sqlite');
   schema = new GraphQLSchemaGenerator({
     adminSchema: null,
-    publishedSchema: new PublishedSchema(server.schema.toPublishedSchema()),
+    publishedSchema: server.schema.toPublishedSchema(),
   }).buildSchema();
 });
 

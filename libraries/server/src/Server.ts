@@ -8,16 +8,10 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedClientMiddleware,
+  PublishedSchema,
   Result,
 } from '@jonasb/datadata-core';
-import {
-  AdminSchema,
-  assertIsDefined,
-  NoOpLogger,
-  notOk,
-  ok,
-  PublishedSchema,
-} from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session } from '@jonasb/datadata-database-adapter';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
@@ -98,7 +92,7 @@ export class ServerImpl {
 
   setAdminSchema(schemaSpec: AdminSchemaSpecification): void {
     this.#adminSchema = new AdminSchema(schemaSpec);
-    this.#publishedSchema = new PublishedSchema(this.#adminSchema.toPublishedSchema());
+    this.#publishedSchema = this.#adminSchema.toPublishedSchema();
   }
 
   createInternalContext(logger?: Logger): InternalContext {
