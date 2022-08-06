@@ -11,15 +11,13 @@ interface GeneratorContext {
   coreImports: Set<string>;
 }
 
-type GenerationOptions =
-  | { adminSchema: AdminSchema }
-  | { publishedSchema: PublishedSchema }
-  | { adminSchema: AdminSchema; publishedSchema: PublishedSchema };
-
-export function generateTypescriptForSchema(options: GenerationOptions) {
-  const adminSchema = 'adminSchema' in options ? options.adminSchema : null;
-  const publishedSchema = 'publishedSchema' in options ? options.publishedSchema : null;
-
+export function generateTypescriptForSchema({
+  adminSchema,
+  publishedSchema,
+}: {
+  adminSchema: AdminSchema | null;
+  publishedSchema: PublishedSchema | null;
+}) {
   const context: GeneratorContext = { coreImports: new Set<string>() };
   const paragraphs: string[] = [];
 
