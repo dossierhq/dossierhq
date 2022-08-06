@@ -7,6 +7,7 @@ describe('generateTypescriptForSchema', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: new AdminSchema({ entityTypes: [], valueTypes: [] }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -18,6 +19,7 @@ describe('generateTypescriptForSchema', () => {
           entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
           valueTypes: [],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -38,6 +40,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -58,6 +61,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -78,6 +82,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -98,6 +103,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -118,6 +124,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
@@ -157,6 +164,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
         }),
+        publishedSchema: null,
       })
     ).toMatchSnapshot();
   });
