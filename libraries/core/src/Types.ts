@@ -61,8 +61,7 @@ export type RichTextEntityNode = Spread<
 export type RichTextValueItemNode = Spread<
   {
     type: typeof RichTextNodeType.valueItem;
-    //TODO remove support for null
-    data: ValueItem | null;
+    data: ValueItem;
     version: 1;
   },
   RichTextNode

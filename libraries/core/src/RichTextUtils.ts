@@ -80,17 +80,9 @@ export function createRichTextTextNode(
 }
 
 export function createRichTextEntityNode(reference: EntityReference | null): RichTextEntityNode {
-  return {
-    type: RichTextNodeType.entity,
-    reference,
-    version: 1,
-  };
+  return { type: RichTextNodeType.entity, reference, version: 1 };
 }
 
-export function createRichTextValueItemNode(data: ValueItem | null): RichTextValueItemNode {
-  return {
-    type: RichTextNodeType.valueItem,
-    data,
-    version: 1,
-  };
+export function createRichTextValueItemNode(data: ValueItem): RichTextValueItemNode {
+  return { type: RichTextNodeType.valueItem, data, version: 1 };
 }

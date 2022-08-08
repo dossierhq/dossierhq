@@ -1,7 +1,7 @@
 import type { FieldSpecification, ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
-import React, { Fragment, useCallback, useContext } from 'react';
+import { Fragment, useCallback, useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker';
 import type { FieldEditorProps } from './FieldEditor';
@@ -10,13 +10,8 @@ import { FieldEditor } from './FieldEditor';
 type Props = FieldEditorProps<ValueItem>;
 
 export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
-  const { schema } = useContext(AdminDataDataContext);
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   const handleCreate = useCallback((type: string) => onChange({ type }), [onChange]);
-
-  if (!schema) {
-    return null;
-  }
 
   if (!value) {
     return (
@@ -30,6 +25,28 @@ export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
     );
   }
 
+  return (
+    <HoverRevealStack>
+      <HoverRevealStack.Item top right>
+        <Delete onClick={handleDeleteClick} />
+      </HoverRevealStack.Item>
+      <ValueItemFieldEditorWithoutClear value={value} onChange={onChange} />
+    </HoverRevealStack>
+  );
+}
+
+export function ValueItemFieldEditorWithoutClear({
+  value,
+  onChange,
+}: {
+  value: ValueItem;
+  onChange: (value: ValueItem) => void;
+}) {
+  const { schema } = useContext(AdminDataDataContext);
+  if (!schema) {
+    return null;
+  }
+
   const { type } = value;
   const valueSpec = schema.getValueTypeSpecification(type);
   if (!valueSpec) {
@@ -37,31 +54,26 @@ export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
   }
 
   return (
-    <HoverRevealStack>
-      <HoverRevealStack.Item top right>
-        <Delete onClick={handleDeleteClick} />
-      </HoverRevealStack.Item>
-      <Column gap={1}>
-        <Text textStyle="body2" noBottomMargin>
-          {type}
-        </Text>
-        {valueSpec.fields.map((valueFieldSpec) => {
-          const fieldEditor = <ValueItemField {...{ value, valueFieldSpec, onChange }} />;
-          return (
-            <Fragment key={valueFieldSpec.name}>
-              <Text textStyle="subtitle1" noBottomMargin>
-                {valueFieldSpec.name}
-              </Text>
-              {valueFieldSpec.type === FieldType.ValueType ? (
-                <div className="nested-value-item-indentation">{fieldEditor}</div>
-              ) : (
-                fieldEditor
-              )}
-            </Fragment>
-          );
-        })}
-      </Column>
-    </HoverRevealStack>
+    <Column gap={1}>
+      <Text textStyle="body2" noBottomMargin>
+        {type}
+      </Text>
+      {valueSpec.fields.map((valueFieldSpec) => {
+        const fieldEditor = <ValueItemField {...{ value, valueFieldSpec, onChange }} />;
+        return (
+          <Fragment key={valueFieldSpec.name}>
+            <Text textStyle="subtitle1" noBottomMargin>
+              {valueFieldSpec.name}
+            </Text>
+            {valueFieldSpec.type === FieldType.ValueType ? (
+              <div className="nested-value-item-indentation">{fieldEditor}</div>
+            ) : (
+              fieldEditor
+            )}
+          </Fragment>
+        );
+      })}
+    </Column>
   );
 }
 
@@ -72,7 +84,7 @@ function ValueItemField({
 }: {
   value: ValueItem;
   valueFieldSpec: FieldSpecification;
-  onChange: (value: ValueItem | null) => void;
+  onChange: (value: ValueItem) => void;
 }) {
   const handleFieldChanged = useCallback(
     (newFieldValue: unknown) => {

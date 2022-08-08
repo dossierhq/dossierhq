@@ -3,13 +3,12 @@ import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { LexicalCommand, LexicalNode, NodeKey } from 'lexical';
 import { $getNodeByKey, createCommand, DecoratorNode } from 'lexical';
-import { useCallback, useContext } from 'react';
-import { ValueTypeFieldEditor } from '../EntityEditor/ValueTypeFieldEditor.js';
-import { RichTextEditorContext } from './RichTextEditorContext.js';
+import { useCallback } from 'react';
+import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
 
-export function $createAdminValueItemNode(data: ValueItem | null): AdminValueItemNode {
+export function $createAdminValueItemNode(data: ValueItem): AdminValueItemNode {
   return new AdminValueItemNode(data);
 }
 
@@ -19,14 +18,13 @@ export function $isAdminValueItemNode(
   return node instanceof AdminValueItemNode;
 }
 
-export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<void> = createCommand();
+export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<ValueItem> = createCommand();
 
-function AdminValueItemComponent({ nodeKey, data }: { nodeKey: NodeKey; data: ValueItem | null }) {
+function AdminValueItemComponent({ nodeKey, data }: { nodeKey: NodeKey; data: ValueItem }) {
   const [editor] = useLexicalComposerContext();
-  const { fieldSpec } = useContext(RichTextEditorContext);
 
   const setValue = useCallback(
-    (value: ValueItem | null) => {
+    (value: ValueItem) => {
       editor.update(() => {
         const node = $getNodeByKey(nodeKey);
         if ($isAdminValueItemNode(node)) {
@@ -37,11 +35,11 @@ function AdminValueItemComponent({ nodeKey, data }: { nodeKey: NodeKey; data: Va
     [editor, nodeKey]
   );
 
-  return <ValueTypeFieldEditor fieldSpec={fieldSpec} value={data} onChange={setValue} />;
+  return <ValueItemFieldEditorWithoutClear value={data} onChange={setValue} />;
 }
 
 export class AdminValueItemNode extends DecoratorNode<JSX.Element> {
-  __data: ValueItem | null;
+  __data: ValueItem;
 
   static override getType(): string {
     return RichTextNodeType.valueItem;
@@ -51,17 +49,17 @@ export class AdminValueItemNode extends DecoratorNode<JSX.Element> {
     return new AdminValueItemNode(node.__data, node.__key);
   }
 
-  constructor(data: ValueItem | null, key?: NodeKey) {
+  constructor(data: ValueItem, key?: NodeKey) {
     super(key);
     this.__data = data;
   }
 
-  setData(data: ValueItem | null) {
+  setData(data: ValueItem) {
     const self = this.getWritable();
     self.__data = data;
   }
 
-  getData(): ValueItem | null {
+  getData(): ValueItem {
     const self = this.getLatest();
     return self.__data;
   }

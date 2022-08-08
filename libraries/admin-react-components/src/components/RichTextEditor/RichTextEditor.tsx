@@ -6,7 +6,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { mergeRegister } from '@lexical/utils';
-import type { EditorState, EditorThemeClasses, LexicalEditor } from 'lexical';
+import type { EditorState, LexicalEditor } from 'lexical';
 import {
   $getSelection,
   $isRangeSelection,
@@ -17,6 +17,7 @@ import {
 import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { LexicalTheme } from '../../utils/LexicalTheme.js';
+import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import { AdminEntityNode, INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { AdminValueItemNode, INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 import { EntityPlugin } from './EntityPlugin.js';
@@ -159,9 +160,12 @@ function ToolbarPlugin() {
       <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, undefined)}>
         Add entity
       </Button>
-      <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, undefined)}>
+      <AdminTypePicker
+        showValueTypes
+        onTypeSelected={(type) => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type })}
+      >
         Add value item
-      </Button>
+      </AdminTypePicker>
     </Row>
   );
 }

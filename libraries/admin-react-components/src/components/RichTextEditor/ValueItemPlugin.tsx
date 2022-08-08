@@ -13,8 +13,8 @@ export function ValueItemPlugin(): null {
   useEffect(() => {
     return editor.registerCommand(
       INSERT_ADMIN_VALUE_ITEM_COMMAND,
-      (_payload) => {
-        const valueItemNode = $createAdminValueItemNode(null);
+      (payload) => {
+        const valueItemNode = $createAdminValueItemNode(payload);
         $insertBlockNode(valueItemNode);
         return true;
       },
