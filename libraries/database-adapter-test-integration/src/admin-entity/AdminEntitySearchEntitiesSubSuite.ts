@@ -3,6 +3,9 @@ import {
   AdminEntityStatus,
   AdminQueryOrder,
   copyEntity,
+  createRichTextEntityNode,
+  createRichTextRootNode,
+  createRichTextValueItemNode,
   getAllNodesForConnection,
 } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
@@ -11,6 +14,7 @@ import type { UnboundTestFunction } from '../Builder.js';
 import {
   LOCATIONS_CREATE,
   REFERENCES_CREATE,
+  RICH_TEXTS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
 import {
@@ -54,12 +58,15 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_statusModifiedPublished,
   searchEntities_statusAll,
   searchEntities_linksToOneReference,
+  searchEntities_linksToOneReferenceFromRichText,
+  searchEntities_linksToOneReferenceFromValueItemInRichText,
   searchEntities_linksToNoReferences,
   searchEntities_linksToTwoReferencesFromOneEntity,
   searchEntities_linksFromOneReference,
   searchEntities_linksFromNoReferences,
   searchEntities_linksFromTwoReferencesFromOneEntity,
   searchEntities_boundingBoxOneInside,
+  searchEntities_boundingBoxOneInsideFromValueItemInRichText,
   searchEntities_boundingBoxOneEntityTwoLocationsInside,
   searchEntities_boundingBoxOneOutside,
   searchEntities_boundingBoxWrappingMaxMinLongitude,
@@ -564,6 +571,52 @@ async function searchEntities_linksToOneReference({ server }: AdminEntityTestCon
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
+async function searchEntities_linksToOneReferenceFromRichText({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      fields: { richText: createRichTextRootNode([createRichTextEntityNode({ id: titleOnlyId })]) },
+    })
+  );
+  assertOkResult(referenceResult);
+
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
+async function searchEntities_linksToOneReferenceFromValueItemInRichText({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      fields: {
+        richText: createRichTextRootNode([
+          createRichTextValueItemNode({ type: 'ReferencesValue', reference: { id: titleOnlyId } }),
+        ]),
+      },
+    })
+  );
+  assertOkResult(referenceResult);
+
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
 async function searchEntities_linksToNoReferences({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
@@ -658,6 +711,30 @@ async function searchEntities_boundingBoxOneInside({ server }: AdminEntityTestCo
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  assertResultValue(matches, 1);
+}
+
+async function searchEntities_boundingBoxOneInsideFromValueItemInRichText({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      fields: {
+        richText: createRichTextRootNode([
+          createRichTextValueItemNode({ type: 'LocationsValue', location: center }),
+        ]),
+      },
+    })
   );
   assertOkResult(createResult);
   const {

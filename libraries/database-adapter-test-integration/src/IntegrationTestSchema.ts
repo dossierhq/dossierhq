@@ -23,7 +23,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'RichTexts',
-      fields: [{ name: 'default', type: FieldType.RichText }],
+      fields: [
+        { name: 'richText', type: FieldType.RichText },
+        { name: 'richTextList', type: FieldType.RichText, list: true },
+      ],
     },
     {
       name: 'Strings',
@@ -33,5 +36,9 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       name: 'TitleOnly',
       fields: [{ name: 'title', type: FieldType.String, required: true, isName: true }],
     },
+  ],
+  valueTypes: [
+    { name: 'LocationsValue', fields: [{ name: 'location', type: FieldType.Location }] },
+    { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.EntityType }] },
   ],
 };
