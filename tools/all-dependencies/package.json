@@ -11,7 +11,7 @@
   "optionalDependencies": {
     "@babel/core": "^7.17.9",
     "@creativebulma/bulma-badge": "~1.0.1",
-    "@faker-js/faker": "~7.3.0",
+    "@faker-js/faker": "~7.4.0",
     "@fortawesome/free-solid-svg-icons": "~6.1.1",
     "@js-temporal/polyfill": "~0.4.0",
     "@lexical/react": "~0.3.8",
