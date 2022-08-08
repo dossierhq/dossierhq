@@ -700,68 +700,6 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with rich text and rich text list', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
-      fields: {
-        body: createRichTextRootNode([
-          createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
-        ]),
-        bodyList: [
-          createRichTextRootNode([
-            createRichTextParagraphNode([createRichTextTextNode('First rich text')]),
-          ]),
-          createRichTextRootNode([
-            createRichTextParagraphNode([createRichTextTextNode('Second rich text')]),
-          ]),
-        ],
-      },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { name, createdAt, updatedAt },
-        },
-      } = createResult.value;
-
-      const expectedEntity: AdminEntity = {
-        id,
-        info: {
-          type: 'EntityAdminBaz',
-          name,
-          version: 0,
-          authKey: 'none',
-          status: AdminEntityStatus.draft,
-          createdAt,
-          updatedAt,
-        },
-        fields: {
-          ...emptyBazFields,
-          body: createRichTextRootNode([
-            createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
-          ]),
-          bodyList: [
-            createRichTextRootNode([
-              createRichTextParagraphNode([createRichTextTextNode('First rich text')]),
-            ]),
-            createRichTextRootNode([
-              createRichTextParagraphNode([createRichTextTextNode('Second rich text')]),
-            ]),
-          ],
-        },
-      };
-
-      expectResultValue(createResult, {
-        effect: 'created',
-        entity: expectedEntity,
-      });
-
-      const getResult = await client.getEntity({ id });
-      expectResultValue(getResult, expectedEntity);
-    }
-  });
-
   test('Create EntityAdminBaz with location and location list', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
