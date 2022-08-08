@@ -51,8 +51,7 @@ export type RichTextTextNode = SerializedTextNode;
 export type RichTextEntityNode = Spread<
   {
     type: typeof RichTextNodeType.entity;
-    //TODO remove support for null
-    reference: EntityReference | null;
+    reference: EntityReference;
     version: 1;
   },
   RichTextNode

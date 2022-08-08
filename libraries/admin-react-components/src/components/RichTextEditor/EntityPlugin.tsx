@@ -10,8 +10,8 @@ export function EntityPlugin(): null {
   useEffect(() => {
     return editor.registerCommand(
       INSERT_ADMIN_ENTITY_COMMAND,
-      (_payload) => {
-        const entityNode = $createAdminEntityNode(null);
+      (payload) => {
+        const entityNode = $createAdminEntityNode(payload);
         $insertBlockNode(entityNode);
         return true;
       },

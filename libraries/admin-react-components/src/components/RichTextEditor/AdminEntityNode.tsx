@@ -1,15 +1,12 @@
 import type { EntityReference, RichTextEntityNode } from '@jonasb/datadata-core';
 import { createRichTextEntityNode, RichTextNodeType } from '@jonasb/datadata-core';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { LexicalCommand, LexicalNode, NodeKey } from 'lexical';
-import { $getNodeByKey, createCommand, DecoratorNode } from 'lexical';
-import { useCallback, useContext } from 'react';
-import { EntityTypeFieldEditor } from '../EntityEditor/EntityTypeFieldEditor.js';
-import { RichTextEditorContext } from './RichTextEditorContext.js';
+import { createCommand, DecoratorNode } from 'lexical';
+import { EntityTypeFieldEditorWithoutClear } from '../EntityEditor/EntityTypeFieldEditor.js';
 
 export type SerializedAdminEntityNode = RichTextEntityNode;
 
-export function $createAdminEntityNode(reference: EntityReference | null): AdminEntityNode {
+export function $createAdminEntityNode(reference: EntityReference): AdminEntityNode {
   return new AdminEntityNode(reference);
 }
 
@@ -17,36 +14,20 @@ export function $isAdminEntityNode(node: LexicalNode | undefined | null): node i
   return node instanceof AdminEntityNode;
 }
 
-export const INSERT_ADMIN_ENTITY_COMMAND: LexicalCommand<void> = createCommand();
+export const INSERT_ADMIN_ENTITY_COMMAND: LexicalCommand<EntityReference> = createCommand();
 
 function AdminEntityComponent({
-  nodeKey,
+  nodeKey: _,
   reference,
 }: {
   nodeKey: NodeKey;
-  reference: EntityReference | null;
+  reference: EntityReference;
 }) {
-  const [editor] = useLexicalComposerContext();
-  const { fieldSpec } = useContext(RichTextEditorContext);
-
-  const setReference = useCallback(
-    (value: EntityReference | null) => {
-      editor.update(() => {
-        const node = $getNodeByKey(nodeKey);
-        if ($isAdminEntityNode(node)) {
-          node.setReference(value);
-        }
-      });
-    },
-    [editor, nodeKey]
-  );
-
-  // TODO replace with display only (i.e. not an editor) and remove clear function
-  return <EntityTypeFieldEditor fieldSpec={fieldSpec} value={reference} onChange={setReference} />;
+  return <EntityTypeFieldEditorWithoutClear value={reference} />;
 }
 
 export class AdminEntityNode extends DecoratorNode<JSX.Element> {
-  __reference: EntityReference | null;
+  __reference: EntityReference;
 
   static override getType(): string {
     return RichTextNodeType.entity;
@@ -56,17 +37,17 @@ export class AdminEntityNode extends DecoratorNode<JSX.Element> {
     return new AdminEntityNode(node.__reference, node.__key);
   }
 
-  constructor(reference: EntityReference | null, key?: NodeKey) {
+  constructor(reference: EntityReference, key?: NodeKey) {
     super(key);
     this.__reference = reference;
   }
 
-  setReference(reference: EntityReference | null) {
+  setReference(reference: EntityReference) {
     const self = this.getWritable();
     self.__reference = reference;
   }
 
-  getReference(): EntityReference | null {
+  getReference(): EntityReference {
     const self = this.getLatest();
     return self.__reference;
   }

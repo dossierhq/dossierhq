@@ -8,7 +8,7 @@ import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 export type SerializedPublishedEntityNode = RichTextEntityNode;
 
-export function $createPublishedEntityNode(reference: EntityReference | null): PublishedEntityNode {
+export function $createPublishedEntityNode(reference: EntityReference): PublishedEntityNode {
   return new PublishedEntityNode(reference);
 }
 
@@ -23,7 +23,7 @@ function PublishedEntityComponent({
   reference,
 }: {
   nodeKey: NodeKey;
-  reference: EntityReference | null;
+  reference: EntityReference;
 }) {
   const { fieldSpec } = useContext(RichTextDisplayContext);
 
@@ -31,7 +31,7 @@ function PublishedEntityComponent({
 }
 
 export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
-  __reference: EntityReference | null;
+  __reference: EntityReference;
 
   static override getType(): string {
     return RichTextNodeType.entity;
@@ -41,12 +41,12 @@ export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
     return new PublishedEntityNode(node.__reference, node.__key);
   }
 
-  constructor(reference: EntityReference | null, key?: NodeKey) {
+  constructor(reference: EntityReference, key?: NodeKey) {
     super(key);
     this.__reference = reference;
   }
 
-  setReference(reference: EntityReference | null) {
+  setReference(reference: EntityReference) {
     const self = this.getWritable();
     self.__reference = reference;
   }

@@ -1,7 +1,7 @@
 import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
-import { Button, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
+import { Button, Column, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
-import React, { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
 import { useAdminEntity } from '../../hooks/useAdminEntity';
@@ -73,5 +73,41 @@ export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
         />
       ) : null}
     </>
+  );
+}
+
+export function EntityTypeFieldEditorWithoutClear({ value }: { value: EntityReference }) {
+  const { adminClient } = useContext(AdminDataDataContext);
+  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
+
+  const handleEntityClick = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      if (!value) return;
+      // open entity asynchronously to not fight with the "click to activate entity" functionality
+      setTimeout(() =>
+        dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id }))
+      );
+    },
+    [dispatchEntityEditorState, value]
+  );
+
+  if (!entity) return null;
+
+  return (
+    <Column>
+      <Column.Item flexGrow={1}>
+        <Text textStyle="body2" noBottomMargin>
+          {entity.info.type}
+        </Text>
+        <Text textStyle="body1">
+          <a onClick={handleEntityClick}>{entity.info.name}</a>
+        </Text>
+      </Column.Item>
+      <Column.Item>
+        <StatusTag status={entity.info.status} />
+      </Column.Item>
+    </Column>
   );
 }
