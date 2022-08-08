@@ -66,7 +66,8 @@ export function assertIsAdminReferences(
 }
 
 export interface AdminRichTextsFields {
-  default: RichText | null;
+  richText: RichText | null;
+  richTextList: Array<RichText> | null;
 }
 
 export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
@@ -183,7 +184,8 @@ export function assertIsPublishedReferences(
 }
 
 export interface PublishedRichTextsFields {
-  default: RichText | null;
+  richText: RichText | null;
+  richTextList: Array<RichText> | null;
 }
 
 export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields>;

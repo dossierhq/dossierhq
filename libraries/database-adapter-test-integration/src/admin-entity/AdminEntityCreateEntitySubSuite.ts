@@ -1,9 +1,11 @@
 import {
   AdminEntityStatus,
   copyEntity,
+  createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
+  createRichTextValueItemNode,
   ErrorType,
 } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
@@ -54,6 +56,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishWithSubjectAuthKey,
   createEntity_withMultilineField,
   createEntity_withRichTextField,
+  createEntity_withRichTextFieldWithReference,
+  createEntity_withRichTextFieldWithValueItem,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
   createEntity_errorMultilineStringInTitle,
@@ -267,11 +271,7 @@ async function createEntity_withRichTextField({ server }: AdminEntityTestContext
   ]);
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity<AdminRichTexts>(
-    copyEntity(RICH_TEXTS_CREATE, {
-      fields: {
-        default: richText,
-      },
-    })
+    copyEntity(RICH_TEXTS_CREATE, { fields: { richText } })
   );
   assertOkResult(createResult);
   const {
@@ -284,7 +284,88 @@ async function createEntity_withRichTextField({ server }: AdminEntityTestContext
   const expectedEntity = copyEntity(RICH_TEXTS_ADMIN_ENTITY, {
     id,
     info: { name, createdAt, updatedAt },
-    fields: { default: richText },
+    fields: { richText },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminRichTexts(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withRichTextFieldWithReference({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+
+  const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createTitleOnlyResult);
+
+  const richText = createRichTextRootNode([
+    createRichTextParagraphNode([
+      createRichTextEntityNode({ id: createTitleOnlyResult.value.entity.id }),
+    ]),
+  ]);
+  const createResult = await client.createEntity<AdminRichTexts>(
+    copyEntity(RICH_TEXTS_CREATE, { fields: { richText } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(RICH_TEXTS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { richText },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminRichTexts(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withRichTextFieldWithValueItem({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+
+  const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createTitleOnlyResult);
+
+  const richText = createRichTextRootNode([
+    createRichTextParagraphNode([
+      createRichTextValueItemNode({
+        type: 'ReferencesValue',
+        reference: { id: createTitleOnlyResult.value.entity.id },
+      }),
+    ]),
+  ]);
+  const createResult = await client.createEntity<AdminRichTexts>(
+    copyEntity(RICH_TEXTS_CREATE, { fields: { richText } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(RICH_TEXTS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { richText },
   });
 
   assertResultValue(createResult, {
