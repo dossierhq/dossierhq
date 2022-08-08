@@ -51,6 +51,7 @@ export type FieldType = keyof typeof FieldType;
 export const RichTextNodeType = {
   entity: 'entity',
   paragraph: 'paragraph',
+  root: 'root',
   text: 'text',
   valueItem: 'valueItem',
 } as const;
@@ -69,13 +70,10 @@ export interface FieldSpecification {
   entityTypes?: string[];
   /** Applicable when type is ValueType or RichText */
   valueTypes?: string[];
-  // TODO replace with rich text nodes. no such thing as inline
-  /** Applicable when type is RichText. All block types are enabled if none are specified. The type
-   * can either be a standard RichTextBlockType or any type that's enabled.
-   * If inlineTypes isn't specified all inline types are enabled. If inlineTypes is an empty array,
-   * no inline types are enabled.
+  /** Applicable when type is RichText. All node types are enabled if none are specified. The type
+   * can either be a standard RichTextNodeType or any type that's supported.
    */
-  richTextBlocks?: { type: RichTextNodeType | string; inlineTypes?: string[] }[];
+  richTextNodes?: (RichTextNodeType | string)[];
 }
 
 export interface FieldValueTypeMap {
@@ -185,39 +183,54 @@ export class AdminSchema {
           }
         }
 
-        if (fieldSpec.richTextBlocks && fieldSpec.richTextBlocks.length > 0) {
+        if (fieldSpec.richTextNodes && fieldSpec.richTextNodes.length > 0) {
           if (fieldSpec.type !== FieldType.RichText) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify richTextBlocks`
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify richTextNodes`
             );
           }
 
-          const paragraph = fieldSpec.richTextBlocks.find(
-            (x) => x.type === RichTextNodeType.paragraph
-          );
-          if (!paragraph) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: richTextBlocks must include paragraph`
-            );
-          }
-
-          const usedRichTextBlockTypes = new Set();
-          for (const richTextBlock of fieldSpec.richTextBlocks) {
-            if (usedRichTextBlockTypes.has(richTextBlock.type)) {
+          const usedRichTextNodes = new Set();
+          for (const richTextNode of fieldSpec.richTextNodes) {
+            if (usedRichTextNodes.has(richTextNode)) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: richTextBlocks with type ${richTextBlock.type} is duplicated`
+                `${typeSpec.name}.${fieldSpec.name}: richTextNodes with type ${richTextNode} is duplicated`
               );
             }
-            usedRichTextBlockTypes.add(richTextBlock.type);
+            usedRichTextNodes.add(richTextNode);
+          }
 
+          const missingNodeTypes = [
+            RichTextNodeType.root,
+            RichTextNodeType.paragraph,
+            RichTextNodeType.text,
+          ].filter((it) => !usedRichTextNodes.has(it));
+          if (missingNodeTypes.length > 0) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${
+                fieldSpec.name
+              }: richTextNodes must include ${missingNodeTypes.join(', ')}`
+            );
+          }
+
+          if (usedRichTextNodes.size > 0) {
             if (
-              (richTextBlock.type === RichTextNodeType.entity ||
-                richTextBlock.type === RichTextNodeType.valueItem) &&
-              richTextBlock.inlineTypes &&
-              richTextBlock.inlineTypes.length > 0
+              fieldSpec.entityTypes &&
+              fieldSpec.entityTypes.length > 0 &&
+              !usedRichTextNodes.has(RichTextNodeType.entity)
             ) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: richTextBlocks with type ${richTextBlock.type} shouldn’t specify inlineTypes`
+                `${typeSpec.name}.${fieldSpec.name}: entityTypes is specified for field, but richTextNodes is missing entity`
+              );
+            }
+
+            if (
+              fieldSpec.valueTypes &&
+              fieldSpec.valueTypes.length > 0 &&
+              !usedRichTextNodes.has(RichTextNodeType.valueItem)
+            ) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: valueTypes is specified for field, but richTextNodes is missing valueItem`
               );
             }
           }

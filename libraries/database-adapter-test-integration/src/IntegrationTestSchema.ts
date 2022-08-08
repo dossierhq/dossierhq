@@ -1,4 +1,8 @@
-import { FieldType, type AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import {
+  FieldType,
+  RichTextNodeType,
+  type AdminSchemaSpecificationUpdate,
+} from '@jonasb/datadata-core';
 
 export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   entityTypes: [
@@ -26,6 +30,11 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'richText', type: FieldType.RichText },
         { name: 'richTextList', type: FieldType.RichText, list: true },
+        {
+          name: 'richTextOnlyParagraphAndText',
+          type: FieldType.RichText,
+          richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
+        },
       ],
     },
     {

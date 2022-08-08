@@ -518,6 +518,58 @@ describe('traverseAdminEntity', () => {
           },
         },
         {
+          "fieldSpec": {
+            "name": "richText",
+            "type": "RichText",
+          },
+          "node": {
+            "children": [
+              {
+                "data": {
+                  "string1": "two-1",
+                  "string2": "two-2",
+                  "type": "TwoStrings",
+                },
+                "type": "valueItem",
+                "version": 1,
+              },
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "root",
+            "version": 1,
+          },
+          "path": [
+            "entity",
+            "fields",
+            "richText",
+          ],
+          "type": "richTextNode",
+        },
+        {
+          "fieldSpec": {
+            "name": "richText",
+            "type": "RichText",
+          },
+          "node": {
+            "data": {
+              "string1": "two-1",
+              "string2": "two-2",
+              "type": "TwoStrings",
+            },
+            "type": "valueItem",
+            "version": 1,
+          },
+          "path": [
+            "entity",
+            "fields",
+            "richText",
+            0,
+          ],
+          "type": "richTextNode",
+        },
+        {
           "path": "entity.fields.richText[0].data",
           "type": "valueItem",
           "valueItem": {

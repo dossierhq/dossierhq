@@ -18,6 +18,7 @@ export const AdminItemTraverseNodeType = {
   field: 'field',
   fieldItem: 'fieldItem',
   valueItem: 'valueItem',
+  richTextNode: 'richTextNode',
 } as const;
 export type AdminItemTraverseNodeType = keyof typeof AdminItemTraverseNodeType;
 
@@ -25,7 +26,8 @@ export type AdminItemTraverseNode =
   | AdminItemTraverseNodeError
   | AdminItemTraverseNodeField
   | AdminItemTraverseNodeFieldItem
-  | AdminItemTraverseNodeValueItem;
+  | AdminItemTraverseNodeValueItem
+  | AdminItemTraverseNodeRichTextNode;
 
 interface AdminItemTraverseNodeError {
   path: ItemValuePath;
@@ -52,6 +54,13 @@ interface AdminItemTraverseNodeValueItem {
   type: 'valueItem';
   valueSpec: AdminValueTypeSpecification;
   valueItem: ValueItem;
+}
+
+interface AdminItemTraverseNodeRichTextNode {
+  path: ItemValuePath;
+  type: 'richTextNode';
+  fieldSpec: FieldSpecification;
+  node: RichTextNode;
 }
 
 export function* traverseAdminEntity(
@@ -206,13 +215,14 @@ function* traverseItemFieldValue(
       yield errorNode;
       return;
     }
-    yield* traverseRichTextNode(schema, path, root);
+    yield* traverseRichTextNode(schema, path, fieldSpec, root);
   }
 }
 
 function* traverseRichTextNode(
   schema: AdminSchema,
   path: ItemValuePath,
+  fieldSpec: FieldSpecification,
   node: RichTextNode
 ): Generator<AdminItemTraverseNode> {
   if (typeof node !== 'object') {
@@ -225,6 +235,14 @@ function* traverseRichTextNode(
     return;
   }
 
+  const traverseNode: AdminItemTraverseNodeRichTextNode = {
+    type: AdminItemTraverseNodeType.richTextNode,
+    path,
+    fieldSpec,
+    node,
+  };
+  yield traverseNode;
+
   if (isRichTextValueItemNode(node) && node.data) {
     yield* traverseAdminValueItem(schema, [...path, 'data'], node.data);
   }
@@ -232,7 +250,7 @@ function* traverseRichTextNode(
     for (let i = 0; i < node.children.length; i += 1) {
       const childPath = [...path, i];
       const child = node.children[i];
-      yield* traverseRichTextNode(schema, childPath, child);
+      yield* traverseRichTextNode(schema, childPath, fieldSpec, child);
     }
   }
 }

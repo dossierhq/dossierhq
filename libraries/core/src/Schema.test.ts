@@ -198,7 +198,7 @@ describe('validate()', () => {
     );
   });
 
-  test('Error: richTextBlocks specified on String field', () => {
+  test('Error: richTextNodes specified on String field', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -209,7 +209,7 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.String,
-                richTextBlocks: [{ type: RichTextNodeType.paragraph }],
+                richTextNodes: [RichTextNodeType.paragraph],
               },
             ],
           },
@@ -217,11 +217,11 @@ describe('validate()', () => {
         valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type String shouldn’t specify richTextBlocks'
+      'Foo.bar: Field with type String shouldn’t specify richTextNodes'
     );
   });
 
-  test('Error: richTextBlocks with duplicate type', () => {
+  test('Error: richTextNodes with duplicate type', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -232,9 +232,103 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
-                richTextBlocks: [
-                  { type: RichTextNodeType.paragraph },
-                  { type: RichTextNodeType.paragraph },
+                richTextNodes: [RichTextNodeType.paragraph, RichTextNodeType.paragraph],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes with type paragraph is duplicated'
+    );
+  });
+
+  test('Error: richTextNodes without root, paragraph and text', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextNodes: [RichTextNodeType.entity],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes must include root, paragraph, text'
+    );
+  });
+
+  test('Error: richTextNodes without paragraph', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextNodes: [RichTextNodeType.root, RichTextNodeType.text],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes must include paragraph'
+    );
+  });
+
+  test('Error: richTextNodes without text', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes must include text'
+    );
+  });
+
+  test('Error: entityTypes specified but not entity richTextNodes', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                entityTypes: ['Foo'],
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
                 ],
               },
             ],
@@ -243,11 +337,11 @@ describe('validate()', () => {
         valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextBlocks with type paragraph is duplicated'
+      'Foo.bar: entityTypes is specified for field, but richTextNodes is missing entity'
     );
   });
 
-  test('Error: richTextBlocks without paragraph', () => {
+  test('Error: valueTypes specified but not valueItem richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -258,41 +352,20 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
-                richTextBlocks: [{ type: RichTextNodeType.entity }],
-              },
-            ],
-          },
-        ],
-        valueTypes: [],
-      }).validate(),
-      ErrorType.BadRequest,
-      'Foo.bar: richTextBlocks must include paragraph'
-    );
-  });
-
-  test('Error: richTextBlock for entity with inlineTypes', () => {
-    expectErrorResult(
-      new AdminSchema({
-        entityTypes: [
-          {
-            name: 'Foo',
-            adminOnly: false,
-            fields: [
-              {
-                name: 'bar',
-                type: FieldType.RichText,
-                richTextBlocks: [
-                  { type: RichTextNodeType.paragraph },
-                  { type: RichTextNodeType.entity, inlineTypes: ['bold'] },
+                valueTypes: ['Bar'],
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
                 ],
               },
             ],
           },
         ],
-        valueTypes: [],
+        valueTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextBlocks with type entity shouldn’t specify inlineTypes'
+      'Foo.bar: valueTypes is specified for field, but richTextNodes is missing valueItem'
     );
   });
 

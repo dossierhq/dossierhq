@@ -82,7 +82,7 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
-  fields: { richText: null, richTextList: null },
+  fields: { richText: null, richTextList: null, richTextOnlyParagraphAndText: null },
 };
 
 export const STRINGS_CREATE: Readonly<AdminEntityCreate<AdminStrings>> = {
