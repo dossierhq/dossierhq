@@ -8,7 +8,7 @@ import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 export type SerializedPublishedValueItemNode = RichTextValueItemNode;
 
-export function $createPublishedValueItemNode(data: ValueItem | null): PublishedValueItemNode {
+export function $createPublishedValueItemNode(data: ValueItem): PublishedValueItemNode {
   return new PublishedValueItemNode(data);
 }
 
@@ -31,7 +31,7 @@ function PublishedValueItemComponent({
 }
 
 export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {
-  __data: ValueItem | null;
+  __data: ValueItem;
 
   static override getType(): string {
     return RichTextNodeType.valueItem;
@@ -41,17 +41,17 @@ export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {
     return new PublishedValueItemNode(node.__data, node.__key);
   }
 
-  constructor(data: ValueItem | null, key?: NodeKey) {
+  constructor(data: ValueItem, key?: NodeKey) {
     super(key);
     this.__data = data;
   }
 
-  setData(data: ValueItem | null) {
+  setData(data: ValueItem) {
     const self = this.getWritable();
     self.__data = data;
   }
 
-  getData(): ValueItem | null {
+  getData(): ValueItem {
     const self = this.getLatest();
     return self.__data;
   }

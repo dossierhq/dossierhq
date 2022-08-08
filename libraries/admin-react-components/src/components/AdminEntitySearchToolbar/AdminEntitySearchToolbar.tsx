@@ -1,7 +1,7 @@
 import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb/datadata-design';
 import { IconButton } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEventHandler } from 'react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AdminDataDataContext } from '../..';
 import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector';
 import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector';
