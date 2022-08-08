@@ -37,7 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
-    "@rushstack/heft": "~0.46.2",
+    "@rushstack/heft": "~0.47.0",
     "@storybook/addon-actions": "^6.4.21",
     "@storybook/addon-essentials": "^6.4.21",
     "@storybook/addon-links": "^6.4.21",
