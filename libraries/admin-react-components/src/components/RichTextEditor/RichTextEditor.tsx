@@ -17,11 +17,11 @@ import {
 import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { LexicalTheme } from '../../utils/LexicalTheme.js';
+import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import { AdminEntityNode, INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { AdminValueItemNode, INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 import { EntityPlugin } from './EntityPlugin.js';
-import { RichTextEditorContext } from './RichTextEditorContext.js';
 import { ValueItemPlugin } from './ValueItemPlugin.js';
 
 interface Props {
@@ -57,27 +57,26 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   };
 
   return (
-    <RichTextEditorContext.Provider value={{ fieldSpec }}>
-      <LexicalComposer initialConfig={initialConfig}>
-        <ToolbarPlugin />
-        <RichTextPlugin
-          contentEditable={
-            <ContentEditable
-              className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
-            />
-          }
-          placeholder=""
-        />
-        <EntityPlugin />
-        <ValueItemPlugin />
-        <OnChangePlugin onChange={debouncedHandleChange} />
-      </LexicalComposer>
-    </RichTextEditorContext.Provider>
+    <LexicalComposer initialConfig={initialConfig}>
+      <ToolbarPlugin fieldSpec={fieldSpec} />
+      <RichTextPlugin
+        contentEditable={
+          <ContentEditable
+            className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
+          />
+        }
+        placeholder=""
+      />
+      <EntityPlugin />
+      <ValueItemPlugin />
+      <OnChangePlugin onChange={debouncedHandleChange} />
+    </LexicalComposer>
   );
 }
 
-function ToolbarPlugin() {
+function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) {
   const [editor] = useLexicalComposerContext();
+
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isSubscript, setIsSubscript] = useState(false);
@@ -85,6 +84,9 @@ function ToolbarPlugin() {
   const [isCode, setIsCode] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
+
+  const [showSelector, setShowSelector] = useState(false);
+  const handleDialogClose = useCallback(() => setShowSelector(false), []);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -157,15 +159,26 @@ function ToolbarPlugin() {
         />
       </IconButton.Group>
       <Row.Item flexGrow={1} />
-      <Button onClick={() => editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, undefined)}>
-        Add entity
-      </Button>
+      <Button onClick={() => setShowSelector(true)}>Add entity</Button>
       <AdminTypePicker
         showValueTypes
+        valueTypes={fieldSpec.valueTypes}
         onTypeSelected={(type) => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type })}
       >
         Add value item
       </AdminTypePicker>
+      {showSelector && (
+        <AdminEntitySelectorDialog
+          show
+          title="Select entity"
+          entityTypes={fieldSpec.entityTypes}
+          onClose={handleDialogClose}
+          onItemClick={(entity) => {
+            editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, { id: entity.id });
+            setShowSelector(false);
+          }}
+        />
+      )}
     </Row>
   );
 }

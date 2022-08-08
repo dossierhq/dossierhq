@@ -1462,7 +1462,9 @@ describe('createEntity()', () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
-        bodyOnlyParagraph: createRichTextRootNode([createRichTextEntityNode(null)]),
+        bodyOnlyParagraph: createRichTextRootNode([
+          createRichTextEntityNode({ id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' }),
+        ]),
       },
     });
     expectErrorResult(

@@ -79,7 +79,7 @@ export function createRichTextTextNode(
   };
 }
 
-export function createRichTextEntityNode(reference: EntityReference | null): RichTextEntityNode {
+export function createRichTextEntityNode(reference: EntityReference): RichTextEntityNode {
   return { type: RichTextNodeType.entity, reference, version: 1 };
 }
 
