@@ -22,6 +22,20 @@ export function validateTraverseNode(
       break;
     case AdminItemTraverseNodeType.error:
       return { path: node.path, message: node.message };
+    case AdminItemTraverseNodeType.richTextNode:
+      if (node.fieldSpec.richTextNodes && node.fieldSpec.richTextNodes.length > 0) {
+        if (!node.fieldSpec.richTextNodes.includes(node.node.type)) {
+          return {
+            path: node.path,
+            message: `Rich text node type ${
+              node.node.type
+            } is not allowed in field (supported nodes: ${node.fieldSpec.richTextNodes.join(
+              ', '
+            )})`,
+          };
+        }
+      }
+      break;
     case AdminItemTraverseNodeType.valueItem:
       break;
     default:

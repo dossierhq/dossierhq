@@ -588,7 +588,7 @@ function normalizeFieldValueItem(
     case FieldType.Location:
       return value;
     case FieldType.RichText: {
-      // TODO normalize rich text more?
+      // TODO normalize ValueItem nodes?
       // Don't fail on invalid rich text, just ignore it in this phase
       const richText = value as RichText;
       if (

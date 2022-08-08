@@ -7,7 +7,6 @@ import type {
 import {
   AdminEntityStatus,
   copyEntity,
-  createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
@@ -15,7 +14,6 @@ import {
   ErrorType,
   FieldType,
   PublishingEventKind,
-  RichTextNodeType,
 } from '@jonasb/datadata-core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
@@ -51,7 +49,6 @@ const emptyBazFields = {
   baz: null,
   body: null,
   bodyList: null,
-  bodyOnlyParagraph: null,
   booleanString: null,
   listFields: null,
   listFieldsList: null,
@@ -103,11 +100,6 @@ beforeAll(async () => {
           { name: 'active', type: FieldType.Boolean },
           { name: 'activeList', type: FieldType.Boolean, list: true },
           { name: 'body', type: FieldType.RichText },
-          {
-            name: 'bodyOnlyParagraph',
-            type: FieldType.RichText,
-            richTextBlocks: [{ type: RichTextNodeType.paragraph }],
-          },
           { name: 'bodyList', type: FieldType.RichText, list: true },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
@@ -1454,23 +1446,6 @@ describe('createEntity()', () => {
       createResult,
       ErrorType.BadRequest,
       'entity.fields.body: Expected object got string'
-    );
-  });
-
-  //TODO support restricting node types
-  test.skip('Error: rich text with invalid node type', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
-      fields: {
-        bodyOnlyParagraph: createRichTextRootNode([
-          createRichTextEntityNode({ id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' }),
-        ]),
-      },
-    });
-    expectErrorResult(
-      createResult,
-      ErrorType.BadRequest,
-      'entity.fields.bodyOnlyParagraph[0]: rich text block of type entity is not allowed'
     );
   });
 

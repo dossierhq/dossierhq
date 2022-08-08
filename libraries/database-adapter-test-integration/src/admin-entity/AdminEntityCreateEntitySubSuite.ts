@@ -62,6 +62,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
   createEntity_errorMultilineStringInTitle,
+  createEntity_errorRichTextWithUnsupportedEntityNode,
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
@@ -526,6 +527,32 @@ async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityT
     createResult,
     ErrorType.BadRequest,
     'entity.fields.title: multiline string not allowed'
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
+}
+
+async function createEntity_errorRichTextWithUnsupportedEntityNode({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const id = uuidv4();
+  const referenceId = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      id,
+      fields: {
+        richTextOnlyParagraphAndText: createRichTextRootNode([
+          createRichTextEntityNode({ id: referenceId }),
+        ]),
+      },
+    })
+  );
+  assertErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    `entity.fields.richTextOnlyParagraphAndText[0]: Rich text node type entity is not allowed in field (supported nodes: root, paragraph, text)`
   );
 
   const getResult = await client.getEntity({ id });
