@@ -42,7 +42,7 @@
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "~0.46.2",
+    "@rushstack/heft": "~0.47.0",
     "@types/pg": "^8.6.5",
     "@types/uuid": "~8.3.4",
     "dotenv": "^16.0.0",
