@@ -1,12 +1,22 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 
 export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'PersonalNote',
       fields: [
-        { name: 'note', type: FieldType.RichText },
+        {
+          name: 'note',
+          type: FieldType.RichText,
+          richTextNodes: [
+            RichTextNodeType.root,
+            RichTextNodeType.paragraph,
+            RichTextNodeType.text,
+            RichTextNodeType.entity,
+          ],
+          entityTypes: ['PlaceOfBusiness'],
+        },
         {
           name: 'placeOfBusiness',
           type: FieldType.EntityType,
