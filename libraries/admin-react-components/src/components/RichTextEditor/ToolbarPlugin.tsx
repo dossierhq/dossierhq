@@ -1,4 +1,5 @@
 import type { FieldSpecification } from '@jonasb/datadata-core';
+import { RichTextNodeType } from '@jonasb/datadata-core';
 import { Button, IconButton, Row } from '@jonasb/datadata-design';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
@@ -25,9 +26,6 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) 
   const [isCode, setIsCode] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
-
-  const [showSelector, setShowSelector] = useState(false);
-  const handleDialogClose = useCallback(() => setShowSelector(false), []);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -59,6 +57,12 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) 
       })
     );
   }, [editor, updateToolbar]);
+
+  const enableAllNodes = !fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0;
+  const enableEntityNode =
+    enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entity);
+  const enableValueItemNode =
+    enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem);
 
   return (
     <Row gap={2} marginBottom={2}>
@@ -99,15 +103,25 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) 
           onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}
         />
       </IconButton.Group>
-      <Row.Item flexGrow={1} />
+      {enableEntityNode || enableValueItemNode ? (
+        <>
+          <Row.Item flexGrow={1} />
+          {enableEntityNode ? <AddEntityButton fieldSpec={fieldSpec} /> : null}
+          {enableValueItemNode ? <AddValueItemButton fieldSpec={fieldSpec} /> : null}
+        </>
+      ) : null}
+    </Row>
+  );
+}
+
+function AddEntityButton({ fieldSpec }: { fieldSpec: FieldSpecification }) {
+  const [editor] = useLexicalComposerContext();
+  const [showSelector, setShowSelector] = useState(false);
+  const handleDialogClose = useCallback(() => setShowSelector(false), []);
+
+  return (
+    <>
       <Button onClick={() => setShowSelector(true)}>Add entity</Button>
-      <AdminTypePicker
-        showValueTypes
-        valueTypes={fieldSpec.valueTypes}
-        onTypeSelected={(type) => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type })}
-      >
-        Add value item
-      </AdminTypePicker>
       {showSelector && (
         <AdminEntitySelectorDialog
           show
@@ -120,6 +134,20 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) 
           }}
         />
       )}
-    </Row>
+    </>
+  );
+}
+
+function AddValueItemButton({ fieldSpec }: { fieldSpec: FieldSpecification }) {
+  const [editor] = useLexicalComposerContext();
+
+  return (
+    <AdminTypePicker
+      showValueTypes
+      valueTypes={fieldSpec.valueTypes}
+      onTypeSelected={(type) => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type })}
+    >
+      Add value item
+    </AdminTypePicker>
   );
 }
