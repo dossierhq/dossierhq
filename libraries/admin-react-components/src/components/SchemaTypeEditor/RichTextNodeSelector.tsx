@@ -1,13 +1,14 @@
+import { RichTextNodeType } from '@jonasb/datadata-core';
 import type { MultipleSelectorItem } from '@jonasb/datadata-design';
 import {
   initializeMultipleSelectorState,
+  MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   TagInputSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import { useEffect, useReducer } from 'react';
 import type {
-  SchemaEditorState,
   SchemaEditorStateAction,
   SchemaFieldSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
@@ -27,32 +28,40 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
 
   useEffect(() => {
     dispatchSchemaEditorState(
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(fieldSelector, state.selectedIds)
+      new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(fieldSelector, state.selectedIds)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
+
+  useEffect(() => {
+    dispatch(new MultipleSelectorStateActions.SetSelection(selectedIds));
+  }, [selectedIds]);
 
   return { state, dispatch };
 }
 
 interface Props {
   fieldSelector: SchemaFieldSelector;
-  valueTypes: string[];
-  schemaEditorState: SchemaEditorState;
+  richTextNodes: string[];
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
-export function FieldValueTypeSelector({
+export function RichTextNodeSelector({
   fieldSelector,
-  valueTypes,
-  schemaEditorState,
+  richTextNodes,
   dispatchSchemaEditorState,
 }: Props) {
-  const items = schemaEditorState.valueTypes.map((it) => ({ id: it.name }));
+  const items = [
+    { id: RichTextNodeType.root },
+    { id: RichTextNodeType.paragraph },
+    { id: RichTextNodeType.text },
+    { id: RichTextNodeType.entity },
+    { id: RichTextNodeType.valueItem },
+  ];
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
     items,
-    valueTypes,
+    richTextNodes,
     dispatchSchemaEditorState
   );
   return (

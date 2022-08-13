@@ -1,6 +1,5 @@
 import { Button, Checkbox, Field } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -8,9 +7,9 @@ import type {
   SchemaFieldSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaFieldEditor } from './SchemaFieldEditor';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaFieldEditor } from './SchemaFieldEditor.js';
 
 interface Props {
   typeSelector: SchemaTypeSelector;

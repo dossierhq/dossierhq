@@ -9,17 +9,18 @@ import {
   TagInput,
 } from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaFieldDraft,
   SchemaFieldSelector,
   SchemaTypeSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { FieldEntityTypeSelector } from './FieldEntityTypeSelector';
-import { FieldValueTypeSelector } from './FieldValueTypeSelector';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
+import { FieldValueTypeSelector } from './FieldValueTypeSelector.js';
+import { RichTextNodeSelector } from './RichTextNodeSelector.js';
 
 interface Props {
   fieldSelector: SchemaFieldSelector;
@@ -67,6 +68,7 @@ export function SchemaFieldEditor({
   const canChangeType = fieldDraft.status === 'new';
   const canChangeMultiline = fieldDraft.status === 'new';
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeRichTextNodes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
 
@@ -165,52 +167,80 @@ export function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {fieldDraft.type === FieldType.EntityType ? (
+        {fieldDraft.type === FieldType.RichText ? (
           <Field horizontal>
             <Field.LabelColumn>
-              <Field.Label>Entity types</Field.Label>
+              <Field.Label>Rich text nodes</Field.Label>
             </Field.LabelColumn>
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  {canChangeEntityTypes ? (
-                    <FieldEntityTypeSelector
+                  {canChangeRichTextNodes ? (
+                    <RichTextNodeSelector
                       fieldSelector={fieldSelector}
-                      entityTypes={fieldDraft.entityTypes ?? []}
-                      schemaEditorState={schemaEditorState}
+                      richTextNodes={fieldDraft.richTextNodes ?? []}
                       dispatchSchemaEditorState={dispatchSchemaEditorState}
                     />
                   ) : (
-                    <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
+                    <RichTextNodeDisplay richTextNodes={fieldDraft.richTextNodes ?? []} />
                   )}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {fieldDraft.type === FieldType.ValueType ? (
-          <Field horizontal>
-            <Field.LabelColumn>
-              <Field.Label>Value types</Field.Label>
-            </Field.LabelColumn>
-            <Field.BodyColumn>
-              <Field>
-                <Field.Control>
-                  {canChangeValueTypes ? (
-                    <FieldValueTypeSelector
-                      fieldSelector={fieldSelector}
-                      valueTypes={fieldDraft.valueTypes ?? []}
-                      schemaEditorState={schemaEditorState}
-                      dispatchSchemaEditorState={dispatchSchemaEditorState}
-                    />
-                  ) : (
-                    <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
-                  )}
-                </Field.Control>
-              </Field>
-            </Field.BodyColumn>
-          </Field>
-        ) : null}
+        {
+          //TODO support sometimes for rich text
+          fieldDraft.type === FieldType.EntityType ? (
+            <Field horizontal>
+              <Field.LabelColumn>
+                <Field.Label>Entity types</Field.Label>
+              </Field.LabelColumn>
+              <Field.BodyColumn>
+                <Field>
+                  <Field.Control>
+                    {canChangeEntityTypes ? (
+                      <FieldEntityTypeSelector
+                        fieldSelector={fieldSelector}
+                        entityTypes={fieldDraft.entityTypes ?? []}
+                        schemaEditorState={schemaEditorState}
+                        dispatchSchemaEditorState={dispatchSchemaEditorState}
+                      />
+                    ) : (
+                      <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
+                    )}
+                  </Field.Control>
+                </Field>
+              </Field.BodyColumn>
+            </Field>
+          ) : null
+        }
+        {
+          //TODO support sometimes for rich text
+          fieldDraft.type === FieldType.ValueType ? (
+            <Field horizontal>
+              <Field.LabelColumn>
+                <Field.Label>Value types</Field.Label>
+              </Field.LabelColumn>
+              <Field.BodyColumn>
+                <Field>
+                  <Field.Control>
+                    {canChangeValueTypes ? (
+                      <FieldValueTypeSelector
+                        fieldSelector={fieldSelector}
+                        valueTypes={fieldDraft.valueTypes ?? []}
+                        schemaEditorState={schemaEditorState}
+                        dispatchSchemaEditorState={dispatchSchemaEditorState}
+                      />
+                    ) : (
+                      <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
+                    )}
+                  </Field.Control>
+                </Field>
+              </Field.BodyColumn>
+            </Field>
+          ) : null
+        }
       </Card.Content>
     </Card>
   );
@@ -237,6 +267,16 @@ function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
     <TagInput>
       {valueTypes.map((valueType) => (
         <Tag key={valueType}>{valueType}</Tag>
+      ))}
+    </TagInput>
+  );
+}
+
+function RichTextNodeDisplay({ richTextNodes }: { richTextNodes: string[] }) {
+  return (
+    <TagInput>
+      {richTextNodes.map((richTextNode) => (
+        <Tag key={richTextNode}>{richTextNode}</Tag>
       ))}
     </TagInput>
   );

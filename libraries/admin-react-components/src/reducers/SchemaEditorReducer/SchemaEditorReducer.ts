@@ -5,7 +5,7 @@ import type {
   AdminValueTypeSpecification,
   AdminValueTypeSpecificationUpdate,
 } from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
 export interface SchemaTypeSelector {
@@ -39,6 +39,7 @@ export interface SchemaFieldDraft {
   list: boolean;
   required: boolean;
   multiline?: boolean;
+  richTextNodes?: string[];
   entityTypes?: string[];
   valueTypes?: string[];
 }
@@ -250,6 +251,34 @@ class ChangeFieldAllowedEntityTypesAction extends FieldAction {
   }
 }
 
+class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
+  richTextNodes: string[];
+
+  constructor(fieldSelector: SchemaFieldSelector, richTextNodes: string[]) {
+    super(fieldSelector);
+    this.richTextNodes = richTextNodes;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (isEqual(fieldDraft.richTextNodes, this.richTextNodes)) {
+      return fieldDraft;
+    }
+
+    let newRichTextNodes = this.richTextNodes;
+
+    if (newRichTextNodes.length > 0) {
+      const basicNodes = [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text];
+      const missingBasicNodes = basicNodes.filter((it) => !newRichTextNodes.includes(it));
+      if (missingBasicNodes.length > 0) {
+        newRichTextNodes = [...newRichTextNodes];
+        newRichTextNodes.push(...missingBasicNodes);
+      }
+    }
+
+    return { ...fieldDraft, richTextNodes: newRichTextNodes };
+  }
+}
+
 class ChangeFieldAllowedValueTypesAction extends FieldAction {
   valueTypes: string[];
 
@@ -322,6 +351,12 @@ class ChangeFieldTypeAction extends FieldAction {
       newFieldDraft.multiline = !!newFieldDraft.multiline;
     } else {
       delete newFieldDraft.multiline;
+    }
+
+    if (this.fieldType === FieldType.RichText) {
+      newFieldDraft.richTextNodes = [];
+    } else {
+      delete newFieldDraft.richTextNodes;
     }
 
     if (this.fieldType === FieldType.EntityType) {
@@ -541,6 +576,9 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         if (fieldSpec.type === FieldType.String) {
           fieldDraft.multiline = !!fieldSpec.multiline;
         }
+        if (fieldSpec.type === FieldType.RichText) {
+          fieldDraft.richTextNodes = fieldSpec.richTextNodes ?? [];
+        }
         if (fieldSpec.type === FieldType.EntityType) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
         }
@@ -557,6 +595,7 @@ export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddField: AddFieldAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
+  ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
@@ -606,10 +645,13 @@ function getTypeUpdateFromEditorState(
       required: draftField.required,
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
-      ...(draftField.type === FieldType.EntityType
+      ...(draftField.type === FieldType.RichText
+        ? { richTextNodes: draftField.richTextNodes }
+        : undefined),
+      ...(draftField.type === FieldType.EntityType //TODO or rich text
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
-      ...(draftField.type === FieldType.ValueType
+      ...(draftField.type === FieldType.ValueType //TODO or rich text
         ? { valueType: draftField.valueTypes ?? [] }
         : undefined),
     };
