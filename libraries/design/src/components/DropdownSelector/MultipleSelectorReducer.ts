@@ -55,6 +55,23 @@ class ClearSelectionAction<TItem extends MultipleSelectorItem>
   }
 }
 
+class SetSelectionAction<TItem extends MultipleSelectorItem>
+  implements MultipleSelectorStateAction<TItem>
+{
+  private readonly selectedIds: string[];
+
+  constructor(selectedIds: string[]) {
+    this.selectedIds = selectedIds;
+  }
+
+  reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
+    if (isEqual(this.selectedIds, state.selectedIds)) {
+      return state;
+    }
+    return { ...state, selectedIds: [...this.selectedIds] };
+  }
+}
+
 class ToggleItemAction<TItem extends MultipleSelectorItem>
   implements MultipleSelectorStateAction<TItem>
 {
@@ -97,6 +114,7 @@ class UpdateItemsAction<TItem extends MultipleSelectorItem<TId>, TId extends str
 
 export const MultipleSelectorStateActions = {
   ClearSelection: ClearSelectionAction,
+  SetSelection: SetSelectionAction,
   ToggleItem: ToggleItemAction,
   UpdateItems: UpdateItemsAction,
 };

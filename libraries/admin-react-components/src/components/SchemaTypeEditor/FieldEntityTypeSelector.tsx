@@ -10,8 +10,8 @@ import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaFieldSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>(
   fieldSelector: SchemaFieldSelector,
