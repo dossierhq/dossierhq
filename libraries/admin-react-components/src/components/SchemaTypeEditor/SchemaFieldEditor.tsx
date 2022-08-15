@@ -1,4 +1,4 @@
-import { FieldType } from '@jonasb/datadata-core';
+import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import {
   Card,
   Checkbox,
@@ -92,6 +92,18 @@ export function SchemaFieldEditor({
         { id: 'delete', title: 'Delete field' },
       ]
     : [];
+  const showEntityTypes =
+    fieldDraft.type === FieldType.EntityType ||
+    (fieldDraft.type === FieldType.RichText &&
+      (!fieldDraft.richTextNodes ||
+        fieldDraft.richTextNodes.length === 0 ||
+        fieldDraft.richTextNodes?.includes(RichTextNodeType.entity)));
+  const showValueTypes =
+    fieldDraft.type === FieldType.ValueType ||
+    (fieldDraft.type === FieldType.RichText &&
+      (!fieldDraft.richTextNodes ||
+        fieldDraft.richTextNodes.length === 0 ||
+        fieldDraft.richTextNodes?.includes(RichTextNodeType.valueItem)));
   return (
     <Card>
       <Card.Header>
@@ -189,58 +201,52 @@ export function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {
-          //TODO support sometimes for rich text
-          fieldDraft.type === FieldType.EntityType ? (
-            <Field horizontal>
-              <Field.LabelColumn>
-                <Field.Label>Entity types</Field.Label>
-              </Field.LabelColumn>
-              <Field.BodyColumn>
-                <Field>
-                  <Field.Control>
-                    {canChangeEntityTypes ? (
-                      <FieldEntityTypeSelector
-                        fieldSelector={fieldSelector}
-                        entityTypes={fieldDraft.entityTypes ?? []}
-                        schemaEditorState={schemaEditorState}
-                        dispatchSchemaEditorState={dispatchSchemaEditorState}
-                      />
-                    ) : (
-                      <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
-                    )}
-                  </Field.Control>
-                </Field>
-              </Field.BodyColumn>
-            </Field>
-          ) : null
-        }
-        {
-          //TODO support sometimes for rich text
-          fieldDraft.type === FieldType.ValueType ? (
-            <Field horizontal>
-              <Field.LabelColumn>
-                <Field.Label>Value types</Field.Label>
-              </Field.LabelColumn>
-              <Field.BodyColumn>
-                <Field>
-                  <Field.Control>
-                    {canChangeValueTypes ? (
-                      <FieldValueTypeSelector
-                        fieldSelector={fieldSelector}
-                        valueTypes={fieldDraft.valueTypes ?? []}
-                        schemaEditorState={schemaEditorState}
-                        dispatchSchemaEditorState={dispatchSchemaEditorState}
-                      />
-                    ) : (
-                      <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
-                    )}
-                  </Field.Control>
-                </Field>
-              </Field.BodyColumn>
-            </Field>
-          ) : null
-        }
+        {showEntityTypes ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Entity types</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field>
+                <Field.Control>
+                  {canChangeEntityTypes ? (
+                    <FieldEntityTypeSelector
+                      fieldSelector={fieldSelector}
+                      entityTypes={fieldDraft.entityTypes ?? []}
+                      schemaEditorState={schemaEditorState}
+                      dispatchSchemaEditorState={dispatchSchemaEditorState}
+                    />
+                  ) : (
+                    <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
+                  )}
+                </Field.Control>
+              </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
+        {showValueTypes ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Value types</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field>
+                <Field.Control>
+                  {canChangeValueTypes ? (
+                    <FieldValueTypeSelector
+                      fieldSelector={fieldSelector}
+                      valueTypes={fieldDraft.valueTypes ?? []}
+                      schemaEditorState={schemaEditorState}
+                      dispatchSchemaEditorState={dispatchSchemaEditorState}
+                    />
+                  ) : (
+                    <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
+                  )}
+                </Field.Control>
+              </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
       </Card.Content>
     </Card>
   );
