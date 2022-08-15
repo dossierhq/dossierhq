@@ -1,6 +1,10 @@
-import { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
+import {
+  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+  SchemaEditorState,
+  SchemaEditorStateAction,
+} from './SchemaEditorReducer';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
@@ -816,6 +820,101 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
                 "name": "foo",
                 "required": false,
                 "type": "EntityType",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
+describe('ChangeFieldAllowedRichTextNodesAction', () => {
+  test('change node types (add entity) of a new rich text field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        FieldType.RichText,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        [RichTextNodeType.entity]
+      )
+    );
+    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+      ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+      RichTextNodeType.entity,
+    ]);
+    expect(state).toMatchInlineSnapshot(`
+      {
+        "activeSelector": null,
+        "activeSelectorEditorScrollSignal": 0,
+        "activeSelectorMenuScrollSignal": 0,
+        "entityTypes": [
+          {
+            "adminOnly": false,
+            "fields": [
+              {
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "richTextNodes": [
+                  "root, paragraph, text",
+                  "entity",
+                ],
+                "status": "new",
+                "type": "RichText",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": {
+            "entityTypes": [
+              {
+                "adminOnly": false,
+                "fields": [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": [],
+          },
+        },
+        "schemaWillBeUpdatedDueToSave": false,
+        "status": "changed",
+        "valueTypes": [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      {
+        "entityTypes": [
+          {
+            "adminOnly": false,
+            "fields": [
+              {
+                "name": "foo",
+                "required": false,
+                "richTextNodes": [
+                  "root",
+                  "paragraph",
+                  "text",
+                  "entity",
+                ],
+                "type": "RichText",
               },
             ],
             "name": "Foo",
@@ -1846,6 +1945,97 @@ describe('UpdateSchemaSpecificationAction', () => {
                   {
                     "name": "title",
                     "type": "String",
+                  },
+                ],
+                "name": "TitleOnly",
+              },
+            ],
+            "valueTypes": [],
+          },
+        },
+        "schemaWillBeUpdatedDueToSave": false,
+        "status": "",
+        "valueTypes": [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+  });
+
+  test('one entity type with rich text field', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'TitleOnly',
+              adminOnly: false,
+              fields: [
+                {
+                  name: 'richText',
+                  type: FieldType.RichText,
+                  richTextNodes: [
+                    RichTextNodeType.root,
+                    RichTextNodeType.paragraph,
+                    RichTextNodeType.text,
+                    RichTextNodeType.entity,
+                  ],
+                },
+              ],
+            },
+          ],
+          valueTypes: [],
+        })
+      )
+    );
+
+    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+      ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+      RichTextNodeType.entity,
+    ]);
+
+    expect(state).toMatchInlineSnapshot(`
+      {
+        "activeSelector": null,
+        "activeSelectorEditorScrollSignal": 0,
+        "activeSelectorMenuScrollSignal": 0,
+        "entityTypes": [
+          {
+            "adminOnly": false,
+            "fields": [
+              {
+                "list": false,
+                "name": "richText",
+                "required": false,
+                "richTextNodes": [
+                  "root, paragraph, text",
+                  "entity",
+                ],
+                "status": "",
+                "type": "RichText",
+              },
+            ],
+            "kind": "entity",
+            "name": "TitleOnly",
+            "status": "",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": {
+            "entityTypes": [
+              {
+                "adminOnly": false,
+                "fields": [
+                  {
+                    "name": "richText",
+                    "richTextNodes": [
+                      "root",
+                      "paragraph",
+                      "text",
+                      "entity",
+                    ],
+                    "type": "RichText",
                   },
                 ],
                 "name": "TitleOnly",

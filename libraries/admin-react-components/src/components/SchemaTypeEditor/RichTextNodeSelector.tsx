@@ -12,7 +12,10 @@ import type {
   SchemaEditorStateAction,
   SchemaFieldSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import {
+  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+  SchemaEditorActions,
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>(
   fieldSelector: SchemaFieldSelector,
@@ -52,9 +55,7 @@ export function RichTextNodeSelector({
   dispatchSchemaEditorState,
 }: Props) {
   const items = [
-    { id: RichTextNodeType.root },
-    { id: RichTextNodeType.paragraph },
-    { id: RichTextNodeType.text },
+    { id: ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER },
     { id: RichTextNodeType.entity },
     { id: RichTextNodeType.valueItem },
   ];
