@@ -1,11 +1,12 @@
 import type { MultipleSelectorItem } from '@jonasb/datadata-design';
 import {
   initializeMultipleSelectorState,
+  MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   TagInputSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -31,6 +32,14 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
+
+  useEffect(() => {
+    dispatch(new MultipleSelectorStateActions.UpdateItems(items));
+  }, [items]);
+
+  useEffect(() => {
+    dispatch(new MultipleSelectorStateActions.SetSelection(selectedIds));
+  }, [selectedIds]);
 
   return { state, dispatch };
 }
