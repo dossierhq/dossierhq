@@ -177,6 +177,61 @@ abstract class FieldAction extends TypeAction {
   abstract reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft>;
 }
 
+function reduceFieldsOfAllTypes(
+  state: Readonly<SchemaEditorState>,
+  reduceField: (fieldDraft: Readonly<SchemaFieldDraft>) => Readonly<SchemaFieldDraft>
+): Readonly<SchemaEditorState> {
+  function reduceTypeFields<T extends SchemaEntityTypeDraft | SchemaValueTypeDraft>(
+    typeDraft: Readonly<T>
+  ): Readonly<T> {
+    let changedFields = false;
+    const newFields = typeDraft.fields.map((fieldDraft) => {
+      const newFieldDraft = reduceField(fieldDraft);
+      if (newFieldDraft !== fieldDraft) {
+        changedFields = true;
+      }
+      return newFieldDraft;
+    });
+    if (changedFields) {
+      const newTypeDraft: T = { ...typeDraft, fields: newFields };
+      newTypeDraft.status = resolveTypeStatus(typeDraft);
+      return newTypeDraft;
+    }
+    return typeDraft;
+  }
+
+  // Entity types
+  let changedEntityTypes = false;
+  const newEntityTypes = state.entityTypes.map((typeDraft) => {
+    const newTypeDraft = reduceTypeFields(typeDraft);
+    if (newTypeDraft !== typeDraft) {
+      changedEntityTypes = true;
+    }
+    return newTypeDraft;
+  });
+
+  // Value types
+  let changedValueTypes = false;
+  const newValueTypes = state.valueTypes.map((typeDraft) => {
+    const newTypeDraft = reduceTypeFields(typeDraft);
+    if (newTypeDraft !== typeDraft) {
+      changedValueTypes = true;
+    }
+    return newTypeDraft;
+  });
+
+  if (!changedEntityTypes && !changedValueTypes) {
+    return state;
+  }
+  const newState = {
+    ...state,
+    entityTypes: changedEntityTypes ? newEntityTypes : state.entityTypes,
+    valueTypes: changedValueTypes ? newValueTypes : state.valueTypes,
+  };
+  newState.status = resolveSchemaStatus(newState);
+  return newState;
+}
+
 // ACTIONS
 
 class AddTypeAction implements SchemaEditorStateAction {
@@ -464,18 +519,43 @@ class RenameTypeAction extends TypeAction {
   override reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
     const superState = super.reduce(state);
 
-    const newState: SchemaEditorState = {
+    // Rename type
+    let newState: SchemaEditorState = {
       ...superState,
       activeSelector: { kind: this.kind, typeName: this.name },
       activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
       activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
     };
 
+    // Sort types
     if (this.kind === 'entity') {
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
       newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
+
+    // Rename references to type in fields
+    newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
+      if (this.kind === 'entity') {
+        if (fieldDraft.entityTypes?.includes(this.typeName)) {
+          return {
+            ...fieldDraft,
+            entityTypes: fieldDraft.entityTypes.map((it) =>
+              it === this.typeName ? this.name : it
+            ),
+          };
+        }
+      } else {
+        if (fieldDraft.valueTypes?.includes(this.typeName)) {
+          return {
+            ...fieldDraft,
+            valueTypes: fieldDraft.valueTypes.map((it) => (it === this.typeName ? this.name : it)),
+          };
+        }
+      }
+      return fieldDraft;
+    });
+
     return newState;
   }
 }

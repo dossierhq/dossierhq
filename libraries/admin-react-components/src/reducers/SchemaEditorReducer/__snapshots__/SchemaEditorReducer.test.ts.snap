@@ -59,3 +59,125 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   ],
 }
 `;
+
+exports[`RenameTypeAction > add and rename entity type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "entityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "new",
+          "type": "EntityType",
+        },
+      ],
+      "kind": "entity",
+      "name": "Bar",
+      "status": "new",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with fields referring to itself 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "entityTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "EntityType",
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+}
+`;
+
+exports[`RenameTypeAction > add and rename value type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "value",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "new",
+          "type": "ValueType",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+      ],
+      "kind": "value",
+      "name": "Bar",
+      "status": "new",
+    },
+  ],
+}
+`;
+
+exports[`RenameTypeAction > add and rename value type with fields referring to itself 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "name": "self",
+          "required": false,
+          "type": "ValueType",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+}
+`;

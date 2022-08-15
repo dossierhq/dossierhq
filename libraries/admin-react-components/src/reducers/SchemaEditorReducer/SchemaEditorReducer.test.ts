@@ -1773,6 +1773,66 @@ describe('RenameTypeAction', () => {
       }
     `);
   });
+
+  test('add and rename entity type with fields referring to itself', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddType('entity', 'Foo'),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
+        FieldType.EntityType,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
+    );
+
+    expect(state).toMatchSnapshot();
+    expect(state.entityTypes[0].name).toBe('Bar');
+    expect(state.entityTypes[0].fields[0].entityTypes).toEqual(['Bar']);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('add and rename value type with fields referring to itself', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddType('value', 'Foo'),
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'self'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'value', typeName: 'Foo', fieldName: 'self' },
+        FieldType.ValueType,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+        { kind: 'value', typeName: 'Foo', fieldName: 'self' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar')
+    );
+
+    expect(state).toMatchSnapshot();
+    expect(state.valueTypes[0].name).toBe('Bar');
+    expect(state.valueTypes[0].fields[0].valueTypes).toEqual(['Bar']);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('SetActiveSelectorAction', () => {
