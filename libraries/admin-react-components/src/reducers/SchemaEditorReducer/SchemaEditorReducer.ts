@@ -1,11 +1,12 @@
-import type {
+import {
   AdminEntityTypeSpecificationUpdate,
   AdminSchema,
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
   AdminValueTypeSpecificationUpdate,
+  RichTextNodeType,
 } from '@jonasb/datadata-core';
-import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
+import { FieldType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
 export interface SchemaTypeSelector {
@@ -60,6 +61,8 @@ export interface SchemaEditorState {
 export interface SchemaEditorStateAction {
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState>;
 }
+
+export const ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER = 'root, paragraph, text';
 
 export function initializeSchemaEditorState(): SchemaEditorState {
   return {
@@ -267,11 +270,8 @@ class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
     let newRichTextNodes = this.richTextNodes;
 
     if (newRichTextNodes.length > 0) {
-      const basicNodes = [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text];
-      const missingBasicNodes = basicNodes.filter((it) => !newRichTextNodes.includes(it));
-      if (missingBasicNodes.length > 0) {
-        newRichTextNodes = [...newRichTextNodes];
-        newRichTextNodes.push(...missingBasicNodes);
+      if (!newRichTextNodes.includes(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER)) {
+        newRichTextNodes = [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER, ...newRichTextNodes];
       }
     }
 
@@ -577,7 +577,19 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           fieldDraft.multiline = !!fieldSpec.multiline;
         }
         if (fieldSpec.type === FieldType.RichText) {
-          fieldDraft.richTextNodes = fieldSpec.richTextNodes ?? [];
+          let richTextNodes = fieldSpec.richTextNodes ?? [];
+          if (richTextNodes.length > 0) {
+            const nodes: string[] = [
+              RichTextNodeType.root,
+              RichTextNodeType.paragraph,
+              RichTextNodeType.text,
+            ];
+            richTextNodes = [
+              ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+              ...richTextNodes.filter((it) => !nodes.includes(it)),
+            ];
+          }
+          fieldDraft.richTextNodes = richTextNodes;
         }
         if (fieldSpec.type === FieldType.EntityType) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
@@ -639,15 +651,22 @@ function getTypeUpdateFromEditorState(
   draftType: SchemaTypeDraft
 ): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
+    let richTextNodes = draftField.richTextNodes;
+    if (richTextNodes && richTextNodes.length > 0) {
+      richTextNodes = [
+        RichTextNodeType.root,
+        RichTextNodeType.paragraph,
+        RichTextNodeType.text,
+        ...richTextNodes.filter((it) => it !== ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER),
+      ];
+    }
     return {
       name: draftField.name,
       type: draftField.type,
       required: draftField.required,
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
-      ...(draftField.type === FieldType.RichText
-        ? { richTextNodes: draftField.richTextNodes }
-        : undefined),
+      ...(draftField.type === FieldType.RichText ? { richTextNodes } : undefined),
       ...(draftField.type === FieldType.EntityType //TODO or rich text
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
