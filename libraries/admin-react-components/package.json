@@ -22,7 +22,6 @@
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
-    "icons:update": "scripts/generate-icons.mjs",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "start-storybook -p 6006 --no-open",
@@ -65,9 +64,7 @@
     "eslint-plugin-react": "~7.30.0",
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.5.12",
-    "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.7.1",
-    "svgo": "~2.8.0",
     "typescript": "^4.7.2",
     "uuid": "^8.3.2",
     "vitest": "~0.21.0"
