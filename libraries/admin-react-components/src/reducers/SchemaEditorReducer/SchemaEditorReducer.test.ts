@@ -1,14 +1,11 @@
 import { AdminSchema, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import {
-  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
-  SchemaEditorState,
-  SchemaEditorStateAction,
-} from './SchemaEditorReducer';
+import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
+  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
 } from './SchemaEditorReducer';
 
@@ -849,6 +846,10 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
         [RichTextNodeType.entity]
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        ['Foo']
       )
     );
     expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
@@ -865,6 +866,9 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "entityTypes": [
+                  "Foo",
+                ],
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -906,6 +910,9 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "entityTypes": [
+                  "Foo",
+                ],
                 "name": "foo",
                 "required": false,
                 "richTextNodes": [
@@ -915,6 +922,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                   "entity",
                 ],
                 "type": "RichText",
+                "valueTypes": [],
               },
             ],
             "name": "Foo",
@@ -999,7 +1007,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
                 "name": "foo",
                 "required": false,
                 "type": "ValueType",
-                "valueType": [
+                "valueTypes": [
                   "Foo",
                 ],
               },
@@ -1412,7 +1420,7 @@ describe('ChangeFieldTypeAction', () => {
                 "name": "bar",
                 "required": false,
                 "type": "ValueType",
-                "valueType": [],
+                "valueTypes": [],
               },
             ],
             "name": "Foo",
@@ -2005,6 +2013,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "entityTypes": [],
                 "list": false,
                 "name": "richText",
                 "required": false,
@@ -2014,6 +2023,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 ],
                 "status": "",
                 "type": "RichText",
+                "valueTypes": [],
               },
             ],
             "kind": "entity",

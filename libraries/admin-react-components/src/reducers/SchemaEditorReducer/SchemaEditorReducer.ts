@@ -1,11 +1,11 @@
-import {
+import type {
   AdminEntityTypeSpecificationUpdate,
   AdminSchema,
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
   AdminValueTypeSpecificationUpdate,
-  RichTextNodeType,
 } from '@jonasb/datadata-core';
+import { RichTextNodeType } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
@@ -591,10 +591,10 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           }
           fieldDraft.richTextNodes = richTextNodes;
         }
-        if (fieldSpec.type === FieldType.EntityType) {
+        if (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
         }
-        if (fieldSpec.type === FieldType.ValueType) {
+        if (fieldSpec.type === FieldType.ValueType || fieldSpec.type === FieldType.RichText) {
           fieldDraft.valueTypes = fieldSpec.valueTypes ?? [];
         }
         return fieldDraft;
@@ -667,11 +667,11 @@ function getTypeUpdateFromEditorState(
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
       ...(draftField.type === FieldType.RichText ? { richTextNodes } : undefined),
-      ...(draftField.type === FieldType.EntityType //TODO or rich text
+      ...(draftField.type === FieldType.EntityType || draftField.type === FieldType.RichText
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
-      ...(draftField.type === FieldType.ValueType //TODO or rich text
-        ? { valueType: draftField.valueTypes ?? [] }
+      ...(draftField.type === FieldType.ValueType || draftField.type === FieldType.RichText
+        ? { valueTypes: draftField.valueTypes ?? [] }
         : undefined),
     };
   });
