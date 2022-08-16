@@ -36,9 +36,11 @@ export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
 }
 
 export function ValueItemFieldEditorWithoutClear({
+  className,
   value,
   onChange,
 }: {
+  className?: string;
   value: ValueItem;
   onChange: (value: ValueItem) => void;
 }) {
@@ -54,7 +56,7 @@ export function ValueItemFieldEditorWithoutClear({
   }
 
   return (
-    <Column gap={1}>
+    <Column className={className} gap={1}>
       <Text textStyle="body2" noBottomMargin>
         {type}
       </Text>

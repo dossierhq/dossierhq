@@ -1,14 +1,16 @@
 import type { ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
-import React, { Fragment, useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import type { FieldDisplayProps } from './FieldDisplay';
 import { FieldDisplay } from './FieldDisplay';
 
-type Props = FieldDisplayProps<ValueItem>;
+interface Props extends FieldDisplayProps<ValueItem> {
+  className?: string;
+}
 
-export function ValueTypeFieldDisplay({ value }: Props) {
+export function ValueTypeFieldDisplay({ className, value }: Props) {
   const { schema } = useContext(PublishedDataDataContext);
 
   if (!schema || !value) {
@@ -22,7 +24,7 @@ export function ValueTypeFieldDisplay({ value }: Props) {
   }
 
   return (
-    <Column gap={1}>
+    <Column className={className} gap={1}>
       <Text textStyle="body2" noBottomMargin>
         {type}
       </Text>

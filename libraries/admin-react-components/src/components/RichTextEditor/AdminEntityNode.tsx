@@ -23,7 +23,9 @@ function AdminEntityComponent({
   nodeKey: NodeKey;
   reference: EntityReference;
 }) {
-  return <EntityTypeFieldEditorWithoutClear value={reference} />;
+  return (
+    <EntityTypeFieldEditorWithoutClear className="rich-text-item-indentation" value={reference} />
+  );
 }
 
 export class AdminEntityNode extends DecoratorNode<JSX.Element> {

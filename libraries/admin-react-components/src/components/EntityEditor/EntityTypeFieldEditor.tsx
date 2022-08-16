@@ -76,7 +76,13 @@ export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
   );
 }
 
-export function EntityTypeFieldEditorWithoutClear({ value }: { value: EntityReference }) {
+export function EntityTypeFieldEditorWithoutClear({
+  className,
+  value,
+}: {
+  className?: string;
+  value: EntityReference;
+}) {
   const { adminClient } = useContext(AdminDataDataContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
@@ -96,7 +102,7 @@ export function EntityTypeFieldEditorWithoutClear({ value }: { value: EntityRefe
   if (!entity) return null;
 
   return (
-    <Column>
+    <Column className={className}>
       <Column.Item flexGrow={1}>
         <Text textStyle="body2" noBottomMargin>
           {entity.info.type}
