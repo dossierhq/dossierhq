@@ -27,7 +27,13 @@ function PublishedValueItemComponent({
 }) {
   const { fieldSpec } = useContext(RichTextDisplayContext);
 
-  return <ValueTypeFieldDisplay fieldSpec={fieldSpec} value={data} />;
+  return (
+    <ValueTypeFieldDisplay
+      className="rich-text-item-indentation"
+      fieldSpec={fieldSpec}
+      value={data}
+    />
+  );
 }
 
 export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {

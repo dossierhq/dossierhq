@@ -1,16 +1,18 @@
 import type { EntityReference } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import type { FieldDisplayProps } from './FieldDisplay';
 
-type Props = FieldDisplayProps<EntityReference>;
+interface Props extends FieldDisplayProps<EntityReference> {
+  className?: string;
+}
 
-export function EntityTypeFieldDisplay({ value }: Props) {
+export function EntityTypeFieldDisplay({ className, value }: Props) {
   const { publishedClient } = useContext(PublishedDataDataContext);
   const dispatchEntityDisplayState = useContext(EntityDisplayDispatchContext);
   const { entity, entityError: _error } = usePublishedEntity(publishedClient, value ?? undefined);
@@ -26,7 +28,7 @@ export function EntityTypeFieldDisplay({ value }: Props) {
   );
 
   return entity ? (
-    <Column>
+    <Column className={className}>
       <Text textStyle="body2" noBottomMargin>
         {entity.info.type}
       </Text>

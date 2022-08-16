@@ -35,7 +35,13 @@ function AdminValueItemComponent({ nodeKey, data }: { nodeKey: NodeKey; data: Va
     [editor, nodeKey]
   );
 
-  return <ValueItemFieldEditorWithoutClear value={data} onChange={setValue} />;
+  return (
+    <ValueItemFieldEditorWithoutClear
+      className="rich-text-item-indentation"
+      value={data}
+      onChange={setValue}
+    />
+  );
 }
 
 export class AdminValueItemNode extends DecoratorNode<JSX.Element> {

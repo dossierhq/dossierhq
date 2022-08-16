@@ -27,7 +27,13 @@ function PublishedEntityComponent({
 }) {
   const { fieldSpec } = useContext(RichTextDisplayContext);
 
-  return <EntityTypeFieldDisplay fieldSpec={fieldSpec} value={reference} />;
+  return (
+    <EntityTypeFieldDisplay
+      className="rich-text-item-indentation"
+      fieldSpec={fieldSpec}
+      value={reference}
+    />
+  );
 }
 
 export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
