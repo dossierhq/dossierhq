@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-core-vitest",
   "entries": [
     {
+      "version": "0.1.25",
+      "tag": "@jonasb/datadata-core-vitest_v0.1.25",
+      "date": "Sun, 21 Aug 2022 12:14:33 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.24",
       "tag": "@jonasb/datadata-core-vitest_v0.1.24",
       "date": "Mon, 13 Jun 2022 22:58:05 GMT",
