@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-test-integration",
+      "comment": "Use updated generated schema types",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-test-integration"
+}
