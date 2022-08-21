@@ -142,14 +142,14 @@ describe('generateTypescriptForSchema', () => {
                 {
                   name: 'valueTypeBar',
                   type: FieldType.ValueType,
-                  valueTypes: ['Bar'],
+                  valueTypes: ['Foo'],
                   required: true,
                 },
                 { name: 'valueTypeList', type: FieldType.ValueType, list: true, required: true },
                 {
                   name: 'valueTypeListBar',
                   type: FieldType.ValueType,
-                  valueTypes: ['Bar'],
+                  valueTypes: ['Foo'],
                   list: true,
                   required: true,
                 },

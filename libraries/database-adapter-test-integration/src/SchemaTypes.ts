@@ -4,6 +4,7 @@ import type {
   Location,
   PublishedEntity,
   RichText,
+  ValueItem,
 } from '@jonasb/datadata-core';
 
 export interface AdminLocationsFields {
@@ -120,6 +121,18 @@ export function assertIsAdminTitleOnly(
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
   }
 }
+
+export interface AdminLocationsValueFields {
+  location: Location | null;
+}
+
+export type AdminLocationsValue = ValueItem<'LocationsValue', AdminLocationsValueFields>;
+
+export interface AdminReferencesValueFields {
+  reference: EntityReference | null;
+}
+
+export type AdminReferencesValue = ValueItem<'ReferencesValue', AdminReferencesValueFields>;
 
 export interface PublishedLocationsFields {
   location: Location | null;
@@ -245,3 +258,15 @@ export function assertIsPublishedTitleOnly(
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
   }
 }
+
+export interface PublishedLocationsValueFields {
+  location: Location | null;
+}
+
+export type PublishedLocationsValue = ValueItem<'LocationsValue', PublishedLocationsValueFields>;
+
+export interface PublishedReferencesValueFields {
+  reference: EntityReference | null;
+}
+
+export type PublishedReferencesValue = ValueItem<'ReferencesValue', PublishedReferencesValueFields>;

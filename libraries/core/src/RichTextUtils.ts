@@ -83,6 +83,8 @@ export function createRichTextEntityNode(reference: EntityReference): RichTextEn
   return { type: RichTextNodeType.entity, reference, version: 1 };
 }
 
-export function createRichTextValueItemNode(data: ValueItem): RichTextValueItemNode {
+export function createRichTextValueItemNode<T extends ValueItem<string, object>>(
+  data: T
+): RichTextValueItemNode {
   return { type: RichTextNodeType.valueItem, data, version: 1 };
 }

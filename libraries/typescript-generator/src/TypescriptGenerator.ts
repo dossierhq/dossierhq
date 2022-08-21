@@ -1,9 +1,11 @@
 import type {
   AdminEntityTypeSpecification,
   AdminSchema,
+  AdminValueTypeSpecification,
   FieldSpecification,
   PublishedEntityTypeSpecification,
   PublishedSchema,
+  PublishedValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
@@ -25,10 +27,16 @@ export function generateTypescriptForSchema({
     for (const entitySpec of adminSchema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec));
     }
+    for (const valueSpec of adminSchema.spec.valueTypes) {
+      paragraphs.push(...generateAdminValueType(context, valueSpec));
+    }
   }
   if (publishedSchema) {
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       paragraphs.push(...generatePublishedEntityType(context, entitySpec));
+    }
+    for (const valueSpec of publishedSchema.spec.valueTypes) {
+      paragraphs.push(...generatePublishedValueType(context, valueSpec));
     }
   }
 
@@ -68,7 +76,7 @@ function generateEntityType(
   const fieldsName = `${adminOrPublished}${entitySpec.name}Fields`;
   paragraphs.push(`export interface ${fieldsName} {`);
   for (const fieldSpec of entitySpec.fields) {
-    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec)};`);
+    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
   }
   paragraphs.push(`}`);
   paragraphs.push('');
@@ -102,7 +110,49 @@ function generateEntityType(
   return paragraphs;
 }
 
-function fieldType({ coreImports }: GeneratorContext, fieldSpec: FieldSpecification) {
+function generateAdminValueType(context: GeneratorContext, valueSpec: AdminValueTypeSpecification) {
+  return generateValueType(context, valueSpec, 'Admin');
+}
+
+function generatePublishedValueType(
+  context: GeneratorContext,
+  valueSpec: PublishedValueTypeSpecification
+) {
+  return generateValueType(context, valueSpec, 'Published');
+}
+
+function generateValueType(
+  context: GeneratorContext,
+  valueSpec: PublishedValueTypeSpecification,
+  adminOrPublished: 'Admin' | 'Published'
+) {
+  const paragraphs: string[] = [''];
+
+  // fields type
+  const fieldsName = `${adminOrPublished}${valueSpec.name}Fields`;
+  paragraphs.push(`export interface ${fieldsName} {`);
+  for (const fieldSpec of valueSpec.fields) {
+    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+  }
+  paragraphs.push(`}`);
+  paragraphs.push('');
+
+  // value type
+  const parentTypeName = 'ValueItem';
+  const valueTypeName = `${adminOrPublished}${valueSpec.name}`;
+  context.coreImports.add(parentTypeName);
+  paragraphs.push(
+    `export type ${valueTypeName} = ${parentTypeName}<'${valueSpec.name}', ${fieldsName}>;`
+  );
+
+  return paragraphs;
+}
+
+function fieldType(
+  { coreImports }: GeneratorContext,
+  fieldSpec: FieldSpecification,
+  adminOrPublished: 'Admin' | 'Published'
+) {
   let type: string;
   switch (fieldSpec.type) {
     case FieldType.Boolean:
@@ -124,9 +174,12 @@ function fieldType({ coreImports }: GeneratorContext, fieldSpec: FieldSpecificat
       type = 'string';
       break;
     case FieldType.ValueType:
-      coreImports.add('ValueItem');
-      type = 'ValueItem';
-      //TODO support specific value types
+      if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
+        type = fieldSpec.valueTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
+      } else {
+        coreImports.add('ValueItem');
+        type = 'ValueItem';
+      }
       break;
   }
   return fieldSpec.list ? `Array<${type}> | null` : `${type} | null`;

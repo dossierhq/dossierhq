@@ -86,10 +86,12 @@ export interface BoundingBox {
   maxLng: number;
 }
 
-export interface ValueItem {
-  type: string;
-  [fieldName: string]: unknown;
-}
+export type ValueItem<
+  TType extends string = string,
+  TFields extends object = Record<string, unknown>
+> = {
+  type: TType;
+} & TFields;
 
 export const AdminEntityStatus = {
   /** The entity has never been published. */
