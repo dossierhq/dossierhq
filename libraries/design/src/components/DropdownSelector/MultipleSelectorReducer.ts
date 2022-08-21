@@ -1,8 +1,10 @@
 import type { Reducer } from 'react';
 import isEqual from 'lodash/isEqual.js';
+import { assertIsDefined } from '../../utils/AssertUtils.js';
 
 export interface MultipleSelectorItem<TId extends string = string> {
   id: TId;
+  removable?: boolean;
 }
 
 export type MultipleSelectorReducer<TItem extends MultipleSelectorItem> = Reducer<
@@ -18,19 +20,32 @@ export interface MultipleSelectorStateInitializerArgs<TItem extends MultipleSele
 export interface MultipleSelectorState<TItem extends MultipleSelectorItem> {
   items: TItem[];
   selectedIds: Array<TItem['id']>;
+  containsRemovableSelection: boolean;
 }
 
 export interface MultipleSelectorStateAction<TItem extends MultipleSelectorItem> {
   reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>>;
 }
 
+function isItemIdRemovable(items: MultipleSelectorItem[], id: string): boolean {
+  const item = items.find((it) => it.id === id);
+  assertIsDefined(item);
+  return item.removable !== false;
+}
+
+function containsRemovableSelection(items: MultipleSelectorItem[], selectedIds: string[]) {
+  return selectedIds.some((id) => isItemIdRemovable(items, id));
+}
+
 export function initializeMultipleSelectorState<TItem extends MultipleSelectorItem>({
   items,
   selectedIds,
 }: MultipleSelectorStateInitializerArgs<TItem>): MultipleSelectorState<TItem> {
+  selectedIds = selectedIds ?? [];
   return {
     items,
-    selectedIds: selectedIds ?? [],
+    selectedIds,
+    containsRemovableSelection: containsRemovableSelection(items, selectedIds),
   };
 }
 
@@ -38,7 +53,13 @@ export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
   state: Readonly<MultipleSelectorState<TItem>>,
   action: MultipleSelectorStateAction<TItem>
 ): Readonly<MultipleSelectorState<TItem>> {
-  const newState = action.reduce(state);
+  let newState = action.reduce(state);
+  if (newState !== state) {
+    newState = {
+      ...newState,
+      containsRemovableSelection: containsRemovableSelection(newState.items, newState.selectedIds),
+    };
+  }
   return newState;
 }
 
@@ -48,10 +69,11 @@ class ClearSelectionAction<TItem extends MultipleSelectorItem>
   implements MultipleSelectorStateAction<TItem>
 {
   reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
-    if (state.selectedIds.length === 0) {
+    const selectedIds = state.selectedIds.filter((id) => !isItemIdRemovable(state.items, id));
+    if (selectedIds.length === state.selectedIds.length) {
       return state;
     }
-    return { ...state, selectedIds: [] };
+    return { ...state, selectedIds };
   }
 }
 

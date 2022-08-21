@@ -1,5 +1,4 @@
 import { RichTextNodeType } from '@jonasb/datadata-core';
-import type { MultipleSelectorItem } from '@jonasb/datadata-design';
 import {
   initializeMultipleSelectorState,
   MultipleSelectorStateActions,
@@ -7,7 +6,7 @@ import {
   TagInputSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
 import type {
   SchemaEditorStateAction,
   SchemaFieldSelector,
@@ -17,12 +16,25 @@ import {
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
-function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>(
+function useSynchronizeMultipleSelectorState(
   fieldSelector: SchemaFieldSelector,
-  items: TItem[],
   selectedIds: string[],
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
 ) {
+  const items = useMemo(
+    () => [
+      {
+        id: ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+        removable:
+          selectedIds.length === 0 ||
+          (selectedIds.length === 1 && selectedIds[0] === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER),
+      },
+      { id: RichTextNodeType.entity },
+      { id: RichTextNodeType.valueItem },
+    ],
+    [selectedIds]
+  );
+
   const [state, dispatch] = useReducer(
     reduceMultipleSelectorState,
     { items, selectedIds },
@@ -40,6 +52,10 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
     dispatch(new MultipleSelectorStateActions.SetSelection(selectedIds));
   }, [selectedIds]);
 
+  useEffect(() => {
+    dispatch(new MultipleSelectorStateActions.UpdateItems(items));
+  }, [items]);
+
   return { state, dispatch };
 }
 
@@ -54,14 +70,8 @@ export function RichTextNodeSelector({
   richTextNodes,
   dispatchSchemaEditorState,
 }: Props) {
-  const items = [
-    { id: ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER },
-    { id: RichTextNodeType.entity },
-    { id: RichTextNodeType.valueItem },
-  ];
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
-    items,
     richTextNodes,
     dispatchSchemaEditorState
   );

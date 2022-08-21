@@ -1,4 +1,5 @@
 import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb/datadata-design';
+import { initializeMultipleSelectorState } from '@jonasb/datadata-design';
 import isEqual from 'lodash/isEqual';
 import type { Dispatch } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
@@ -55,7 +56,8 @@ function useSearchStateToEntitySelectorAdapter(
   const [items, setItems] = useState<EntityTypeItem[]>([]);
 
   const entityTypeFilterState = useMemo(
-    () => ({ selectedIds: searchEntityState.query.entityTypes ?? [], items }),
+    () =>
+      initializeMultipleSelectorState({ items, selectedIds: searchEntityState.query.entityTypes }),
     [items, searchEntityState.query.entityTypes]
   );
 

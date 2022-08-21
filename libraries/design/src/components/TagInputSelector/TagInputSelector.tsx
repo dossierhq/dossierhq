@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Dropdown } from '../Dropdown/Dropdown.js';
 import type {
   MultipleSelectorItem,
@@ -23,7 +23,7 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
   state,
   dispatch,
 }: TagInputSelectorProps<TItem>): JSX.Element | null {
-  const { items, selectedIds } = state;
+  const { items, selectedIds, containsRemovableSelection } = state;
 
   const selectedItems = items.filter(({ id }) => selectedIds.includes(id));
 
@@ -37,6 +37,7 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
       className="is-width-100"
       items={items}
       activeItemIds={selectedIds}
+      isContentItem={(item) => item.removable === false}
       renderItem={(item) => {
         const { tag, color } = itemTag(item);
         return (
@@ -53,13 +54,15 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
               return (
                 <Tag key={item.id} color={color}>
                   {tag}
-                  <Tag.Remove
-                    onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(item.id))}
-                  />
+                  {item.removable !== false ? (
+                    <Tag.Remove
+                      onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(item.id))}
+                    />
+                  ) : null}
                 </Tag>
               );
             })}
-            {selectedItems.length > 0 ? (
+            {containsRemovableSelection ? (
               <Tag.Clear
                 onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}
               >
