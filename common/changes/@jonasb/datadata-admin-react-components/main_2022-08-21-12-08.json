@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Add schema editor. Switch rich text to Lexical. Show links to/from entity.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}
