@@ -33,11 +33,13 @@ async function createPlaceOfBusiness(
   adminClient: AdminClient,
   locationGenerator: Generator<Location, void>
 ) {
-  const name = faker.company.companyName();
+  const name = faker.company.name();
   const line1 = faker.address.streetAddress();
   const zip = faker.address.zipCode();
   const city = faker.address.city();
-  const location = locationGenerator.next().value;
+
+  const nextValue = locationGenerator.next();
+  const location = !nextValue.done ? nextValue.value : null;
   return (
     await adminClient.createEntity<AdminPlaceOfBusiness>(
       {
@@ -50,6 +52,7 @@ async function createPlaceOfBusiness(
             type: 'Address',
             location,
             line1,
+            line2: null,
             zip,
             city,
           },

@@ -21,6 +21,7 @@ import type { UnboundTestFunction } from '../Builder.js';
 import type {
   AdminLocations,
   AdminReferences,
+  AdminReferencesValue,
   AdminRichTexts,
   AdminStrings,
   AdminTitleOnly,
@@ -383,7 +384,7 @@ async function createEntity_withRichTextFieldWithValueItem({ server }: AdminEnti
 
   const richText = createRichTextRootNode([
     createRichTextParagraphNode([
-      createRichTextValueItemNode({
+      createRichTextValueItemNode<AdminReferencesValue>({
         type: 'ReferencesValue',
         reference: { id: createTitleOnlyResult.value.entity.id },
       }),

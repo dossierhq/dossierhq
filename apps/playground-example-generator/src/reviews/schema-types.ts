@@ -1,4 +1,10 @@
-import type { AdminEntity, EntityReference, RichText, ValueItem } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  EntityReference,
+  Location,
+  RichText,
+  ValueItem,
+} from '@jonasb/datadata-core';
 
 export interface AdminPersonalNoteFields {
   note: RichText | null;
@@ -23,7 +29,7 @@ export function assertIsAdminPersonalNote(
 
 export interface AdminPlaceOfBusinessFields {
   name: string | null;
-  address: ValueItem | null;
+  address: AdminAddress | null;
   slogan: string | null;
   description: string | null;
 }
@@ -81,3 +87,13 @@ export function assertIsAdminReviewer(
     throw new Error('Expected info.type = Reviewer (but was ' + entity.info.type + ')');
   }
 }
+
+export interface AdminAddressFields {
+  location: Location | null;
+  line1: string | null;
+  line2: string | null;
+  zip: string | null;
+  city: string | null;
+}
+
+export type AdminAddress = ValueItem<'Address', AdminAddressFields>;

@@ -11,6 +11,7 @@ import {
 import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminLocationsValue, AdminReferencesValue } from '../SchemaTypes.js';
 import {
   LOCATIONS_CREATE,
   REFERENCES_CREATE,
@@ -605,7 +606,10 @@ async function searchEntities_linksToOneReferenceFromValueItemInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichTextRootNode([
-          createRichTextValueItemNode({ type: 'ReferencesValue', reference: { id: titleOnlyId } }),
+          createRichTextValueItemNode<AdminReferencesValue>({
+            type: 'ReferencesValue',
+            reference: { id: titleOnlyId },
+          }),
         ]),
       },
     })
@@ -731,7 +735,10 @@ async function searchEntities_boundingBoxOneInsideFromValueItemInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichTextRootNode([
-          createRichTextValueItemNode({ type: 'LocationsValue', location: center }),
+          createRichTextValueItemNode<AdminLocationsValue>({
+            type: 'LocationsValue',
+            location: center,
+          }),
         ]),
       },
     })

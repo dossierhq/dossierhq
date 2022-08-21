@@ -135,9 +135,9 @@ exports[`generateTypescriptForSchema > ValueTypes 1`] = `
 
 export interface AdminValueTypesFields {
   valueType: ValueItem | null;
-  valueTypeBar: ValueItem | null;
+  valueTypeBar: AdminFoo | null;
   valueTypeList: Array<ValueItem> | null;
-  valueTypeListBar: Array<ValueItem> | null;
+  valueTypeListBar: Array<AdminFoo> | null;
 }
 
 export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields>;
@@ -151,6 +151,12 @@ export function assertIsAdminValueTypes(entity: AdminEntity | AdminValueTypes): 
     throw new Error('Expected info.type = ValueTypes (but was ' + entity.info.type + ')');
   }
 }
+
+export interface AdminFooFields {
+  string: string | null;
+}
+
+export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
 "
 `;
 
