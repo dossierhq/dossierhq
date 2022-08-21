@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-graphql",
   "entries": [
     {
+      "version": "0.1.26",
+      "tag": "@jonasb/datadata-graphql_v0.1.26",
+      "date": "Sun, 21 Aug 2022 22:26:51 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.25",
       "tag": "@jonasb/datadata-graphql_v0.1.25",
       "date": "Sun, 21 Aug 2022 12:14:33 GMT",

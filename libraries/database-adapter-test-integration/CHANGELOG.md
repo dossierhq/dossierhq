@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-database-adapter-test-integration
 
-This log was last generated on Sun, 21 Aug 2022 12:14:33 GMT and should not be manually modified.
+This log was last generated on Sun, 21 Aug 2022 22:26:51 GMT and should not be manually modified.
+
+## 0.1.26
+Sun, 21 Aug 2022 22:26:51 GMT
+
+### Updates
+
+- Use updated generated schema types
 
 ## 0.1.25
 Sun, 21 Aug 2022 12:14:33 GMT

@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-core",
   "entries": [
     {
+      "version": "0.1.26",
+      "tag": "@jonasb/datadata-core_v0.1.26",
+      "date": "Sun, 21 Aug 2022 22:26:51 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make ValueItem more specific."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.25",
       "tag": "@jonasb/datadata-core_v0.1.25",
       "date": "Sun, 21 Aug 2022 12:14:33 GMT",
