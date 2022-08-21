@@ -31,7 +31,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       react-router-dom: ~6.3.0
-      rollup-plugin-visualizer: ~5.7.1
+      rollup-plugin-visualizer: ~5.8.0
       sql.js: ~1.7.0
       swr: ~1.3.0
       typescript: ^4.7.2
@@ -64,7 +64,7 @@ importers:
       eslint: 8.16.0
       graphql-config: 4.3.1_graphql@16.6.0+typescript@4.7.2
       graphql-ws: 5.10.0_graphql@16.6.0
-      rollup-plugin-visualizer: 5.7.1
+      rollup-plugin-visualizer: 5.8.0
       typescript: 4.7.2
       vite: 2.9.12
 
@@ -1037,7 +1037,7 @@ importers:
       react-dom: ~18.2.0
       react-leaflet: ~4.0.0
       react-router-dom: ~6.3.0
-      rollup-plugin-visualizer: ~5.7.1
+      rollup-plugin-visualizer: ~5.8.0
       sass: ~1.54.0
       sass-loader: ~13.0.0
       sql.js: ~1.7.0
@@ -1117,7 +1117,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.0.0_ca979b1fef1aafd570a8ecf3ffa670f6
       react-router-dom: 6.3.0_react-dom@18.2.0+react@18.2.0
-      rollup-plugin-visualizer: 5.7.1
+      rollup-plugin-visualizer: 5.8.0
       sass: 1.54.0
       sass-loader: 13.0.0_sass@1.54.0
       sql.js: 1.7.0
@@ -13552,8 +13552,8 @@ packages:
       hash-base: 3.1.0
       inherits: 2.0.4
 
-  /rollup-plugin-visualizer/5.7.1:
-    resolution: {integrity: sha512-E/IgOMnmXKlc6ICyf53ok1b6DxPeNVUs3R0kYYPuDpGfofT4bkiG+KtSMlGjMACFmfwbbqTVDZBIF7sMZVKJbA==}
+  /rollup-plugin-visualizer/5.8.0:
+    resolution: {integrity: sha512-pY6j/7qHz5I9rB7d/bQoA5gX+2FbV3MBG055wrsFxDn550bgl0FNViRj6wDHh85PMswv+JVdZjhnMBzz/hdAHA==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
@@ -13964,7 +13964,7 @@ packages:
     deprecated: See https://github.com/lydell/source-map-url#deprecated
 
   /source-map/0.5.7:
-    resolution: {integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=}
+    resolution: {integrity: sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==}
     engines: {node: '>=0.10.0'}
 
   /source-map/0.6.1:
