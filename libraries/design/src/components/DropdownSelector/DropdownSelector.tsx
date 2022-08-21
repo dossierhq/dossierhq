@@ -88,6 +88,10 @@ function Item<TItem extends MultipleSelectorItem<TId>, TId extends string = stri
 }: DropdownSelectorItemProps<TItem, TId>) {
   const active = state.selectedIds.includes(item.id);
 
+  if (item.removable === false) {
+    return <DropdownDisplay.ContentItem>{children}</DropdownDisplay.ContentItem>;
+  }
+
   const handleChange = () => {
     dispatch(new MultipleSelectorStateActions.ToggleItem(item.id));
   };

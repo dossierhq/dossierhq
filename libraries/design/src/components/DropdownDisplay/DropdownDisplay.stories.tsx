@@ -57,6 +57,17 @@ UpLeft.args = {
   ),
 };
 
+export const ContentItem = Template.bind({});
+ContentItem.args = {
+  children: (
+    <>
+      <DropdownDisplay.Item active>One</DropdownDisplay.Item>
+      <DropdownDisplay.ContentItem>Content</DropdownDisplay.ContentItem>
+      <DropdownDisplay.Item>Three</DropdownDisplay.Item>
+    </>
+  ),
+};
+
 export const OneHundredItems = Template.bind({});
 OneHundredItems.args = {
   children: (() => (

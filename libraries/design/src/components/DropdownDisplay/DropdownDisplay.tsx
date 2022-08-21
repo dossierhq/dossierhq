@@ -18,8 +18,13 @@ export interface DropdownDisplayItemProps {
   children: ReactNode;
 }
 
+export interface DropdownDisplayContentItemProps {
+  children: ReactNode;
+}
+
 interface DropdownDisplayComponent extends FunctionComponent<DropdownDisplayProps> {
   Item: FunctionComponent<DropdownDisplayItemProps>;
+  ContentItem: FunctionComponent<DropdownDisplayContentItemProps>;
 }
 
 export const DropdownDisplay: DropdownDisplayComponent = ({
@@ -59,3 +64,12 @@ DropdownDisplay.Item = ({ active, onClick, children }: DropdownDisplayItemProps)
   );
 };
 DropdownDisplay.Item.displayName = 'DropdownDisplay.Item';
+
+DropdownDisplay.ContentItem = ({ children }: DropdownDisplayContentItemProps) => {
+  return (
+    <div className="dropdown-item">
+      <p>{children}</p>
+    </div>
+  );
+};
+DropdownDisplay.ContentItem.displayName = 'DropdownDisplay.ContentItem';

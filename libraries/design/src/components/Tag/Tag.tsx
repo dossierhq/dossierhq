@@ -6,7 +6,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 export interface TagProps {
   className?: string;
   color?: keyof typeof StatusColor;
-  children: string | [string, ReactElement<TagRemoveProps>];
+  children: string | [string, ReactElement<TagRemoveProps> | null];
 }
 
 export interface TagRemoveProps {

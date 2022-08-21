@@ -13,6 +13,7 @@ interface StoryItem {
   id: string;
   name: string;
   color?: TagProps['color'];
+  removable?: boolean;
 }
 
 type StoryProps = Omit<TagInputSelectorProps<StoryItem>, 'state' | 'dispatch'> & {
@@ -32,7 +33,7 @@ const meta: Meta<StoryProps> = {
       ],
       selectedIds: ['one', 'two', 'three'],
     },
-    itemTag: (item) => ({ tag: item.name, color: item.color }),
+    itemTag: (item) => ({ tag: item.name, color: item.color, removable: item.removable }),
   },
 };
 export default meta;
@@ -55,4 +56,15 @@ Normal.args = {};
 export const NoSelection = Template.bind({});
 NoSelection.args = {
   initialState: { items: [{ id: 'one', name: 'One' }], selectedIds: [] },
+};
+
+export const NonRemovableSelection = Template.bind({});
+NonRemovableSelection.args = {
+  initialState: {
+    items: [
+      { id: 'non-removable', name: 'Non-removable', removable: false },
+      { id: 'one', name: 'One' },
+    ],
+    selectedIds: ['non-removable', 'one'],
+  },
 };

@@ -17,6 +17,7 @@ export interface DropdownProps<
   activeItemIds?: string[];
   left?: boolean;
   up?: boolean;
+  isContentItem?: (item: TItem) => boolean;
   renderItem: (item: TItem) => React.ReactNode;
   renderTrigger: (ref: Ref<TTrigger>, onOpenDropDown: () => void) => ReactNode;
   onItemClick?: (item: TItem) => void;
@@ -28,6 +29,7 @@ export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownIte
   items,
   left,
   up,
+  isContentItem,
   renderItem,
   renderTrigger,
   onItemClick,
@@ -43,15 +45,21 @@ export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownIte
 
   return (
     <DropdownDisplay className={className} active={active} up={up} left={left} trigger={trigger}>
-      {items.map((item) => (
-        <DropdownDisplay.Item
-          key={item.id}
-          active={activeItemIds?.includes(item.id)}
-          onClick={() => onItemClick?.(item)}
-        >
-          {renderItem(item)}
-        </DropdownDisplay.Item>
-      ))}
+      {items.map((item) => {
+        const contentItem = isContentItem?.(item);
+        if (contentItem) {
+          return <DropdownDisplay.ContentItem>{renderItem(item)}</DropdownDisplay.ContentItem>;
+        }
+        return (
+          <DropdownDisplay.Item
+            key={item.id}
+            active={activeItemIds?.includes(item.id)}
+            onClick={() => onItemClick?.(item)}
+          >
+            {renderItem(item)}
+          </DropdownDisplay.Item>
+        );
+      })}
     </DropdownDisplay>
   );
 }
