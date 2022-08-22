@@ -39,7 +39,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Strings',
-      fields: [{ name: 'multiline', type: FieldType.String, multiline: true }],
+      fields: [
+        { name: 'multiline', type: FieldType.String, multiline: true },
+        { name: 'stringAdminOnly', type: FieldType.String, adminOnly: true },
+      ],
     },
     {
       name: 'TitleOnly',

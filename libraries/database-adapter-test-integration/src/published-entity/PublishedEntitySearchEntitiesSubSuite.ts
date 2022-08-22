@@ -4,12 +4,14 @@ import type { UnboundTestFunction } from '../Builder.js';
 import {
   adminToPublishedEntity,
   REFERENCES_CREATE,
+  STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
 import {
   assertPageInfoEquals,
   assertPublishedEntityConnectionToMatchSlice,
   assertSearchResultEntities,
+  countSearchResultWithEntity,
 } from '../shared-entity/SearchTestUtils.js';
 import {
   adminClientForMainPrincipal,
@@ -41,6 +43,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_linksFromOneReference,
   searchEntities_linksFromNoReferences,
   searchEntities_linksFromTwoReferencesFromOneEntity,
+  searchEntities_textExcludedInAdminOnlyField,
 ];
 
 async function searchEntities_minimal({
@@ -509,4 +512,23 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
   const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
+async function searchEntities_textExcludedInAdminOnlyField({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, {
+      fields: { stringAdminOnly: 'papaya, coconut, and all those things' },
+    }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(publishedClient, { text: 'coconut' }, id);
+  assertResultValue(matches, 1); //TODO should be 0
 }
