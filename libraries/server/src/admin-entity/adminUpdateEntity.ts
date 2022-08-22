@@ -5,6 +5,7 @@ import type {
   AdminSchema,
   ErrorType,
   PromiseResult,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -16,7 +17,8 @@ import { randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
 
 export async function adminUpdateEntity(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -51,7 +53,7 @@ export async function adminUpdateEntity(
       return authResult;
     }
 
-    const resolvedResult = resolveUpdateEntity(schema, entity, entityInfoResult.value);
+    const resolvedResult = resolveUpdateEntity(adminSchema, entity, entityInfoResult.value);
     if (resolvedResult.isError()) {
       return resolvedResult;
     }
@@ -60,7 +62,8 @@ export async function adminUpdateEntity(
       const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
       if (options?.publish && updatedEntity.info.status !== AdminEntityStatus.published) {
         const publishResult = await publishEntityAfterMutation(
-          schema,
+          adminSchema,
+          publishedSchema,
           authorizationAdapter,
           databaseAdapter,
           context,
@@ -80,7 +83,12 @@ export async function adminUpdateEntity(
       return ok(payload);
     }
 
-    const encodeResult = await encodeAdminEntity(schema, databaseAdapter, context, updatedEntity);
+    const encodeResult = await encodeAdminEntity(
+      adminSchema,
+      databaseAdapter,
+      context,
+      updatedEntity
+    );
     if (encodeResult.isError()) {
       return encodeResult;
     }
@@ -112,7 +120,8 @@ export async function adminUpdateEntity(
 
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(
-        schema,
+        adminSchema,
+        publishedSchema,
         authorizationAdapter,
         databaseAdapter,
         context,

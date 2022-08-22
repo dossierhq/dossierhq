@@ -6,6 +6,7 @@ import type {
   AdminSchema,
   ErrorType,
   PromiseResult,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -17,7 +18,8 @@ import { randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
 
 export async function adminCreateEntity(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -30,7 +32,7 @@ export async function adminCreateEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  const resolvedResult = resolveCreateEntity(schema, entity);
+  const resolvedResult = resolveCreateEntity(adminSchema, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
   }
@@ -45,7 +47,7 @@ export async function adminCreateEntity(
     return resolvedAuthKeyResult;
   }
 
-  const encodeResult = await encodeAdminEntity(schema, databaseAdapter, context, createEntity);
+  const encodeResult = await encodeAdminEntity(adminSchema, databaseAdapter, context, createEntity);
   if (encodeResult.isError()) {
     return encodeResult;
   }
@@ -85,7 +87,8 @@ export async function adminCreateEntity(
 
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(
-        schema,
+        adminSchema,
+        publishedSchema,
         authorizationAdapter,
         databaseAdapter,
         context,

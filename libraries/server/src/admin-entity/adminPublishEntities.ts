@@ -46,7 +46,8 @@ interface VersionInfoAlreadyPublished {
 }
 
 export async function adminPublishEntities(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -66,7 +67,8 @@ export async function adminPublishEntities(
   return context.withTransaction(async (context) => {
     // Step 1: Get version info for each entity
     const versionsInfoResult = await collectVersionsInfo(
-      schema,
+      adminSchema,
+      publishedSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -117,7 +119,8 @@ export async function adminPublishEntities(
 }
 
 async function collectVersionsInfo(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -168,7 +171,7 @@ async function collectVersionsInfo(
       return createErrorResult(authResult.error, `entity(${reference.id}): ${authResult.message}`);
     }
 
-    const entitySpec = schema.getEntityTypeSpecification(type);
+    const entitySpec = adminSchema.getEntityTypeSpecification(type);
     if (!entitySpec) {
       return notOk.Generic(`No entity spec for type ${type}`);
     }
@@ -178,9 +181,10 @@ async function collectVersionsInfo(
     } else if (versionIsPublished) {
       versionsInfo.push({ effect: 'none', uuid: reference.id, status, updatedAt });
     } else {
-      const entityFields = decodeAdminEntityFields(schema, entitySpec, fieldValues);
+      const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, fieldValues);
       const verifyFieldsResult = verifyFieldValuesAndCollectInformation(
-        schema,
+        adminSchema,
+        publishedSchema,
         reference,
         type,
         entityFields
@@ -210,7 +214,8 @@ async function collectVersionsInfo(
 }
 
 function verifyFieldValuesAndCollectInformation(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   reference: EntityReference,
   type: string,
   entityFields: Record<string, unknown>
@@ -222,7 +227,7 @@ function verifyFieldValuesAndCollectInformation(
 
   const ftsCollector = createFullTextSearchCollector();
 
-  for (const node of traverseEntity(schema, [`entity(${reference.id})`], entity)) {
+  for (const node of traverseEntity(adminSchema, [`entity(${reference.id})`], entity)) {
     ftsCollector.collect(node);
     switch (node.type) {
       case ItemTraverseNodeType.error:
