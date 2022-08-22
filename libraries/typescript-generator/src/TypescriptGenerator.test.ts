@@ -169,3 +169,50 @@ describe('generateTypescriptForSchema', () => {
     ).toMatchSnapshot();
   });
 });
+
+describe('generateTypescriptForSchema published', () => {
+  test('empty', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: null,
+        publishedSchema: new AdminSchema({ entityTypes: [], valueTypes: [] }).toPublishedSchema(),
+      })
+    ).toMatchSnapshot();
+  });
+
+  test('adminOnly entity type', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: null,
+        publishedSchema: new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: true,
+              fields: [],
+            },
+          ],
+          valueTypes: [],
+        }).toPublishedSchema(),
+      })
+    ).toMatchSnapshot();
+  });
+
+  test('adminOnly field', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: null,
+        publishedSchema: new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'field', adminOnly: true, type: FieldType.String }],
+            },
+          ],
+          valueTypes: [],
+        }).toPublishedSchema(),
+      })
+    ).toMatchSnapshot();
+  });
+});

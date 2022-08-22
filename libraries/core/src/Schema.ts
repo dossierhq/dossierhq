@@ -5,35 +5,35 @@ import type { EntityReference, Location, RichText, ValueItem } from './Types.js'
 export interface AdminEntityTypeSpecification {
   name: string;
   adminOnly: boolean;
-  fields: FieldSpecification[];
+  fields: AdminFieldSpecification[];
 }
 
 export interface AdminValueTypeSpecification {
   name: string;
   adminOnly: boolean;
-  fields: FieldSpecification[];
+  fields: AdminFieldSpecification[];
 }
 
 export interface AdminEntityTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
-  fields: FieldSpecification[];
+  fields: AdminFieldSpecification[];
 }
 
 export interface AdminValueTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
-  fields: FieldSpecification[];
+  fields: AdminFieldSpecification[];
 }
 
 export interface PublishedEntityTypeSpecification {
   name: string;
-  fields: FieldSpecification[];
+  fields: PublishedFieldSpecification[];
 }
 
 export interface PublishedValueTypeSpecification {
   name: string;
-  fields: FieldSpecification[];
+  fields: PublishedFieldSpecification[];
 }
 
 export const FieldType = {
@@ -57,12 +57,13 @@ export const RichTextNodeType = {
 } as const;
 export type RichTextNodeType = keyof typeof RichTextNodeType;
 
-export interface FieldSpecification {
+interface FieldSpecification {
   name: string;
   /** The type of the field, only values from {@link FieldType} as accepted. */
   type: FieldType;
   list?: boolean;
   required?: boolean;
+  adminOnly?: boolean;
   isName?: boolean;
   /** Applicable when type is String */
   multiline?: boolean;
@@ -75,6 +76,12 @@ export interface FieldSpecification {
    */
   richTextNodes?: (RichTextNodeType | string)[];
 }
+
+export interface AdminFieldSpecification extends FieldSpecification {
+  adminOnly?: boolean;
+}
+
+export type PublishedFieldSpecification = FieldSpecification;
 
 export interface FieldValueTypeMap {
   [FieldType.Boolean]: boolean;
@@ -252,7 +259,7 @@ export class AdminSchema {
   getEntityFieldSpecification(
     entitySpec: AdminEntityTypeSpecification,
     fieldName: string
-  ): FieldSpecification | null {
+  ): AdminFieldSpecification | null {
     return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 
@@ -267,7 +274,7 @@ export class AdminSchema {
   getValueFieldSpecification(
     valueSpec: AdminValueTypeSpecification,
     fieldName: string
-  ): FieldSpecification | null {
+  ): AdminFieldSpecification | null {
     return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 
@@ -322,17 +329,29 @@ export class AdminSchema {
       valueTypes: [],
     };
 
+    function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
+      return fields
+        .filter((it) => !it.adminOnly)
+        .map((field) => {
+          const { adminOnly, ...publishedField } = field;
+          return publishedField;
+        });
+    }
+
     for (const entitySpec of this.spec.entityTypes) {
       if (entitySpec.adminOnly) {
         continue;
       }
-      spec.entityTypes.push({ name: entitySpec.name, fields: entitySpec.fields });
+      spec.entityTypes.push({
+        name: entitySpec.name,
+        fields: toPublishedFields(entitySpec.fields),
+      });
     }
     for (const valueSpec of this.spec.valueTypes) {
       if (valueSpec.adminOnly) {
         continue;
       }
-      spec.valueTypes.push({ name: valueSpec.name, fields: valueSpec.fields });
+      spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
     }
 
     return new PublishedSchema(spec);
@@ -357,7 +376,7 @@ export class PublishedSchema {
   getEntityFieldSpecification(
     entitySpec: PublishedEntityTypeSpecification,
     fieldName: string
-  ): FieldSpecification | null {
+  ): PublishedFieldSpecification | null {
     return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 
@@ -372,7 +391,7 @@ export class PublishedSchema {
   getValueFieldSpecification(
     valueSpec: PublishedValueTypeSpecification,
     fieldName: string
-  ): FieldSpecification | null {
+  ): PublishedFieldSpecification | null {
     return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 }

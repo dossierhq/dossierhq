@@ -6,6 +6,7 @@
     "graphiql",
     "jonasb",
     "postgres",
+    "tsbuildinfo",
     "unpublish",
     "vitest"
   ],

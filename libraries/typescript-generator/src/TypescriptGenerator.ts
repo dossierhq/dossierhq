@@ -1,9 +1,10 @@
 import type {
   AdminEntityTypeSpecification,
+  AdminFieldSpecification,
   AdminSchema,
   AdminValueTypeSpecification,
-  FieldSpecification,
   PublishedEntityTypeSpecification,
+  PublishedFieldSpecification,
   PublishedSchema,
   PublishedValueTypeSpecification,
 } from '@jonasb/datadata-core';
@@ -150,7 +151,7 @@ function generateValueType(
 
 function fieldType(
   { coreImports }: GeneratorContext,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   adminOrPublished: 'Admin' | 'Published'
 ) {
   let type: string;

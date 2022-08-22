@@ -465,4 +465,28 @@ describe('AdminSchema.toPublishedSchema()', () => {
       valueTypes: [],
     });
   });
+
+  test('1 entity type with adminOnly field and 1 value type with adminOnly field', () => {
+    expect(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'field1', adminOnly: true, type: FieldType.String }],
+          },
+        ],
+        valueTypes: [
+          {
+            name: 'Bar',
+            adminOnly: false,
+            fields: [{ name: 'field1', adminOnly: true, type: FieldType.Location }],
+          },
+        ],
+      }).toPublishedSchema().spec
+    ).toEqual({
+      entityTypes: [{ name: 'Foo', fields: [] }],
+      valueTypes: [{ name: 'Bar', fields: [] }],
+    });
+  });
 });

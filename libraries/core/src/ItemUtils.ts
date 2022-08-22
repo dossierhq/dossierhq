@@ -1,7 +1,7 @@
 import { assertExhaustive } from './Asserts.js';
 import type {
   AdminSchema,
-  FieldSpecification,
+  AdminFieldSpecification,
   FieldValueTypeMap,
   PublishedSchema,
 } from './Schema.js';
@@ -23,7 +23,7 @@ import type {
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean && !fieldSpec.list;
@@ -31,7 +31,7 @@ export function isBooleanField(
 
 /** Check if `value` with `fieldSpec` is a list boolean field */
 export function isBooleanListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[typeof FieldType.Boolean]> | null {
   return fieldSpec.type === FieldType.Boolean && !!fieldSpec.list;
@@ -39,7 +39,7 @@ export function isBooleanListField(
 
 /** Check if `value` with `fieldSpec` is either a single boolean field or an item in a list field */
 export function isBooleanItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean;
@@ -47,7 +47,7 @@ export function isBooleanItemField(
 
 /** Check if `value` with `fieldSpec` is a single EntityType field */
 export function isEntityTypeField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.EntityType] | null {
   return fieldSpec.type === FieldType.EntityType && !fieldSpec.list;
@@ -55,7 +55,7 @@ export function isEntityTypeField(
 
 /** Check if `value` with `fieldSpec` is a list EntityType field */
 export function isEntityTypeListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[typeof FieldType.EntityType]> | null {
   return fieldSpec.type === FieldType.EntityType && !!fieldSpec.list;
@@ -63,7 +63,7 @@ export function isEntityTypeListField(
 
 /** Check if `value` with `fieldSpec` is either a single EntityType field or an item in a list field */
 export function isEntityTypeItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.EntityType] | null {
   return fieldSpec.type === FieldType.EntityType;
@@ -71,7 +71,7 @@ export function isEntityTypeItemField(
 
 /** Check if `value` with `fieldSpec` is a single Location field */
 export function isLocationField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location && !fieldSpec.list;
@@ -79,7 +79,7 @@ export function isLocationField(
 
 /** Check if `value` with `fieldSpec` is a list Location field */
 export function isLocationListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[typeof FieldType.Location]> | null {
   return fieldSpec.type === FieldType.Location && !!fieldSpec.list;
@@ -87,7 +87,7 @@ export function isLocationListField(
 
 /** Check if `value` with `fieldSpec` is either a single Location field or an item in a list field */
 export function isLocationItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location;
@@ -95,7 +95,7 @@ export function isLocationItemField(
 
 /** Check if `value` with `fieldSpec` is a single String field */
 export function isStringField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String && !fieldSpec.list;
@@ -103,7 +103,7 @@ export function isStringField(
 
 /** Check if `value` with `fieldSpec` is a list String field */
 export function isStringListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[typeof FieldType.String]> | null {
   return fieldSpec.type === FieldType.String && !!fieldSpec.list;
@@ -111,7 +111,7 @@ export function isStringListField(
 
 /** Check if `value` with `fieldSpec` is either a single String field or an item in a list field */
 export function isStringItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String;
@@ -119,7 +119,7 @@ export function isStringItemField(
 
 /** Check if `value` with `fieldSpec` is a single RichText field */
 export function isRichTextField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText && !fieldSpec.list;
@@ -127,7 +127,7 @@ export function isRichTextField(
 
 /** Check if `value` with `fieldSpec` is a list RichText field */
 export function isRichTextListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[typeof FieldType.RichText]> | null {
   return fieldSpec.type === FieldType.RichText && !!fieldSpec.list;
@@ -135,7 +135,7 @@ export function isRichTextListField(
 
 /** Check if `value` with `fieldSpec` is either a single RichText field or an item in a list field */
 export function isRichTextItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText;
@@ -143,7 +143,7 @@ export function isRichTextItemField(
 
 /** Check if `value` with `fieldSpec` is a single ValueType field */
 export function isValueTypeField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.ValueType] | null {
   return fieldSpec.type === FieldType.ValueType && !fieldSpec.list;
@@ -151,7 +151,7 @@ export function isValueTypeField(
 
 /** Check if `value` with `fieldSpec` is a list ValueType field */
 export function isValueTypeListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[typeof FieldType.ValueType]> | null {
   return fieldSpec.type === FieldType.ValueType && !!fieldSpec.list;
@@ -159,7 +159,7 @@ export function isValueTypeListField(
 
 /** Check if `value` with `fieldSpec` is either a single ValueType field or an item in a list field */
 export function isValueTypeItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[typeof FieldType.ValueType] | null {
   return fieldSpec.type === FieldType.ValueType;
@@ -233,31 +233,31 @@ export function visitorPathToString(path: ItemValuePath): string {
 
 type VisitorVisitField<TVisitContext> = (
   path: Array<string | number>,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   data: unknown,
   visitContext: TVisitContext
 ) => void;
 type VisitorVisitRichTextNode<TVisitContext> = (
   path: Array<string | number>,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   node: RichTextNode,
   visitContext: TVisitContext
 ) => void;
 type VisitorEnterValueItem<TVisitContext> = (
   path: Array<string | number>,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   valueItem: ValueItem,
   visitContext: TVisitContext
 ) => TVisitContext;
 type VisitorEnterList<TVisitContext> = (
   path: Array<string | number>,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   list: unknown[],
   visitContext: TVisitContext
 ) => TVisitContext;
 type VisitorEnterRichText<TVisitContext> = (
   path: Array<string | number>,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   RichText: RichText,
   visitContext: TVisitContext
 ) => TVisitContext;
@@ -314,7 +314,7 @@ export function visitFieldRecursively<TVisitContext>({
 }: {
   schema: AdminSchema | PublishedSchema;
   path?: ItemValuePath;
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: unknown;
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextNode: VisitorVisitRichTextNode<TVisitContext>;
@@ -401,7 +401,7 @@ function doVisitItemRecursively<TVisitContext>(
 function doVisitFieldRecursively<TVisitContext>(
   schema: AdminSchema | PublishedSchema,
   path: ItemValuePath,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown,
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
@@ -435,7 +435,7 @@ function doVisitFieldRecursively<TVisitContext>(
 
 function visitRichTextNodeRecursively<TVisitContext>(
   schema: AdminSchema | PublishedSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   path: ItemValuePath,
   node: RichTextNode,
   callbacks: VisitorCallbacks<TVisitContext>,
@@ -540,7 +540,7 @@ export function isFieldValueEqual(a: unknown, b: unknown): boolean {
 
 export function normalizeFieldValue(
   schema: AdminSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown
 ): unknown {
   if (value === null || value === undefined) {
@@ -576,7 +576,7 @@ export function normalizeFieldValue(
 
 function normalizeFieldValueItem(
   schema: AdminSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown
 ) {
   if (value === null) return value;

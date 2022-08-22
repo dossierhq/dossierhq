@@ -1,4 +1,4 @@
-import type { FieldSpecification } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -14,7 +14,6 @@ import {
   isValueTypeListField,
 } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
-import React from 'react';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
 import { FieldDisplayListWrapper } from './FieldDisplayListWrapper.js';
@@ -24,7 +23,7 @@ import { StringFieldDisplay } from './StringFieldDisplay.js';
 import { ValueTypeFieldDisplay } from './ValueTypeFieldDisplay.js';
 
 export interface FieldDisplayProps<T> {
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: T | null;
 }
 

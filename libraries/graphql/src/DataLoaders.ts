@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityTypeSpecification,
+  AdminFieldSpecification,
   AdminQuery,
   AdminSchema,
   AdminSearchQuery,
@@ -9,11 +10,11 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
-  FieldSpecification,
   PageInfo,
   Paging,
   PublishedEntity,
   PublishedEntityTypeSpecification,
+  PublishedFieldSpecification,
   PublishedQuery,
   PublishedSchema,
   PublishedSearchQuery,
@@ -307,7 +308,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 
 function extractEntityIdsForRichTextField(
   schema: AdminSchema | PublishedSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   value: RichText
 ) {
   const entityIds = new Set<string>();

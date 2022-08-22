@@ -1,4 +1,4 @@
-import type { FieldSpecification, ValueItem } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
 import { Fragment, useCallback, useContext } from 'react';
@@ -85,7 +85,7 @@ function ValueItemField({
   onChange,
 }: {
   value: ValueItem;
-  valueFieldSpec: FieldSpecification;
+  valueFieldSpec: AdminFieldSpecification;
   onChange: (value: ValueItem) => void;
 }) {
   const handleFieldChanged = useCallback(

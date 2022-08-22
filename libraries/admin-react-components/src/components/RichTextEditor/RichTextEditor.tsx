@@ -1,4 +1,4 @@
-import type { FieldSpecification, RichText } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -15,7 +15,7 @@ import { ToolbarPlugin } from './ToolbarPlugin';
 import { ValueItemPlugin } from './ValueItemPlugin.js';
 
 interface Props {
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: RichText | null;
   onChange: (value: RichText | null) => void;
 }
