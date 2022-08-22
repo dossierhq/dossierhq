@@ -1,6 +1,6 @@
 import { assertExhaustive } from './Asserts.js';
-import type { AdminItemTraverseNode } from './ItemTraverser.js';
-import { AdminItemTraverseNodeType } from './ItemTraverser.js';
+import type { ItemTraverseNode } from './ItemTraverser.js';
+import { ItemTraverseNodeType } from './ItemTraverser.js';
 import type { ItemValuePath } from './ItemUtils.js';
 import type { AdminSchema } from './Schema.js';
 
@@ -11,18 +11,18 @@ export interface ValidationError {
 
 export function validateTraverseNode(
   schema: AdminSchema,
-  node: AdminItemTraverseNode,
+  node: ItemTraverseNode<AdminSchema>,
   { validatePublish: _1 }: { validatePublish: boolean }
 ): ValidationError | null {
   const nodeType = node.type;
   switch (nodeType) {
-    case AdminItemTraverseNodeType.field:
+    case ItemTraverseNodeType.field:
       break;
-    case AdminItemTraverseNodeType.fieldItem:
+    case ItemTraverseNodeType.fieldItem:
       break;
-    case AdminItemTraverseNodeType.error:
+    case ItemTraverseNodeType.error:
       return { path: node.path, message: node.message };
-    case AdminItemTraverseNodeType.richTextNode:
+    case ItemTraverseNodeType.richTextNode:
       if (node.fieldSpec.richTextNodes && node.fieldSpec.richTextNodes.length > 0) {
         if (!node.fieldSpec.richTextNodes.includes(node.node.type)) {
           return {
@@ -36,7 +36,7 @@ export function validateTraverseNode(
         }
       }
       break;
-    case AdminItemTraverseNodeType.valueItem:
+    case ItemTraverseNodeType.valueItem:
       break;
     default:
       assertExhaustive(nodeType);

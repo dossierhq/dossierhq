@@ -1,23 +1,24 @@
 import type {
   AdminEntityPublishPayload,
-  AdminItemTraverseNode,
   AdminSchema,
   EntityLike,
   EntityReference,
   EntityVersionReference,
+  ItemTraverseNode,
   PromiseResult,
+  PublishedSchema,
   Result,
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
-  AdminItemTraverseNodeType,
   createErrorResult,
   ErrorType,
   isRichTextTextNode,
   isStringItemField,
+  ItemTraverseNodeType,
   notOk,
   ok,
-  traverseAdminEntity,
+  traverseEntity,
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -221,17 +222,17 @@ function verifyFieldValuesAndCollectInformation(
 
   const ftsCollector = createFullTextSearchCollector();
 
-  for (const node of traverseAdminEntity(schema, [`entity(${reference.id})`], entity)) {
+  for (const node of traverseEntity(schema, [`entity(${reference.id})`], entity)) {
     ftsCollector.collect(node);
     switch (node.type) {
-      case AdminItemTraverseNodeType.error:
+      case ItemTraverseNodeType.error:
         return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);
-      case AdminItemTraverseNodeType.field:
+      case ItemTraverseNodeType.field:
         if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
           return notOk.BadRequest(`${visitorPathToString(node.path)}: Required field is empty`);
         }
         break;
-      case AdminItemTraverseNodeType.valueItem:
+      case ItemTraverseNodeType.valueItem:
         if (node.valueSpec.adminOnly) {
           return notOk.BadRequest(
             `${visitorPathToString(node.path)}: Value item of type ${
@@ -245,17 +246,17 @@ function verifyFieldValuesAndCollectInformation(
   return ok({ fullTextSearchText: ftsCollector.result });
 }
 
-function createFullTextSearchCollector() {
+function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const fullTextSearchText: string[] = [];
   return {
-    collect: (node: AdminItemTraverseNode) => {
+    collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
-        case AdminItemTraverseNodeType.field:
+        case ItemTraverseNodeType.field:
           if (isStringItemField(node.fieldSpec, node.value) && node.value) {
             fullTextSearchText.push(node.value);
           }
           break;
-        case AdminItemTraverseNodeType.richTextNode: {
+        case ItemTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextTextNode(richTextNode) && richTextNode.text) {
             fullTextSearchText.push(richTextNode.text);

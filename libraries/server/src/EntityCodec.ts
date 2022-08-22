@@ -33,7 +33,7 @@ import {
   normalizeFieldValue,
   notOk,
   ok,
-  traverseAdminEntity,
+  traverseEntity,
   validateTraverseNode,
   visitItemRecursively,
   visitorPathToString,
@@ -355,7 +355,7 @@ export async function encodeAdminEntity(
   // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
   const validateOptions = { validatePublish: false };
-  for (const node of traverseAdminEntity(schema, ['entity'], entity)) {
+  for (const node of traverseEntity(schema, ['entity'], entity)) {
     const validationError = validateTraverseNode(schema, node, validateOptions);
     if (validationError) {
       return notOk.BadRequest(
@@ -522,7 +522,7 @@ export function collectDataFromEntity(
   const locations: Location[] = [];
   const fullTextSearchText: string[] = [];
 
-  // TODO migrate to traverseAdminEntity, see createFullTextSearchCollector()
+  // TODO migrate to traverseEntity, see createFullTextSearchCollector()
 
   visitItemRecursively({
     schema,
