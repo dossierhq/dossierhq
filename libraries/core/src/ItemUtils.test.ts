@@ -14,7 +14,7 @@ import {
   createRichTextTextNode,
   createRichTextValueItemNode,
 } from './RichTextUtils.js';
-import type { FieldSpecification } from './Schema.js';
+import type { AdminFieldSpecification } from './Schema.js';
 import { AdminSchema, FieldType } from './Schema.js';
 import type { EntityLike, RichText, RichTextNode, ValueItem } from './Types.js';
 
@@ -58,7 +58,7 @@ function buildMockCallbacks<TVisitContext>() {
     callbacks: {
       visitField: (
         path: Array<string | number>,
-        fieldSpec: FieldSpecification,
+        fieldSpec: AdminFieldSpecification,
         data: unknown,
         visitContext: TVisitContext
       ) => {
@@ -72,7 +72,7 @@ function buildMockCallbacks<TVisitContext>() {
       },
       visitRichTextNode: (
         path: Array<string | number>,
-        fieldSpec: FieldSpecification,
+        fieldSpec: AdminFieldSpecification,
         node: RichTextNode,
         visitContext: TVisitContext
       ) => {
@@ -86,7 +86,7 @@ function buildMockCallbacks<TVisitContext>() {
       },
       enterValueItem: (
         path: Array<string | number>,
-        fieldSpec: FieldSpecification,
+        fieldSpec: AdminFieldSpecification,
         valueItem: ValueItem,
         visitContext: TVisitContext
       ) => {
@@ -100,7 +100,7 @@ function buildMockCallbacks<TVisitContext>() {
       },
       enterList: (
         path: Array<string | number>,
-        fieldSpec: FieldSpecification,
+        fieldSpec: AdminFieldSpecification,
         list: unknown[],
         visitContext: TVisitContext
       ) => {
@@ -114,7 +114,7 @@ function buildMockCallbacks<TVisitContext>() {
       },
       enterRichText: (
         path: Array<string | number>,
-        fieldSpec: FieldSpecification,
+        fieldSpec: AdminFieldSpecification,
         richText: RichText,
         visitContext: TVisitContext
       ) => {

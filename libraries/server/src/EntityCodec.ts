@@ -3,14 +3,15 @@ import type {
   AdminEntityCreate,
   AdminEntityTypeSpecification,
   AdminEntityUpdate,
+  AdminFieldSpecification,
   AdminSchema,
   EntityLike,
   ErrorType,
-  FieldSpecification,
   Location,
   PromiseResult,
   PublishedEntity,
   PublishedEntityTypeSpecification,
+  PublishedFieldSpecification,
   PublishedSchema,
   Result,
   RichText,
@@ -91,7 +92,7 @@ export function decodePublishedEntity(
 
 function decodeFieldItemOrList(
   schema: AdminSchema | PublishedSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   fieldValue: unknown
 ) {
   if (fieldValue === null || fieldValue === undefined) {
@@ -126,7 +127,7 @@ function decodeFieldItemOrList(
 
 function decodeValueItemField(
   schema: AdminSchema | PublishedSchema,
-  _fieldSpec: FieldSpecification,
+  _fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   encodedValue: ValueItem
 ) {
   const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
@@ -408,7 +409,7 @@ export async function encodeAdminEntity(
 
 function encodeFieldItemOrList(
   schema: AdminSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   prefix: string,
   data: unknown
 ): Result<unknown, typeof ErrorType.BadRequest> {
@@ -445,7 +446,7 @@ function encodeFieldItemOrList(
 
 function encodeValueItemField(
   schema: AdminSchema,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   prefix: string,
   data: ValueItem | null
 ): Result<unknown, typeof ErrorType.BadRequest> {

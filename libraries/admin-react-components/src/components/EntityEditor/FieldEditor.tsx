@@ -1,4 +1,4 @@
-import type { FieldSpecification } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -13,7 +13,6 @@ import {
   isValueTypeField,
   isValueTypeListField,
 } from '@jonasb/datadata-core';
-import React from 'react';
 import { BooleanFieldEditor } from './BooleanFieldEditor';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
 import { FieldListWrapper } from './FieldListWrapper';
@@ -23,7 +22,7 @@ import { StringFieldEditor } from './StringFieldEditor';
 import { ValueTypeFieldEditor } from './ValueTypeFieldEditor';
 
 export interface FieldEditorProps<T> {
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: T | null;
   onChange: (value: T | null) => void;
 }

@@ -3,8 +3,8 @@ import type {
   AdminEntityCreate,
   AdminEntityTypeSpecification,
   AdminEntityUpdate,
+  AdminFieldSpecification,
   AdminSchema,
-  FieldSpecification,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, normalizeFieldValue } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
@@ -36,7 +36,7 @@ export interface EntityEditorDraftState {
 
 export interface FieldEditorState {
   status: '' | 'changed';
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: unknown;
   normalizedValue: unknown;
 }

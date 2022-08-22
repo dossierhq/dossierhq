@@ -1,6 +1,9 @@
-import type { FieldSpecification, PublishedEntity, PublishedSchema } from '@jonasb/datadata-core';
+import type {
+  AdminFieldSpecification,
+  PublishedEntity,
+  PublishedSchema,
+} from '@jonasb/datadata-core';
 import { Field } from '@jonasb/datadata-design';
-import React from 'react';
 import { FieldDisplay } from './FieldDisplay.js';
 
 interface Props {
@@ -31,7 +34,7 @@ function EntityFieldDisplay({
   fieldSpec,
 }: {
   value: unknown;
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
 }) {
   return (
     <Field>

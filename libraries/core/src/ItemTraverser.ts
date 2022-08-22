@@ -9,7 +9,7 @@ import type {
   AdminEntityTypeSpecification,
   AdminSchema,
   AdminValueTypeSpecification,
-  FieldSpecification,
+  AdminFieldSpecification,
 } from './Schema.js';
 import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
 
@@ -38,14 +38,14 @@ interface AdminItemTraverseNodeError {
 interface AdminItemTraverseNodeField {
   path: ItemValuePath;
   type: 'field';
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: unknown;
 }
 
 interface AdminItemTraverseNodeFieldItem {
   path: ItemValuePath;
   type: 'fieldItem';
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: unknown;
 }
 
@@ -59,7 +59,7 @@ interface AdminItemTraverseNodeValueItem {
 interface AdminItemTraverseNodeRichTextNode {
   path: ItemValuePath;
   type: 'richTextNode';
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   node: RichTextNode;
 }
 
@@ -134,7 +134,7 @@ function* traverseAdminItem(
 export function* traverseAdminItemField(
   schema: AdminSchema,
   path: ItemValuePath,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   value: unknown
 ): Generator<AdminItemTraverseNode> {
   const fieldNode: AdminItemTraverseNodeField = {
@@ -172,7 +172,7 @@ export function* traverseAdminItemField(
 function* traverseItemFieldValue(
   schema: AdminSchema,
   path: ItemValuePath,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   itemValue: unknown
 ): Generator<AdminItemTraverseNode> {
   if (Array.isArray(itemValue)) {
@@ -222,7 +222,7 @@ function* traverseItemFieldValue(
 function* traverseRichTextNode(
   schema: AdminSchema,
   path: ItemValuePath,
-  fieldSpec: FieldSpecification,
+  fieldSpec: AdminFieldSpecification,
   node: RichTextNode
 ): Generator<AdminItemTraverseNode> {
   if (typeof node !== 'object') {

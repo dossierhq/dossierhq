@@ -1,4 +1,4 @@
-import type { FieldSpecification, RichText } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -10,7 +10,7 @@ import { PublishedValueItemNode } from './PublishedValueItemNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
-  fieldSpec: FieldSpecification;
+  fieldSpec: AdminFieldSpecification;
   value: RichText | null;
 }
 

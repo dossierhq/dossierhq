@@ -1,4 +1,4 @@
-import type { FieldSpecification } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import { RichTextNodeType } from '@jonasb/datadata-core';
 import { Button, IconButton, Row } from '@jonasb/datadata-design';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
@@ -16,7 +16,7 @@ import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 
-export function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) {
+export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
   const [editor] = useLexicalComposerContext();
 
   const [isBold, setIsBold] = useState(false);
@@ -114,7 +114,7 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: FieldSpecification }) 
   );
 }
 
-function AddEntityButton({ fieldSpec }: { fieldSpec: FieldSpecification }) {
+function AddEntityButton({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
   const [editor] = useLexicalComposerContext();
   const [showSelector, setShowSelector] = useState(false);
   const handleDialogClose = useCallback(() => setShowSelector(false), []);
@@ -138,7 +138,7 @@ function AddEntityButton({ fieldSpec }: { fieldSpec: FieldSpecification }) {
   );
 }
 
-function AddValueItemButton({ fieldSpec }: { fieldSpec: FieldSpecification }) {
+function AddValueItemButton({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
   const [editor] = useLexicalComposerContext();
 
   return (

@@ -161,3 +161,27 @@ export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
 `;
 
 exports[`generateTypescriptForSchema > empty 1`] = `""`;
+
+exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `""`;
+
+exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
+"import type { PublishedEntity } from '@jonasb/datadata-core';
+
+export interface PublishedFooFields {
+}
+
+export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields>;
+
+export function isPublishedFoo(entity: PublishedEntity | PublishedFoo): entity is PublishedFoo {
+  return entity.info.type === 'Foo';
+}
+
+export function assertIsPublishedFoo(entity: PublishedEntity | PublishedFoo): asserts entity is PublishedFoo {
+  if (entity.info.type !== 'Foo') {
+    throw new Error('Expected info.type = Foo (but was ' + entity.info.type + ')');
+  }
+}
+"
+`;
+
+exports[`generateTypescriptForSchema published > empty 1`] = `""`;

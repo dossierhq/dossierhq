@@ -1,14 +1,14 @@
-import { FieldType, notOk, ok } from '@jonasb/datadata-core';
 import type {
+  AdminFieldSpecification,
   ErrorType,
-  FieldSpecification,
   FieldValueTypeMap,
   Result,
 } from '@jonasb/datadata-core';
+import { FieldType, notOk, ok } from '@jonasb/datadata-core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(
-    fieldSpec: FieldSpecification,
+    fieldSpec: AdminFieldSpecification,
     prefix: string,
     decodedData: TDecoded
   ): Result<TEncoded, typeof ErrorType.BadRequest>;
@@ -17,7 +17,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
-  encodeData: (_fieldSpec: FieldSpecification, prefix: string, data) =>
+  encodeData: (_fieldSpec: AdminFieldSpecification, prefix: string, data) =>
     typeof data === 'boolean'
       ? ok(data)
       : notOk.BadRequest(
@@ -28,7 +28,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.EntityType], string> = {
-  encodeData: (_fieldSpec: FieldSpecification, prefix: string, x) => {
+  encodeData: (_fieldSpec: AdminFieldSpecification, prefix: string, x) => {
     if (Array.isArray(x)) {
       return notOk.BadRequest(`${prefix}: expected reference, got list`);
     }
@@ -48,7 +48,7 @@ const locationCodec: FieldTypeAdapter<
   FieldValueTypeMap[typeof FieldType.Location],
   [number, number]
 > = {
-  encodeData: (_fieldSpec: FieldSpecification, prefix: string, data) => {
+  encodeData: (_fieldSpec: AdminFieldSpecification, prefix: string, data) => {
     if (Array.isArray(data)) {
       return notOk.BadRequest(`${prefix}: expected location, got list`);
     }
@@ -72,7 +72,7 @@ const locationCodec: FieldTypeAdapter<
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (fieldSpec: FieldSpecification, prefix: string, data) => {
+  encodeData: (fieldSpec: AdminFieldSpecification, prefix: string, data) => {
     if (typeof data !== 'string') {
       return notOk.BadRequest(
         `${prefix}: expected string, got ${Array.isArray(data) ? 'list' : typeof data}`
@@ -108,7 +108,7 @@ const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.ValueType]: invalidCodec,
 };
 
-export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
+export function getAdapter(fieldSpec: AdminFieldSpecification): FieldTypeAdapter {
   return getAdapterForType(fieldSpec.type as FieldType);
 }
 
