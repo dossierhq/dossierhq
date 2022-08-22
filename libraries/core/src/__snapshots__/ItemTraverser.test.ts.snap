@@ -1,0 +1,720 @@
+// Vitest Snapshot v1
+
+exports[`traverseEntity > Empty Foo entity 1`] = `
+[
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "string",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "string",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.twoStrings",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "twoStrings",
+      "type": "ValueType",
+      "valueTypes": [
+        "TwoStrings",
+      ],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.richText",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.adminOnlyString",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": true,
+      "name": "adminOnlyString",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "adminOnlyString",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
+[
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": "string1",
+  },
+  {
+    "fieldSpec": {
+      "name": "string",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "string",
+    ],
+    "type": "fieldItem",
+    "value": "string1",
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": [
+      "string2.1",
+      "string2.2",
+    ],
+  },
+  {
+    "fieldSpec": {
+      "list": true,
+      "name": "stringList",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "stringList",
+      0,
+    ],
+    "type": "fieldItem",
+    "value": "string2.1",
+  },
+  {
+    "fieldSpec": {
+      "list": true,
+      "name": "stringList",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "stringList",
+      1,
+    ],
+    "type": "fieldItem",
+    "value": "string2.2",
+  },
+  {
+    "path": "entity.fields.twoStrings",
+    "type": "field",
+    "value": {
+      "string1": "two-1",
+      "string2": "two-2",
+      "type": "TwoStrings",
+    },
+  },
+  {
+    "fieldSpec": {
+      "name": "twoStrings",
+      "type": "ValueType",
+      "valueTypes": [
+        "TwoStrings",
+      ],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+    ],
+    "type": "fieldItem",
+    "value": {
+      "string1": "two-1",
+      "string2": "two-2",
+      "type": "TwoStrings",
+    },
+  },
+  {
+    "path": "entity.fields.twoStrings",
+    "type": "valueItem",
+    "valueItem": {
+      "string1": "two-1",
+      "string2": "two-2",
+      "type": "TwoStrings",
+    },
+  },
+  {
+    "path": "entity.fields.twoStrings.string1",
+    "type": "field",
+    "value": "two-1",
+  },
+  {
+    "fieldSpec": {
+      "name": "string1",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+      "string1",
+    ],
+    "type": "fieldItem",
+    "value": "two-1",
+  },
+  {
+    "path": "entity.fields.twoStrings.string2",
+    "type": "field",
+    "value": "two-2",
+  },
+  {
+    "fieldSpec": {
+      "name": "string2",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+      "string2",
+    ],
+    "type": "fieldItem",
+    "value": "two-2",
+  },
+  {
+    "path": "entity.fields.richText",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.adminOnlyString",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": true,
+      "name": "adminOnlyString",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "adminOnlyString",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1`] = `
+[
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "string",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "string",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.twoStrings",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "twoStrings",
+      "type": "ValueType",
+      "valueTypes": [
+        "TwoStrings",
+      ],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.richText",
+    "type": "field",
+    "value": {
+      "root": {
+        "children": [
+          {
+            "data": {
+              "string1": "two-1",
+              "string2": "two-2",
+              "type": "TwoStrings",
+            },
+            "type": "valueItem",
+            "version": 1,
+          },
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+      },
+    },
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+    ],
+    "type": "fieldItem",
+    "value": {
+      "root": {
+        "children": [
+          {
+            "data": {
+              "string1": "two-1",
+              "string2": "two-2",
+              "type": "TwoStrings",
+            },
+            "type": "valueItem",
+            "version": 1,
+          },
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+      },
+    },
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "node": {
+      "children": [
+        {
+          "data": {
+            "string1": "two-1",
+            "string2": "two-2",
+            "type": "TwoStrings",
+          },
+          "type": "valueItem",
+          "version": 1,
+        },
+      ],
+      "direction": "ltr",
+      "format": "",
+      "indent": 0,
+      "type": "root",
+      "version": 1,
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+    ],
+    "type": "richTextNode",
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "node": {
+      "data": {
+        "string1": "two-1",
+        "string2": "two-2",
+        "type": "TwoStrings",
+      },
+      "type": "valueItem",
+      "version": 1,
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+      0,
+    ],
+    "type": "richTextNode",
+  },
+  {
+    "path": "entity.fields.richText[0].data",
+    "type": "valueItem",
+    "valueItem": {
+      "string1": "two-1",
+      "string2": "two-2",
+      "type": "TwoStrings",
+    },
+  },
+  {
+    "path": "entity.fields.richText[0].data.string1",
+    "type": "field",
+    "value": "two-1",
+  },
+  {
+    "fieldSpec": {
+      "name": "string1",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+      0,
+      "data",
+      "string1",
+    ],
+    "type": "fieldItem",
+    "value": "two-1",
+  },
+  {
+    "path": "entity.fields.richText[0].data.string2",
+    "type": "field",
+    "value": "two-2",
+  },
+  {
+    "fieldSpec": {
+      "name": "string2",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+      0,
+      "data",
+      "string2",
+    ],
+    "type": "fieldItem",
+    "value": "two-2",
+  },
+  {
+    "path": "entity.fields.adminOnlyString",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": true,
+      "name": "adminOnlyString",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "adminOnlyString",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
+[
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "string",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "string",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.twoStrings",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "twoStrings",
+      "type": "ValueType",
+      "valueTypes": [
+        "TwoStrings",
+      ],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.richText",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > Foo with two strings in list 1`] = `
+[
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "string",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "string",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": [
+      "string1",
+      "string2",
+    ],
+  },
+  {
+    "fieldSpec": {
+      "list": true,
+      "name": "stringList",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "stringList",
+      0,
+    ],
+    "type": "fieldItem",
+    "value": "string1",
+  },
+  {
+    "fieldSpec": {
+      "list": true,
+      "name": "stringList",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "stringList",
+      1,
+    ],
+    "type": "fieldItem",
+    "value": "string2",
+  },
+  {
+    "path": "entity.fields.twoStrings",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "twoStrings",
+      "type": "ValueType",
+      "valueTypes": [
+        "TwoStrings",
+      ],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "twoStrings",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.richText",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "richText",
+      "type": "RichText",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "richText",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "entity.fields.adminOnlyString",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": true,
+      "name": "adminOnlyString",
+      "type": "String",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "adminOnlyString",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
+[
+  {
+    "path": "valueItem",
+    "type": "valueItem",
+    "valueItem": {
+      "type": "TwoStrings",
+    },
+  },
+  {
+    "path": "valueItem.string1",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "string1",
+      "type": "String",
+    },
+    "path": [
+      "valueItem",
+      "string1",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "valueItem.string2",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "name": "string2",
+      "type": "String",
+    },
+    "path": [
+      "valueItem",
+      "string2",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
