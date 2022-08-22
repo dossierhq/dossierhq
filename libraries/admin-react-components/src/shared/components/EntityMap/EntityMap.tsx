@@ -6,10 +6,10 @@ import type {
   PublishedEntity,
   PublishedSchema,
 } from '@jonasb/datadata-core';
-import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
+import { isLocationItemField, ItemTraverseNodeType, traverseEntity } from '@jonasb/datadata-core';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import type { Dispatch, ReactNode } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
@@ -88,18 +88,12 @@ function extractEntityLocations(
   entity: AdminEntity | PublishedEntity
 ) {
   const locations: Location[] = [];
-  visitItemRecursively({
-    schema,
-    item: entity,
-    visitField: (_path, fieldSpec, data, _visitContext) => {
-      if (isLocationItemField(fieldSpec, data) && data) {
-        locations.push(data);
+  for (const node of traverseEntity(schema, ['entity'], entity)) {
+    if (node.type === ItemTraverseNodeType.fieldItem) {
+      if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
+        locations.push(node.value);
       }
-    },
-    visitRichTextNode: (_path, _fieldSpec, _node, _visitContext) => {
-      //empty
-    },
-    initialVisitContext: undefined,
-  });
+    }
+  }
   return locations;
 }
