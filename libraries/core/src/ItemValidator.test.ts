@@ -1,4 +1,5 @@
 import { describe, test, expect } from 'vitest';
+import { ItemTraverseNodeErrorType } from './ItemTraverser.js';
 import { validateTraverseNode } from './ItemValidator.js';
 import { AdminSchema } from './Schema.js';
 
@@ -12,6 +13,7 @@ describe('validateTraverseNode', () => {
         {
           type: 'error',
           path: ['entity', 'foo'],
+          errorType: ItemTraverseNodeErrorType.generic,
           message: 'Error message',
         },
         { validatePublish: true }
