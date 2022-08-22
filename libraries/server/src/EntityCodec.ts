@@ -522,6 +522,8 @@ export function collectDataFromEntity(
   const locations: Location[] = [];
   const fullTextSearchText: string[] = [];
 
+  // TODO migrate to traverseAdminEntity, see createFullTextSearchCollector()
+
   visitItemRecursively({
     schema,
     item: entity,

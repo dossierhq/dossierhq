@@ -1,5 +1,6 @@
 import type {
   AdminEntityPublishPayload,
+  AdminItemTraverseNode,
   AdminSchema,
   EntityLike,
   EntityReference,
@@ -12,6 +13,8 @@ import {
   AdminItemTraverseNodeType,
   createErrorResult,
   ErrorType,
+  isRichTextTextNode,
+  isStringItemField,
   notOk,
   ok,
   traverseAdminEntity,
@@ -19,10 +22,10 @@ import {
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
+import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import { authVerifyAuthorizationKey } from '../Auth.js';
-import { collectDataFromEntity, decodeAdminEntityFields } from '../EntityCodec.js';
+import { decodeAdminEntityFields } from '../EntityCodec.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 
 interface VersionInfoToBePublished {
@@ -215,10 +218,11 @@ function verifyFieldValuesAndCollectInformation(
     info: { type },
     fields: entityFields,
   };
-  //TODO create a FTS collector that works with traverseAdminItem
-  const { fullTextSearchText } = collectDataFromEntity(schema, entity);
+
+  const ftsCollector = createFullTextSearchCollector();
 
   for (const node of traverseAdminEntity(schema, [`entity(${reference.id})`], entity)) {
+    ftsCollector.collect(node);
     switch (node.type) {
       case AdminItemTraverseNodeType.error:
         return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);
@@ -238,7 +242,32 @@ function verifyFieldValuesAndCollectInformation(
         break;
     }
   }
-  return ok({ fullTextSearchText: fullTextSearchText.join(' ') });
+  return ok({ fullTextSearchText: ftsCollector.result });
+}
+
+function createFullTextSearchCollector() {
+  const fullTextSearchText: string[] = [];
+  return {
+    collect: (node: AdminItemTraverseNode) => {
+      switch (node.type) {
+        case AdminItemTraverseNodeType.field:
+          if (isStringItemField(node.fieldSpec, node.value) && node.value) {
+            fullTextSearchText.push(node.value);
+          }
+          break;
+        case AdminItemTraverseNodeType.richTextNode: {
+          const richTextNode = node.node;
+          if (isRichTextTextNode(richTextNode) && richTextNode.text) {
+            fullTextSearchText.push(richTextNode.text);
+          }
+          break;
+        }
+      }
+    },
+    get result() {
+      return fullTextSearchText.join(' ');
+    },
+  };
 }
 
 async function publishEntitiesAndCollectResult(
