@@ -15,6 +15,7 @@ import {
   ErrorType,
   isRichTextTextNode,
   isStringItemField,
+  ItemTraverseNodeErrorType,
   ItemTraverseNodeType,
   notOk,
   ok,
@@ -227,23 +228,26 @@ function verifyFieldValuesAndCollectInformation(
 
   const ftsCollector = createFullTextSearchCollector();
 
-  for (const node of traverseEntity(adminSchema, [`entity(${reference.id})`], entity)) {
+  for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
     ftsCollector.collect(node);
+
     switch (node.type) {
       case ItemTraverseNodeType.error:
+        if (
+          node.errorType === ItemTraverseNodeErrorType.missingTypeSpec &&
+          node.kind === 'valueItem'
+        ) {
+          const adminTypeSpec = adminSchema.getValueTypeSpecification(node.typeName);
+          if (adminTypeSpec && adminTypeSpec.adminOnly) {
+            return notOk.BadRequest(
+              `${visitorPathToString(node.path)}: Value item of type ${node.typeName} is adminOnly`
+            );
+          }
+        }
         return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);
       case ItemTraverseNodeType.field:
         if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
           return notOk.BadRequest(`${visitorPathToString(node.path)}: Required field is empty`);
-        }
-        break;
-      case ItemTraverseNodeType.valueItem:
-        if (node.valueSpec.adminOnly) {
-          return notOk.BadRequest(
-            `${visitorPathToString(node.path)}: Value item of type ${
-              node.valueSpec.name
-            } is adminOnly`
-          );
         }
         break;
     }

@@ -32,6 +32,7 @@ export type {
   Result,
 } from './ErrorResult.js';
 export {
+  ItemTraverseNodeErrorType,
   ItemTraverseNodeType,
   traverseEntity,
   traverseItemField,

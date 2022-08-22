@@ -43,6 +43,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_linksFromOneReference,
   searchEntities_linksFromNoReferences,
   searchEntities_linksFromTwoReferencesFromOneEntity,
+  searchEntities_textIncluded,
   searchEntities_textExcludedInAdminOnlyField,
 ];
 
@@ -514,6 +515,25 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
+async function searchEntities_textIncluded({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, {
+      fields: { title: 'winter is coming' },
+    }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(publishedClient, { text: 'winter' }, id);
+  assertResultValue(matches, 1);
+}
+
 async function searchEntities_textExcludedInAdminOnlyField({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
@@ -530,5 +550,5 @@ async function searchEntities_textExcludedInAdminOnlyField({ server }: Published
   } = createResult.value;
 
   const matches = await countSearchResultWithEntity(publishedClient, { text: 'coconut' }, id);
-  assertResultValue(matches, 1); //TODO should be 0
+  assertResultValue(matches, 0);
 }
