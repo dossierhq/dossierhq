@@ -6,6 +6,7 @@ import type {
   AdminSchema,
   ErrorResult,
   PromiseResult,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -15,7 +16,8 @@ import { adminCreateEntity } from './adminCreateEntity.js';
 import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 export async function adminUpsertEntity(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -29,7 +31,8 @@ export async function adminUpsertEntity(
 
   if (nameResult.isError() && nameResult.isErrorType(ErrorType.NotFound)) {
     return await createNewEntity(
-      schema,
+      adminSchema,
+      publishedSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -47,7 +50,8 @@ export async function adminUpsertEntity(
   }
 
   const updateResult = await adminUpdateEntity(
-    schema,
+    adminSchema,
+    publishedSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -67,7 +71,8 @@ export async function adminUpsertEntity(
 }
 
 async function createNewEntity(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -78,7 +83,8 @@ async function createNewEntity(
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const createResult = await adminCreateEntity(
-    schema,
+    adminSchema,
+    publishedSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -89,7 +95,8 @@ async function createNewEntity(
     return createResult.map((value) => value);
   } else if (createResult.isErrorType(ErrorType.Conflict)) {
     return adminUpsertEntity(
-      schema,
+      adminSchema,
+      publishedSchema,
       authorizationAdapter,
       databaseAdapter,
       context,

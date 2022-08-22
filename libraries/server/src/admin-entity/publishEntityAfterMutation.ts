@@ -3,6 +3,7 @@ import type {
   AdminSchema,
   EntityVersionReference,
   PromiseResult,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -13,7 +14,8 @@ import { adminPublishEntities } from './adminPublishEntities.js';
 //TODO not optimized since we already have the entity data before this and adminPublishEntities() fetches it again
 
 export async function publishEntityAfterMutation(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -23,7 +25,8 @@ export async function publishEntityAfterMutation(
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const publishResult = await adminPublishEntities(
-    schema,
+    adminSchema,
+    publishedSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
