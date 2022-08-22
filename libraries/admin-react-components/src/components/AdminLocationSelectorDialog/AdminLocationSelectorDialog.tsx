@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminSchema, Location } from '@jonasb/datadata-core';
-import { AdminItemTraverseNodeType, isLocationItemField } from '@jonasb/datadata-core';
+import { ItemTraverseNodeType, isLocationItemField } from '@jonasb/datadata-core';
 import {
   Dialog,
   FullscreenContainer,
@@ -198,7 +198,7 @@ function extractDraftLocations(
 
     if (schema) {
       for (const node of traverseEntityEditorDraft(schema, draftState)) {
-        if (node.type === AdminItemTraverseNodeType.fieldItem) {
+        if (node.type === ItemTraverseNodeType.fieldItem) {
           if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
             considerLocation(draftState, node.value);
           }

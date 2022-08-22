@@ -32,12 +32,12 @@ export type {
   Result,
 } from './ErrorResult.js';
 export {
-  AdminItemTraverseNodeType,
-  traverseAdminEntity,
-  traverseAdminItemField,
-  traverseAdminValueItem,
+  ItemTraverseNodeType,
+  traverseEntity,
+  traverseItemField,
+  traverseValueItem,
 } from './ItemTraverser.js';
-export type { AdminItemTraverseNode } from './ItemTraverser.js';
+export type { ItemTraverseNode } from './ItemTraverser.js';
 export {
   copyEntity,
   isBooleanField,

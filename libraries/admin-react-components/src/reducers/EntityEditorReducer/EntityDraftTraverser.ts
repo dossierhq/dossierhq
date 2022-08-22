@@ -1,11 +1,11 @@
-import type { AdminItemTraverseNode, AdminSchema } from '@jonasb/datadata-core';
-import { traverseAdminItemField } from '@jonasb/datadata-core';
+import type { AdminSchema, ItemTraverseNode } from '@jonasb/datadata-core';
+import { traverseItemField } from '@jonasb/datadata-core';
 import type { EntityEditorDraftState } from './EntityEditorReducer';
 
 export function* traverseEntityEditorDraft(
   schema: AdminSchema,
   draftState: EntityEditorDraftState
-): Generator<AdminItemTraverseNode> {
+): Generator<ItemTraverseNode<AdminSchema>> {
   if (!draftState.draft) {
     return;
   }
@@ -15,6 +15,6 @@ export function* traverseEntityEditorDraft(
   for (const field of draftState.draft.fields) {
     const { fieldSpec, value } = field;
     const fieldPath = [...path, fieldSpec.name];
-    yield* traverseAdminItemField(schema, fieldPath, fieldSpec, value);
+    yield* traverseItemField(schema, fieldPath, fieldSpec, value);
   }
 }
