@@ -16,6 +16,7 @@ import {
   LOCATIONS_CREATE,
   REFERENCES_CREATE,
   RICH_TEXTS_CREATE,
+  STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
 import {
@@ -72,6 +73,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_boundingBoxOneOutside,
   searchEntities_boundingBoxWrappingMaxMinLongitude,
   searchEntities_textIncludedAfterCreation,
+  searchEntities_textIncludedInAdminOnlyFieldAfterCreation,
   searchEntities_textIncludedAfterUpdate,
   searchEntities_textExcludedAfterUpdate,
   searchEntities_authKeySubject,
@@ -837,6 +839,27 @@ async function searchEntities_textIncludedAfterCreation({ server }: AdminEntityT
   } = createResult.value;
 
   const matches = await countSearchResultWithEntity(adminClient, { text: 'serious insights' }, id);
+  assertResultValue(matches, 1);
+}
+
+async function searchEntities_textIncludedInAdminOnlyFieldAfterCreation({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, {
+      fields: {
+        stringAdminOnly:
+          'pizza includes these three ingredients: pineapple, blue cheese and broccoli',
+      },
+    })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { text: 'broccoli' }, id);
   assertResultValue(matches, 1);
 }
 

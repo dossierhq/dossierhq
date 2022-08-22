@@ -88,6 +88,7 @@ export function assertIsAdminRichTexts(
 
 export interface AdminStringsFields {
   multiline: string | null;
+  stringAdminOnly: string | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;

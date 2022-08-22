@@ -82,7 +82,11 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
-  fields: { richText: null, richTextList: null, richTextOnlyParagraphAndText: null },
+  fields: {
+    richText: null,
+    richTextList: null,
+    richTextOnlyParagraphAndText: null,
+  },
 };
 
 export const STRINGS_CREATE: Readonly<AdminEntityCreate<AdminStrings>> = {
@@ -105,7 +109,7 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
-  fields: { multiline: 'Hello\nWorld' },
+  fields: { multiline: 'Hello\nWorld', stringAdminOnly: null },
 };
 
 export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate<AdminTitleOnly>> = {
