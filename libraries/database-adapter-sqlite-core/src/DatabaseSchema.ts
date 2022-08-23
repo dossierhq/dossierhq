@@ -23,6 +23,12 @@ export interface EntitiesTable {
   published_entity_versions_id: number | null;
 }
 
+export interface EntityLatestReferencesTable {
+  id: number;
+  from_entities_id: number;
+  to_entities_id: number;
+}
+
 export interface EntityPublishedReferencesTable {
   id: number;
   from_entities_id: number;
