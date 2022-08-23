@@ -11,9 +11,10 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
-import { queryMany } from '../QueryFunctions.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryMany, queryNone } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityUnpublishGetEntitiesInfo(
@@ -83,6 +84,18 @@ export async function adminEntityUnpublishEntities(
   if (result.isError()) {
     return result;
   }
+
+  const removeReferencesIndexResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildPostgresSqlQuery(({ sql, addValue }) => {
+      sql`DELETE FROM entity_published_references WHERE from_entities_id = ANY(${addValue(
+        references.map(({ entityInternalId }) => entityInternalId as number)
+      )})`;
+    })
+  );
+  if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
+
   return ok(
     references.map((reference) => {
       const row = result.value.find((it) => it.id === reference.entityInternalId);
@@ -99,11 +112,9 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
 ): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(databaseAdapter, context, {
     text: `SELECT e.uuid
-       FROM entity_version_references evr, entity_versions ev, entities e
-       WHERE evr.entities_id = $1
-         AND evr.entity_versions_id = ev.id
-         AND ev.entities_id = e.id
-         AND e.published_entity_versions_id = ev.id`,
+       FROM entity_published_references epr, entities e
+       WHERE epr.to_entities_id = $1
+         AND epr.from_entities_id = e.id`,
     values: [reference.entityInternalId],
   });
   if (result.isError()) {

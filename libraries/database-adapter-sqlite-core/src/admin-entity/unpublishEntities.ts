@@ -11,7 +11,7 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
@@ -93,6 +93,17 @@ export async function adminEntityUnpublishEntities(
     return result;
   }
 
+  const removeReferencesIndexResult = await queryNone(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
+      sql`DELETE FROM entity_published_references WHERE from_entities_id IN ${addValueList(
+        references.map(({ entityInternalId }) => entityInternalId as number)
+      )}`;
+    })
+  );
+  if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
+
   const qbFts = new SqliteQueryBuilder(`DELETE FROM entities_published_fts WHERE`);
   qbFts.addQuery(
     `docid IN ${qbFts.addValueList(
@@ -118,11 +129,9 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
 ): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid
-       FROM entity_version_references evr, entity_versions ev, entities e
-       WHERE evr.entities_id = $1
-         AND evr.entity_versions_id = ev.id
-         AND ev.entities_id = e.id
-         AND e.published_entity_versions_id = ev.id`,
+       FROM entity_published_references epr, entities e
+       WHERE epr.to_entities_id = $1
+         AND epr.from_entities_id = e.id`,
     values: [reference.entityInternalId as number],
   });
   if (result.isError()) {

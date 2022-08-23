@@ -45,6 +45,12 @@ export interface EntitiesTable {
   resolved_auth_key: string;
 }
 
+export interface EntityPublishedReferencesTable {
+  id: number;
+  from_entities_id: number;
+  to_entities_id: number;
+}
+
 export interface EntityVersionsTable {
   id: number;
   entities_id: number;

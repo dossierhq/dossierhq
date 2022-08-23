@@ -1,20 +1,16 @@
-import type {
-  EntityReference,
-  EntityVersionReference,
-  ErrorType,
-  PromiseResult,
-} from '@jonasb/datadata-core';
+import type { EntityVersionReference, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntityUpdateStatusPayload,
-  DatabaseResolvedEntityVersionReference,
+  DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
-import { queryMany, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityPublishGetVersionInfo(
@@ -104,21 +100,34 @@ export async function adminEntityPublishUpdateEntity(
   return ok({ updatedAt });
 }
 
-export async function adminEntityPublishGetUnpublishedReferencedEntities(
-  databaseAdapter: PostgresDatabaseAdapter,
+export async function adminEntityPublishUpdatePublishedReferencesIndex(
+  database: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: DatabaseResolvedEntityVersionReference
-): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
-  const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(databaseAdapter, context, {
-    text: `SELECT e.uuid
-           FROM entity_version_references evr, entities e
-           WHERE evr.entity_versions_id = $1
-             AND evr.entities_id = e.id
-             AND e.published_entity_versions_id IS NULL`,
-    values: [reference.entityVersionInternalId],
+  fromReference: DatabaseResolvedEntityReference,
+  toReferences: DatabaseResolvedEntityReference[]
+): PromiseResult<void, typeof ErrorType.Generic> {
+  // Step 1: Clear existing references
+  const clearResult = await queryNone(database, context, {
+    text: 'DELETE FROM entity_published_references WHERE from_entities_id = $1',
+    values: [fromReference.entityInternalId as number],
   });
-  if (result.isError()) {
-    return result;
+  if (clearResult.isError()) return clearResult;
+
+  if (toReferences.length === 0) {
+    return ok(undefined);
   }
-  return result.map((rows) => rows.map(({ uuid }) => ({ id: uuid })));
+
+  // Step 2: Insert new references
+  const insertResult = await queryNone(
+    database,
+    context,
+    buildPostgresSqlQuery(({ sql, addValue }) => {
+      sql`INSERT INTO entity_published_references (from_entities_id, to_entities_id) VALUES`;
+      const fromValue = addValue(fromReference.entityInternalId as number);
+      for (const toReference of toReferences) {
+        sql`(${fromValue}, ${toReference.entityInternalId as number})`;
+      }
+    })
+  );
+  return insertResult;
 }

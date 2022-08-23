@@ -22,9 +22,9 @@ import {
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import {
-  adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
+  adminEntityPublishUpdatePublishedReferencesIndex,
 } from './admin-entity/publishEntities.js';
 import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
@@ -105,8 +105,8 @@ function createOuterAdapter(database: Database): DatabaseAdapter {
       adminEntityHistoryGetEntityInfo(database, ...args),
     adminEntityHistoryGetVersionsInfo: (...args) =>
       adminEntityHistoryGetVersionsInfo(database, ...args),
-    adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
-      adminEntityPublishGetUnpublishedReferencedEntities(database, ...args),
+    adminEntityPublishUpdatePublishedReferencesIndex: (...args) =>
+      adminEntityPublishUpdatePublishedReferencesIndex(database, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(database, ...args),
     adminEntityPublishingCreateEvents: (...args) =>

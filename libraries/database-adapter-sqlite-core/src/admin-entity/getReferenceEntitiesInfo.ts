@@ -14,10 +14,12 @@ export async function adminEntityGetReferenceEntitiesInfo(
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic> {
-  const qb = new SqliteQueryBuilder('SELECT id, uuid, type FROM entities WHERE');
+  if (references.length === 0) return ok([]);
+
+  const qb = new SqliteQueryBuilder('SELECT id, uuid, type, status FROM entities WHERE');
   qb.addQuery(`uuid IN ${qb.addValueList(references.map(({ id }) => id))}`);
 
-  const result = await queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
+  const result = await queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid' | 'status'>>(
     database,
     context,
     qb.build()
@@ -25,5 +27,12 @@ export async function adminEntityGetReferenceEntitiesInfo(
   if (result.isError()) {
     return result;
   }
-  return ok(result.value.map((it) => ({ entityInternalId: it.id, id: it.uuid, type: it.type })));
+  return ok(
+    result.value.map((it) => ({
+      entityInternalId: it.id,
+      id: it.uuid,
+      type: it.type,
+      status: it.status,
+    }))
+  );
 }

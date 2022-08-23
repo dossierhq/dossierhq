@@ -16,9 +16,9 @@ import {
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import {
-  adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
+  adminEntityPublishUpdatePublishedReferencesIndex,
 } from './admin-entity/publishEntities.js';
 import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
@@ -80,8 +80,6 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityHistoryGetEntityInfo(databaseAdapter, ...args),
     adminEntityHistoryGetVersionsInfo: (...args) =>
       adminEntityHistoryGetVersionsInfo(databaseAdapter, ...args),
-    adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
-      adminEntityPublishGetUnpublishedReferencedEntities(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
@@ -92,6 +90,8 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishingHistoryGetEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
+    adminEntityPublishUpdatePublishedReferencesIndex: (...args) =>
+      adminEntityPublishUpdatePublishedReferencesIndex(databaseAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(databaseAdapter, ...args),

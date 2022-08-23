@@ -13,6 +13,7 @@ import {
   AdminEntityStatus,
   createErrorResult,
   ErrorType,
+  isEntityTypeItemField,
   isRichTextTextNode,
   isStringItemField,
   ItemTraverseNodeErrorType,
@@ -37,6 +38,7 @@ interface VersionInfoToBePublished {
   entityVersionInternalId: unknown;
   status: AdminEntityStatus;
   fullTextSearchText: string;
+  references: EntityReference[];
 }
 
 interface VersionInfoAlreadyPublished {
@@ -95,11 +97,12 @@ export async function adminPublishEntities(
     }
 
     // Step 3: Check if references are ok
-    const ensureReferencePublishedResult = await ensureReferencedEntitiesArePublished(
-      databaseAdapter,
-      context,
-      publishVersionsInfo
-    );
+    const ensureReferencePublishedResult =
+      await ensureReferencedEntitiesArePublishedAndUpdatePublishedReferencesIndex(
+        databaseAdapter,
+        context,
+        publishVersionsInfo
+      );
     if (ensureReferencePublishedResult.isError()) {
       return ensureReferencePublishedResult;
     }
@@ -193,7 +196,7 @@ async function collectVersionsInfo(
       if (verifyFieldsResult.isError()) {
         return verifyFieldsResult;
       }
-      const { fullTextSearchText } = verifyFieldsResult.value;
+      const { fullTextSearchText, references } = verifyFieldsResult.value;
 
       versionsInfo.push({
         effect: 'published',
@@ -201,6 +204,8 @@ async function collectVersionsInfo(
         entityInternalId,
         entityVersionInternalId,
         fullTextSearchText,
+        references,
+
         status: versionIsLatest ? AdminEntityStatus.published : AdminEntityStatus.modified,
       });
     }
@@ -220,16 +225,21 @@ function verifyFieldValuesAndCollectInformation(
   reference: EntityReference,
   type: string,
   entityFields: Record<string, unknown>
-): Result<{ fullTextSearchText: string }, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): Result<
+  { fullTextSearchText: string; references: EntityReference[] },
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const entity: EntityLike = {
     info: { type },
     fields: entityFields,
   };
 
   const ftsCollector = createFullTextSearchCollector();
+  const referencesCollector = createReferencesCollector();
 
   for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
     ftsCollector.collect(node);
+    referencesCollector.collect(node);
 
     switch (node.type) {
       case ItemTraverseNodeType.error:
@@ -252,7 +262,7 @@ function verifyFieldValuesAndCollectInformation(
         break;
     }
   }
-  return ok({ fullTextSearchText: ftsCollector.result });
+  return ok({ fullTextSearchText: ftsCollector.result, references: referencesCollector.result });
 }
 
 function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
@@ -260,7 +270,7 @@ function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSc
   return {
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.field:
+        case ItemTraverseNodeType.fieldItem:
           if (isStringItemField(node.fieldSpec, node.value) && node.value) {
             fullTextSearchText.push(node.value);
           }
@@ -276,6 +286,23 @@ function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSc
     },
     get result() {
       return fullTextSearchText.join(' ');
+    },
+  };
+}
+
+function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+  const referencesUuids = new Set<string>();
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+            referencesUuids.add(node.value.id);
+          }
+      }
+    },
+    get result(): EntityReference[] {
+      return [...referencesUuids].map((id) => ({ id }));
     },
   };
 }
@@ -309,22 +336,38 @@ async function publishEntitiesAndCollectResult(
   return ok(result);
 }
 
-async function ensureReferencedEntitiesArePublished(
+async function ensureReferencedEntitiesArePublishedAndUpdatePublishedReferencesIndex(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   publishVersionsInfo: VersionInfoToBePublished[]
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const referenceErrorMessages: string[] = [];
-  for (const { uuid, entityInternalId, entityVersionInternalId } of publishVersionsInfo) {
-    const unpublishedReferencesResult =
-      await databaseAdapter.adminEntityPublishGetUnpublishedReferencedEntities(context, {
-        entityInternalId,
-        entityVersionInternalId,
-      });
-    if (unpublishedReferencesResult.isError()) {
-      return unpublishedReferencesResult;
+  for (const { uuid, entityInternalId, references } of publishVersionsInfo) {
+    // Step 1: Check that referenced entities are published
+    const referencesResult = await databaseAdapter.adminEntityGetReferenceEntitiesInfo(
+      context,
+      references
+    );
+    if (referencesResult.isError()) return referencesResult;
+
+    const unpublishedReferences: EntityReference[] = [];
+
+    for (const requestedReference of references) {
+      const referenceInfo = referencesResult.value.find(
+        (reference) => reference.id === requestedReference.id
+      );
+      if (!referenceInfo) {
+        // Shouldn't happen since you can't create an entity with invalid references
+        return notOk.Generic(`${uuid}: Referenced entity ${requestedReference.id} not found`);
+      }
+      if (
+        referenceInfo.status !== AdminEntityStatus.published &&
+        referenceInfo.status !== AdminEntityStatus.modified
+      ) {
+        unpublishedReferences.push(requestedReference);
+      }
     }
-    const unpublishedReferences = unpublishedReferencesResult.value;
+
     if (unpublishedReferences.length > 0) {
       referenceErrorMessages.push(
         `${uuid}: References unpublished entities: ${unpublishedReferences
@@ -332,6 +375,14 @@ async function ensureReferencedEntitiesArePublished(
           .join(', ')}`
       );
     }
+
+    // Step 2: Update published references index
+    const updateResult = await databaseAdapter.adminEntityPublishUpdatePublishedReferencesIndex(
+      context,
+      { entityInternalId },
+      referencesResult.value
+    );
+    if (updateResult.isError()) return updateResult;
   }
 
   if (referenceErrorMessages.length > 0) {
