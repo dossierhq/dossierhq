@@ -148,6 +148,7 @@ async function searchEntities_pagingFirstAfterFirstEntity({
 }
 
 async function searchEntities_pagingFirstAfterNameWithUnicode({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -161,13 +162,16 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } }),
     { publish: true }
   );
-  const firstEntity = adminToPublishedEntity(firstEntityResult.valueOrThrow().entity);
+  const firstEntity = adminToPublishedEntity(adminSchema, firstEntityResult.valueOrThrow().entity);
 
   const secondEntityResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } }),
     { publish: true }
   );
-  const secondEntity = adminToPublishedEntity(secondEntityResult.valueOrThrow().entity);
+  const secondEntity = adminToPublishedEntity(
+    adminSchema,
+    secondEntityResult.valueOrThrow().entity
+  );
 
   // Create entity with links to the unicode entities to create a scoped query
   const linkEntityResult = await adminClient.createEntity(
@@ -393,7 +397,10 @@ async function searchEntities_authKeyNoneAndSubject({
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
 
-async function searchEntities_linksToOneReference({ server }: PublishedEntityTestContext) {
+async function searchEntities_linksToOneReference({
+  adminSchema,
+  server,
+}: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -411,7 +418,7 @@ async function searchEntities_linksToOneReference({ server }: PublishedEntityTes
   const { entity: referenceEntity } = referenceResult.value;
 
   const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(referenceEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, referenceEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
@@ -430,6 +437,7 @@ async function searchEntities_linksToNoReferences({ server }: PublishedEntityTes
 }
 
 async function searchEntities_linksToTwoReferencesFromOneEntity({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -451,11 +459,12 @@ async function searchEntities_linksToTwoReferencesFromOneEntity({
   const { entity: referenceEntity } = referenceResult.value;
 
   const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(referenceEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, referenceEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function searchEntities_linksToExcludedAfterUnpublish({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -477,7 +486,7 @@ async function searchEntities_linksToExcludedAfterUnpublish({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchBeforeUnpublishResult, [
-    adminToPublishedEntity(referenceEntity),
+    adminToPublishedEntity(adminSchema, referenceEntity),
   ]);
 
   assertOkResult(await adminClient.unpublishEntities([{ id: referenceEntity.id }]));
@@ -489,6 +498,7 @@ async function searchEntities_linksToExcludedAfterUnpublish({
 }
 
 async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -509,7 +519,9 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
   const searchBeforeUpdateResult = await publishedClient.searchEntities({
     linksTo: { id: titleOnlyId },
   });
-  assertSearchResultEntities(searchBeforeUpdateResult, [adminToPublishedEntity(referenceEntity)]);
+  assertSearchResultEntities(searchBeforeUpdateResult, [
+    adminToPublishedEntity(adminSchema, referenceEntity),
+  ]);
 
   assertOkResult(
     await adminClient.updateEntity(
@@ -524,7 +536,10 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
   assertSearchResultEntities(searchAfterUpdateResult, []);
 }
 
-async function searchEntities_linksFromOneReference({ server }: PublishedEntityTestContext) {
+async function searchEntities_linksFromOneReference({
+  adminSchema,
+  server,
+}: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -542,7 +557,7 @@ async function searchEntities_linksFromOneReference({ server }: PublishedEntityT
   } = referenceResult.value;
 
   const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
@@ -561,6 +576,7 @@ async function searchEntities_linksFromNoReferences({ server }: PublishedEntityT
 }
 
 async function searchEntities_linksFromTwoReferencesFromOneEntity({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -582,7 +598,7 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
   } = referenceResult.value;
 
   const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 

@@ -1,4 +1,5 @@
-import { AdminSchema, ErrorType, ok, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { AdminSchema, ok } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import {

@@ -24,7 +24,7 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_errorArchivedEntity,
 ];
 
-async function getEntity_withSubjectAuthKey({ server }: PublishedEntityTestContext) {
+async function getEntity_withSubjectAuthKey({ adminSchema, server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(
@@ -37,7 +37,7 @@ async function getEntity_withSubjectAuthKey({ server }: PublishedEntityTestConte
   } = createResult.value;
 
   const getResult = await publishedClient.getEntity({ id });
-  assertResultValue(getResult, adminToPublishedEntity(createResult.value.entity));
+  assertResultValue(getResult, adminToPublishedEntity(adminSchema, createResult.value.entity));
 }
 
 async function getEntity_archivedThenPublished({ server }: PublishedEntityTestContext) {

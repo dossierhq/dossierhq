@@ -18,9 +18,10 @@ export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext
   getEntities_errorArchivedEntity,
 ];
 
-async function getEntities_minimal({ server }: PublishedEntityTestContext) {
+async function getEntities_minimal({ adminSchema, server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
+
   const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(create1Result);
@@ -37,8 +38,8 @@ async function getEntities_minimal({ server }: PublishedEntityTestContext) {
   const [get1Result, get2Result] = getResult.value;
   assertOkResult(get1Result);
   assertOkResult(get2Result);
-  assertEquals(get1Result.value, adminToPublishedEntity(create1Result.value.entity));
-  assertEquals(get2Result.value, adminToPublishedEntity(create2Result.value.entity));
+  assertEquals(get1Result.value, adminToPublishedEntity(adminSchema, create1Result.value.entity));
+  assertEquals(get2Result.value, adminToPublishedEntity(adminSchema, create2Result.value.entity));
 }
 
 async function getEntities_none({ server }: PublishedEntityTestContext) {
@@ -47,6 +48,7 @@ async function getEntities_none({ server }: PublishedEntityTestContext) {
 }
 
 async function getEntities_authKeySubjectOneCorrectOneWrong({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
@@ -73,12 +75,15 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<PublishedEntity, typeof ErrorType.Generic>(
-      adminToPublishedEntity(create2Result.value.entity)
+      adminToPublishedEntity(adminSchema, create2Result.value.entity)
     ),
   ]);
 }
 
-async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTestContext) {
+async function getEntities_oneMissingOneExisting({
+  adminSchema,
+  server,
+}: PublishedEntityTestContext) {
   const createResult = await adminClientForMainPrincipal(server).createEntity(TITLE_ONLY_CREATE, {
     publish: true,
   });
@@ -94,7 +99,7 @@ async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTest
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
     ok<PublishedEntity, typeof ErrorType.Generic>(
-      adminToPublishedEntity(createResult.value.entity)
+      adminToPublishedEntity(adminSchema, createResult.value.entity)
     ),
   ]);
 }
