@@ -16,6 +16,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
+import { updateEntityLatestReferencesIndex } from './updateEntityLatestReferencesIndex.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,
@@ -172,19 +173,15 @@ export async function adminEntityUpdateEntity(
   );
   if (ftsResult.isError()) return ftsResult;
 
-  if (entity.referenceIds.length > 0) {
-    const qb = new SqliteQueryBuilder(
-      'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
-      [versionsId]
-    );
-    for (const referenceId of entity.referenceIds) {
-      qb.addQuery(`(?1, ${qb.addValue(referenceId.entityInternalId as number)})`);
-    }
-    const referenceResult = await queryNone(database, context, qb.build());
-    if (referenceResult.isError()) {
-      return referenceResult;
-    }
-  }
+  // Update latest references
+  const updateLatestReferencesIndexResult = await updateEntityLatestReferencesIndex(
+    database,
+    context,
+    entity,
+    entity.referenceIds,
+    { skipDelete: false }
+  );
+  if (updateLatestReferencesIndexResult.isError()) return updateLatestReferencesIndexResult;
 
   if (entity.locations.length > 0) {
     const qb = new SqliteQueryBuilder(

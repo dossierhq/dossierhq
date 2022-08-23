@@ -122,11 +122,27 @@ const VERSION_3: QueryOrQueryAndValues[] = [
       WHERE e.published_entity_versions_id = evr.entity_versions_id`,
 ];
 
+const VERSION_4: QueryOrQueryAndValues[] = [
+  `CREATE TABLE entity_latest_references (
+    id INTEGER PRIMARY KEY,
+    from_entities_id INTEGER NOT NULL,
+    to_entities_id INTEGER NOT NULL,
+    FOREIGN KEY (from_entities_id) REFERENCES entities(id) ON DELETE CASCADE,
+    FOREIGN KEY (to_entities_id) REFERENCES entities(id) ON DELETE CASCADE
+  ) STRICT`,
+  `INSERT INTO entity_latest_references(from_entities_id, to_entities_id)
+    SELECT e.id AS from_entities_id, evr.entities_id AS to_entities_id
+      FROM entities e, entity_version_references evr
+      WHERE e.latest_entity_versions_id = evr.entity_versions_id`,
+  `DROP TABLE entity_version_references`,
+];
+
 const VERSIONS: QueryOrQueryAndValues[][] = [
   [], // nothing for version 0
   VERSION_1,
   VERSION_2,
   VERSION_3,
+  VERSION_4,
 ];
 
 export async function migrateDatabaseIfNecessary(
