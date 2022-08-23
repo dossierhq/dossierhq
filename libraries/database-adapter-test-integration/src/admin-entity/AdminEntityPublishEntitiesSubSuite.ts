@@ -14,6 +14,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_oldVersion,
   publishEntities_twoEntitiesReferencingEachOther,
   publishEntities_publishAlreadyPublishedEntity,
+  publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity,
   publishEntities_errorInvalidId,
   publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
@@ -197,6 +198,29 @@ async function publishEntities_publishAlreadyPublishedEntity({ server }: AdminEn
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const {
+    entity: { id: draftId },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = (
+    await client.createEntity(
+      copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: draftId } } })
+    )
+  ).valueOrThrow();
+
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertOkResult(publishResult);
 }
 
 async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {

@@ -62,6 +62,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_linksToOneReference,
   searchEntities_linksToOneReferenceFromRichText,
   searchEntities_linksToOneReferenceFromValueItemInRichText,
+  searchEntities_linksToFromAdminOnlyField,
   searchEntities_linksToNoReferences,
   searchEntities_linksToTwoReferencesFromOneEntity,
   searchEntities_linksFromOneReference,
@@ -621,6 +622,24 @@ async function searchEntities_linksToOneReferenceFromValueItemInRichText({
   const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
+async function searchEntities_linksToFromAdminOnlyField({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  const {
+    entity: { id: titleOnlyId },
+  } = (await adminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const referenceCreateResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: titleOnlyId } } }),
+    { publish: true }
+  );
+  assertOkResult(referenceCreateResult);
+
+  // Is included when searching with admin client even though the field is admin only.
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  assertSearchResultEntities(searchResult, [referenceCreateResult.value.entity]);
 }
 
 async function searchEntities_linksToNoReferences({ server }: AdminEntityTestContext) {
