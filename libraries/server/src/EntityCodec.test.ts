@@ -62,7 +62,7 @@ describe('collectDataFromEntity', () => {
     expect(collectDataFromEntity(schema, { info: { type: 'EntityCodecFoo' }, fields: {} }))
       .toMatchInlineSnapshot(`
         {
-          "fullTextSearchText": [],
+          "fullTextSearchText": "",
           "locations": [],
           "requestedReferences": [],
         }
@@ -77,7 +77,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [],
+        "fullTextSearchText": "",
         "locations": [],
         "requestedReferences": [],
       }
@@ -95,12 +95,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [
-          "Hello string world",
-          "one",
-          "two",
-          "three",
-        ],
+        "fullTextSearchText": "Hello string world one two three",
         "locations": [],
         "requestedReferences": [],
       }
@@ -122,12 +117,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [
-          "one",
-          "two",
-          "three",
-          "four",
-        ],
+        "fullTextSearchText": "one two three four",
         "locations": [],
         "requestedReferences": [],
       }
@@ -151,12 +141,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [
-          "one one",
-          "one two",
-          "Header text",
-          "two",
-        ],
+        "fullTextSearchText": "one one one two Header text two",
         "locations": [],
         "requestedReferences": [],
       }
@@ -177,7 +162,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [],
+        "fullTextSearchText": "",
         "locations": [
           {
             "lat": 1,
@@ -213,7 +198,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [],
+        "fullTextSearchText": "",
         "locations": [
           {
             "lat": 1,
@@ -241,7 +226,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [],
+        "fullTextSearchText": "",
         "locations": [],
         "requestedReferences": [
           {
@@ -293,7 +278,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [],
+        "fullTextSearchText": "",
         "locations": [],
         "requestedReferences": [
           {
@@ -323,7 +308,7 @@ describe('collectDataFromEntity', () => {
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": [],
+        "fullTextSearchText": "",
         "locations": [],
         "requestedReferences": [
           {
@@ -339,7 +324,7 @@ describe('collectDataFromEntity', () => {
             "entityTypes": [
               "EntityCodecBar",
             ],
-            "prefix": "entity.fields.richText[1].bar",
+            "prefix": "entity.fields.richText[1].data.bar",
             "uuids": [
               "bar2Id",
             ],

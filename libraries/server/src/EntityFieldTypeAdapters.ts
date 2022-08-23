@@ -13,7 +13,6 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
     decodedData: TDecoded
   ): Result<TEncoded, typeof ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
-  getReferenceUUIDs(decodedData: TDecoded): null | string[]; //TODO remove
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
@@ -24,7 +23,6 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
           `${prefix}: expected boolean, got ${Array.isArray(data) ? 'list' : typeof data}`
         ),
   decodeData: (x) => x,
-  getReferenceUUIDs: (_x) => null,
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.EntityType], string> = {
@@ -41,7 +39,6 @@ const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entit
     return ok(x.id);
   },
   decodeData: (x) => ({ id: x }),
-  getReferenceUUIDs: (x) => (x ? [x.id] : null),
 };
 
 const locationCodec: FieldTypeAdapter<
@@ -68,7 +65,6 @@ const locationCodec: FieldTypeAdapter<
     return ok([lat, lng]);
   },
   decodeData: ([lat, lng]) => ({ lat, lng }),
-  getReferenceUUIDs: (_data) => null,
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
@@ -84,7 +80,6 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], 
     return ok(data);
   },
   decodeData: (x) => x,
-  getReferenceUUIDs: (_x) => null,
 };
 
 const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueType], unknown> = {
@@ -92,9 +87,6 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueTyp
     throw new Error('Should not be used');
   },
   decodeData: (_data) => {
-    throw new Error('Should not be used');
-  },
-  getReferenceUUIDs: (_data) => {
     throw new Error('Should not be used');
   },
 };
