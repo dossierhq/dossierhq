@@ -2,12 +2,19 @@ export const DEFAULT = Symbol('DEFAULT');
 
 const ValueReferenceSymbol = Symbol('ValueReference');
 
+const RawSqlSymbol = Symbol('RawSql');
+
 interface ValueReference {
   marker: typeof ValueReferenceSymbol;
   index: number;
 }
 
-type InputValue<TValue> = TValue | typeof DEFAULT | ValueReference;
+interface RawSql {
+  marker: typeof RawSqlSymbol;
+  sql: string;
+}
+
+type InputValue<TValue> = TValue | typeof DEFAULT | ValueReference | RawSql;
 
 type SqlTemplateTag<TValue> = (
   strings: TemplateStringsArray,
@@ -47,6 +54,10 @@ function createSqlQuery<TValue>(config: DialectConfig): SqlQueryBuilder<TValue> 
   return { sql, query, addValue };
 }
 
+function createRawSql(sql: string): RawSql {
+  return { marker: RawSqlSymbol, sql };
+}
+
 function addValueReference<TValue>(query: Query<TValue>, value: TValue): ValueReference {
   query.values.push(value);
   return { marker: ValueReferenceSymbol, index: query.values.length };
@@ -65,6 +76,8 @@ function addValueToQuery<TValue>(
     value.marker === ValueReferenceSymbol
   ) {
     query.text += `${config.indexPrefix}${value.index}`;
+  } else if (typeof value === 'object' && 'marker' in value && value.marker === RawSqlSymbol) {
+    query.text += value.sql;
   } else {
     query.values.push(value as TValue);
     query.text += `${config.indexPrefix}${query.values.length}`; // 1-based index
@@ -127,12 +140,26 @@ export function buildPostgresSqlQuery(callback: SqlQueryBuilderCallback<unknown>
 
 type SqliteColumnValue = number | string | Uint8Array | null;
 
-export function createSqliteSqlQuery() {
-  return createSqlQuery<SqliteColumnValue>({ indexPrefix: '?' });
+interface SqliteQueryBuilder extends SqlQueryBuilder<SqliteColumnValue> {
+  addValueList: (values: SqliteColumnValue[]) => RawSql;
+}
+
+type SqliteQueryBuilderCallback = (builder: Omit<SqliteQueryBuilder, 'query'>) => void;
+
+export function createSqliteSqlQuery(): SqliteQueryBuilder {
+  const sqlBuilder = createSqlQuery<SqliteColumnValue>({ indexPrefix: '?' });
+
+  const addValueList = (list: SqliteColumnValue[]) => {
+    const values = list.map((it) => sqlBuilder.addValue(it));
+    return createRawSql('(' + values.map((it) => `?${it.index}`).join(', ') + ')');
+  };
+
+  const sqliteBuilder: SqliteQueryBuilder = { ...sqlBuilder, addValueList };
+  return sqliteBuilder;
 }
 
 export function buildSqliteSqlQuery(
-  callback: SqlQueryBuilderCallback<SqliteColumnValue>
+  callback: SqliteQueryBuilderCallback
 ): Query<SqliteColumnValue> {
   const { query, ...builder } = createSqliteSqlQuery();
   callback(builder);

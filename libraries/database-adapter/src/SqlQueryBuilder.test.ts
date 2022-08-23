@@ -130,4 +130,20 @@ describe('createSqliteSqlQuery', () => {
       }
     `);
   });
+
+  test('add multiple values with addValueList', () => {
+    const { sql, query, addValueList } = createSqliteSqlQuery();
+    sql`SELECT * FROM foo WHERE bar IN ${addValueList([1, 2, 3])}`;
+
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo WHERE bar IN (?1, ?2, ?3)",
+        "values": [
+          1,
+          2,
+          3,
+        ],
+      }
+    `);
+  });
 });
