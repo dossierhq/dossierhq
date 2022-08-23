@@ -1,12 +1,18 @@
 import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
-import type { Server } from "@jonasb/datadata-server";
-import { createServer } from "@jonasb/datadata-server";
-import { createDotenvAdapter } from "../ServerUtils.ts";
+import { AdminSchema, ok } from "@jonasb/datadata-core";
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
   TestSuite,
 } from "@jonasb/datadata-database-adapter-test-integration";
+import type { Server } from "@jonasb/datadata-server";
+import { createServer } from "@jonasb/datadata-server";
+import { createDotenvAdapter } from "../ServerUtils.ts";
+
+export interface ServerInit {
+  server: Server;
+  adminSchema: AdminSchema;
+}
 
 export function registerTestSuite(
   testSuite: TestSuite,
@@ -26,7 +32,7 @@ export function registerTestSuite(
 }
 
 export async function initializeIntegrationTestServer(): PromiseResult<
-  Server,
+  ServerInit,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const serverResult = await createServer({
@@ -47,6 +53,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
     IntegrationTestSchema,
   );
   if (schemaResult.isError()) return schemaResult;
+  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
-  return serverResult;
+  return ok({ server, adminSchema });
 }

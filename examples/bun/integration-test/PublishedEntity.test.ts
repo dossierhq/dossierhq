@@ -9,7 +9,7 @@ registerTestSuite(
   'PublishedEntityTest',
   createPublishedEntityTestSuite({
     before: async () => {
-      const server = (
+      const { adminSchema, server } = (
         await initializeIntegrationTestServer('databases/integration-test-published-entity.sqlite')
       ).valueOrThrow();
 
@@ -17,7 +17,7 @@ registerTestSuite(
         await createReadOnlyEntityRepository(server, 'published-entity')
       ).valueOrThrow();
 
-      return [{ server, readOnlyEntityRepository }, { server }];
+      return [{ adminSchema, server, readOnlyEntityRepository }, { server }];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();

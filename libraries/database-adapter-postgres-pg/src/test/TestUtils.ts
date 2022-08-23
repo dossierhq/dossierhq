@@ -8,7 +8,7 @@ import type {
   PublishedEntity,
   Result,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, ok } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, ok } from '@jonasb/datadata-core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
@@ -57,7 +57,15 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
   return ok({ server, context });
 }
 
-export async function initializeIntegrationTestServer() {
+export interface IntegrationTestServerInit {
+  server: Server;
+  adminSchema: AdminSchema;
+}
+
+export async function initializeIntegrationTestServer(): PromiseResult<
+  IntegrationTestServerInit,
+  typeof ErrorType.Generic | typeof ErrorType.BadRequest
+> {
   const serverResult = await createServer({
     databaseAdapter: createPostgresTestAdapter(),
     authorizationAdapter: createTestAuthorizationAdapter(),
@@ -79,8 +87,9 @@ export async function initializeIntegrationTestServer() {
   if (schemaResult.isError()) {
     return schemaResult;
   }
+  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
-  return serverResult;
+  return ok({ server, adminSchema });
 }
 
 export function expectEntityHistoryVersions(

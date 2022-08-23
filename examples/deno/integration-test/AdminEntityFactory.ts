@@ -14,7 +14,8 @@ export function registerAdminEntityTestSuite(suitePage: {
 }) {
   const testSuite = createAdminEntityTestSuite({
     before: async () => {
-      const server = (await initializeIntegrationTestServer()).valueOrThrow();
+      const { server } = (await initializeIntegrationTestServer())
+        .valueOrThrow();
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server)
       ).valueOrThrow();

@@ -4,24 +4,26 @@ import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
+import type { ServerInit } from './Sqlite3TestUtils.js';
 import { initializeSqlite3Server } from './Sqlite3TestUtils.js';
 
-let server: Server | null = null;
+let serverInit: ServerInit | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
-  server = (
+  serverInit = (
     await initializeSqlite3Server('databases/integration-test-admin-entity.sqlite')
   ).valueOrThrow();
-  readOnlyEntityRepository = (await createReadOnlyEntityRepository(server)).valueOrThrow();
+  readOnlyEntityRepository = (
+    await createReadOnlyEntityRepository(serverInit.server)
+  ).valueOrThrow();
 });
 afterAll(async () => {
-  if (server) {
-    (await server.shutdown()).throwIfError();
-    server = null;
+  if (serverInit) {
+    (await serverInit.server.shutdown()).throwIfError();
+    serverInit = null;
   }
 });
 
@@ -29,8 +31,15 @@ registerTestSuite(
   'AdminEntityTest',
   createAdminEntityTestSuite({
     before: async () => {
-      assertIsDefined(server);
-      return [{ server, readOnlyEntityRepository }, undefined];
+      assertIsDefined(serverInit);
+      return [
+        {
+          server: serverInit.server,
+          adminSchema: serverInit.adminSchema,
+          readOnlyEntityRepository,
+        },
+        undefined,
+      ];
     },
     after: async () => {
       //empty

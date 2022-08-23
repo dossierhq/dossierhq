@@ -5,6 +5,7 @@
     "postgres",
     "rushstack",
     "SAVEPOINT",
+    "SRID",
     "tsquery",
     "tsvector",
     "vitest",
