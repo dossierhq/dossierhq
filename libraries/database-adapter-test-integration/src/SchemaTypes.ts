@@ -47,6 +47,7 @@ export function assertIsAdminReadOnly(
 export interface AdminReferencesFields {
   any: EntityReference | null;
   anyList: Array<EntityReference> | null;
+  anyAdminOnly: EntityReference | null;
   titleOnly: EntityReference | null;
 }
 

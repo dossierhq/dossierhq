@@ -22,6 +22,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'any', type: FieldType.EntityType },
         { name: 'anyList', type: FieldType.EntityType, list: true },
+        { name: 'anyAdminOnly', type: FieldType.EntityType, adminOnly: true },
         { name: 'titleOnly', type: FieldType.EntityType, entityTypes: ['TitleOnly'] },
       ],
     },

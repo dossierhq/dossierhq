@@ -2,9 +2,12 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpsert,
+  AdminFieldSpecification,
+  AdminSchema,
+  EntityLike,
   PublishedEntity,
 } from '@jonasb/datadata-core';
-import { AdminEntityStatus } from '@jonasb/datadata-core';
+import { AdminEntityStatus, assertIsDefined } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals } from '../Asserts.js';
 import type {
@@ -59,7 +62,7 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
-  fields: { any: null, anyList: null, titleOnly: null },
+  fields: { any: null, anyList: null, anyAdminOnly: null, titleOnly: null },
 };
 
 export const RICH_TEXTS_CREATE: Readonly<AdminEntityCreate<AdminRichTexts>> = {
@@ -156,14 +159,14 @@ export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedTitleOnly> = {
   fields: { title: 'Title' },
 };
 
-export function adminToPublishedEntity(entity: AdminEntity): PublishedEntity {
+export function adminToPublishedEntity(schema: AdminSchema, entity: AdminEntity): PublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);
   const {
     id,
     info: { name, type, authKey, createdAt },
     fields,
   } = entity;
-  const result: PublishedEntity = {
+  let publishedEntity: PublishedEntity = {
     id,
     info: {
       type,
@@ -173,5 +176,50 @@ export function adminToPublishedEntity(entity: AdminEntity): PublishedEntity {
     },
     fields,
   };
-  return result;
+  publishedEntity = deepMapEntity(schema, publishedEntity, {
+    mapField: (fieldSpec, value) => {
+      if (fieldSpec.adminOnly) return undefined;
+      return value;
+    },
+  });
+  return publishedEntity;
+}
+
+interface DeepMapMapper {
+  mapField: (
+    fieldSpec: AdminFieldSpecification,
+    value: Readonly<unknown> | null
+  ) => Readonly<unknown> | null | undefined;
+}
+
+//TODO prototype for a generic deep map function
+//TODO remove adminOnly fields from value items
+function deepMapEntity<T extends EntityLike>(
+  schema: AdminSchema,
+  entity: T,
+  mapper: DeepMapMapper
+): T {
+  const entityTypeSpec = schema.getEntityTypeSpecification(entity.info.type);
+  assertIsDefined(entityTypeSpec);
+
+  let changedFields = false;
+  const newFields: Record<string, unknown> = {};
+  for (const fieldSpec of entityTypeSpec.fields) {
+    const value = entity.fields[fieldSpec.name] as Readonly<unknown>;
+    const mappedValue = mapper.mapField(fieldSpec, value);
+    if (mappedValue !== value) {
+      changedFields = true;
+    }
+
+    // If undefined, delete the field.
+    if (mappedValue !== undefined) {
+      newFields[fieldSpec.name] = mappedValue;
+    }
+  }
+
+  if (!changedFields) {
+    return entity;
+  }
+
+  return { ...entity, fields: newFields };
 }

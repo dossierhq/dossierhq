@@ -66,7 +66,10 @@ async function sampleEntities_authKeyNoneAndSubject({
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
-async function sampleEntities_linksToOneReference({ server }: PublishedEntityTestContext) {
+async function sampleEntities_linksToOneReference({
+  adminSchema,
+  server,
+}: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -87,7 +90,7 @@ async function sampleEntities_linksToOneReference({ server }: PublishedEntityTes
     { linksTo: { id: titleOnlyId } },
     { seed: 505 }
   );
-  assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(referenceEntity)]);
+  assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
 
 async function sampleEntities_linksToNoReferences({ server }: PublishedEntityTestContext) {
@@ -105,6 +108,7 @@ async function sampleEntities_linksToNoReferences({ server }: PublishedEntityTes
 }
 
 async function sampleEntities_linksToTwoReferencesFromOneEntity({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -129,10 +133,13 @@ async function sampleEntities_linksToTwoReferencesFromOneEntity({
     { linksTo: { id: titleOnlyId } },
     { seed: 765 }
   );
-  assertSampledEntities(sampleResult, 765, [adminToPublishedEntity(referenceEntity)]);
+  assertSampledEntities(sampleResult, 765, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
 
-async function sampleEntities_linksFromOneReference({ server }: PublishedEntityTestContext) {
+async function sampleEntities_linksFromOneReference({
+  adminSchema,
+  server,
+}: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -153,7 +160,7 @@ async function sampleEntities_linksFromOneReference({ server }: PublishedEntityT
     { linksFrom: { id: referenceId } },
     { seed: 432 }
   );
-  assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(titleOnlyEntity)]);
+  assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
 }
 
 async function sampleEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
@@ -171,6 +178,7 @@ async function sampleEntities_linksFromNoReferences({ server }: PublishedEntityT
 }
 
 async function sampleEntities_linksFromTwoReferencesFromOneEntity({
+  adminSchema,
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -195,5 +203,5 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
     { linksFrom: { id: referenceId } },
     { seed: 555 }
   );
-  assertSampledEntities(sampleResult, 555, [adminToPublishedEntity(titleOnlyEntity)]);
+  assertSampledEntities(sampleResult, 555, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
 }
