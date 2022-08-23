@@ -9,12 +9,10 @@ import { registerTestSuite } from "./TestUtils.ts";
 
 registerTestSuite(createAdvisoryLockTestSuite({
   before: async () => {
-    const serverResult = await createServer({
+    const server = (await createServer({
       databaseAdapter: createDotenvAdapter(),
       authorizationAdapter: createTestAuthorizationAdapter(),
-    });
-    if (serverResult.isError()) throw serverResult.toError();
-    const server = serverResult.value;
+    })).valueOrThrow();
     return [{ server }, { server }];
   },
   after: async ({ server }: { server: Server }) => {

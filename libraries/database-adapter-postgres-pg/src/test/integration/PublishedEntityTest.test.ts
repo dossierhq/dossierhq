@@ -3,36 +3,33 @@ import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
+import type { IntegrationTestServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
-let server: Server | null = null;
+let serverInit: IntegrationTestServerInit | null = null;
 
 beforeAll(async () => {
-  const result = await initializeIntegrationTestServer();
-  if (result.isError()) {
-    throw result.toError();
-  }
-  server = result.value;
+  serverInit = (await initializeIntegrationTestServer()).valueOrThrow();
 });
 afterAll(async () => {
-  if (server) {
-    (await server.shutdown()).throwIfError();
-    server = null;
+  if (serverInit) {
+    (await serverInit.server.shutdown()).throwIfError();
+    serverInit = null;
   }
 });
 
 registerTestSuite(
   createPublishedEntityTestSuite({
     before: async () => {
-      assertIsDefined(server);
+      assertIsDefined(serverInit);
+      const { adminSchema, server } = serverInit;
 
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server)
       ).valueOrThrow();
 
-      return [{ server, readOnlyEntityRepository }, undefined];
+      return [{ adminSchema, server, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty

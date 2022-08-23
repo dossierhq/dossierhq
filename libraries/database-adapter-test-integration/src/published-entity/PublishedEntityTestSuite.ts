@@ -1,3 +1,4 @@
+import type { AdminSchema } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
@@ -10,6 +11,7 @@ import { SearchEntitiesSubSuite } from './PublishedEntitySearchEntitiesSubSuite.
 
 export interface PublishedEntityTestContext {
   server: Server;
+  adminSchema: AdminSchema;
   readOnlyEntityRepository: ReadOnlyEntityRepository;
 }
 

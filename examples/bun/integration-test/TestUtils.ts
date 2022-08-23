@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { AdminSchema, ErrorType, ok, PromiseResult } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import {
@@ -10,6 +10,11 @@ import { createServer } from '@jonasb/datadata-server';
 import { describe, it } from 'bun:test';
 import { createAdapter } from '../ServerUtils.js';
 
+export interface ServerInit {
+  server: Server;
+  adminSchema: AdminSchema;
+}
+
 export function registerTestSuite(suiteName: string, testSuite: TestSuite): void {
   describe(suiteName, () => {
     for (const [testName, testFunction] of Object.entries(testSuite)) {
@@ -20,7 +25,7 @@ export function registerTestSuite(suiteName: string, testSuite: TestSuite): void
 
 export async function initializeIntegrationTestServer(
   filename: string
-): PromiseResult<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<ServerInit, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const serverResult = await createServer({
     databaseAdapter: (await createAdapter({ logger: NoOpLogger }, filename)).valueOrThrow(),
     authorizationAdapter: createTestAuthorizationAdapter(),
@@ -37,6 +42,7 @@ export async function initializeIntegrationTestServer(
 
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
+  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
-  return serverResult;
+  return ok({ server, adminSchema });
 }

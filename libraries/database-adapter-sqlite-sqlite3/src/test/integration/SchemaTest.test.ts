@@ -1,21 +1,21 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createSchemaTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
+import type { ServerInit } from './Sqlite3TestUtils.js';
 import { initializeSqlite3Server } from './Sqlite3TestUtils.js';
 
-let server: Server | null = null;
+let serverInit: ServerInit | null = null;
 
 beforeAll(async () => {
-  const result = await initializeSqlite3Server('databases/integration-test-schema.sqlite');
-  if (result.isError()) throw result.toError();
-  server = result.value;
+  serverInit = (
+    await initializeSqlite3Server('databases/integration-test-schema.sqlite')
+  ).valueOrThrow();
 });
 afterAll(async () => {
-  if (server) {
-    (await server.shutdown()).throwIfError();
-    server = null;
+  if (serverInit) {
+    (await serverInit.server.shutdown()).throwIfError();
+    serverInit = null;
   }
 });
 
@@ -23,7 +23,8 @@ registerTestSuite(
   'SchemaTest',
   createSchemaTestSuite({
     before: async () => {
-      assertIsDefined(server);
+      assertIsDefined(serverInit);
+      const { server } = serverInit;
       const sessionResult = await server.createSession({
         provider: 'test',
         identifier: 'id',

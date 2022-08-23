@@ -6,7 +6,7 @@ registerTestSuite(
   'SchemaTest',
   createSchemaTestSuite({
     before: async () => {
-      const server = (
+      const { server } = (
         await initializeIntegrationTestServer('databases/integration-test-schema.sqlite')
       ).valueOrThrow();
 

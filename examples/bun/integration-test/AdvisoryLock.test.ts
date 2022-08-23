@@ -6,7 +6,7 @@ registerTestSuite(
   'AdvisoryLockTest',
   createAdvisoryLockTestSuite({
     before: async () => {
-      const server = (
+      const { server } = (
         await initializeIntegrationTestServer('databases/integration-test-advisory-lock.sqlite')
       ).valueOrThrow();
       return [{ server }, { server }];

@@ -1,11 +1,22 @@
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { AdminSchema, ok } from '@jonasb/datadata-core';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
 } from '@jonasb/datadata-database-adapter-test-integration';
+import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { createSqlJsTestAdapter } from '../TestUtils.js';
 
-export async function initializeSqlJsServer() {
+export interface ServerInit {
+  server: Server;
+  adminSchema: AdminSchema;
+}
+
+export async function initializeSqlJsServer(): PromiseResult<
+  ServerInit,
+  typeof ErrorType.Generic | typeof ErrorType.BadRequest
+> {
   const databaseAdapterResult = await createSqlJsTestAdapter();
   if (databaseAdapterResult.isError()) {
     return databaseAdapterResult;
@@ -27,6 +38,7 @@ export async function initializeSqlJsServer() {
 
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
+  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
-  return createServerResult;
+  return ok({ server, adminSchema });
 }

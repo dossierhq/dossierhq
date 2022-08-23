@@ -9,7 +9,7 @@ registerTestSuite(
   'AdminEntityTest',
   createAdminEntityTestSuite({
     before: async () => {
-      const server = (
+      const { server } = (
         await initializeIntegrationTestServer('databases/integration-test-admin-entity.sqlite')
       ).valueOrThrow();
 

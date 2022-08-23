@@ -1,8 +1,8 @@
-import type { Server } from "@jonasb/datadata-server";
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
 } from "@jonasb/datadata-database-adapter-test-integration";
+import type { Server } from "@jonasb/datadata-server";
 import {
   initializeIntegrationTestServer,
   registerTestSuite,
@@ -11,14 +11,15 @@ import {
 registerTestSuite(
   createPublishedEntityTestSuite({
     before: async () => {
-      const server = (await initializeIntegrationTestServer()).valueOrThrow();
+      const { adminSchema, server } = (await initializeIntegrationTestServer())
+        .valueOrThrow();
 
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server)
       ).valueOrThrow();
 
       return [
-        { server, readOnlyEntityRepository },
+        { adminSchema, server, readOnlyEntityRepository },
         { server },
       ];
     },

@@ -6,7 +6,7 @@ registerTestSuite(
   'AuthTest',
   createAuthTestSuite({
     before: async () => {
-      const server = (
+      const { server } = (
         await initializeIntegrationTestServer('databases/integration-test-auth.sqlite')
       ).valueOrThrow();
       return [{ server }, { server }];

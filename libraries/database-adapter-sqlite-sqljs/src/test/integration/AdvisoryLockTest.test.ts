@@ -1,27 +1,26 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAdvisoryLockTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
+import type { ServerInit } from './SqlJsTestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 
-let server: Server | null = null;
+let serverInit: ServerInit | null = null;
 
 beforeAll(async () => {
-  const result = await initializeSqlJsServer();
-  if (result.isError()) throw result.toError();
-  server = result.value;
+  serverInit = (await initializeSqlJsServer()).valueOrThrow();
 });
 afterAll(async () => {
-  if (server) {
-    await server.shutdown();
+  if (serverInit) {
+    await serverInit.server.shutdown();
   }
 });
 
 registerTestSuite(
   createAdvisoryLockTestSuite({
     before: async () => {
-      assertIsDefined(server);
+      assertIsDefined(serverInit);
+      const { server } = serverInit;
       return [{ server }, undefined];
     },
     after: async () => {
