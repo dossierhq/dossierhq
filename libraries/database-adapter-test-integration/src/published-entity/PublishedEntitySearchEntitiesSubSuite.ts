@@ -42,6 +42,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_linksToTwoReferencesFromOneEntity,
   searchEntities_linksToExcludedAfterUnpublish,
   searchEntities_linksToExcludedAfterUpdateWithNoReference,
+  searchEntities_linksToExcludedForAdminOnlyField,
   searchEntities_linksFromOneReference,
   searchEntities_linksFromNoReferences,
   searchEntities_linksFromTwoReferencesFromOneEntity,
@@ -534,6 +535,26 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchAfterUpdateResult, []);
+}
+
+async function searchEntities_linksToExcludedForAdminOnlyField({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const {
+    entity: { id: titleOnlyId },
+  } = (await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })).valueOrThrow();
+
+  const referenceCreateResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: titleOnlyId } } }),
+    { publish: true }
+  );
+  assertOkResult(referenceCreateResult);
+
+  const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  assertSearchResultEntities(searchResult, []);
 }
 
 async function searchEntities_linksFromOneReference({
