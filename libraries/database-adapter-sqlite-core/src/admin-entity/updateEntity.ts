@@ -174,14 +174,14 @@ export async function adminEntityUpdateEntity(
   if (ftsResult.isError()) return ftsResult;
 
   // Update latest references
-  const updateLatestReferencesIndexResult = await updateEntityLatestReferencesIndex(
+  const updateReferencesIndexResult = await updateEntityLatestReferencesIndex(
     database,
     context,
     entity,
     entity.referenceIds,
     { skipDelete: false }
   );
-  if (updateLatestReferencesIndexResult.isError()) return updateLatestReferencesIndexResult;
+  if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   if (entity.locations.length > 0) {
     const qb = new SqliteQueryBuilder(
