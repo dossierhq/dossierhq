@@ -21,8 +21,8 @@ type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
 interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityCreate: MockedFunction<DatabaseAdapter['adminEntityCreate']>;
   adminEntityGetOne: MockedFunction<DatabaseAdapter['adminEntityGetOne']>;
-  adminEntityPublishGetUnpublishedReferencedEntities: MockedFunction<
-    DatabaseAdapter['adminEntityPublishGetUnpublishedReferencedEntities']
+  adminEntityGetReferenceEntitiesInfo: MockedFunction<
+    DatabaseAdapter['adminEntityGetReferenceEntitiesInfo']
   >;
   adminEntityPublishGetVersionInfo: MockedFunction<
     DatabaseAdapter['adminEntityPublishGetVersionInfo']
@@ -31,6 +31,9 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
     DatabaseAdapter['adminEntityPublishingCreateEvents']
   >;
   adminEntityPublishUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityPublishUpdateEntity']>;
+  adminEntityPublishUpdatePublishedReferencesIndex: MockedFunction<
+    DatabaseAdapter['adminEntityPublishUpdatePublishedReferencesIndex']
+  >;
   adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
   adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
   adminEntitySearchTotalCount: MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
@@ -103,7 +106,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntityGetReferenceEntitiesInfo: vi.fn(),
     adminEntityHistoryGetEntityInfo: vi.fn(),
     adminEntityHistoryGetVersionsInfo: vi.fn(),
-    adminEntityPublishGetUnpublishedReferencedEntities: vi.fn(),
+    adminEntityPublishUpdatePublishedReferencesIndex: vi.fn(),
     adminEntityPublishGetVersionInfo: vi.fn(),
     adminEntityPublishingCreateEvents: vi.fn(),
     adminEntityPublishingHistoryGetEntityInfo: vi.fn(),

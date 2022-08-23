@@ -84,6 +84,7 @@ export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
   extends DatabaseResolvedEntityReference {
   id: string;
   type: string;
+  status: AdminEntityStatus;
 }
 
 export interface DatabaseAdminEntityHistoryGetEntityInfoPayload
@@ -306,10 +307,11 @@ export interface DatabaseAdapter {
     values: DatabaseAdminEntityPublishUpdateEntityArg
   ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
 
-  adminEntityPublishGetUnpublishedReferencedEntities(
+  adminEntityPublishUpdatePublishedReferencesIndex(
     context: TransactionContext,
-    reference: DatabaseResolvedEntityVersionReference
-  ): PromiseResult<EntityReference[], typeof ErrorType.Generic>;
+    fromReference: DatabaseResolvedEntityReference,
+    toReferences: DatabaseResolvedEntityReference[]
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityPublishingCreateEvents(
     context: TransactionContext,

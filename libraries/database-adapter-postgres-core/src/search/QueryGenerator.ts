@@ -268,16 +268,24 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  const linkToEntityVersion = !!(query?.linksTo || query?.boundingBox);
+  const linkToEntityVersion = !!((!published && query?.linksTo) || query?.boundingBox);
 
   if (linkToEntityVersion) {
     qb.addQuery('entity_versions ev');
   }
   if (query?.linksTo) {
-    qb.addQuery('entity_version_references evr, entities e2');
+    if (published) {
+      qb.addQuery('entity_published_references epr_to, entities e_to');
+    } else {
+      qb.addQuery('entity_version_references evr, entities e2');
+    }
   }
   if (query?.linksFrom) {
-    qb.addQuery('entities e_from, entity_version_references evr_from');
+    if (published) {
+      qb.addQuery('entity_published_references epr_from, entities e_from');
+    } else {
+      qb.addQuery('entities e_from, entity_version_references evr_from');
+    }
   }
   if (query?.boundingBox) {
     qb.addQuery('entity_version_locations evl');
@@ -311,10 +319,18 @@ function addEntityQuerySelectColumn(
     );
   }
   if (query?.linksTo) {
-    qb.addQuery('entity_version_references evr, entities e2');
+    if (published) {
+      qb.addQuery('entity_published_references epr_to, entities e_to');
+    } else {
+      qb.addQuery('entity_version_references evr, entities e2');
+    }
   }
   if (query?.linksFrom) {
-    qb.addQuery('entities e_from, entity_version_references evr_from');
+    if (published) {
+      qb.addQuery('entities e_from, entity_published_references epr_from');
+    } else {
+      qb.addQuery('entities e_from, entity_version_references evr_from');
+    }
   }
   if (query?.boundingBox) {
     qb.addQuery('entity_version_locations evl');
@@ -364,25 +380,30 @@ function addQueryFilters(
 
   // Filter: linksTo
   if (query?.linksTo) {
-    qb.addQuery(
-      `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
-        query.linksTo.id
-      )}`
-    );
     if (published) {
-      qb.addQuery('AND e2.published_entity_versions_id IS NOT NULL');
+      qb.addQuery(
+        `AND e.id = epr_to.from_entities_id AND epr_to.to_entities_id = e_to.id AND e_to.uuid = ${qb.addValue(
+          query.linksTo.id
+        )}`
+      );
+    } else {
+      qb.addQuery(
+        `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
+          query.linksTo.id
+        )}`
+      );
     }
   }
 
   // Filter: linksFrom
   if (query?.linksFrom) {
     qb.addQuery(`AND e_from.uuid = ${qb.addValue(query.linksFrom.id)}`);
-    qb.addQuery(
-      published
-        ? 'AND e_from.published_entity_versions_id = evr_from.entity_versions_id'
-        : 'AND e_from.latest_draft_entity_versions_id = evr_from.entity_versions_id'
-    );
-    qb.addQuery('AND evr_from.entities_id = e.id');
+    if (published) {
+      qb.addQuery(`AND e_from.id = epr_from.from_entities_id AND epr_from.to_entities_id = e.id`);
+    } else {
+      qb.addQuery('AND e_from.latest_draft_entity_versions_id = evr_from.entity_versions_id');
+      qb.addQuery('AND evr_from.entities_id = e.id');
+    }
   }
 
   // Filter: bounding box

@@ -13,7 +13,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
     decodedData: TDecoded
   ): Result<TEncoded, typeof ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
-  getReferenceUUIDs(decodedData: TDecoded): null | string[];
+  getReferenceUUIDs(decodedData: TDecoded): null | string[]; //TODO remove
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {

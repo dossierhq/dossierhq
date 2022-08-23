@@ -39,8 +39,9 @@ describe('Admin adminPublishEntities', () => {
       )
     );
     databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(ok({ updatedAt: now }));
-    databaseAdapter.adminEntityPublishGetUnpublishedReferencedEntities.mockResolvedValueOnce(
-      ok([])
+    databaseAdapter.adminEntityGetReferenceEntitiesInfo.mockResolvedValueOnce(ok([]));
+    databaseAdapter.adminEntityPublishUpdatePublishedReferencesIndex.mockResolvedValueOnce(
+      ok(undefined)
     );
     databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(ok(undefined));
 
@@ -65,11 +66,8 @@ describe('Admin adminPublishEntities', () => {
       .toMatchInlineSnapshot(`
         [
           [
-            "adminEntityPublishGetUnpublishedReferencedEntities",
-            {
-              "entityInternalId": 999,
-              "entityVersionInternalId": 888,
-            },
+            "adminEntityGetReferenceEntitiesInfo",
+            [],
           ],
           [
             "adminEntityPublishGetVersionInfo",
@@ -86,6 +84,13 @@ describe('Admin adminPublishEntities', () => {
               "fullTextSearchText": "Title",
               "status": "published",
             },
+          ],
+          [
+            "adminEntityPublishUpdatePublishedReferencesIndex",
+            {
+              "entityInternalId": 999,
+            },
+            [],
           ],
           [
             "adminEntityPublishingCreateEvents",

@@ -1402,7 +1402,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entities e_from, entity_version_references evr_from WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e_from.uuid = ?2 AND e_from.published_entity_versions_id = evr_from.entity_versions_id AND evr_from.entities_id = e.id ORDER BY e.id LIMIT ?3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entities e_from, entity_published_references epr_from WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e_from.uuid = ?2 AND e_from.id = epr_from.from_entities_id AND epr_from.to_entities_id = e.id ORDER BY e.id LIMIT ?3",
             "values": [
               "none",
               "37b48706-803e-4227-a51e-8208db12d949",
@@ -1429,7 +1429,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?2 AND e2.published_entity_versions_id IS NOT NULL ORDER BY e.id LIMIT ?3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_published_references epr_to, entities e_to WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id = epr_to.from_entities_id AND epr_to.to_entities_id = e_to.id AND e_to.uuid = ?2 ORDER BY e.id LIMIT ?3",
             "values": [
               "none",
               "37b48706-803e-4227-a51e-8208db12d949",
@@ -1555,7 +1555,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?4 AND e2.published_entity_versions_id IS NOT NULL AND e.id > ?5 ORDER BY e.id LIMIT ?6",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_published_references epr_to, entities e_to WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.id = epr_to.from_entities_id AND epr_to.to_entities_id = e_to.id AND e_to.uuid = ?4 AND e.id > ?5 ORDER BY e.id LIMIT ?6",
             "values": [
               "none",
               "QueryGeneratorFoo",
@@ -2063,7 +2063,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entities e_from, entity_version_references evr_from WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e_from.uuid = ?2 AND e_from.published_entity_versions_id = evr_from.entity_versions_id AND evr_from.entities_id = e.id",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_published_references epr_from, entities e_from WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e_from.uuid = ?2 AND e_from.id = epr_from.from_entities_id AND epr_from.to_entities_id = e.id",
           "values": [
             "none",
             "37b48706-803e-4227-a51e-8208db12d949",
@@ -2081,7 +2081,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?2 AND e2.published_entity_versions_id IS NOT NULL",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_published_references epr_to, entities e_to WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id = epr_to.from_entities_id AND epr_to.to_entities_id = e_to.id AND e_to.uuid = ?2",
           "values": [
             "none",
             "37b48706-803e-4227-a51e-8208db12d949",
@@ -2100,7 +2100,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?4 AND e2.published_entity_versions_id IS NOT NULL",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_published_references epr_to, entities e_to WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.id = epr_to.from_entities_id AND epr_to.to_entities_id = e_to.id AND e_to.uuid = ?4",
           "values": [
             "none",
             "QueryGeneratorFoo",
