@@ -14,6 +14,7 @@ import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
+import { updateEntityLatestReferencesIndex } from './updateEntityLatestReferencesIndex.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -160,19 +161,14 @@ export async function adminEntityUpdateEntity(
   }
   const { updated_at: updatedAt } = updateEntityResult.value;
 
-  if (entity.referenceIds.length > 0) {
-    const qb = new PostgresQueryBuilder(
-      'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
-      [versionsId]
-    );
-    for (const referenceId of entity.referenceIds) {
-      qb.addQuery(`($1, ${qb.addValue(referenceId.entityInternalId)})`);
-    }
-    const referenceResult = await queryNone(databaseAdapter, context, qb.build());
-    if (referenceResult.isError()) {
-      return referenceResult;
-    }
-  }
+  const updateReferencesIndexResult = await updateEntityLatestReferencesIndex(
+    databaseAdapter,
+    context,
+    entity,
+    entity.referenceIds,
+    { skipDelete: false }
+  );
+  if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   if (entity.locations.length > 0) {
     const qb = new PostgresQueryBuilder(
