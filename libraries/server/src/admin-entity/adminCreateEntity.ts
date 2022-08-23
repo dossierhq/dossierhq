@@ -60,7 +60,7 @@ export async function adminCreateEntity(
       name: encodeEntityResult.name,
       creator: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
-      fullTextSearchText: encodeEntityResult.fullTextSearchText.join(' '),
+      fullTextSearchText: encodeEntityResult.fullTextSearchText,
       referenceIds: encodeEntityResult.referenceIds,
       locations: encodeEntityResult.locations,
       fieldsData: encodeEntityResult.data,

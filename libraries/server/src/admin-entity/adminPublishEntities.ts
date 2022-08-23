@@ -4,7 +4,6 @@ import type {
   EntityLike,
   EntityReference,
   EntityVersionReference,
-  ItemTraverseNode,
   PromiseResult,
   PublishedSchema,
   Result,
@@ -13,9 +12,6 @@ import {
   AdminEntityStatus,
   createErrorResult,
   ErrorType,
-  isEntityTypeItemField,
-  isRichTextTextNode,
-  isStringItemField,
   ItemTraverseNodeErrorType,
   ItemTraverseNodeType,
   notOk,
@@ -28,7 +24,11 @@ import type { Temporal } from '@js-temporal/polyfill';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import { decodeAdminEntityFields } from '../EntityCodec.js';
+import {
+  createFullTextSearchCollector,
+  createReferencesCollector,
+  decodeAdminEntityFields,
+} from '../EntityCodec.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 
 interface VersionInfoToBePublished {
@@ -262,49 +262,10 @@ function verifyFieldValuesAndCollectInformation(
         break;
     }
   }
-  return ok({ fullTextSearchText: ftsCollector.result, references: referencesCollector.result });
-}
-
-function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
-  const fullTextSearchText: string[] = [];
-  return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
-      switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
-          if (isStringItemField(node.fieldSpec, node.value) && node.value) {
-            fullTextSearchText.push(node.value);
-          }
-          break;
-        case ItemTraverseNodeType.richTextNode: {
-          const richTextNode = node.node;
-          if (isRichTextTextNode(richTextNode) && richTextNode.text) {
-            fullTextSearchText.push(richTextNode.text);
-          }
-          break;
-        }
-      }
-    },
-    get result() {
-      return fullTextSearchText.join(' ');
-    },
-  };
-}
-
-function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
-  const referencesUuids = new Set<string>();
-  return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
-      switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
-          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
-            referencesUuids.add(node.value.id);
-          }
-      }
-    },
-    get result(): EntityReference[] {
-      return [...referencesUuids].map((id) => ({ id }));
-    },
-  };
+  return ok({
+    fullTextSearchText: ftsCollector.result,
+    references: referencesCollector.result,
+  });
 }
 
 async function publishEntitiesAndCollectResult(

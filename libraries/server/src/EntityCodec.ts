@@ -6,7 +6,9 @@ import type {
   AdminFieldSpecification,
   AdminSchema,
   EntityLike,
+  EntityReference,
   ErrorType,
+  ItemTraverseNode,
   Location,
   PromiseResult,
   PublishedEntity,
@@ -20,22 +22,22 @@ import type {
 import {
   AdminEntityStatus,
   FieldType,
+  isEntityTypeItemField,
   isFieldValueEqual,
   isLocationItemField,
   isRichTextEntityNode,
   isRichTextField,
   isRichTextItemField,
   isRichTextTextNode,
-  isRichTextValueItemNode,
   isStringItemField,
   isValueTypeField,
   isValueTypeItemField,
+  ItemTraverseNodeType,
   normalizeFieldValue,
   notOk,
   ok,
   traverseEntity,
   validateTraverseNode,
-  visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type {
@@ -55,7 +57,7 @@ export interface EncodeAdminEntityResult {
   data: Record<string, unknown>;
   referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
-  fullTextSearchText: string[];
+  fullTextSearchText: string;
 }
 
 interface RequestedReference {
@@ -370,7 +372,7 @@ export async function encodeAdminEntity(
     data: {},
     referenceIds: [],
     locations: [],
-    fullTextSearchText: [],
+    fullTextSearchText: '',
   };
   for (const fieldSpec of entitySpec.fields) {
     if (entity.fields && fieldSpec.name in entity.fields) {
@@ -402,7 +404,7 @@ export async function encodeAdminEntity(
 
   result.referenceIds.push(...resolveResult.value);
   result.locations.push(...locations);
-  result.fullTextSearchText.push(...fullTextSearchText);
+  result.fullTextSearchText = fullTextSearchText;
 
   return ok(result);
 }
@@ -510,63 +512,131 @@ function encodeRichTextField(
   return ok(data);
 }
 
+//TODO remove to only traverse once
 export function collectDataFromEntity(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
   entity: EntityLike
 ): {
   requestedReferences: RequestedReference[];
   locations: Location[];
-  fullTextSearchText: string[];
+  fullTextSearchText: string;
 } {
-  const requestedReferences: RequestedReference[] = [];
-  const locations: Location[] = [];
+  const ftsCollector = createFullTextSearchCollector();
+  const referencesCollector = createRequestedReferencesCollector();
+  const locationsCollector = createLocationsCollector();
+
+  for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
+    ftsCollector.collect(node);
+    referencesCollector.collect(node);
+    locationsCollector.collect(node);
+  }
+
+  return {
+    requestedReferences: referencesCollector.result,
+    locations: locationsCollector.result,
+    fullTextSearchText: ftsCollector.result,
+  };
+}
+
+export function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const fullTextSearchText: string[] = [];
-
-  // TODO migrate to traverseEntity, see createFullTextSearchCollector()
-
-  visitItemRecursively({
-    schema,
-    item: entity,
-    path: ['entity'],
-    visitField: (path, fieldSpec, data, _visitContext) => {
-      if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {
-        const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-        const uuids = fieldAdapter.getReferenceUUIDs(data);
-        if (uuids && uuids.length > 0) {
-          requestedReferences.push({
-            prefix: visitorPathToString(path),
-            uuids,
-            entityTypes: fieldSpec.entityTypes,
-          });
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isStringItemField(node.fieldSpec, node.value) && node.value) {
+            fullTextSearchText.push(node.value);
+          }
+          break;
+        case ItemTraverseNodeType.richTextNode: {
+          const richTextNode = node.node;
+          if (isRichTextTextNode(richTextNode) && richTextNode.text) {
+            fullTextSearchText.push(richTextNode.text);
+          }
+          break;
         }
       }
-
-      if (isLocationItemField(fieldSpec, data) && data) {
-        locations.push(data);
-      } else if (isStringItemField(fieldSpec, data) && data) {
-        fullTextSearchText.push(data);
-      }
     },
-    visitRichTextNode: (path, fieldSpec, node, _visitContext) => {
-      if (isRichTextEntityNode(node) && node.reference) {
-        requestedReferences.push({
-          prefix: visitorPathToString(path),
-          uuids: [node.reference.id],
-          entityTypes: fieldSpec.entityTypes,
-        });
-      } else if (isRichTextTextNode(node)) {
-        const text = node.text;
-        if (text) {
-          fullTextSearchText.push(text);
+    get result() {
+      return fullTextSearchText.join(' ');
+    },
+  };
+}
+
+//TODO we have three similar implementations of this function, should it move to core?
+export function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+  const references = new Set<string>();
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+            references.add(node.value.id);
+          }
+          break;
+        case ItemTraverseNodeType.richTextNode: {
+          const richTextNode = node.node;
+          if (isRichTextEntityNode(richTextNode)) {
+            references.add(richTextNode.reference.id);
+          }
+          break;
         }
-      } else if (isRichTextValueItemNode(node)) {
-        // skip since visitField will be called
       }
     },
-    initialVisitContext: undefined,
-  });
+    get result(): EntityReference[] {
+      return [...references].map((id) => ({ id }));
+    },
+  };
+}
 
-  return { requestedReferences, locations, fullTextSearchText };
+function createRequestedReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+  const requestedReferences: RequestedReference[] = [];
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+            requestedReferences.push({
+              prefix: visitorPathToString(node.path),
+              uuids: [node.value.id], //TODO handle list field (optimization, one requested reference instead of one for each item in the list)
+              entityTypes: node.fieldSpec.entityTypes,
+            });
+          }
+          break;
+        case ItemTraverseNodeType.richTextNode: {
+          const richTextNode = node.node;
+          if (isRichTextEntityNode(richTextNode)) {
+            requestedReferences.push({
+              prefix: visitorPathToString(node.path),
+              uuids: [richTextNode.reference.id],
+              entityTypes: node.fieldSpec.entityTypes,
+            });
+          }
+          break;
+        }
+      }
+    },
+    get result(): RequestedReference[] {
+      return requestedReferences;
+    },
+  };
+}
+
+export function createLocationsCollector<TSchema extends AdminSchema | PublishedSchema>() {
+  const locations: Location[] = [];
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
+            locations.push(node.value);
+          }
+      }
+    },
+    get result(): Location[] {
+      return locations;
+    },
+  };
 }
 
 async function resolveRequestedEntityReferences(

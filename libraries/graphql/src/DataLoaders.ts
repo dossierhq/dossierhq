@@ -10,6 +10,7 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  ItemTraverseNode,
   PageInfo,
   Paging,
   PublishedEntity,
@@ -25,13 +26,15 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   isEntityTypeField,
+  isEntityTypeItemField,
   isEntityTypeListField,
   isItemValueItem,
   isRichTextEntityNode,
   isRichTextField,
   isValueTypeField,
   isValueTypeListField,
-  visitFieldRecursively,
+  ItemTraverseNodeType,
+  traverseItemField,
 } from '@jonasb/datadata-core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
@@ -311,24 +314,37 @@ function extractEntityIdsForRichTextField(
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   value: RichText
 ) {
-  const entityIds = new Set<string>();
-  visitFieldRecursively({
-    schema,
-    fieldSpec,
-    value,
-    visitField: (_path, fieldSpec, data, _visitContext) => {
-      if (isEntityTypeField(fieldSpec, data) && data) {
-        entityIds.add(data.id);
+  const referencesCollector = createReferencesCollector();
+  for (const node of traverseItemField(schema, [fieldSpec.name], fieldSpec, value)) {
+    referencesCollector.collect(node);
+  }
+  return referencesCollector.result;
+}
+
+//TODO we have two identical (three similar) implementations of this function, should it move to core?
+function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+  const references = new Set<string>();
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+            references.add(node.value.id);
+          }
+          break;
+        case ItemTraverseNodeType.richTextNode: {
+          const richTextNode = node.node;
+          if (isRichTextEntityNode(richTextNode)) {
+            references.add(richTextNode.reference.id);
+          }
+          break;
+        }
       }
     },
-    visitRichTextNode: (_path, _fieldSpec, node, _visitContext) => {
-      if (isRichTextEntityNode(node) && node.reference) {
-        entityIds.add(node.reference.id);
-      }
+    get result(): string[] {
+      return [...references];
     },
-    visitContext: undefined,
-  });
-  return [...entityIds];
+  };
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(

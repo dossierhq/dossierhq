@@ -52,7 +52,6 @@ export {
   isItemAdminEntity,
   isItemEntity,
   isItemValueItem,
-  isItemValuePathEqual,
   isLocationField,
   isLocationItemField,
   isLocationListField,
@@ -70,8 +69,6 @@ export {
   isValueTypeItemField,
   isValueTypeListField,
   normalizeFieldValue,
-  visitFieldRecursively,
-  visitItemRecursively,
   visitorPathToString,
 } from './ItemUtils.js';
 export type { ItemValuePath } from './ItemUtils.js';

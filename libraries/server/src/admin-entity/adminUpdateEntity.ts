@@ -105,7 +105,7 @@ export async function adminUpdateEntity(
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,
         fieldValues: data,
-        fullTextSearchText: fullTextSearchText.join(' '),
+        fullTextSearchText,
         referenceIds,
         locations,
       }
