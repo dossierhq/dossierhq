@@ -14,7 +14,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { updateEntityLatestReferencesIndex } from './updateEntityLatestReferencesIndex.js';
+import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
 
 export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -58,32 +58,15 @@ export async function adminCreateEntity(
     return updateLatestDraftIdResult;
   }
 
-  const updateReferencesIndexResult = await updateEntityLatestReferencesIndex(
+  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
     databaseAdapter,
     context,
     { entityInternalId: entityId },
     entity.referenceIds,
+    entity.locations,
     { skipDelete: true }
   );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
-
-  if (entity.locations.length > 0) {
-    const qb = new PostgresQueryBuilder(
-      'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
-      [versionsId]
-    );
-    for (const location of entity.locations) {
-      qb.addQuery(
-        `($1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
-          location.lat
-        )}), 4326))`
-      );
-    }
-    const insertLocationsResult = await queryNone(databaseAdapter, context, qb.build());
-    if (insertLocationsResult.isError()) {
-      return insertLocationsResult;
-    }
-  }
 
   return ok({ id: uuid, name: actualName, createdAt, updatedAt });
 }

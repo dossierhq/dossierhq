@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, Location, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type {
   DatabaseResolvedEntityReference,
@@ -8,11 +8,12 @@ import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryNone } from '../QueryFunctions.js';
 
-export async function updateEntityLatestReferencesIndex(
+export async function updateEntityLatestReferencesAndLocationsIndexes(
   database: Database,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
   referenceIds: DatabaseResolvedEntityReference[],
+  locations: Location[],
   { skipDelete }: { skipDelete: boolean }
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (!skipDelete) {
@@ -27,6 +28,18 @@ export async function updateEntityLatestReferencesIndex(
       )
     );
     if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
+
+    const removeExistingLocationsResult = await queryNone(
+      database,
+      context,
+      buildSqliteSqlQuery(
+        ({ sql }) =>
+          sql`DELETE FROM entity_latest_locations WHERE entities_id = ${
+            entity.entityInternalId as number
+          }`
+      )
+    );
+    if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
   }
 
   if (referenceIds.length > 0) {
@@ -42,6 +55,21 @@ export async function updateEntityLatestReferencesIndex(
       })
     );
     if (insertReferencesResult.isError()) return insertReferencesResult;
+  }
+
+  if (locations.length > 0) {
+    const insertLocationsResult = await queryNone(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql, addValue }) => {
+        sql`INSERT INTO entity_latest_locations (entities_id, lat, lng) VALUES`;
+        const entitiesId = addValue(entity.entityInternalId as number);
+        for (const location of locations) {
+          sql`(${entitiesId}, ${location.lat}, ${location.lng})`;
+        }
+      })
+    );
+    if (insertLocationsResult.isError()) return insertLocationsResult;
   }
 
   return ok(undefined);

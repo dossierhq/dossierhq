@@ -116,6 +116,7 @@ export interface DatabaseAdminEntityPublishUpdateEntityArg
   extends DatabaseResolvedEntityVersionReference {
   status: AdminEntityStatus;
   fullTextSearchText: string;
+  locations: Location[];
 }
 
 export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } & (

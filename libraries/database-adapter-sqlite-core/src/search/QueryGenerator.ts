@@ -268,11 +268,6 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  const linkToEntityVersion = !!query?.boundingBox;
-
-  if (linkToEntityVersion) {
-    qb.addQuery('entity_versions ev');
-  }
   if (query?.linksTo) {
     qb.addQuery(
       published
@@ -288,7 +283,7 @@ function totalCountQuery(
     );
   }
   if (query?.boundingBox) {
-    qb.addQuery('entity_version_locations evl');
+    qb.addQuery(published ? 'entity_published_locations el' : 'entity_latest_locations el');
   }
   if (query?.text) {
     qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
@@ -296,7 +291,7 @@ function totalCountQuery(
 
   qb.addQuery('WHERE');
 
-  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, linkToEntityVersion);
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, false);
   if (filterResult.isError()) return filterResult;
 
   return ok(qb.build());
@@ -333,7 +328,7 @@ function addEntityQuerySelectColumn(
     );
   }
   if (query?.boundingBox) {
-    qb.addQuery('entity_version_locations evl');
+    qb.addQuery(published ? 'entity_published_locations el' : 'entity_latest_locations el');
   }
   if (query?.text) {
     qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
@@ -402,15 +397,15 @@ function addQueryFilters(
   if (query?.boundingBox) {
     const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
     qb.addQuery(
-      `AND ev.id = evl.entity_versions_id AND evl.lat >= ${qb.addValue(
-        minLat
-      )} AND evl.lat <= ${qb.addValue(maxLat)}`
+      `AND e.id = el.entities_id AND el.lat >= ${qb.addValue(minLat)} AND el.lat <= ${qb.addValue(
+        maxLat
+      )}`
     );
     if (minLng > 0 && maxLng < 0) {
       // wrapping around 180/-180 boundary
-      qb.addQuery(`AND (evl.lng <= ${qb.addValue(minLng)} OR evl.lng >= ${qb.addValue(maxLng)})`);
+      qb.addQuery(`AND (el.lng <= ${qb.addValue(minLng)} OR el.lng >= ${qb.addValue(maxLng)})`);
     } else {
-      qb.addQuery(`AND evl.lng >= ${qb.addValue(minLng)} AND evl.lng <= ${qb.addValue(maxLng)}`);
+      qb.addQuery(`AND el.lng >= ${qb.addValue(minLng)} AND el.lng <= ${qb.addValue(maxLng)}`);
     }
   }
 

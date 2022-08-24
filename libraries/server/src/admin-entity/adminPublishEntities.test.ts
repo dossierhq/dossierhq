@@ -82,6 +82,7 @@ describe('Admin adminPublishEntities', () => {
               "entityInternalId": 999,
               "entityVersionInternalId": 888,
               "fullTextSearchText": "Title",
+              "locations": [],
               "status": "published",
             },
           ],

@@ -268,11 +268,6 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  const linkToEntityVersion = !!query?.boundingBox;
-
-  if (linkToEntityVersion) {
-    qb.addQuery('entity_versions ev');
-  }
   if (query?.linksTo) {
     qb.addQuery(
       published
@@ -288,12 +283,12 @@ function totalCountQuery(
     );
   }
   if (query?.boundingBox) {
-    qb.addQuery('entity_version_locations evl');
+    qb.addQuery(published ? 'entity_published_locations el' : 'entity_latest_locations el');
   }
 
   qb.addQuery('WHERE');
 
-  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, linkToEntityVersion);
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, false);
   if (filterResult.isError()) return filterResult;
 
   return ok(qb.build());
@@ -333,7 +328,7 @@ function addEntityQuerySelectColumn(
     );
   }
   if (query?.boundingBox) {
-    qb.addQuery('entity_version_locations evl');
+    qb.addQuery(published ? 'entity_published_locations el' : 'entity_latest_locations el');
   }
 }
 
@@ -397,7 +392,7 @@ function addQueryFilters(
   if (query?.boundingBox) {
     const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
     qb.addQuery(
-      `AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(${qb.addValue(
+      `AND e.id = el.entities_id AND el.location && ST_MakeEnvelope(${qb.addValue(
         minLng
       )}, ${qb.addValue(minLat)}, ${qb.addValue(maxLng)}, ${qb.addValue(maxLat)}, 4326)`
     );
