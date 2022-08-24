@@ -785,7 +785,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5 ORDER BY e.id LIMIT ?6",
+        FROM entities e, entity_versions ev, entity_latest_locations el WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND el.lng >= ?4 AND el.lng <= ?5 ORDER BY e.id LIMIT ?6",
             "values": [
               "none",
               55.07,
@@ -816,7 +816,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5) ORDER BY e.id LIMIT ?6",
+        FROM entities e, entity_versions ev, entity_latest_locations el WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND (el.lng <= ?4 OR el.lng >= ?5) ORDER BY e.id LIMIT ?6",
             "values": [
               "none",
               55.07,
@@ -1464,7 +1464,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5 ORDER BY e.id LIMIT ?6",
+            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_published_locations el WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND el.lng >= ?4 AND el.lng <= ?5 ORDER BY e.id LIMIT ?6",
             "values": [
               "none",
               55.07,
@@ -1494,7 +1494,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5) ORDER BY e.id LIMIT ?6",
+            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_published_locations el WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND (el.lng <= ?4 OR el.lng >= ?5) ORDER BY e.id LIMIT ?6",
             "values": [
               "none",
               55.07,
@@ -1934,7 +1934,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_latest_locations el WHERE e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND el.lng >= ?4 AND el.lng <= ?5",
           "values": [
             "none",
             55.07,
@@ -1960,7 +1960,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_latest_locations el WHERE e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND (el.lng <= ?4 OR el.lng >= ?5)",
           "values": [
             "none",
             55.07,
@@ -2120,7 +2120,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_published_locations el WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND el.lng >= ?4 AND el.lng <= ?5",
           "values": [
             "none",
             55.07,
@@ -2141,7 +2141,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_published_locations el WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id = el.entities_id AND el.lat >= ?2 AND el.lat <= ?3 AND (el.lng <= ?4 OR el.lng >= ?5)",
           "values": [
             "none",
             55.07,

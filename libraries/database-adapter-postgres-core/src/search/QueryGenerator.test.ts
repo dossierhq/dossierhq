@@ -809,7 +809,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
+        FROM entities e, entity_versions ev, entity_latest_locations el WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
             "values": [
               "none",
               11.62,
@@ -1476,7 +1476,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
+            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev, entity_published_locations el WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
             "values": [
               "none",
               11.62,
@@ -1934,7 +1934,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_latest_locations el WHERE e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326)",
           "values": [
             "none",
             11.62,
@@ -2105,7 +2105,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_published_locations el WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326)",
           "values": [
             "none",
             11.62,

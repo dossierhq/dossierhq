@@ -93,9 +93,34 @@ export async function adminEntityPublishUpdateEntity(
           RETURNING updated_at`,
     values: [entityVersionInternalId, fullTextSearchText, status, entityInternalId],
   });
-  if (updateResult.isError()) {
-    return updateResult;
+  if (updateResult.isError()) return updateResult;
+
+  // Update locations index: Clear existing
+  const clearLocationsResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildPostgresSqlQuery(({ sql }) => {
+      sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityInternalId}`;
+    })
+  );
+  if (clearLocationsResult.isError()) return clearLocationsResult;
+
+  // Update locations index: Insert new
+  if (values.locations.length > 0) {
+    const insertResult = await queryNone(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql, addValue }) => {
+        sql`INSERT INTO entity_published_locations (entities_id, location) VALUES`;
+        const entitiesId = addValue(entityInternalId);
+        for (const location of values.locations) {
+          sql`(${entitiesId}, ST_SetSRID(ST_Point(${location.lng}, ${location.lat}), 4326))`;
+        }
+      })
+    );
+    if (insertResult.isError()) return insertResult;
   }
+
   const { updated_at: updatedAt } = updateResult.value;
   return ok({ updatedAt });
 }

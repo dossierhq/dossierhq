@@ -1,7 +1,6 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
 import {
   buildSqliteSqlQuery,
-  createSqliteSqlQuery,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
@@ -15,7 +14,7 @@ import { queryNone, queryOne } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateEntityLatestReferencesIndex } from './updateEntityLatestReferencesIndex.js';
+import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
 
 export async function adminCreateEntity(
   database: Database,
@@ -74,27 +73,15 @@ export async function adminCreateEntity(
     return updateLatestDraftIdResult;
   }
 
-  const updateReferencesIndexResult = await updateEntityLatestReferencesIndex(
+  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
     database,
     context,
     { entityInternalId: entityId },
     entity.referenceIds,
+    entity.locations,
     { skipDelete: true }
   );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
-
-  if (entity.locations.length > 0) {
-    const { query, sql, addValue } = createSqliteSqlQuery();
-    sql`INSERT INTO entity_version_locations (entity_versions_id, lat, lng) VALUES`;
-    const entityVersion = addValue(versionsId);
-    for (const location of entity.locations) {
-      sql`(${entityVersion}, ${location.lat}, ${location.lng})`;
-    }
-    const insertLocationsResult = await queryNone(database, context, query);
-    if (insertLocationsResult.isError()) {
-      return insertLocationsResult;
-    }
-  }
 
   return ok({ id: uuid, name: actualName, createdAt, updatedAt });
 }

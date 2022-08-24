@@ -103,9 +103,7 @@ export async function adminEntityPublishUpdateEntity(
       entityInternalId as number,
     ],
   });
-  if (updateResult.isError()) {
-    return updateResult;
-  }
+  if (updateResult.isError()) return updateResult;
 
   // FTS virtual tables don't support upsert
   // FTS upsert 1/2) Try to insert
@@ -140,6 +138,32 @@ export async function adminEntityPublishUpdateEntity(
       )
     );
     if (ftsUpdateResult.isError()) return ftsUpdateResult;
+  }
+
+  // Update locations index: Clear existing
+  const clearLocationsResult = await queryNone(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql }) => {
+      sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityInternalId as number}`;
+    })
+  );
+  if (clearLocationsResult.isError()) return clearLocationsResult;
+
+  // Update locations index: Insert new
+  if (values.locations.length > 0) {
+    const insertResult = await queryNone(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql, addValue }) => {
+        sql`INSERT INTO entity_published_locations (entities_id, lat, lng) VALUES`;
+        const entitiesId = addValue(entityInternalId as number);
+        for (const location of values.locations) {
+          sql`(${entitiesId}, ${location.lat}, ${location.lng})`;
+        }
+      })
+    );
+    if (insertResult.isError()) return insertResult;
   }
 
   return ok({ updatedAt: now });

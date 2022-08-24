@@ -6,7 +6,7 @@ import type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
@@ -16,7 +16,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateEntityLatestReferencesIndex } from './updateEntityLatestReferencesIndex.js';
+import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,
@@ -173,28 +173,16 @@ export async function adminEntityUpdateEntity(
   );
   if (ftsResult.isError()) return ftsResult;
 
-  // Update latest references
-  const updateReferencesIndexResult = await updateEntityLatestReferencesIndex(
+  // Update latest indexes
+  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
     database,
     context,
     entity,
     entity.referenceIds,
+    entity.locations,
     { skipDelete: false }
   );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
-  if (entity.locations.length > 0) {
-    const qb = new SqliteQueryBuilder(
-      'INSERT INTO entity_version_locations (entity_versions_id, lat, lng) VALUES',
-      [versionsId]
-    );
-    for (const location of entity.locations) {
-      qb.addQuery(`(?1, ${qb.addValue(location.lat)}, ${qb.addValue(location.lng)})`);
-    }
-    const locationsResult = await queryNone(database, context, qb.build());
-    if (locationsResult.isError()) {
-      return locationsResult;
-    }
-  }
   return ok({ name: newName, updatedAt: now });
 }

@@ -104,6 +104,17 @@ export async function adminEntityUnpublishEntities(
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
 
+  const removeLocationsIndexResult = await queryNone(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
+      sql`DELETE FROM entity_published_locations WHERE entities_id IN ${addValueList(
+        references.map(({ entityInternalId }) => entityInternalId as number)
+      )}`;
+    })
+  );
+  if (removeLocationsIndexResult.isError()) return removeLocationsIndexResult;
+
   const qbFts = new SqliteQueryBuilder(`DELETE FROM entities_published_fts WHERE`);
   qbFts.addQuery(
     `docid IN ${qbFts.addValueList(

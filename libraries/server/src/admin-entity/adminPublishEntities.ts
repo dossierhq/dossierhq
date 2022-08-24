@@ -4,6 +4,7 @@ import type {
   EntityLike,
   EntityReference,
   EntityVersionReference,
+  Location,
   PromiseResult,
   PublishedSchema,
   Result,
@@ -26,6 +27,7 @@ import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import {
   createFullTextSearchCollector,
+  createLocationsCollector,
   createReferencesCollector,
   decodeAdminEntityFields,
 } from '../EntityCodec.js';
@@ -39,6 +41,7 @@ interface VersionInfoToBePublished {
   status: AdminEntityStatus;
   fullTextSearchText: string;
   references: EntityReference[];
+  locations: Location[];
 }
 
 interface VersionInfoAlreadyPublished {
@@ -196,7 +199,7 @@ async function collectVersionsInfo(
       if (verifyFieldsResult.isError()) {
         return verifyFieldsResult;
       }
-      const { fullTextSearchText, references } = verifyFieldsResult.value;
+      const { fullTextSearchText, references, locations } = verifyFieldsResult.value;
 
       versionsInfo.push({
         effect: 'published',
@@ -205,7 +208,7 @@ async function collectVersionsInfo(
         entityVersionInternalId,
         fullTextSearchText,
         references,
-
+        locations,
         status: versionIsLatest ? AdminEntityStatus.published : AdminEntityStatus.modified,
       });
     }
@@ -226,7 +229,7 @@ function verifyFieldValuesAndCollectInformation(
   type: string,
   entityFields: Record<string, unknown>
 ): Result<
-  { fullTextSearchText: string; references: EntityReference[] },
+  { fullTextSearchText: string; references: EntityReference[]; locations: Location[] },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const entity: EntityLike = {
@@ -236,10 +239,12 @@ function verifyFieldValuesAndCollectInformation(
 
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
+  const locationsCollector = createLocationsCollector();
 
   for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
     ftsCollector.collect(node);
     referencesCollector.collect(node);
+    locationsCollector.collect(node);
 
     switch (node.type) {
       case ItemTraverseNodeType.error:
@@ -265,6 +270,7 @@ function verifyFieldValuesAndCollectInformation(
   return ok({
     fullTextSearchText: ftsCollector.result,
     references: referencesCollector.result,
+    locations: locationsCollector.result,
   });
 }
 
@@ -280,10 +286,12 @@ async function publishEntitiesAndCollectResult(
     if (versionInfo.effect === 'none') {
       updatedAt = versionInfo.updatedAt;
     } else {
-      const { entityVersionInternalId, fullTextSearchText, entityInternalId } = versionInfo;
+      const { entityVersionInternalId, fullTextSearchText, locations, entityInternalId } =
+        versionInfo;
       const updateResult = await databaseAdapter.adminEntityPublishUpdateEntity(context, {
         entityVersionInternalId,
         fullTextSearchText,
+        locations,
         status,
         entityInternalId,
       });

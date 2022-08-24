@@ -90,11 +90,22 @@ export async function adminEntityUnpublishEntities(
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
       sql`DELETE FROM entity_published_references WHERE from_entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId as number)
+        references.map(({ entityInternalId }) => entityInternalId)
       )})`;
     })
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
+
+  const removeLocationIndexResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildPostgresSqlQuery(({ sql, addValue }) => {
+      sql`DELETE FROM entity_published_locations WHERE entities_id = ANY(${addValue(
+        references.map(({ entityInternalId }) => entityInternalId)
+      )})`;
+    })
+  );
+  if (removeLocationIndexResult.isError()) return removeLocationIndexResult;
 
   return ok(
     references.map((reference) => {
