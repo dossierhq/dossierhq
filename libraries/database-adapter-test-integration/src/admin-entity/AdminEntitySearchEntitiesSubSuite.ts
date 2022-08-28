@@ -71,6 +71,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_boundingBoxOneInside,
   searchEntities_boundingBoxOneInsideFromValueItemInRichText,
   searchEntities_boundingBoxOneEntityTwoLocationsInside,
+  searchEntities_boundingBoxOneInsideFromAdminOnlyField,
   searchEntities_boundingBoxOneOutside,
   searchEntities_boundingBoxWrappingMaxMinLongitude,
   searchEntities_textIncludedAfterCreation,
@@ -782,6 +783,24 @@ async function searchEntities_boundingBoxOneEntityTwoLocationsInside({
   const inside = boundingBoxBelowCenter(boundingBox);
   const createResult = await adminClient.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  assertResultValue(matches, 1);
+}
+
+async function searchEntities_boundingBoxOneInsideFromAdminOnlyField({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { locationAdminOnly: center } })
   );
   assertOkResult(createResult);
   const {

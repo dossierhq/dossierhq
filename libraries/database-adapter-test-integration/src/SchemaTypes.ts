@@ -10,6 +10,7 @@ import type {
 export interface AdminLocationsFields {
   location: Location | null;
   locationList: Array<Location> | null;
+  locationAdminOnly: Location | null;
 }
 
 export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
