@@ -11,6 +11,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'location', type: FieldType.Location },
         { name: 'locationList', type: FieldType.Location, list: true },
+        { name: 'locationAdminOnly', type: FieldType.Location, adminOnly: true },
       ],
     },
     {

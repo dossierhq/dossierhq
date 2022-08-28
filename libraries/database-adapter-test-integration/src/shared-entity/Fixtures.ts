@@ -39,7 +39,7 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
-  fields: { location: null, locationList: null },
+  fields: { location: null, locationList: null, locationAdminOnly: null },
 };
 
 export const REFERENCES_CREATE: Readonly<AdminEntityCreate<AdminReferences>> = {

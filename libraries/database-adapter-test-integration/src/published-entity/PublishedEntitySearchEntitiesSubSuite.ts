@@ -3,10 +3,12 @@ import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
   adminToPublishedEntity,
+  LOCATIONS_CREATE,
   REFERENCES_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { boundingBoxCenter, randomBoundingBox } from '../shared-entity/LocationTestUtils.js';
 import {
   assertPageInfoEquals,
   assertPublishedEntityConnectionToMatchSlice,
@@ -46,6 +48,8 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_linksFromOneReference,
   searchEntities_linksFromNoReferences,
   searchEntities_linksFromTwoReferencesFromOneEntity,
+  searchEntities_boundingBox,
+  searchEntities_boundingBoxExcludedWithInAdminOnlyField,
   searchEntities_textIncluded,
   searchEntities_textExcludedInAdminOnlyField,
 ];
@@ -621,6 +625,46 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
   const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
+async function searchEntities_boundingBox({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const boundingBox = randomBoundingBox();
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
+  assertResultValue(matches, 1);
+}
+
+async function searchEntities_boundingBoxExcludedWithInAdminOnlyField({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const boundingBox = randomBoundingBox();
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { locationAdminOnly: center } }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
+  assertResultValue(matches, 0);
 }
 
 async function searchEntities_textIncluded({ server }: PublishedEntityTestContext) {
