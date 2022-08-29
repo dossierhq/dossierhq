@@ -39,6 +39,7 @@ export interface SchemaFieldDraft {
   type: FieldType;
   list: boolean;
   required: boolean;
+  adminOnly: boolean;
   multiline?: boolean;
   richTextNodes?: string[];
   entityTypes?: string[];
@@ -284,11 +285,29 @@ class AddFieldAction extends TypeAction {
       multiline: false,
       list: false,
       required: false,
+      adminOnly: false,
     };
 
     const fields = [...typeSpec.fields, field];
 
     return { ...typeSpec, fields };
+  }
+}
+
+class ChangeFieldAdminOnlyAction extends FieldAction {
+  adminOnly: boolean;
+
+  constructor(fieldSelector: SchemaFieldSelector, adminOnly: boolean) {
+    super(fieldSelector);
+    this.adminOnly = adminOnly;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.adminOnly === this.adminOnly) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, adminOnly: this.adminOnly };
   }
 }
 
@@ -652,6 +671,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           type: fieldSpec.type as FieldType,
           list: !!fieldSpec.list,
           required: !!fieldSpec.required,
+          adminOnly: !!fieldSpec.adminOnly,
         };
         if (fieldSpec.type === FieldType.String) {
           fieldDraft.multiline = !!fieldSpec.multiline;
@@ -686,6 +706,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddField: AddFieldAction,
+  ChangeFieldAdminOnly: ChangeFieldAdminOnlyAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
@@ -744,6 +765,7 @@ function getTypeUpdateFromEditorState(
       name: draftField.name,
       type: draftField.type,
       required: draftField.required,
+      adminOnly: draftField.adminOnly,
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
       ...(draftField.type === FieldType.RichText ? { richTextNodes } : undefined),

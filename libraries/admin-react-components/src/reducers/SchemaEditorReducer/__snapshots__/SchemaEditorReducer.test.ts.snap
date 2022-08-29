@@ -1,5 +1,67 @@
 // Vitest Snapshot v1
 
+exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": true,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": true,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldMultilineAction > make new multiline field in existing entity type 1`] = `
 {
   "activeSelector": null,
@@ -10,6 +72,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "adminOnly": false,
       "fields": [
         {
+          "adminOnly": false,
           "list": false,
           "multiline": true,
           "name": "bar",
@@ -48,6 +111,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "adminOnly": false,
       "fields": [
         {
+          "adminOnly": false,
           "multiline": true,
           "name": "bar",
           "required": false,
@@ -73,6 +137,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       "adminOnly": false,
       "fields": [
         {
+          "adminOnly": false,
           "entityTypes": [
             "Bar",
           ],
@@ -107,6 +172,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       "adminOnly": false,
       "fields": [
         {
+          "adminOnly": false,
           "entityTypes": [
             "Bar",
           ],
@@ -143,6 +209,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "adminOnly": false,
       "fields": [
         {
+          "adminOnly": false,
           "list": false,
           "name": "self",
           "required": false,
@@ -168,6 +235,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "adminOnly": false,
       "fields": [
         {
+          "adminOnly": false,
           "name": "self",
           "required": false,
           "type": "ValueType",

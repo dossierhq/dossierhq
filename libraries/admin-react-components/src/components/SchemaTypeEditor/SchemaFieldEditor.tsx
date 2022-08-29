@@ -71,6 +71,7 @@ export function SchemaFieldEditor({
   const canChangeRichTextNodes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeAdminOnly = fieldDraft.status === 'new'; //TODO too restrictive
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
@@ -130,6 +131,22 @@ export function SchemaFieldEditor({
               }
             >
               Required
+            </Checkbox>
+          </Field.BodyColumn>
+        </Field>
+        <Field horizontal>
+          <Field.LabelColumn />
+          <Field.BodyColumn>
+            <Checkbox
+              checked={fieldDraft.adminOnly}
+              disabled={!canChangeAdminOnly}
+              onChange={(event) =>
+                dispatchSchemaEditorState(
+                  new SchemaEditorActions.ChangeFieldAdminOnly(fieldSelector, event.target.checked)
+                )
+              }
+            >
+              Admin only
             </Checkbox>
           </Field.BodyColumn>
         </Field>
