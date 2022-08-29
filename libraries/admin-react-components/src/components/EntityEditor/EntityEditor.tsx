@@ -1,8 +1,8 @@
 import type { AdminClient } from '@jonasb/datadata-core';
-import { Button, Field, Input, NotificationContext, Row } from '@jonasb/datadata-design';
 import type { NotificationInfo } from '@jonasb/datadata-design';
+import { Button, Field, Input, NotificationContext, Row } from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import React, { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import type {
   EntityEditorDraftState,

@@ -1,5 +1,4 @@
-import { Card } from '@jonasb/datadata-design';
-import React from 'react';
+import { Card2 } from '@jonasb/datadata-design';
 import type { FieldEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import { FieldEditor } from './FieldEditor';
 
@@ -10,13 +9,15 @@ interface Props {
 
 export function EntityFieldEditor({ field, onValueChange }: Props) {
   return (
-    <Card>
-      <Card.Header>
-        <Card.HeaderTitle>{field.fieldSpec.name}</Card.HeaderTitle>
-      </Card.Header>
-      <Card.Content>
+    <Card2>
+      <Card2.Header noIcons>
+        <Card2.HeaderTitle>{field.fieldSpec.name}</Card2.HeaderTitle>
+        {field.fieldSpec.adminOnly ? <Card2.HeaderTag>Admin only</Card2.HeaderTag> : null}
+        {field.fieldSpec.required ? <Card2.HeaderTag>Required</Card2.HeaderTag> : null}
+      </Card2.Header>
+      <Card2.Content>
         <FieldEditor fieldSpec={field.fieldSpec} value={field.value} onChange={onValueChange} />
-      </Card.Content>
-    </Card>
+      </Card2.Content>
+    </Card2>
   );
 }
