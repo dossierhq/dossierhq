@@ -3,6 +3,7 @@ export {
   Button,
   ButtonDropdown,
   Card,
+  Card2,
   Checkbox,
   Column,
   Delete,
