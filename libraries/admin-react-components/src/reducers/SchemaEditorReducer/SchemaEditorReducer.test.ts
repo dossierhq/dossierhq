@@ -428,6 +428,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -466,6 +467,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -515,6 +517,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -538,6 +541,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -575,6 +579,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -583,6 +588,7 @@ describe('AddFieldAction', () => {
                 "type": "String",
               },
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -626,12 +632,14 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -689,6 +697,7 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -697,6 +706,7 @@ describe('AddFieldAction', () => {
                 "type": "String",
               },
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -720,12 +730,14 @@ describe('AddFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -737,6 +749,28 @@ describe('AddFieldAction', () => {
         ],
       }
     `);
+  });
+});
+
+describe('ChangeFieldAdminOnlyAction', () => {
+  test('make new field admin only in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldAdminOnly(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        true
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -771,6 +805,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [
                   "Foo",
                 ],
@@ -811,6 +846,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [
                   "Foo",
                 ],
@@ -866,6 +902,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [
                   "Foo",
                 ],
@@ -910,6 +947,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [
                   "Foo",
                 ],
@@ -979,6 +1017,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -1004,6 +1043,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "name": "foo",
                 "required": false,
                 "type": "ValueType",
@@ -1071,6 +1111,7 @@ describe('ChangeFieldRequiredAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -1109,6 +1150,7 @@ describe('ChangeFieldRequiredAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "bar",
                 "required": true,
@@ -1150,6 +1192,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1187,6 +1230,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1241,6 +1285,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1263,6 +1308,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1302,6 +1348,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [],
                 "list": false,
                 "name": "bar",
@@ -1340,6 +1387,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [],
                 "name": "bar",
                 "required": false,
@@ -1379,6 +1427,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -1417,6 +1466,7 @@ describe('ChangeFieldTypeAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "name": "bar",
                 "required": false,
                 "type": "ValueType",
@@ -1512,6 +1562,7 @@ describe('DeleteFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -1647,6 +1698,7 @@ describe('RenameFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -1655,6 +1707,7 @@ describe('RenameFieldAction', () => {
                 "type": "String",
               },
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "baz",
@@ -1698,12 +1751,14 @@ describe('RenameFieldAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "title",
                 "required": false,
                 "type": "String",
               },
               {
+                "adminOnly": false,
                 "multiline": false,
                 "name": "baz",
                 "required": false,
@@ -1991,6 +2046,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -2073,6 +2129,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [],
                 "list": false,
                 "name": "richText",
@@ -2170,6 +2227,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -2222,6 +2280,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [
                   "Foo",
                 ],
@@ -2278,6 +2337,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "entityTypes": [
                   "Foo",
                 ],
@@ -2332,6 +2392,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "name": "valueItem",
                 "required": false,
@@ -2388,6 +2449,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "adminOnly": false,
             "fields": [
               {
+                "adminOnly": false,
                 "list": false,
                 "name": "valueItem",
                 "required": false,
