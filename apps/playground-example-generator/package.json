@@ -21,7 +21,7 @@
     "@jonasb/datadata-server": "workspace:*",
     "sql.js": "~1.7.0",
     "tslib": "~2.4.0",
-    "undici": "~5.9.1",
+    "undici": "~5.10.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
