@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-typescript-generator",
+      "comment": "Support adminOnly fields. Tweak empty fields. Add isAdminFoo()/assertIsAdminFoo() for value types.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-typescript-generator"
+}
