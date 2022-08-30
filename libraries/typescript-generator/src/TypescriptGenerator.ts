@@ -75,11 +75,15 @@ function generateEntityType(
 
   // fields type
   const fieldsName = `${adminOrPublished}${entitySpec.name}Fields`;
-  paragraphs.push(`export interface ${fieldsName} {`);
-  for (const fieldSpec of entitySpec.fields) {
-    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+  if (entitySpec.fields.length === 0) {
+    paragraphs.push(`export type ${fieldsName} = Record<never, never>;`);
+  } else {
+    paragraphs.push(`export interface ${fieldsName} {`);
+    for (const fieldSpec of entitySpec.fields) {
+      paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+    }
+    paragraphs.push(`}`);
   }
-  paragraphs.push(`}`);
   paragraphs.push('');
 
   // entity type
@@ -131,11 +135,15 @@ function generateValueType(
 
   // fields type
   const fieldsName = `${adminOrPublished}${valueSpec.name}Fields`;
-  paragraphs.push(`export interface ${fieldsName} {`);
-  for (const fieldSpec of valueSpec.fields) {
-    paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+  if (valueSpec.fields.length === 0) {
+    paragraphs.push(`export type ${fieldsName} = Record<never, never>;`);
+  } else {
+    paragraphs.push(`export interface ${fieldsName} {`);
+    for (const fieldSpec of valueSpec.fields) {
+      paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+    }
+    paragraphs.push(`}`);
   }
-  paragraphs.push(`}`);
   paragraphs.push('');
 
   // value type

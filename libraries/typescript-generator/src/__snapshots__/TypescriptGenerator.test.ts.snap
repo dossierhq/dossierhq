@@ -47,8 +47,7 @@ export function assertIsAdminEntityTypes(entity: AdminEntity | AdminEntityTypes)
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
 "import type { AdminEntity } from '@jonasb/datadata-core';
 
-export interface AdminFooFields {
-}
+export type AdminFooFields = Record<never, never>;
 
 export type AdminFoo = AdminEntity<'Foo', AdminFooFields>;
 
@@ -130,6 +129,31 @@ export function assertIsAdminStrings(entity: AdminEntity | AdminStrings): assert
 "
 `;
 
+exports[`generateTypescriptForSchema > ValueTypes (no fields) 1`] = `
+"import type { AdminEntity, ValueItem } from '@jonasb/datadata-core';
+
+export interface AdminValueTypeFields {
+  valueType: ValueItem | null;
+}
+
+export type AdminValueType = AdminEntity<'ValueType', AdminValueTypeFields>;
+
+export function isAdminValueType(entity: AdminEntity | AdminValueType): entity is AdminValueType {
+  return entity.info.type === 'ValueType';
+}
+
+export function assertIsAdminValueType(entity: AdminEntity | AdminValueType): asserts entity is AdminValueType {
+  if (entity.info.type !== 'ValueType') {
+    throw new Error('Expected info.type = ValueType (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AdminFooFields = Record<never, never>;
+
+export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
+"
+`;
+
 exports[`generateTypescriptForSchema > ValueTypes 1`] = `
 "import type { AdminEntity, ValueItem } from '@jonasb/datadata-core';
 
@@ -167,8 +191,7 @@ exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `""
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
 "import type { PublishedEntity } from '@jonasb/datadata-core';
 
-export interface PublishedFooFields {
-}
+export type PublishedFooFields = Record<never, never>;
 
 export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields>;
 

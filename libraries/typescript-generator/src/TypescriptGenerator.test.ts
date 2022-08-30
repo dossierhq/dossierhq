@@ -168,6 +168,30 @@ describe('generateTypescriptForSchema', () => {
       })
     ).toMatchSnapshot();
   });
+
+  test('ValueTypes (no fields)', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: new AdminSchema({
+          entityTypes: [
+            {
+              name: 'ValueType',
+              adminOnly: false,
+              fields: [{ name: 'valueType', type: FieldType.ValueType, required: true }],
+            },
+          ],
+          valueTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [],
+            },
+          ],
+        }),
+        publishedSchema: null,
+      })
+    ).toMatchSnapshot();
+  });
 });
 
 describe('generateTypescriptForSchema published', () => {
