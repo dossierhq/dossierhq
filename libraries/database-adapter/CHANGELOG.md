@@ -1,6 +1,11 @@
 # Change Log - @jonasb/datadata-database-adapter
 
-This log was last generated on Tue, 30 Aug 2022 14:05:13 GMT and should not be manually modified.
+This log was last generated on Tue, 30 Aug 2022 21:10:47 GMT and should not be manually modified.
+
+## 0.1.28
+Tue, 30 Aug 2022 21:10:47 GMT
+
+_Version update only_
 
 ## 0.1.27
 Tue, 30 Aug 2022 14:05:13 GMT

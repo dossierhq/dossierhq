@@ -2,6 +2,12 @@
   "name": "@jonasb/datadata-database-adapter-test-integration",
   "entries": [
     {
+      "version": "0.1.28",
+      "tag": "@jonasb/datadata-database-adapter-test-integration_v0.1.28",
+      "date": "Tue, 30 Aug 2022 21:10:47 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.27",
       "tag": "@jonasb/datadata-database-adapter-test-integration_v0.1.27",
       "date": "Tue, 30 Aug 2022 14:05:13 GMT",
