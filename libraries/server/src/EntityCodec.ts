@@ -17,6 +17,7 @@ import type {
   PublishedSchema,
   Result,
   RichText,
+  RichTextValueItemNode,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -29,6 +30,7 @@ import {
   isRichTextField,
   isRichTextItemField,
   isRichTextTextNode,
+  isRichTextValueItemNode,
   isStringItemField,
   isValueTypeField,
   isValueTypeItemField,
@@ -50,6 +52,7 @@ import type {
 import { ensureRequired } from './Assertions.js';
 import type { SessionContext } from './Context.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
+import { transformRichText } from './utils/RichTextTransformer.js';
 
 export interface EncodeAdminEntityResult {
   type: string;
@@ -65,6 +68,13 @@ interface RequestedReference {
   uuids: string[];
   entityTypes: string[] | undefined;
 }
+
+/** `optimized` is the original way of encoding/decoding values, using type adapters and saving less
+ * data than the json. Used by entity fields, and value items in entities.
+ * For Rich Text, `json` is used, which means values are saved as is. Value items within rich text
+ * are encoded as `json`.
+ */
+export type CodecMode = 'optimized' | 'json';
 
 export function decodePublishedEntity(
   schema: PublishedSchema,
@@ -87,7 +97,7 @@ export function decodePublishedEntity(
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.fieldValues[fieldName];
-    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
   }
   return entity;
 }
@@ -95,6 +105,7 @@ export function decodePublishedEntity(
 function decodeFieldItemOrList(
   schema: AdminSchema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
+  codecMode: CodecMode,
   fieldValue: unknown
 ) {
   if (fieldValue === null || fieldValue === undefined) {
@@ -108,28 +119,35 @@ function decodeFieldItemOrList(
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
       if (fieldSpec.type === FieldType.ValueType) {
-        const decodedItem = decodeValueItemField(schema, fieldSpec, encodedItem);
+        const decodedItem = decodeValueItemField(schema, fieldSpec, codecMode, encodedItem);
         decodedItems.push(decodedItem);
       } else if (fieldSpec.type === FieldType.RichText) {
-        decodedItems.push(decodeRichTextField(encodedItem));
+        decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem));
       } else {
-        decodedItems.push(fieldAdapter.decodeData(encodedItem));
+        decodedItems.push(
+          codecMode === 'optimized'
+            ? fieldAdapter.decodeData(encodedItem)
+            : fieldAdapter.decodeJson(encodedItem)
+        );
       }
     }
     return decodedItems;
   }
   if (fieldSpec.type === FieldType.ValueType) {
-    return decodeValueItemField(schema, fieldSpec, fieldValue as ValueItem);
+    return decodeValueItemField(schema, fieldSpec, codecMode, fieldValue as ValueItem);
   }
   if (fieldSpec.type === FieldType.RichText) {
-    return decodeRichTextField(fieldValue as RichText);
+    return decodeRichTextField(schema, fieldSpec, fieldValue as RichText);
   }
-  return fieldAdapter.decodeData(fieldValue);
+  return codecMode === 'optimized'
+    ? fieldAdapter.decodeData(fieldValue)
+    : fieldAdapter.decodeJson(fieldValue);
 }
 
 function decodeValueItemField(
   schema: AdminSchema | PublishedSchema,
   _fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
+  codecMode: CodecMode,
   encodedValue: ValueItem
 ) {
   const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
@@ -140,14 +158,27 @@ function decodeValueItemField(
   for (const fieldFieldSpec of valueSpec.fields) {
     const fieldName = fieldFieldSpec.name;
     const fieldValue = encodedValue[fieldName];
-    decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldFieldSpec, fieldValue);
+    decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldFieldSpec, codecMode, fieldValue);
   }
 
   return decodedValue;
 }
 
-function decodeRichTextField(encodedValue: RichText): RichText {
-  return encodedValue;
+function decodeRichTextField(
+  schema: AdminSchema | PublishedSchema,
+  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
+  encodedValue: RichText
+): RichText {
+  return transformRichText(encodedValue, (node) => {
+    if (isRichTextValueItemNode(node)) {
+      const newNode: RichTextValueItemNode = {
+        ...node,
+        data: decodeValueItemField(schema, fieldSpec, 'json', node.data),
+      };
+      return newNode;
+    }
+    return node;
+  });
 }
 
 export function decodeAdminEntity(
@@ -185,7 +216,7 @@ export function decodeAdminEntityFields(
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = fieldValues[fieldName];
-    fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+    fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
   }
   return fields;
 }
@@ -292,6 +323,7 @@ export function resolveUpdateEntity(
     const previousFieldValue = decodeFieldItemOrList(
       schema,
       fieldSpec,
+      'optimized',
       entityInfo.fieldValues[fieldName] ?? null
     );
 

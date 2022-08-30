@@ -1,7 +1,9 @@
 import type {
   AdminFieldSpecification,
+  EntityReference,
   ErrorType,
   FieldValueTypeMap,
+  Location,
   Result,
 } from '@jonasb/datadata-core';
 import { FieldType, notOk, ok } from '@jonasb/datadata-core';
@@ -13,6 +15,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
     decodedData: TDecoded
   ): Result<TEncoded, typeof ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
+  decodeJson(json: unknown): TDecoded;
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
@@ -23,6 +26,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
           `${prefix}: expected boolean, got ${Array.isArray(data) ? 'list' : typeof data}`
         ),
   decodeData: (x) => x,
+  decodeJson: (json) => json as boolean,
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.EntityType], string> = {
@@ -38,7 +42,8 @@ const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entit
     }
     return ok(x.id);
   },
-  decodeData: (x) => ({ id: x }),
+  decodeData: (it) => ({ id: it }),
+  decodeJson: (json) => json as EntityReference,
 };
 
 const locationCodec: FieldTypeAdapter<
@@ -65,6 +70,7 @@ const locationCodec: FieldTypeAdapter<
     return ok([lat, lng]);
   },
   decodeData: ([lat, lng]) => ({ lat, lng }),
+  decodeJson: (json) => json as Location,
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
@@ -80,6 +86,7 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], 
     return ok(data);
   },
   decodeData: (x) => x,
+  decodeJson: (json) => json as string,
 };
 
 const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueType], unknown> = {
@@ -87,6 +94,9 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueTyp
     throw new Error('Should not be used');
   },
   decodeData: (_data) => {
+    throw new Error('Should not be used');
+  },
+  decodeJson: (_json) => {
     throw new Error('Should not be used');
   },
 };

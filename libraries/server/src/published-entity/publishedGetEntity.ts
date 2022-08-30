@@ -26,18 +26,15 @@ export async function publishedGetEntity(
   | typeof ErrorType.Generic
 > {
   const result = await databaseAdapter.publishedEntityGetOne(context, reference);
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   const { authKey, resolvedAuthKey } = result.value;
 
   const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
     authKey,
     resolvedAuthKey,
   });
-  if (authResult.isError()) {
-    return authResult;
-  }
+  if (authResult.isError()) return authResult;
 
   const entity = decodePublishedEntity(schema, result.value);
 
