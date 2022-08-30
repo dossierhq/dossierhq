@@ -76,7 +76,9 @@ function useSearchStateToEntitySelectorAdapter(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ): [MultipleSelectorState<EntityTypeItem>, Dispatch<MultipleSelectorStateAction<EntityTypeItem>>] {
-  const [items, setItems] = useState<EntityTypeItem[]>([]);
+  const [items, setItems] = useState<EntityTypeItem[]>(
+    () => searchEntityState.query.entityTypes?.map((it) => ({ id: it, name: it })) ?? []
+  );
 
   const entityTypeFilterState = useMemo(
     () =>
