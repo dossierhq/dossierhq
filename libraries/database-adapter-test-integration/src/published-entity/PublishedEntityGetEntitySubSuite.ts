@@ -1,12 +1,29 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
+import type { RichTextValueItemNode } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  assertIsDefined,
+  copyEntity,
+  createRichTextRootNode,
+  createRichTextValueItemNode,
+  ErrorType,
+} from '@jonasb/datadata-core';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminTitleOnly } from '../SchemaTypes.js';
-import { assertIsPublishedTitleOnly } from '../SchemaTypes.js';
+import type { AdminLocationsValue, AdminTitleOnly } from '../SchemaTypes.js';
+import {
+  assertIsPublishedLocationsValue,
+  assertIsPublishedRichTexts,
+  assertIsPublishedStrings,
+  assertIsPublishedTitleOnly,
+  assertIsPublishedValueItems,
+} from '../SchemaTypes.js';
 import {
   adminToPublishedEntity,
+  RICH_TEXTS_CREATE,
+  STRINGS_CREATE,
   TITLE_ONLY_CREATE,
   TITLE_ONLY_PUBLISHED_ENTITY,
+  VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
@@ -19,6 +36,9 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_withSubjectAuthKey,
   getEntity_archivedThenPublished,
   getEntity_oldVersion,
+  getEntity_entityAdminOnlyFieldIsExcluded,
+  getEntity_valueItemAdminOnlyFieldIsExcluded,
+  getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded,
   getEntity_errorInvalidId,
   getEntity_errorWrongAuthKey,
   getEntity_errorArchivedEntity,
@@ -103,6 +123,104 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
       fields: { title: createResult.value.entity.fields.title },
     })
   );
+}
+
+async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, {
+      fields: {
+        multiline: 'multiline\nmultiline',
+        stringAdminOnly: 'stringAdminOnly',
+      },
+    }),
+    { publish: true }
+  );
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const getResult = await publishedClient.getEntity({ id });
+  const entity = getResult.valueOrThrow();
+  assertIsPublishedStrings(entity);
+  assertEquals(entity.fields, { multiline: 'multiline\nmultiline' });
+  assertEquals(entity.fields.stringAdminOnly, undefined);
+}
+
+async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const adminLocationsValueItem: AdminLocationsValue = {
+    type: 'LocationsValue',
+    location: { lat: 12, lng: 34 },
+    locationAdminOnly: { lat: 56, lng: 78 },
+  };
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(VALUE_ITEMS_CREATE, {
+      fields: {
+        any: adminLocationsValueItem,
+      },
+    }),
+    { publish: true }
+  );
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const getResult = await publishedClient.getEntity({ id });
+  const entity = getResult.valueOrThrow();
+  assertIsPublishedValueItems(entity);
+  const publishedLocationsValueItem = entity.fields.any;
+  assertIsDefined(publishedLocationsValueItem);
+  assertIsPublishedLocationsValue(publishedLocationsValueItem);
+  assertEquals(publishedLocationsValueItem, {
+    type: 'LocationsValue',
+    location: { lat: 12, lng: 34 },
+  });
+  assertEquals('locationAdminOnly' in publishedLocationsValueItem, false);
+}
+
+async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const adminLocationsValueItem: AdminLocationsValue = {
+    type: 'LocationsValue',
+    location: { lat: 12, lng: 34 },
+    locationAdminOnly: { lat: 56, lng: 78 },
+  };
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      fields: {
+        richText: createRichTextRootNode([createRichTextValueItemNode(adminLocationsValueItem)]),
+      },
+    }),
+    { publish: true }
+  );
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const getResult = await publishedClient.getEntity({ id });
+  const entity = getResult.valueOrThrow();
+  assertIsPublishedRichTexts(entity);
+  const valueItemNode = entity.fields.richText?.root.children[0] as RichTextValueItemNode;
+  assertIsDefined(valueItemNode);
+  const publishedLocationsValueItem = valueItemNode.data;
+  assertIsPublishedLocationsValue(publishedLocationsValueItem);
+  assertEquals(publishedLocationsValueItem, {
+    type: 'LocationsValue',
+    location: { lat: 12, lng: 34 },
+    locationAdminOnly: { lat: 56, lng: 78 }, //TODO remove
+  });
+  assertEquals('locationAdminOnly' in publishedLocationsValueItem, true); //TODO false
 }
 
 async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {
