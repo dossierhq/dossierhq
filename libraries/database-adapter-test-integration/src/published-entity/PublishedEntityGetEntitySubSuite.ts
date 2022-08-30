@@ -211,16 +211,18 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   const getResult = await publishedClient.getEntity({ id });
   const entity = getResult.valueOrThrow();
   assertIsPublishedRichTexts(entity);
+
   const valueItemNode = entity.fields.richText?.root.children[0] as RichTextValueItemNode;
   assertIsDefined(valueItemNode);
+
   const publishedLocationsValueItem = valueItemNode.data;
   assertIsPublishedLocationsValue(publishedLocationsValueItem);
+
   assertEquals(publishedLocationsValueItem, {
     type: 'LocationsValue',
     location: { lat: 12, lng: 34 },
-    locationAdminOnly: { lat: 56, lng: 78 }, //TODO remove
   });
-  assertEquals('locationAdminOnly' in publishedLocationsValueItem, true); //TODO false
+  assertEquals('locationAdminOnly' in publishedLocationsValueItem, false);
 }
 
 async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {
