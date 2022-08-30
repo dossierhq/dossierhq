@@ -125,6 +125,31 @@ export function assertIsAdminTitleOnly(
   }
 }
 
+export interface AdminValueItemsFields {
+  any: ValueItem | null;
+  anyAdminOnly: ValueItem | null;
+}
+
+export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields>;
+
+export function isAdminValueItems(
+  entity: AdminEntity | AdminValueItems
+): entity is AdminValueItems {
+  return entity.info.type === 'ValueItems';
+}
+
+export function assertIsAdminValueItems(
+  entity: AdminEntity | AdminValueItems
+): asserts entity is AdminValueItems {
+  if (entity.info.type !== 'ValueItems') {
+    throw new Error('Expected info.type = ValueItems (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AdminAdminOnlyValueFields = Record<never, never>;
+
+export type AdminAdminOnlyValue = ValueItem<'AdminOnlyValue', AdminAdminOnlyValueFields>;
+
 export interface AdminLocationsValueFields {
   location: Location | null;
 }
@@ -259,6 +284,26 @@ export function assertIsPublishedTitleOnly(
 ): asserts entity is PublishedTitleOnly {
   if (entity.info.type !== 'TitleOnly') {
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedValueItemsFields {
+  any: ValueItem | null;
+}
+
+export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields>;
+
+export function isPublishedValueItems(
+  entity: PublishedEntity | PublishedValueItems
+): entity is PublishedValueItems {
+  return entity.info.type === 'ValueItems';
+}
+
+export function assertIsPublishedValueItems(
+  entity: PublishedEntity | PublishedValueItems
+): asserts entity is PublishedValueItems {
+  if (entity.info.type !== 'ValueItems') {
+    throw new Error('Expected info.type = ValueItems (but was ' + entity.info.type + ')');
   }
 }
 

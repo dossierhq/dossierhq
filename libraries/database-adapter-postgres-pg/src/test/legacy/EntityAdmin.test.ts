@@ -2692,28 +2692,6 @@ describe('publishEntities()', () => {
     }
   });
 
-  test('Error: adminOnly value type', async () => {
-    const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
-      fields: {
-        title: 'Baz title',
-        valueItem: { type: 'EntityAdminOneStringAdminOnly', one: 'String' },
-      },
-    });
-    if (expectOkResult(createBazResult)) {
-      const {
-        entity: { id: bazId },
-      } = createBazResult.value;
-
-      const publishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
-      expectErrorResult(
-        publishResult,
-        ErrorType.BadRequest,
-        `entity(${bazId}).fields.valueItem: Value item of type EntityAdminOneStringAdminOnly is adminOnly`
-      );
-    }
-  });
-
   test('Error: missing value for required field in value item', async () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },

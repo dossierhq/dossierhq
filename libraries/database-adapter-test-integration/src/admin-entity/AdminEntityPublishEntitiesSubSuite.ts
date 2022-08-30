@@ -1,7 +1,12 @@
+import type { ValueItem } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import {
+  REFERENCES_CREATE,
+  TITLE_ONLY_CREATE,
+  VALUE_ITEMS_CREATE,
+} from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
@@ -15,10 +20,12 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_twoEntitiesReferencingEachOther,
   publishEntities_publishAlreadyPublishedEntity,
   publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity,
+  publishEntities_adminOnlyFieldWithAdminOnlyValueItem,
   publishEntities_errorInvalidId,
   publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
   publishEntities_errorWrongAuthKey,
+  publishEntities_errorAdminOnlyTypeItem,
 ];
 
 async function publishEntities_minimal({ server }: AdminEntityTestContext) {
@@ -223,6 +230,25 @@ async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
   assertOkResult(publishResult);
 }
 
+async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const adminOnlyValueItem: ValueItem = { type: 'AdminOnlyValue' };
+  const createResult = await client.createEntity(
+    copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyValueItem } })
+  );
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = createResult.valueOrThrow();
+
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertOkResult(publishResult);
+}
+
 async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {
   const publishResult = await adminClientForMainPrincipal(server).publishEntities([
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
@@ -286,5 +312,27 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
     publishResult,
     ErrorType.NotAuthorized,
     `entity(${id}): Wrong authKey provided`
+  );
+}
+
+async function publishEntities_errorAdminOnlyTypeItem({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const adminOnlyValueItem: ValueItem = { type: 'AdminOnlyValue' };
+  const createResult = await client.createEntity(
+    copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyValueItem } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = createResult.value;
+
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    `entity(${id}).fields.any: Value item of type AdminOnlyValue is adminOnly`
   );
 }
