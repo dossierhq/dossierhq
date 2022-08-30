@@ -50,8 +50,16 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       name: 'TitleOnly',
       fields: [{ name: 'title', type: FieldType.String, required: true, isName: true }],
     },
+    {
+      name: 'ValueItems',
+      fields: [
+        { name: 'any', type: FieldType.ValueType },
+        { name: 'anyAdminOnly', type: FieldType.ValueType, adminOnly: true },
+      ],
+    },
   ],
   valueTypes: [
+    { name: 'AdminOnlyValue', adminOnly: true, fields: [] },
     { name: 'LocationsValue', fields: [{ name: 'location', type: FieldType.Location }] },
     { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.EntityType }] },
   ],

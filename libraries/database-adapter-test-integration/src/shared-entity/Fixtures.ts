@@ -16,6 +16,7 @@ import type {
   AdminRichTexts,
   AdminStrings,
   AdminTitleOnly,
+  AdminValueItems,
   PublishedTitleOnly,
 } from '../SchemaTypes.js';
 
@@ -157,6 +158,15 @@ export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedTitleOnly> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
   fields: { title: 'Title' },
+};
+
+export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = {
+  info: {
+    type: 'ValueItems',
+    name: 'ValueItems name',
+    authKey: 'none',
+  },
+  fields: {},
 };
 
 export function adminToPublishedEntity(schema: AdminSchema, entity: AdminEntity): PublishedEntity {
