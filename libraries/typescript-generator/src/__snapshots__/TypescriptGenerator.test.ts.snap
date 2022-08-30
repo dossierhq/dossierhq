@@ -19,6 +19,8 @@ export function assertIsAdminBooleans(entity: AdminEntity | AdminBooleans): asse
     throw new Error('Expected info.type = Booleans (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;
 "
 `;
 
@@ -41,6 +43,8 @@ export function assertIsAdminEntityTypes(entity: AdminEntity | AdminEntityTypes)
     throw new Error('Expected info.type = EntityTypes (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;
 "
 `;
 
@@ -60,6 +64,8 @@ export function assertIsAdminFoo(entity: AdminEntity | AdminFoo): asserts entity
     throw new Error('Expected info.type = Foo (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;
 "
 `;
 
@@ -82,6 +88,8 @@ export function assertIsAdminLocations(entity: AdminEntity | AdminLocations): as
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;
 "
 `;
 
@@ -104,6 +112,8 @@ export function assertIsAdminRichTexts(entity: AdminEntity | AdminRichTexts): as
     throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;
 "
 `;
 
@@ -126,6 +136,8 @@ export function assertIsAdminStrings(entity: AdminEntity | AdminStrings): assert
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;
 "
 `;
 
@@ -133,7 +145,7 @@ exports[`generateTypescriptForSchema > ValueTypes (no fields) 1`] = `
 "import type { AdminEntity, ValueItem } from '@jonasb/datadata-core';
 
 export interface AdminValueTypeFields {
-  valueType: ValueItem | null;
+  valueType: AllAdminValueItems | null;
 }
 
 export type AdminValueType = AdminEntity<'ValueType', AdminValueTypeFields>;
@@ -148,15 +160,17 @@ export function assertIsAdminValueType(entity: AdminEntity | AdminValueType): as
   }
 }
 
+export type AllAdminValueItems = AdminFoo;
+
 export type AdminFooFields = Record<never, never>;
 
 export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
 
-export function isAdminFoo(valueItem: ValueItem | AdminFoo): valueItem is AdminFoo {
+export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): valueItem is AdminFoo {
   return valueItem.type === 'Foo';
 }
 
-export function assertIsAdminFoo(valueItem: ValueItem | AdminFoo): asserts valueItem is AdminFoo {
+export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
   if (valueItem.type !== 'Foo') {
     throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
   }
@@ -168,9 +182,9 @@ exports[`generateTypescriptForSchema > ValueTypes 1`] = `
 "import type { AdminEntity, ValueItem } from '@jonasb/datadata-core';
 
 export interface AdminValueTypesFields {
-  valueType: ValueItem | null;
+  valueType: AllAdminValueItems | null;
   valueTypeBar: AdminFoo | null;
-  valueTypeList: Array<ValueItem> | null;
+  valueTypeList: Array<AllAdminValueItems> | null;
   valueTypeListBar: Array<AdminFoo> | null;
 }
 
@@ -186,17 +200,19 @@ export function assertIsAdminValueTypes(entity: AdminEntity | AdminValueTypes): 
   }
 }
 
+export type AllAdminValueItems = AdminFoo;
+
 export interface AdminFooFields {
   string: string | null;
 }
 
 export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
 
-export function isAdminFoo(valueItem: ValueItem | AdminFoo): valueItem is AdminFoo {
+export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): valueItem is AdminFoo {
   return valueItem.type === 'Foo';
 }
 
-export function assertIsAdminFoo(valueItem: ValueItem | AdminFoo): asserts valueItem is AdminFoo {
+export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
   if (valueItem.type !== 'Foo') {
     throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
   }
@@ -204,9 +220,17 @@ export function assertIsAdminFoo(valueItem: ValueItem | AdminFoo): asserts value
 "
 `;
 
-exports[`generateTypescriptForSchema > empty 1`] = `""`;
+exports[`generateTypescriptForSchema > empty 1`] = `
+"
+export type AllAdminValueItems = never;
+"
+`;
 
-exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `""`;
+exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `
+"
+export type AllPublishedValueItems = never;
+"
+`;
 
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
 "import type { PublishedEntity } from '@jonasb/datadata-core';
@@ -224,7 +248,13 @@ export function assertIsPublishedFoo(entity: PublishedEntity | PublishedFoo): as
     throw new Error('Expected info.type = Foo (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllPublishedValueItems = never;
 "
 `;
 
-exports[`generateTypescriptForSchema published > empty 1`] = `""`;
+exports[`generateTypescriptForSchema published > empty 1`] = `
+"
+export type AllPublishedValueItems = never;
+"
+`;

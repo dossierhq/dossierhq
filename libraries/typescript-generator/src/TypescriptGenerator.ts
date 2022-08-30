@@ -28,6 +28,7 @@ export function generateTypescriptForSchema({
     for (const entitySpec of adminSchema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec));
     }
+    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.valueTypes, 'Admin', 'ValueItems'));
     for (const valueSpec of adminSchema.spec.valueTypes) {
       paragraphs.push(...generateAdminValueType(context, valueSpec));
     }
@@ -36,6 +37,9 @@ export function generateTypescriptForSchema({
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       paragraphs.push(...generatePublishedEntityType(context, entitySpec));
     }
+    paragraphs.push(
+      ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItems')
+    );
     for (const valueSpec of publishedSchema.spec.valueTypes) {
       paragraphs.push(...generatePublishedValueType(context, valueSpec));
     }
@@ -50,6 +54,16 @@ export function generateTypescriptForSchema({
   }
   paragraphs.push(''); // final newline
   return paragraphs.join('\n');
+}
+
+function generateAllTypesUnion(
+  types: AdminEntityTypeSpecification[] | PublishedEntityTypeSpecification[],
+  adminOrPublished: 'Admin' | 'Published',
+  entitiesOrValueItems: 'Entities' | 'ValueItems'
+) {
+  const typeDefinition =
+    types.length === 0 ? 'never' : types.map((it) => `${adminOrPublished}${it.name}`).join(' | ');
+  return ['', `export type All${adminOrPublished}${entitiesOrValueItems} = ${typeDefinition};`];
 }
 
 function generateAdminEntityType(
@@ -150,6 +164,7 @@ function generateValueType(
 
   // value type
   const parentTypeName = 'ValueItem';
+  const parentTypeInName = 'ValueItem<string, object>';
   const valueTypeName = `${adminOrPublished}${valueSpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
@@ -159,7 +174,7 @@ function generateValueType(
   // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function is${valueTypeName}(valueItem: ${parentTypeName} | ${valueTypeName}): valueItem is ${valueTypeName} {`
+    `export function is${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): valueItem is ${valueTypeName} {`
   );
   paragraphs.push(`  return valueItem.type === '${valueSpec.name}';`);
   paragraphs.push(`}`);
@@ -167,7 +182,7 @@ function generateValueType(
   // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIs${valueTypeName}(valueItem: ${parentTypeName} | ${valueTypeName}): asserts valueItem is ${valueTypeName} {`
+    `export function assertIs${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): asserts valueItem is ${valueTypeName} {`
   );
   paragraphs.push(`  if (valueItem.type !== '${valueSpec.name}') {`);
   paragraphs.push(
@@ -208,8 +223,7 @@ function fieldType(
       if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
         type = fieldSpec.valueTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
       } else {
-        coreImports.add('ValueItem');
-        type = 'ValueItem';
+        type = `All${adminOrPublished}ValueItems`;
       }
       break;
   }
