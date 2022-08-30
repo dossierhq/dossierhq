@@ -88,6 +88,8 @@ export function assertIsAdminReviewer(
   }
 }
 
+export type AllAdminValueItems = AdminAddress;
+
 export interface AdminAddressFields {
   location: Location | null;
   line1: string | null;
@@ -98,12 +100,14 @@ export interface AdminAddressFields {
 
 export type AdminAddress = ValueItem<'Address', AdminAddressFields>;
 
-export function isAdminAddress(valueItem: ValueItem | AdminAddress): valueItem is AdminAddress {
+export function isAdminAddress(
+  valueItem: ValueItem<string, object> | AdminAddress
+): valueItem is AdminAddress {
   return valueItem.type === 'Address';
 }
 
 export function assertIsAdminAddress(
-  valueItem: ValueItem | AdminAddress
+  valueItem: ValueItem<string, object> | AdminAddress
 ): asserts valueItem is AdminAddress {
   if (valueItem.type !== 'Address') {
     throw new Error('Expected type = Address (but was ' + valueItem.type + ')');

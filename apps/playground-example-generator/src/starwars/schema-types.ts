@@ -172,3 +172,5 @@ export function assertIsAdminVehicle(
     throw new Error('Expected info.type = Vehicle (but was ' + entity.info.type + ')');
   }
 }
+
+export type AllAdminValueItems = never;

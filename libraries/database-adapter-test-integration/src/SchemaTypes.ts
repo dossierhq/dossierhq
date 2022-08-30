@@ -126,8 +126,8 @@ export function assertIsAdminTitleOnly(
 }
 
 export interface AdminValueItemsFields {
-  any: ValueItem | null;
-  anyAdminOnly: ValueItem | null;
+  any: AllAdminValueItems | null;
+  anyAdminOnly: AllAdminValueItems | null;
 }
 
 export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields>;
@@ -146,18 +146,20 @@ export function assertIsAdminValueItems(
   }
 }
 
+export type AllAdminValueItems = AdminAdminOnlyValue | AdminLocationsValue | AdminReferencesValue;
+
 export type AdminAdminOnlyValueFields = Record<never, never>;
 
 export type AdminAdminOnlyValue = ValueItem<'AdminOnlyValue', AdminAdminOnlyValueFields>;
 
 export function isAdminAdminOnlyValue(
-  valueItem: ValueItem | AdminAdminOnlyValue
+  valueItem: ValueItem<string, object> | AdminAdminOnlyValue
 ): valueItem is AdminAdminOnlyValue {
   return valueItem.type === 'AdminOnlyValue';
 }
 
 export function assertIsAdminAdminOnlyValue(
-  valueItem: ValueItem | AdminAdminOnlyValue
+  valueItem: ValueItem<string, object> | AdminAdminOnlyValue
 ): asserts valueItem is AdminAdminOnlyValue {
   if (valueItem.type !== 'AdminOnlyValue') {
     throw new Error('Expected type = AdminOnlyValue (but was ' + valueItem.type + ')');
@@ -172,13 +174,13 @@ export interface AdminLocationsValueFields {
 export type AdminLocationsValue = ValueItem<'LocationsValue', AdminLocationsValueFields>;
 
 export function isAdminLocationsValue(
-  valueItem: ValueItem | AdminLocationsValue
+  valueItem: ValueItem<string, object> | AdminLocationsValue
 ): valueItem is AdminLocationsValue {
   return valueItem.type === 'LocationsValue';
 }
 
 export function assertIsAdminLocationsValue(
-  valueItem: ValueItem | AdminLocationsValue
+  valueItem: ValueItem<string, object> | AdminLocationsValue
 ): asserts valueItem is AdminLocationsValue {
   if (valueItem.type !== 'LocationsValue') {
     throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
@@ -192,13 +194,13 @@ export interface AdminReferencesValueFields {
 export type AdminReferencesValue = ValueItem<'ReferencesValue', AdminReferencesValueFields>;
 
 export function isAdminReferencesValue(
-  valueItem: ValueItem | AdminReferencesValue
+  valueItem: ValueItem<string, object> | AdminReferencesValue
 ): valueItem is AdminReferencesValue {
   return valueItem.type === 'ReferencesValue';
 }
 
 export function assertIsAdminReferencesValue(
-  valueItem: ValueItem | AdminReferencesValue
+  valueItem: ValueItem<string, object> | AdminReferencesValue
 ): asserts valueItem is AdminReferencesValue {
   if (valueItem.type !== 'ReferencesValue') {
     throw new Error('Expected type = ReferencesValue (but was ' + valueItem.type + ')');
@@ -331,7 +333,7 @@ export function assertIsPublishedTitleOnly(
 }
 
 export interface PublishedValueItemsFields {
-  any: ValueItem | null;
+  any: AllPublishedValueItems | null;
 }
 
 export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields>;
@@ -350,6 +352,8 @@ export function assertIsPublishedValueItems(
   }
 }
 
+export type AllPublishedValueItems = PublishedLocationsValue | PublishedReferencesValue;
+
 export interface PublishedLocationsValueFields {
   location: Location | null;
 }
@@ -357,13 +361,13 @@ export interface PublishedLocationsValueFields {
 export type PublishedLocationsValue = ValueItem<'LocationsValue', PublishedLocationsValueFields>;
 
 export function isPublishedLocationsValue(
-  valueItem: ValueItem | PublishedLocationsValue
+  valueItem: ValueItem<string, object> | PublishedLocationsValue
 ): valueItem is PublishedLocationsValue {
   return valueItem.type === 'LocationsValue';
 }
 
 export function assertIsPublishedLocationsValue(
-  valueItem: ValueItem | PublishedLocationsValue
+  valueItem: ValueItem<string, object> | PublishedLocationsValue
 ): asserts valueItem is PublishedLocationsValue {
   if (valueItem.type !== 'LocationsValue') {
     throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
@@ -377,13 +381,13 @@ export interface PublishedReferencesValueFields {
 export type PublishedReferencesValue = ValueItem<'ReferencesValue', PublishedReferencesValueFields>;
 
 export function isPublishedReferencesValue(
-  valueItem: ValueItem | PublishedReferencesValue
+  valueItem: ValueItem<string, object> | PublishedReferencesValue
 ): valueItem is PublishedReferencesValue {
   return valueItem.type === 'ReferencesValue';
 }
 
 export function assertIsPublishedReferencesValue(
-  valueItem: ValueItem | PublishedReferencesValue
+  valueItem: ValueItem<string, object> | PublishedReferencesValue
 ): asserts valueItem is PublishedReferencesValue {
   if (valueItem.type !== 'ReferencesValue') {
     throw new Error('Expected type = ReferencesValue (but was ' + valueItem.type + ')');
