@@ -1,7 +1,7 @@
-import type { ValueItem } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminAdminOnlyValue } from '../SchemaTypes.js';
 import {
   REFERENCES_CREATE,
   TITLE_ONLY_CREATE,
@@ -234,7 +234,7 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
   server,
 }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const adminOnlyValueItem: ValueItem = { type: 'AdminOnlyValue' };
+  const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyValueItem } })
   );
@@ -317,7 +317,7 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
 
 async function publishEntities_errorAdminOnlyTypeItem({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const adminOnlyValueItem: ValueItem = { type: 'AdminOnlyValue' };
+  const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyValueItem } })
   );
