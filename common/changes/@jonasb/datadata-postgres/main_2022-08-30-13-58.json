@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Database schema changes for admin only fields.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres"
+}

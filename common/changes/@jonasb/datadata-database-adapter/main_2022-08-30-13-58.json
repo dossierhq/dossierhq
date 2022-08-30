@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter",
+      "comment": "Changes to support adminOnly fields.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter"
+}

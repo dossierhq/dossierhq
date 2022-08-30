@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-graphql",
+      "comment": "Support adminOnly fields.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-graphql"
+}

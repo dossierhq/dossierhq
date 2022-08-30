@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Add new Card2 component.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
