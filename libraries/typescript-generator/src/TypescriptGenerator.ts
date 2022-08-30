@@ -94,6 +94,7 @@ function generateEntityType(
     `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}>;`
   );
 
+  // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
     `export function is${entityTypeName}(entity: ${parentTypeName} | ${entityTypeName}): entity is ${entityTypeName} {`
@@ -101,6 +102,7 @@ function generateEntityType(
   paragraphs.push(`  return entity.info.type === '${entitySpec.name}';`);
   paragraphs.push(`}`);
 
+  // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
     `export function assertIs${entityTypeName}(entity: ${parentTypeName} | ${entityTypeName}): asserts entity is ${entityTypeName} {`
@@ -153,6 +155,26 @@ function generateValueType(
   paragraphs.push(
     `export type ${valueTypeName} = ${parentTypeName}<'${valueSpec.name}', ${fieldsName}>;`
   );
+
+  // isAdminFoo() / isPublishedFoo()
+  paragraphs.push('');
+  paragraphs.push(
+    `export function is${valueTypeName}(valueItem: ${parentTypeName} | ${valueTypeName}): valueItem is ${valueTypeName} {`
+  );
+  paragraphs.push(`  return valueItem.type === '${valueSpec.name}';`);
+  paragraphs.push(`}`);
+
+  // assertIsAdminFoo() / assertIsPublishedFoo()
+  paragraphs.push('');
+  paragraphs.push(
+    `export function assertIs${valueTypeName}(valueItem: ${parentTypeName} | ${valueTypeName}): asserts valueItem is ${valueTypeName} {`
+  );
+  paragraphs.push(`  if (valueItem.type !== '${valueSpec.name}') {`);
+  paragraphs.push(
+    `    throw new Error('Expected type = ${valueSpec.name} (but was ' + valueItem.type + ')');`
+  );
+  paragraphs.push(`  }`);
+  paragraphs.push(`}`);
 
   return paragraphs;
 }

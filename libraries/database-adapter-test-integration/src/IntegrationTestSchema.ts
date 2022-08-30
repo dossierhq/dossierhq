@@ -60,7 +60,13 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   ],
   valueTypes: [
     { name: 'AdminOnlyValue', adminOnly: true, fields: [] },
-    { name: 'LocationsValue', fields: [{ name: 'location', type: FieldType.Location }] },
+    {
+      name: 'LocationsValue',
+      fields: [
+        { name: 'location', type: FieldType.Location },
+        { name: 'locationAdminOnly', type: FieldType.Location, adminOnly: true },
+      ],
+    },
     { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.EntityType }] },
   ],
 };
