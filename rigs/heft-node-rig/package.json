@@ -16,6 +16,6 @@
     "eslint": "^8.16.0"
   },
   "devDependencies": {
-    "@rushstack/heft": "~0.47.0"
+    "@rushstack/heft": "~0.47.5"
   }
 }
