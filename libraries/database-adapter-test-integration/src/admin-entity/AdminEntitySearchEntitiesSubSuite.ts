@@ -760,6 +760,7 @@ async function searchEntities_boundingBoxOneInsideFromValueItemInRichText({
           createRichTextValueItemNode<AdminLocationsValue>({
             type: 'LocationsValue',
             location: center,
+            locationAdminOnly: null,
           }),
         ]),
       },

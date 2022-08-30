@@ -97,3 +97,15 @@ export interface AdminAddressFields {
 }
 
 export type AdminAddress = ValueItem<'Address', AdminAddressFields>;
+
+export function isAdminAddress(valueItem: ValueItem | AdminAddress): valueItem is AdminAddress {
+  return valueItem.type === 'Address';
+}
+
+export function assertIsAdminAddress(
+  valueItem: ValueItem | AdminAddress
+): asserts valueItem is AdminAddress {
+  if (valueItem.type !== 'Address') {
+    throw new Error('Expected type = Address (but was ' + valueItem.type + ')');
+  }
+}

@@ -151,6 +151,16 @@ export function assertIsAdminValueType(entity: AdminEntity | AdminValueType): as
 export type AdminFooFields = Record<never, never>;
 
 export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
+
+export function isAdminFoo(valueItem: ValueItem | AdminFoo): valueItem is AdminFoo {
+  return valueItem.type === 'Foo';
+}
+
+export function assertIsAdminFoo(valueItem: ValueItem | AdminFoo): asserts valueItem is AdminFoo {
+  if (valueItem.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
+  }
+}
 "
 `;
 
@@ -181,6 +191,16 @@ export interface AdminFooFields {
 }
 
 export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
+
+export function isAdminFoo(valueItem: ValueItem | AdminFoo): valueItem is AdminFoo {
+  return valueItem.type === 'Foo';
+}
+
+export function assertIsAdminFoo(valueItem: ValueItem | AdminFoo): asserts valueItem is AdminFoo {
+  if (valueItem.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
+  }
+}
 "
 `;
 

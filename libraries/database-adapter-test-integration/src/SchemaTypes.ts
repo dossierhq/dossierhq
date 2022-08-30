@@ -150,17 +150,60 @@ export type AdminAdminOnlyValueFields = Record<never, never>;
 
 export type AdminAdminOnlyValue = ValueItem<'AdminOnlyValue', AdminAdminOnlyValueFields>;
 
+export function isAdminAdminOnlyValue(
+  valueItem: ValueItem | AdminAdminOnlyValue
+): valueItem is AdminAdminOnlyValue {
+  return valueItem.type === 'AdminOnlyValue';
+}
+
+export function assertIsAdminAdminOnlyValue(
+  valueItem: ValueItem | AdminAdminOnlyValue
+): asserts valueItem is AdminAdminOnlyValue {
+  if (valueItem.type !== 'AdminOnlyValue') {
+    throw new Error('Expected type = AdminOnlyValue (but was ' + valueItem.type + ')');
+  }
+}
+
 export interface AdminLocationsValueFields {
   location: Location | null;
+  locationAdminOnly: Location | null;
 }
 
 export type AdminLocationsValue = ValueItem<'LocationsValue', AdminLocationsValueFields>;
+
+export function isAdminLocationsValue(
+  valueItem: ValueItem | AdminLocationsValue
+): valueItem is AdminLocationsValue {
+  return valueItem.type === 'LocationsValue';
+}
+
+export function assertIsAdminLocationsValue(
+  valueItem: ValueItem | AdminLocationsValue
+): asserts valueItem is AdminLocationsValue {
+  if (valueItem.type !== 'LocationsValue') {
+    throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
+  }
+}
 
 export interface AdminReferencesValueFields {
   reference: EntityReference | null;
 }
 
 export type AdminReferencesValue = ValueItem<'ReferencesValue', AdminReferencesValueFields>;
+
+export function isAdminReferencesValue(
+  valueItem: ValueItem | AdminReferencesValue
+): valueItem is AdminReferencesValue {
+  return valueItem.type === 'ReferencesValue';
+}
+
+export function assertIsAdminReferencesValue(
+  valueItem: ValueItem | AdminReferencesValue
+): asserts valueItem is AdminReferencesValue {
+  if (valueItem.type !== 'ReferencesValue') {
+    throw new Error('Expected type = ReferencesValue (but was ' + valueItem.type + ')');
+  }
+}
 
 export interface PublishedLocationsFields {
   location: Location | null;
@@ -313,8 +356,36 @@ export interface PublishedLocationsValueFields {
 
 export type PublishedLocationsValue = ValueItem<'LocationsValue', PublishedLocationsValueFields>;
 
+export function isPublishedLocationsValue(
+  valueItem: ValueItem | PublishedLocationsValue
+): valueItem is PublishedLocationsValue {
+  return valueItem.type === 'LocationsValue';
+}
+
+export function assertIsPublishedLocationsValue(
+  valueItem: ValueItem | PublishedLocationsValue
+): asserts valueItem is PublishedLocationsValue {
+  if (valueItem.type !== 'LocationsValue') {
+    throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
+  }
+}
+
 export interface PublishedReferencesValueFields {
   reference: EntityReference | null;
 }
 
 export type PublishedReferencesValue = ValueItem<'ReferencesValue', PublishedReferencesValueFields>;
+
+export function isPublishedReferencesValue(
+  valueItem: ValueItem | PublishedReferencesValue
+): valueItem is PublishedReferencesValue {
+  return valueItem.type === 'ReferencesValue';
+}
+
+export function assertIsPublishedReferencesValue(
+  valueItem: ValueItem | PublishedReferencesValue
+): asserts valueItem is PublishedReferencesValue {
+  if (valueItem.type !== 'ReferencesValue') {
+    throw new Error('Expected type = ReferencesValue (but was ' + valueItem.type + ')');
+  }
+}
