@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-leaflet
 
-This log was last generated on Sun, 21 Aug 2022 22:26:51 GMT and should not be manually modified.
+This log was last generated on Tue, 30 Aug 2022 14:05:13 GMT and should not be manually modified.
+
+## 0.1.27
+Tue, 30 Aug 2022 14:05:13 GMT
+
+### Updates
+
+- Upgrade heft.
 
 ## 0.1.26
 Sun, 21 Aug 2022 22:26:51 GMT

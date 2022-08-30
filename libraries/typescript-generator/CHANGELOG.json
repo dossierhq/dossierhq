@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-typescript-generator",
   "entries": [
     {
+      "version": "0.1.27",
+      "tag": "@jonasb/datadata-typescript-generator_v0.1.27",
+      "date": "Tue, 30 Aug 2022 14:05:13 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support adminOnly fields. Tweak empty fields. Add isAdminFoo()/assertIsAdminFoo() for value types."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.26",
       "tag": "@jonasb/datadata-typescript-generator_v0.1.26",
       "date": "Sun, 21 Aug 2022 22:26:51 GMT",
