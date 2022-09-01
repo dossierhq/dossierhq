@@ -183,3 +183,19 @@ edit entity	sqlite	9a9f4aed	9a9f4aed-sqlite-edit-entity	2.045388	1.18	1.470599	1
 archive entity	sqlite	9a9f4aed	9a9f4aed-sqlite-archive-entity	1.256595	0.60	0.879499	1.169099	1.321399	1.496999	10.109295
 get admin entity	sqlite	9a9f4aed	9a9f4aed-sqlite-get-admin-entity	0.26636	0.38	0.2159	0.236099	0.2547	0.2599	7.345397
 search admin entities (any, first 50)	sqlite	9a9f4aed	9a9f4aed-sqlite-search-admin-entities-any-first-50	4.610743	1.15	4.222498	4.306798	4.552598	7.032497	19.555791
+create entity	postgres	bf087c53	bf087c53-postgres-create-entity	3.558508	1.13	2.254321	3.29463	4.807143	6.044855	10.980699
+create entity organization	postgres	bf087c53	bf087c53-postgres-create-entity-organization	2.743673	0.82	2.22212	2.525522	3.068527	3.968436	11.173401
+create entity person	postgres	bf087c53	bf087c53-postgres-create-entity-person	3.196021	0.64	2.19592	3.098828	3.478332	3.784134	8.844479
+create and publish entity	postgres	bf087c53	bf087c53-postgres-create-publish-entity	6.897263	1.29	5.122946	6.876762	7.983872	9.327883	17.86316
+edit entity	postgres	bf087c53	bf087c53-postgres-edit-entity	4.564879	1.39	3.548432	4.44334	5.060645	5.683551	40.578165
+archive entity	postgres	bf087c53	bf087c53-postgres-archive-entity	2.194955	0.44	1.806516	2.095618	2.448122	2.731724	6.261256
+get admin entity	postgres	bf087c53	bf087c53-postgres-get-admin-entity	0.742828	0.21	0.648406	0.705307	0.814307	0.863808	4.773142
+search admin entities (any, first 50)	postgres	bf087c53	bf087c53-postgres-search-admin-entities-any-first-50	6.087908	1.96	5.261247	5.515949	6.843661	10.441593	28.227051
+create entity	sqlite	bf087c53	bf087c53-sqlite-create-entity	2.491327	1.31	1.473413	2.189519	3.069027	4.575641	17.696356
+create entity organization	sqlite	bf087c53	bf087c53-sqlite-create-entity-organization	2.141456	1.71	1.420812	1.906317	2.494922	3.353931	47.661628
+create entity person	sqlite	bf087c53	bf087c53-sqlite-create-entity-person	2.510666	1.66	1.398613	2.23022	2.921727	4.085237	41.208569
+create and publish entity	sqlite	bf087c53	bf087c53-sqlite-create-publish-entity	4.548607	1.96	3.099926	4.145335	5.195343	7.23146	44.386667
+edit entity	sqlite	bf087c53	bf087c53-sqlite-edit-entity	3.177686	1.58	2.197019	2.857424	3.66003	5.329244	38.925948
+archive entity	sqlite	bf087c53	bf087c53-sqlite-archive-entity	1.76733	0.76	1.07261	1.592614	2.082319	2.420921	10.115291
+get admin entity	sqlite	bf087c53	bf087c53-sqlite-get-admin-entity	0.343455	0.35	0.259402	0.313203	0.346603	0.357103	7.972671
+search admin entities (any, first 50)	sqlite	bf087c53	bf087c53-sqlite-search-admin-entities-any-first-50	5.349492	1.90	4.574041	4.793143	5.353548	10.14319	28.155451
