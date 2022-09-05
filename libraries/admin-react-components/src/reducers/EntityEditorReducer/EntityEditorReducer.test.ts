@@ -221,6 +221,35 @@ describe('SetNameAction', () => {
     assertIsDefined(draftState);
     expect(draftState.draft?.name).toEqual('New name');
     expect(draftState.status).toEqual('changed');
+    expect(draftState.draft?.nameIsLinkedToField).toBe(false);
+  });
+
+  test('clearing name of enw draft links to name field', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.SetName(id, 'New name'),
+      new EntityEditorActions.SetName(id, '')
+    );
+    expect(state).toMatchSnapshot();
+
+    const draftState = state.drafts.find((it) => it.id === id);
+    assertIsDefined(draftState);
+
+    expect(draftState.draft?.nameIsLinkedToField).toBe(true);
   });
 });
 
@@ -232,12 +261,39 @@ describe('SetFieldAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+            },
           ],
           valueTypes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.SetField(id, 'title', 'New title')
+    );
+    expect(state).toMatchSnapshot();
+  });
+
+  test('set title field of new draft after name has been set', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.SetName(id, 'New name'),
       new EntityEditorActions.SetField(id, 'title', 'New title')
     );
     expect(state).toMatchSnapshot();
@@ -273,7 +329,11 @@ describe('UpdateEntityAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+            },
           ],
           valueTypes: [],
         })
@@ -283,7 +343,7 @@ describe('UpdateEntityAction', () => {
         id,
         info: {
           authKey: 'none',
-          name: 'Foo name',
+          name: 'Foo title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
           createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
@@ -291,16 +351,57 @@ describe('UpdateEntityAction', () => {
           version: 0,
         },
         fields: {
-          title: 'Title',
+          title: 'Foo title',
         },
       })
     );
     expect(state).toMatchSnapshot();
 
-    expect(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      getEntityUpdateFromDraftState(state.drafts.find((it) => it.id === id)!)
-    ).toMatchSnapshot();
+    const draftState = state.drafts.find((it) => it.id === id);
+    assertIsDefined(draftState);
+    expect(draftState.draft?.nameIsLinkedToField).toBe(true);
+
+    expect(getEntityUpdateFromDraftState(draftState)).toMatchSnapshot();
+  });
+
+  test('add draft, update entity with unlinked name', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id }),
+      new EntityEditorActions.UpdateEntity({
+        id,
+        info: {
+          authKey: 'none',
+          name: 'Different name',
+          type: 'Foo',
+          status: AdminEntityStatus.draft,
+          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          version: 0,
+        },
+        fields: {
+          title: 'Foo title',
+        },
+      })
+    );
+    expect(state).toMatchSnapshot();
+
+    const draftState = state.drafts.find((it) => it.id === id);
+    assertIsDefined(draftState);
+    expect(draftState.draft?.nameIsLinkedToField).toBe(false);
   });
 });
 
@@ -333,7 +434,7 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
-              fields: [{ name: 'title', type: FieldType.String }],
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
@@ -349,7 +450,7 @@ describe('EntityEditorReducer scenarios', () => {
         id,
         info: {
           authKey: 'none',
-          name: 'Foo name#123456',
+          name: "Foo's title#123456",
           type: 'Foo',
           status: AdminEntityStatus.draft,
           createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
@@ -357,11 +458,13 @@ describe('EntityEditorReducer scenarios', () => {
           version: 0,
         },
         fields: {
-          title: null,
+          title: "Foo's title",
         },
       })
     );
     expect(state).toMatchSnapshot();
+    // Linked since the title field matches the name
+    expect(state.drafts[0].draft?.nameIsLinkedToField).toBe(true);
   });
 
   test('add new draft, set name and authKey, force update', async () => {
@@ -496,7 +599,7 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
-              fields: [{ name: 'title', type: FieldType.String }],
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
@@ -507,7 +610,7 @@ describe('EntityEditorReducer scenarios', () => {
         id,
         info: {
           authKey: 'none',
-          name: 'Foo name#123456',
+          name: 'Foo title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
           createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
@@ -515,7 +618,7 @@ describe('EntityEditorReducer scenarios', () => {
           version: 0,
         },
         fields: {
-          title: 'Existing title',
+          title: 'Foo title',
         },
       })
     );
@@ -544,7 +647,7 @@ describe('EntityEditorReducer scenarios', () => {
         id,
         info: {
           authKey: 'none',
-          name: 'Foo name#123456',
+          name: 'New title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
           createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
