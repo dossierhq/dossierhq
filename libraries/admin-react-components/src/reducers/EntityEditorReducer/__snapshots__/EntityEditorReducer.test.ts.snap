@@ -31,6 +31,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
           },
         ],
         "name": "Foo",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -105,6 +106,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
           },
         ],
         "name": "",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -193,6 +195,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           },
         ],
         "name": "",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -253,6 +256,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -313,6 +317,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -387,6 +392,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": true,
@@ -447,6 +453,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -521,6 +528,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -581,6 +589,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -641,6 +650,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -701,6 +711,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -775,6 +786,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "Foo name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": true,
@@ -835,6 +847,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -891,6 +904,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -900,25 +914,27 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
-            "normalizedValue": "Existing title",
+            "normalizedValue": "Foo title",
             "status": "",
-            "value": "Existing title",
+            "value": "Foo title",
           },
         ],
-        "name": "Foo name#123456",
+        "name": "Foo title#123456",
+        "nameIsLinkedToField": true,
       },
       "entity": {
         "fields": {
-          "title": "Existing title",
+          "title": "Foo title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
-          "name": "Foo name#123456",
+          "name": "Foo title#123456",
           "status": "draft",
           "type": "Foo",
           "updatedAt": "2022-04-30T07:51:25.56Z",
@@ -938,6 +954,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -965,6 +982,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -974,6 +992,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -982,17 +1001,18 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "value": "New title",
           },
         ],
-        "name": "Foo name#123456",
+        "name": "New title",
+        "nameIsLinkedToField": true,
       },
       "entity": {
         "fields": {
-          "title": "Existing title",
+          "title": "Foo title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
-          "name": "Foo name#123456",
+          "name": "Foo title#123456",
           "status": "draft",
           "type": "Foo",
           "updatedAt": "2022-04-30T07:51:25.56Z",
@@ -1012,6 +1032,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1033,6 +1054,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "info": {
+    "name": "New title",
     "type": "Foo",
   },
 }
@@ -1051,6 +1073,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1060,6 +1083,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1068,17 +1092,18 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "value": "New title",
           },
         ],
-        "name": "Foo name#123456",
+        "name": "New title",
+        "nameIsLinkedToField": true,
       },
       "entity": {
         "fields": {
-          "title": "Existing title",
+          "title": "Foo title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
-          "name": "Foo name#123456",
+          "name": "Foo title#123456",
           "status": "draft",
           "type": "Foo",
           "updatedAt": "2022-04-30T07:51:25.56Z",
@@ -1098,6 +1123,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1125,6 +1151,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1134,6 +1161,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1142,7 +1170,8 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "value": "New title",
           },
         ],
-        "name": "Foo name#123456",
+        "name": "New title#123456",
+        "nameIsLinkedToField": true,
       },
       "entity": {
         "fields": {
@@ -1152,7 +1181,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
-          "name": "Foo name#123456",
+          "name": "New title#123456",
           "status": "draft",
           "type": "Foo",
           "updatedAt": "2022-05-01T07:51:25.56Z",
@@ -1172,6 +1201,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1217,6 +1247,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -1291,6 +1322,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -1374,6 +1406,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1401,6 +1434,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1410,25 +1444,27 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
-            "normalizedValue": null,
+            "normalizedValue": "Foo's title",
             "status": "",
-            "value": null,
+            "value": "Foo's title",
           },
         ],
-        "name": "Foo name#123456",
+        "name": "Foo's title#123456",
+        "nameIsLinkedToField": true,
       },
       "entity": {
         "fields": {
-          "title": null,
+          "title": "Foo's title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
-          "name": "Foo name#123456",
+          "name": "Foo's title#123456",
           "status": "draft",
           "type": "Foo",
           "updatedAt": "2022-04-30T07:51:25.56Z",
@@ -1448,6 +1484,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1497,6 +1534,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -1577,6 +1615,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -1664,6 +1703,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           },
         ],
         "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -1711,6 +1751,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           },
         ],
         "name": "Foo 2",
+        "nameIsLinkedToField": false,
       },
       "entity": {
         "fields": {
@@ -1770,6 +1811,7 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
         },
         "fields": [],
         "name": "",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -1786,6 +1828,7 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
         },
         "fields": [],
         "name": "",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -1846,6 +1889,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
           },
         ],
         "name": "",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -1888,6 +1932,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1897,6 +1942,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1905,7 +1951,8 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             "value": "New title",
           },
         ],
-        "name": "",
+        "name": "New title",
+        "nameIsLinkedToField": true,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -1921,6 +1968,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -1932,6 +1980,134 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
     },
   },
   "status": "changed",
+}
+`;
+
+exports[`SetFieldAction > set title field of new draft after name has been set 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": null,
+        "entitySpec": {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": [
+          {
+            "fieldSpec": {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "value": "New title",
+          },
+        ],
+        "name": "New name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": null,
+        "entitySpec": {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": [
+          {
+            "fieldSpec": {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": true,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "status": "",
 }
 `;
 
@@ -1966,6 +2142,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
           },
         ],
         "name": "New name",
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -2008,6 +2185,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -2017,25 +2195,27 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
         "fields": [
           {
             "fieldSpec": {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
-            "normalizedValue": "Title",
+            "normalizedValue": "Foo title",
             "status": "",
-            "value": "Title",
+            "value": "Foo title",
           },
         ],
-        "name": "Foo name",
+        "name": "Foo title#123456",
+        "nameIsLinkedToField": true,
       },
       "entity": {
         "fields": {
-          "title": "Title",
+          "title": "Foo title",
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
           "authKey": "none",
           "createdAt": "2022-04-30T07:51:25.56Z",
-          "name": "Foo name",
+          "name": "Foo title#123456",
           "status": "draft",
           "type": "Foo",
           "updatedAt": "2022-04-30T07:51:25.56Z",
@@ -2055,6 +2235,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "isName": true,
               "name": "title",
               "type": "String",
             },
@@ -2072,12 +2253,90 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
 exports[`UpdateEntityAction > add draft, update entity 2`] = `
 {
   "fields": {
-    "title": "Title",
+    "title": "Foo title",
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "info": {
     "type": "Foo",
   },
+}
+`;
+
+exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "none",
+        "entitySpec": {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": [
+          {
+            "fieldSpec": {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Foo title",
+            "status": "",
+            "value": "Foo title",
+          },
+        ],
+        "name": "Different name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Different name",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "status": "",
 }
 `;
 

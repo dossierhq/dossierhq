@@ -6,7 +6,11 @@ import type {
   AdminFieldSpecification,
   AdminSchema,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, normalizeFieldValue } from '@jonasb/datadata-core';
+import {
+  assertIsDefined,
+  isEntityNameAsRequested,
+  normalizeFieldValue,
+} from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
 type EntityEditorSelector = { id: string } | { id: string; newType: string };
@@ -28,6 +32,7 @@ export interface EntityEditorDraftState {
     entitySpec: AdminEntityTypeSpecification;
     authKey: string | null;
     name: string;
+    nameIsLinkedToField: boolean;
     fields: FieldEditorState[];
   } | null;
   entity: AdminEntity | null;
@@ -295,6 +300,7 @@ class SetActiveEntityAction implements EntityEditorStateAction {
 
 class SetFieldAction extends EntityEditorFieldAction {
   value: unknown;
+  isNameField = false;
 
   constructor(entityId: string, fieldName: string, value: unknown) {
     super(entityId, fieldName);
@@ -308,12 +314,38 @@ class SetFieldAction extends EntityEditorFieldAction {
   ): Readonly<FieldEditorState> {
     const { schema } = editorState;
     assertIsDefined(schema);
+
+    this.isNameField = !!fieldState.fieldSpec.isName;
+
     if (fieldState.value === this.value) {
       return fieldState;
     }
 
     const normalizedValue = normalizeFieldValue(schema, fieldState.fieldSpec, this.value);
+
     return { ...fieldState, value: this.value, normalizedValue };
+  }
+
+  override reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>,
+    editorState: Readonly<EntityEditorState>
+  ): Readonly<EntityEditorDraftState> {
+    let newDraftState = super.reduceDraft(draftState, editorState);
+    if (newDraftState === draftState) {
+      return draftState;
+    }
+
+    if (
+      this.isNameField &&
+      newDraftState.draft &&
+      newDraftState.draft.nameIsLinkedToField &&
+      typeof this.value === 'string'
+    ) {
+      const name = this.value;
+      newDraftState = { ...newDraftState, draft: { ...newDraftState.draft, name } };
+    }
+
+    return newDraftState;
   }
 }
 
@@ -333,7 +365,10 @@ class SetNameAction extends EntityEditorDraftAction {
       return draftState;
     }
 
-    return { ...draftState, draft: { ...draftState.draft, name: this.name } };
+    // If new name is empty, link name to the field, otherwise unlink it
+    const nameIsLinkedToField = !this.name;
+
+    return { ...draftState, draft: { ...draftState.draft, name: this.name, nameIsLinkedToField } };
   }
 }
 
@@ -474,10 +509,24 @@ function createEditorEntityDraftState(
     const normalizedValue = normalizeFieldValue(schema, fieldSpec, value);
     return { status: '', fieldSpec, value, normalizedValue };
   });
+
+  // Check if name is linked to a field
+  let nameIsLinkedToField = !entity; // default to true for new entities
+  if (entity) {
+    const nameFieldSpec = entitySpec.fields.find((it) => it.isName);
+    if (nameFieldSpec) {
+      const nameFieldValue = entity.fields[nameFieldSpec.name];
+      if (nameFieldValue && typeof nameFieldValue === 'string') {
+        nameIsLinkedToField = isEntityNameAsRequested(entity.info.name, nameFieldValue);
+      }
+    }
+  }
+
   return {
     entitySpec,
     authKey: entity?.info.authKey ?? null,
     name: entity?.info.name ?? '',
+    nameIsLinkedToField,
     fields,
   };
 }
