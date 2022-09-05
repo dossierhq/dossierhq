@@ -50,7 +50,7 @@
     "prettier": "2.7.1",
     "typescript": "^4.7.2",
     "uuid": "^8.3.2",
-    "vitest": "~0.22.0"
+    "vitest": "~0.23.1"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
