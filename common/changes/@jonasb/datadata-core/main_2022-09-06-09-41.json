@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
