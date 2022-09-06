@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-admin-react-components",
   "entries": [
     {
+      "version": "0.1.29",
+      "tag": "@jonasb/datadata-admin-react-components_v0.1.29",
+      "date": "Tue, 06 Sep 2022 09:47:25 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Autofill name from name field. Support setting name field in schema editor."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.28",
       "tag": "@jonasb/datadata-admin-react-components_v0.1.28",
       "date": "Tue, 30 Aug 2022 21:10:46 GMT",

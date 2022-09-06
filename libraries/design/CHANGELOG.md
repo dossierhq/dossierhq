@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-design
 
-This log was last generated on Tue, 30 Aug 2022 21:10:47 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Sep 2022 09:47:25 GMT and should not be manually modified.
+
+## 0.1.29
+Tue, 06 Sep 2022 09:47:25 GMT
+
+### Updates
+
+- Upgrade dependencies.
 
 ## 0.1.28
 Tue, 30 Aug 2022 21:10:47 GMT
