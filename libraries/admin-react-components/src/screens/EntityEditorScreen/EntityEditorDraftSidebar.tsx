@@ -50,7 +50,7 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
 
   return (
     <>
-      <Text textStyle="headline6">{draft.name}</Text>
+      <Text textStyle="headline6">{draft.name || <i>Untitled</i>}</Text>
       {entity ? (
         <>
           <Text textStyle="body2">{entity.id}</Text>
