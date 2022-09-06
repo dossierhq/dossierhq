@@ -13,9 +13,11 @@ import { useCallback } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
+  SchemaEntityTypeDraft,
   SchemaFieldDraft,
   SchemaFieldSelector,
   SchemaTypeSelector,
+  SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
@@ -23,6 +25,7 @@ import { FieldValueTypeSelector } from './FieldValueTypeSelector.js';
 import { RichTextNodeSelector } from './RichTextNodeSelector.js';
 
 interface Props {
+  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   fieldSelector: SchemaFieldSelector;
   fieldDraft: SchemaFieldDraft;
   schemaEditorState: SchemaEditorState;
@@ -58,6 +61,7 @@ function fieldTypeValue(type: FieldType, list: boolean) {
 }
 
 export function SchemaFieldEditor({
+  typeDraft,
   fieldSelector,
   fieldDraft,
   schemaEditorState,
@@ -72,6 +76,9 @@ export function SchemaFieldEditor({
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeAdminOnly = fieldDraft.status === 'new'; //TODO too restrictive
+
+  const fieldCanBeName =
+    typeDraft.kind === 'entity' && fieldDraft.type === FieldType.String && !fieldDraft.list;
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
@@ -150,6 +157,23 @@ export function SchemaFieldEditor({
             </Checkbox>
           </Field.BodyColumn>
         </Field>
+        {fieldCanBeName ? (
+          <Field horizontal>
+            <Field.LabelColumn />
+            <Field.BodyColumn>
+              <Checkbox
+                checked={fieldDraft.isName}
+                onChange={(event) =>
+                  dispatchSchemaEditorState(
+                    new SchemaEditorActions.ChangeFieldIsName(fieldSelector, event.target.checked)
+                  )
+                }
+              >
+                Is name
+              </Checkbox>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
         <Field horizontal>
           <Field.LabelColumn>
             <Field.Label>Type</Field.Label>

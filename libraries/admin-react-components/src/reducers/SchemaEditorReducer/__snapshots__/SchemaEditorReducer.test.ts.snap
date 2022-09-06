@@ -12,6 +12,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
         {
           "adminOnly": true,
           "existingFieldSpec": null,
+          "isName": false,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -63,6 +64,226 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
 }
 `;
 
+exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "TitleOnly",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": true,
+          "list": false,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "status": "new",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldIsNameAction > make new string field is-name in new type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "isName": true,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "TitleOnly",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "isName": true,
+            "name": "title",
+            "type": "String",
+          },
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": true,
+          "list": false,
+          "multiline": false,
+          "name": "other",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "isName": true,
+          "multiline": false,
+          "name": "other",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "TitleOnly",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "isName": true,
+            "name": "title",
+            "type": "String",
+          },
+          "isName": true,
+          "list": false,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "other",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
 exports[`ChangeFieldMultilineAction > make new multiline field in existing entity type 1`] = `
 {
   "activeSelector": null,
@@ -75,6 +296,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
         {
           "adminOnly": false,
           "existingFieldSpec": null,
+          "isName": false,
           "list": false,
           "multiline": true,
           "name": "bar",
@@ -144,6 +366,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
             "Bar",
           ],
           "existingFieldSpec": null,
+          "isName": false,
           "list": false,
           "name": "self",
           "required": false,
@@ -214,6 +437,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
         {
           "adminOnly": false,
           "existingFieldSpec": null,
+          "isName": false,
           "list": false,
           "name": "self",
           "required": false,

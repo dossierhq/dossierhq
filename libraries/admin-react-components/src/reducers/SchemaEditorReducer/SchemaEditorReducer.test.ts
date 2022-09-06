@@ -1,4 +1,4 @@
-import { AdminSchema, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
 import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
 import {
@@ -430,6 +430,7 @@ describe('AddFieldAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -520,6 +521,7 @@ describe('AddFieldAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -586,6 +588,7 @@ describe('AddFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -596,6 +599,7 @@ describe('AddFieldAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -709,6 +713,7 @@ describe('AddFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -719,6 +724,7 @@ describe('AddFieldAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -822,6 +828,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
                   "Foo",
                 ],
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -920,6 +927,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                   "Foo",
                 ],
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -1033,6 +1041,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -1072,6 +1081,88 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         ],
       }
     `);
+  });
+});
+
+describe('ChangeFieldIsNameAction', () => {
+  test('make new string field is-name in new type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddType('entity', 'TitleOnly'),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'title'),
+      new SchemaEditorActions.ChangeFieldIsName(
+        { kind: 'entity', typeName: 'TitleOnly', fieldName: 'title' },
+        true
+      )
+    );
+    expect(state).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].isName).toBe(true);
+    expect(schemaUpdate?.entityTypes?.[0].fields[0].isName).toBe(true);
+  });
+
+  test('make other field is-name, and switch back', () => {
+    let state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'TitleOnly',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'other'),
+      new SchemaEditorActions.ChangeFieldIsName(
+        { kind: 'entity', typeName: 'TitleOnly', fieldName: 'other' },
+        true
+      )
+    );
+    expect(state).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    let titleFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'title');
+    assertIsDefined(titleFieldDraft);
+    let otherFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'other');
+    assertIsDefined(otherFieldDraft);
+
+    expect(titleFieldDraft.isName).toBe(false); // unchecked when other field is checked
+    expect(otherFieldDraft.isName).toBe(true);
+    expect(titleFieldDraft.status).toBe('changed');
+    expect(otherFieldDraft.status).toBe('new');
+
+    // Change back
+    state = reduceSchemaEditorStateActions(
+      state,
+      new SchemaEditorActions.ChangeFieldIsName(
+        { kind: 'entity', typeName: 'TitleOnly', fieldName: 'title' },
+        true
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    titleFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'title');
+    assertIsDefined(titleFieldDraft);
+    otherFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'other');
+    assertIsDefined(otherFieldDraft);
+
+    expect(titleFieldDraft.isName).toBe(true);
+    expect(otherFieldDraft.isName).toBe(false); // unchecked when title field is checked
+    expect(titleFieldDraft.status).toBe('');
+    expect(otherFieldDraft.status).toBe('new');
   });
 });
 
@@ -1128,6 +1219,7 @@ describe('ChangeFieldRequiredAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -1210,6 +1302,7 @@ describe('ChangeFieldTypeAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1304,6 +1397,7 @@ describe('ChangeFieldTypeAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1369,6 +1463,7 @@ describe('ChangeFieldTypeAction', () => {
                 "adminOnly": false,
                 "entityTypes": [],
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -1448,6 +1543,7 @@ describe('ChangeFieldTypeAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -1587,6 +1683,7 @@ describe('DeleteFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -1727,6 +1824,7 @@ describe('RenameFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -1737,6 +1835,7 @@ describe('RenameFieldAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": null,
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "baz",
@@ -2057,7 +2156,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             {
               name: 'TitleOnly',
               adminOnly: false,
-              fields: [{ name: 'title', type: FieldType.String }],
+              fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
@@ -2077,9 +2176,11 @@ describe('UpdateSchemaSpecificationAction', () => {
               {
                 "adminOnly": false,
                 "existingFieldSpec": {
+                  "isName": true,
                   "name": "title",
                   "type": "String",
                 },
+                "isName": true,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -2100,6 +2201,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "adminOnly": false,
                 "fields": [
                   {
+                    "isName": true,
                     "name": "title",
                     "type": "String",
                   },
@@ -2174,6 +2276,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   ],
                   "type": "RichText",
                 },
+                "isName": false,
                 "list": false,
                 "name": "richText",
                 "required": false,
@@ -2275,6 +2378,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "isName": false,
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -2338,6 +2442,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   "name": "reference",
                   "type": "EntityType",
                 },
+                "isName": false,
                 "list": false,
                 "name": "reference",
                 "required": false,
@@ -2402,6 +2507,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   "name": "reference",
                   "type": "EntityType",
                 },
+                "isName": false,
                 "list": false,
                 "name": "reference",
                 "required": false,
@@ -2461,6 +2567,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                     "ValueItem",
                   ],
                 },
+                "isName": false,
                 "list": false,
                 "name": "valueItem",
                 "required": false,
@@ -2525,6 +2632,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                     "ValueItem",
                   ],
                 },
+                "isName": false,
                 "list": false,
                 "name": "valueItem",
                 "required": false,
