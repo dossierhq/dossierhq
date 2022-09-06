@@ -649,7 +649,7 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.getSchemaSpecification,
       async (_context, operation) => {
-        operation.resolve(ok({ entityTypes: [], valueTypes: [] }));
+        operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [] }));
       }
     );
 
@@ -658,6 +658,7 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value).toMatchInlineSnapshot(`
         {
           "entityTypes": [],
+          "patterns": [],
           "valueTypes": [],
         }
       `);
@@ -1309,7 +1310,10 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.updateSchemaSpecification,
       async (_context, operation) => {
         operation.resolve(
-          ok({ effect: 'updated', schemaSpecification: { entityTypes: [], valueTypes: [] } })
+          ok({
+            effect: 'updated',
+            schemaSpecification: { entityTypes: [], valueTypes: [], patterns: [] },
+          })
         );
       }
     );
@@ -1321,6 +1325,7 @@ describe('AdminClient forward operation over JSON', () => {
           "effect": "updated",
           "schemaSpecification": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         }

@@ -6,7 +6,9 @@ import { SCHEMA as STARWARS_SCHEMA } from '../src/starwars/schema.ts';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
   const adminSchema = new AdminSchema(
-    new AdminSchema({ entityTypes: [], valueTypes: [] }).mergeWith(schemaSpec).valueOrThrow()
+    new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+      .mergeWith(schemaSpec)
+      .valueOrThrow()
   );
   const sourceCode = generateTypescriptForSchema({ adminSchema });
   await Deno.writeTextFile(filename, sourceCode);

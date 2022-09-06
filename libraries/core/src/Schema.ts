@@ -5,6 +5,7 @@ import type { EntityReference, Location, RichText, ValueItem } from './Types.js'
 export interface AdminEntityTypeSpecification {
   name: string;
   adminOnly: boolean;
+  authKeyPattern: string | null;
   fields: AdminFieldSpecification[];
 }
 
@@ -17,6 +18,7 @@ export interface AdminValueTypeSpecification {
 export interface AdminEntityTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
+  authKeyPattern?: string | null;
   fields: AdminFieldSpecification[];
 }
 
@@ -28,6 +30,7 @@ export interface AdminValueTypeSpecificationUpdate {
 
 export interface PublishedEntityTypeSpecification {
   name: string;
+  authKeyPattern: string | null;
   fields: PublishedFieldSpecification[];
 }
 
@@ -92,19 +95,27 @@ export interface FieldValueTypeMap {
   [FieldType.ValueType]: ValueItem;
 }
 
+export interface SchemaPatternSpecification {
+  name: string;
+  pattern: string;
+}
+
 export interface PublishedSchemaSpecification {
   entityTypes: PublishedEntityTypeSpecification[];
   valueTypes: PublishedValueTypeSpecification[];
+  patterns: SchemaPatternSpecification[];
 }
 
 export interface AdminSchemaSpecification {
   entityTypes: AdminEntityTypeSpecification[];
   valueTypes: AdminValueTypeSpecification[];
+  patterns: SchemaPatternSpecification[];
 }
 
 export interface AdminSchemaSpecificationUpdate {
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
   valueTypes?: AdminValueTypeSpecificationUpdate[];
+  patterns?: SchemaPatternSpecification[];
 }
 
 export interface SchemaSpecificationUpdatePayload {
@@ -128,6 +139,15 @@ export class AdminSchema {
         return notOk.BadRequest(`${typeSpec.name}: Duplicate type name`);
       }
       usedNames.add(typeSpec.name);
+
+      if (!isValueType) {
+        const authKeyPattern = (typeSpec as AdminEntityTypeSpecification).authKeyPattern;
+        if (authKeyPattern) {
+          if (!this.getPattern(authKeyPattern)) {
+            return notOk.BadRequest(`${typeSpec.name}: Unknown authKeyPattern (${authKeyPattern})`);
+          }
+        }
+      }
 
       for (const fieldSpec of typeSpec.fields) {
         if (isValueType && fieldSpec.name === 'type') {
@@ -245,6 +265,20 @@ export class AdminSchema {
       }
     }
 
+    const usedPatterns = new Set();
+    for (const patternSpec of this.spec.patterns) {
+      if (usedPatterns.has(patternSpec.name)) {
+        return notOk.BadRequest(`${patternSpec.name}: Duplicate pattern name`);
+      }
+      usedPatterns.add(patternSpec.name);
+
+      try {
+        new RegExp(patternSpec.pattern);
+      } catch (e) {
+        return notOk.BadRequest(`${patternSpec.name}: Invalid regex`);
+      }
+    }
+
     return ok(undefined);
   }
 
@@ -278,18 +312,25 @@ export class AdminSchema {
     return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 
+  getPattern(name: string): SchemaPatternSpecification | null {
+    return this.spec.patterns.find((it) => it.name === name) ?? null;
+  }
+
   mergeWith(
     other: AdminSchemaSpecificationUpdate
   ): Result<AdminSchemaSpecification, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
+      patterns: [],
     };
+
     if (other.entityTypes) {
       for (const entitySpecUpdate of other.entityTypes) {
         const entitySpec = {
           name: entitySpecUpdate.name,
           adminOnly: entitySpecUpdate.adminOnly ?? false,
+          authKeyPattern: entitySpecUpdate.authKeyPattern ?? null,
           fields: entitySpecUpdate.fields,
         };
         const existingIndex = schemaSpec.entityTypes.findIndex(
@@ -303,6 +344,7 @@ export class AdminSchema {
         }
       }
     }
+
     if (other.valueTypes) {
       for (const valueSpecUpdate of other.valueTypes) {
         const valueSpec = {
@@ -319,6 +361,19 @@ export class AdminSchema {
         }
       }
     }
+
+    const usedPatterns = new Set(
+      schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[]
+    );
+    for (const patternName of [...usedPatterns].sort()) {
+      const pattern =
+        other.patterns?.find((it) => it.name === patternName) ?? this.getPattern(patternName);
+      if (!pattern) {
+        return notOk.BadRequest(`Pattern ${patternName} is used by entity types, but not defined`);
+      }
+      schemaSpec.patterns.push(pattern);
+    }
+
     // TODO normalize
     return ok(schemaSpec);
   }
@@ -327,6 +382,7 @@ export class AdminSchema {
     const spec: PublishedSchemaSpecification = {
       entityTypes: [],
       valueTypes: [],
+      patterns: [],
     };
 
     function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
@@ -338,20 +394,31 @@ export class AdminSchema {
         });
     }
 
+    const usedPatternNames = new Set();
     for (const entitySpec of this.spec.entityTypes) {
       if (entitySpec.adminOnly) {
         continue;
       }
       spec.entityTypes.push({
         name: entitySpec.name,
+        authKeyPattern: entitySpec.authKeyPattern,
         fields: toPublishedFields(entitySpec.fields),
       });
+      if (entitySpec.authKeyPattern) {
+        usedPatternNames.add(entitySpec.authKeyPattern);
+      }
     }
     for (const valueSpec of this.spec.valueTypes) {
       if (valueSpec.adminOnly) {
         continue;
       }
       spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
+    }
+    for (const patternName of [...usedPatternNames].sort()) {
+      const pattern = this.spec.patterns.find((it) => it.name === patternName);
+      if (pattern) {
+        spec.patterns.push(pattern);
+      }
     }
 
     return new PublishedSchema(spec);

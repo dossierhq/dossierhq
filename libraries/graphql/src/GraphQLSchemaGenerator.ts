@@ -1062,6 +1062,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   addTypeSpecificationOutputFields<TSource>(
     typeSpec:
       | PublishedEntityTypeSpecification
+      | PublishedValueTypeSpecification
       | AdminEntityTypeSpecification
       | AdminValueTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
@@ -1544,7 +1545,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         }
 
         const fieldSpec = isEntity
-          ? adminSchema.getEntityFieldSpecification(typeSpec, fieldName)
+          ? adminSchema.getEntityFieldSpecification(
+              typeSpec as AdminEntityTypeSpecification,
+              fieldName
+            )
           : adminSchema.getValueFieldSpecification(typeSpec, fieldName);
 
         // Traverse into value items

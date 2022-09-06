@@ -1,0 +1,56 @@
+// Vitest Snapshot v1
+
+exports[`mergeWith() > empty->entity with pattern 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": "a-pattern",
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "patterns": [
+    {
+      "name": "a-pattern",
+      "pattern": "^hello$",
+    },
+  ],
+  "valueTypes": [],
+}
+`;
+
+exports[`mergeWith() > unused pattern is removed 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [],
+}
+`;
+
+exports[`mergeWith() > update pattern 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": "a-pattern",
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "patterns": [
+    {
+      "name": "a-pattern",
+      "pattern": "^new-pattern$",
+    },
+  ],
+  "valueTypes": [],
+}
+`;

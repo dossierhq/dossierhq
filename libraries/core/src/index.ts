@@ -132,6 +132,7 @@ export type {
   PublishedFieldSpecification,
   PublishedSchemaSpecification,
   PublishedValueTypeSpecification,
+  SchemaPatternSpecification,
   SchemaSpecificationUpdatePayload,
 } from './Schema.js';
 export { LoggingClientMiddleware } from './SharedClient.js';

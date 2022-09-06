@@ -91,7 +91,7 @@ export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, 
 }
 
 export function createTestAdminSchema(): AdminSchema {
-  return new AdminSchema({ entityTypes: [], valueTypes: [] });
+  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] });
 }
 
 export function resolvePaging(

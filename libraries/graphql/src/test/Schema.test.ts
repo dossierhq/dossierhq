@@ -1,16 +1,21 @@
-import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { AdminSchema, FieldType } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 
+function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
+  return new AdminSchema(
+    new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+      .mergeWith(update)
+      .valueOrThrow()
+  );
+}
+
 function buildSchema(
-  schemaSpec: AdminSchemaSpecification,
+  adminSchema: AdminSchema,
   { published, admin }: { published: boolean; admin: boolean }
 ) {
-  const adminSchema = new AdminSchema(schemaSpec);
-  adminSchema.validate().throwIfError();
-
   const generator = new GraphQLSchemaGenerator({
     adminSchema: admin ? adminSchema : null,
     publishedSchema: published ? adminSchema.toPublishedSchema() : null,
@@ -19,58 +24,57 @@ function buildSchema(
 }
 
 function describeGeneratedSchema(
-  schemaSpec: AdminSchemaSpecification,
+  adminSchema: AdminSchema,
   options: { published: boolean; admin: boolean }
 ) {
-  const graphQLSchema = buildSchema(schemaSpec, options);
+  const graphQLSchema = buildSchema(adminSchema, options);
   return printSchema(graphQLSchema);
 }
 
 async function querySchema(
-  schemaSpec: AdminSchemaSpecification,
+  adminSchema: AdminSchema,
   options: { published: boolean; admin: boolean },
   query: string
 ) {
-  const graphQLSchema = buildSchema(schemaSpec, options);
+  const graphQLSchema = buildSchema(adminSchema, options);
   return await graphql({ schema: graphQLSchema, source: query });
 }
 
 describe('Empty schema spec', () => {
-  const schemaSpec = { entityTypes: [], valueTypes: [] };
+  const adminSchema = createAdminSchema({});
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('One empty entity type schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-    valueTypes: [],
-  };
+  });
 
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -112,7 +116,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
+    const result = await querySchema(adminSchema, { admin: true, published: true }, query);
     expect(result).toEqual(expected);
   });
 
@@ -171,7 +175,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
+    const result = await querySchema(adminSchema, { admin: true, published: true }, query);
 
     // remove all fields except 'node'
     const queryType = (result.data as { __schema: { queryType: { fields: { name: string }[] } } })
@@ -251,7 +255,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
+    const result = await querySchema(adminSchema, { admin: true, published: true }, query);
 
     expect(result).toEqual(expected);
   });
@@ -303,7 +307,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
+    const result = await querySchema(adminSchema, { admin: true, published: true }, query);
 
     expect(result).toEqual(expected);
   });
@@ -357,7 +361,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = (await querySchema(schemaSpec, { admin: true, published: true }, query)) as {
+    const result = (await querySchema(adminSchema, { admin: true, published: true }, query)) as {
       data: { __type: { fields: { name: string }[] } };
     };
 
@@ -373,7 +377,7 @@ describe('One empty entity type schema spec', () => {
 });
 
 describe('Two entity types with reference schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       { name: 'Foo', adminOnly: false, fields: [{ name: 'fooField', type: FieldType.String }] },
       {
@@ -387,26 +391,25 @@ describe('Two entity types with reference schema spec', () => {
         ],
       },
     ],
-    valueTypes: [],
-  };
+  });
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('Multiple references with entityTypes schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -430,26 +433,26 @@ describe('Multiple references with entityTypes schema spec', () => {
       { name: 'Bar', adminOnly: false, fields: [] },
       { name: 'Baz', adminOnly: false, fields: [] },
     ],
-    valueTypes: [],
-  };
+  });
+
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('List of strings, booleans, locations and references schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -463,26 +466,25 @@ describe('List of strings, booleans, locations and references schema spec', () =
       },
       { name: 'Bar', adminOnly: false, fields: [] },
     ],
-    valueTypes: [],
-  };
+  });
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('Value type schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -530,25 +532,26 @@ describe('Value type schema spec', () => {
         ],
       },
     ],
-  };
+  });
+
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('Rich text schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -556,26 +559,25 @@ describe('Rich text schema spec', () => {
         fields: [{ name: 'body', type: FieldType.RichText }],
       },
     ],
-    valueTypes: [],
-  };
+  });
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('Admin only entity and value schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -600,25 +602,26 @@ describe('Admin only entity and value schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String }],
       },
     ],
-  };
+  });
+
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('Admin only field in entity and value schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -633,25 +636,26 @@ describe('Admin only field in entity and value schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String, adminOnly: true }],
       },
     ],
-  };
+  });
+
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
 
 describe('Required fields schema spec', () => {
-  const schemaSpec = {
+  const adminSchema = createAdminSchema({
     entityTypes: [
       {
         name: 'Foo',
@@ -670,20 +674,20 @@ describe('Required fields schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String, required: true }],
       },
     ],
-  };
+  });
 
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (admin only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
     expect(result).toMatchSnapshot();
   });
 
   test('Generated QL schema (published only)', () => {
-    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });

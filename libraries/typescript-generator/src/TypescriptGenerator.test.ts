@@ -6,7 +6,7 @@ describe('generateTypescriptForSchema', () => {
   test('empty', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({ entityTypes: [], valueTypes: [] }),
+        adminSchema: new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] }),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -16,8 +16,9 @@ describe('generateTypescriptForSchema', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
           valueTypes: [],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -32,6 +33,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'Booleans',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [
                 { name: 'boolean', type: FieldType.Boolean },
                 { name: 'booleanList', type: FieldType.Boolean, list: true },
@@ -39,6 +41,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -53,6 +56,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'EntityTypes',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [
                 { name: 'entityType', type: FieldType.EntityType },
                 { name: 'entityTypeList', type: FieldType.EntityType, list: true },
@@ -60,6 +64,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -74,6 +79,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'Locations',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [
                 { name: 'location', type: FieldType.Location },
                 { name: 'locationList', type: FieldType.Location, list: true },
@@ -81,6 +87,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -95,6 +102,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'RichTexts',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [
                 { name: 'richText', type: FieldType.RichText },
                 { name: 'richTextList', type: FieldType.RichText, list: true },
@@ -102,6 +110,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -116,6 +125,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'Strings',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [
                 { name: 'string', type: FieldType.String, isName: true, required: true },
                 { name: 'stringList', type: FieldType.String, list: true, required: true },
@@ -123,6 +133,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           valueTypes: [],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -137,6 +148,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'ValueTypes',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [
                 { name: 'valueType', type: FieldType.ValueType, required: true },
                 {
@@ -163,6 +175,7 @@ describe('generateTypescriptForSchema', () => {
               fields: [{ name: 'string', type: FieldType.String, required: true }],
             },
           ],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -177,6 +190,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'ValueType',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'valueType', type: FieldType.ValueType, required: true }],
             },
           ],
@@ -187,6 +201,7 @@ describe('generateTypescriptForSchema', () => {
               fields: [],
             },
           ],
+          patterns: [],
         }),
         publishedSchema: null,
       })
@@ -199,7 +214,11 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: new AdminSchema({ entityTypes: [], valueTypes: [] }).toPublishedSchema(),
+        publishedSchema: new AdminSchema({
+          entityTypes: [],
+          valueTypes: [],
+          patterns: [],
+        }).toPublishedSchema(),
       })
     ).toMatchSnapshot();
   });
@@ -213,10 +232,12 @@ describe('generateTypescriptForSchema published', () => {
             {
               name: 'Foo',
               adminOnly: true,
+              authKeyPattern: null,
               fields: [],
             },
           ],
           valueTypes: [],
+          patterns: [],
         }).toPublishedSchema(),
       })
     ).toMatchSnapshot();
@@ -231,10 +252,12 @@ describe('generateTypescriptForSchema published', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'field', adminOnly: true, type: FieldType.String }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         }).toPublishedSchema(),
       })
     ).toMatchSnapshot();
