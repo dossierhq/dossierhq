@@ -11,6 +11,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "fields": [
         {
           "adminOnly": true,
+          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -73,6 +74,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "fields": [
         {
           "adminOnly": false,
+          "existingFieldSpec": null,
           "list": false,
           "multiline": true,
           "name": "bar",
@@ -141,6 +143,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
           "entityTypes": [
             "Bar",
           ],
+          "existingFieldSpec": null,
           "list": false,
           "name": "self",
           "required": false,
@@ -210,6 +213,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "fields": [
         {
           "adminOnly": false,
+          "existingFieldSpec": null,
           "list": false,
           "name": "self",
           "required": false,

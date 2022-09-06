@@ -1,5 +1,6 @@
 import type {
   AdminEntityTypeSpecificationUpdate,
+  AdminFieldSpecification,
   AdminSchema,
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
@@ -44,6 +45,7 @@ export interface SchemaFieldDraft {
   richTextNodes?: string[];
   entityTypes?: string[];
   valueTypes?: string[];
+  existingFieldSpec: AdminFieldSpecification | null;
 }
 
 export interface SchemaEditorState {
@@ -286,6 +288,7 @@ class AddFieldAction extends TypeAction {
       list: false,
       required: false,
       adminOnly: false,
+      existingFieldSpec: null,
     };
 
     const fields = [...typeSpec.fields, field];
@@ -672,6 +675,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           list: !!fieldSpec.list,
           required: !!fieldSpec.required,
           adminOnly: !!fieldSpec.adminOnly,
+          existingFieldSpec: fieldSpec,
         };
         if (fieldSpec.type === FieldType.String) {
           fieldDraft.multiline = !!fieldSpec.multiline;

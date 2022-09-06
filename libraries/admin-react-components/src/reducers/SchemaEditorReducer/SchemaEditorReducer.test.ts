@@ -429,6 +429,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -518,6 +519,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -580,6 +582,10 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "title",
+                  "type": "String",
+                },
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -589,6 +595,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -698,6 +705,10 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "title",
+                  "type": "String",
+                },
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -707,6 +718,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -809,6 +821,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
                 "entityTypes": [
                   "Foo",
                 ],
+                "existingFieldSpec": null,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -906,6 +919,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                 "entityTypes": [
                   "Foo",
                 ],
+                "existingFieldSpec": null,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -1018,6 +1032,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "name": "foo",
                 "required": false,
@@ -1112,6 +1127,7 @@ describe('ChangeFieldRequiredAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "multiline": false,
                 "name": "bar",
@@ -1193,6 +1209,7 @@ describe('ChangeFieldTypeAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1286,6 +1303,7 @@ describe('ChangeFieldTypeAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": true,
                 "name": "bar",
                 "required": false,
@@ -1350,6 +1368,7 @@ describe('ChangeFieldTypeAction', () => {
               {
                 "adminOnly": false,
                 "entityTypes": [],
+                "existingFieldSpec": null,
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -1428,6 +1447,7 @@ describe('ChangeFieldTypeAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "name": "bar",
                 "required": false,
@@ -1563,6 +1583,10 @@ describe('DeleteFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "title",
+                  "type": "String",
+                },
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -1699,6 +1723,10 @@ describe('RenameFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "title",
+                  "type": "String",
+                },
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -1708,6 +1736,7 @@ describe('RenameFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "existingFieldSpec": null,
                 "list": false,
                 "multiline": false,
                 "name": "baz",
@@ -2047,6 +2076,10 @@ describe('UpdateSchemaSpecificationAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "title",
+                  "type": "String",
+                },
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -2131,6 +2164,16 @@ describe('UpdateSchemaSpecificationAction', () => {
               {
                 "adminOnly": false,
                 "entityTypes": [],
+                "existingFieldSpec": {
+                  "name": "richText",
+                  "richTextNodes": [
+                    "root",
+                    "paragraph",
+                    "text",
+                    "entity",
+                  ],
+                  "type": "RichText",
+                },
                 "list": false,
                 "name": "richText",
                 "required": false,
@@ -2228,6 +2271,10 @@ describe('UpdateSchemaSpecificationAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "title",
+                  "type": "String",
+                },
                 "list": false,
                 "multiline": false,
                 "name": "title",
@@ -2284,6 +2331,13 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "entityTypes": [
                   "Foo",
                 ],
+                "existingFieldSpec": {
+                  "entityTypes": [
+                    "Foo",
+                  ],
+                  "name": "reference",
+                  "type": "EntityType",
+                },
                 "list": false,
                 "name": "reference",
                 "required": false,
@@ -2341,6 +2395,13 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "entityTypes": [
                   "Foo",
                 ],
+                "existingFieldSpec": {
+                  "entityTypes": [
+                    "Foo",
+                  ],
+                  "name": "reference",
+                  "type": "EntityType",
+                },
                 "list": false,
                 "name": "reference",
                 "required": false,
@@ -2393,6 +2454,13 @@ describe('UpdateSchemaSpecificationAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "valueItem",
+                  "type": "ValueType",
+                  "valueTypes": [
+                    "ValueItem",
+                  ],
+                },
                 "list": false,
                 "name": "valueItem",
                 "required": false,
@@ -2450,6 +2518,13 @@ describe('UpdateSchemaSpecificationAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "existingFieldSpec": {
+                  "name": "valueItem",
+                  "type": "ValueType",
+                  "valueTypes": [
+                    "ValueItem",
+                  ],
+                },
                 "list": false,
                 "name": "valueItem",
                 "required": false,
