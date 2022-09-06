@@ -16,7 +16,10 @@ function getHistory() {
   return getWindow()?.history?.state;
 }
 
-export function useWarningOnExit(message: string, shouldWarn = true) {
+export function useWarningOnExit(
+  message: string,
+  shouldWarn: boolean | ((fromUrl: string, toUrl: string) => boolean)
+) {
   const router = useRouter();
   const lastHistory = useRef(getHistory());
 
@@ -49,7 +52,7 @@ export function useWarningOnExit(message: string, shouldWarn = true) {
   }, [revertTheChangeRouterJustMade, router]);
 
   useEffect(() => {
-    if (!shouldWarn) {
+    if (shouldWarn === false) {
       return;
     }
 
@@ -58,8 +61,10 @@ export function useWarningOnExit(message: string, shouldWarn = true) {
 
     const routeChangeStart = (url: string) => {
       if (router.asPath !== url && !isWarned) {
+        const showConfirm =
+          typeof shouldWarn === 'function' ? shouldWarn(router.asPath, url) : true;
         isWarned = true;
-        if (!window || window.confirm(message)) {
+        if (!showConfirm || !window || window.confirm(message)) {
           router.push(url);
           return;
         }
