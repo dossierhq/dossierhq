@@ -53,6 +53,7 @@ export function SchemaTypeEditor({
       {typeDraft.fields.map((fieldDraft) => (
         <SchemaFieldEditor
           key={fieldDraft.name}
+          typeDraft={typeDraft}
           fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
           fieldDraft={fieldDraft}
           schemaEditorState={schemaEditorState}

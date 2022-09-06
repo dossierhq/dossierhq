@@ -41,6 +41,7 @@ export interface SchemaFieldDraft {
   list: boolean;
   required: boolean;
   adminOnly: boolean;
+  isName: boolean;
   multiline?: boolean;
   richTextNodes?: string[];
   entityTypes?: string[];
@@ -108,6 +109,21 @@ function resolveTypeStatus(state: SchemaTypeDraft): SchemaTypeDraft['status'] {
   return '';
 }
 
+function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status'] {
+  if (state.existingFieldSpec === null) {
+    return 'new';
+  }
+  if (!!state.existingFieldSpec.isName !== state.isName) return 'changed';
+  // TODO expand when supporting changing more properties of a field
+  return '';
+}
+
+function withResolvedFieldStatus(state: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+  const newStatus = resolveFieldStatus(state);
+  if (newStatus === state.status) return state;
+  return { ...state, status: newStatus };
+}
+
 // ACTION HELPERS
 
 abstract class TypeAction implements SchemaEditorStateAction {
@@ -166,15 +182,8 @@ abstract class FieldAction extends TypeAction {
     const currentFieldDraft = typeDraft.fields[fieldIndex];
 
     const newFieldDraft = this.reduceField(currentFieldDraft);
-    if (newFieldDraft === currentFieldDraft) {
-      return typeDraft;
-    }
 
-    const newFields = [...typeDraft.fields];
-    newFields[fieldIndex] = newFieldDraft;
-
-    const newTypeDraft = { ...typeDraft, fields: newFields };
-    return newTypeDraft;
+    return replaceFieldWithIndex(typeDraft, fieldIndex, withResolvedFieldStatus(newFieldDraft));
   }
 
   abstract reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft>;
@@ -235,6 +244,22 @@ function reduceFieldsOfAllTypes(
   return newState;
 }
 
+function replaceFieldWithIndex(
+  typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
+  fieldIndex: number,
+  newFieldDraft: SchemaFieldDraft
+): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+  if (typeDraft.fields[fieldIndex] === newFieldDraft) {
+    return typeDraft;
+  }
+
+  const newFields = [...typeDraft.fields];
+  newFields[fieldIndex] = newFieldDraft;
+
+  const newTypeDraft = { ...typeDraft, fields: newFields };
+  return newTypeDraft;
+}
+
 // ACTIONS
 
 class AddTypeAction implements SchemaEditorStateAction {
@@ -288,6 +313,7 @@ class AddFieldAction extends TypeAction {
       list: false,
       required: false,
       adminOnly: false,
+      isName: false,
       existingFieldSpec: null,
     };
 
@@ -373,6 +399,51 @@ class ChangeFieldAllowedValueTypesAction extends FieldAction {
   }
 }
 
+class ChangeFieldIsNameAction extends FieldAction {
+  isName: boolean;
+
+  constructor(fieldSelector: SchemaFieldSelector, isName: boolean) {
+    super(fieldSelector);
+    this.isName = isName;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.isName === this.isName) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, isName: this.isName };
+  }
+
+  override reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    let newTypeDraft = super.reduceType(typeDraft);
+    if (newTypeDraft === typeDraft) {
+      return newTypeDraft;
+    }
+
+    // Reset other field with isName is set
+    if (this.isName) {
+      const otherNameFieldIndex = newTypeDraft.fields.findIndex(
+        (it) => it.isName && it.name !== this.fieldName
+      );
+      if (otherNameFieldIndex >= 0) {
+        newTypeDraft = replaceFieldWithIndex(
+          newTypeDraft,
+          otherNameFieldIndex,
+          withResolvedFieldStatus({
+            ...newTypeDraft.fields[otherNameFieldIndex],
+            isName: false,
+          })
+        );
+      }
+    }
+
+    return newTypeDraft;
+  }
+}
+
 class ChangeFieldMultilineAction extends FieldAction {
   multiline: boolean;
 
@@ -423,6 +494,7 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     const newFieldDraft = { ...fieldDraft, type: this.fieldType, list: this.list };
+    //TODO reset isName
 
     if (this.fieldType === FieldType.String) {
       newFieldDraft.multiline = !!newFieldDraft.multiline;
@@ -675,6 +747,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           list: !!fieldSpec.list,
           required: !!fieldSpec.required,
           adminOnly: !!fieldSpec.adminOnly,
+          isName: !!fieldSpec.isName,
           existingFieldSpec: fieldSpec,
         };
         if (fieldSpec.type === FieldType.String) {
@@ -714,6 +787,7 @@ export const SchemaEditorActions = {
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
+  ChangeFieldIsName: ChangeFieldIsNameAction,
   ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
@@ -770,6 +844,7 @@ function getTypeUpdateFromEditorState(
       type: draftField.type,
       required: draftField.required,
       adminOnly: draftField.adminOnly,
+      ...(draftField.isName ? { isName: true } : undefined),
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
       ...(draftField.type === FieldType.RichText ? { richTextNodes } : undefined),
