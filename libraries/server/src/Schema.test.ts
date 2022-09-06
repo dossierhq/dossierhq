@@ -18,7 +18,7 @@ describe('AdminSchema getSchema', () => {
     const result = await getSchemaSpecification(databaseAdapter, context);
 
     // defaults to empty spec
-    expectResultValue(result, { entityTypes: [], valueTypes: [] });
+    expectResultValue(result, { entityTypes: [], valueTypes: [], patterns: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
         [
@@ -34,8 +34,9 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecification = {
-      entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+      entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
+      patterns: [],
     };
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await getSchemaSpecification(databaseAdapter, context);

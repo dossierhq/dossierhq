@@ -20,10 +20,11 @@ import {
 
 const schema = new AdminSchema({
   entityTypes: [
-    { name: 'QueryGeneratorFoo', adminOnly: false, fields: [] },
-    { name: 'QueryGeneratorBar', adminOnly: false, fields: [] },
+    { name: 'QueryGeneratorFoo', adminOnly: false, authKeyPattern: null, fields: [] },
+    { name: 'QueryGeneratorBar', adminOnly: false, authKeyPattern: null, fields: [] },
   ],
   valueTypes: [],
+  patterns: [],
 });
 
 const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];

@@ -19,6 +19,7 @@ const schemaSpec: AdminSchemaSpecification = {
     {
       name: 'EntityCodecFoo',
       adminOnly: false,
+      authKeyPattern: null,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'strings', type: FieldType.String, list: true },
@@ -35,6 +36,7 @@ const schemaSpec: AdminSchemaSpecification = {
     {
       name: 'EntityCodecBar',
       adminOnly: false,
+      authKeyPattern: null,
       fields: [],
     },
   ],
@@ -53,6 +55,7 @@ const schemaSpec: AdminSchemaSpecification = {
       ],
     },
   ],
+  patterns: [],
 };
 
 const schema = new AdminSchema(schemaSpec);

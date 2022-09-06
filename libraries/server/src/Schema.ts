@@ -15,19 +15,22 @@ export async function getSchemaSpecification(
   const { logger } = context;
   logger.info('Loading schema');
   const result = await databaseAdapter.schemaGetSpecification(context);
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   const specification = result.value;
   if (!specification) {
     logger.info('No schema set, defaulting to empty');
-    return ok({ entityTypes: [], valueTypes: [] });
+    return ok({ entityTypes: [], valueTypes: [], patterns: [] });
   }
+
+  // Handle old schema format which lacked patterns
+  if (!specification.patterns) specification.patterns = [];
+
   logger.info(
-    'Loaded schema with %d entity types and %d value types',
+    'Loaded schema with %d entity types, %d value types, %d patterns',
     specification.entityTypes.length,
-    specification.valueTypes.length
+    specification.valueTypes.length,
+    specification.patterns.length
   );
   return ok(specification);
 }

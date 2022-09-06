@@ -102,9 +102,15 @@ describe('AddDraftAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -119,9 +125,15 @@ describe('AddDraftAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -156,9 +168,15 @@ describe('DeleteDraftAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -178,10 +196,11 @@ describe('SetActiveEntityAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [] },
-            { name: 'Bar', adminOnly: false, fields: [] },
+            { name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] },
+            { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({
@@ -207,9 +226,15 @@ describe('SetNameAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -234,10 +259,12 @@ describe('SetNameAction', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -264,10 +291,12 @@ describe('SetFieldAction', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -286,10 +315,12 @@ describe('SetFieldAction', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -308,9 +339,15 @@ describe('SetAuthKeyAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -332,10 +369,12 @@ describe('UpdateEntityAction', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -374,10 +413,12 @@ describe('UpdateEntityAction', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -410,7 +451,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceEntityEditorState(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
+        new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
       )
     );
     expect(state).toMatchSnapshot();
@@ -434,10 +475,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       )
     );
@@ -477,10 +520,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -535,10 +580,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -599,10 +646,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -687,10 +736,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -730,10 +781,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               adminOnly: false,
+              authKeyPattern: null,
               fields: [{ name: 'foo', type: FieldType.EntityType }],
             },
           ],
           valueTypes: [],
+          patterns: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id: firstId }),

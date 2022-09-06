@@ -1,3 +1,4 @@
+import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
 import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
@@ -8,6 +9,14 @@ import {
   ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
 } from './SchemaEditorReducer';
+
+function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
+  return new AdminSchema(
+    new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+      .mergeWith(update)
+      .valueOrThrow()
+  );
+}
 
 function reduceSchemaEditorStateActions(
   state: SchemaEditorState,
@@ -44,9 +53,7 @@ describe('AddTypeAction', () => {
   test('add entity type to empty schema', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'Foo')
     );
 
@@ -70,6 +77,7 @@ describe('AddTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -95,9 +103,7 @@ describe('AddTypeAction', () => {
   test('add value type to empty schema', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('value', 'Foo')
     );
 
@@ -113,6 +119,7 @@ describe('AddTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -147,10 +154,7 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddType('entity', 'Bar')
     );
@@ -184,10 +188,12 @@ describe('AddTypeAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -214,10 +220,7 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-        })
+        createAdminSchema({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddType('value', 'Bar')
     );
@@ -234,6 +237,7 @@ describe('AddTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -280,9 +284,7 @@ describe('AddTypeAction', () => {
   test('add two entity types (orders)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'ZooKeeper'),
       new SchemaEditorActions.AddType('entity', 'Anaconda')
     );
@@ -314,6 +316,7 @@ describe('AddTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -344,9 +347,7 @@ describe('AddTypeAction', () => {
   test('add two value types (orders)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('value', 'ZooKeeper'),
       new SchemaEditorActions.AddType('value', 'Anaconda')
     );
@@ -363,6 +364,7 @@ describe('AddTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -411,10 +413,7 @@ describe('AddFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
@@ -449,10 +448,12 @@ describe('AddFieldAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -487,10 +488,7 @@ describe('AddFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-        })
+        createAdminSchema({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
@@ -503,6 +501,7 @@ describe('AddFieldAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -563,11 +562,10 @@ describe('AddFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
           ],
-          valueTypes: [],
         })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
@@ -618,6 +616,7 @@ describe('AddFieldAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "name": "title",
@@ -627,6 +626,7 @@ describe('AddFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -668,8 +668,7 @@ describe('AddFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
+        createAdminSchema({
           valueTypes: [
             { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
           ],
@@ -687,6 +686,7 @@ describe('AddFieldAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -775,10 +775,7 @@ describe('ChangeFieldAdminOnlyAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldAdminOnly(
@@ -797,10 +794,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
@@ -846,10 +840,12 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -888,10 +884,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
@@ -949,10 +942,12 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -998,10 +993,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-        })
+        createAdminSchema({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
@@ -1023,6 +1015,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -1088,12 +1081,7 @@ describe('ChangeFieldIsNameAction', () => {
   test('make new string field is-name in new type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-        })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'TitleOnly'),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'title'),
       new SchemaEditorActions.ChangeFieldIsName(
@@ -1113,7 +1101,7 @@ describe('ChangeFieldIsNameAction', () => {
     let state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             {
               name: 'TitleOnly',
@@ -1121,7 +1109,6 @@ describe('ChangeFieldIsNameAction', () => {
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
         })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'other'),
@@ -1171,10 +1158,7 @@ describe('ChangeFieldMultilineAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldMultiline(
@@ -1196,10 +1180,7 @@ describe('ChangeFieldRequiredAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldRequired(
@@ -1238,10 +1219,12 @@ describe('ChangeFieldRequiredAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1278,10 +1261,7 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
@@ -1320,10 +1300,12 @@ describe('ChangeFieldTypeAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1358,10 +1340,7 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-        })
+        createAdminSchema({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
@@ -1379,6 +1358,7 @@ describe('ChangeFieldTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -1438,10 +1418,7 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
@@ -1481,10 +1458,12 @@ describe('ChangeFieldTypeAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1519,10 +1498,7 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
@@ -1562,10 +1538,12 @@ describe('ChangeFieldTypeAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1601,12 +1579,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
   test('make new entity type admin only', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-        })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true)
     );
@@ -1630,6 +1603,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1658,11 +1632,10 @@ describe('DeleteFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
           ],
-          valueTypes: [],
         })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
@@ -1702,6 +1675,7 @@ describe('DeleteFieldAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "name": "title",
@@ -1711,6 +1685,7 @@ describe('DeleteFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1728,9 +1703,7 @@ describe('DeleteTypeAction', () => {
   test('delete newly added entity type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
     );
@@ -1744,6 +1717,7 @@ describe('DeleteTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1761,9 +1735,7 @@ describe('DeleteTypeAction', () => {
   test('delete newly added value type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('value', 'Foo'),
       new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
     );
@@ -1777,6 +1749,7 @@ describe('DeleteTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1796,11 +1769,10 @@ describe('RenameFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
           ],
-          valueTypes: [],
         })
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
@@ -1854,6 +1826,7 @@ describe('RenameFieldAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "name": "title",
@@ -1863,6 +1836,7 @@ describe('RenameFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1905,12 +1879,7 @@ describe('RenameTypeAction', () => {
   test('add and rename type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-        })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
     );
@@ -1935,6 +1904,7 @@ describe('RenameTypeAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -1960,12 +1930,7 @@ describe('RenameTypeAction', () => {
   test('add and rename entity type with fields referring to itself', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-        })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
@@ -1990,12 +1955,7 @@ describe('RenameTypeAction', () => {
   test('add and rename value type with fields referring to itself', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-        })
-      ),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
       new SchemaEditorActions.AddType('value', 'Foo'),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
@@ -2023,10 +1983,7 @@ describe('SetActiveSelectorAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
-        })
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
       ),
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, false)
     );
@@ -2052,10 +2009,12 @@ describe('SetActiveSelectorAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -2072,9 +2031,8 @@ describe('SetActiveSelectorAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-          valueTypes: [],
         })
       ),
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, true)
@@ -2101,10 +2059,12 @@ describe('SetActiveSelectorAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "Foo",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -2122,9 +2082,7 @@ describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
-      new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [] })
-      )
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({}))
     );
     expect(state).toMatchInlineSnapshot(`
       {
@@ -2135,6 +2093,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -2151,7 +2110,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             {
               name: 'TitleOnly',
@@ -2159,7 +2118,6 @@ describe('UpdateSchemaSpecificationAction', () => {
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
         })
       )
     );
@@ -2199,6 +2157,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "isName": true,
@@ -2209,6 +2168,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "TitleOnly",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -2225,7 +2185,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             {
               name: 'TitleOnly',
@@ -2244,7 +2204,6 @@ describe('UpdateSchemaSpecificationAction', () => {
               ],
             },
           ],
-          valueTypes: [],
         })
       )
     );
@@ -2299,6 +2258,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "name": "richText",
@@ -2314,6 +2274,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "TitleOnly",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },
@@ -2330,8 +2291,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
-          entityTypes: [],
+        createAdminSchema({
           valueTypes: [
             {
               name: 'TitleOnly',
@@ -2352,6 +2312,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -2402,7 +2363,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             {
               name: 'EntityReference',
@@ -2460,6 +2421,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "entityTypes": [
@@ -2472,6 +2434,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "EntityReference",
               },
             ],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -2530,7 +2493,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        createAdminSchema({
           entityTypes: [
             {
               name: 'EntityWithValueItem',
@@ -2588,6 +2551,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [
                   {
                     "name": "valueItem",
@@ -2600,6 +2564,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "EntityWithValueItem",
               },
             ],
+            "patterns": [],
             "valueTypes": [
               {
                 "adminOnly": false,
@@ -2657,7 +2622,7 @@ describe('UpdateSchemaSpecificationAction', () => {
 
 describe('SchemaEditorReducer scenarios', () => {
   test('add type, save, force update', () => {
-    const initialSchema = new AdminSchema({ entityTypes: [], valueTypes: [] });
+    const initialSchema = createAdminSchema({});
     const beforeSaveState = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),
@@ -2698,10 +2663,12 @@ describe('SchemaEditorReducer scenarios', () => {
             "entityTypes": [
               {
                 "adminOnly": false,
+                "authKeyPattern": null,
                 "fields": [],
                 "name": "NewType",
               },
             ],
+            "patterns": [],
             "valueTypes": [],
           },
         },

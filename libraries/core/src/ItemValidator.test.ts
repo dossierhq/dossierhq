@@ -3,7 +3,7 @@ import { ItemTraverseNodeErrorType } from './ItemTraverser.js';
 import { validateTraverseNode } from './ItemValidator.js';
 import { AdminSchema } from './Schema.js';
 
-const schema = new AdminSchema({ entityTypes: [], valueTypes: [] });
+const schema = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] });
 
 describe('validateTraverseNode', () => {
   test('foo', () => {

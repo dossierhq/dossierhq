@@ -57,7 +57,11 @@ export function generateTypescriptForSchema({
 }
 
 function generateAllTypesUnion(
-  types: AdminEntityTypeSpecification[] | PublishedEntityTypeSpecification[],
+  types:
+    | AdminEntityTypeSpecification[]
+    | PublishedEntityTypeSpecification[]
+    | AdminValueTypeSpecification[]
+    | PublishedValueTypeSpecification[],
   adminOrPublished: 'Admin' | 'Published',
   entitiesOrValueItems: 'Entities' | 'ValueItems'
 ) {

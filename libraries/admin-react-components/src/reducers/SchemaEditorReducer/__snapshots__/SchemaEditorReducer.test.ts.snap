@@ -31,10 +31,12 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "entityTypes": [
         {
           "adminOnly": false,
+          "authKeyPattern": null,
           "fields": [],
           "name": "Foo",
         },
       ],
+      "patterns": [],
       "valueTypes": [],
     },
   },
@@ -96,6 +98,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`]
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
+      "patterns": [],
       "valueTypes": [],
     },
   },
@@ -172,6 +175,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
       "entityTypes": [
         {
           "adminOnly": false,
+          "authKeyPattern": null,
           "fields": [
             {
               "isName": true,
@@ -182,6 +186,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
           "name": "TitleOnly",
         },
       ],
+      "patterns": [],
       "valueTypes": [],
     },
   },
@@ -265,6 +270,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
       "entityTypes": [
         {
           "adminOnly": false,
+          "authKeyPattern": null,
           "fields": [
             {
               "isName": true,
@@ -275,6 +281,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
           "name": "TitleOnly",
         },
       ],
+      "patterns": [],
       "valueTypes": [],
     },
   },
@@ -315,10 +322,12 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "entityTypes": [
         {
           "adminOnly": false,
+          "authKeyPattern": null,
           "fields": [],
           "name": "Foo",
         },
       ],
+      "patterns": [],
       "valueTypes": [],
     },
   },
@@ -382,6 +391,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
+      "patterns": [],
       "valueTypes": [],
     },
   },
@@ -425,6 +435,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
+      "patterns": [],
       "valueTypes": [],
     },
   },

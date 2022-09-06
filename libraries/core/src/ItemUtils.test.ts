@@ -9,6 +9,7 @@ const schema = new AdminSchema({
     {
       name: 'Foo',
       adminOnly: false,
+      authKeyPattern: null,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
@@ -27,6 +28,7 @@ const schema = new AdminSchema({
       ],
     },
   ],
+  patterns: [],
 });
 
 function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: string) {
