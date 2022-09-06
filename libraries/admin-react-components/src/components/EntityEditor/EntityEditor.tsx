@@ -43,7 +43,18 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
       setSubmitLoading,
       adminClient,
       dispatchEntityEditorState,
-      showNotification
+      showNotification,
+      false
+    );
+  }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
+  const handleSubmitAndPublishClick = useCallback(() => {
+    submitEntity(
+      draftState,
+      setSubmitLoading,
+      adminClient,
+      dispatchEntityEditorState,
+      showNotification,
+      true
     );
   }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
 
@@ -78,6 +89,11 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
           {isNewEntity ? 'Create' : 'Save'}
         </Button>
+        {!draftState.draft.entitySpec.adminOnly ? (
+          <Button disabled={!isSubmittable} onClick={handleSubmitAndPublishClick}>
+            {isNewEntity ? 'Create & publish' : 'Save & publish'}
+          </Button>
+        ) : null}
         <PublishingButton
           disabled={draftState.status !== ''}
           entity={draftState.entity}
@@ -104,7 +120,8 @@ async function submitEntity(
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   adminClient: AdminClient,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
-  showNotification: (notification: NotificationInfo) => void
+  showNotification: (notification: NotificationInfo) => void,
+  publish: boolean
 ) {
   setSubmitLoading(true);
   dispatchEntityEditorState(
@@ -115,10 +132,10 @@ async function submitEntity(
   let result;
   if (isCreate) {
     const entityCreate = getEntityCreateFromDraftState(draftState);
-    result = await adminClient.createEntity(entityCreate);
+    result = await adminClient.createEntity(entityCreate, { publish });
   } else {
     const entityUpdate = getEntityUpdateFromDraftState(draftState);
-    result = await adminClient.updateEntity(entityUpdate);
+    result = await adminClient.updateEntity(entityUpdate, { publish });
   }
   if (result.isOk()) {
     showNotification({ color: 'success', message: isCreate ? 'Created entity' : 'Updated entity' });
