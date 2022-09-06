@@ -41,6 +41,10 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
     [entity, entitySpec]
   );
 
+  if (!buttonAction) {
+    return null;
+  }
+
   return (
     <Row>
       <Button
@@ -51,9 +55,8 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
             : undefined
         }
       >
-        {buttonAction?.name ?? 'Publish'}
+        {buttonAction.name}
       </Button>
-
       {dropdownActions.length > 0 ? (
         <ButtonDropdown
           disabled={disabled}
