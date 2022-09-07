@@ -11,11 +11,9 @@ import {
 } from './SchemaEditorReducer';
 
 function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
-  return new AdminSchema(
-    new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
-      .mergeWith(update)
-      .valueOrThrow()
-  );
+  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+    .mergeWith(update)
+    .valueOrThrow();
 }
 
 function reduceSchemaEditorStateActions(
@@ -2630,11 +2628,9 @@ describe('SchemaEditorReducer scenarios', () => {
       new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true)
     );
 
-    const newAdminSchema = new AdminSchema(
-      initialSchema
-        .mergeWith(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
-        .valueOrThrow()
-    );
+    const newAdminSchema = initialSchema
+      .mergeWith(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
+      .valueOrThrow();
 
     const afterSaveState = reduceSchemaEditorState(
       beforeSaveState,

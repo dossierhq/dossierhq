@@ -4,11 +4,10 @@ import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generat
 import { IntegrationTestSchema } from '../src/IntegrationTestSchema.ts';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
-  const adminSchema = new AdminSchema(
-    new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
-      .mergeWith(schemaSpec)
-      .valueOrThrow()
-  );
+  const adminSchema = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+    .mergeWith(schemaSpec)
+    .valueOrThrow();
+
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
   await Deno.writeTextFile(filename, sourceCode);
