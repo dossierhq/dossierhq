@@ -81,7 +81,11 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         <Field>
           <Field.Label>Authorization key</Field.Label>
           <Field.Control>
-            <AuthKeyPicker value={draftState.draft.authKey} onValueChange={handleAuthKeyChange} />
+            <AuthKeyPicker
+              patternName={draftState.draft.entitySpec.authKeyPattern}
+              value={draftState.draft.authKey}
+              onValueChange={handleAuthKeyChange}
+            />
           </Field.Control>
         </Field>
       ) : null}

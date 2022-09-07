@@ -5,6 +5,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'PersonalNote',
+      authKeyPattern: 'subject',
       fields: [
         {
           name: 'note',
@@ -27,6 +28,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'PlaceOfBusiness',
+      authKeyPattern: 'none',
       fields: [
         { name: 'name', type: FieldType.String, isName: true, required: true },
         { name: 'address', type: FieldType.ValueType, valueTypes: ['Address'] },
@@ -36,6 +38,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Review',
+      authKeyPattern: 'none',
       fields: [
         { name: 'reviewer', type: FieldType.EntityType, entityTypes: ['Reviewer'], required: true },
         {
@@ -49,6 +52,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Reviewer',
+      authKeyPattern: 'none',
       fields: [{ name: 'name', type: FieldType.String, isName: true, required: true }],
     },
   ],
@@ -62,6 +66,16 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         { name: 'zip', type: FieldType.String, required: true },
         { name: 'city', type: FieldType.String, required: true },
       ],
+    },
+  ],
+  patterns: [
+    {
+      name: 'none',
+      pattern: '^none$',
+    },
+    {
+      name: 'subject',
+      pattern: '^subject$',
     },
   ],
 };
