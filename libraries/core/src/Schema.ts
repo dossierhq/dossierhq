@@ -318,7 +318,7 @@ export class AdminSchema {
 
   mergeWith(
     other: AdminSchemaSpecificationUpdate
-  ): Result<AdminSchemaSpecification, typeof ErrorType.BadRequest> {
+  ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
@@ -375,7 +375,7 @@ export class AdminSchema {
     }
 
     // TODO normalize
-    return ok(schemaSpec);
+    return ok(new AdminSchema(schemaSpec));
   }
 
   toPublishedSchema(): PublishedSchema {

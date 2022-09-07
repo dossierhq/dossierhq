@@ -45,23 +45,17 @@ export async function updateSchemaSpecification(
 > {
   return await context.withTransaction(async (context) => {
     const previousSpecificationResult = await getSchemaSpecification(databaseAdapter, context);
-    if (previousSpecificationResult.isError()) {
-      return previousSpecificationResult;
-    }
-    const schema = new AdminSchema(previousSpecificationResult.value);
-    const mergeResult = schema.mergeWith(schemaSpec);
-    if (mergeResult.isError()) {
-      return mergeResult;
-    }
-    const schemaSpecification = mergeResult.value;
+    if (previousSpecificationResult.isError()) return previousSpecificationResult;
+
+    const oldSchema = new AdminSchema(previousSpecificationResult.value);
+    const mergeResult = oldSchema.mergeWith(schemaSpec);
+    if (mergeResult.isError()) return mergeResult;
+    const newSchema = mergeResult.value;
+
     // TODO return with 'none' if same as previous schema
-    const updateResult = await databaseAdapter.schemaUpdateSpecification(
-      context,
-      schemaSpecification
-    );
-    if (updateResult.isError()) {
-      return updateResult;
-    }
-    return ok({ effect: 'updated', schemaSpecification });
+    const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
+    if (updateResult.isError()) return updateResult;
+
+    return ok({ effect: 'updated', schemaSpecification: newSchema.spec });
   });
 }

@@ -1,18 +1,19 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils.js';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
 import { ErrorType } from './ErrorResult.js';
 import { AdminSchema, FieldType, RichTextNodeType } from './Schema.js';
 
 describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
-    expectResultValue(
-      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] }).mergeWith({}),
-      {
-        entityTypes: [],
-        valueTypes: [],
-        patterns: [],
-      }
-    );
+    expect(
+      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+        .mergeWith({})
+        .valueOrThrow().spec
+    ).toEqual({
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+    });
   });
 
   test('empty->entity with pattern', () => {
@@ -22,7 +23,7 @@ describe('mergeWith()', () => {
           entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
           patterns: [{ name: 'a-pattern', pattern: '^hello$' }],
         })
-        .valueOrThrow()
+        .valueOrThrow().spec
     ).toMatchSnapshot();
   });
 
@@ -37,8 +38,8 @@ describe('mergeWith()', () => {
       })
       .valueOrThrow();
 
-    expect(result).toMatchSnapshot();
-    expect(result.patterns[0].pattern).toBe('^new-pattern$');
+    expect(result.spec).toMatchSnapshot();
+    expect(result.getPattern('a-pattern')?.pattern).toBe('^new-pattern$');
   });
 
   test('unused pattern is removed', () => {
@@ -52,8 +53,8 @@ describe('mergeWith()', () => {
       })
       .valueOrThrow();
 
-    expect(result).toMatchSnapshot();
-    expect(result.patterns.length).toBe(0);
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.patterns.length).toBe(0);
   });
 });
 
