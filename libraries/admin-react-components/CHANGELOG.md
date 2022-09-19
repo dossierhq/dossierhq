@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-admin-react-components
 
-This log was last generated on Mon, 19 Sep 2022 13:10:56 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Sep 2022 21:05:31 GMT and should not be manually modified.
+
+## 0.1.31
+Mon, 19 Sep 2022 21:05:31 GMT
+
+### Updates
+
+- Add entity history dialog
 
 ## 0.1.30
 Mon, 19 Sep 2022 13:10:56 GMT
