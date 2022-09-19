@@ -107,6 +107,26 @@ export function assertIsAdminStrings(
   }
 }
 
+export interface AdminSubjectOnlyFields {
+  message: string | null;
+}
+
+export type AdminSubjectOnly = AdminEntity<'SubjectOnly', AdminSubjectOnlyFields>;
+
+export function isAdminSubjectOnly(
+  entity: AdminEntity | AdminSubjectOnly
+): entity is AdminSubjectOnly {
+  return entity.info.type === 'SubjectOnly';
+}
+
+export function assertIsAdminSubjectOnly(
+  entity: AdminEntity | AdminSubjectOnly
+): asserts entity is AdminSubjectOnly {
+  if (entity.info.type !== 'SubjectOnly') {
+    throw new Error('Expected info.type = SubjectOnly (but was ' + entity.info.type + ')');
+  }
+}
+
 export interface AdminTitleOnlyFields {
   title: string | null;
 }
@@ -309,6 +329,26 @@ export function assertIsPublishedStrings(
 ): asserts entity is PublishedStrings {
   if (entity.info.type !== 'Strings') {
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedSubjectOnlyFields {
+  message: string | null;
+}
+
+export type PublishedSubjectOnly = PublishedEntity<'SubjectOnly', PublishedSubjectOnlyFields>;
+
+export function isPublishedSubjectOnly(
+  entity: PublishedEntity | PublishedSubjectOnly
+): entity is PublishedSubjectOnly {
+  return entity.info.type === 'SubjectOnly';
+}
+
+export function assertIsPublishedSubjectOnly(
+  entity: PublishedEntity | PublishedSubjectOnly
+): asserts entity is PublishedSubjectOnly {
+  if (entity.info.type !== 'SubjectOnly') {
+    throw new Error('Expected info.type = SubjectOnly (but was ' + entity.info.type + ')');
   }
 }
 

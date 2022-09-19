@@ -8,7 +8,7 @@ import type {
   PromiseResult,
   PublishedSchema,
 } from '@jonasb/datadata-core';
-import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authResolveAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -32,25 +32,37 @@ export async function adminCreateEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  // entity
   const resolvedResult = resolveCreateEntity(adminSchema, entity);
-  if (resolvedResult.isError()) {
-    return resolvedResult;
-  }
-  const createEntity = resolvedResult.value;
+  if (resolvedResult.isError()) return resolvedResult;
+  const { createEntity, entitySpec } = resolvedResult.value;
 
+  // auth key
   const resolvedAuthKeyResult = await authResolveAuthorizationKey(
     authorizationAdapter,
     context,
-    entity.info.authKey
+    createEntity.info.authKey
   );
-  if (resolvedAuthKeyResult.isError()) {
-    return resolvedAuthKeyResult;
+  if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
+
+  if (entitySpec.authKeyPattern) {
+    const authKeyPattern = adminSchema.getPattern(entitySpec.authKeyPattern);
+    if (!authKeyPattern) {
+      return notOk.Generic(
+        `Pattern '${entitySpec.authKeyPattern}' for authKey of type '${entitySpec.name}' not found`
+      );
+    }
+    const authKeyRegExp = new RegExp(authKeyPattern.pattern);
+    if (!authKeyRegExp.test(createEntity.info.authKey)) {
+      return notOk.BadRequest(
+        `AuthKey '${createEntity.info.authKey}' does not match pattern '${authKeyPattern.name}' (${authKeyPattern.pattern})`
+      );
+    }
   }
 
+  // encode fields
   const encodeResult = await encodeAdminEntity(adminSchema, databaseAdapter, context, createEntity);
-  if (encodeResult.isError()) {
-    return encodeResult;
-  }
+  if (encodeResult.isError()) return encodeResult;
   const encodeEntityResult = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
