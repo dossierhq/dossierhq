@@ -306,7 +306,7 @@ importers:
       '@storybook/builder-webpack5': ^6.4.21
       '@storybook/manager-webpack5': ^6.4.21
       '@storybook/react': ^6.4.21
-      '@types/leaflet': ~1.7.9
+      '@types/leaflet': ~1.8.0
       '@types/lodash': ~4.14.181
       '@types/react': ~18.0.0
       '@types/react-dom': ~18.0.0
@@ -356,7 +356,7 @@ importers:
       '@storybook/builder-webpack5': 6.4.21_b3162554da50854e64a74b406ad90478
       '@storybook/manager-webpack5': 6.4.21_b3162554da50854e64a74b406ad90478
       '@storybook/react': 6.4.21_c31c968068a8394e31b4a5fe97b78444
-      '@types/leaflet': 1.7.9
+      '@types/leaflet': 1.8.0
       '@types/lodash': 4.14.181
       '@types/react': 18.0.0
       '@types/react-dom': 18.0.0
@@ -803,7 +803,7 @@ importers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': ~0.47.5
-      '@types/leaflet': ~1.7.9
+      '@types/leaflet': ~1.8.0
       '@types/leaflet.locatecontrol': ~0.74.0
       '@types/react': ~18.0.0
       eslint: ^8.16.0
@@ -826,7 +826,7 @@ importers:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.47.5
-      '@types/leaflet': 1.7.9
+      '@types/leaflet': 1.8.0
       '@types/leaflet.locatecontrol': 0.74.0
       '@types/react': 18.0.0
       eslint: 8.16.0
@@ -992,7 +992,7 @@ importers:
       '@types/base-64': ~1.0.0
       '@types/codemirror': ~5.60.5
       '@types/express': ~4.17.13
-      '@types/leaflet': ~1.7.9
+      '@types/leaflet': ~1.8.0
       '@types/leaflet.locatecontrol': ~0.74.0
       '@types/lodash': ~4.14.181
       '@types/node': ^18.0.0
@@ -1072,7 +1072,7 @@ importers:
       '@types/base-64': 1.0.0
       '@types/codemirror': 5.60.5
       '@types/express': 4.17.13
-      '@types/leaflet': 1.7.9
+      '@types/leaflet': 1.8.0
       '@types/leaflet.locatecontrol': 0.74.0
       '@types/lodash': 4.14.181
       '@types/node': 18.0.0
@@ -5643,10 +5643,10 @@ packages:
   /@types/leaflet.locatecontrol/0.74.0:
     resolution: {integrity: sha512-FxJcd5/8CvjQARz86QY+ZquKORvaFZYObYFC0fK/N/4kXTD8dhS+KUxjZCPVz54K/jWkiOvzHV2xqfxnPKf/Iw==}
     dependencies:
-      '@types/leaflet': 1.7.9
+      '@types/leaflet': 1.8.0
 
-  /@types/leaflet/1.7.9:
-    resolution: {integrity: sha512-H8vPgD49HKzqM41ArHGZM70g/tfhp8W+JcPxfnF+5H/Xvp+xiP+KQOUNWU8U89fqS1Jj3cpRY/+nbnaHFzwnFA==}
+  /@types/leaflet/1.8.0:
+    resolution: {integrity: sha512-+sXFmiJTFdhaXXIGFlV5re9AdqtAODoXbGAvxx02e5SHXL3ir7ClP5J7pahO8VmzKY3dth4RUS1nf2BTT+DW1A==}
     dependencies:
       '@types/geojson': 7946.0.8
 
