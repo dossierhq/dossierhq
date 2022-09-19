@@ -1,3 +1,4 @@
+import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
 import {
   AdminDataDataContext,
   PublishedDataDataContext,
@@ -6,7 +7,6 @@ import type { AdminSchema, PublishedSchema } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import type { FetcherOpts, FetcherParams } from 'graphiql';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 import { graphql } from 'graphql';
@@ -53,5 +53,5 @@ export default function GraphiQLEditor({
     [graphQlSchema, graphQlSession]
   );
 
-  return <GraphiQL fetcher={fetcher} headerEditorEnabled={false} />;
+  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} editorTheme="light" />;
 }

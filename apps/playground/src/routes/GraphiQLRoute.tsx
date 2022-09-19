@@ -24,7 +24,7 @@ export function GraphiQLRoute(): JSX.Element {
             <EmptyStateMessage
               icon="add"
               title="No entity types"
-              message="Create an entity type to enable Graphql"
+              message="Add an entity type to the schema to enable GraphQL"
             />
           ) : (
             <ErrorBoundary>
