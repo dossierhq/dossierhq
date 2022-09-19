@@ -15,6 +15,7 @@ export interface SelectDisplayProps {
 
 export interface SelectDisplayOptionProps {
   value: OptionHTMLAttributes<HTMLOptionElement>['value'];
+  disabled?: boolean;
   children: ReactNode;
 }
 
@@ -38,7 +39,11 @@ export const SelectDisplay: SelectDisplayComponent = ({
 };
 SelectDisplay.displayName = 'SelectDisplay';
 
-SelectDisplay.Option = ({ value, children }: SelectDisplayOptionProps) => {
-  return <option value={value}>{children}</option>;
+SelectDisplay.Option = ({ value, disabled, children }: SelectDisplayOptionProps) => {
+  return (
+    <option value={value} disabled={disabled}>
+      {children}
+    </option>
+  );
 };
 SelectDisplay.Option.displayName = 'SelectDisplay.Option';
