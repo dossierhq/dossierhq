@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
 import {
   Button,
   EmptyStateMessage,
@@ -12,6 +12,7 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog';
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
 import { EntityEditor } from '../../components/EntityEditor/EntityEditor';
@@ -60,6 +61,8 @@ export function EntityEditorScreen({
     entityEditorState;
 
   const [showEntitySelector, setShowEntitySelector] = useState(false);
+  const [entityHistoryDialogReference, setEntityHistoryDialogReference] =
+    useState<EntityReference | null>(null);
   const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
   const handleEntitySelectorClose = useCallback(() => setShowEntitySelector(false), []);
   const handleOpenEntityClick = useCallback((entity: AdminEntity) => {
@@ -72,6 +75,10 @@ export function EntityEditorScreen({
     ),
       setShowEntitySelector(false);
   }, []);
+  const handleCloseEntityHistoryDialog = useCallback(
+    () => setEntityHistoryDialogReference(null),
+    []
+  );
 
   const onCreateEntity = useCallback((type: string) => {
     dispatchEntityEditorState(
@@ -148,7 +155,10 @@ export function EntityEditorScreen({
               )}
             </FullscreenContainer.ScrollableColumn>
             <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
-              <EntityEditorDraftSidebar entityEditorState={entityEditorState} />
+              <EntityEditorDraftSidebar
+                entityEditorState={entityEditorState}
+                onShowEntityHistory={setEntityHistoryDialogReference}
+              />
             </FullscreenContainer.ScrollableColumn>
           </FullscreenContainer.Columns>
           {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
@@ -158,6 +168,11 @@ export function EntityEditorScreen({
             onClose={handleEntitySelectorClose}
             onItemClick={handleOpenEntityClick}
             onCreateItemClick={handleCreateItemClick}
+          />
+          <AdminEntityHistoryDialog
+            show={entityHistoryDialogReference !== null}
+            reference={entityHistoryDialogReference}
+            onClose={handleCloseEntityHistoryDialog}
           />
         </FullscreenContainer>
       </EntityEditorStateContext.Provider>

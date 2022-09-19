@@ -1,6 +1,7 @@
 import type { AdminClient, EntityReference, PublishingEvent } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
 import {
+  Button,
   InstantDisplay,
   Row,
   TabContainer,
@@ -19,6 +20,7 @@ import { AdminEntityLinks } from './AdminEntityLinks.js';
 
 interface Props {
   entityEditorState: EntityEditorState;
+  onShowEntityHistory: (reference: EntityReference) => void;
 }
 
 interface ActivityListEvent {
@@ -34,7 +36,7 @@ const ActivityFilter = {
 } as const;
 type ActivityFilter = keyof typeof ActivityFilter;
 
-export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
+export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistory }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
   const { activeEntityId } = entityEditorState;
 
@@ -59,6 +61,9 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
             status={entity.info.status}
           />
           <AdminEntityLinks entityReference={{ id: entity.id }} />
+          {entity.info.version > 0 ? (
+            <Button onClick={() => onShowEntityHistory({ id: entity.id })}>Entity history</Button>
+          ) : null}
           <TabContainer small>
             {Object.keys(ActivityFilter).map((filter) => (
               <TabContainer.Item
