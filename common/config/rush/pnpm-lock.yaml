@@ -300,7 +300,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.3.8
-      '@lexical/utils': ~0.3.8
+      '@lexical/utils': ~0.4.1
       '@rushstack/heft': ~0.47.5
       '@storybook/addon-actions': ^6.4.21
       '@storybook/addon-essentials': ^6.4.21
@@ -337,7 +337,7 @@ importers:
       '@jonasb/datadata-design': link:../design
       '@jonasb/datadata-leaflet': link:../leaflet
       '@lexical/react': 0.3.8_236d7cadea59d2bb1db42ef7e45b3fdb
-      '@lexical/utils': 0.3.8_lexical@0.4.1
+      '@lexical/utils': 0.4.1_lexical@0.4.1
       leaflet: 1.8.0
       lexical: 0.4.1
       lodash: 4.17.21
@@ -981,7 +981,7 @@ importers:
       '@graphiql/toolkit': ~0.8.0
       '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.3.8
-      '@lexical/utils': ~0.3.8
+      '@lexical/utils': ~0.4.1
       '@microsoft/rush-lib': ~5.78.0
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': ~0.47.5
@@ -1063,7 +1063,7 @@ importers:
       '@graphiql/toolkit': 0.8.0_41448c9d124006d3883329624a808903
       '@js-temporal/polyfill': 0.4.0
       '@lexical/react': 0.3.8_236d7cadea59d2bb1db42ef7e45b3fdb
-      '@lexical/utils': 0.3.8_lexical@0.4.1
+      '@lexical/utils': 0.4.1_lexical@0.4.1
       '@rushstack/eslint-patch': 1.2.0
       '@rushstack/heft': 0.47.5
       '@storybook/addon-actions': 6.4.21_586f613ba77215e52a5b54f04f1f707c
@@ -3265,6 +3265,15 @@ packages:
       lexical: 0.4.1
     dev: false
 
+  /@lexical/list/0.4.1_lexical@0.4.1:
+    resolution: {integrity: sha512-dP6i18qm1UhUoG6FvqLMn7hoj4htE0jYcmMPYqFyH+f1ir9Ybvr87pV3aFhqH6hdHjQ5tMyM0kURSL1t89GesQ==}
+    peerDependencies:
+      lexical: 0.4.1
+    dependencies:
+      '@lexical/utils': 0.4.1_lexical@0.4.1
+      lexical: 0.4.1
+    dev: false
+
   /@lexical/mark/0.3.8_lexical@0.4.1:
     resolution: {integrity: sha512-lnBzXlsTsZcKN2+yDembxWPWpN/zt6m/EElYddOjFmU1jcUMrlqSon5SHulWFu+TYfc10sw5WchHTmNnfRBMig==}
     peerDependencies:
@@ -3383,6 +3392,15 @@ packages:
       lexical: 0.4.1
     dev: false
 
+  /@lexical/table/0.4.1_lexical@0.4.1:
+    resolution: {integrity: sha512-1BRLB+cYpqXSk0IHk3uHI1Fa6H4rnQ5pySDm+7HSyShjAzQSMBt0BWoX9B0TW/vXysl3p5+vcnU8mGjGyCA0Lg==}
+    peerDependencies:
+      lexical: 0.4.1
+    dependencies:
+      '@lexical/utils': 0.4.1_lexical@0.4.1
+      lexical: 0.4.1
+    dev: false
+
   /@lexical/text/0.3.8_lexical@0.4.1:
     resolution: {integrity: sha512-TdImt1hmkCugOpS1hPJ8XXE4jV0fI98xfMlKew6jkxFtwEv+dUuGJMQYdBD4ixL4TcV4DReW1dhRRxRsuBq6IA==}
     peerDependencies:
@@ -3398,6 +3416,16 @@ packages:
     dependencies:
       '@lexical/list': 0.3.8_lexical@0.4.1
       '@lexical/table': 0.3.8_lexical@0.4.1
+      lexical: 0.4.1
+    dev: false
+
+  /@lexical/utils/0.4.1_lexical@0.4.1:
+    resolution: {integrity: sha512-OUYS7qpu1oHv9vhUGhL60ow5gbyqLG449XGFZrzaKUGnz1iWU/rXP8nEljoqdtai3rg4t0Ahxcbe9cVIubK3hQ==}
+    peerDependencies:
+      lexical: 0.4.1
+    dependencies:
+      '@lexical/list': 0.4.1_lexical@0.4.1
+      '@lexical/table': 0.4.1_lexical@0.4.1
       lexical: 0.4.1
     dev: false
 
