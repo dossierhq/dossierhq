@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rushstack/eslint-patch": "~1.1.3",
+    "@rushstack/eslint-patch": "~1.2.0",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0"
   }
