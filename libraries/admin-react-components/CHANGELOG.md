@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-admin-react-components
 
-This log was last generated on Tue, 06 Sep 2022 09:47:25 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Sep 2022 13:10:56 GMT and should not be manually modified.
+
+## 0.1.30
+Mon, 19 Sep 2022 13:10:56 GMT
+
+### Updates
+
+- Support authKeyPattern when creating entity. Hide publishing button on new entity. Add create/save & publish button.
 
 ## 0.1.29
 Tue, 06 Sep 2022 09:47:25 GMT

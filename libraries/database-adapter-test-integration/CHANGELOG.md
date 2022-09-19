@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-database-adapter-test-integration
 
-This log was last generated on Tue, 06 Sep 2022 09:47:25 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Sep 2022 13:10:56 GMT and should not be manually modified.
+
+## 0.1.30
+Mon, 19 Sep 2022 13:10:56 GMT
+
+### Updates
+
+- Add tests for authKeyPattern.
 
 ## 0.1.29
 Tue, 06 Sep 2022 09:47:25 GMT
