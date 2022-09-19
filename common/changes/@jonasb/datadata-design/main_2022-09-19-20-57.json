@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Add disabled to SelectDisplay.Option",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
