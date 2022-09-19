@@ -47,6 +47,12 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       ],
     },
     {
+      name: 'SubjectOnly',
+      authKeyPattern: 'subject',
+      fields: [{ name: 'message', type: FieldType.String, required: true }],
+    },
+
+    {
       name: 'TitleOnly',
       fields: [{ name: 'title', type: FieldType.String, required: true, isName: true }],
     },
@@ -69,4 +75,5 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.EntityType }] },
   ],
+  patterns: [{ name: 'subject', pattern: '^subject$' }],
 };

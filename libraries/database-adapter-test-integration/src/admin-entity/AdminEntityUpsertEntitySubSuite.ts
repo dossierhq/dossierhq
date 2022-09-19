@@ -6,6 +6,7 @@ import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminTitleOnly } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import {
+  SUBJECT_ONLY_UPSERT,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
   TITLE_ONLY_UPSERT,
@@ -18,6 +19,7 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   upsertEntity_minimalUpdate,
   upsertEntity_updateWithoutChange,
   upsertEntity_updateAndPublishWithSubjectAuthKey,
+  upsertEntity_errorCreateAuthKeyNotMatchingPattern,
   upsertEntity_errorUpdateTryingToChangeAuthKey,
   upsertEntity_errorUpdateNoAuthKey,
 ];
@@ -142,6 +144,24 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: Admin
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const id = uuidv4();
+  const upsertResult = await client.upsertEntity(
+    copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: 'none' } })
+  );
+  assertErrorResult(
+    upsertResult,
+    ErrorType.BadRequest,
+    "AuthKey 'none' does not match pattern 'subject' (^subject$)"
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
 async function upsertEntity_errorUpdateTryingToChangeAuthKey({ server }: AdminEntityTestContext) {

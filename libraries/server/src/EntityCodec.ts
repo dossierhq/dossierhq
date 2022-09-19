@@ -224,7 +224,10 @@ export function decodeAdminEntityFields(
 export function resolveCreateEntity(
   schema: AdminSchema,
   entity: AdminEntityCreate
-): Result<AdminEntityCreate, typeof ErrorType.BadRequest> {
+): Result<
+  { createEntity: AdminEntityCreate; entitySpec: AdminEntityTypeSpecification },
+  typeof ErrorType.BadRequest
+> {
   if (!entity.info.type) {
     return notOk.BadRequest('Missing entity.info.type');
   }
@@ -266,7 +269,7 @@ export function resolveCreateEntity(
   }
   result.fields = fields;
 
-  return ok(result);
+  return ok({ createEntity: result, entitySpec });
 }
 
 export function resolveUpdateEntity(

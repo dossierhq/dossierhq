@@ -15,6 +15,7 @@ import type {
   AdminReferences,
   AdminRichTexts,
   AdminStrings,
+  AdminSubjectOnly,
   AdminTitleOnly,
   AdminValueItems,
   PublishedTitleOnly,
@@ -116,6 +117,34 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
   fields: { multiline: 'Hello\nWorld', stringAdminOnly: null },
 };
 
+export const SUBJECT_ONLY_CREATE: Readonly<AdminEntityCreate<AdminSubjectOnly>> = {
+  info: {
+    type: 'SubjectOnly',
+    name: 'SubjectOnly name',
+    authKey: 'subject',
+  },
+  fields: { message: 'Message' },
+};
+
+export const SUBJECT_ONLY_UPSERT: Readonly<AdminEntityUpsert<AdminSubjectOnly>> = {
+  id: 'REPLACE',
+  ...SUBJECT_ONLY_CREATE,
+};
+
+export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
+  id: 'REPLACE',
+  info: {
+    type: 'SubjectOnly',
+    name: 'SubjectOnly name',
+    version: 0,
+    authKey: 'subject',
+    status: AdminEntityStatus.draft,
+    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+  },
+  fields: { message: 'Message' },
+};
+
 export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate<AdminTitleOnly>> = {
   info: {
     type: 'TitleOnly',
@@ -127,12 +156,7 @@ export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate<AdminTitleOnly>> = {
 
 export const TITLE_ONLY_UPSERT: Readonly<AdminEntityUpsert<AdminTitleOnly>> = {
   id: 'REPLACE',
-  info: {
-    type: 'TitleOnly',
-    name: 'TitleOnly name',
-    authKey: 'none',
-  },
-  fields: { title: 'Title' },
+  ...TITLE_ONLY_CREATE,
 };
 
 export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {

@@ -24,6 +24,7 @@ import type {
   AdminReferencesValue,
   AdminRichTexts,
   AdminStrings,
+  AdminSubjectOnly,
   AdminTitleOnly,
 } from '../SchemaTypes.js';
 import {
@@ -31,6 +32,7 @@ import {
   assertIsAdminReferences,
   assertIsAdminRichTexts,
   assertIsAdminStrings,
+  assertIsAdminSubjectOnly,
   assertIsAdminTitleOnly,
 } from '../SchemaTypes.js';
 import {
@@ -42,6 +44,8 @@ import {
   RICH_TEXTS_CREATE,
   STRINGS_ADMIN_ENTITY,
   STRINGS_CREATE,
+  SUBJECT_ONLY_ADMIN_ENTITY,
+  SUBJECT_ONLY_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
@@ -55,6 +59,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
+  createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
   createEntity_withRichTextField,
   createEntity_withRichTextListField,
@@ -62,6 +67,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withRichTextFieldWithValueItem,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
+  createEntity_errorAuthKeyNotMatchingPattern,
   createEntity_errorMultilineStringInTitle,
   createEntity_errorRichTextWithUnsupportedEntityNode,
   createEntity_errorPublishWithoutRequiredTitle,
@@ -235,6 +241,37 @@ async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTes
   const getResult = await client.getEntity({ id });
   assertOkResult(getResult);
   assertIsAdminTitleOnly(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withAuthKeyMatchingPattern({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity<AdminSubjectOnly>(SUBJECT_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(SUBJECT_ONLY_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      createdAt,
+      updatedAt,
+    },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminSubjectOnly(getResult.value);
   assertEquals(getResult.value, expectedEntity);
 }
 
@@ -516,6 +553,22 @@ async function createEntity_withMultipleLocations({ server }: AdminEntityTestCon
   assertOkResult(getResult);
   assertIsAdminLocations(getResult.value);
   assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_errorAuthKeyNotMatchingPattern({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const id = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: 'none' } })
+  );
+  assertErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    "AuthKey 'none' does not match pattern 'subject' (^subject$)"
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
 async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityTestContext) {
