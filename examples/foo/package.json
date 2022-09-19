@@ -28,7 +28,7 @@
     "@jonasb/datadata-server": "workspace:*",
     "express": "~4.18.1",
     "express-graphql": "~0.12.0",
-    "sqlite3": "~5.0.8",
+    "sqlite3": "~5.1.1",
     "tslib": "~2.4.0"
   },
   "devDependencies": {
