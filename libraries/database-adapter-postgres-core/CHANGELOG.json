@@ -2,6 +2,12 @@
   "name": "@jonasb/datadata-database-adapter-postgres-core",
   "entries": [
     {
+      "version": "0.1.30",
+      "tag": "@jonasb/datadata-database-adapter-postgres-core_v0.1.30",
+      "date": "Mon, 19 Sep 2022 13:10:56 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.29",
       "tag": "@jonasb/datadata-database-adapter-postgres-core_v0.1.29",
       "date": "Tue, 06 Sep 2022 09:47:25 GMT",
