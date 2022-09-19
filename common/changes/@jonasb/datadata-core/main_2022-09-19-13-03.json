@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Support patterns in schema.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
