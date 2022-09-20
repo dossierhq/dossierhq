@@ -9,6 +9,7 @@ import type {
   PublishedEntity,
   RichText,
   RichTextElementNode,
+  RichTextEntityLinkNode,
   RichTextEntityNode,
   RichTextNode,
   RichTextTextNode,
@@ -170,6 +171,10 @@ export function isRichTextElementNode(node: RichTextNode): node is RichTextEleme
 
 export function isRichTextEntityNode(node: RichTextNode): node is RichTextEntityNode {
   return node.type === RichTextNodeType.entity;
+}
+
+export function isRichTextEntityLinkNode(node: RichTextNode): node is RichTextEntityLinkNode {
+  return node.type === RichTextNodeType.entityLink;
 }
 
 export function isRichTextValueItemNode(node: RichTextNode): node is RichTextValueItemNode {

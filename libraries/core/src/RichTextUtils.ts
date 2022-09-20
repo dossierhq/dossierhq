@@ -10,6 +10,7 @@ import { TEXT_TYPE_TO_FORMAT } from './third-party/Lexical.js';
 import type {
   EntityReference,
   RichText,
+  RichTextEntityLinkNode,
   RichTextEntityNode,
   RichTextNode,
   RichTextValueItemNode,
@@ -81,6 +82,21 @@ export function createRichTextTextNode(
 
 export function createRichTextEntityNode(reference: EntityReference): RichTextEntityNode {
   return { type: RichTextNodeType.entity, reference, version: 1 };
+}
+
+export function createRichTextEntityLinkNode(
+  reference: EntityReference,
+  children: RichTextNode[]
+): RichTextEntityLinkNode {
+  return {
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: RichTextNodeType.entityLink,
+    reference,
+    version: 1,
+    children,
+  };
 }
 
 export function createRichTextValueItemNode<T extends ValueItem<string, object>>(

@@ -56,6 +56,7 @@ export {
   isLocationItemField,
   isLocationListField,
   isRichTextElementNode,
+  isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextField,
   isRichTextItemField,
@@ -111,6 +112,7 @@ export type {
   PublishedClientOperation,
 } from './PublishedClient.js';
 export {
+  createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
