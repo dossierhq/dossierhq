@@ -186,6 +186,7 @@ export type {
   PublishingHistory,
   RichText,
   RichTextElementNode,
+  RichTextEntityLinkNode,
   RichTextEntityNode,
   RichTextNode,
   RichTextTextNode,

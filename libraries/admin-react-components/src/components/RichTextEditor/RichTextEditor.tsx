@@ -8,8 +8,10 @@ import type { EditorState, LexicalEditor } from 'lexical';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo } from 'react';
 import { LexicalTheme } from '../../utils/LexicalTheme.js';
+import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
 import { AdminValueItemNode } from './AdminValueItemNode.js';
+import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { ToolbarPlugin } from './ToolbarPlugin';
 import { ValueItemPlugin } from './ValueItemPlugin.js';
@@ -36,7 +38,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   const initialConfig = {
     namespace: 'datadata',
     onError: handleError,
-    nodes: [AdminEntityNode, AdminValueItemNode],
+    nodes: [AdminEntityNode, AdminEntityLinkNode, AdminValueItemNode],
     theme: LexicalTheme,
     editorState: value
       ? (editor: LexicalEditor) => {
@@ -58,6 +60,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
         placeholder=""
       />
       <EntityPlugin />
+      <EntityLinkPlugin />
       <ValueItemPlugin />
       <OnChangePlugin onChange={debouncedHandleChange} />
     </LexicalComposer>
