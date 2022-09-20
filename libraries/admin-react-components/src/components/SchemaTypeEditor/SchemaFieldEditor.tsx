@@ -74,6 +74,7 @@ export function SchemaFieldEditor({
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeRichTextNodes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeLinkEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeAdminOnly = fieldDraft.status === 'new'; //TODO too restrictive
 
@@ -106,6 +107,11 @@ export function SchemaFieldEditor({
       (!fieldDraft.richTextNodes ||
         fieldDraft.richTextNodes.length === 0 ||
         fieldDraft.richTextNodes?.includes(RichTextNodeType.entity)));
+  const showLinkEntityTypes =
+    fieldDraft.type === FieldType.RichText &&
+    (!fieldDraft.richTextNodes ||
+      fieldDraft.richTextNodes.length === 0 ||
+      fieldDraft.richTextNodes?.includes(RichTextNodeType.entityLink));
   const showValueTypes =
     fieldDraft.type === FieldType.ValueType ||
     (fieldDraft.type === FieldType.RichText &&
@@ -253,12 +259,37 @@ export function SchemaFieldEditor({
                   {canChangeEntityTypes ? (
                     <FieldEntityTypeSelector
                       fieldSelector={fieldSelector}
+                      referenceOrLink="reference"
                       entityTypes={fieldDraft.entityTypes ?? []}
                       schemaEditorState={schemaEditorState}
                       dispatchSchemaEditorState={dispatchSchemaEditorState}
                     />
                   ) : (
                     <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
+                  )}
+                </Field.Control>
+              </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
+        {showLinkEntityTypes ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Link entity types</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field>
+                <Field.Control>
+                  {canChangeLinkEntityTypes ? (
+                    <FieldEntityTypeSelector
+                      fieldSelector={fieldSelector}
+                      referenceOrLink="link"
+                      entityTypes={fieldDraft.linkEntityTypes ?? []}
+                      schemaEditorState={schemaEditorState}
+                      dispatchSchemaEditorState={dispatchSchemaEditorState}
+                    />
+                  ) : (
+                    <FieldEntityTypeDisplay entityTypes={fieldDraft.linkEntityTypes ?? []} />
                   )}
                 </Field.Control>
               </Field>

@@ -45,6 +45,7 @@ export interface SchemaFieldDraft {
   multiline?: boolean;
   richTextNodes?: string[];
   entityTypes?: string[];
+  linkEntityTypes?: string[];
   valueTypes?: string[];
   existingFieldSpec: AdminFieldSpecification | null;
 }
@@ -357,6 +358,23 @@ class ChangeFieldAllowedEntityTypesAction extends FieldAction {
   }
 }
 
+class ChangeFieldAllowedLinkEntityTypesAction extends FieldAction {
+  linkEntityTypes: string[];
+
+  constructor(fieldSelector: SchemaFieldSelector, linkEntityTypes: string[]) {
+    super(fieldSelector);
+    this.linkEntityTypes = linkEntityTypes;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (isEqual(fieldDraft.linkEntityTypes, this.linkEntityTypes)) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, linkEntityTypes: this.linkEntityTypes };
+  }
+}
+
 class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
   richTextNodes: string[];
 
@@ -508,11 +526,14 @@ class ChangeFieldTypeAction extends FieldAction {
       delete newFieldDraft.richTextNodes;
     }
 
+    //TODO handle rich text?
     if (this.fieldType === FieldType.EntityType) {
       newFieldDraft.entityTypes = [];
     } else {
       delete newFieldDraft.entityTypes;
     }
+
+    //TODO handle linkEntityTypes?
 
     if (this.fieldType === FieldType.ValueType) {
       newFieldDraft.valueTypes = [];
@@ -631,10 +652,16 @@ class RenameTypeAction extends TypeAction {
     // Rename references to type in fields
     newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
       if (this.kind === 'entity') {
-        if (fieldDraft.entityTypes?.includes(this.typeName)) {
+        if (
+          fieldDraft.entityTypes?.includes(this.typeName) ||
+          fieldDraft.linkEntityTypes?.includes(this.typeName)
+        ) {
           return {
             ...fieldDraft,
-            entityTypes: fieldDraft.entityTypes.map((it) =>
+            entityTypes: fieldDraft.entityTypes?.map((it) =>
+              it === this.typeName ? this.name : it
+            ),
+            linkEntityTypes: fieldDraft.linkEntityTypes?.map((it) =>
               it === this.typeName ? this.name : it
             ),
           };
@@ -771,6 +798,9 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         if (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
         }
+        if (fieldSpec.type === FieldType.RichText) {
+          fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes ?? [];
+        }
         if (fieldSpec.type === FieldType.ValueType || fieldSpec.type === FieldType.RichText) {
           fieldDraft.valueTypes = fieldSpec.valueTypes ?? [];
         }
@@ -785,6 +815,7 @@ export const SchemaEditorActions = {
   AddField: AddFieldAction,
   ChangeFieldAdminOnly: ChangeFieldAdminOnlyAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
+  ChangeFieldAllowedLinkEntityTypes: ChangeFieldAllowedLinkEntityTypesAction,
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldIsName: ChangeFieldIsNameAction,
@@ -850,6 +881,9 @@ function getTypeUpdateFromEditorState(
       ...(draftField.type === FieldType.RichText ? { richTextNodes } : undefined),
       ...(draftField.type === FieldType.EntityType || draftField.type === FieldType.RichText
         ? { entityTypes: draftField.entityTypes ?? [] }
+        : undefined),
+      ...(draftField.type === FieldType.RichText
+        ? { linkEntityTypes: draftField.linkEntityTypes ?? [] }
         : undefined),
       ...(draftField.type === FieldType.ValueType || draftField.type === FieldType.RichText
         ? { valueTypes: draftField.valueTypes ?? [] }

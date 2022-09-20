@@ -16,6 +16,7 @@ import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEd
 
 function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>(
   fieldSelector: SchemaFieldSelector,
+  referenceOrLink: 'reference' | 'link',
   items: TItem[],
   selectedIds: string[],
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
@@ -28,7 +29,12 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
 
   useEffect(() => {
     dispatchSchemaEditorState(
-      new SchemaEditorActions.ChangeFieldAllowedEntityTypes(fieldSelector, state.selectedIds)
+      referenceOrLink === 'reference'
+        ? new SchemaEditorActions.ChangeFieldAllowedEntityTypes(fieldSelector, state.selectedIds)
+        : new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
+            fieldSelector,
+            state.selectedIds
+          )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
@@ -46,6 +52,7 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
 
 interface Props {
   fieldSelector: SchemaFieldSelector;
+  referenceOrLink: 'reference' | 'link';
   entityTypes: string[];
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
@@ -53,6 +60,7 @@ interface Props {
 
 export function FieldEntityTypeSelector({
   fieldSelector,
+  referenceOrLink,
   entityTypes,
   schemaEditorState,
   dispatchSchemaEditorState,
@@ -60,6 +68,7 @@ export function FieldEntityTypeSelector({
   const items = schemaEditorState.entityTypes.map((it) => ({ id: it.name }));
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
+    referenceOrLink,
     items,
     entityTypes,
     dispatchSchemaEditorState

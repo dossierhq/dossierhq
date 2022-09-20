@@ -66,6 +66,80 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
 }
 `;
 
+exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a new entity field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [],
+          "status": "new",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a new entity field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`] = `
 {
   "activeSelector": {
@@ -376,6 +450,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
           ],
           "existingFieldSpec": null,
           "isName": false,
+          "linkEntityTypes": undefined,
           "list": false,
           "name": "self",
           "required": false,
@@ -415,6 +490,77 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
           "name": "self",
           "required": false,
           "type": "EntityType",
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with link fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": undefined,
+          "existingFieldSpec": null,
+          "isName": false,
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "self",
+          "required": false,
+          "richTextNodes": [],
+          "status": "new",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Bar",
+      "status": "new",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with link fields referring to itself 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
         },
       ],
       "name": "Bar",

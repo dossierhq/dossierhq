@@ -877,6 +877,30 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
   });
 });
 
+describe('ChangeFieldAllowedLinkEntityTypesAction', () => {
+  test('change link entity types of a new entity field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        createAdminSchema({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        FieldType.RichText,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        ['Foo']
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('ChangeFieldAllowedRichTextNodesAction', () => {
   test('change node types (add entity) of a new rich text field', () => {
     const state = reduceSchemaEditorStateActions(
@@ -966,6 +990,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                 "entityTypes": [
                   "Foo",
                 ],
+                "linkEntityTypes": [],
                 "name": "foo",
                 "required": false,
                 "richTextNodes": [
@@ -1950,6 +1975,31 @@ describe('RenameTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
+  test('add and rename entity type with link fields referring to itself', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
+      new SchemaEditorActions.AddType('entity', 'Foo'),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
+        FieldType.RichText,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
+    );
+
+    expect(state).toMatchSnapshot();
+    expect(state.entityTypes[0].name).toBe('Bar');
+    expect(state.entityTypes[0].fields[0].linkEntityTypes).toEqual(['Bar']);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
   test('add and rename value type with fields referring to itself', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
@@ -2234,6 +2284,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   "type": "RichText",
                 },
                 "isName": false,
+                "linkEntityTypes": [],
                 "list": false,
                 "name": "richText",
                 "required": false,
