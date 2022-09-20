@@ -11,8 +11,10 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import { useCallback, useEffect, useState } from 'react';
+import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
+import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './AdminEntityLinkNode.js';
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 
@@ -26,6 +28,7 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const [isCode, setIsCode] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
+  const [isEntityLink, setIsEntityLink] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -37,6 +40,10 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
       setIsCode(selection.hasFormat('code'));
       setIsUnderline(selection.hasFormat('underline'));
       setIsStrikethrough(selection.hasFormat('strikethrough'));
+
+      const node = getSelectedNode(selection);
+      const parent = node.getParent();
+      setIsEntityLink($isAdminEntityLinkNode(parent) || $isAdminEntityLinkNode(node));
     }
   }, []);
 
@@ -61,6 +68,8 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const enableAllNodes = !fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0;
   const enableEntityNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entity);
+  const enableEntityLinkNode =
+    enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entityLink);
   const enableValueItemNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem);
 
@@ -103,9 +112,12 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
           onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}
         />
       </IconButton.Group>
-      {enableEntityNode || enableValueItemNode ? (
+      {enableEntityNode || enableEntityLinkNode || enableValueItemNode ? (
         <>
           <Row.Item flexGrow={1} />
+          {enableEntityLinkNode ? (
+            <EntityLinkButton fieldSpec={fieldSpec} isEntityLink={isEntityLink} />
+          ) : null}
           {enableEntityNode ? <AddEntityButton fieldSpec={fieldSpec} /> : null}
           {enableValueItemNode ? <AddValueItemButton fieldSpec={fieldSpec} /> : null}
         </>
@@ -130,6 +142,43 @@ function AddEntityButton({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) 
           onClose={handleDialogClose}
           onItemClick={(entity) => {
             editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, { id: entity.id });
+            setShowSelector(false);
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+function EntityLinkButton({
+  fieldSpec,
+  isEntityLink,
+}: {
+  fieldSpec: AdminFieldSpecification;
+  isEntityLink: boolean;
+}) {
+  const [editor] = useLexicalComposerContext();
+  const [showSelector, setShowSelector] = useState(false);
+  const handleDialogClose = useCallback(() => setShowSelector(false), []);
+  const handleToggleButton = useCallback(
+    () =>
+      isEntityLink
+        ? editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, null)
+        : setShowSelector(true),
+    [editor, isEntityLink]
+  );
+
+  return (
+    <>
+      <Button onClick={handleToggleButton}>Entity link</Button>
+      {showSelector && (
+        <AdminEntitySelectorDialog
+          show
+          title="Select entity"
+          entityTypes={fieldSpec.entityTypes}
+          onClose={handleDialogClose}
+          onItemClick={(entity) => {
+            editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, { id: entity.id });
             setShowSelector(false);
           }}
         />

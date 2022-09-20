@@ -300,6 +300,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.4.1
+      '@lexical/selection': ~0.4.1
       '@lexical/utils': ~0.4.1
       '@rushstack/heft': ~0.47.5
       '@storybook/addon-actions': ^6.4.21
@@ -337,6 +338,7 @@ importers:
       '@jonasb/datadata-design': link:../design
       '@jonasb/datadata-leaflet': link:../leaflet
       '@lexical/react': 0.4.1_236d7cadea59d2bb1db42ef7e45b3fdb
+      '@lexical/selection': 0.4.1_lexical@0.4.1
       '@lexical/utils': 0.4.1_lexical@0.4.1
       leaflet: 1.8.0
       lexical: 0.4.1
@@ -981,6 +983,7 @@ importers:
       '@graphiql/toolkit': ~0.8.0
       '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.4.1
+      '@lexical/selection': ~0.4.1
       '@lexical/utils': ~0.4.1
       '@microsoft/rush-lib': ~5.78.0
       '@rushstack/eslint-patch': ~1.2.0
@@ -1063,6 +1066,7 @@ importers:
       '@graphiql/toolkit': 0.8.0_41448c9d124006d3883329624a808903
       '@js-temporal/polyfill': 0.4.0
       '@lexical/react': 0.4.1_236d7cadea59d2bb1db42ef7e45b3fdb
+      '@lexical/selection': 0.4.1_lexical@0.4.1
       '@lexical/utils': 0.4.1_lexical@0.4.1
       '@rushstack/eslint-patch': 1.2.0
       '@rushstack/heft': 0.47.5
