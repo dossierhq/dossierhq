@@ -30,6 +30,7 @@ function useSynchronizeMultipleSelectorState(
           (selectedIds.length === 1 && selectedIds[0] === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER),
       },
       { id: RichTextNodeType.entity },
+      { id: RichTextNodeType.entityLink },
       { id: RichTextNodeType.valueItem },
     ],
     [selectedIds]
