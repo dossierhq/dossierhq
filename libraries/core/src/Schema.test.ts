@@ -77,6 +77,7 @@ describe('validate()', () => {
                 type: FieldType.RichText,
                 valueTypes: ['Value'],
                 entityTypes: ['Foo'],
+                linkEntityTypes: ['Foo'],
               },
             ],
           },
@@ -202,6 +203,25 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Reference to invalid entity type in linkEntityTypes', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'bar', type: FieldType.RichText, linkEntityTypes: ['Invalid'] }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Referenced entity type in linkEntityTypes Invalid doesn’t exist'
+    );
+  });
+
   test('Error: entityTypes specified on String field', () => {
     expectErrorResult(
       new AdminSchema({
@@ -238,6 +258,26 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Value type in valueTypes Invalid doesn’t exist'
+    );
+  });
+
+  test('Error: linkEntityTypes specified on String field', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'bar', type: FieldType.String, linkEntityTypes: ['Bar'] }],
+          },
+          { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
+        ],
+        valueTypes: [],
+        patterns: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Field with type String shouldn’t specify linkEntityTypes'
     );
   });
 
@@ -416,6 +456,36 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: linkEntityTypes specified but not entityLink richTextNodes', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                linkEntityTypes: ['Foo'],
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
+                ],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: linkEntityTypes is specified for field, but richTextNodes is missing entityLink'
+    );
+  });
+
   test('Error: valueTypes specified but not valueItem richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
@@ -474,6 +544,37 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but Foo isn’t'
+    );
+  });
+
+  test('Error: referencing adminOnly link entity from non-adminOnly', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                linkEntityTypes: ['Bar'],
+              },
+            ],
+          },
+          {
+            name: 'Bar',
+            adminOnly: true,
+            authKeyPattern: null,
+            fields: [],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but Foo isn’t'
     );
   });
 

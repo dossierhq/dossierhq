@@ -67,7 +67,9 @@ export interface EncodeAdminEntityResult {
 interface RequestedReference {
   prefix: string;
   uuids: string[];
+  isRichTextLink: boolean;
   entityTypes: string[] | undefined;
+  linkEntityTypes: string[] | undefined;
 }
 
 /** `optimized` is the original way of encoding/decoding values, using type adapters and saving less
@@ -636,6 +638,8 @@ function createRequestedReferencesCollector<TSchema extends AdminSchema | Publis
               prefix: visitorPathToString(node.path),
               uuids: [node.value.id], //TODO handle list field (optimization, one requested reference instead of one for each item in the list)
               entityTypes: node.fieldSpec.entityTypes,
+              linkEntityTypes: node.fieldSpec.linkEntityTypes,
+              isRichTextLink: false,
             });
           }
           break;
@@ -646,6 +650,8 @@ function createRequestedReferencesCollector<TSchema extends AdminSchema | Publis
               prefix: visitorPathToString(node.path),
               uuids: [richTextNode.reference.id],
               entityTypes: node.fieldSpec.entityTypes,
+              linkEntityTypes: node.fieldSpec.linkEntityTypes,
+              isRichTextLink: isRichTextEntityLinkNode(richTextNode),
             });
           }
           break;
@@ -704,12 +710,18 @@ async function resolveRequestedEntityReferences(
     for (const uuid of request.uuids) {
       const item = items.find((it) => it.id === uuid);
       if (!item) {
-        return notOk.BadRequest(`${request.prefix}: referenced entity (${uuid}) doesn’t exist`);
+        return notOk.BadRequest(`${request.prefix}: Referenced entity (${uuid}) doesn’t exist`);
       }
-      if (request.entityTypes && request.entityTypes.length > 0) {
+      if (request.isRichTextLink && request.linkEntityTypes && request.linkEntityTypes.length > 0) {
+        if (request.linkEntityTypes.indexOf(item.type) < 0) {
+          return notOk.BadRequest(
+            `${request.prefix}: Linked entity (${uuid}) has an invalid type ${item.type}`
+          );
+        }
+      } else if (request.entityTypes && request.entityTypes.length > 0) {
         if (request.entityTypes.indexOf(item.type) < 0) {
           return notOk.BadRequest(
-            `${request.prefix}: referenced entity (${uuid}) has an invalid type ${item.type}`
+            `${request.prefix}: Referenced entity (${uuid}) has an invalid type ${item.type}`
           );
         }
       }

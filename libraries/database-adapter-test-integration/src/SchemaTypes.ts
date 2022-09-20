@@ -72,6 +72,7 @@ export interface AdminRichTextsFields {
   richText: RichText | null;
   richTextList: Array<RichText> | null;
   richTextOnlyParagraphAndText: RichText | null;
+  richTextLimitedTypes: RichText | null;
 }
 
 export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
@@ -294,6 +295,7 @@ export interface PublishedRichTextsFields {
   richText: RichText | null;
   richTextList: Array<RichText> | null;
   richTextOnlyParagraphAndText: RichText | null;
+  richTextLimitedTypes: RichText | null;
 }
 
 export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields>;

@@ -1242,7 +1242,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.fields.bar: referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist'
+      'entity.fields.bar: Referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist'
     );
   });
 
@@ -1258,7 +1258,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      `entity.fields.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
+      `entity.fields.bar: Referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
     );
   });
 
@@ -2440,7 +2440,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        'entity.fields.bar: referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist'
+        'entity.fields.bar: Referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist'
       );
     }
   });
@@ -2460,7 +2460,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        `entity.fields.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
+        `entity.fields.bar: Referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
       );
     }
   });
