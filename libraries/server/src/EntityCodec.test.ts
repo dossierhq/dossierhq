@@ -1,6 +1,7 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import {
   AdminSchema,
+  createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
@@ -305,13 +306,14 @@ describe('collectDataFromEntity', () => {
         fields: {
           richText: createRichTextRootNode([
             createRichTextEntityNode({ id: 'barId1' }),
-            createRichTextValueItemNode({ type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } }),
+            createRichTextEntityLinkNode({ id: 'barId2' }, [createRichTextTextNode('bar')]),
+            createRichTextValueItemNode({ type: 'EntityCodecValueOne', bar: { id: 'bar3Id' } }),
           ]),
         },
       })
     ).toMatchInlineSnapshot(`
       {
-        "fullTextSearchText": "",
+        "fullTextSearchText": "bar",
         "locations": [],
         "requestedReferences": [
           {
@@ -327,9 +329,18 @@ describe('collectDataFromEntity', () => {
             "entityTypes": [
               "EntityCodecBar",
             ],
-            "prefix": "entity.fields.richText[1].data.bar",
+            "prefix": "entity.fields.richText[1]",
             "uuids": [
-              "bar2Id",
+              "barId2",
+            ],
+          },
+          {
+            "entityTypes": [
+              "EntityCodecBar",
+            ],
+            "prefix": "entity.fields.richText[2].data.bar",
+            "uuids": [
+              "bar3Id",
             ],
           },
         ],

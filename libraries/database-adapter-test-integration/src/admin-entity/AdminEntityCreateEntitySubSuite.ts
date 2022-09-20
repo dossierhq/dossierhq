@@ -1,6 +1,7 @@
 import {
   AdminEntityStatus,
   copyEntity,
+  createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -64,6 +65,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withRichTextField,
   createEntity_withRichTextListField,
   createEntity_withRichTextFieldWithReference,
+  createEntity_withRichTextFieldWithLinkReference,
   createEntity_withRichTextFieldWithValueItem,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
@@ -395,6 +397,46 @@ async function createEntity_withRichTextFieldWithReference({ server }: AdminEnti
       info: { name, createdAt, updatedAt },
     },
   } = createResult.value;
+
+  const expectedEntity = copyEntity(RICH_TEXTS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { richText },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminRichTexts(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withRichTextFieldWithLinkReference({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+
+  const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createTitleOnlyResult);
+
+  const richText = createRichTextRootNode([
+    createRichTextParagraphNode([
+      createRichTextEntityLinkNode({ id: createTitleOnlyResult.value.entity.id }, [
+        createRichTextTextNode('Hello world'),
+      ]),
+    ]),
+  ]);
+  const createResult = await client.createEntity<AdminRichTexts>(
+    copyEntity(RICH_TEXTS_CREATE, { fields: { richText } })
+  );
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.valueOrThrow();
 
   const expectedEntity = copyEntity(RICH_TEXTS_ADMIN_ENTITY, {
     id,

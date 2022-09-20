@@ -29,6 +29,7 @@ import {
   isEntityTypeItemField,
   isEntityTypeListField,
   isItemValueItem,
+  isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextField,
   isValueTypeField,
@@ -334,7 +335,7 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
           break;
         case ItemTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
-          if (isRichTextEntityNode(richTextNode)) {
+          if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             references.add(richTextNode.reference.id);
           }
           break;

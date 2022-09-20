@@ -57,6 +57,15 @@ export type RichTextEntityNode = Spread<
   RichTextNode
 >;
 
+export type RichTextEntityLinkNode = Spread<
+  {
+    type: typeof RichTextNodeType.entityLink;
+    reference: EntityReference;
+    version: 1;
+  },
+  RichTextElementNode
+>;
+
 export type RichTextValueItemNode = Spread<
   {
     type: typeof RichTextNodeType.valueItem;

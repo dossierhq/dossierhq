@@ -1,9 +1,18 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  copyEntity,
+  createRichTextEntityLinkNode,
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+  ErrorType,
+} from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminAdminOnlyValue } from '../SchemaTypes.js';
 import {
   REFERENCES_CREATE,
+  RICH_TEXTS_CREATE,
   TITLE_ONLY_CREATE,
   VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
@@ -26,6 +35,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_errorMissingRequiredTitle,
   publishEntities_errorWrongAuthKey,
   publishEntities_errorAdminOnlyTypeItem,
+  publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode,
 ];
 
 async function publishEntities_minimal({ server }: AdminEntityTestContext) {
@@ -334,5 +344,41 @@ async function publishEntities_errorAdminOnlyTypeItem({ server }: AdminEntityTes
     publishResult,
     ErrorType.BadRequest,
     `entity(${id}).fields.any: Value item of type AdminOnlyValue is adminOnly`
+  );
+}
+
+async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const {
+    entity: { id: titleOnlyId },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const {
+    entity: {
+      id: richTextId,
+      info: { version },
+    },
+  } = (
+    await client.createEntity(
+      copyEntity(RICH_TEXTS_CREATE, {
+        fields: {
+          richText: createRichTextRootNode([
+            createRichTextParagraphNode([
+              createRichTextEntityLinkNode({ id: titleOnlyId }, [
+                createRichTextTextNode('link text'),
+              ]),
+            ]),
+          ]),
+        },
+      })
+    )
+  ).valueOrThrow();
+  const publishResult = await client.publishEntities([{ id: richTextId, version }]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    `${richTextId}: References unpublished entities: ${titleOnlyId}`
   );
 }

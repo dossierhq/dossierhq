@@ -1,5 +1,6 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import {
+  createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -299,43 +300,63 @@ describe('node()', () => {
 
   test('Query rich text with reference', async () => {
     const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
-      info: { type: 'QueryBar', name: 'Bar name', authKey: 'none' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createBarResult)) {
-      const {
-        entity: {
-          id: barId,
-          info: { name: barName },
-        },
-      } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
-
-      const body = createRichTextRootNode([
-        createRichTextEntityNode({ id: barId }),
-        createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
-      ]);
-      const createFooResult = await adminClient.createEntity({
-        info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
-        fields: {
-          body,
+    const {
+      entity: {
+        id: bar1Id,
+        info: { name: bar1Name },
+      },
+    } = (
+      await adminClient.createEntity(
+        {
+          info: { type: 'QueryBar', name: 'Bar 1 name', authKey: 'none' },
+          fields: { title: 'Bar title' },
         },
-      });
-      if (expectOkResult(createFooResult)) {
-        const {
-          entity: {
-            id: fooId,
-            info: { name },
+        { publish: true }
+      )
+    ).valueOrThrow();
+
+    const {
+      entity: {
+        id: bar2Id,
+        info: { name: bar2Name },
+      },
+    } = (
+      await adminClient.createEntity(
+        {
+          info: { type: 'QueryBar', name: 'Bar 2 name', authKey: 'none' },
+          fields: { title: 'Bar title' },
+        },
+        { publish: true }
+      )
+    ).valueOrThrow();
+
+    const body = createRichTextRootNode([
+      createRichTextEntityNode({ id: bar1Id }),
+      createRichTextParagraphNode([
+        createRichTextEntityLinkNode({ id: bar2Id }, [createRichTextTextNode('Hello world')]),
+      ]),
+    ]);
+    const {
+      entity: {
+        id: fooId,
+        info: { name: fooName },
+      },
+    } = (
+      await adminClient.createEntity(
+        {
+          info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
+          fields: {
+            body,
           },
-        } = createFooResult.value;
+        },
+        { publish: true }
+      )
+    ).valueOrThrow();
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
-
-        const result = await graphql({
-          schema,
-          source: `
+    const result = await graphql({
+      schema,
+      source: `
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -360,23 +381,27 @@ describe('node()', () => {
               }
             }
           `,
-          contextValue: createContext(),
-          variableValues: { id: fooId },
-        });
-        expect(result).toEqual({
-          data: {
-            node: {
-              __typename: 'PublishedQueryFoo',
-              id: fooId,
-              info: { name, authKey: 'none' },
-              fields: {
-                body: { ...body, entities: [{ id: barId, info: { name: barName } }] },
-              },
+      contextValue: createContext(),
+      variableValues: { id: fooId },
+    });
+    expect(result).toEqual({
+      data: {
+        node: {
+          __typename: 'PublishedQueryFoo',
+          id: fooId,
+          info: { name: fooName, authKey: 'none' },
+          fields: {
+            body: {
+              ...body,
+              entities: [
+                { id: bar1Id, info: { name: bar1Name } },
+                { id: bar2Id, info: { name: bar2Name } },
+              ],
             },
           },
-        });
-      }
-    }
+        },
+      },
+    });
   });
 
   test('Query referenced entity', async () => {

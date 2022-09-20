@@ -53,6 +53,7 @@ export type FieldType = keyof typeof FieldType;
 
 export const RichTextNodeType = {
   entity: 'entity',
+  entityLink: 'entityLink',
   paragraph: 'paragraph',
   root: 'root',
   text: 'text',

@@ -3,8 +3,11 @@ import {
   AdminEntityStatus,
   AdminQueryOrder,
   copyEntity,
+  createRichTextEntityLinkNode,
   createRichTextEntityNode,
+  createRichTextParagraphNode,
   createRichTextRootNode,
+  createRichTextTextNode,
   createRichTextValueItemNode,
   getAllNodesForConnection,
 } from '@jonasb/datadata-core';
@@ -61,6 +64,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_statusAll,
   searchEntities_linksToOneReference,
   searchEntities_linksToOneReferenceFromRichText,
+  searchEntities_linksToOneReferenceFromLinkRichText,
   searchEntities_linksToOneReferenceFromValueItemInRichText,
   searchEntities_linksToFromAdminOnlyField,
   searchEntities_linksToNoReferences,
@@ -587,6 +591,35 @@ async function searchEntities_linksToOneReferenceFromRichText({ server }: AdminE
   const referenceResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: { richText: createRichTextRootNode([createRichTextEntityNode({ id: titleOnlyId })]) },
+    })
+  );
+  assertOkResult(referenceResult);
+
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
+async function searchEntities_linksToOneReferenceFromLinkRichText({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.valueOrThrow();
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      fields: {
+        richText: createRichTextRootNode([
+          createRichTextParagraphNode([
+            createRichTextEntityLinkNode({ id: titleOnlyId }, [
+              createRichTextTextNode('link text'),
+            ]),
+          ]),
+        ]),
+      },
     })
   );
   assertOkResult(referenceResult);

@@ -26,6 +26,7 @@ import {
   isEntityTypeItemField,
   isFieldValueEqual,
   isLocationItemField,
+  isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextField,
   isRichTextItemField,
@@ -611,7 +612,7 @@ export function createReferencesCollector<TSchema extends AdminSchema | Publishe
           break;
         case ItemTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
-          if (isRichTextEntityNode(richTextNode)) {
+          if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             references.add(richTextNode.reference.id);
           }
           break;
@@ -640,7 +641,7 @@ function createRequestedReferencesCollector<TSchema extends AdminSchema | Publis
           break;
         case ItemTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
-          if (isRichTextEntityNode(richTextNode)) {
+          if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             requestedReferences.push({
               prefix: visitorPathToString(node.path),
               uuids: [richTextNode.reference.id],
