@@ -72,6 +72,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_errorAuthKeyNotMatchingPattern,
   createEntity_errorMultilineStringInTitle,
   createEntity_errorRichTextWithUnsupportedEntityNode,
+  createEntity_errorRichTextWithUnsupportedLinkEntityType,
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
@@ -649,6 +650,33 @@ async function createEntity_errorRichTextWithUnsupportedEntityNode({
     createResult,
     ErrorType.BadRequest,
     `entity.fields.richTextOnlyParagraphAndText[0]: Rich text node type entity is not allowed in field (supported nodes: root, paragraph, text)`
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
+}
+
+async function createEntity_errorRichTextWithUnsupportedLinkEntityType({
+  server,
+  readOnlyEntityRepository,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const referenceId = readOnlyEntityRepository.getMainPrincipalAdminEntities()[0].id;
+  const id = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(RICH_TEXTS_CREATE, {
+      id,
+      fields: {
+        richTextLimitedTypes: createRichTextRootNode([
+          createRichTextEntityLinkNode({ id: referenceId }, [createRichTextTextNode('link text')]),
+        ]),
+      },
+    })
+  );
+  assertErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    `entity.fields.richTextLimitedTypes[0]: Linked entity (${referenceId}) has an invalid type ReadOnly`
   );
 
   const getResult = await client.getEntity({ id });

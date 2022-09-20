@@ -73,6 +73,8 @@ interface FieldSpecification {
   multiline?: boolean;
   /** Applicable when type is EntityType or RichText */
   entityTypes?: string[];
+  /** Applicable when type is RichText */
+  linkEntityTypes?: string[];
   /** Applicable when type is ValueType or RichText */
   valueTypes?: string[];
   /** Applicable when type is RichText. All node types are enabled if none are specified. The type
@@ -190,6 +192,27 @@ export class AdminSchema {
           }
         }
 
+        if (fieldSpec.linkEntityTypes && fieldSpec.linkEntityTypes.length > 0) {
+          if (fieldSpec.type !== FieldType.RichText) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify linkEntityTypes`
+            );
+          }
+          for (const referencedTypeName of fieldSpec.linkEntityTypes) {
+            const referencedEntityType = this.getEntityTypeSpecification(referencedTypeName);
+            if (!referencedEntityType) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes ${referencedTypeName} doesn’t exist`
+              );
+            }
+            if (referencedEntityType.adminOnly && !typeSpec.adminOnly) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is adminOnly, but ${typeSpec.name} isn’t`
+              );
+            }
+          }
+        }
+
         if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
           if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {
             return notOk.BadRequest(
@@ -249,6 +272,16 @@ export class AdminSchema {
             ) {
               return notOk.BadRequest(
                 `${typeSpec.name}.${fieldSpec.name}: entityTypes is specified for field, but richTextNodes is missing entity`
+              );
+            }
+
+            if (
+              fieldSpec.linkEntityTypes &&
+              fieldSpec.linkEntityTypes.length > 0 &&
+              !usedRichTextNodes.has(RichTextNodeType.entityLink)
+            ) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: linkEntityTypes is specified for field, but richTextNodes is missing entityLink`
               );
             }
 

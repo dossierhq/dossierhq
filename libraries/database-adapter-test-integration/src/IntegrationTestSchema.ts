@@ -37,6 +37,13 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
           type: FieldType.RichText,
           richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
         },
+        {
+          name: 'richTextLimitedTypes',
+          type: FieldType.RichText,
+          entityTypes: ['References'],
+          linkEntityTypes: ['TitleOnly'],
+          valueTypes: ['LocationsValue'],
+        },
       ],
     },
     {

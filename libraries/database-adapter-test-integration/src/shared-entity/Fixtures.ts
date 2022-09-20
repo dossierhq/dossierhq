@@ -91,6 +91,7 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
     richText: null,
     richTextList: null,
     richTextOnlyParagraphAndText: null,
+    richTextLimitedTypes: null,
   },
 };
 
