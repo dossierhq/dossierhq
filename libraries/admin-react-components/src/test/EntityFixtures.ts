@@ -105,9 +105,11 @@ export const entitiesFixture: FixtureEntity[] = [
             child: null,
           }),
         ]),
-        bodyItalicOnly: createRichTextParagraphNode([
-          createRichTextTextNode('Text with '),
-          createRichTextTextNode('italic', { format: ['italic'] }),
+        bodyItalicOnly: createRichTextRootNode([
+          createRichTextParagraphNode([
+            createRichTextTextNode('Text with '),
+            createRichTextTextNode('italic', { format: ['italic'] }),
+          ]),
         ]),
         bodyNoInline: createRichTextRootNode([
           createRichTextParagraphNode([createRichTextTextNode('Text with no inline styles')]),
