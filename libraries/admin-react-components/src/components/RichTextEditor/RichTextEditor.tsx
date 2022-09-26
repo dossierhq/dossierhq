@@ -10,10 +10,10 @@ import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { LexicalTheme } from '../../utils/LexicalTheme.js';
+import { AdminClickableLinkPlugin } from './AdminClickableLinkPlugin.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
 import { AdminValueItemNode } from './AdminValueItemNode.js';
-import { ClickableLinkPlugin } from './ClickableLinkPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { ToolbarPlugin } from './ToolbarPlugin';
@@ -48,7 +48,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
     [dispatchEntityEditorState]
   );
 
-  const initialConfig = {
+  const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
     namespace: 'datadata',
     onError: handleError,
     nodes: [AdminEntityNode, AdminEntityLinkNode, AdminValueItemNode],
@@ -74,7 +74,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
       />
       <EntityPlugin />
       <EntityLinkPlugin />
-      <ClickableLinkPlugin onClick={handleEntityLinkClick} />
+      <AdminClickableLinkPlugin onClick={handleEntityLinkClick} />
       <ValueItemPlugin />
       <OnChangePlugin onChange={debouncedHandleChange} />
     </LexicalComposer>

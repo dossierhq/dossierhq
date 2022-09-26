@@ -1,10 +1,15 @@
-import type { AdminFieldSpecification, RichText } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, EntityReference, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import type { LexicalEditor } from 'lexical/LexicalEditor.js';
+import { useCallback, useContext } from 'react';
+import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
+import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import { LexicalTheme } from '../../utils/LexicalTheme.js';
+import { PublishedClickableLinkPlugin } from './PublishedClickableLinkPlugin.js';
+import { PublishedEntityLinkNode } from './PublishedEntityLinkNode.js';
 import { PublishedEntityNode } from './PublishedEntityNode.js';
 import { PublishedValueItemNode } from './PublishedValueItemNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
@@ -15,11 +20,22 @@ interface Props {
 }
 
 export function RichTextDisplay({ fieldSpec, value }: Props) {
-  const initialConfig = {
+  const dispatchEntityDisplayState = useContext(EntityDisplayDispatchContext);
+  const handleEntityLinkClick = useCallback(
+    (reference: EntityReference) => {
+      // open entity asynchronously to not fight with the "click to activate entity" functionality
+      setTimeout(() =>
+        dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(reference.id))
+      );
+    },
+    [dispatchEntityDisplayState]
+  );
+
+  const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
     namespace: 'datadata',
     onError: handleError,
-    nodes: [PublishedEntityNode, PublishedValueItemNode],
-    readOnly: true,
+    nodes: [PublishedEntityNode, PublishedEntityLinkNode, PublishedValueItemNode],
+    editable: false,
     theme: LexicalTheme,
     editorState: value
       ? (editor: LexicalEditor) => {
@@ -40,6 +56,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
           }
           placeholder=""
         />
+        <PublishedClickableLinkPlugin onClick={handleEntityLinkClick} />
       </LexicalComposer>
     </RichTextDisplayContext.Provider>
   );
