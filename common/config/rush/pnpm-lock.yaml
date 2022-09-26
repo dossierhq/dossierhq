@@ -816,7 +816,7 @@ importers:
       mini-svg-data-uri: ~1.4.4
       prettier: 2.7.1
       react: ~18.2.0
-      react-leaflet: ~4.0.0
+      react-leaflet: ~4.1.0
       svgo: ~2.8.0
       tslib: ~2.4.0
       typescript: ^4.7.2
@@ -824,7 +824,7 @@ importers:
       leaflet: 1.8.0
       leaflet.locatecontrol: 0.76.1
       react: 18.2.0
-      react-leaflet: 4.0.0_leaflet@1.8.0+react@18.2.0
+      react-leaflet: 4.1.0_leaflet@1.8.0+react@18.2.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -1041,7 +1041,7 @@ importers:
       prettier: 2.7.1
       react: ~18.2.0
       react-dom: ~18.2.0
-      react-leaflet: ~4.0.0
+      react-leaflet: ~4.1.0
       react-router-dom: ~6.3.0
       rollup-plugin-visualizer: ~5.8.0
       sass: ~1.55.0
@@ -1123,7 +1123,7 @@ importers:
       prettier: 2.7.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-leaflet: 4.0.0_ca979b1fef1aafd570a8ecf3ffa670f6
+      react-leaflet: 4.1.0_ca979b1fef1aafd570a8ecf3ffa670f6
       react-router-dom: 6.3.0_react-dom@18.2.0+react@18.2.0
       rollup-plugin-visualizer: 5.8.0
       sass: 1.55.0
@@ -4099,10 +4099,10 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@react-leaflet/core/2.0.0_ca979b1fef1aafd570a8ecf3ffa670f6:
-    resolution: {integrity: sha512-SQQ5DCQIaLzvslN6wCXs5OWqtlvk1Ubv2n5d7zTM8SDl9hM5Rr2wVy7/nOCIY958D75/ovhq6ZoSvT7GLCX6sg==}
+  /@react-leaflet/core/2.1.0_ca979b1fef1aafd570a8ecf3ffa670f6:
+    resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
     peerDependencies:
-      leaflet: ^1.8.0
+      leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
@@ -4112,10 +4112,10 @@ packages:
     dev: false
     optional: true
 
-  /@react-leaflet/core/2.0.0_leaflet@1.8.0+react@18.2.0:
-    resolution: {integrity: sha512-SQQ5DCQIaLzvslN6wCXs5OWqtlvk1Ubv2n5d7zTM8SDl9hM5Rr2wVy7/nOCIY958D75/ovhq6ZoSvT7GLCX6sg==}
+  /@react-leaflet/core/2.1.0_leaflet@1.8.0+react@18.2.0:
+    resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
     peerDependencies:
-      leaflet: ^1.8.0
+      leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
@@ -13337,28 +13337,28 @@ packages:
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
-  /react-leaflet/4.0.0_ca979b1fef1aafd570a8ecf3ffa670f6:
-    resolution: {integrity: sha512-qJJvoCNe12XHSWVUwhXYmMObPoSYy8h/hn0aDNvcBuq3O8zmVI5S2RdabhaDg/iWMCJ2jbCWZWtIU5VtztO9sg==}
+  /react-leaflet/4.1.0_ca979b1fef1aafd570a8ecf3ffa670f6:
+    resolution: {integrity: sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==}
     peerDependencies:
-      leaflet: ^1.8.0
+      leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 2.0.0_ca979b1fef1aafd570a8ecf3ffa670f6
+      '@react-leaflet/core': 2.1.0_ca979b1fef1aafd570a8ecf3ffa670f6
       leaflet: 1.8.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
     optional: true
 
-  /react-leaflet/4.0.0_leaflet@1.8.0+react@18.2.0:
-    resolution: {integrity: sha512-qJJvoCNe12XHSWVUwhXYmMObPoSYy8h/hn0aDNvcBuq3O8zmVI5S2RdabhaDg/iWMCJ2jbCWZWtIU5VtztO9sg==}
+  /react-leaflet/4.1.0_leaflet@1.8.0+react@18.2.0:
+    resolution: {integrity: sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==}
     peerDependencies:
-      leaflet: ^1.8.0
+      leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 2.0.0_leaflet@1.8.0+react@18.2.0
+      '@react-leaflet/core': 2.1.0_leaflet@1.8.0+react@18.2.0
       leaflet: 1.8.0
       react: 18.2.0
     dev: false
