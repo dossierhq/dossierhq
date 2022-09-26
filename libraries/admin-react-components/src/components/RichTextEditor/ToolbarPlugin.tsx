@@ -10,7 +10,8 @@ import {
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePickerDialog } from '../AdminTypePickerDialog/AdminTypePickerDialog.js';
@@ -19,6 +20,7 @@ import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 
 export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
+  const { schema } = useContext(AdminDataDataContext);
   const [editor] = useLexicalComposerContext();
 
   const [isBold, setIsBold] = useState(false);
@@ -74,7 +76,9 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const enableEntityLinkNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entityLink);
   const enableValueItemNode =
-    enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem);
+    (enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem)) &&
+    schema &&
+    schema.getValueTypeCount() > 0;
 
   const insertItems: { id: string; name: string; show: (show: boolean) => void }[] = [];
   if (enableEntityNode) {
