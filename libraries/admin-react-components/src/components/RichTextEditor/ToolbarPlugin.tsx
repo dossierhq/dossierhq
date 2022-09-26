@@ -170,7 +170,7 @@ function EntityLinkButton({
 
   return (
     <>
-      <Button onClick={handleToggleButton}>Entity link</Button>
+      <IconButton icon="link" toggled={isEntityLink} onClick={handleToggleButton} />
       {showSelector && (
         <AdminEntitySelectorDialog
           show
