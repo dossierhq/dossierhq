@@ -21,6 +21,7 @@ const iconSources = {
   first: solidSvgIcons.faFastBackward,
   italic: solidSvgIcons.faItalic,
   last: solidSvgIcons.faFastForward,
+  link: solidSvgIcons.faLink,
   linkFrom: solidSvgIcons.faArrowRightFromBracket,
   linkTo: solidSvgIcons.faArrowRightToBracket,
   list: solidSvgIcons.faThList,

@@ -21,6 +21,7 @@ export const ICON_NAMES = [
   'first',
   'italic',
   'last',
+  'link',
   'linkFrom',
   'linkTo',
   'list',
