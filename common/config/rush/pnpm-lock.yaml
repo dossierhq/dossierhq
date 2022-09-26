@@ -27,7 +27,7 @@ importers:
       graphql-config: ~4.3.1
       graphql-ws: ~5.11.1
       history: ~5.3.0
-      leaflet: ~1.8.0
+      leaflet: ~1.9.1
       playground-example-generator: workspace:*
       react: ~18.2.0
       react-dom: ~18.2.0
@@ -48,7 +48,7 @@ importers:
       graphiql: 2.0.7_82199b0f5b207a481f8353c87b338e5e
       graphql: 16.6.0
       history: 5.3.0
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       playground-example-generator: link:../playground-example-generator
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -252,7 +252,7 @@ importers:
       eslint-config-next: ~12.3.0
       graphql: ~16.6.0
       graphql-voyager: ~1.0.0-rc.31
-      leaflet: ~1.8.0
+      leaflet: ~1.9.1
       next: ~12.3.0
       prettier: 2.7.1
       react: ~18.2.0
@@ -272,7 +272,7 @@ importers:
       '@jonasb/datadata-server': link:../../libraries/server
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_30c50e0ebe73d138eec12db09601b888
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       next: 12.3.0_react-dom@18.2.0+react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -322,7 +322,7 @@ importers:
       eslint-plugin-react: ~7.31.1
       eslint-plugin-react-hooks: ~4.6.0
       eslint-plugin-storybook: ~0.6.4
-      leaflet: ~1.8.0
+      leaflet: ~1.9.1
       lexical: ~0.5.0
       lodash: ~4.17.21
       prettier: 2.7.1
@@ -340,7 +340,7 @@ importers:
       '@lexical/react': 0.5.0_230c23d011b589f0fae4445856ff8c58
       '@lexical/selection': 0.5.0_lexical@0.5.0
       '@lexical/utils': 0.5.0_lexical@0.5.0
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       lexical: 0.5.0
       lodash: 4.17.21
       react: 18.2.0
@@ -811,7 +811,7 @@ importers:
       '@types/leaflet.locatecontrol': ~0.74.0
       '@types/react': ~18.0.0
       eslint: ^8.16.0
-      leaflet: ~1.8.0
+      leaflet: ~1.9.1
       leaflet.locatecontrol: ~0.76.1
       mini-svg-data-uri: ~1.4.4
       prettier: 2.7.1
@@ -821,10 +821,10 @@ importers:
       tslib: ~2.4.0
       typescript: ^4.7.2
     dependencies:
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       leaflet.locatecontrol: 0.76.1
       react: 18.2.0
-      react-leaflet: 4.1.0_leaflet@1.8.0+react@18.2.0
+      react-leaflet: 4.1.0_leaflet@1.9.1+react@18.2.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -1030,7 +1030,7 @@ importers:
       graphql-voyager: ~1.0.0-rc.31
       graphql-ws: ~5.11.1
       history: ~5.3.0
-      leaflet: ~1.8.0
+      leaflet: ~1.9.1
       leaflet.locatecontrol: ~0.76.1
       lexical: ~0.5.0
       lodash: ~4.17.21
@@ -1112,7 +1112,7 @@ importers:
       graphql-voyager: 1.0.0-rc.31_30c50e0ebe73d138eec12db09601b888
       graphql-ws: 5.11.1_graphql@16.6.0
       history: 5.3.0
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       leaflet.locatecontrol: 0.76.1
       lexical: 0.5.0
       lodash: 4.17.21
@@ -1123,7 +1123,7 @@ importers:
       prettier: 2.7.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-leaflet: 4.1.0_ca979b1fef1aafd570a8ecf3ffa670f6
+      react-leaflet: 4.1.0_f600b0a669fab98c290ebd185b66c01b
       react-router-dom: 6.3.0_react-dom@18.2.0+react@18.2.0
       rollup-plugin-visualizer: 5.8.0
       sass: 1.55.0
@@ -4099,27 +4099,27 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@react-leaflet/core/2.1.0_ca979b1fef1aafd570a8ecf3ffa670f6:
+  /@react-leaflet/core/2.1.0_f600b0a669fab98c290ebd185b66c01b:
     resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
     peerDependencies:
       leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
     optional: true
 
-  /@react-leaflet/core/2.1.0_leaflet@1.8.0+react@18.2.0:
+  /@react-leaflet/core/2.1.0_leaflet@1.9.1+react@18.2.0:
     resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
     peerDependencies:
       leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      leaflet: 1.8.0
+      leaflet: 1.9.1
       react: 18.2.0
     dev: false
 
@@ -11349,8 +11349,8 @@ packages:
     resolution: {integrity: sha512-qA92Mxs2N1jgVx+EdmxtDrdzFD+f2llPJbqaKvmW1epZMSIvD6KNsBjpQYUIxz4XtJkOleqRSwWQcrm5P5NnYw==}
     dev: false
 
-  /leaflet/1.8.0:
-    resolution: {integrity: sha512-gwhMjFCQiYs3x/Sf+d49f10ERXaEFCPr+nVTryhAW8DWbMGqJqt9G4XuIaHmFW08zYvhgdzqXGr8AlW8v8dQkA==}
+  /leaflet/1.9.1:
+    resolution: {integrity: sha512-5FcDAMTLAuOq0RisQQbTFatl8Sl4bM0gMrBfuHbl7CYbYJv45BfCS8oU3T644MLjleBq1Ncq541QEA1pqUGTFA==}
     dev: false
 
   /levn/0.3.0:
@@ -13337,29 +13337,29 @@ packages:
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
-  /react-leaflet/4.1.0_ca979b1fef1aafd570a8ecf3ffa670f6:
+  /react-leaflet/4.1.0_f600b0a669fab98c290ebd185b66c01b:
     resolution: {integrity: sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==}
     peerDependencies:
       leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 2.1.0_ca979b1fef1aafd570a8ecf3ffa670f6
-      leaflet: 1.8.0
+      '@react-leaflet/core': 2.1.0_f600b0a669fab98c290ebd185b66c01b
+      leaflet: 1.9.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
     optional: true
 
-  /react-leaflet/4.1.0_leaflet@1.8.0+react@18.2.0:
+  /react-leaflet/4.1.0_leaflet@1.9.1+react@18.2.0:
     resolution: {integrity: sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==}
     peerDependencies:
       leaflet: ^1.9.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 2.1.0_leaflet@1.8.0+react@18.2.0
-      leaflet: 1.8.0
+      '@react-leaflet/core': 2.1.0_leaflet@1.9.1+react@18.2.0
+      leaflet: 1.9.1
       react: 18.2.0
     dev: false
 
