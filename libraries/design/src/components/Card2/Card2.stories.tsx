@@ -83,6 +83,20 @@ TwoParagraphsInContent.args = {
   ),
 };
 
+export const NoPaddingContent = Template.bind({});
+NoPaddingContent.args = {
+  children: (
+    <>
+      <Card2.Header noIcons>
+        <Card2.HeaderTitle>Header</Card2.HeaderTitle>
+      </Card2.Header>
+      <Card2.Content noPadding>
+        <div style={{ backgroundColor: '#ccc', height: '10rem' }} />
+      </Card2.Content>
+    </>
+  ),
+};
+
 export const FooterButtons = Template.bind({});
 FooterButtons.args = {
   children: (
