@@ -1,8 +1,16 @@
 import type { RichTextValueItemNode, ValueItem } from '@jonasb/datadata-core';
 import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-core';
+import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
-import type { ElementFormatType, LexicalCommand, LexicalNode, NodeKey } from 'lexical';
+import type {
+  EditorConfig,
+  ElementFormatType,
+  LexicalCommand,
+  LexicalEditor,
+  LexicalNode,
+  NodeKey,
+} from 'lexical';
 import { $getNodeByKey, createCommand } from 'lexical';
 import { useCallback } from 'react';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
@@ -22,10 +30,15 @@ export function $isAdminValueItemNode(
 export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<ValueItem> = createCommand();
 
 function AdminValueItemComponent({
-  format: _,
+  className,
+  format,
   nodeKey,
   data,
 }: {
+  className: Readonly<{
+    base: string;
+    focus: string;
+  }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
   data: ValueItem;
@@ -45,11 +58,13 @@ function AdminValueItemComponent({
   );
 
   return (
-    <ValueItemFieldEditorWithoutClear
-      className="rich-text-item-indentation"
-      value={data}
-      onChange={setValue}
-    />
+    <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
+      <ValueItemFieldEditorWithoutClear
+        className="rich-text-item-indentation"
+        value={data}
+        onChange={setValue}
+      />
+    </BlockWithAlignableContents>
   );
 }
 
@@ -104,9 +119,20 @@ export class AdminValueItemNode extends DecoratorBlockNode {
     return false;
   }
 
-  override decorate(): JSX.Element {
+  override decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
+    const embedBlockTheme = config.theme.embedBlock || {};
+    const className = {
+      base: embedBlockTheme.base || '',
+      focus: embedBlockTheme.focus || '',
+    };
+
     return (
-      <AdminValueItemComponent data={this.__data} format={this.__format} nodeKey={this.__key} />
+      <AdminValueItemComponent
+        className={className}
+        data={this.__data}
+        format={this.__format}
+        nodeKey={this.__key}
+      />
     );
   }
 }

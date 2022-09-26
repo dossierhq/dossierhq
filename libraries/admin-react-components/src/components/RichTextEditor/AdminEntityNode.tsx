@@ -1,7 +1,15 @@
 import type { EntityReference, RichTextEntityNode } from '@jonasb/datadata-core';
 import { createRichTextEntityNode, RichTextNodeType } from '@jonasb/datadata-core';
+import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
-import type { ElementFormatType, LexicalCommand, LexicalNode, NodeKey } from 'lexical';
+import type {
+  EditorConfig,
+  ElementFormatType,
+  LexicalCommand,
+  LexicalEditor,
+  LexicalNode,
+  NodeKey,
+} from 'lexical';
 import { createCommand } from 'lexical';
 import { EntityTypeFieldEditorWithoutClear } from '../EntityEditor/EntityTypeFieldEditor.js';
 
@@ -18,16 +26,23 @@ export function $isAdminEntityNode(node: LexicalNode | undefined | null): node i
 export const INSERT_ADMIN_ENTITY_COMMAND: LexicalCommand<EntityReference> = createCommand();
 
 function AdminEntityComponent({
-  format: _1,
-  nodeKey: _2,
+  className,
+  format,
+  nodeKey,
   reference,
 }: {
+  className: Readonly<{
+    base: string;
+    focus: string;
+  }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
   reference: EntityReference;
 }) {
   return (
-    <EntityTypeFieldEditorWithoutClear className="rich-text-item-indentation" value={reference} />
+    <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
+      <EntityTypeFieldEditorWithoutClear className="rich-text-item-indentation" value={reference} />
+    </BlockWithAlignableContents>
   );
 }
 
@@ -82,9 +97,16 @@ export class AdminEntityNode extends DecoratorBlockNode {
     return false;
   }
 
-  override decorate(): JSX.Element {
+  override decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
+    const embedBlockTheme = config.theme.embedBlock || {};
+    const className = {
+      base: embedBlockTheme.base || '',
+      focus: embedBlockTheme.focus || '',
+    };
+
     return (
       <AdminEntityComponent
+        className={className}
         reference={this.__reference}
         format={this.__format}
         nodeKey={this.__key}
