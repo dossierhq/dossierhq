@@ -81,7 +81,7 @@ export function createRichTextTextNode(
 }
 
 export function createRichTextEntityNode(reference: EntityReference): RichTextEntityNode {
-  return { type: RichTextNodeType.entity, reference, version: 1 };
+  return { type: RichTextNodeType.entity, format: '', reference, version: 1 };
 }
 
 export function createRichTextEntityLinkNode(
@@ -102,5 +102,5 @@ export function createRichTextEntityLinkNode(
 export function createRichTextValueItemNode<T extends ValueItem<string, object>>(
   data: T
 ): RichTextValueItemNode {
-  return { type: RichTextNodeType.valueItem, data, version: 1 };
+  return { type: RichTextNodeType.valueItem, data, format: '', version: 1 };
 }

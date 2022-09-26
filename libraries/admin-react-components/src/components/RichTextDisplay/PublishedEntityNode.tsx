@@ -1,7 +1,7 @@
 import type { EntityReference, RichTextEntityNode } from '@jonasb/datadata-core';
 import { createRichTextEntityNode, RichTextNodeType } from '@jonasb/datadata-core';
-import type { LexicalNode, NodeKey } from 'lexical';
-import { DecoratorNode } from 'lexical';
+import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
+import type { ElementFormatType, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
 import { EntityTypeFieldDisplay } from '../EntityDisplay/EntityTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
@@ -19,9 +19,11 @@ export function $isPublishedEntityNode(
 }
 
 function PublishedEntityComponent({
-  nodeKey: _,
+  format: _1,
+  nodeKey: _2,
   reference,
 }: {
+  format: ElementFormatType | null;
   nodeKey: NodeKey;
   reference: EntityReference;
 }) {
@@ -36,7 +38,7 @@ function PublishedEntityComponent({
   );
 }
 
-export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
+export class PublishedEntityNode extends DecoratorBlockNode {
   __reference: EntityReference;
 
   static override getType(): string {
@@ -44,11 +46,11 @@ export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
   }
 
   static override clone(node: PublishedEntityNode): PublishedEntityNode {
-    return new PublishedEntityNode(node.__reference, node.__key);
+    return new PublishedEntityNode(node.__reference, node.__format, node.__key);
   }
 
-  constructor(reference: EntityReference, key?: NodeKey) {
-    super(key);
+  constructor(reference: EntityReference, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__reference = reference;
   }
 
@@ -64,10 +66,12 @@ export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
 
   static override importJSON(serializedNode: SerializedPublishedEntityNode): PublishedEntityNode {
     const node = $createPublishedEntityNode(serializedNode.reference);
+    node.setFormat(serializedNode.format);
     return node;
   }
 
   override exportJSON(): SerializedPublishedEntityNode {
+    //TODO format
     return createRichTextEntityNode(this.__reference);
   }
 
@@ -77,19 +81,21 @@ export class PublishedEntityNode extends DecoratorNode<JSX.Element> {
     return div;
   }
 
-  override updateDOM(_prevNode: PublishedEntityNode, _dom: HTMLElement): boolean {
-    return false; // no need to recreate the DOM
-  }
-
   override getTextContent(): '\n' {
     return '\n';
   }
 
-  override isTopLevel(): true {
-    return true;
+  override isInline(): false {
+    return false;
   }
 
   override decorate(): JSX.Element {
-    return <PublishedEntityComponent reference={this.__reference} nodeKey={this.__key} />;
+    return (
+      <PublishedEntityComponent
+        reference={this.__reference}
+        format={this.__format}
+        nodeKey={this.__key}
+      />
+    );
   }
 }
