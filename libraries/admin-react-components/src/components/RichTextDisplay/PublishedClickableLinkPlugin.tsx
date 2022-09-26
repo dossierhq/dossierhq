@@ -3,13 +3,13 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import type { LexicalEditor } from 'lexical';
 import { $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection } from 'lexical';
 import { useEffect } from 'react';
-import { $isAdminEntityLinkNode } from './AdminEntityLinkNode.js';
+import { $isPublishedEntityLinkNode } from './PublishedEntityLinkNode.js';
 
 interface Props {
   onClick: (reference: EntityReference) => void;
 }
 
-export function ClickableLinkPlugin({ onClick }: Props): JSX.Element | null {
+export function PublishedClickableLinkPlugin({ onClick }: Props): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -27,7 +27,7 @@ export function ClickableLinkPlugin({ onClick }: Props): JSX.Element | null {
       editor.update(() => {
         const maybeLinkNode = $getNearestNodeFromDOMNode(anchorDomNode);
 
-        if ($isAdminEntityLinkNode(maybeLinkNode)) {
+        if ($isPublishedEntityLinkNode(maybeLinkNode)) {
           entityReference = maybeLinkNode.getReference();
         }
       });
