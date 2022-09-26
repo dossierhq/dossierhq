@@ -58,7 +58,7 @@
     "eslint": "^8.16.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.7.1",
-    "sass": "~1.54.0",
+    "sass": "~1.55.0",
     "sass-loader": "~13.0.0",
     "svgo": "~2.8.0",
     "typescript": "^4.7.2"
