@@ -7,6 +7,7 @@ import { ServerProvider } from './components/ServerProvider';
 import type { User } from './contexts/UserContext';
 import { UserContext } from './contexts/UserContext';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
+import { CloudinaryTestRoute } from './routes/CloudinaryTestRoute';
 import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
 import { EditSchemaRoute } from './routes/EditSchemaRoute';
 import { GraphiQLRoute } from './routes/GraphiQLRoute';
@@ -33,6 +34,7 @@ export default function App() {
                 <Routes>
                   <Route path={ROUTE.index.route} element={<IndexRoute />} />
                   <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
+                  <Route path={ROUTE.cloudinaryTest.route} element={<CloudinaryTestRoute />} />
                   <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
                   <Route path={ROUTE.login.route} element={<LoginRoute />} />
                   <Route
