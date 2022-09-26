@@ -1,18 +1,12 @@
-import type {
-  AdminEntityTypeSpecification,
-  AdminValueTypeSpecification,
-} from '@jonasb/datadata-core';
 import type { IconName } from '@jonasb/datadata-design';
 import { ButtonDropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import { AdminDataDataContext } from '../..';
+import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
+import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
 
-export interface AdminTypePickerProps {
+export interface AdminTypePickerProps extends TypeSelectionFilter {
   iconLeft?: IconName;
-  showEntityTypes?: boolean;
-  entityTypes?: string[];
-  showValueTypes?: boolean;
-  valueTypes?: string[];
   onTypeSelected?: (type: string) => void;
   children: React.ReactNode;
 }
@@ -24,23 +18,15 @@ interface Item {
 
 export function AdminTypePicker({
   iconLeft,
-  showEntityTypes,
-  entityTypes,
-  showValueTypes,
-  valueTypes,
   onTypeSelected,
   children,
+  ...filter
 }: AdminTypePickerProps): JSX.Element {
   const { schema } = useContext(AdminDataDataContext);
 
-  const items: Item[] = [];
+  let items: Item[] = [];
   if (schema) {
-    if (showEntityTypes) {
-      items.push(...gatherItems(schema.spec.entityTypes, entityTypes));
-    }
-    if (showValueTypes) {
-      items.push(...gatherItems(schema.spec.valueTypes, valueTypes));
-    }
+    items = filterTypeSpecifications(schema, filter).map((it) => ({ id: it.name, name: it.name }));
   }
 
   return (
@@ -54,15 +40,4 @@ export function AdminTypePicker({
       {children}
     </ButtonDropdown>
   );
-}
-
-function gatherItems(
-  typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[],
-  filterNames: string[] | undefined
-): Item[] {
-  let types = typeSpecs.map((x) => x.name);
-  if (filterNames && filterNames.length > 0) {
-    types = types.filter((it) => filterNames.indexOf(it) >= 0);
-  }
-  return types.map((it) => ({ id: it, name: it }));
 }

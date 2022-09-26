@@ -1,6 +1,6 @@
 import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import { RichTextNodeType } from '@jonasb/datadata-core';
-import { Button, IconButton, Row } from '@jonasb/datadata-design';
+import { ButtonDropdown, IconButton, Row } from '@jonasb/datadata-design';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
@@ -13,7 +13,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
-import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
+import { AdminTypePickerDialog } from '../AdminTypePickerDialog/AdminTypePickerDialog.js';
 import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './AdminEntityLinkNode.js';
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
@@ -29,6 +29,9 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isEntityLink, setIsEntityLink] = useState(false);
+
+  const [showAddEntityDialog, setShowAddEntityDialog] = useState(false);
+  const [showAddValueItemDialog, setShowAddValueItemDialog] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -73,6 +76,14 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const enableValueItemNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem);
 
+  const insertItems: { id: string; name: string; show: (show: boolean) => void }[] = [];
+  if (enableEntityNode) {
+    insertItems.push({ id: 'entity', name: 'Entity', show: setShowAddEntityDialog });
+  }
+  if (enableValueItemNode) {
+    insertItems.push({ id: 'valueItem', name: 'Value item', show: setShowAddValueItemDialog });
+  }
+
   return (
     <Row gap={2} marginBottom={2}>
       <IconButton.Group condensed skipBottomMargin>
@@ -112,41 +123,80 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
           onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}
         />
       </IconButton.Group>
-      {enableEntityNode || enableEntityLinkNode || enableValueItemNode ? (
+      {enableEntityLinkNode ? (
+        <EntityLinkButton fieldSpec={fieldSpec} isEntityLink={isEntityLink} />
+      ) : null}
+      {insertItems.length > 0 ? (
         <>
           <Row.Item flexGrow={1} />
-          {enableEntityLinkNode ? (
-            <EntityLinkButton fieldSpec={fieldSpec} isEntityLink={isEntityLink} />
-          ) : null}
-          {enableEntityNode ? <AddEntityButton fieldSpec={fieldSpec} /> : null}
-          {enableValueItemNode ? <AddValueItemButton fieldSpec={fieldSpec} /> : null}
+          <ButtonDropdown
+            iconLeft="add"
+            left
+            items={insertItems}
+            renderItem={(item) => item.name}
+            onItemClick={(item) => item.show(true)}
+          >
+            Insert
+          </ButtonDropdown>
         </>
+      ) : null}
+      {showAddEntityDialog ? (
+        <AddEntityDialog fieldSpec={fieldSpec} onClose={() => setShowAddEntityDialog(false)} />
+      ) : null}
+      {showAddValueItemDialog ? (
+        <AddValueItemButton
+          fieldSpec={fieldSpec}
+          onClose={() => setShowAddValueItemDialog(false)}
+        />
       ) : null}
     </Row>
   );
 }
 
-function AddEntityButton({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
+function AddEntityDialog({
+  fieldSpec,
+  onClose,
+}: {
+  fieldSpec: AdminFieldSpecification;
+  onClose: () => void;
+}) {
   const [editor] = useLexicalComposerContext();
-  const [showSelector, setShowSelector] = useState(false);
-  const handleDialogClose = useCallback(() => setShowSelector(false), []);
 
   return (
-    <>
-      <Button onClick={() => setShowSelector(true)}>Add entity</Button>
-      {showSelector && (
-        <AdminEntitySelectorDialog
-          show
-          title="Select entity"
-          entityTypes={fieldSpec.entityTypes}
-          onClose={handleDialogClose}
-          onItemClick={(entity) => {
-            editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, { id: entity.id });
-            setShowSelector(false);
-          }}
-        />
-      )}
-    </>
+    <AdminEntitySelectorDialog
+      show
+      title="Select entity"
+      entityTypes={fieldSpec.entityTypes}
+      onClose={onClose}
+      onItemClick={(entity) => {
+        editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, { id: entity.id });
+        onClose();
+      }}
+    />
+  );
+}
+
+function AddValueItemButton({
+  fieldSpec,
+  onClose,
+}: {
+  fieldSpec: AdminFieldSpecification;
+  onClose: () => void;
+}) {
+  const [editor] = useLexicalComposerContext();
+
+  return (
+    <AdminTypePickerDialog
+      show
+      title="Select value type"
+      showValueTypes
+      valueTypes={fieldSpec.valueTypes}
+      onClose={onClose}
+      onItemClick={(type) => {
+        editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type });
+        onClose();
+      }}
+    />
   );
 }
 
@@ -184,19 +234,5 @@ function EntityLinkButton({
         />
       )}
     </>
-  );
-}
-
-function AddValueItemButton({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
-  const [editor] = useLexicalComposerContext();
-
-  return (
-    <AdminTypePicker
-      showValueTypes
-      valueTypes={fieldSpec.valueTypes}
-      onTypeSelected={(type) => editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type })}
-    >
-      Add value item
-    </AdminTypePicker>
   );
 }
