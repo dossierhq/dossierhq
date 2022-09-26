@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification, RichText } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, EntityReference, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -6,11 +6,14 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import type { EditorState, LexicalEditor } from 'lexical';
 import debounce from 'lodash/debounce';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
+import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { LexicalTheme } from '../../utils/LexicalTheme.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
 import { AdminValueItemNode } from './AdminValueItemNode.js';
+import { ClickableLinkPlugin } from './ClickableLinkPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { ToolbarPlugin } from './ToolbarPlugin';
@@ -23,6 +26,8 @@ interface Props {
 }
 
 export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
+  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+
   const debouncedHandleChange = useMemo(
     () =>
       debounce((editorState: EditorState) => {
@@ -34,6 +39,14 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   useEffect(() => {
     return () => debouncedHandleChange.cancel();
   }, [debouncedHandleChange]);
+
+  const handleEntityLinkClick = useCallback(
+    (reference: EntityReference) => {
+      // open entity asynchronously to not fight with the "click to activate entity" functionality
+      setTimeout(() => dispatchEntityEditorState(new EntityEditorActions.AddDraft(reference)));
+    },
+    [dispatchEntityEditorState]
+  );
 
   const initialConfig = {
     namespace: 'datadata',
@@ -61,6 +74,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
       />
       <EntityPlugin />
       <EntityLinkPlugin />
+      <ClickableLinkPlugin onClick={handleEntityLinkClick} />
       <ValueItemPlugin />
       <OnChangePlugin onChange={debouncedHandleChange} />
     </LexicalComposer>

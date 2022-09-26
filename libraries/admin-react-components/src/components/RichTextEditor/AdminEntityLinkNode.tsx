@@ -1,6 +1,7 @@
 import type { EntityReference, RichTextEntityLinkNode } from '@jonasb/datadata-core';
 import { RichTextNodeType } from '@jonasb/datadata-core';
-import type { LexicalCommand, LexicalNode, NodeKey } from 'lexical';
+import { addClassNamesToElement } from '@lexical/utils';
+import type { EditorConfig, LexicalCommand, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import {
   $getSelection,
   $isElementNode,
@@ -67,12 +68,17 @@ export class AdminEntityLinkNode extends ElementNode {
     };
   }
 
-  override createDOM(): HTMLElement {
-    const a = document.createElement('a');
-    return a;
+  override createDOM(config: EditorConfig, _editor: LexicalEditor): HTMLElement {
+    const element = document.createElement('a');
+    addClassNamesToElement(element, config.theme.link);
+    return element;
   }
 
-  override updateDOM(_prevNode: AdminEntityLinkNode, _dom: HTMLElement): boolean {
+  override updateDOM(
+    _prevNode: AdminEntityLinkNode,
+    _dom: HTMLElement,
+    _config: EditorConfig
+  ): boolean {
     return false; // no need to recreate the DOM
   }
 
