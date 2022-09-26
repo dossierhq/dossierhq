@@ -10,6 +10,7 @@
   "license": "ISC",
   "optionalDependencies": {
     "@babel/core": "^7.17.9",
+    "@cloudinary/url-gen": "~1.8.6",
     "@creativebulma/bulma-badge": "~1.0.1",
     "@faker-js/faker": "~7.5.0",
     "@fortawesome/free-solid-svg-icons": "~6.2.0",

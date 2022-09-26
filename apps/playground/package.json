@@ -10,6 +10,7 @@
     "preview": "vite --port 3002 preview"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "~1.8.6",
     "@jonasb/datadata-admin-react-components": "workspace:*",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sql.js": "workspace:*",
