@@ -2,6 +2,7 @@ import type { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, Result } from './ErrorResult.js';
 import type { RichTextNodeType } from './Schema.js';
 import type {
+  SerializedDecoratorBlockNode,
   SerializedEditorState,
   SerializedElementNode,
   SerializedLexicalNode,
@@ -54,7 +55,7 @@ export type RichTextEntityNode = Spread<
     reference: EntityReference;
     version: 1;
   },
-  RichTextNode
+  SerializedDecoratorBlockNode
 >;
 
 export type RichTextEntityLinkNode = Spread<
@@ -72,7 +73,7 @@ export type RichTextValueItemNode = Spread<
     data: ValueItem;
     version: 1;
   },
-  RichTextNode
+  SerializedDecoratorBlockNode
 >;
 
 /** Geographic location using EPSG:4326/WGS 84 */

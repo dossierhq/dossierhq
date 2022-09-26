@@ -1,7 +1,7 @@
 import type { RichTextValueItemNode, ValueItem } from '@jonasb/datadata-core';
 import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-core';
-import type { LexicalNode, NodeKey } from 'lexical';
-import { DecoratorNode } from 'lexical';
+import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
+import type { ElementFormatType, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
 import { ValueTypeFieldDisplay } from '../EntityDisplay/ValueTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
@@ -19,9 +19,11 @@ export function $isPublishedValueItemNode(
 }
 
 function PublishedValueItemComponent({
-  nodeKey: _,
+  format: _1,
+  nodeKey: _2,
   data,
 }: {
+  format: ElementFormatType | null;
   nodeKey: NodeKey;
   data: ValueItem | null;
 }) {
@@ -36,7 +38,7 @@ function PublishedValueItemComponent({
   );
 }
 
-export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {
+export class PublishedValueItemNode extends DecoratorBlockNode {
   __data: ValueItem;
 
   static override getType(): string {
@@ -44,11 +46,11 @@ export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {
   }
 
   static override clone(node: PublishedValueItemNode): PublishedValueItemNode {
-    return new PublishedValueItemNode(node.__data, node.__key);
+    return new PublishedValueItemNode(node.__data, node.__format, node.__key);
   }
 
-  constructor(data: ValueItem, key?: NodeKey) {
-    super(key);
+  constructor(data: ValueItem, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__data = data;
   }
 
@@ -66,10 +68,12 @@ export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {
     serializedNode: SerializedPublishedValueItemNode
   ): PublishedValueItemNode {
     const node = $createPublishedValueItemNode(serializedNode.data);
+    node.setFormat(serializedNode.format);
     return node;
   }
 
   override exportJSON(): SerializedPublishedValueItemNode {
+    //TODO format
     return createRichTextValueItemNode(this.__data);
   }
 
@@ -79,19 +83,17 @@ export class PublishedValueItemNode extends DecoratorNode<JSX.Element> {
     return div;
   }
 
-  override updateDOM(_prevNode: PublishedValueItemNode, _dom: HTMLElement): boolean {
-    return false; // no need to recreate the DOM
-  }
-
   override getTextContent(): '\n' {
     return '\n';
   }
 
-  override isTopLevel(): true {
-    return true;
+  override isInline(): false {
+    return false;
   }
 
   override decorate(): JSX.Element {
-    return <PublishedValueItemComponent data={this.__data} nodeKey={this.__key} />;
+    return (
+      <PublishedValueItemComponent data={this.__data} format={this.__format} nodeKey={this.__key} />
+    );
   }
 }

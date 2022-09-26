@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $insertBlockNode } from '@lexical/utils';
+import { $insertNodeToNearestRoot } from '@lexical/utils';
 import { COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
 import { $createAdminEntityNode, INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
@@ -12,7 +12,7 @@ export function EntityPlugin(): null {
       INSERT_ADMIN_ENTITY_COMMAND,
       (payload) => {
         const entityNode = $createAdminEntityNode(payload);
-        $insertBlockNode(entityNode);
+        $insertNodeToNearestRoot(entityNode);
         return true;
       },
       COMMAND_PRIORITY_EDITOR

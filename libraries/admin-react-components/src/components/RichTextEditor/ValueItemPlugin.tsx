@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $insertBlockNode } from '@lexical/utils';
+import { $insertNodeToNearestRoot } from '@lexical/utils';
 import { COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
 import {
@@ -15,7 +15,7 @@ export function ValueItemPlugin(): null {
       INSERT_ADMIN_VALUE_ITEM_COMMAND,
       (payload) => {
         const valueItemNode = $createAdminValueItemNode(payload);
-        $insertBlockNode(valueItemNode);
+        $insertNodeToNearestRoot(valueItemNode);
         return true;
       },
       COMMAND_PRIORITY_EDITOR

@@ -1,7 +1,8 @@
 import type { EntityReference, RichTextEntityNode } from '@jonasb/datadata-core';
 import { createRichTextEntityNode, RichTextNodeType } from '@jonasb/datadata-core';
-import type { LexicalCommand, LexicalNode, NodeKey } from 'lexical';
-import { createCommand, DecoratorNode } from 'lexical';
+import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
+import type { ElementFormatType, LexicalCommand, LexicalNode, NodeKey } from 'lexical';
+import { createCommand } from 'lexical';
 import { EntityTypeFieldEditorWithoutClear } from '../EntityEditor/EntityTypeFieldEditor.js';
 
 export type SerializedAdminEntityNode = RichTextEntityNode;
@@ -17,9 +18,11 @@ export function $isAdminEntityNode(node: LexicalNode | undefined | null): node i
 export const INSERT_ADMIN_ENTITY_COMMAND: LexicalCommand<EntityReference> = createCommand();
 
 function AdminEntityComponent({
-  nodeKey: _,
+  format: _1,
+  nodeKey: _2,
   reference,
 }: {
+  format: ElementFormatType | null;
   nodeKey: NodeKey;
   reference: EntityReference;
 }) {
@@ -28,7 +31,7 @@ function AdminEntityComponent({
   );
 }
 
-export class AdminEntityNode extends DecoratorNode<JSX.Element> {
+export class AdminEntityNode extends DecoratorBlockNode {
   __reference: EntityReference;
 
   static override getType(): string {
@@ -36,11 +39,11 @@ export class AdminEntityNode extends DecoratorNode<JSX.Element> {
   }
 
   static override clone(node: AdminEntityNode): AdminEntityNode {
-    return new AdminEntityNode(node.__reference, node.__key);
+    return new AdminEntityNode(node.__reference, node.__format, node.__key);
   }
 
-  constructor(reference: EntityReference, key?: NodeKey) {
-    super(key);
+  constructor(reference: EntityReference, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__reference = reference;
   }
 
@@ -56,10 +59,12 @@ export class AdminEntityNode extends DecoratorNode<JSX.Element> {
 
   static override importJSON(serializedNode: SerializedAdminEntityNode): AdminEntityNode {
     const node = $createAdminEntityNode(serializedNode.reference);
+    node.setFormat(serializedNode.format);
     return node;
   }
 
   override exportJSON(): SerializedAdminEntityNode {
+    //TODO format
     return createRichTextEntityNode(this.__reference);
   }
 
@@ -69,19 +74,21 @@ export class AdminEntityNode extends DecoratorNode<JSX.Element> {
     return div;
   }
 
-  override updateDOM(_prevNode: AdminEntityNode, _dom: HTMLElement): boolean {
-    return false; // no need to recreate the DOM
-  }
-
   override getTextContent(): '\n' {
     return '\n';
   }
 
-  override isTopLevel(): true {
-    return true;
+  override isInline(): false {
+    return false;
   }
 
   override decorate(): JSX.Element {
-    return <AdminEntityComponent reference={this.__reference} nodeKey={this.__key} />;
+    return (
+      <AdminEntityComponent
+        reference={this.__reference}
+        format={this.__format}
+        nodeKey={this.__key}
+      />
+    );
   }
 }

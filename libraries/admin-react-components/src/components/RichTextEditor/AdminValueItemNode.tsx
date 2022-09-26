@@ -1,8 +1,9 @@
 import type { RichTextValueItemNode, ValueItem } from '@jonasb/datadata-core';
 import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-core';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
-import type { LexicalCommand, LexicalNode, NodeKey } from 'lexical';
-import { $getNodeByKey, createCommand, DecoratorNode } from 'lexical';
+import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
+import type { ElementFormatType, LexicalCommand, LexicalNode, NodeKey } from 'lexical';
+import { $getNodeByKey, createCommand } from 'lexical';
 import { useCallback } from 'react';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
 
@@ -20,7 +21,15 @@ export function $isAdminValueItemNode(
 
 export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<ValueItem> = createCommand();
 
-function AdminValueItemComponent({ nodeKey, data }: { nodeKey: NodeKey; data: ValueItem }) {
+function AdminValueItemComponent({
+  format: _,
+  nodeKey,
+  data,
+}: {
+  format: ElementFormatType | null;
+  nodeKey: NodeKey;
+  data: ValueItem;
+}) {
   const [editor] = useLexicalComposerContext();
 
   const setValue = useCallback(
@@ -44,7 +53,7 @@ function AdminValueItemComponent({ nodeKey, data }: { nodeKey: NodeKey; data: Va
   );
 }
 
-export class AdminValueItemNode extends DecoratorNode<JSX.Element> {
+export class AdminValueItemNode extends DecoratorBlockNode {
   __data: ValueItem;
 
   static override getType(): string {
@@ -52,11 +61,11 @@ export class AdminValueItemNode extends DecoratorNode<JSX.Element> {
   }
 
   static override clone(node: AdminValueItemNode): AdminValueItemNode {
-    return new AdminValueItemNode(node.__data, node.__key);
+    return new AdminValueItemNode(node.__data, node.__format, node.__key);
   }
 
-  constructor(data: ValueItem, key?: NodeKey) {
-    super(key);
+  constructor(data: ValueItem, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__data = data;
   }
 
@@ -72,10 +81,12 @@ export class AdminValueItemNode extends DecoratorNode<JSX.Element> {
 
   static override importJSON(serializedNode: SerializedAdminValueItemNode): AdminValueItemNode {
     const node = $createAdminValueItemNode(serializedNode.data);
+    node.setFormat(serializedNode.format);
     return node;
   }
 
   override exportJSON(): SerializedAdminValueItemNode {
+    //TODO format
     return createRichTextValueItemNode(this.__data);
   }
 
@@ -85,19 +96,17 @@ export class AdminValueItemNode extends DecoratorNode<JSX.Element> {
     return div;
   }
 
-  override updateDOM(_prevNode: AdminValueItemNode, _dom: HTMLElement): boolean {
-    return false; // no need to recreate the DOM
-  }
-
   override getTextContent(): '\n' {
     return '\n';
   }
 
-  override isTopLevel(): true {
-    return true;
+  override isInline(): false {
+    return false;
   }
 
   override decorate(): JSX.Element {
-    return <AdminValueItemComponent data={this.__data} nodeKey={this.__key} />;
+    return (
+      <AdminValueItemComponent data={this.__data} format={this.__format} nodeKey={this.__key} />
+    );
   }
 }

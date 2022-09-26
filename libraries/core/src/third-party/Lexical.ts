@@ -74,6 +74,15 @@ export const TEXT_TYPE_TO_FORMAT = {
   underline: IS_UNDERLINE,
 } as const;
 
+// from @lexical/react
+
+export type SerializedDecoratorBlockNode = Spread<
+  {
+    format: ElementFormatType;
+  },
+  SerializedLexicalNode
+>;
+
 // from @lexical/rich-text
 
 // deno had issue resolving the types on skypack, so copy instead
