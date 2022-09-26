@@ -719,7 +719,7 @@ importers:
       prettier: 2.7.1
       react: ~18.2.0
       react-dom: ~18.2.0
-      sass: ~1.54.0
+      sass: ~1.55.0
       sass-loader: ~13.0.0
       svgo: ~2.8.0
       tslib: ~2.4.0
@@ -756,8 +756,8 @@ importers:
       eslint-plugin-storybook: 0.6.4_eslint@8.16.0+typescript@4.7.2
       mini-svg-data-uri: 1.4.4
       prettier: 2.7.1
-      sass: 1.54.0
-      sass-loader: 13.0.0_sass@1.54.0
+      sass: 1.55.0
+      sass-loader: 13.0.0_sass@1.55.0
       svgo: 2.8.0
       typescript: 4.7.2
 
@@ -1044,7 +1044,7 @@ importers:
       react-leaflet: ~4.0.0
       react-router-dom: ~6.3.0
       rollup-plugin-visualizer: ~5.8.0
-      sass: ~1.54.0
+      sass: ~1.55.0
       sass-loader: ~13.0.0
       sql.js: ~1.8.0
       sqlite3: ~5.1.1
@@ -1117,7 +1117,7 @@ importers:
       lexical: 0.5.0
       lodash: 4.17.21
       mini-svg-data-uri: 1.4.4
-      next: 12.3.0_3cca913cee0df5a8156edf8091eeb15d
+      next: 12.3.0_426afb3e043be3656d1ede6581f349e2
       pg: 8.7.1
       postgrator: 7.1.0
       prettier: 2.7.1
@@ -1126,8 +1126,8 @@ importers:
       react-leaflet: 4.0.0_ca979b1fef1aafd570a8ecf3ffa670f6
       react-router-dom: 6.3.0_react-dom@18.2.0+react@18.2.0
       rollup-plugin-visualizer: 5.8.0
-      sass: 1.54.0
-      sass-loader: 13.0.0_sass@1.54.0
+      sass: 1.55.0
+      sass-loader: 13.0.0_sass@1.55.0
       sql.js: 1.8.0
       sqlite3: 5.1.1
       svgo: 2.8.0
@@ -1136,8 +1136,8 @@ importers:
       typescript: 4.7.2
       undici: 5.10.0
       uuid: 9.0.0
-      vite: 2.9.12_sass@1.54.0
-      vitest: 0.23.1_sass@1.54.0
+      vite: 2.9.12_sass@1.55.0
+      vitest: 0.23.1_sass@1.55.0
 
   ../../tools/generic-tools:
     specifiers:
@@ -5485,7 +5485,7 @@ packages:
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 13.0.0_sass@1.54.0
+      sass-loader: 13.0.0_sass@1.55.0
 
   /@storybook/preview-web/6.4.21_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-v0AS7rDbdcD3aw/1pY525EJ4jmgY5ntz9CqiLmBKVBgshjng7Cza8AVR8Kvhr+ppoP/v63w4sEdxIw7jYsO5rQ==}
@@ -11988,7 +11988,7 @@ packages:
   /nested-error-stacks/2.1.0:
     resolution: {integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==}
 
-  /next/12.3.0_3cca913cee0df5a8156edf8091eeb15d:
+  /next/12.3.0_426afb3e043be3656d1ede6581f349e2:
     resolution: {integrity: sha512-GpzI6me9V1+XYtfK0Ae9WD0mKqHyzQlGq1xH1rzNIYMASo4Tkl4rTe9jSqtBpXFhOS33KohXs9ZY38Akkhdciw==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -12012,7 +12012,7 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      sass: 1.54.0
+      sass: 1.55.0
       styled-jsx: 5.0.6_@babel+core@7.17.9+react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     optionalDependencies:
@@ -13937,7 +13937,7 @@ packages:
       minimist: 1.2.6
       walker: 1.0.8
 
-  /sass-loader/13.0.0_sass@1.54.0:
+  /sass-loader/13.0.0_sass@1.55.0:
     resolution: {integrity: sha512-IHCFecI+rbPvXE2zO/mqdVFe8MU7ElGrwga9hh2H65Ru4iaBJAMRteum1c4Gsxi9Cq1FOtTEDd6+/AEYuQDM4Q==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -13958,10 +13958,10 @@ packages:
     dependencies:
       klona: 2.0.5
       neo-async: 2.6.2
-      sass: 1.54.0
+      sass: 1.55.0
 
-  /sass/1.54.0:
-    resolution: {integrity: sha512-C4zp79GCXZfK0yoHZg+GxF818/aclhp9F48XBu/+bm9vXEVAYov9iU3FBVRMq3Hx3OA4jfKL+p2K9180mEh0xQ==}
+  /sass/1.55.0:
+    resolution: {integrity: sha512-Pk+PMy7OGLs9WaxZGJMn7S96dvlyVBwwtToX895WmCpAOr5YiJYEUJfiJidMuKb613z2xNWcXCHEuOvjZbqC6A==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -15444,7 +15444,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/2.9.12_sass@1.54.0:
+  /vite/2.9.12_sass@1.55.0:
     resolution: {integrity: sha512-suxC36dQo9Rq1qMB2qiRorNJtJAdxguu5TMvBHOc/F370KvqAe9t48vYp+/TbPKRNrMh/J55tOUmkuIqstZaew==}
     engines: {node: '>=12.2.0'}
     hasBin: true
@@ -15464,7 +15464,7 @@ packages:
       postcss: 8.4.14
       resolve: 1.22.0
       rollup: 2.70.1
-      sass: 1.54.0
+      sass: 1.55.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: false
@@ -15510,7 +15510,7 @@ packages:
       - supports-color
     dev: true
 
-  /vitest/0.23.1_sass@1.54.0:
+  /vitest/0.23.1_sass@1.55.0:
     resolution: {integrity: sha512-kn9pG+h6VA3yj/xRvwgLKEd33rOlzMqJEg3tl5HSm3WUPlkY1Lr1FK8RN1uIqVKvFxmz6HGU3EQW+xW2kazRkQ==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -15542,7 +15542,7 @@ packages:
       tinybench: 2.1.4
       tinypool: 0.2.4
       tinyspy: 1.0.2
-      vite: 2.9.12_sass@1.54.0
+      vite: 2.9.12_sass@1.55.0
     transitivePeerDependencies:
       - less
       - sass
