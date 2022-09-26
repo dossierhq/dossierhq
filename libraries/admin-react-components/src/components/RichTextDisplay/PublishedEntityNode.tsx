@@ -1,7 +1,8 @@
 import type { EntityReference, RichTextEntityNode } from '@jonasb/datadata-core';
 import { createRichTextEntityNode, RichTextNodeType } from '@jonasb/datadata-core';
+import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
-import type { ElementFormatType, LexicalNode, NodeKey } from 'lexical';
+import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
 import { EntityTypeFieldDisplay } from '../EntityDisplay/EntityTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
@@ -19,10 +20,15 @@ export function $isPublishedEntityNode(
 }
 
 function PublishedEntityComponent({
-  format: _1,
-  nodeKey: _2,
+  className,
+  format,
+  nodeKey,
   reference,
 }: {
+  className: Readonly<{
+    base: string;
+    focus: string;
+  }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
   reference: EntityReference;
@@ -30,11 +36,13 @@ function PublishedEntityComponent({
   const { fieldSpec } = useContext(RichTextDisplayContext);
 
   return (
-    <EntityTypeFieldDisplay
-      className="rich-text-item-indentation"
-      fieldSpec={fieldSpec}
-      value={reference}
-    />
+    <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
+      <EntityTypeFieldDisplay
+        className="rich-text-item-indentation"
+        fieldSpec={fieldSpec}
+        value={reference}
+      />
+    </BlockWithAlignableContents>
   );
 }
 
@@ -89,9 +97,16 @@ export class PublishedEntityNode extends DecoratorBlockNode {
     return false;
   }
 
-  override decorate(): JSX.Element {
+  override decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
+    const embedBlockTheme = config.theme.embedBlock || {};
+    const className = {
+      base: embedBlockTheme.base || '',
+      focus: embedBlockTheme.focus || '',
+    };
+
     return (
       <PublishedEntityComponent
+        className={className}
         reference={this.__reference}
         format={this.__format}
         nodeKey={this.__key}

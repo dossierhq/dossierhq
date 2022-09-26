@@ -1,7 +1,8 @@
 import type { RichTextValueItemNode, ValueItem } from '@jonasb/datadata-core';
 import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-core';
+import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
-import type { ElementFormatType, LexicalNode, NodeKey } from 'lexical';
+import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
 import { ValueTypeFieldDisplay } from '../EntityDisplay/ValueTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
@@ -19,10 +20,15 @@ export function $isPublishedValueItemNode(
 }
 
 function PublishedValueItemComponent({
-  format: _1,
-  nodeKey: _2,
+  className,
+  format,
+  nodeKey,
   data,
 }: {
+  className: Readonly<{
+    base: string;
+    focus: string;
+  }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
   data: ValueItem | null;
@@ -30,11 +36,13 @@ function PublishedValueItemComponent({
   const { fieldSpec } = useContext(RichTextDisplayContext);
 
   return (
-    <ValueTypeFieldDisplay
-      className="rich-text-item-indentation"
-      fieldSpec={fieldSpec}
-      value={data}
-    />
+    <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
+      <ValueTypeFieldDisplay
+        className="rich-text-item-indentation"
+        fieldSpec={fieldSpec}
+        value={data}
+      />
+    </BlockWithAlignableContents>
   );
 }
 
@@ -91,9 +99,20 @@ export class PublishedValueItemNode extends DecoratorBlockNode {
     return false;
   }
 
-  override decorate(): JSX.Element {
+  override decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
+    const embedBlockTheme = config.theme.embedBlock || {};
+    const className = {
+      base: embedBlockTheme.base || '',
+      focus: embedBlockTheme.focus || '',
+    };
+
     return (
-      <PublishedValueItemComponent data={this.__data} format={this.__format} nodeKey={this.__key} />
+      <PublishedValueItemComponent
+        className={className}
+        data={this.__data}
+        format={this.__format}
+        nodeKey={this.__key}
+      />
     );
   }
 }
