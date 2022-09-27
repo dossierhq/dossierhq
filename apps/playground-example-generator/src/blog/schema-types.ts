@@ -2,7 +2,7 @@ import type { AdminEntity, EntityReference, RichText, ValueItem } from '@jonasb/
 
 export interface AdminBlogPostFields {
   title: string | null;
-  heroImage: AdminImage | null;
+  heroImage: AdminCloudinaryImage | null;
   description: RichText | null;
   body: RichText | null;
   authors: Array<EntityReference> | null;
@@ -41,24 +41,24 @@ export function assertIsAdminPerson(
   }
 }
 
-export type AllAdminValueItems = AdminImage;
+export type AllAdminValueItems = AdminCloudinaryImage;
 
-export interface AdminImageFields {
+export interface AdminCloudinaryImageFields {
   publicId: string | null;
 }
 
-export type AdminImage = ValueItem<'Image', AdminImageFields>;
+export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
 
-export function isAdminImage(
-  valueItem: ValueItem<string, object> | AdminImage
-): valueItem is AdminImage {
-  return valueItem.type === 'Image';
+export function isAdminCloudinaryImage(
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+): valueItem is AdminCloudinaryImage {
+  return valueItem.type === 'CloudinaryImage';
 }
 
-export function assertIsAdminImage(
-  valueItem: ValueItem<string, object> | AdminImage
-): asserts valueItem is AdminImage {
-  if (valueItem.type !== 'Image') {
-    throw new Error('Expected type = Image (but was ' + valueItem.type + ')');
+export function assertIsAdminCloudinaryImage(
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+): asserts valueItem is AdminCloudinaryImage {
+  if (valueItem.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
   }
 }

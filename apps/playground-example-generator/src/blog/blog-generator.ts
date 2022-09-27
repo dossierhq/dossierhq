@@ -6,6 +6,7 @@ import {
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
+  createRichTextValueItemNode,
 } from '@jonasb/datadata-core';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
 import {
@@ -13,7 +14,7 @@ import {
   createDatabase,
   exportDatabase,
 } from '../utils/shared-generator.js';
-import type { AdminBlogPost, AdminImage, AdminPerson } from './schema-types.js';
+import type { AdminBlogPost, AdminCloudinaryImage, AdminPerson } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
 async function createPerson(adminClient: AdminClient) {
@@ -33,7 +34,7 @@ async function createPerson(adminClient: AdminClient) {
 async function createBlogPost(
   adminClient: AdminClient,
   persons: AdminPerson[],
-  images: AdminImage[]
+  images: AdminCloudinaryImage[]
 ) {
   const title = faker.company.catchPhrase();
 
@@ -52,6 +53,8 @@ async function createBlogPost(
           ]),
           body: createRichTextRootNode([
             createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),
+            createRichTextValueItemNode(faker.helpers.arrayElement(images)),
+            createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),
           ]),
         },
       },
@@ -66,13 +69,13 @@ async function main() {
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
-  const images = cloudinaryImages.map<AdminImage>((image) => ({
-    type: 'Image',
+  const images = cloudinaryImages.map<AdminCloudinaryImage>((image) => ({
+    type: 'CloudinaryImage',
     publicId: image.public_id,
   }));
 
   const persons: AdminPerson[] = [];
-  for (const _ of Array(100).keys()) {
+  for (const _ of Array(20).keys()) {
     persons.push(await createPerson(adminClient));
   }
 

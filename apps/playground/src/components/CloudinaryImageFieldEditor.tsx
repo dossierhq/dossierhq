@@ -12,22 +12,22 @@ import type {
   UploadWidget,
 } from '../types/CloudinaryUploadWidget.js';
 
-export interface AdminImageFields {
+export interface AdminCloudinaryImageFields {
   publicId: string | null;
 }
 
-export type AdminImage = ValueItem<'Image', AdminImageFields>;
+export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
 
 export function isAdminImage(
-  valueItem: ValueItem<string, object> | AdminImage
-): valueItem is AdminImage {
-  return valueItem.type === 'Image';
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+): valueItem is AdminCloudinaryImage {
+  return valueItem.type === 'CloudinaryImage';
 }
 
 export function CloudinaryImageFieldEditor({
   value,
   onChange,
-}: FieldEditorProps<AdminImage> & { value: AdminImage }) {
+}: FieldEditorProps<AdminCloudinaryImage> & { value: AdminCloudinaryImage }) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   return (
     <HoverRevealStack>
@@ -43,8 +43,8 @@ export function CloudinaryImageFieldEditorWithoutClear({
   value,
   onChange,
 }: {
-  value: AdminImage;
-  onChange: (value: AdminImage) => void;
+  value: AdminCloudinaryImage;
+  onChange: (value: AdminCloudinaryImage) => void;
 }) {
   const uploadWidgetCallback = useCallback(
     (error: Error | undefined, result: CloudinaryUploadResult | undefined) =>
@@ -111,9 +111,9 @@ function useInitializeUploadWidget(callback: CloudinaryUploadWidgetCallback): Up
 function handleUploadWidgetCallback(
   error: Error | undefined,
   result: CloudinaryUploadResult | undefined,
-  onChange: (value: AdminImage) => void
+  onChange: (value: AdminCloudinaryImage) => void
 ) {
   if (result && result.event === 'success') {
-    onChange({ type: 'Image', publicId: result.info.public_id });
+    onChange({ type: 'CloudinaryImage', publicId: result.info.public_id });
   }
 }

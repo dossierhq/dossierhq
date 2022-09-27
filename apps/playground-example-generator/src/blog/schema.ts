@@ -1,4 +1,5 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import { RichTextNodeType } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
 export const SCHEMA: AdminSchemaSpecificationUpdate = {
@@ -8,9 +9,33 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       authKeyPattern: 'none',
       fields: [
         { name: 'title', type: FieldType.String, required: true, isName: true },
-        { name: 'heroImage', type: FieldType.ValueType, required: true, valueTypes: ['Image'] },
-        { name: 'description', type: FieldType.RichText, multiline: true, required: true },
-        { name: 'body', type: FieldType.RichText, required: true },
+        {
+          name: 'heroImage',
+          type: FieldType.ValueType,
+          required: true,
+          valueTypes: ['CloudinaryImage'],
+        },
+        {
+          name: 'description',
+          type: FieldType.RichText,
+          multiline: true,
+          required: true,
+          richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
+        },
+        {
+          name: 'body',
+          type: FieldType.RichText,
+          required: true,
+          richTextNodes: [
+            RichTextNodeType.root,
+            RichTextNodeType.paragraph,
+            RichTextNodeType.text,
+            RichTextNodeType.entityLink,
+            RichTextNodeType.valueItem,
+          ],
+          linkEntityTypes: ['BlogPost'],
+          valueTypes: ['CloudinaryImage'],
+        },
         {
           name: 'authors',
           type: FieldType.EntityType,
@@ -29,7 +54,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   ],
   valueTypes: [
     {
-      name: 'Image',
+      name: 'CloudinaryImage',
       fields: [{ name: 'publicId', type: FieldType.String, required: true }],
     },
   ],
