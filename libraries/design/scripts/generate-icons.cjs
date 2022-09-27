@@ -31,6 +31,7 @@ const iconSources = {
   orderAsc: solidSvgIcons.faSortDown,
   orderDesc: solidSvgIcons.faSortUp,
   ordered: solidSvgIcons.faArrowDownShortWide,
+  openInNewWindow: solidSvgIcons.faArrowUpRightFromSquare,
   previous: solidSvgIcons.faStepBackward,
   search: solidSvgIcons.faSearch,
   shuffle: solidSvgIcons.faShuffle,
