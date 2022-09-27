@@ -10,6 +10,7 @@ export interface IconProps {
   size?: 'small' | '' | 'medium' | 'large';
 }
 
+// Also update ./scripts/generate-icons.cjs
 export const ICON_NAMES = [
   'add',
   'bold',
@@ -28,6 +29,7 @@ export const ICON_NAMES = [
   'location',
   'map',
   'next',
+  'openInNewWindow',
   'orderAsc',
   'orderDesc',
   'ordered',
