@@ -6,6 +6,7 @@ import {
   Text,
   toSpacingClassName,
 } from '@jonasb/datadata-design';
+import blogUrl from 'playground-example-generator/dist/blog.sqlite?url';
 import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
 import reviewsUrl from 'playground-example-generator/dist/reviews.sqlite?url';
 import type { ChangeEvent } from 'react';
@@ -82,6 +83,25 @@ export function ChangeDatabaseMessage({ className }: Props) {
           onClick={() => loadDatabaseFromUrl(reviewsUrl, createDatabase, showNotification)}
         >
           Load Reviews
+        </Button>
+        <Text textStyle="headline5">Example: Blog</Text>
+        <p>An example database with fake blog posts and people.</p>
+        <p>
+          The information is generated using{' '}
+          <a href="https://fakerjs.dev/" target="_blank" rel="noopener noreferrer">
+            Faker
+          </a>{' '}
+          with sample images provided by{' '}
+          <a href="https://cloudinary.com/" target="_blank" rel="noopener noreferrer">
+            Cloudinary
+          </a>
+          .
+        </p>
+        <Button
+          className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
+          onClick={() => loadDatabaseFromUrl(blogUrl, createDatabase, showNotification)}
+        >
+          Load Blog
         </Button>
         <Text textStyle="headline5">Upload new database</Text>
         <p>You can upload a database that you’ve downloaded from the Playground before.</p>

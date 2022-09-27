@@ -48,6 +48,7 @@
     "base-64": "~1.0.0",
     "bulma": "~0.9.3",
     "bun-types": "~0.1.4",
+    "cloudinary": "~1.32.0",
     "dotenv": "^16.0.0",
     "eslint": "^8.16.0",
     "eslint-config-next": "~12.3.0",
