@@ -7,10 +7,6 @@ export const ROUTE = {
     route: 'admin-entities',
     url: '/admin-entities',
   },
-  cloudinaryTest: {
-    route: 'cloudinary-test',
-    url: '/cloudinary-test',
-  },
   graphiql: {
     route: 'graphiql',
     url: '/graphiql',
