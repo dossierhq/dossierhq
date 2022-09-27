@@ -229,7 +229,7 @@ function EntityLinkButton({
         <AdminEntitySelectorDialog
           show
           title="Select entity"
-          entityTypes={fieldSpec.entityTypes}
+          entityTypes={fieldSpec.linkEntityTypes}
           onClose={handleDialogClose}
           onItemClick={(entity) => {
             editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, { id: entity.id });
