@@ -1,6 +1,7 @@
 import type {
   AdminDataDataContextAdapter,
   DisplayAuthKey,
+  FieldEditorProps,
   SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
 import {
@@ -55,7 +56,11 @@ const logger: Logger = {
   },
 };
 
-export class ContextAdapter implements AdminDataDataContextAdapter {}
+export class ContextAdapter implements AdminDataDataContextAdapter {
+  renderFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+    return null;
+  }
+}
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
   const { cache, mutate } = useSWRConfig();

@@ -26,6 +26,7 @@ import {
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
+import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { AdminDataDataContextAdapter } from '../contexts/AdminDataDataContext.js';
 import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
 import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
@@ -178,7 +179,11 @@ export function createSlowPublishedMiddleware(): PublishedClientMiddleware<Clien
   };
 }
 
-export class TestContextAdapter implements AdminDataDataContextAdapter {}
+export class TestContextAdapter implements AdminDataDataContextAdapter {
+  renderFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+    return null;
+  }
+}
 
 export async function ensureManyBarEntities(
   adminClient: AdminClient,

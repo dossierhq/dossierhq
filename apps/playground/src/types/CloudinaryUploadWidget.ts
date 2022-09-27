@@ -5,7 +5,7 @@ declare global {
     cloudinary: {
       createUploadWidget(
         options: UploadWidgetOptions,
-        callback: UploadWidgetCallback
+        callback: CloudinaryUploadWidgetCallback
       ): UploadWidget;
     };
   }
@@ -36,7 +36,9 @@ interface UploadWidgetOptions {
 }
 
 // Contains many more events
-type UploadResult = { event: 'success'; info: CloudinaryAsset };
+export type CloudinaryUploadResult =
+  | { event: 'success'; info: CloudinaryAsset }
+  | { event: 'close' };
 
 export interface CloudinaryAsset {
   access_mode: 'public';
@@ -65,7 +67,10 @@ export interface CloudinaryAsset {
   width: number;
 }
 
-type UploadWidgetCallback = (error: Error | undefined, result: UploadResult | undefined) => void;
+export type CloudinaryUploadWidgetCallback = (
+  error: Error | undefined,
+  result: CloudinaryUploadResult | undefined
+) => void;
 
 export interface UploadWidget {
   open(): void;

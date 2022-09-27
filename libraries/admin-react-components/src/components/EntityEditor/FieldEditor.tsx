@@ -13,6 +13,8 @@ import {
   isValueTypeField,
   isValueTypeListField,
 } from '@jonasb/datadata-core';
+import { useContext } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { BooleanFieldEditor } from './BooleanFieldEditor';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
 import { FieldListWrapper } from './FieldListWrapper';
@@ -27,9 +29,16 @@ export interface FieldEditorProps<T> {
   onChange: (value: T | null) => void;
 }
 
-export function FieldEditor({ value, ...props }: FieldEditorProps<unknown>) {
-  const { fieldSpec } = props;
-  let editor;
+export function FieldEditor(props: FieldEditorProps<unknown>) {
+  const { fieldSpec, value } = props;
+  const { adapter } = useContext(AdminDataDataContext);
+
+  const overriddenEditor = adapter.renderFieldEditor(props);
+  if (overriddenEditor) {
+    return overriddenEditor;
+  }
+
+  let editor: JSX.Element;
   if (isBooleanField(fieldSpec, value)) {
     editor = <BooleanFieldEditor {...props} value={value} />;
   } else if (isBooleanListField(fieldSpec, value)) {

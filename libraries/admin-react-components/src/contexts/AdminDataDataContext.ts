@@ -6,10 +6,12 @@ import type {
   Logger,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
+import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface AdminDataDataContextAdapter {}
+export interface AdminDataDataContextAdapter {
+  renderFieldEditor(props: FieldEditorProps<unknown>): JSX.Element | null;
+}
 
 export interface AdminDataDataContextValue {
   adapter: AdminDataDataContextAdapter;
