@@ -48,23 +48,24 @@ export function ChangeDatabaseMessage({ className }: Props) {
         >
           Reset
         </Button>
-        <Text textStyle="headline5">Example: Star Wars</Text>
+        <Text textStyle="headline5">Example: Blog</Text>
+        <p>An example database with fake blog posts and people.</p>
         <p>
-          An example database with information about Star Wars films, people, species, planets, star
-          ships, transports and vehicles.
-        </p>
-        <p>
-          The information comes from{' '}
-          <a href="https://swapi.dev/" target="_blank" rel="noopener noreferrer">
-            SWAPI
+          The information is generated using{' '}
+          <a href="https://fakerjs.dev/" target="_blank" rel="noopener noreferrer">
+            Faker
           </a>{' '}
-          (The Star Wars API).
+          with sample images provided by{' '}
+          <a href="https://cloudinary.com/" target="_blank" rel="noopener noreferrer">
+            Cloudinary
+          </a>
+          .
         </p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() => loadDatabaseFromUrl(starwarsUrl, createDatabase, showNotification)}
+          onClick={() => loadDatabaseFromUrl(blogUrl, createDatabase, showNotification)}
         >
-          Load Star Wars
+          Load Blog
         </Button>
         <Text textStyle="headline5">Example: Reviews</Text>
         <p>
@@ -84,24 +85,23 @@ export function ChangeDatabaseMessage({ className }: Props) {
         >
           Load Reviews
         </Button>
-        <Text textStyle="headline5">Example: Blog</Text>
-        <p>An example database with fake blog posts and people.</p>
+        <Text textStyle="headline5">Example: Star Wars</Text>
         <p>
-          The information is generated using{' '}
-          <a href="https://fakerjs.dev/" target="_blank" rel="noopener noreferrer">
-            Faker
+          An example database with information about Star Wars films, people, species, planets, star
+          ships, transports and vehicles.
+        </p>
+        <p>
+          The information comes from{' '}
+          <a href="https://swapi.dev/" target="_blank" rel="noopener noreferrer">
+            SWAPI
           </a>{' '}
-          with sample images provided by{' '}
-          <a href="https://cloudinary.com/" target="_blank" rel="noopener noreferrer">
-            Cloudinary
-          </a>
-          .
+          (The Star Wars API).
         </p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() => loadDatabaseFromUrl(blogUrl, createDatabase, showNotification)}
+          onClick={() => loadDatabaseFromUrl(starwarsUrl, createDatabase, showNotification)}
         >
-          Load Blog
+          Load Star Wars
         </Button>
         <Text textStyle="headline5">Upload new database</Text>
         <p>You can upload a database that you’ve downloaded from the Playground before.</p>
