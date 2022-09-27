@@ -11,6 +11,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
+    "generate:blog": "node lib/blog/blog-generator.js",
     "generate:reviews": "node lib/reviews/reviews-generator.js",
     "generate:starwars": "node lib/starwars/starwars-generator.js"
   },
@@ -19,6 +20,8 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sql.js": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
+    "cloudinary": "~1.32.0",
+    "dotenv": "^16.0.0",
     "sql.js": "~1.8.0",
     "tslib": "~2.4.0",
     "undici": "~5.10.0",
