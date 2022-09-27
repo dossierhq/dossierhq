@@ -4,7 +4,7 @@ import { Button } from '@jonasb/datadata-design';
 import { useLayoutEffect, useState } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig.js';
 import { useRuntimeDependency } from '../hooks/useRuntimeDependency.js';
-import { CloudinaryAsset, UploadWidget } from '../types/CloudinaryUploadWidget.js';
+import type { CloudinaryAsset, UploadWidget } from '../types/CloudinaryUploadWidget.js';
 
 export function CloudinaryTestRoute(): JSX.Element {
   const { status } = useRuntimeDependency('cloudinary-upload-widget');

@@ -48,7 +48,11 @@ export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownIte
       {items.map((item) => {
         const contentItem = isContentItem?.(item);
         if (contentItem) {
-          return <DropdownDisplay.ContentItem>{renderItem(item)}</DropdownDisplay.ContentItem>;
+          return (
+            <DropdownDisplay.ContentItem key={item.id}>
+              {renderItem(item)}
+            </DropdownDisplay.ContentItem>
+          );
         }
         return (
           <DropdownDisplay.Item
