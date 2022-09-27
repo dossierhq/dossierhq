@@ -10,6 +10,7 @@ const config = {
   classNamePrefix: 'icon-',
 };
 
+// Also update ICON_NAMES in ./src/components/Icon/Icon.tsx
 const iconSources = {
   add: solidSvgIcons.faPlusSquare,
   bold: solidSvgIcons.faBold,
@@ -28,10 +29,10 @@ const iconSources = {
   location: solidSvgIcons.faLocationPin,
   map: solidSvgIcons.faMapMarkedAlt,
   next: solidSvgIcons.faStepForward,
+  openInNewWindow: solidSvgIcons.faArrowUpRightFromSquare,
   orderAsc: solidSvgIcons.faSortDown,
   orderDesc: solidSvgIcons.faSortUp,
   ordered: solidSvgIcons.faArrowDownShortWide,
-  openInNewWindow: solidSvgIcons.faArrowUpRightFromSquare,
   previous: solidSvgIcons.faStepBackward,
   search: solidSvgIcons.faSearch,
   shuffle: solidSvgIcons.faShuffle,
