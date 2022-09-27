@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification, EntityReference, RichText } from '@jonasb/datadata-core';
+import type { EntityReference, PublishedFieldSpecification, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -15,7 +15,7 @@ import { PublishedValueItemNode } from './PublishedValueItemNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: PublishedFieldSpecification;
   value: RichText | null;
 }
 

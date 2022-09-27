@@ -1,7 +1,10 @@
 export { AdminDataDataProvider } from './components/AdminDataDataProvider/AdminDataDataProvider';
 export type { FieldEditorProps } from './components/EntityEditor/FieldEditor.js';
 export { AdminDataDataContext } from './contexts/AdminDataDataContext';
-export type { AdminDataDataContextAdapter } from './contexts/AdminDataDataContext.js';
+export type {
+  AdminDataDataContextAdapter,
+  RichTextValueItemEditorProps,
+} from './contexts/AdminDataDataContext.js';
 export { PublishedDataDataProvider } from './published/components/PublishedDataDataProvider/PublishedDataDataProvider.js';
 export { PublishedDataDataContext } from './published/contexts/PublishedDataDataContext.js';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen';

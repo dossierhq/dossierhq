@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification } from '@jonasb/datadata-core';
+import type { PublishedFieldSpecification } from '@jonasb/datadata-core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -23,7 +23,7 @@ import { StringFieldDisplay } from './StringFieldDisplay.js';
 import { ValueTypeFieldDisplay } from './ValueTypeFieldDisplay.js';
 
 export interface FieldDisplayProps<T> {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: PublishedFieldSpecification;
   value: T | null;
 }
 
