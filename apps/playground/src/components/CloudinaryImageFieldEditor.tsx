@@ -2,7 +2,7 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
 import type { ValueItem } from '@jonasb/datadata-core';
-import { Button, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
+import { Button, Delete, HoverRevealContainer, IconButton } from '@jonasb/datadata-design';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig.js';
 import { useRuntimeDependency } from '../hooks/useRuntimeDependency.js';
@@ -50,12 +50,19 @@ export function CloudinaryImageFieldEditor({
     },
   });
 
-  const imageUrl = cld.image(publicId).namedTransformation(name('media_lib_thumb')).toURL();
+  const thumbnailImageUrl = cld
+    .image(publicId)
+    .namedTransformation(name('media_lib_thumb'))
+    .toURL();
+  const fullImageUrl = cld.image(publicId).toURL();
 
   return (
     <HoverRevealContainer>
+      <HoverRevealContainer.Item forceVisible paddingRight={2}>
+        <img src={thumbnailImageUrl} />
+      </HoverRevealContainer.Item>
       <HoverRevealContainer.Item flexGrow={1} forceVisible>
-        <img src={imageUrl} />
+        <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
       </HoverRevealContainer.Item>
       <HoverRevealContainer.Item>
         <Delete onClick={() => onChange(null)} />
