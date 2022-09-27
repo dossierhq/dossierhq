@@ -1,8 +1,8 @@
-import type { AdminFieldSpecification } from '@jonasb/datadata-core';
+import type { PublishedFieldSpecification } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 
 interface RichTextDisplayContextValue {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: PublishedFieldSpecification;
 }
 
 export const RichTextDisplayContext = createContext<RichTextDisplayContextValue>({

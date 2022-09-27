@@ -2,7 +2,7 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
 import type { ValueItem } from '@jonasb/datadata-core';
-import { Button, Delete, HoverRevealContainer, IconButton } from '@jonasb/datadata-design';
+import { Button, Delete, HoverRevealStack, IconButton, Row } from '@jonasb/datadata-design';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig.js';
 import { useRuntimeDependency } from '../hooks/useRuntimeDependency.js';
@@ -28,6 +28,24 @@ export function CloudinaryImageFieldEditor({
   value,
   onChange,
 }: FieldEditorProps<AdminImage> & { value: AdminImage }) {
+  const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
+  return (
+    <HoverRevealStack>
+      <HoverRevealStack.Item top right>
+        <Delete onClick={handleDeleteClick} />
+      </HoverRevealStack.Item>
+      <CloudinaryImageFieldEditorWithoutClear value={value} onChange={onChange} />
+    </HoverRevealStack>
+  );
+}
+
+export function CloudinaryImageFieldEditorWithoutClear({
+  value,
+  onChange,
+}: {
+  value: AdminImage;
+  onChange: (value: AdminImage) => void;
+}) {
   const uploadWidgetCallback = useCallback(
     (error: Error | undefined, result: CloudinaryUploadResult | undefined) =>
       handleUploadWidgetCallback(error, result, onChange),
@@ -57,17 +75,10 @@ export function CloudinaryImageFieldEditor({
   const fullImageUrl = cld.image(publicId).toURL();
 
   return (
-    <HoverRevealContainer>
-      <HoverRevealContainer.Item forceVisible paddingRight={2}>
-        <img src={thumbnailImageUrl} />
-      </HoverRevealContainer.Item>
-      <HoverRevealContainer.Item flexGrow={1} forceVisible>
-        <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
-      </HoverRevealContainer.Item>
-      <HoverRevealContainer.Item>
-        <Delete onClick={() => onChange(null)} />
-      </HoverRevealContainer.Item>
-    </HoverRevealContainer>
+    <Row gap={2}>
+      <img src={thumbnailImageUrl} />
+      <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
+    </Row>
   );
 }
 
@@ -100,7 +111,7 @@ function useInitializeUploadWidget(callback: CloudinaryUploadWidgetCallback): Up
 function handleUploadWidgetCallback(
   error: Error | undefined,
   result: CloudinaryUploadResult | undefined,
-  onChange: (value: AdminImage | null) => void
+  onChange: (value: AdminImage) => void
 ) {
   if (result && result.event === 'success') {
     onChange({ type: 'Image', publicId: result.info.public_id });

@@ -2,6 +2,7 @@ import type {
   AdminDataDataContextAdapter,
   DisplayAuthKey,
   FieldEditorProps,
+  RichTextValueItemEditorProps,
   SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
 import {
@@ -58,6 +59,9 @@ const logger: Logger = {
 
 export class ContextAdapter implements AdminDataDataContextAdapter {
   renderFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+    return null;
+  }
+  renderRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
     return null;
   }
 }

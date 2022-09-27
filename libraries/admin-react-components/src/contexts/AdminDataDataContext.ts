@@ -4,13 +4,20 @@ import type {
   ErrorResult,
   ErrorType,
   Logger,
+  ValueItem,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
+export interface RichTextValueItemEditorProps {
+  value: ValueItem;
+  onChange: (value: ValueItem<string, object>) => void;
+}
+
 export interface AdminDataDataContextAdapter {
   renderFieldEditor(props: FieldEditorProps<unknown>): JSX.Element | null;
+  renderRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null;
 }
 
 export interface AdminDataDataContextValue {

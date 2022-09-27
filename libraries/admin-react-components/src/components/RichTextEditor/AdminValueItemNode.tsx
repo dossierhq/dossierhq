@@ -12,7 +12,8 @@ import type {
   NodeKey,
 } from 'lexical';
 import { $getNodeByKey, createCommand } from 'lexical';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
@@ -44,6 +45,7 @@ function AdminValueItemComponent({
   data: ValueItem;
 }) {
   const [editor] = useLexicalComposerContext();
+  const { adapter } = useContext(AdminDataDataContext);
 
   const setValue = useCallback(
     (value: ValueItem) => {
@@ -57,13 +59,20 @@ function AdminValueItemComponent({
     [editor, nodeKey]
   );
 
+  const overriddenEditor = adapter.renderRichTextValueItemEditor({
+    value: data,
+    onChange: setValue,
+  });
+
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
-      <ValueItemFieldEditorWithoutClear
-        className="rich-text-item-indentation"
-        value={data}
-        onChange={setValue}
-      />
+      {overriddenEditor ?? (
+        <ValueItemFieldEditorWithoutClear
+          className="rich-text-item-indentation"
+          value={data}
+          onChange={setValue}
+        />
+      )}
     </BlockWithAlignableContents>
   );
 }
