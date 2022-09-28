@@ -2,11 +2,15 @@ import type { Logger, PublishedClient } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
-import type { PublishedDataDataContextValue } from '../../contexts/PublishedDataDataContext.js';
+import type {
+  PublishedDataDataContextAdapter,
+  PublishedDataDataContextValue,
+} from '../../contexts/PublishedDataDataContext.js';
 import { PublishedDataDataContext } from '../../contexts/PublishedDataDataContext.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 
 interface Props {
+  adapter: PublishedDataDataContextAdapter;
   publishedClient: PublishedClient;
   authKeys: DisplayAuthKey[];
   logger?: Logger;
@@ -14,6 +18,7 @@ interface Props {
 }
 
 export function PublishedDataDataProvider({
+  adapter,
   publishedClient,
   authKeys,
   logger,
@@ -22,13 +27,14 @@ export function PublishedDataDataProvider({
   const { schema, schemaError } = usePublishedSchema(publishedClient);
   const value: PublishedDataDataContextValue = useMemo(() => {
     return {
+      adapter,
       publishedClient,
       authKeys,
       logger: logger ?? NoOpLogger,
       schema,
       schemaError,
     };
-  }, [publishedClient, authKeys, logger, schema, schemaError]);
+  }, [adapter, publishedClient, authKeys, logger, schema, schemaError]);
 
   return (
     <PublishedDataDataContext.Provider value={value}>{children}</PublishedDataDataContext.Provider>

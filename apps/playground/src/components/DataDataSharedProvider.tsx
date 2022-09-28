@@ -78,6 +78,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   const args = useMemo(() => {
     if (!server) return null;
 
+    const adapter = new ContextAdapter();
     const adminArgs = {
       adminClient: server.createAdminClient(
         () => Promise.resolve(sessionResultRef.current),
@@ -86,11 +87,12 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
           createCachingAdminMiddleware(swrConfigRef),
         ]
       ),
-      adapter: new ContextAdapter(),
+      adapter,
       authKeys: DISPLAY_AUTH_KEYS,
     };
 
     const publishedArgs = {
+      adapter,
       publishedClient: server.createPublishedClient(
         () => Promise.resolve(sessionResultRef.current),
         [LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>]
