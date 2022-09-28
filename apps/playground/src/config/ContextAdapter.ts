@@ -18,7 +18,7 @@ import {
 export class ContextAdapter
   implements AdminDataDataContextAdapter, PublishedDataDataContextAdapter
 {
-  renderFieldEditor(props: FieldEditorProps<unknown>): JSX.Element | null {
+  renderAdminFieldEditor(props: FieldEditorProps<unknown>): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (isValueTypeField(fieldSpec, value) && value && isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditor({ ...props, value });
@@ -26,7 +26,7 @@ export class ContextAdapter
     return null;
   }
 
-  renderRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
     const { value, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({
