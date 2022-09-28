@@ -10,6 +10,11 @@ import {
   createCachingAdminMiddleware,
   PublishedDataDataProvider,
 } from '@jonasb/datadata-admin-react-components';
+import type { FieldDisplayProps } from '@jonasb/datadata-admin-react-components';
+import type {
+  PublishedDataDataContextAdapter,
+  RichTextValueItemDisplayProps,
+} from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
@@ -57,11 +62,22 @@ const logger: Logger = {
   },
 };
 
-export class ContextAdapter implements AdminDataDataContextAdapter {
+export class AdminContextAdapter implements AdminDataDataContextAdapter {
   renderFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
     return null;
   }
   renderRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
+    return null;
+  }
+}
+
+export class PublishedContextAdapter implements PublishedDataDataContextAdapter {
+  renderPublishedFieldDisplay(props: FieldDisplayProps<unknown>): JSX.Element | null {
+    return null;
+  }
+  renderPublishedRichTextValueItemDisplay(
+    props: RichTextValueItemDisplayProps
+  ): JSX.Element | null {
     return null;
   }
 }
@@ -74,7 +90,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   const args = useMemo(
     () => ({
       adminClient: createBackendAdminClient(swrConfigRef),
-      adapter: new ContextAdapter(),
+      adapter: new AdminContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
     []
@@ -86,6 +102,7 @@ export function PublishedDataDataSharedProvider({ children }: { children: React.
   const args = useMemo(
     () => ({
       publishedClient: createBackendPublishedClient(),
+      adapter: new PublishedContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
     []

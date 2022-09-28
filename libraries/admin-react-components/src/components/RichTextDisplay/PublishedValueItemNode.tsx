@@ -4,6 +4,7 @@ import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlign
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { ValueTypeFieldDisplay } from '../EntityDisplay/ValueTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
@@ -31,17 +32,24 @@ function PublishedValueItemComponent({
   }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
-  data: ValueItem | null;
+  data: ValueItem;
 }) {
   const { fieldSpec } = useContext(RichTextDisplayContext);
+  const { adapter } = useContext(PublishedDataDataContext);
+
+  const overriddenDisplay = adapter.renderPublishedRichTextValueItemDisplay({
+    value: data,
+  });
 
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
-      <ValueTypeFieldDisplay
-        className="rich-text-item-indentation"
-        fieldSpec={fieldSpec}
-        value={data}
-      />
+      {overriddenDisplay ?? (
+        <ValueTypeFieldDisplay
+          className="rich-text-item-indentation"
+          fieldSpec={fieldSpec}
+          value={data}
+        />
+      )}
     </BlockWithAlignableContents>
   );
 }

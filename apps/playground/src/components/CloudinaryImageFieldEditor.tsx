@@ -16,11 +16,22 @@ export interface AdminCloudinaryImageFields {
   publicId: string | null;
 }
 
-export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+export interface PublishedCloudinaryImageFields {
+  publicId: string;
+}
 
-export function isAdminImage(
+export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;
+
+export function isAdminCloudinaryImage(
   valueItem: ValueItem<string, object> | AdminCloudinaryImage
 ): valueItem is AdminCloudinaryImage {
+  return valueItem.type === 'CloudinaryImage';
+}
+
+export function isPublishedCloudinaryImage(
+  valueItem: ValueItem<string, object> | PublishedCloudinaryImage
+): valueItem is PublishedCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
 
@@ -61,6 +72,29 @@ export function CloudinaryImageFieldEditorWithoutClear({
   if (!publicId) {
     return <Button onClick={() => uploadWidget.open()}>Upload image</Button>;
   }
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: CLOUDINARY_CLOUD_NAME,
+    },
+  });
+
+  const thumbnailImageUrl = cld
+    .image(publicId)
+    .namedTransformation(name('media_lib_thumb'))
+    .toURL();
+  const fullImageUrl = cld.image(publicId).toURL();
+
+  return (
+    <Row gap={2}>
+      <img src={thumbnailImageUrl} />
+      <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
+    </Row>
+  );
+}
+
+export function CloudinaryImageFieldDisplay({ value }: { value: PublishedCloudinaryImage }) {
+  const { publicId } = value;
 
   const cld = new Cloudinary({
     cloud: {

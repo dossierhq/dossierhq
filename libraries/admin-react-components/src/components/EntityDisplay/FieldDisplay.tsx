@@ -14,6 +14,8 @@ import {
   isValueTypeListField,
 } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
+import { useContext } from 'react';
+import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
 import { FieldDisplayListWrapper } from './FieldDisplayListWrapper.js';
@@ -27,8 +29,14 @@ export interface FieldDisplayProps<T> {
   value: T | null;
 }
 
-export function FieldDisplay({ value, ...props }: FieldDisplayProps<unknown>) {
-  const { fieldSpec } = props;
+export function FieldDisplay(props: FieldDisplayProps<unknown>) {
+  const { fieldSpec, value } = props;
+  const { adapter } = useContext(PublishedDataDataContext);
+
+  const overriddenDisplay = adapter.renderPublishedFieldDisplay(props);
+  if (overriddenDisplay) {
+    return overriddenDisplay;
+  }
 
   if (value === null) {
     return (
