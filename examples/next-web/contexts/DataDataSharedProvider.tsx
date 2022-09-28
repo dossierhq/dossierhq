@@ -63,10 +63,10 @@ const logger: Logger = {
 };
 
 export class AdminContextAdapter implements AdminDataDataContextAdapter {
-  renderFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+  renderAdminFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
     return null;
   }
-  renderRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
     return null;
   }
 }

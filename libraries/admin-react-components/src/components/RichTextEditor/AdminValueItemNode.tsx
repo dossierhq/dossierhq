@@ -59,7 +59,7 @@ function AdminValueItemComponent({
     [editor, nodeKey]
   );
 
-  const overriddenEditor = adapter.renderRichTextValueItemEditor({
+  const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
     value: data,
     onChange: setValue,
   });

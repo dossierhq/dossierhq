@@ -33,7 +33,7 @@ export function FieldEditor(props: FieldEditorProps<unknown>) {
   const { fieldSpec, value } = props;
   const { adapter } = useContext(AdminDataDataContext);
 
-  const overriddenEditor = adapter.renderFieldEditor(props);
+  const overriddenEditor = adapter.renderAdminFieldEditor(props);
   if (overriddenEditor) {
     return overriddenEditor;
   }
