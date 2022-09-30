@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-core
 
-This log was last generated on Mon, 19 Sep 2022 21:05:31 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Sep 2022 18:08:39 GMT and should not be manually modified.
+
+## 0.1.32
+Fri, 30 Sep 2022 18:08:39 GMT
+
+### Updates
+
+- Support entity link node in RichText. Update dependencies.
 
 ## 0.1.31
 Mon, 19 Sep 2022 21:05:31 GMT

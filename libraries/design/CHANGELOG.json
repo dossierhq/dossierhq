@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-design",
   "entries": [
     {
+      "version": "0.1.32",
+      "tag": "@jonasb/datadata-design_v0.1.32",
+      "date": "Fri, 30 Sep 2022 18:08:39 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add icons"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.31",
       "tag": "@jonasb/datadata-design_v0.1.31",
       "date": "Mon, 19 Sep 2022 21:05:31 GMT",
