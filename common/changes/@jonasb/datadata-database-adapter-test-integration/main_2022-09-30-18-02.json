@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-test-integration",
+      "comment": "Add tests for entity link nodes.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-test-integration"
+}

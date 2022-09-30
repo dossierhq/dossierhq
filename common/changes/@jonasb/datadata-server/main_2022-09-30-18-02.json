@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Support entity link node in RichText.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
