@@ -5,11 +5,7 @@ import {
   createRichTextRootNode,
   createRichTextTextNode,
 } from '@jonasb/datadata-core';
-import {
-  createAdapterAndServer,
-  createDatabase,
-  exportDatabase,
-} from '../utils/shared-generator.js';
+import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
 import type {
   AdminPersonalNote,
   AdminPlaceOfBusiness,
@@ -119,8 +115,8 @@ async function createPersonalNote(adminClient: AdminClient, placeOfBusiness: Adm
 }
 
 async function main() {
-  const database = await createDatabase();
-  const { adminClient } = await createAdapterAndServer(database, SCHEMA);
+  const database = await createNewDatabase('dist/reviews.sqlite');
+  const { adminClient, server } = await createAdapterAndServer(database, SCHEMA);
 
   const placesOfBusiness: AdminPlaceOfBusiness[] = [];
   for (const _ of Array(100).keys()) {
@@ -146,8 +142,7 @@ async function main() {
     await createPersonalNote(adminClient, faker.helpers.arrayElement(placesOfBusiness));
   }
 
-  await exportDatabase(database, 'dist/reviews.sqlite');
-  database.close();
+  await server.shutdown();
 }
 
 main().catch((error) => {

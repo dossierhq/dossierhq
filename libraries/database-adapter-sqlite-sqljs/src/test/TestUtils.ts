@@ -14,13 +14,23 @@ export async function createSqlJsTestAdapter(): PromiseResult<
 > {
   const SQL = await initSqlJs();
   const db = new SQL.Database();
-  return await createSqlJsAdapter({ logger: NoOpLogger }, db, { randomUUID });
+  return await createSqlJsAdapter({ logger: NoOpLogger }, db);
 }
 
 export function registerTestSuite(testSuite: TestSuite): void {
+  polyfillCrypto();
   polyfillAtoBToA();
   for (const [testName, testFunction] of Object.entries(testSuite)) {
     test(testName, testFunction);
+  }
+}
+
+function polyfillCrypto() {
+  // This package is meant to be run in a browser, polyfill crypto for Node
+  if (!globalThis.crypto) {
+    globalThis.crypto = {
+      randomUUID,
+    } as Crypto;
   }
 }
 

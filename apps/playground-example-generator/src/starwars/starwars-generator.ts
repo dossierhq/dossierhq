@@ -1,11 +1,7 @@
 import type { AdminClient } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import { fetchJsonCached } from '../utils/fetchUtils.js';
-import {
-  createAdapterAndServer,
-  createDatabase,
-  exportDatabase,
-} from '../utils/shared-generator.js';
+import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
 import type {
   AdminFilm,
   AdminPerson,
@@ -219,8 +215,8 @@ async function createVehicles(adminClient: AdminClient) {
 }
 
 async function main() {
-  const database = await createDatabase();
-  const { adminClient } = await createAdapterAndServer(database, SCHEMA);
+  const database = await createNewDatabase('dist/starwars.sqlite');
+  const { adminClient, server } = await createAdapterAndServer(database, SCHEMA);
 
   // order is due to references between entities
   await createPlanets(adminClient);
@@ -231,8 +227,7 @@ async function main() {
   await createVehicles(adminClient);
   await createFilms(adminClient);
 
-  await exportDatabase(database, 'dist/starwars.sqlite');
-  database.close();
+  await server.shutdown();
 }
 
 main().catch((error) => {

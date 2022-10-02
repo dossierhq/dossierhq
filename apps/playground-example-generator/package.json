@@ -18,11 +18,11 @@
   "dependencies": {
     "@faker-js/faker": "~7.5.0",
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter-sqlite-sql.js": "workspace:*",
+    "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "cloudinary": "~1.32.0",
     "dotenv": "^16.0.0",
-    "sql.js": "~1.8.0",
+    "sqlite3": "~5.1.1",
     "tslib": "~2.4.0",
     "undici": "~5.10.0",
     "uuid": "^9.0.0"
@@ -32,7 +32,7 @@
     "@jonasb/datadata-typescript-generator": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.48.0",
-    "@types/sql.js": "~1.4.2",
+    "@types/sqlite3": "~3.1.8",
     "@types/uuid": "~8.3.4",
     "eslint": "^8.16.0",
     "prettier": "2.7.1",
