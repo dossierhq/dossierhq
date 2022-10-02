@@ -37,7 +37,7 @@ describe('Admin adminSampleEntities', () => {
         [
           [
             "adminEntitySearchTotalCount",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -52,6 +52,7 @@ describe('Admin adminSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             [
@@ -124,7 +125,7 @@ describe('Admin adminSampleEntities', () => {
         [
           [
             "adminEntitySampleEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -139,6 +140,7 @@ describe('Admin adminSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             0,
@@ -152,7 +154,7 @@ describe('Admin adminSampleEntities', () => {
           ],
           [
             "adminEntitySearchTotalCount",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -167,6 +169,7 @@ describe('Admin adminSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             [

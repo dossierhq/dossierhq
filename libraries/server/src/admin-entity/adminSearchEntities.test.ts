@@ -39,7 +39,7 @@ describe('Admin adminSearchEntities', () => {
         [
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -54,6 +54,7 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -139,7 +140,7 @@ describe('Admin adminSearchEntities', () => {
         [
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -154,6 +155,7 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -238,7 +240,7 @@ describe('Admin adminSearchEntities', () => {
         [
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -253,6 +255,7 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -272,7 +275,7 @@ describe('Admin adminSearchEntities', () => {
           ],
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -287,6 +290,7 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             {

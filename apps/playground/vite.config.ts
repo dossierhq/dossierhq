@@ -6,7 +6,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   build: {
-    commonjsOptions: { include: [] },
     chunkSizeWarningLimit: 1500,
     rollupOptions: {
       plugins: [visualizer()],
