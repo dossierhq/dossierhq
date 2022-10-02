@@ -6,6 +6,7 @@ import type {
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
+import { randomUUID } from 'node:crypto';
 import type { Database } from 'sqlite3';
 import { closeDatabase, queryAll } from './SqliteUtils.js';
 
@@ -40,6 +41,8 @@ export async function createSqlite3Adapter(
     decodeCursor(value) {
       return Buffer.from(value, 'base64').toString('utf8');
     },
+
+    randomUUID,
   };
 
   return createSqliteDatabaseAdapterAdapter(context, adapter);

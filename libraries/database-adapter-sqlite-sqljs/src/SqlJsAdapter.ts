@@ -8,9 +8,14 @@ import type {
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
 import type { Database } from 'sql.js';
 
+export interface SqlJsPlatformAdapter {
+  randomUUID(): string;
+}
+
 export async function createSqlJsAdapter(
   context: Context,
-  database: Database
+  database: Database,
+  platformAdapter: SqlJsPlatformAdapter
 ): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -37,6 +42,7 @@ export async function createSqlJsAdapter(
     decodeCursor(value) {
       return decodeURIComponent(escape(atob(value)));
     },
+    randomUUID: platformAdapter.randomUUID,
   };
 
   return createSqliteDatabaseAdapterAdapter(context, adapter);

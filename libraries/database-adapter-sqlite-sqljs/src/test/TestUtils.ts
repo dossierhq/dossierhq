@@ -3,6 +3,7 @@ import { NoOpLogger } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import * as base64 from 'base-64';
+import { randomUUID } from 'node:crypto';
 import initSqlJs from 'sql.js';
 import { test } from 'vitest';
 import { createSqlJsAdapter } from '../SqlJsAdapter.js';
@@ -13,7 +14,7 @@ export async function createSqlJsTestAdapter(): PromiseResult<
 > {
   const SQL = await initSqlJs();
   const db = new SQL.Database();
-  return await createSqlJsAdapter({ logger: NoOpLogger }, db);
+  return await createSqlJsAdapter({ logger: NoOpLogger }, db, { randomUUID });
 }
 
 export function registerTestSuite(testSuite: TestSuite): void {
