@@ -82,7 +82,7 @@ importers:
       '@jonasb/datadata-typescript-generator': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': ~0.48.0
-      '@types/sql.js': ~1.4.2
+      '@types/sqlite3': ~3.1.8
       '@types/uuid': ~8.3.4
       cloudinary: ~1.32.0
       dotenv: ^16.0.0
@@ -109,7 +109,7 @@ importers:
       '@jonasb/datadata-typescript-generator': link:../../libraries/typescript-generator
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.48.0
-      '@types/sql.js': 1.4.3
+      '@types/sqlite3': 3.1.8
       '@types/uuid': 8.3.4
       eslint: 8.16.0
       prettier: 2.7.1
