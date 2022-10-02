@@ -4,17 +4,32 @@ import type {
   ClientContext,
 } from '@jonasb/datadata-core';
 import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@jonasb/datadata-core';
-import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
+import {
+  createDatabase,
+  createSqlite3Adapter,
+} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
-import { writeFile } from 'fs/promises';
-import { randomUUID } from 'node:crypto';
-import type { Database } from 'sql.js';
-import initSqlJs from 'sql.js';
+import { unlink } from 'fs/promises';
+import * as Sqlite from 'sqlite3';
+import type { Database } from 'sqlite3';
 
-export async function createDatabase() {
-  const SQL = await initSqlJs();
-  const db = new SQL.Database();
-  return db;
+// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
+const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+
+export async function createNewDatabase(databasePath: string) {
+  try {
+    // delete existing database
+    await unlink(databasePath);
+  } catch (error) {
+    // ignore
+  }
+
+  const context = { logger: NoOpLogger };
+  const databaseResult = await createDatabase(context, SqliteDatabase, {
+    filename: databasePath,
+    journalMode: 'wal',
+  });
+  return databaseResult.valueOrThrow();
 }
 
 export async function createAdapterAndServer(
@@ -22,7 +37,7 @@ export async function createAdapterAndServer(
   schema: AdminSchemaSpecificationUpdate
 ) {
   const databaseAdapter = (
-    await createSqlJsAdapter({ logger: NoOpLogger }, database, { randomUUID })
+    await createSqlite3Adapter({ logger: NoOpLogger }, database)
   ).valueOrThrow();
   const server = (
     await createServer({
@@ -45,12 +60,5 @@ export async function createAdapterAndServer(
   ]);
   (await adminClient.updateSchemaSpecification(schema)).valueOrThrow();
 
-  return { adminClient };
-}
-
-export async function exportDatabase(database: Database, file: string) {
-  const data = database.export();
-  const buffer = Buffer.from(data);
-  await writeFile(file, buffer);
-  console.log(`Wrote to ${file}`);
+  return { adminClient, server };
 }

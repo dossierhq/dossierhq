@@ -76,7 +76,7 @@ importers:
     specifiers:
       '@faker-js/faker': ~7.5.0
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-sqlite-sql.js': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
@@ -88,7 +88,7 @@ importers:
       dotenv: ^16.0.0
       eslint: ^8.16.0
       prettier: 2.7.1
-      sql.js: ~1.8.0
+      sqlite3: ~5.1.1
       tslib: ~2.4.0
       typescript: ^4.8.4
       undici: ~5.10.0
@@ -96,11 +96,11 @@ importers:
     dependencies:
       '@faker-js/faker': 7.5.0
       '@jonasb/datadata-core': link:../../libraries/core
-      '@jonasb/datadata-database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-server': link:../../libraries/server
       cloudinary: 1.32.0
       dotenv: 16.0.0
-      sql.js: 1.8.0
+      sqlite3: 5.1.1
       tslib: 2.4.0
       undici: 5.10.0
       uuid: 9.0.0
@@ -16018,7 +16018,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   /util-deprecate/1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
   /util.promisify/1.0.0:
     resolution: {integrity: sha512-i+6qA2MPhvoKLuxnJNpXAGhg7HphQOSUq2LKMZD0m15EiskXUkMvKdF4Uui0WYeCUGea+o2cw/ZuwehtfsrNkA==}
@@ -16536,7 +16536,7 @@ packages:
       strip-ansi: 6.0.1
 
   /wrappy/1.0.2:
-    resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
+    resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
   /write-file-atomic/3.0.3:
     resolution: {integrity: sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q==}

@@ -42,9 +42,7 @@ async function initializeServer(
   database: Database
 ): PromiseResult<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   try {
-    const adapterResult = await createSqlJsAdapter({ logger: SERVER_LOGGER }, database, {
-      randomUUID: crypto.randomUUID,
-    });
+    const adapterResult = await createSqlJsAdapter({ logger: SERVER_LOGGER }, database);
     if (adapterResult.isError()) return adapterResult;
 
     const serverResult = await createServer({

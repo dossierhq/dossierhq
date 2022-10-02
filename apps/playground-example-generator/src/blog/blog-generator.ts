@@ -9,11 +9,7 @@ import {
   createRichTextValueItemNode,
 } from '@jonasb/datadata-core';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
-import {
-  createAdapterAndServer,
-  createDatabase,
-  exportDatabase,
-} from '../utils/shared-generator.js';
+import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
 import type { AdminBlogPost, AdminCloudinaryImage, AdminPerson } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
@@ -64,8 +60,8 @@ async function createBlogPost(
 }
 
 async function main() {
-  const database = await createDatabase();
-  const { adminClient } = await createAdapterAndServer(database, SCHEMA);
+  const database = await createNewDatabase('dist/blog.sqlite');
+  const { adminClient, server } = await createAdapterAndServer(database, SCHEMA);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
@@ -83,8 +79,7 @@ async function main() {
     await createBlogPost(adminClient, persons, images);
   }
 
-  await exportDatabase(database, 'dist/blog.sqlite');
-  database.close();
+  await server.shutdown();
 }
 
 main().catch((error) => {
