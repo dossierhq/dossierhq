@@ -72,11 +72,17 @@ function addValueToQuery<TValue>(
     query.text += 'DEFAULT';
   } else if (
     typeof value === 'object' &&
+    value &&
     'marker' in value &&
     value.marker === ValueReferenceSymbol
   ) {
     query.text += `${config.indexPrefix}${value.index}`;
-  } else if (typeof value === 'object' && 'marker' in value && value.marker === RawSqlSymbol) {
+  } else if (
+    typeof value === 'object' &&
+    value &&
+    'marker' in value &&
+    value.marker === RawSqlSymbol
+  ) {
     query.text += value.sql;
   } else {
     query.values.push(value as TValue);
