@@ -71,6 +71,7 @@ export interface SqliteDatabaseAdapter {
   isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean;
   encodeCursor(value: string): string;
   decodeCursor(value: string): string;
+  randomUUID(): string;
 }
 
 export async function createSqliteDatabaseAdapterAdapter(

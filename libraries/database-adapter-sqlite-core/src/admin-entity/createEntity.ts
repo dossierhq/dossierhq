@@ -5,7 +5,6 @@ import {
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { v4 as uuidv4 } from 'uuid';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
@@ -91,7 +90,7 @@ async function createEntityRow(
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg
 ) {
-  const uuid = entity.id ?? uuidv4();
+  const uuid = entity.id ?? database.adapter.randomUUID();
   const now = new Date();
 
   const updatedSecResult = await getEntitiesUpdatedSeq(database, context);

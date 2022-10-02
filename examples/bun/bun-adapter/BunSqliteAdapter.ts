@@ -44,6 +44,8 @@ export function createBunSqliteAdapter(
       // @ts-ignore
       return Buffer.from(value, 'base64url').toString('utf8');
     },
+
+    randomUUID: crypto.randomUUID,
   };
 
   return createSqliteDatabaseAdapterAdapter(context, adapter);

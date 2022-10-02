@@ -7,6 +7,7 @@ import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@jonas
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { writeFile } from 'fs/promises';
+import { randomUUID } from 'node:crypto';
 import type { Database } from 'sql.js';
 import initSqlJs from 'sql.js';
 
@@ -21,7 +22,7 @@ export async function createAdapterAndServer(
   schema: AdminSchemaSpecificationUpdate
 ) {
   const databaseAdapter = (
-    await createSqlJsAdapter({ logger: NoOpLogger }, database)
+    await createSqlJsAdapter({ logger: NoOpLogger }, database, { randomUUID })
   ).valueOrThrow();
   const server = (
     await createServer({

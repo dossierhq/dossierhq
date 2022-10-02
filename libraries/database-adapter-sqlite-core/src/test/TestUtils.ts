@@ -7,6 +7,7 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
+import { randomUUID } from 'node:crypto';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
@@ -82,12 +83,14 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     isUniqueViolationOfConstraint: vi.fn().mockReturnValue(false),
     encodeCursor: vi.fn(),
     decodeCursor: vi.fn(),
+    randomUUID: vi.fn(),
   };
 
   mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));
   mockAdapter.decodeCursor.mockImplementation((value) =>
     Buffer.from(value, 'base64').toString('utf8')
   );
+  mockAdapter.randomUUID.mockImplementation(randomUUID);
 
   return mockAdapter;
 }

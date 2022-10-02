@@ -4,7 +4,6 @@ import type {
   DatabaseAuthCreateSessionPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { v4 as uuidv4 } from 'uuid';
 import type { SubjectsTable } from '../DatabaseSchema.js';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
@@ -85,7 +84,7 @@ async function createSubject(
   typeof ErrorType.Conflict | typeof ErrorType.Generic
 > {
   return await context.withTransaction(async (context) => {
-    const uuid = uuidv4();
+    const uuid = database.adapter.randomUUID();
     const now = new Date();
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(database, context, {
       text: 'INSERT INTO subjects (uuid, created_at) VALUES (?1, ?2) RETURNING id',
