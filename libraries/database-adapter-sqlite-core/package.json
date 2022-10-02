@@ -37,7 +37,7 @@
     "@jonasb/datadata-core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "~0.47.5",
+    "@rushstack/heft": "~0.48.0",
     "@types/uuid": "~8.3.4",
     "eslint": "^8.16.0",
     "prettier": "2.7.1",

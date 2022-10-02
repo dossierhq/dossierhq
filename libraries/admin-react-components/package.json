@@ -43,7 +43,7 @@
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@rushstack/heft": "~0.47.5",
+    "@rushstack/heft": "~0.48.0",
     "@storybook/addon-actions": "^6.4.21",
     "@storybook/addon-essentials": "^6.4.21",
     "@storybook/addon-links": "^6.4.21",
