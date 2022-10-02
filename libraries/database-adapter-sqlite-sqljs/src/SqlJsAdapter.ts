@@ -37,7 +37,7 @@ export async function createSqlJsAdapter(
     decodeCursor(value) {
       return decodeURIComponent(escape(atob(value)));
     },
-    randomUUID: crypto.randomUUID,
+    randomUUID: () => crypto.randomUUID(),
   };
 
   return createSqliteDatabaseAdapterAdapter(context, adapter);
