@@ -2,7 +2,6 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import { AdvisoryLocksUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNone } from '../QueryFunctions.js';
@@ -13,15 +12,12 @@ export async function advisoryLockAcquire(
   name: string,
   handle: number,
   leaseDuration: number
-): PromiseResult<
-  { acquiredAt: Temporal.Instant },
-  typeof ErrorType.Conflict | typeof ErrorType.Generic
-> {
-  const now = Temporal.Now.instant();
-  const expires_at = now.epochMilliseconds + leaseDuration;
+): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
+  const now = new Date();
+  const expires_at = now.getTime() + leaseDuration;
 
   const query = buildSqliteSqlQuery(({ sql, addValue }) => {
-    const nowValue = addValue(now.toString());
+    const nowValue = addValue(now.toISOString());
     sql`INSERT INTO advisory_locks (name, handle, acquired_at, renewed_at, expires_at, lease_duration)
         VALUES (${name}, ${handle}, ${nowValue}, ${nowValue}, ${expires_at}, ${leaseDuration})`;
   });

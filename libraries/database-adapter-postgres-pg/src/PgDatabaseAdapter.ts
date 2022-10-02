@@ -4,7 +4,6 @@ import type {
   PostgresTransaction,
 } from '@jonasb/datadata-database-adapter-postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
-import { Temporal } from '@js-temporal/polyfill';
 import type { PoolClient, PoolConfig } from 'pg';
 import * as PG from 'pg';
 
@@ -18,11 +17,6 @@ const {
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
 PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
-PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
-  if (value === '-infinity') return Number.NEGATIVE_INFINITY;
-  if (value === 'infinity') return Number.POSITIVE_INFINITY;
-  return Temporal.Instant.from(value);
-});
 
 export type PgDatabaseAdapter = DatabaseAdapter;
 

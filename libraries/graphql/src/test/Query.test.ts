@@ -140,7 +140,7 @@ describe('node()', () => {
           node: {
             __typename: 'PublishedQueryFoo',
             id,
-            info: { name, authKey: 'none', createdAt: createdAt.toString() },
+            info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
             fields: {
               title: 'Howdy title',
               summary: 'Howdy summary',
@@ -220,7 +220,7 @@ describe('node()', () => {
           node: {
             __typename: 'PublishedQueryFoo',
             id,
-            info: { name, authKey: 'none', createdAt: createdAt.toString() },
+            info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
             fields: {
               title: null,
               summary: null,
@@ -812,12 +812,12 @@ describe('nodes()', () => {
             {
               __typename: 'PublishedQueryFoo',
               id: foo1Id,
-              info: { name: foo1Name, authKey: 'none', createdAt: foo1CreatedAt.toString() },
+              info: { name: foo1Name, authKey: 'none', createdAt: foo1CreatedAt.toISOString() },
             },
             {
               __typename: 'PublishedQueryFoo',
               id: foo2Id,
-              info: { name: foo2Name, authKey: 'none', createdAt: foo2CreatedAt.toString() },
+              info: { name: foo2Name, authKey: 'none', createdAt: foo2CreatedAt.toISOString() },
             },
           ],
         },

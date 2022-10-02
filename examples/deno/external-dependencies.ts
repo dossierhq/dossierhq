@@ -1,4 +1,3 @@
-import type {} from "@js-temporal/polyfill";
 import type {} from "dotenv";
 import type {} from "postgres";
 import type {} from "std/log/mod.ts";

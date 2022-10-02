@@ -71,7 +71,7 @@ describe('adminEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "fieldValues": {
                 "title": "Title",
@@ -80,7 +80,7 @@ describe('adminEntitySearchEntities', () => {
               "name": "Title#1",
               "status": "draft",
               "type": "TitleOnly",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           ],
@@ -119,7 +119,7 @@ describe('adminEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "fieldValues": {
                 "title": "Title",
@@ -128,7 +128,7 @@ describe('adminEntitySearchEntities', () => {
               "name": "Title#2",
               "status": "draft",
               "type": "TitleOnly",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           ],
@@ -168,7 +168,7 @@ describe('adminEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "fieldValues": {
                 "title": "Title",
@@ -177,7 +177,7 @@ describe('adminEntitySearchEntities', () => {
               "name": "Title#2",
               "status": "draft",
               "type": "TitleOnly",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           ],

@@ -146,7 +146,7 @@ function EntityListRow({
       </Table.Cell>
       <Table.Cell narrow>
         {order === AdminQueryOrder.updatedAt ||
-        !entity.info.updatedAt.equals(entity.info.createdAt) ? (
+        entity.info.updatedAt.getTime() !== entity.info.createdAt.getTime() ? (
           <InstantDisplay instant={entity.info.updatedAt} />
         ) : null}
       </Table.Cell>

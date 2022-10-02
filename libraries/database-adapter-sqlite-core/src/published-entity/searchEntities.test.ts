@@ -66,7 +66,7 @@ describe('publishedEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "fieldValues": {
                 "title": "Title",
@@ -110,7 +110,7 @@ describe('publishedEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "fieldValues": {
                 "title": "Title",
@@ -155,7 +155,7 @@ describe('publishedEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "fieldValues": {
                 "title": "Title",

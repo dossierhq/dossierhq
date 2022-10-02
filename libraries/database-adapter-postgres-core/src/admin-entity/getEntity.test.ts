@@ -1,13 +1,12 @@
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils.js';
 import { adminGetEntity } from './getEntity.js';
 
 describe('adminGetEntity', () => {
   test('Get latest version', async () => {
-    const now = Temporal.Now.instant();
+    const now = new Date();
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
     adapter.query.mockImplementation(async (_transaction, query, _values) => {
@@ -56,7 +55,7 @@ describe('adminGetEntity', () => {
   });
 
   test('Get specific version', async () => {
-    const now = Temporal.Now.instant();
+    const now = new Date();
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
     adapter.query.mockImplementation(async (_transaction, query, _values) => {

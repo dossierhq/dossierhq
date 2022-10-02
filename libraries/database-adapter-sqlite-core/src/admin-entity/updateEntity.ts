@@ -7,7 +7,6 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
@@ -73,8 +72,8 @@ export async function adminEntityUpdateGetEntityInfo(
     resolvedAuthKey,
     status: resolveEntityStatus(status),
     version,
-    createdAt: Temporal.Instant.from(createdAt),
-    updatedAt: Temporal.Instant.from(updatedAt),
+    createdAt: new Date(createdAt),
+    updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
   });
 }
@@ -85,13 +84,13 @@ export async function adminEntityUpdateEntity(
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
-  const now = Temporal.Now.instant();
+  const now = new Date();
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
     text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, fields) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING id',
     values: [
       entity.entityInternalId as number,
-      now.toString(),
+      now.toISOString(),
       getSessionSubjectInternalId(entity.session),
       entity.version,
       JSON.stringify(entity.fieldValues),
@@ -151,7 +150,7 @@ export async function adminEntityUpdateEntity(
            WHERE id = ?5`,
     values: [
       versionsId,
-      now.toString(),
+      now.toISOString(),
       updatedReqResult.value,
       entity.status,
       entity.entityInternalId as number,

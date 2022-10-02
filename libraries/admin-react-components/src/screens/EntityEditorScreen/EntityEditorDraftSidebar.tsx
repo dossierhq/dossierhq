@@ -9,7 +9,6 @@ import {
   Text,
   toFlexItemClassName,
 } from '@jonasb/datadata-design';
-import { Temporal } from '@js-temporal/polyfill';
 import { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
@@ -24,7 +23,7 @@ interface Props {
 }
 
 interface ActivityListEvent {
-  instant: Temporal.Instant;
+  instant: Date;
   version: number | null;
   kind: PublishingEvent['kind'] | 'create';
 }
@@ -132,7 +131,7 @@ function ActivityList({
   }
 
   events.sort((a, b) => {
-    return Temporal.Instant.compare(b.instant, a.instant); // descending
+    return b.instant.getTime() - a.instant.getTime(); // descending
   });
 
   return (

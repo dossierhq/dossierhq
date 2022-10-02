@@ -166,7 +166,6 @@ importers:
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       bun-types: ~0.1.4
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -176,7 +175,6 @@ importers:
       '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
       '@jonasb/datadata-database-adapter-sqlite-core': link:../../libraries/database-adapter-sqlite-core
       '@jonasb/datadata-server': link:../../libraries/server
-      '@js-temporal/polyfill': 0.4.0
     devDependencies:
       '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
@@ -304,7 +302,6 @@ importers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.5.0
       '@lexical/selection': ~0.5.0
       '@lexical/utils': ~0.5.0
@@ -358,7 +355,6 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../database-adapter-sqlite-sqlite3
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
-      '@js-temporal/polyfill': 0.4.0
       '@rushstack/heft': 0.47.5
       '@storybook/addon-actions': 6.4.21_lbxwco5hoik6kks3ktye6h3qpq
       '@storybook/addon-essentials': 6.4.21_6y2whzvbsetbe7bt6yn6io4ltq
@@ -409,7 +405,6 @@ importers:
     specifiers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -417,7 +412,6 @@ importers:
       typescript: ^4.7.2
       vitest: ~0.23.1
     dependencies:
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -433,7 +427,6 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -442,7 +435,6 @@ importers:
       vitest: ~0.23.1
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -458,7 +450,6 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -467,7 +458,6 @@ importers:
       vitest: ~0.23.1
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -485,7 +475,6 @@ importers:
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -500,7 +489,6 @@ importers:
       '@jonasb/datadata-core-vitest': link:../core-vitest
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
-      '@js-temporal/polyfill': 0.4.0
       '@rushstack/heft': 0.47.5
       eslint: 8.16.0
       prettier: 2.7.1
@@ -518,7 +506,6 @@ importers:
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       '@types/pg': ^8.6.5
       '@types/uuid': ~8.3.4
@@ -534,7 +521,6 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-database-adapter-postgres-core': link:../database-adapter-postgres-core
-      '@js-temporal/polyfill': 0.4.0
       pg: 8.7.1
       tslib: 2.4.0
     devDependencies:
@@ -561,7 +547,6 @@ importers:
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       '@types/uuid': ~8.3.4
       eslint: ^8.16.0
@@ -573,7 +558,6 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
       uuid: 9.0.0
     devDependencies:
@@ -669,7 +653,6 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       '@types/uuid': ~8.3.4
       eslint: ^8.16.0
@@ -681,7 +664,6 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-server': link:../server
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
       uuid: 9.0.0
     devDependencies:
@@ -700,7 +682,6 @@ importers:
       '@creativebulma/bulma-badge': ~1.0.1
       '@fortawesome/free-solid-svg-icons': ~6.2.0
       '@jonasb/datadata-heft-node-rig': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       '@storybook/addon-actions': ^6.4.21
       '@storybook/addon-essentials': ^6.4.21
@@ -733,7 +714,6 @@ importers:
     dependencies:
       '@creativebulma/bulma-badge': 1.0.1
       '@fortawesome/free-solid-svg-icons': 6.2.0
-      '@js-temporal/polyfill': 0.4.0
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -775,7 +755,6 @@ importers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~8.3.4
@@ -789,7 +768,6 @@ importers:
       vitest: ~0.23.1
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@js-temporal/polyfill': 0.4.0
       graphql: 16.6.0
       tslib: 2.4.0
     devDependencies:
@@ -860,7 +838,6 @@ importers:
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -870,7 +847,6 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-core-vitest': link:../core-vitest
@@ -942,7 +918,6 @@ importers:
     specifiers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@js-temporal/polyfill': ~0.4.0
       '@rushstack/heft': ~0.47.5
       eslint: ^8.16.0
       prettier: 2.7.1
@@ -950,7 +925,6 @@ importers:
       typescript: ^4.7.2
       vitest: ~0.23.1
     dependencies:
-      '@js-temporal/polyfill': 0.4.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -988,7 +962,6 @@ importers:
       '@faker-js/faker': ~7.5.0
       '@fortawesome/free-solid-svg-icons': ~6.2.0
       '@graphiql/toolkit': ~0.8.0
-      '@js-temporal/polyfill': ~0.4.0
       '@lexical/react': ~0.5.0
       '@lexical/selection': ~0.5.0
       '@lexical/utils': ~0.5.0
@@ -1073,7 +1046,6 @@ importers:
       '@faker-js/faker': 7.5.0
       '@fortawesome/free-solid-svg-icons': 6.2.0
       '@graphiql/toolkit': 0.8.0_ifcizhisiadnhcbtffrevaejam
-      '@js-temporal/polyfill': 0.4.0
       '@lexical/react': 0.5.0_emgchuarwwe7b6xeirmfn74mla
       '@lexical/selection': 0.5.0_lexical@0.5.0
       '@lexical/utils': 0.5.0_lexical@0.5.0
@@ -3200,13 +3172,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
-
-  /@js-temporal/polyfill/0.4.0:
-    resolution: {integrity: sha512-j6DwrVV5e2fj3pdXXx6e4ol9/VWg+hX54xOUJjNx+PekzWdjkVzBLpttPNczFcY1W0SFv2ovxrsz/OB4SzIALA==}
-    engines: {node: '>=12'}
-    dependencies:
-      jsbi: 4.2.0
-      tslib: 2.4.0
 
   /@lexical/clipboard/0.5.0_lexical@0.5.0:
     resolution: {integrity: sha512-JFvdH4N/80GxC0jhaiO/fdUOeYcX8pMFrcrpBDeNIcBN/9eF8Rn/czvoPLLNB9Kcbz8d8XXqabKEGCz2hFL//w==}
@@ -11243,9 +11208,6 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
-
-  /jsbi/4.2.0:
-    resolution: {integrity: sha512-JzhwPkH7Ra8O1b5uHmWxl6N8ZumqGvMXgpKcsq0/iWlnB+KkzbekCIcLl3hu3sFGTLNXAuXIqY4STtE0ZfT1zA==}
 
   /jsesc/0.5.0:
     resolution: {integrity: sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=}

@@ -15,7 +15,6 @@ import {
   PublishingEventKind,
 } from '@jonasb/datadata-core';
 import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
-import { Temporal } from '@js-temporal/polyfill';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
@@ -238,8 +237,8 @@ describe('create*Entity()', () => {
         version: 0,
         authKey: 'none',
         status: AdminEntityStatus.draft,
-        createdAt: Temporal.Instant.from(createdAt),
-        updatedAt: Temporal.Instant.from(updatedAt),
+        createdAt: new Date(createdAt),
+        updatedAt: new Date(updatedAt),
       },
       fields: {
         ...emptyFooFields,
@@ -456,8 +455,8 @@ describe('create*Entity()', () => {
           version: 0,
           authKey: 'none',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from(createdAt),
-          updatedAt: Temporal.Instant.from(updatedAt),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -573,8 +572,8 @@ describe('create*Entity()', () => {
           version: 0,
           authKey: 'none',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from(createdAt),
-          updatedAt: Temporal.Instant.from(updatedAt),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -696,8 +695,8 @@ describe('create*Entity()', () => {
           version: 0,
           authKey: 'none',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from(createdAt),
-          updatedAt: Temporal.Instant.from(updatedAt),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -829,8 +828,8 @@ describe('create*Entity()', () => {
           version: 0,
           authKey: 'none',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from(createdAt),
-          updatedAt: Temporal.Instant.from(updatedAt),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -960,8 +959,8 @@ describe('create*Entity()', () => {
           version: 0,
           authKey: 'none',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from(createdAt),
-          updatedAt: Temporal.Instant.from(updatedAt),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -1083,8 +1082,8 @@ describe('create*Entity()', () => {
         version: 0,
         authKey: 'none',
         status: AdminEntityStatus.draft,
-        createdAt: Temporal.Instant.from(createdAt),
-        updatedAt: Temporal.Instant.from(updatedAt),
+        createdAt: new Date(createdAt),
+        updatedAt: new Date(updatedAt),
       },
       fields: {
         ...emptyFooFields,
@@ -1288,7 +1287,7 @@ describe('update*Entity()', () => {
                 version: 1,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
-                createdAt: createdAt.toString(),
+                createdAt: createdAt.toISOString(),
                 updatedAt: updatedAtString,
               },
               fields: {
@@ -1311,7 +1310,7 @@ describe('update*Entity()', () => {
           authKey: 'none',
           status: AdminEntityStatus.draft,
           createdAt,
-          updatedAt: Temporal.Instant.from(updatedAtString),
+          updatedAt: new Date(updatedAtString),
         },
         fields: {
           ...emptyFooFields,
@@ -1611,8 +1610,8 @@ describe('update*Entity()', () => {
             version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
-            createdAt: Temporal.Instant.from(createdAt),
-            updatedAt: Temporal.Instant.from(updatedAt),
+            createdAt: new Date(createdAt),
+            updatedAt: new Date(updatedAt),
           },
           fields: {
             ...emptyFooFields,
@@ -1705,7 +1704,7 @@ describe('update*Entity()', () => {
                 version: 1,
                 authKey: 'none',
                 status: AdminEntityStatus.published,
-                createdAt: createdAt.toString(),
+                createdAt: createdAt.toISOString(),
                 updatedAt: updatedAtString,
               },
               fields: {
@@ -1728,7 +1727,7 @@ describe('update*Entity()', () => {
           authKey: 'none',
           status: AdminEntityStatus.published,
           createdAt,
-          updatedAt: Temporal.Instant.from(updatedAtString),
+          updatedAt: new Date(updatedAtString),
         },
         fields: {
           ...emptyFooFields,
@@ -1896,8 +1895,8 @@ describe('upsert*Entity()', () => {
         version: 0,
         authKey: 'none',
         status: AdminEntityStatus.draft,
-        createdAt: Temporal.Instant.from(createdAt),
-        updatedAt: Temporal.Instant.from(updatedAt),
+        createdAt: new Date(createdAt),
+        updatedAt: new Date(updatedAt),
       },
       fields: {
         ...emptyFooFields,
@@ -1969,8 +1968,8 @@ describe('upsert*Entity()', () => {
           version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from(createdAt),
-          updatedAt: Temporal.Instant.from(updatedAt),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -2091,8 +2090,8 @@ describe('upsert*Entity()', () => {
         version: 0,
         authKey: 'none',
         status: AdminEntityStatus.published,
-        createdAt: Temporal.Instant.from(createdAt),
-        updatedAt: Temporal.Instant.from(updatedAt),
+        createdAt: new Date(createdAt),
+        updatedAt: new Date(updatedAt),
       },
       fields: {
         ...emptyFooFields,
@@ -2194,7 +2193,7 @@ describe('publishEntities()', () => {
           },
         ],
       });
-      expect(publishedAt0).toEqual(Temporal.Instant.from(updatedAt));
+      expect(Math.abs(publishedAt0.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
     }
   });
 
@@ -2324,7 +2323,7 @@ describe('unpublishEntities()', () => {
             },
           ],
         });
-        expect(publishedAt1).toEqual(Temporal.Instant.from(updatedAt));
+        expect(Math.abs(publishedAt1.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
       }
     }
   });
@@ -2444,7 +2443,7 @@ describe('archiveEntity()', () => {
           },
         ],
       });
-      expect(publishedAt0).toEqual(Temporal.Instant.from(updatedAt));
+      expect(publishedAt0).toEqual(new Date(updatedAt));
     }
   });
 
@@ -2550,7 +2549,7 @@ describe('unarchiveEntity()', () => {
           ],
         });
 
-        expect(publishedAt1).toEqual(Temporal.Instant.from(updatedAt));
+        expect(publishedAt1).toEqual(new Date(updatedAt));
       }
     }
   });

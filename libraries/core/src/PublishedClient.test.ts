@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test, vi } from 'vitest';
 import { expectOkResult, expectResultValue } from './CoreTestUtils.js';
 import { ok } from './ErrorResult.js';
@@ -73,7 +72,7 @@ function createDummyEntity({ id }: { id: string }): PublishedEntity {
       name: 'Foo name',
       type: 'FooType',
       authKey: 'none',
-      createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+      createdAt: new Date('2021-08-17T07:51:25.56Z'),
     },
     fields: {},
   };
@@ -94,10 +93,10 @@ describe('PublishedClient forward operation over JSON', () => {
     const result = await publishedClient.getEntities([{ id: '1234' }, { id: '5678' }]);
     if (expectOkResult(result)) {
       if (expectOkResult(result.value[0])) {
-        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Date);
       }
       if (expectOkResult(result.value[1])) {
-        expect(result.value[1].value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+        expect(result.value[1].value.info.createdAt).toBeInstanceOf(Date);
       }
 
       expect(result.value).toMatchInlineSnapshot(`
@@ -108,7 +107,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "id": "1234",
               "info": {
                 "authKey": "none",
-                "createdAt": "2021-08-17T07:51:25.56Z",
+                "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "type": "FooType",
               },
@@ -120,7 +119,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "id": "5678",
               "info": {
                 "authKey": "none",
-                "createdAt": "2021-08-17T07:51:25.56Z",
+                "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "type": "FooType",
               },
@@ -175,14 +174,14 @@ describe('PublishedClient forward operation over JSON', () => {
 
     const result = await publishedClient.getEntity({ id: '1234' });
     if (expectOkResult(result)) {
-      expect(result.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.info.createdAt).toBeInstanceOf(Date);
       expect(result.value).toMatchInlineSnapshot(`
         {
           "fields": {},
           "id": "1234",
           "info": {
             "authKey": "none",
-            "createdAt": "2021-08-17T07:51:25.56Z",
+            "createdAt": 2021-08-17T07:51:25.560Z,
             "name": "Foo name",
             "type": "FooType",
           },
@@ -315,7 +314,7 @@ describe('PublishedClient forward operation over JSON', () => {
         type: 'Foo',
         name: 'Name',
         authKey: 'none',
-        createdAt: Temporal.Now.instant(),
+        createdAt: new Date(),
       },
       fields: { foo: 'Hello' },
     };
@@ -336,8 +335,7 @@ describe('PublishedClient forward operation over JSON', () => {
     );
     expectResultValue(result, { seed: 123, totalCount: 1, items: [entity1] });
 
-    expectOkResult(result) &&
-      expect(result.value.items[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value.items[0].info.createdAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -381,7 +379,7 @@ describe('PublishedClient forward operation over JSON', () => {
         type: 'Foo',
         name: 'Name',
         authKey: 'none',
-        createdAt: Temporal.Now.instant(),
+        createdAt: new Date(),
       },
       fields: { foo: 'Hello' },
     };
@@ -433,7 +431,7 @@ describe('PublishedClient forward operation over JSON', () => {
     expectOkResult(result) &&
       result.value?.edges[0].node &&
       expectOkResult(result.value.edges[0].node) &&
-      expect(result.value?.edges[0].node.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value?.edges[0].node.value.info.createdAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [

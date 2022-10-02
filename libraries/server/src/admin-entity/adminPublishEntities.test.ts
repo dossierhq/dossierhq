@@ -1,6 +1,5 @@
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
@@ -16,7 +15,7 @@ describe('Admin adminPublishEntities', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
-    const now = Temporal.Now.instant();
+    const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
       Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
@@ -33,7 +32,7 @@ describe('Admin adminPublishEntities', () => {
           authKey: 'none',
           resolvedAuthKey: 'none',
           status: AdminEntityStatus.draft,
-          updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+          updatedAt: new Date('2021-08-17T07:51:25.56Z'),
           fieldValues: { title: 'Title' },
         })
       )

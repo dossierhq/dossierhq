@@ -25,7 +25,6 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
-    "@js-temporal/polyfill": "~0.4.0"
+    "@jonasb/datadata-server": "workspace:*"
   }
 }

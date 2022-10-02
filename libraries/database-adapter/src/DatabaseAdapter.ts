@@ -15,7 +15,6 @@ import type {
   PublishedSearchQuery,
   PublishingEvent,
 } from '@jonasb/datadata-core';
-import type { Temporal } from '@js-temporal/polyfill';
 import type { ResolvedAuthKey, Session } from './Session.js';
 import type { Transaction, TransactionContext } from './TransactionContext.js';
 
@@ -41,7 +40,7 @@ export interface DatabaseAdminEntityArchivingEntityInfoPayload
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
   neverPublished: boolean;
 }
 
@@ -60,8 +59,8 @@ export interface DatabaseAdminEntityCreateEntityArg {
 export interface DatabaseAdminEntityCreatePayload {
   id: string;
   name: string;
-  createdAt: Temporal.Instant;
-  updatedAt: Temporal.Instant;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface DatabaseAdminEntityPayload {
@@ -71,8 +70,8 @@ export interface DatabaseAdminEntityPayload {
   version: number;
   authKey: string;
   status: AdminEntityStatus;
-  createdAt: Temporal.Instant;
-  updatedAt: Temporal.Instant;
+  createdAt: Date;
+  updatedAt: Date;
   fieldValues: Record<string, unknown>;
 }
 
@@ -96,7 +95,7 @@ export interface DatabaseAdminEntityHistoryGetEntityInfoPayload
 export interface DatabaseAdminEntityHistoryGetVersionInfoPayload
   extends DatabaseResolvedEntityVersionReference {
   version: number;
-  createdAt: Temporal.Instant;
+  createdAt: Date;
   createdBy: string;
 }
 
@@ -108,7 +107,7 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
   fieldValues: Record<string, unknown>;
 }
 
@@ -160,8 +159,8 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   resolvedAuthKey: string;
   status: AdminEntityStatus;
   version: number;
-  createdAt: Temporal.Instant;
-  updatedAt: Temporal.Instant;
+  createdAt: Date;
+  updatedAt: Date;
   fieldValues: Record<string, unknown>;
 }
 
@@ -179,11 +178,11 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
 
 export interface DatabaseEntityUpdateEntityPayload {
   name: string;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export interface DatabaseAdminEntityUpdateStatusPayload {
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
@@ -192,12 +191,12 @@ export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export interface DatabaseAdminEntityUnpublishUpdateEntityPayload
   extends DatabaseResolvedEntityReference {
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export interface DatabaseAuthCreateSessionPayload {
@@ -210,7 +209,7 @@ export interface DatabasePublishedEntityPayload {
   name: string;
   type: string;
   authKey: string;
-  createdAt: Temporal.Instant;
+  createdAt: Date;
   fieldValues: Record<string, unknown>;
 }
 
@@ -406,10 +405,7 @@ export interface DatabaseAdapter {
     name: string,
     handle: number,
     leaseDuration: number
-  ): PromiseResult<
-    { acquiredAt: Temporal.Instant },
-    typeof ErrorType.Conflict | typeof ErrorType.Generic
-  >;
+  ): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 
   advisoryLockDeleteExpired(
     context: TransactionContext
@@ -426,7 +422,7 @@ export interface DatabaseAdapter {
     name: string,
     handle: number
   ): PromiseResult<
-    { acquiredAt: Temporal.Instant; renewedAt: Temporal.Instant },
+    { acquiredAt: Date; renewedAt: Date },
     typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 

@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill';
 import { expect } from 'vitest';
 import type { ErrorType, OkResult, Result } from './ErrorResult.js';
 
@@ -37,13 +36,9 @@ export function expectResultValue<TOk, TError extends ErrorType>(
   }
 }
 
+//TODO remove now when we don't use Temporal?
 function deepCopyForIsEqual<T>(obj: T): T {
   if (obj === null || obj === undefined) return obj;
-  if (obj instanceof Temporal.Instant) {
-    // Since the epoch isn't stored as a property for Instant (but a slot), jest isn't able to compare them.
-    // Replace with string representation
-    return obj.toString() as unknown as T;
-  }
   if (typeof obj === 'object') {
     const copy = { ...obj };
     for (const [key, value] of Object.entries(obj)) {

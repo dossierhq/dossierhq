@@ -56,7 +56,6 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
-    "@js-temporal/polyfill": "~0.4.0",
     "pg": "^8.7.1",
     "tslib": "~2.4.0"
   }

@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
 import { ErrorType, notOk, ok } from './ErrorResult.js';
@@ -107,15 +106,13 @@ describe('convertJsonEntityVersion()', () => {
   test('History with one version', () => {
     const expected: EntityHistory = {
       id: '123',
-      versions: [
-        { createdAt: Temporal.Now.instant(), createdBy: '4321', published: true, version: 0 },
-      ],
+      versions: [{ createdAt: new Date(), createdBy: '4321', published: true, version: 0 }],
     };
     const asJson: JsonEntityHistory = JSON.parse(JSON.stringify(expected));
     const converted = convertJsonEntityHistory(asJson);
     expect(converted).toEqual(expected);
 
-    expect(converted.versions[0].createdAt).toBeInstanceOf(Temporal.Instant);
+    expect(converted.versions[0].createdAt).toBeInstanceOf(Date);
   });
 });
 
@@ -126,7 +123,7 @@ describe('convertJsonPublishingHistory()', () => {
       events: [
         {
           kind: PublishingEventKind.publish,
-          publishedAt: Temporal.Now.instant(),
+          publishedAt: new Date(),
           publishedBy: '4321',
           version: 0,
         },
@@ -136,6 +133,6 @@ describe('convertJsonPublishingHistory()', () => {
     const converted = convertJsonPublishingHistory(asJson);
     expect(converted).toEqual(expected);
 
-    expect(converted.events[0].publishedAt).toBeInstanceOf(Temporal.Instant);
+    expect(converted.events[0].publishedAt).toBeInstanceOf(Date);
   });
 });

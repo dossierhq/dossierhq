@@ -1,6 +1,5 @@
 import { AdminEntityStatus, ErrorType, ok } from '@jonasb/datadata-core';
 import { expectErrorResult, expectResultValue } from '@jonasb/datadata-core-vitest';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
@@ -16,7 +15,7 @@ describe('Admin adminCreateEntity', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
-    const now = Temporal.Now.instant();
+    const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
       Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))

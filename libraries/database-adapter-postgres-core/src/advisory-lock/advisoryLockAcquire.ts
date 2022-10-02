@@ -2,10 +2,9 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
 import { UniqueConstraints } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';
 
 export async function advisoryLockAcquire(
@@ -14,10 +13,7 @@ export async function advisoryLockAcquire(
   name: string,
   handle: number,
   leaseDuration: number
-): PromiseResult<
-  { acquiredAt: Temporal.Instant },
-  typeof ErrorType.Conflict | typeof ErrorType.Generic
-> {
+): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const query = buildPostgresSqlQuery(({ sql }) => {
     sql`INSERT INTO advisory_locks (name, handle, lease_duration)
         VALUES (${name}, ${handle}, make_interval(secs => ${leaseDuration / 1000}))
@@ -43,5 +39,5 @@ export async function advisoryLockAcquire(
   if (result.isError()) return result;
   const { acquired_at: acquiredAt } = result.value;
 
-  return ok({ acquiredAt: Temporal.Instant.from(acquiredAt) });
+  return ok({ acquiredAt: new Date(acquiredAt) });
 }

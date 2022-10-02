@@ -12,7 +12,6 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { Temporal } from '@js-temporal/polyfill';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
@@ -32,7 +31,7 @@ interface EntityInfoAlreadyUnpublished {
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export async function adminUnpublishEntities(

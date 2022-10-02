@@ -4,7 +4,6 @@ import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
@@ -52,7 +51,7 @@ export async function publishedEntityGetOne(
     name,
     authKey,
     resolvedAuthKey,
-    createdAt: Temporal.Instant.from(createdAt),
+    createdAt: new Date(createdAt),
     fieldValues: JSON.parse(fieldValues),
   });
 }

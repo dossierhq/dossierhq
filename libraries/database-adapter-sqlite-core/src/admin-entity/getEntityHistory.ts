@@ -6,7 +6,6 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
@@ -71,7 +70,7 @@ export async function adminEntityHistoryGetVersionsInfo(
       entityInternalId: reference.entityInternalId,
       entityVersionInternalId: it.id,
       version: it.version,
-      createdAt: Temporal.Instant.from(it.created_at),
+      createdAt: new Date(it.created_at),
       createdBy: it.created_by_uuid,
     }))
   );

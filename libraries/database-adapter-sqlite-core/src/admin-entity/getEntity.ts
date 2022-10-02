@@ -10,7 +10,6 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
@@ -53,8 +52,8 @@ export async function adminGetEntity(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
-    createdAt: Temporal.Instant.from(createdAt),
-    updatedAt: Temporal.Instant.from(updatedAt),
+    createdAt: new Date(createdAt),
+    updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
   });
 }

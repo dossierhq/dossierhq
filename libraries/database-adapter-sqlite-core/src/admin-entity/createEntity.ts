@@ -5,7 +5,6 @@ import {
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema.js';
@@ -54,7 +53,7 @@ export async function adminCreateEntity(
       text: 'INSERT INTO entity_versions (entities_id, version, created_at, created_by, fields) VALUES (?1, 0, ?2, ?3, ?4) RETURNING id',
       values: [
         entityId,
-        createdAt.toString(),
+        createdAt.toISOString(),
         getSessionSubjectInternalId(entity.creator),
         JSON.stringify(entity.fieldsData),
       ],
@@ -93,7 +92,7 @@ async function createEntityRow(
   entity: DatabaseAdminEntityCreateEntityArg
 ) {
   const uuid = entity.id ?? uuidv4();
-  const now = Temporal.Now.instant();
+  const now = new Date();
 
   const updatedSecResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSecResult.isError()) return updatedSecResult;
@@ -116,7 +115,7 @@ async function createEntityRow(
             entity.resolvedAuthKey.authKey,
             entity.resolvedAuthKey.resolvedAuthKey,
             'draft',
-            now.toString(),
+            now.toISOString(),
             updatedSecResult.value,
           ],
         },

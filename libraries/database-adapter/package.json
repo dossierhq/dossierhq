@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@js-temporal/polyfill": "~0.4.0",
     "tslib": "~2.4.0"
   }
 }

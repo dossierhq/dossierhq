@@ -6,7 +6,6 @@ import type {
   PublishedEntity,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, ok } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer';
 import {
@@ -22,7 +21,7 @@ function createPublishedEntity(id: string): PublishedEntity {
       name: `Entity ${id}`,
       type: 'TitleOnly',
       authKey: 'none',
-      createdAt: Temporal.Instant.from('2022-03-19T07:51:25.56Z'),
+      createdAt: new Date('2022-03-19T07:51:25.56Z'),
     },
     fields: { title: `Title ${id}` },
   };

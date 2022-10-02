@@ -1,4 +1,3 @@
-import type { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, Result } from './ErrorResult.js';
 import type { RichTextNodeType } from './Schema.js';
 import type {
@@ -24,7 +23,7 @@ export interface PublishedEntityInfo<TType extends string = string> {
   type: TType;
   name: string;
   authKey: string;
-  createdAt: Temporal.Instant;
+  createdAt: Date;
 }
 
 export interface EntityLike {
@@ -137,8 +136,8 @@ export interface AdminEntityInfo<TType extends string = string> {
    * It is not connected to the requested version so if you get an old version of the entity, the
    * status refer to the latest version. */
   status: AdminEntityStatus;
-  createdAt: Temporal.Instant;
-  updatedAt: Temporal.Instant;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface AdminEntityMutationOptions {
@@ -215,7 +214,7 @@ export interface EntityVersionInfo {
   version: number;
   published: boolean;
   createdBy: string;
-  createdAt: Temporal.Instant;
+  createdAt: Date;
 }
 
 export interface PublishingHistory {
@@ -234,7 +233,7 @@ export type PublishingEventKind = keyof typeof PublishingEventKind;
 export interface PublishingEvent {
   kind: PublishingEventKind;
   version: number | null;
-  publishedAt: Temporal.Instant;
+  publishedAt: Date;
   publishedBy: string;
 }
 
@@ -242,7 +241,7 @@ export interface AdminEntityPublishingPayload<TEffect> {
   id: string;
   status: AdminEntityStatus;
   effect: TEffect;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export type AdminEntityArchivePayload = AdminEntityPublishingPayload<'archived' | 'none'>;

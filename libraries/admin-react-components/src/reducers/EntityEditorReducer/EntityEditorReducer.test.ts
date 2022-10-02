@@ -6,7 +6,6 @@ import {
   copyEntity,
   FieldType,
 } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
@@ -144,8 +143,8 @@ describe('AddDraftAction', () => {
           name: 'Foo',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-05-01T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -385,8 +384,8 @@ describe('UpdateEntityAction', () => {
           name: 'Foo title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -429,8 +428,8 @@ describe('UpdateEntityAction', () => {
           name: 'Different name',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -496,8 +495,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: "Foo's title#123456",
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -558,8 +557,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: 'Foo name#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -624,8 +623,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: 'Foo name#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -662,8 +661,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: 'Foo title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -699,8 +698,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: 'New title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-05-01T07:51:25.56Z'),
           version: 1,
         },
         fields: {
@@ -720,8 +719,8 @@ describe('EntityEditorReducer scenarios', () => {
         name: 'Foo name#123456',
         type: 'Foo',
         status: AdminEntityStatus.draft,
-        createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-        updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+        createdAt: new Date('2022-04-30T07:51:25.56Z'),
+        updatedAt: new Date('2022-04-30T07:51:25.56Z'),
         version: 0,
       },
       fields: {
@@ -755,7 +754,7 @@ describe('EntityEditorReducer scenarios', () => {
         copyEntity(entity, {
           info: {
             status: AdminEntityStatus.published,
-            updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+            updatedAt: new Date('2022-05-01T07:51:25.56Z'),
           },
         })
       )
@@ -765,9 +764,7 @@ describe('EntityEditorReducer scenarios', () => {
     const draftState = state.drafts.find((it) => it.id === id);
     assertIsDefined(draftState);
     expect(draftState.entity?.info.status).toBe(AdminEntityStatus.published);
-    expect(draftState.entity?.info.updatedAt).toEqual(
-      Temporal.Instant.from('2022-05-01T07:51:25.56Z')
-    );
+    expect(draftState.entity?.info.updatedAt).toEqual(new Date('2022-05-01T07:51:25.56Z'));
   });
 
   test('open first entity, open second entity', async () => {
@@ -797,8 +794,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: 'Foo name#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-04-30T07:51:25.56Z'),
           version: 0,
         },
         fields: {
@@ -824,8 +821,8 @@ describe('EntityEditorReducer scenarios', () => {
           name: 'Foo 2',
           type: 'Foo',
           status: AdminEntityStatus.draft,
-          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-          updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+          createdAt: new Date('2022-04-30T07:51:25.56Z'),
+          updatedAt: new Date('2022-05-01T07:51:25.56Z'),
           version: 0,
         },
         fields: {
