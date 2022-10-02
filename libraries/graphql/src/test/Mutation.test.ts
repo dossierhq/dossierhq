@@ -2549,7 +2549,7 @@ describe('unarchiveEntity()', () => {
           ],
         });
 
-        expect(publishedAt1).toEqual(new Date(updatedAt));
+        expect(Math.abs(publishedAt1.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
       }
     }
   });
