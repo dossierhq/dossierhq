@@ -1,5 +1,4 @@
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import {
@@ -18,8 +17,8 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     type: 'TitleOnly',
     name: `Title#${id}`,
     auth_key: 'none',
-    created_at: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updated_at: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    created_at: new Date('2021-08-17T07:51:25.56Z'),
+    updated_at: new Date('2021-08-17T07:51:25.56Z'),
     updated: id,
     status: 'draft',
     version: 0,
@@ -73,7 +72,7 @@ describe('adminEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "fieldValues": {
                 "title": "Title",
@@ -82,7 +81,7 @@ describe('adminEntitySearchEntities', () => {
               "name": "Title#1",
               "status": "draft",
               "type": "TitleOnly",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           ],
@@ -122,7 +121,7 @@ describe('adminEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "fieldValues": {
                 "title": "Title",
@@ -131,7 +130,7 @@ describe('adminEntitySearchEntities', () => {
               "name": "Title#2",
               "status": "draft",
               "type": "TitleOnly",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           ],
@@ -172,7 +171,7 @@ describe('adminEntitySearchEntities', () => {
           "entities": [
             {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "fieldValues": {
                 "title": "Title",
@@ -181,7 +180,7 @@ describe('adminEntitySearchEntities', () => {
               "name": "Title#2",
               "status": "draft",
               "type": "TitleOnly",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           ],

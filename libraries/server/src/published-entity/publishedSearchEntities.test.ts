@@ -1,7 +1,6 @@
 import { ok } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
 import type { DatabasePublishedEntitySearchPayloadEntity } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
@@ -116,7 +115,7 @@ describe('publishedSearchEntities', () => {
                 "id": "id-1",
                 "info": {
                   "authKey": "none",
-                  "createdAt": "2022-03-15T08:51:25.56Z",
+                  "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "type": "TitleOnly",
                 },
@@ -212,7 +211,7 @@ describe('publishedSearchEntities', () => {
                 "id": "id-2",
                 "info": {
                   "authKey": "none",
-                  "createdAt": "2022-03-15T08:51:25.56Z",
+                  "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "type": "TitleOnly",
                 },
@@ -312,7 +311,7 @@ function createDatabaseEntity(id = 1): DatabasePublishedEntitySearchPayloadEntit
     name: 'TitleOnly name',
     type: 'TitleOnly',
     authKey: 'none',
-    createdAt: Temporal.Instant.from('2022-03-15T08:51:25.56Z'),
+    createdAt: new Date('2022-03-15T08:51:25.56Z'),
     fieldValues: { title: 'Title' },
   };
 }

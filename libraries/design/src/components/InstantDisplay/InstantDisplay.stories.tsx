@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill';
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
 import type { InstantDisplayProps } from './InstantDisplay.js';
@@ -18,13 +17,16 @@ const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
 };
 
 export const Now = Template.bind({});
-Now.args = { instant: Temporal.Now.instant() };
+Now.args = { instant: new Date() };
+
+export const TwoHoursAgo = Template.bind({});
+TwoHoursAgo.args = { instant: new Date(Date.now() - 2 * 60 * 60 * 1000) };
 
 export const TwoDaysAgo = Template.bind({});
-TwoDaysAgo.args = { instant: Temporal.Now.instant().subtract({ hours: 24 * 2 }) };
+TwoDaysAgo.args = { instant: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) };
 
 export const TenDaysAgo = Template.bind({});
-TenDaysAgo.args = { instant: Temporal.Now.instant().subtract({ hours: 24 * 10 }) };
+TenDaysAgo.args = { instant: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000) };
 
 export const AYearAgo = Template.bind({});
-AYearAgo.args = { instant: Temporal.Now.instant().subtract({ hours: 24 * 365 }) };
+AYearAgo.args = { instant: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000) };

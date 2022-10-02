@@ -8,7 +8,6 @@ import type {
   PublishedEntity,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, assertIsDefined } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals } from '../Asserts.js';
 import type {
   AdminLocations,
@@ -38,8 +37,8 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
     version: 0,
     authKey: 'none',
     status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
+    updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { location: null, locationList: null, locationAdminOnly: null },
 };
@@ -61,8 +60,8 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
     version: 0,
     authKey: 'none',
     status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
+    updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { any: null, anyList: null, anyAdminOnly: null, titleOnly: null },
 };
@@ -84,8 +83,8 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
     version: 0,
     authKey: 'none',
     status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
+    updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: {
     richText: null,
@@ -112,8 +111,8 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     version: 0,
     authKey: 'none',
     status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
+    updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { multiline: 'Hello\nWorld', stringAdminOnly: null },
 };
@@ -140,8 +139,8 @@ export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
     version: 0,
     authKey: 'subject',
     status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
+    updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { message: 'Message' },
 };
@@ -168,8 +167,8 @@ export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {
     version: 0,
     authKey: 'none',
     status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
+    updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { title: 'Title' },
 };
@@ -180,7 +179,7 @@ export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedTitleOnly> = {
     type: 'TitleOnly',
     name: 'TitleOnly name',
     authKey: 'none',
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    createdAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { title: 'Title' },
 };

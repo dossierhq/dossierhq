@@ -1,6 +1,5 @@
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-vitest';
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test } from 'vitest';
 import {
   createMockContext,
@@ -10,7 +9,7 @@ import {
 
 describe('adminGetEntity', () => {
   test('Get latest version', async () => {
-    const now = Temporal.Now.instant();
+    const now = new Date();
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
@@ -24,8 +23,8 @@ describe('adminGetEntity', () => {
             name: 'Name',
             auth_key: 'authKey-123',
             resolved_auth_key: 'resolvedAuthKey-123',
-            created_at: now.toString(),
-            updated_at: now.toString(),
+            created_at: now.toISOString(),
+            updated_at: now.toISOString(),
             status: 'modified',
             version: 2,
             fields: '{ "title": "Title" }',
@@ -61,7 +60,7 @@ describe('adminGetEntity', () => {
   });
 
   test('Get specific version', async () => {
-    const now = Temporal.Now.instant();
+    const now = new Date();
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
@@ -75,8 +74,8 @@ describe('adminGetEntity', () => {
             name: 'Name',
             auth_key: 'authKey-123',
             resolved_auth_key: 'resolvedAuthKey-123',
-            created_at: now.toString(),
-            updated_at: now.toString(),
+            created_at: now.toISOString(),
+            updated_at: now.toISOString(),
             status: 'modified',
             version: 5,
             fields: '{ "title": "Title" }',

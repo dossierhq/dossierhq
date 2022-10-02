@@ -1,6 +1,5 @@
 import type { AdminEntity } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import { expect, test } from 'bun:test';
 
 test('copyEntity()', () => {
@@ -12,8 +11,8 @@ test('copyEntity()', () => {
       version: 0,
       authKey: 'none',
       status: AdminEntityStatus.draft,
-      createdAt: Temporal.Now.instant(),
-      updatedAt: Temporal.Now.instant(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     fields: { title: 'message' },
   };

@@ -5,7 +5,6 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
@@ -51,8 +50,8 @@ export async function adminEntityGetMultiple(
       name: row.name,
       authKey: row.auth_key,
       resolvedAuthKey: row.resolved_auth_key,
-      createdAt: Temporal.Instant.from(row.created_at),
-      updatedAt: Temporal.Instant.from(row.updated_at),
+      createdAt: new Date(row.created_at),
+      updatedAt: new Date(row.updated_at),
       status: resolveEntityStatus(row.status),
       version: row.version,
       fieldValues: JSON.parse(row.fields),

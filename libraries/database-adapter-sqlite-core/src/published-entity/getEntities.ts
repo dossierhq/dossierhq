@@ -5,7 +5,6 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
@@ -42,7 +41,7 @@ export async function publishedEntityGetEntities(
       name: row.name,
       authKey: row.auth_key,
       resolvedAuthKey: row.resolved_auth_key,
-      createdAt: Temporal.Instant.from(row.created_at),
+      createdAt: new Date(row.created_at),
       fieldValues: JSON.parse(row.fields),
     }))
   );

@@ -15,7 +15,6 @@
     "@faker-js/faker": "~7.5.0",
     "@fortawesome/free-solid-svg-icons": "~6.2.0",
     "@graphiql/toolkit": "~0.8.0",
-    "@js-temporal/polyfill": "~0.4.0",
     "@lexical/react": "~0.5.0",
     "@lexical/selection": "~0.5.0",
     "@lexical/utils": "~0.5.0",

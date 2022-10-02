@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, Result } from './ErrorResult.js';
 import { createErrorResult, ok } from './ErrorResult.js';
 import type {
@@ -119,8 +118,8 @@ export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
     ...entity,
     info: {
       ...entity.info,
-      createdAt: Temporal.Instant.from(entity.info.createdAt),
-      updatedAt: Temporal.Instant.from(entity.info.updatedAt),
+      createdAt: new Date(entity.info.createdAt),
+      updatedAt: new Date(entity.info.updatedAt),
     },
   };
 }
@@ -130,7 +129,7 @@ export function convertJsonPublishedEntity(entity: JsonPublishedEntity): Publish
     ...entity,
     info: {
       ...entity.info,
-      createdAt: Temporal.Instant.from(entity.info.createdAt),
+      createdAt: new Date(entity.info.createdAt),
     },
   };
 }
@@ -140,7 +139,7 @@ export function convertJsonPublishingResult<TEffect>(
 ): AdminEntityPublishingPayload<TEffect> {
   return {
     ...publishingResult,
-    updatedAt: Temporal.Instant.from(publishingResult.updatedAt),
+    updatedAt: new Date(publishingResult.updatedAt),
   };
 }
 
@@ -149,7 +148,7 @@ export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): Enti
     ...entityHistory,
     versions: entityHistory.versions.map((version) => ({
       ...version,
-      createdAt: Temporal.Instant.from(version.createdAt),
+      createdAt: new Date(version.createdAt),
     })),
   };
 }
@@ -161,7 +160,7 @@ export function convertJsonPublishingHistory(
     ...publishingHistory,
     events: publishingHistory.events.map((version) => ({
       ...version,
-      publishedAt: Temporal.Instant.from(version.publishedAt),
+      publishedAt: new Date(version.publishedAt),
     })),
   };
 }

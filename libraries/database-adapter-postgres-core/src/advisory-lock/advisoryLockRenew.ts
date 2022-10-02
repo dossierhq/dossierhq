@@ -2,9 +2,8 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function advisoryLockRenew(
@@ -13,7 +12,7 @@ export async function advisoryLockRenew(
   name: string,
   handle: number
 ): PromiseResult<
-  { acquiredAt: Temporal.Instant; renewedAt: Temporal.Instant },
+  { acquiredAt: Date; renewedAt: Date },
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const query = buildPostgresSqlQuery(({ sql }) => {
@@ -33,7 +32,7 @@ export async function advisoryLockRenew(
 
   const { acquired_at: acquiredAt, renewed_at: renewedAt } = result.value;
   return ok({
-    acquiredAt: Temporal.Instant.from(acquiredAt),
-    renewedAt: Temporal.Instant.from(renewedAt),
+    acquiredAt: new Date(acquiredAt),
+    renewedAt: new Date(renewedAt),
   });
 }

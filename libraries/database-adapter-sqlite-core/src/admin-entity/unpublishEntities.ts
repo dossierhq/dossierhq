@@ -12,7 +12,6 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryNone } from '../QueryFunctions.js';
@@ -57,7 +56,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
         authKey: entityInfo.auth_key,
         resolvedAuthKey: entityInfo.resolved_auth_key,
         status: resolveEntityStatus(entityInfo.status),
-        updatedAt: Temporal.Instant.from(entityInfo.updated_at),
+        updatedAt: new Date(entityInfo.updated_at),
       };
     })
   );
@@ -72,7 +71,7 @@ export async function adminEntityUnpublishEntities(
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
-  const now = Temporal.Now.instant();
+  const now = new Date();
   const qb = new SqliteQueryBuilder(
     `UPDATE entities
      SET
@@ -81,7 +80,7 @@ export async function adminEntityUnpublishEntities(
        updated_seq = ?2,
        status = ?3
      WHERE`,
-    [now.toString(), updatedSeqResult.value, status]
+    [now.toISOString(), updatedSeqResult.value, status]
   );
   qb.addQuery(
     `id IN ${qb.addValueList(

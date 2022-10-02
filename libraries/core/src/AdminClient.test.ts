@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill';
 import { describe, expect, test, vi } from 'vitest';
 import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from './AdminClient.js';
 import {
@@ -92,8 +91,8 @@ function createDummyEntity(changes: {
         version: 0,
         authKey: 'none',
         status: AdminEntityStatus.draft,
-        createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-        updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+        createdAt: new Date('2021-08-17T07:51:25.56Z'),
+        updatedAt: new Date('2021-08-17T07:51:25.56Z'),
       },
       fields: { title: 'Foo title' },
     },
@@ -221,7 +220,7 @@ describe('AdminClient forward operation over JSON', () => {
             id: reference.id,
             status: AdminEntityStatus.archived,
             effect: 'archived',
-            updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+            updatedAt: new Date('2021-08-17T08:51:25.56Z'),
           })
         );
       }
@@ -232,9 +231,9 @@ describe('AdminClient forward operation over JSON', () => {
       id: '1234',
       status: AdminEntityStatus.archived,
       effect: 'archived',
-      updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+      updatedAt: new Date('2021-08-17T08:51:25.56Z'),
     });
-    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -292,8 +291,8 @@ describe('AdminClient forward operation over JSON', () => {
       { publish: true }
     );
     if (expectOkResult(result)) {
-      expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
-      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
+      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
 
       expect(result.value).toMatchInlineSnapshot(`
         {
@@ -305,11 +304,11 @@ describe('AdminClient forward operation over JSON', () => {
             "id": "1234",
             "info": {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "name": "Foo name",
               "status": "published",
               "type": "FooType",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           },
@@ -371,8 +370,8 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value[1].isOk()).toBeTruthy();
 
       if (expectOkResult(result.value[0])) {
-        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Temporal.Instant);
-        expect(result.value[0].value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Date);
+        expect(result.value[0].value.info.updatedAt).toBeInstanceOf(Date);
       }
 
       expect(result.value).toMatchInlineSnapshot(`
@@ -385,11 +384,11 @@ describe('AdminClient forward operation over JSON', () => {
               "id": "1234",
               "info": {
                 "authKey": "none",
-                "createdAt": "2021-08-17T07:51:25.56Z",
+                "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "status": "draft",
                 "type": "FooType",
-                "updatedAt": "2021-08-17T07:51:25.56Z",
+                "updatedAt": 2021-08-17T07:51:25.560Z,
                 "version": 0,
               },
             },
@@ -402,11 +401,11 @@ describe('AdminClient forward operation over JSON', () => {
               "id": "5678",
               "info": {
                 "authKey": "none",
-                "createdAt": "2021-08-17T07:51:25.56Z",
+                "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "status": "draft",
                 "type": "FooType",
-                "updatedAt": "2021-08-17T07:51:25.56Z",
+                "updatedAt": 2021-08-17T07:51:25.560Z,
                 "version": 0,
               },
             },
@@ -459,8 +458,8 @@ describe('AdminClient forward operation over JSON', () => {
 
     const result = await adminClient.getEntity({ id: '1234' });
     if (expectOkResult(result)) {
-      expect(result.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
-      expect(result.value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.info.createdAt).toBeInstanceOf(Date);
+      expect(result.value.info.updatedAt).toBeInstanceOf(Date);
 
       expect(result.value).toMatchInlineSnapshot(`
         {
@@ -470,11 +469,11 @@ describe('AdminClient forward operation over JSON', () => {
           "id": "1234",
           "info": {
             "authKey": "none",
-            "createdAt": "2021-08-17T07:51:25.56Z",
+            "createdAt": 2021-08-17T07:51:25.560Z,
             "name": "Foo name",
             "status": "draft",
             "type": "FooType",
-            "updatedAt": "2021-08-17T07:51:25.56Z",
+            "updatedAt": 2021-08-17T07:51:25.560Z,
             "version": 0,
           },
         }
@@ -519,7 +518,7 @@ describe('AdminClient forward operation over JSON', () => {
             id: reference.id,
             versions: [
               {
-                createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+                createdAt: new Date('2021-08-17T07:51:25.56Z'),
                 createdBy: '123-456',
                 version: 0,
                 published: true,
@@ -532,14 +531,14 @@ describe('AdminClient forward operation over JSON', () => {
 
     const result = await adminClient.getEntityHistory({ id: '1234' });
     if (expectOkResult(result)) {
-      expect(result.value.versions[0].createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.versions[0].createdAt).toBeInstanceOf(Date);
 
       expect(result.value).toMatchInlineSnapshot(`
         {
           "id": "1234",
           "versions": [
             {
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "createdBy": "123-456",
               "published": true,
               "version": 0,
@@ -588,7 +587,7 @@ describe('AdminClient forward operation over JSON', () => {
             events: [
               {
                 kind: PublishingEventKind.publish,
-                publishedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+                publishedAt: new Date('2021-08-17T07:51:25.56Z'),
                 publishedBy: '123-456',
                 version: 0,
               },
@@ -600,14 +599,14 @@ describe('AdminClient forward operation over JSON', () => {
 
     const result = await adminClient.getPublishingHistory({ id: '1234' });
     if (expectOkResult(result)) {
-      expect(result.value.events[0].publishedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.events[0].publishedAt).toBeInstanceOf(Date);
 
       expect(result.value).toMatchInlineSnapshot(`
         {
           "events": [
             {
               "kind": "publish",
-              "publishedAt": "2021-08-17T07:51:25.56Z",
+              "publishedAt": 2021-08-17T07:51:25.560Z,
               "publishedBy": "123-456",
               "version": 0,
             },
@@ -745,7 +744,7 @@ describe('AdminClient forward operation over JSON', () => {
               id: it.id,
               status: AdminEntityStatus.published,
               effect: 'published',
-              updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+              updatedAt: new Date('2021-08-17T08:51:25.56Z'),
             }))
           )
         );
@@ -761,17 +760,17 @@ describe('AdminClient forward operation over JSON', () => {
         id: '1234',
         status: AdminEntityStatus.published,
         effect: 'published',
-        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+        updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
         status: AdminEntityStatus.published,
         effect: 'published',
-        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+        updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
     ]);
-    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Temporal.Instant);
-    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Date);
+    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -894,8 +893,8 @@ describe('AdminClient forward operation over JSON', () => {
         version: 2,
         authKey: 'none',
         status: AdminEntityStatus.published,
-        createdAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
-        updatedAt: Temporal.Instant.from('2021-10-17T08:51:25.56Z'),
+        createdAt: new Date('2021-08-17T08:51:25.56Z'),
+        updatedAt: new Date('2021-10-17T08:51:25.56Z'),
       },
       fields: { foo: 'Hello' },
     };
@@ -916,8 +915,8 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, { seed: 1234, totalCount: 1, items: [entity1] });
 
     if (expectOkResult(result)) {
-      expect(result.value.items[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
-      expect(result.value.items[0].info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.items[0].info.createdAt).toBeInstanceOf(Date);
+      expect(result.value.items[0].info.updatedAt).toBeInstanceOf(Date);
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -965,8 +964,8 @@ describe('AdminClient forward operation over JSON', () => {
         version: 2,
         authKey: 'none',
         status: AdminEntityStatus.published,
-        createdAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
-        updatedAt: Temporal.Instant.from('2021-10-17T08:51:25.56Z'),
+        createdAt: new Date('2021-08-17T08:51:25.56Z'),
+        updatedAt: new Date('2021-10-17T08:51:25.56Z'),
       },
       fields: { foo: 'Hello' },
     };
@@ -1018,8 +1017,8 @@ describe('AdminClient forward operation over JSON', () => {
       const node = result.value?.edges[0].node;
       assertIsDefined(node);
       if (expectOkResult(node)) {
-        expect(node.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
-        expect(node.value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+        expect(node.value.info.createdAt).toBeInstanceOf(Date);
+        expect(node.value.info.updatedAt).toBeInstanceOf(Date);
       }
     }
 
@@ -1109,7 +1108,7 @@ describe('AdminClient forward operation over JSON', () => {
             id: reference.id,
             status: AdminEntityStatus.withdrawn,
             effect: 'unarchived',
-            updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+            updatedAt: new Date('2021-08-17T08:51:25.56Z'),
           })
         );
       }
@@ -1120,9 +1119,9 @@ describe('AdminClient forward operation over JSON', () => {
       id: '1234',
       status: AdminEntityStatus.withdrawn,
       effect: 'unarchived',
-      updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+      updatedAt: new Date('2021-08-17T08:51:25.56Z'),
     });
-    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1163,7 +1162,7 @@ describe('AdminClient forward operation over JSON', () => {
               id: it.id,
               status: AdminEntityStatus.withdrawn,
               effect: 'unpublished',
-              updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+              updatedAt: new Date('2021-08-17T08:51:25.56Z'),
             }))
           )
         );
@@ -1176,17 +1175,17 @@ describe('AdminClient forward operation over JSON', () => {
         id: '1234',
         status: AdminEntityStatus.withdrawn,
         effect: 'unpublished',
-        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+        updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
         status: AdminEntityStatus.withdrawn,
         effect: 'unpublished',
-        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+        updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
     ]);
-    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Temporal.Instant);
-    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Date);
+    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1248,8 +1247,8 @@ describe('AdminClient forward operation over JSON', () => {
       { publish: true }
     );
     if (expectOkResult(result)) {
-      expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
-      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
+      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
 
       expect(result.value).toMatchInlineSnapshot(`
         {
@@ -1261,11 +1260,11 @@ describe('AdminClient forward operation over JSON', () => {
             "id": "1234",
             "info": {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "name": "Foo name",
               "status": "published",
               "type": "FooType",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           },
@@ -1388,8 +1387,8 @@ describe('AdminClient forward operation over JSON', () => {
       { publish: true }
     );
     if (expectOkResult(result)) {
-      expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
-      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
+      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
 
       expect(result.value).toMatchInlineSnapshot(`
         {
@@ -1401,11 +1400,11 @@ describe('AdminClient forward operation over JSON', () => {
             "id": "1234",
             "info": {
               "authKey": "none",
-              "createdAt": "2021-08-17T07:51:25.56Z",
+              "createdAt": 2021-08-17T07:51:25.560Z,
               "name": "Foo name",
               "status": "published",
               "type": "FooType",
-              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
               "version": 0,
             },
           },

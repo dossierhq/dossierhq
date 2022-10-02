@@ -4,7 +4,6 @@ import type {
   DatabaseAdminEntityArchivingEntityInfoPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
@@ -49,7 +48,7 @@ export async function adminEntityArchivingGetEntityInfo(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
-    updatedAt: Temporal.Instant.from(updatedAt),
+    updatedAt: new Date(updatedAt),
     neverPublished,
   });
 }

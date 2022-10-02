@@ -24,7 +24,6 @@ import type {
   ValueItem,
 } from '@jonasb/datadata-core';
 import { FieldType, isItemValueItem, isValueTypeField, notOk } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
@@ -73,7 +72,6 @@ import {
   toPublishedTypeName,
 } from './NameGenerator.js';
 import { TypeRepository } from './TypeRepository.js';
-import { seemsLikeATemporalInstant } from './Utils.js';
 import { GraphQLJSON } from './vendor/GraphQLScalar.js';
 
 export interface SessionGraphQLContext {
@@ -132,25 +130,25 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLScalarType({
         name: 'Instant',
         serialize(value: unknown) {
-          if (seemsLikeATemporalInstant(value)) {
-            return value.toString();
+          if (value instanceof Date) {
+            return value.toISOString();
           }
-          throw new TypeError('Instant must be serialized from a Temporal.Instant.');
+          throw new TypeError('Instant must be serialized from a Date.');
         },
         parseLiteral(ast) {
           if (ast.kind === Kind.STRING) {
-            return Temporal.Instant.from(ast.value);
+            return new Date(ast.value);
           }
           throw new TypeError('Instant must be represented as a string.');
         },
         parseValue(value: unknown) {
-          if (seemsLikeATemporalInstant(value)) {
+          if (value instanceof Date) {
             return value;
           }
           if (typeof value === 'string') {
-            return Temporal.Instant.from(value);
+            return new Date(value);
           }
-          throw new TypeError('Instant must be represented as a Temporal.Instant or string.');
+          throw new TypeError('Instant must be represented as a Date or string.');
         },
       })
     );

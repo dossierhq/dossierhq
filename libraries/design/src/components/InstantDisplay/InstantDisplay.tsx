@@ -1,14 +1,11 @@
-import { Temporal } from '@js-temporal/polyfill';
-import React from 'react';
-
 export interface InstantDisplayProps {
   className?: string;
-  instant: Temporal.Instant;
+  instant: Date;
 }
 
 export function InstantDisplay({ className, instant }: InstantDisplayProps): JSX.Element {
   const title = instant.toLocaleString();
-  const now = Temporal.Now.instant();
+  const now = new Date();
 
   const relativeTime = getRelativeTime(instant, now);
 
@@ -19,9 +16,9 @@ export function InstantDisplay({ className, instant }: InstantDisplayProps): JSX
   );
 }
 
-function getRelativeTime(instant: Temporal.Instant, now: Temporal.Instant) {
-  const duration = now.since(instant);
-  const secondsAgo = duration.total({ unit: 'seconds' });
+function getRelativeTime(instant: Date, now: Date) {
+  const duration = now.getTime() - instant.getTime();
+  const secondsAgo = duration / 1000;
   if (secondsAgo < 45) {
     return 'a few seconds ago';
   }
@@ -42,15 +39,13 @@ function getRelativeTime(instant: Temporal.Instant, now: Temporal.Instant) {
   if (hoursAgo < 36) {
     return 'a day ago';
   }
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const thenPlainDate = instant.toZonedDateTimeISO(timeZone).toPlainDate();
-  const nowPlainDate = now.toZonedDateTimeISO(timeZone).toPlainDate();
-  if (thenPlainDate.weekOfYear === nowPlainDate.weekOfYear) {
-    return thenPlainDate.toLocaleString(undefined, { weekday: 'short' });
+  if (duration < 7 * 24 * 60 * 60 * 1000) {
+    return instant.toLocaleString(undefined, { weekday: 'short' });
   }
-  return thenPlainDate.toLocaleString(undefined, {
+  const sameYear = instant.getFullYear() === now.getFullYear();
+  return instant.toLocaleString(undefined, {
     day: '2-digit',
     month: 'short',
-    year: thenPlainDate.year < nowPlainDate.year ? 'numeric' : undefined,
+    year: sameYear ? undefined : 'numeric',
   });
 }

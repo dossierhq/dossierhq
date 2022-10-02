@@ -37,7 +37,6 @@
     "@jonasb/datadata-core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@js-temporal/polyfill": "~0.4.0",
     "@rushstack/heft": "~0.47.5",
     "eslint": "^8.16.0",
     "prettier": "2.7.1",

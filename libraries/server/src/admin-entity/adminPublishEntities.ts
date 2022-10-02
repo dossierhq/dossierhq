@@ -21,7 +21,6 @@ import {
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { Temporal } from '@js-temporal/polyfill';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
@@ -48,7 +47,7 @@ interface VersionInfoAlreadyPublished {
   effect: 'none';
   uuid: string;
   status: AdminEntityStatus;
-  updatedAt: Temporal.Instant;
+  updatedAt: Date;
 }
 
 export async function adminPublishEntities(
@@ -282,7 +281,7 @@ async function publishEntitiesAndCollectResult(
   const result: AdminEntityPublishPayload[] = [];
   for (const versionInfo of versionsInfo) {
     const { status } = versionInfo;
-    let updatedAt: Temporal.Instant;
+    let updatedAt: Date;
     if (versionInfo.effect === 'none') {
       updatedAt = versionInfo.updatedAt;
     } else {

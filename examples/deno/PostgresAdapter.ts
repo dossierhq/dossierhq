@@ -4,7 +4,6 @@ import type {
   PostgresTransaction,
 } from "@jonasb/datadata-database-adapter-postgres-core";
 import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
-import { toTemporalInstant } from "@js-temporal/polyfill";
 import type { PoolClient } from "postgres";
 import { Pool, PostgresError } from "postgres";
 import { decode, encode } from "std/encoding/base64.ts";
@@ -42,28 +41,18 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
       query: string,
       values: unknown[] | undefined,
     ): Promise<R[]> {
-      let result: { rows: Record<string, unknown>[] };
+      let result: { rows: R[] };
       if (transaction) {
         result = await getTransaction(transaction).queryObject(query, values);
       } else {
         const poolClient = await pool.connect();
         try {
-          result = await poolClient.queryObject(query, values);
+          result = await poolClient.queryObject<R>(query, values);
         } finally {
           poolClient.release();
         }
       }
-
-      //TODO switch to some other way when deno-postgres support type decoders
-      result.rows.forEach((row) => {
-        for (const [key, value] of Object.entries(row)) {
-          if (value instanceof Date) {
-            row[key] = toTemporalInstant.apply(value);
-          }
-        }
-      });
-
-      return result.rows as R[];
+      return result.rows;
     },
 
     isUniqueViolationOfConstraint,

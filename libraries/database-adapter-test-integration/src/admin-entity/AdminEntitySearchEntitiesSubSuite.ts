@@ -11,7 +11,6 @@ import {
   createRichTextValueItemNode,
   getAllNodesForConnection,
 } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminLocationsValue, AdminReferencesValue } from '../SchemaTypes.js';
@@ -323,7 +322,7 @@ async function searchEntities_orderUpdatedAt({
   // Check that all updatedAt are after the previous updatedAt, with a small adjustment.
 
   let count = 0;
-  let previousUpdatedAt: Temporal.Instant | null = null;
+  let previousUpdatedAt: Date | null = null;
 
   const adminClient = adminClientForMainPrincipal(server);
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
@@ -338,8 +337,8 @@ async function searchEntities_orderUpdatedAt({
       info: { updatedAt },
     } = node.value;
     if (previousUpdatedAt) {
-      const adjustedUpdatedAt = updatedAt.add({ milliseconds: 20 });
-      assertTruthy(Temporal.Instant.compare(previousUpdatedAt, adjustedUpdatedAt) < 0);
+      const adjustedUpdatedAt = updatedAt.getTime() + 20;
+      assertTruthy(previousUpdatedAt.getTime() < adjustedUpdatedAt);
     }
     previousUpdatedAt = updatedAt;
   }
@@ -358,7 +357,7 @@ async function searchEntities_orderUpdatedAtReversed({
   // Check that all updatedAt are before the previous updatedAt, with a small adjustment.
 
   let count = 0;
-  let previousUpdatedAt: Temporal.Instant | null = null;
+  let previousUpdatedAt: Date | null = null;
 
   const adminClient = adminClientForMainPrincipal(server);
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
@@ -373,8 +372,8 @@ async function searchEntities_orderUpdatedAtReversed({
       info: { updatedAt },
     } = node.value;
     if (previousUpdatedAt) {
-      const adjustedUpdatedAt = updatedAt.subtract({ milliseconds: 20 });
-      assertTruthy(Temporal.Instant.compare(previousUpdatedAt, adjustedUpdatedAt) > 0);
+      const adjustedUpdatedAt = updatedAt.getTime() - 20;
+      assertTruthy(previousUpdatedAt.getTime() > adjustedUpdatedAt);
     }
     previousUpdatedAt = updatedAt;
   }

@@ -3,7 +3,6 @@ import {
   AdminEntityStatus,
   copyEntity,
 } from "@jonasb/datadata-core";
-import { Temporal } from "@js-temporal/polyfill";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("copyEntity()", () => {
@@ -15,8 +14,8 @@ Deno.test("copyEntity()", () => {
       version: 0,
       authKey: "none",
       status: AdminEntityStatus.draft,
-      createdAt: Temporal.Now.instant(),
-      updatedAt: Temporal.Now.instant(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     fields: { title: "message" },
   };

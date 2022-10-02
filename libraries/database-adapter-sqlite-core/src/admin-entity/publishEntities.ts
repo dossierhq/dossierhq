@@ -8,7 +8,6 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNone, queryNoneOrOne } from '../QueryFunctions.js';
@@ -69,7 +68,7 @@ export async function adminEntityPublishGetVersionInfo(
     resolvedAuthKey,
     type,
     status: resolveEntityStatus(status),
-    updatedAt: Temporal.Instant.from(updatedAt),
+    updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
   });
 }
@@ -84,7 +83,7 @@ export async function adminEntityPublishUpdateEntity(
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
-  const now = Temporal.Now.instant();
+  const now = new Date();
 
   const updateResult = await queryNone(database, context, {
     text: `UPDATE entities
@@ -97,7 +96,7 @@ export async function adminEntityPublishUpdateEntity(
            WHERE id = ?5`,
     values: [
       entityVersionInternalId as number,
-      now.toString(),
+      now.toISOString(),
       updatedSeqResult.value,
       status,
       entityInternalId as number,

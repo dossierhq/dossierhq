@@ -11,7 +11,6 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { Temporal } from '@js-temporal/polyfill';
 import type {
   EntitiesTable,
   EntityPublishingEventsTable,
@@ -78,7 +77,7 @@ export async function adminEntityPublishingHistoryGetEvents(
       const event: PublishingEvent = {
         version: it.version,
         kind: it.kind as PublishingEventKind,
-        publishedAt: Temporal.Instant.from(it.published_at),
+        publishedAt: new Date(it.published_at),
         publishedBy: it.published_by,
       };
       return event;

@@ -20,7 +20,6 @@ import {
   ok,
   PublishedQueryOrder,
 } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import {
   assertEquals,
   assertOkResult,
@@ -30,10 +29,8 @@ import {
 } from '../Asserts.js';
 
 const adminOrderCompare: Record<AdminQueryOrder, (a: AdminEntity, b: AdminEntity) => number> = {
-  [AdminQueryOrder.createdAt]: (a, b) =>
-    Temporal.Instant.compare(a.info.createdAt, b.info.createdAt),
-  [AdminQueryOrder.updatedAt]: (a, b) =>
-    Temporal.Instant.compare(a.info.updatedAt, b.info.updatedAt),
+  [AdminQueryOrder.createdAt]: (a, b) => a.info.createdAt.getTime() - b.info.createdAt.getTime(),
+  [AdminQueryOrder.updatedAt]: (a, b) => a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
   [AdminQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
@@ -48,7 +45,7 @@ const publishedOrderCompare: Record<
   (a: PublishedEntity, b: PublishedEntity) => number
 > = {
   [PublishedQueryOrder.createdAt]: (a, b) =>
-    Temporal.Instant.compare(a.info.createdAt, b.info.createdAt),
+    a.info.createdAt.getTime() - b.info.createdAt.getTime(),
   [PublishedQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
