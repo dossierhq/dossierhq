@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite --force --port 3002",
-    "build": "tsc && npm run eslint:check && vite build",
+    "build": "tsc && npm run eslint:check && (vite build 2>&1)",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "preview": "vite --port 3002 preview"
