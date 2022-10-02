@@ -2443,7 +2443,7 @@ describe('archiveEntity()', () => {
           },
         ],
       });
-      expect(publishedAt0).toEqual(new Date(updatedAt));
+      expect(Math.abs(publishedAt0.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
     }
   });
 
