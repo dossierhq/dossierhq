@@ -17,11 +17,11 @@ import type {
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
-  SchemaPatternSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import {
+  getElementIdForSelector,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
   SchemaEditorActions,
@@ -265,19 +265,6 @@ function TypeEditorRows({
       </FullscreenContainer.Row>
     </>
   );
-}
-
-function getElementIdForSelector(
-  selector: SchemaTypeSelector | SchemaPatternSelector | null,
-  section: 'menuItem' | 'header'
-) {
-  if (!selector) {
-    return undefined;
-  }
-  if (selector.kind === 'pattern') {
-    return `pattern-${selector.name}-${section}`;
-  }
-  return `${selector.typeName}-${section}`;
 }
 
 function useSelectorFocused(
