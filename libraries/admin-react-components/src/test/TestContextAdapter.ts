@@ -26,11 +26,16 @@ import {
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
+import { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {
   AdminDataDataContextAdapter,
   RichTextValueItemEditorProps,
 } from '../contexts/AdminDataDataContext.js';
+import {
+  PublishedDataDataContextAdapter,
+  RichTextValueItemDisplayProps,
+} from '../published/contexts/PublishedDataDataContext.js';
 import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
 import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
 
@@ -182,7 +187,17 @@ export function createSlowPublishedMiddleware(): PublishedClientMiddleware<Clien
   };
 }
 
-export class TestContextAdapter implements AdminDataDataContextAdapter {
+export class TestContextAdapter
+  implements AdminDataDataContextAdapter, PublishedDataDataContextAdapter
+{
+  renderPublishedFieldDisplay(_props: FieldDisplayProps<unknown>): JSX.Element | null {
+    return null;
+  }
+  renderPublishedRichTextValueItemDisplay(
+    _props: RichTextValueItemDisplayProps
+  ): JSX.Element | null {
+    return null;
+  }
   renderAdminFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
     return null;
   }

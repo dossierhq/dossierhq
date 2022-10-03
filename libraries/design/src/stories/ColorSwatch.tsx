@@ -63,12 +63,14 @@ export function AllColorSwatches() {
   return (
     <Table>
       <Table.Head>
-        <Table.Header>Color</Table.Header>
-        <Table.Header> </Table.Header>
-        <Table.Header>Light</Table.Header>
-        <Table.Header>Dark</Table.Header>
-        <Table.Header>Background color</Table.Header>
-        <Table.Header>Color</Table.Header>
+        <Table.Row>
+          <Table.Header>Color</Table.Header>
+          <Table.Header> </Table.Header>
+          <Table.Header>Light</Table.Header>
+          <Table.Header>Dark</Table.Header>
+          <Table.Header>Background color</Table.Header>
+          <Table.Header>Color</Table.Header>
+        </Table.Row>
       </Table.Head>
       <Table.Body>
         {Object.keys(Color).map((color) => (
