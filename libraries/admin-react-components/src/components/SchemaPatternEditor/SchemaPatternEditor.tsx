@@ -1,11 +1,13 @@
 import { Field, Input } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import type { ChangeEvent, Dispatch } from 'react';
+import { useCallback } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaPatternDraft,
   SchemaPatternSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   selector: SchemaPatternSelector;
@@ -15,17 +17,27 @@ interface Props {
 }
 
 export function SchemaPatternEditor({
-  selector: _1,
+  selector,
   patternDraft,
   schemaEditorState: _2,
-  dispatchSchemaEditorState: _3,
+  dispatchSchemaEditorState,
 }: Props) {
   const canChangePattern = patternDraft.status === 'new'; //TODO too restrictive
+
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.ChangePatternPattern(selector, event.target.value)
+      );
+    },
+    [dispatchSchemaEditorState, selector]
+  );
+
   return (
     <Field>
       <Field.Label>Pattern</Field.Label>
       <Field.Control>
-        <Input readOnly={!canChangePattern} value={patternDraft.pattern} />
+        <Input readOnly={!canChangePattern} value={patternDraft.pattern} onChange={handleChange} />
       </Field.Control>
     </Field>
   );

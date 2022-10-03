@@ -1631,6 +1631,23 @@ describe('ChangeFieldTypeAction', () => {
   });
 });
 
+describe('ChangePatternPatternAction', () => {
+  test('change pattern of new pattern', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
+      new SchemaEditorActions.AddPattern('foo'),
+      new SchemaEditorActions.ChangePatternPattern(
+        { kind: 'pattern', name: 'foo' },
+        '^this is a new pattern$'
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('ChangeTypeAdminOnlyAction', () => {
   test('make new entity type admin only', () => {
     const state = reduceSchemaEditorStateActions(

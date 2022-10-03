@@ -6,8 +6,7 @@ import type {
   AdminValueTypeSpecification,
   AdminValueTypeSpecificationUpdate,
 } from '@jonasb/datadata-core';
-import { RichTextNodeType } from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
 export type SchemaSelector = SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector;
@@ -203,6 +202,34 @@ abstract class FieldAction extends TypeAction {
   }
 
   abstract reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft>;
+}
+
+abstract class PatternAction implements SchemaEditorStateAction {
+  name: string;
+
+  constructor({ name }: SchemaPatternSelector) {
+    this.name = name;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const patternIndex = state.patterns.findIndex((it) => it.name === this.name);
+    if (patternIndex < 0) throw new Error(`No such pattern ${this.name}`);
+    const currentDraft = state.patterns[patternIndex];
+
+    const newDraft = this.reducePattern(currentDraft);
+    if (newDraft === currentDraft) {
+      return state;
+    }
+
+    const newPatterns = [...state.patterns];
+    newPatterns[patternIndex] = newDraft;
+
+    const newState = { ...state, patterns: newPatterns };
+    newState.status = resolveSchemaStatus(newState);
+    return newState;
+  }
+
+  abstract reducePattern(draft: Readonly<SchemaPatternDraft>): Readonly<SchemaPatternDraft>;
 }
 
 function reduceFieldsOfAllTypes(
@@ -585,6 +612,22 @@ class ChangeFieldTypeAction extends FieldAction {
   }
 }
 
+class ChangePatternPatternAction extends PatternAction {
+  pattern: string;
+
+  constructor(selector: SchemaPatternSelector, pattern: string) {
+    super(selector);
+    this.pattern = pattern;
+  }
+
+  reducePattern(draft: Readonly<SchemaPatternDraft>): Readonly<SchemaPatternDraft> {
+    if (draft.pattern === this.pattern) {
+      return draft;
+    }
+    return { ...draft, pattern: this.pattern };
+  }
+}
+
 class ChangeTypeAdminOnlyAction extends TypeAction {
   adminOnly: boolean;
 
@@ -869,6 +912,7 @@ export const SchemaEditorActions = {
   ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
+  ChangePatternPattern: ChangePatternPatternAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   DeleteField: DeleteFieldAction,
   DeleteType: DeleteTypeAction,

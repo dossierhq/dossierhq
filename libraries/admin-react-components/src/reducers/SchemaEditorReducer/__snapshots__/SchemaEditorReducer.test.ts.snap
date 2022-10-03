@@ -477,6 +477,46 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
 }
 `;
 
+exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "patterns": [
+    {
+      "name": "foo",
+      "pattern": "^this is a new pattern$",
+      "status": "new",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
+{
+  "patterns": [
+    {
+      "name": "foo",
+      "pattern": "^this is a new pattern$",
+    },
+  ],
+}
+`;
+
 exports[`RenameTypeAction > add and rename entity type with fields referring to itself 1`] = `
 {
   "activeSelector": {
