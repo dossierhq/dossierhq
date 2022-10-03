@@ -10,6 +10,8 @@ import { RichTextNodeType } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
+export type SchemaSelector = SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector;
+
 export interface SchemaTypeSelector {
   kind: 'entity' | 'value';
   typeName: string;
@@ -70,7 +72,7 @@ export interface SchemaEditorState {
   valueTypes: SchemaValueTypeDraft[];
   patterns: SchemaPatternDraft[];
 
-  activeSelector: null | SchemaTypeSelector | SchemaFieldSelector | SchemaPatternSelector;
+  activeSelector: null | SchemaSelector;
   activeSelectorEditorScrollSignal: number;
   activeSelectorMenuScrollSignal: number;
 }
@@ -720,12 +722,12 @@ class RenameTypeAction extends TypeAction {
 }
 
 class SetActiveSelectorAction implements SchemaEditorStateAction {
-  selector: SchemaTypeSelector | null;
+  selector: SchemaSelector | null;
   increaseMenuScrollSignal: boolean;
   increaseEditorScrollSignal: boolean;
 
   constructor(
-    selector: SchemaTypeSelector | null,
+    selector: SchemaSelector | null,
     increaseMenuScrollSignal: boolean,
     increaseEditorScrollSignal: boolean
   ) {
@@ -948,4 +950,19 @@ function getTypeUpdateFromEditorState(
     adminOnly: draftType.adminOnly,
     fields,
   };
+}
+
+// SELECTORS
+
+export function getElementIdForSelector(
+  selector: SchemaTypeSelector | SchemaPatternSelector | null,
+  section: 'menuItem' | 'header'
+) {
+  if (!selector) {
+    return undefined;
+  }
+  if (selector.kind === 'pattern') {
+    return `pattern-${selector.name}-${section}`;
+  }
+  return `${selector.typeName}-${section}`;
 }

@@ -4,13 +4,14 @@ import React, { useCallback } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
-  SchemaEntityTypeDraft,
-  SchemaFieldSelector,
   SchemaPatternSelector,
+  SchemaSelector,
   SchemaTypeSelector,
-  SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import {
+  getElementIdForSelector,
+  SchemaEditorActions,
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 
 export function SchemaMenu({
   schemaEditorState,
@@ -19,7 +20,7 @@ export function SchemaMenu({
   schemaEditorState: Readonly<SchemaEditorState>;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
-  const { activeSelector, entityTypes, valueTypes } = schemaEditorState;
+  const { activeSelector, entityTypes, valueTypes, patterns } = schemaEditorState;
   return (
     <Menu>
       {entityTypes.length > 0 ? (
@@ -27,10 +28,16 @@ export function SchemaMenu({
           <Menu.Label>Entity types</Menu.Label>
           <Menu.List>
             {entityTypes.map((typeDraft) => (
-              <TypeDraftItem
+              <DraftItem
                 key={typeDraft.name}
-                {...{ activeSelector, typeDraft, dispatchEditorState }}
-              />
+                {...{
+                  activeSelector,
+                  selector: { kind: 'entity', typeName: typeDraft.name },
+                  dispatchEditorState,
+                }}
+              >
+                {typeDraft.name}
+              </DraftItem>
             ))}
           </Menu.List>
         </>
@@ -40,10 +47,35 @@ export function SchemaMenu({
           <Menu.Label>Value types</Menu.Label>
           <Menu.List>
             {valueTypes.map((typeDraft) => (
-              <TypeDraftItem
+              <DraftItem
                 key={typeDraft.name}
-                {...{ activeSelector, typeDraft, dispatchEditorState }}
-              />
+                {...{
+                  activeSelector,
+                  selector: { kind: 'value', typeName: typeDraft.name },
+                  dispatchEditorState,
+                }}
+              >
+                {typeDraft.name}
+              </DraftItem>
+            ))}
+          </Menu.List>
+        </>
+      ) : null}
+      {patterns.length > 0 ? (
+        <>
+          <Menu.Label>Patterns</Menu.Label>
+          <Menu.List>
+            {patterns.map((patternDraft) => (
+              <DraftItem
+                key={patternDraft.name}
+                {...{
+                  activeSelector,
+                  selector: { kind: 'pattern', name: patternDraft.name },
+                  dispatchEditorState,
+                }}
+              >
+                {patternDraft.name}
+              </DraftItem>
             ))}
           </Menu.List>
         </>
@@ -52,52 +84,47 @@ export function SchemaMenu({
   );
 }
 
-function TypeDraftItem({
+function DraftItem({
   activeSelector,
-  typeDraft,
+  selector,
   dispatchEditorState,
+  children,
 }: {
-  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector;
-  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  activeSelector: SchemaSelector | null;
+  selector: SchemaTypeSelector | SchemaPatternSelector;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
+  children: React.ReactNode;
 }) {
   const handleClick = useCallback(
     (event: MouseEvent) => {
       event.preventDefault();
-      dispatchEditorState(
-        new SchemaEditorActions.SetActiveSelector(typeDraftToSelector(typeDraft), false, true)
-      );
+      dispatchEditorState(new SchemaEditorActions.SetActiveSelector(selector, false, true));
     },
-    [dispatchEditorState, typeDraft]
+    [dispatchEditorState, selector]
   );
   return (
     <Menu.Item>
       <a
-        id={`${typeDraft.name}-menuItem`}
-        className={isTypeDraftActive(typeDraft, activeSelector) ? 'is-active' : undefined}
+        id={getElementIdForSelector(selector, 'menuItem')}
+        className={isDraftActive(selector, activeSelector) ? 'is-active' : undefined}
         onClick={handleClick}
       >
-        {typeDraft.name}
+        {children}
       </a>
     </Menu.Item>
   );
 }
 
-function typeDraftToSelector(
-  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft
-): SchemaTypeSelector {
-  const { kind, name: typeName } = typeDraft;
-  return { kind, typeName };
-}
-
-function isTypeDraftActive(
-  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft,
-  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector
-) {
+function isDraftActive(selector: SchemaSelector, activeSelector: null | SchemaSelector) {
   if (!activeSelector) return false;
-  return (
-    typeDraft.kind === activeSelector.kind &&
-    typeDraft.name === activeSelector.typeName &&
-    !('fieldName' in activeSelector)
-  );
+  if (selector.kind !== activeSelector.kind) return false;
+  if (selector.kind === 'pattern' && activeSelector.kind === 'pattern') {
+    return selector.name === activeSelector.name;
+  }
+  if (
+    (selector.kind === 'entity' && activeSelector.kind === 'entity') ||
+    (selector.kind === 'value' && activeSelector.kind === 'value')
+  ) {
+    return selector.typeName === activeSelector.typeName && !!('fieldName' in activeSelector);
+  }
 }
