@@ -1,5 +1,45 @@
 // Vitest Snapshot v1
 
+exports[`AddPatternAction > add pattern to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "my-pattern",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "patterns": [
+    {
+      "name": "my-pattern",
+      "pattern": "",
+      "status": "new",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddPatternAction > add pattern to empty schema 2`] = `
+{
+  "patterns": [
+    {
+      "name": "my-pattern",
+      "pattern": "",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 1`] = `
 {
   "activeSelector": null,
