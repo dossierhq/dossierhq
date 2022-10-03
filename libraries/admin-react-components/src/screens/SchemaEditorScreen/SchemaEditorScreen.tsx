@@ -19,6 +19,7 @@ import type {
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
   SchemaPatternDraft,
+  SchemaPatternSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
@@ -29,6 +30,7 @@ import {
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog';
+import { AddOrRenamePatternDialog } from './AddOrRenamePatternDialog';
 import { AddOrRenameTypeDialog } from './AddOrRenameTypeDialog';
 import { SaveSchemaDialog } from './SaveSchemaDialog';
 import { SchemaMenu } from './SchemaMenu';
@@ -57,12 +59,19 @@ export function SchemaEditorScreen({
   const [addOrRenameFieldSelector, setAddOrRenameFieldSelector] = useState<
     SchemaFieldSelector | SchemaTypeSelector | null
   >(null);
+  const [addOrRenamePatternSelector, setAddOrRenamePatternSelector] = useState<
+    SchemaPatternSelector | 'add' | null
+  >(null);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const hasChanges = schemaEditorState.status === 'changed';
 
   const handleCloseAddTypeDialog = useCallback(() => setAddOrRenameTypeSelector(null), []);
   const handleCloseAddOrRenameFieldDialog = useCallback(
     () => setAddOrRenameFieldSelector(null),
+    []
+  );
+  const handleCloseAddOrRenamePatternDialog = useCallback(
+    () => setAddOrRenamePatternSelector(null),
     []
   );
   const handleCloseSchemaDialog = useCallback(() => setShowSaveDialog(false), []);
@@ -96,7 +105,10 @@ export function SchemaEditorScreen({
           scrollToId={menuScrollToId}
           scrollToIdSignal={schemaEditorState.activeSelectorMenuScrollSignal}
         >
-          <Button onClick={() => setAddOrRenameTypeSelector('add')}>Add type</Button>
+          <Button.Group centered noBottomMargin>
+            <Button onClick={() => setAddOrRenameTypeSelector('add')}>Add type</Button>
+            <Button onClick={() => setAddOrRenamePatternSelector('add')}>Add pattern</Button>
+          </Button.Group>
           <Button
             disabled={schemaEditorState.status !== 'changed'}
             color="primary"
@@ -165,6 +177,12 @@ export function SchemaEditorScreen({
         schemaEditorState={schemaEditorState}
         dispatchSchemaEditorState={dispatchSchemaEditorState}
         onClose={handleCloseAddOrRenameFieldDialog}
+      />
+      <AddOrRenamePatternDialog
+        selector={addOrRenamePatternSelector}
+        schemaEditorState={schemaEditorState}
+        dispatchSchemaEditorState={dispatchSchemaEditorState}
+        onClose={handleCloseAddOrRenamePatternDialog}
       />
       <SaveSchemaDialog
         show={showSaveDialog}
