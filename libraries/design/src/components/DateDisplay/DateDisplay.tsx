@@ -1,13 +1,13 @@
-export interface InstantDisplayProps {
+export interface DateDisplayProps {
   className?: string;
-  instant: Date;
+  date: Date;
 }
 
-export function InstantDisplay({ className, instant }: InstantDisplayProps): JSX.Element {
-  const title = instant.toLocaleString();
+export function DateDisplay({ className, date }: DateDisplayProps): JSX.Element {
+  const title = date.toLocaleString();
   const now = new Date();
 
-  const relativeTime = getRelativeTime(instant, now);
+  const relativeTime = getRelativeTime(date, now);
 
   return (
     <span className={className} title={title}>
@@ -16,8 +16,8 @@ export function InstantDisplay({ className, instant }: InstantDisplayProps): JSX
   );
 }
 
-function getRelativeTime(instant: Date, now: Date) {
-  const duration = now.getTime() - instant.getTime();
+function getRelativeTime(date: Date, now: Date) {
+  const duration = now.getTime() - date.getTime();
   const secondsAgo = duration / 1000;
   if (secondsAgo < 45) {
     return 'a few seconds ago';
@@ -40,10 +40,10 @@ function getRelativeTime(instant: Date, now: Date) {
     return 'a day ago';
   }
   if (duration < 7 * 24 * 60 * 60 * 1000) {
-    return instant.toLocaleString(undefined, { weekday: 'short' });
+    return date.toLocaleString(undefined, { weekday: 'short' });
   }
-  const sameYear = instant.getFullYear() === now.getFullYear();
-  return instant.toLocaleString(undefined, {
+  const sameYear = date.getFullYear() === now.getFullYear();
+  return date.toLocaleString(undefined, {
     day: '2-digit',
     month: 'short',
     year: sameYear ? undefined : 'numeric',

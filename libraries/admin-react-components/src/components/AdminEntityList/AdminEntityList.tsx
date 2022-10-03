@@ -1,8 +1,8 @@
 import type { AdminEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
 import { AdminQueryOrder } from '@jonasb/datadata-core';
-import { EmptyStateMessage, InstantDisplay, Table, toSizeClassName } from '@jonasb/datadata-design';
+import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AdminDataDataContext } from '../..';
 import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
@@ -142,12 +142,12 @@ function EntityListRow({
         />
       </Table.Cell>
       <Table.Cell narrow>
-        <InstantDisplay instant={entity.info.createdAt} />
+        <DateDisplay date={entity.info.createdAt} />
       </Table.Cell>
       <Table.Cell narrow>
         {order === AdminQueryOrder.updatedAt ||
         entity.info.updatedAt.getTime() !== entity.info.createdAt.getTime() ? (
-          <InstantDisplay instant={entity.info.updatedAt} />
+          <DateDisplay date={entity.info.updatedAt} />
         ) : null}
       </Table.Cell>
     </Table.Row>

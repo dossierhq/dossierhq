@@ -2,7 +2,7 @@ import type { AdminClient, EntityReference, PublishingEvent } from '@jonasb/data
 import { assertIsDefined } from '@jonasb/datadata-core';
 import {
   Button,
-  InstantDisplay,
+  DateDisplay,
   Row,
   TabContainer,
   Tag,
@@ -141,7 +141,7 @@ function ActivityList({
           <Tag>{event.version === null ? '–' : '' + event.version}</Tag>
           <Tag>{event.kind}</Tag>
           <Row.Item flexGrow={1}>
-            <InstantDisplay instant={event.instant} />
+            <DateDisplay date={event.instant} />
           </Row.Item>
         </Row>
       ))}
