@@ -36,6 +36,7 @@ describe('initializeSchemaEditorState', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": null,
         "schemaWillBeUpdatedDueToSave": false,
         "status": "uninitialized",
@@ -72,6 +73,7 @@ describe('AddTypeAction', () => {
             "status": "new",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -114,6 +116,7 @@ describe('AddTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -181,6 +184,7 @@ describe('AddTypeAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -232,6 +236,7 @@ describe('AddTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -311,6 +316,7 @@ describe('AddTypeAction', () => {
             "status": "new",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -359,6 +365,7 @@ describe('AddTypeAction', () => {
         "activeSelectorEditorScrollSignal": 2,
         "activeSelectorMenuScrollSignal": 2,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -441,6 +448,7 @@ describe('AddFieldAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -496,6 +504,7 @@ describe('AddFieldAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -609,6 +618,7 @@ describe('AddFieldAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -681,6 +691,7 @@ describe('AddFieldAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -833,6 +844,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -959,6 +971,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1035,6 +1048,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -1237,6 +1251,7 @@ describe('ChangeFieldRequiredAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1318,6 +1333,7 @@ describe('ChangeFieldTypeAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1378,6 +1394,7 @@ describe('ChangeFieldTypeAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -1476,6 +1493,7 @@ describe('ChangeFieldTypeAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1556,6 +1574,7 @@ describe('ChangeFieldTypeAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1623,6 +1642,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
             "status": "new",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -1693,6 +1713,7 @@ describe('DeleteFieldAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1737,6 +1758,7 @@ describe('DeleteTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -1769,6 +1791,7 @@ describe('DeleteTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -1844,6 +1867,7 @@ describe('RenameFieldAction', () => {
             "status": "changed",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -1924,6 +1948,7 @@ describe('RenameTypeAction', () => {
             "status": "new",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -2052,6 +2077,7 @@ describe('SetActiveSelectorAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -2102,6 +2128,7 @@ describe('SetActiveSelectorAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -2138,6 +2165,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -2200,6 +2228,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -2302,6 +2331,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -2358,6 +2388,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [],
@@ -2465,6 +2496,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -2595,6 +2627,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
@@ -2667,6 +2700,22 @@ describe('UpdateSchemaSpecificationAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
+
+  test('entity type with auth key pattern', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        createAdminSchema({
+          entityTypes: [{ name: 'Foo', authKeyPattern: 'pattern-one', fields: [] }],
+          patterns: [{ name: 'pattern-one', pattern: '^foo$' }],
+        })
+      )
+    );
+
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+  });
 });
 
 describe('SchemaEditorReducer scenarios', () => {
@@ -2705,6 +2754,7 @@ describe('SchemaEditorReducer scenarios', () => {
             "status": "",
           },
         ],
+        "patterns": [],
         "schema": AdminSchema {
           "spec": {
             "entityTypes": [
