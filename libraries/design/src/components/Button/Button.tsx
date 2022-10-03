@@ -23,6 +23,7 @@ export interface ButtonProps {
 export interface ButtonGroupProps {
   centered?: boolean;
   hasAddons?: boolean;
+  noBottomMargin?: boolean;
   children: ReactNode;
 }
 
@@ -67,9 +68,16 @@ ButtonWithRef.displayName = 'Button';
 
 export const Button = ButtonWithRef as ButtonComponent;
 
-Button.Group = ({ centered, hasAddons, children }: ButtonGroupProps) => {
+Button.Group = ({ centered, hasAddons, noBottomMargin, children }: ButtonGroupProps) => {
   return (
-    <div className={toClassName('buttons', centered && 'is-centered', hasAddons && 'has-addons')}>
+    <div
+      className={toClassName(
+        'buttons',
+        centered && 'is-centered',
+        hasAddons && 'has-addons',
+        noBottomMargin && 'mb-0'
+      )}
+    >
       {children}
     </div>
   );
