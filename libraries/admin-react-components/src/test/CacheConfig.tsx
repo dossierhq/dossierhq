@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SWRConfig } from 'swr';
 
 interface Props {
@@ -8,5 +8,9 @@ interface Props {
 }
 
 export function CacheConfig({ ownCache, children }: Props) {
-  return <SWRConfig value={ownCache ? { provider: () => new Map() } : {}}>{children}</SWRConfig>;
+  const config = useMemo(() => {
+    const cache = new Map();
+    return ownCache ? { provider: () => cache } : {};
+  }, [ownCache]);
+  return <SWRConfig value={config}>{children}</SWRConfig>;
 }
