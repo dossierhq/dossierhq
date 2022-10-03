@@ -26,13 +26,13 @@ import {
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
-import { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
+import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {
   AdminDataDataContextAdapter,
   RichTextValueItemEditorProps,
 } from '../contexts/AdminDataDataContext.js';
-import {
+import type {
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
 } from '../published/contexts/PublishedDataDataContext.js';
