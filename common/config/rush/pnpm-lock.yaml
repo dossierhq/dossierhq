@@ -166,7 +166,7 @@ importers:
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      bun-types: ~0.1.4
+      bun-types: ~0.1.11
       eslint: ^8.16.0
       prettier: 2.7.1
       typescript: ^4.8.4
@@ -178,7 +178,7 @@ importers:
     devDependencies:
       '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
-      bun-types: 0.1.4
+      bun-types: 0.1.11
       eslint: 8.16.0
       prettier: 2.7.1
       typescript: 4.8.4
@@ -990,7 +990,7 @@ importers:
       babel-loader: ^8.2.4
       base-64: ~1.0.0
       bulma: ~0.9.3
-      bun-types: ~0.1.4
+      bun-types: ~0.1.11
       cloudinary: ~1.32.0
       dotenv: ^16.0.0
       eslint: ^8.16.0
@@ -1073,7 +1073,7 @@ importers:
       babel-loader: 8.2.5_@babel+core@7.19.3
       base-64: 1.0.0
       bulma: 0.9.3
-      bun-types: 0.1.4
+      bun-types: 0.1.11
       cloudinary: 1.32.0
       dotenv: 16.0.0
       eslint: 8.16.0
@@ -8203,6 +8203,7 @@ packages:
   /babel-loader/8.2.5_@babel+core@7.19.3:
     resolution: {integrity: sha512-OSiFfH89LrEMiWd4pLNqGz4CwJDtbs2ZVc+iGu2HrkRfPxId9F2anQj38IxWpmRfsUY0aBZYi1EFcd3mhtRMLQ==}
     engines: {node: '>= 8.9'}
+    requiresBuild: true
     peerDependencies:
       '@babel/core': ^7.0.0
       webpack: '>=2'
@@ -8614,8 +8615,8 @@ packages:
   /bulma/0.9.3:
     resolution: {integrity: sha512-0d7GNW1PY4ud8TWxdNcP6Cc8Bu7MxcntD/RRLGWuiw/s0a9P+XlH/6QoOIrmbj6o8WWJzJYhytiu9nFjTszk1g==}
 
-  /bun-types/0.1.4:
-    resolution: {integrity: sha512-8nyx22INhlPT+R/1MebbAK7TX48aLQdrLTEmce3oTlne5GunoxMEtCiHOku90XKeHbxxbMkkPI2TX1m0pvlLaw==}
+  /bun-types/0.1.11:
+    resolution: {integrity: sha512-a5G9LZtF5qBsDMjGnS5FfTvIeg1bS0PzI3Q2LqShEjJWdhZTB56xO8ewqZ83J+3my5rW/PPPWT/udAofRQ3zdg==}
 
   /busboy/1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
