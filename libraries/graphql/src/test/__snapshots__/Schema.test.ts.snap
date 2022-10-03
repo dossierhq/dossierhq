@@ -12,7 +12,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -59,8 +59,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -180,7 +180,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -191,7 +191,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -208,7 +208,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -220,7 +220,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -232,7 +232,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -244,7 +244,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -408,7 +408,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -442,7 +442,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -541,7 +541,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -575,7 +575,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -678,8 +678,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -794,7 +794,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -805,7 +805,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -822,7 +822,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -834,7 +834,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -846,7 +846,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -858,7 +858,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -1026,7 +1026,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -1071,8 +1071,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -1192,7 +1192,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -1203,7 +1203,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -1220,7 +1220,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -1232,7 +1232,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -1244,7 +1244,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -1256,7 +1256,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -1360,7 +1360,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -1394,7 +1394,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -1487,7 +1487,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -1521,7 +1521,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -1616,8 +1616,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -1732,7 +1732,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -1743,7 +1743,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -1760,7 +1760,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -1772,7 +1772,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -1784,7 +1784,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -1796,7 +1796,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -1904,7 +1904,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 type Query"
 `;
@@ -1921,7 +1921,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 type Query"
 `;
@@ -1938,7 +1938,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 type Query"
 `;
@@ -1955,7 +1955,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -1997,8 +1997,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -2114,7 +2114,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -2125,7 +2125,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -2142,7 +2142,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -2154,7 +2154,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -2166,7 +2166,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -2178,7 +2178,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -2316,7 +2316,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -2347,7 +2347,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -2445,7 +2445,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -2476,7 +2476,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -2573,8 +2573,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -2685,7 +2685,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -2696,7 +2696,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -2713,7 +2713,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -2725,7 +2725,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -2737,7 +2737,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -2749,7 +2749,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -2891,7 +2891,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -2934,8 +2934,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -3051,7 +3051,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -3062,7 +3062,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -3079,7 +3079,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -3091,7 +3091,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -3103,7 +3103,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -3115,7 +3115,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -3304,7 +3304,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -3336,7 +3336,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -3451,7 +3451,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -3483,7 +3483,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -3587,8 +3587,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -3699,7 +3699,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -3710,7 +3710,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -3727,7 +3727,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -3739,7 +3739,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -3751,7 +3751,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -3763,7 +3763,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -3967,7 +3967,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -4008,8 +4008,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -4125,7 +4125,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -4136,7 +4136,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -4153,7 +4153,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -4165,7 +4165,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -4177,7 +4177,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -4189,7 +4189,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -4271,7 +4271,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -4301,7 +4301,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -4386,7 +4386,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -4416,7 +4416,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -4499,8 +4499,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -4611,7 +4611,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -4622,7 +4622,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -4639,7 +4639,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -4651,7 +4651,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -4663,7 +4663,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -4675,7 +4675,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -4761,7 +4761,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -4806,8 +4806,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -4927,7 +4927,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -4938,7 +4938,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -4955,7 +4955,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -4967,7 +4967,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -4979,7 +4979,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -4991,7 +4991,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -5100,7 +5100,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -5134,7 +5134,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -5235,7 +5235,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -5269,7 +5269,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -5372,8 +5372,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -5488,7 +5488,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -5499,7 +5499,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -5516,7 +5516,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -5528,7 +5528,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -5540,7 +5540,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -5552,7 +5552,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -5665,7 +5665,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -5706,8 +5706,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -5823,7 +5823,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -5834,7 +5834,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -5851,7 +5851,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -5863,7 +5863,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -5875,7 +5875,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -5887,7 +5887,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -5981,7 +5981,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -6011,7 +6011,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -6101,7 +6101,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -6131,7 +6131,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -6219,8 +6219,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -6331,7 +6331,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -6342,7 +6342,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -6359,7 +6359,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -6371,7 +6371,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -6383,7 +6383,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -6395,7 +6395,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -6493,7 +6493,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -6535,8 +6535,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -6652,7 +6652,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -6663,7 +6663,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -6680,7 +6680,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -6692,7 +6692,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -6704,7 +6704,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -6716,7 +6716,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -6866,7 +6866,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -6897,7 +6897,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -7000,7 +7000,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -7031,7 +7031,7 @@ enum EntityType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -7133,8 +7133,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -7245,7 +7245,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -7256,7 +7256,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -7273,7 +7273,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -7285,7 +7285,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -7297,7 +7297,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -7309,7 +7309,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -7463,7 +7463,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -7511,8 +7511,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -7632,7 +7632,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -7643,7 +7643,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -7660,7 +7660,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -7672,7 +7672,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -7684,7 +7684,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -7696,7 +7696,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
@@ -7886,7 +7886,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -7923,7 +7923,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -8052,7 +8052,7 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar Instant
+scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -8089,7 +8089,7 @@ enum ValueType {
 type PublishedEntityInfo {
   name: String!
   authKey: String!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 interface PublishedEntity implements Node {
@@ -8218,8 +8218,8 @@ type AdminEntityInfo {
   version: Int!
   authKey: String!
   status: AdminEntityStatus!
-  createdAt: Instant!
-  updatedAt: Instant!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input AdminEntityCreateInfo {
@@ -8334,7 +8334,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: Instant!
+  createdAt: DateTime!
 }
 
 type EntityHistory {
@@ -8345,7 +8345,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: Instant!
+  publishedAt: DateTime!
 }
 
 type PublishingHistory {
@@ -8362,7 +8362,7 @@ type AdminEntityPublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityPublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnpublishEffect {
@@ -8374,7 +8374,7 @@ type AdminEntityUnpublishPayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnpublishEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityArchiveEffect {
@@ -8386,7 +8386,7 @@ type AdminEntityArchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityArchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 enum AdminEntityUnarchiveEffect {
@@ -8398,7 +8398,7 @@ type AdminEntityUnarchivePayload {
   id: ID!
   status: AdminEntityStatus!
   effect: AdminEntityUnarchiveEffect!
-  updatedAt: Instant!
+  updatedAt: DateTime!
 }
 
 type AdvisoryLockPayload {
