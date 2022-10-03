@@ -7,6 +7,10 @@ module.exports = {
   reactOptions: {
     strictMode: true,
   },
+  typescript: {
+    // TODO: Disable docgen due to plenty of deprecation warnings when starting Storybook
+    reactDocgen: false,
+  },
   webpackFinal: (config) => {
     config.resolve.plugins = [...(config.resolve.plugins || []), new ResolveJsToTsPlugin()];
     return config;
