@@ -23,7 +23,7 @@ interface Props {
 }
 
 interface ActivityListEvent {
-  instant: Date;
+  date: Date;
   version: number | null;
   kind: PublishingEvent['kind'] | 'create';
 }
@@ -114,7 +114,7 @@ function ActivityList({
   if (entityHistory) {
     events.push(
       ...entityHistory.versions.map<ActivityListEvent>((it) => ({
-        instant: it.createdAt,
+        date: it.createdAt,
         version: it.version,
         kind: 'create',
       }))
@@ -123,7 +123,7 @@ function ActivityList({
   if (publishingHistory) {
     events.push(
       ...publishingHistory.events.map<ActivityListEvent>((it) => ({
-        instant: it.publishedAt,
+        date: it.publishedAt,
         version: it.version,
         kind: it.kind,
       }))
@@ -131,7 +131,7 @@ function ActivityList({
   }
 
   events.sort((a, b) => {
-    return b.instant.getTime() - a.instant.getTime(); // descending
+    return b.date.getTime() - a.date.getTime(); // descending
   });
 
   return (
@@ -141,7 +141,7 @@ function ActivityList({
           <Tag>{event.version === null ? '–' : '' + event.version}</Tag>
           <Tag>{event.kind}</Tag>
           <Row.Item flexGrow={1}>
-            <DateDisplay date={event.instant} />
+            <DateDisplay date={event.date} />
           </Row.Item>
         </Row>
       ))}
