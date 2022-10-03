@@ -26,6 +26,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "status": "changed",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [
@@ -95,6 +96,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       "status": "changed",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [
@@ -169,6 +171,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`]
       "status": "new",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
@@ -244,6 +247,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
       "status": "changed",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [
@@ -339,6 +343,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
       "status": "changed",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [
@@ -391,6 +396,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "status": "changed",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [
@@ -463,6 +469,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       "status": "new",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
@@ -531,6 +538,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
       "status": "new",
     },
   ],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
@@ -578,6 +586,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "entityTypes": [],
+  "patterns": [],
   "schema": AdminSchema {
     "spec": {
       "entityTypes": [],
@@ -632,5 +641,51 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "name": "Bar",
     },
   ],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "patterns": [
+    {
+      "name": "pattern-one",
+      "pattern": "^foo$",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": "pattern-one",
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "patterns": [
+        {
+          "name": "pattern-one",
+          "pattern": "^foo$",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
 }
 `;

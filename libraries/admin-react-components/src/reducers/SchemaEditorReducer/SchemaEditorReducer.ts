@@ -50,6 +50,12 @@ export interface SchemaFieldDraft {
   existingFieldSpec: AdminFieldSpecification | null;
 }
 
+export interface SchemaPatternDraft {
+  name: string;
+  status: 'new' | '';
+  pattern: string;
+}
+
 export interface SchemaEditorState {
   status: 'uninitialized' | 'changed' | '';
   schema: AdminSchema | null;
@@ -57,6 +63,7 @@ export interface SchemaEditorState {
 
   entityTypes: SchemaEntityTypeDraft[];
   valueTypes: SchemaValueTypeDraft[];
+  patterns: SchemaPatternDraft[];
 
   activeSelector: null | SchemaTypeSelector;
   activeSelectorEditorScrollSignal: number;
@@ -76,6 +83,7 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     schemaWillBeUpdatedDueToSave: false,
     entityTypes: [],
     valueTypes: [],
+    patterns: [],
     activeSelector: null,
     activeSelectorMenuScrollSignal: 0,
     activeSelectorEditorScrollSignal: 0,
@@ -745,6 +753,11 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       this.convertField('value', valueTypeSpec)
     );
 
+    const patterns = this.schema.spec.patterns.map<SchemaPatternDraft>((patternSpec) => ({
+      ...patternSpec,
+      status: '',
+    }));
+
     if (!state.schemaWillBeUpdatedDueToSave && state.schema) return state; //TODO handle update to schema
 
     return {
@@ -754,6 +767,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       schemaWillBeUpdatedDueToSave: false,
       entityTypes,
       valueTypes,
+      patterns,
     };
   }
 
