@@ -1,6 +1,10 @@
 import type { ClientContext, PublishedClientMiddleware } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
-import { createBackendPublishedClient, DISPLAY_AUTH_KEYS } from '../../test/TestContextAdapter';
+import {
+  createBackendPublishedClient,
+  DISPLAY_AUTH_KEYS,
+  TestContextAdapter,
+} from '../../test/TestContextAdapter';
 import { PublishedDataDataProvider } from '../components/PublishedDataDataProvider/PublishedDataDataProvider.js';
 
 interface Props {
@@ -16,9 +20,14 @@ export function PublishedLoadContextProvider({
     () => createBackendPublishedClient(publishedClientMiddleware),
     [publishedClientMiddleware]
   );
+  const adapter = useMemo(() => new TestContextAdapter(), []);
 
   return (
-    <PublishedDataDataProvider publishedClient={publishedClient} authKeys={DISPLAY_AUTH_KEYS}>
+    <PublishedDataDataProvider
+      adapter={adapter}
+      publishedClient={publishedClient}
+      authKeys={DISPLAY_AUTH_KEYS}
+    >
       {children}
     </PublishedDataDataProvider>
   );
