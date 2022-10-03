@@ -11,12 +11,14 @@ import {
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { AdminDataDataContext } from '../..';
+import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
+  SchemaPatternDraft,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
@@ -137,6 +139,14 @@ export function SchemaEditorScreen({
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
                   onAddOrRenameType={setAddOrRenameTypeSelector}
                   onAddOrRenameField={setAddOrRenameFieldSelector}
+                />
+              ))}
+              {schemaEditorState.patterns.map((patternDraft) => (
+                <PatternEditorRows
+                  key={patternDraft.name}
+                  patternDraft={patternDraft}
+                  schemaEditorState={schemaEditorState}
+                  dispatchSchemaEditorState={dispatchSchemaEditorState}
                 />
               ))}
             </>
@@ -267,6 +277,97 @@ function TypeEditorRows({
   );
 }
 
+function PatternEditorRows({
+  patternDraft,
+  schemaEditorState,
+  dispatchSchemaEditorState,
+}: {
+  patternDraft: SchemaPatternDraft;
+  schemaEditorState: SchemaEditorState;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  const canDeleteOrRename = patternDraft.status === 'new'; //TODO too restrictive
+
+  const patternSelector = useMemo(
+    () => ({ kind: 'pattern', name: patternDraft.name } as const),
+    [patternDraft.name]
+  );
+
+  const handleClick = useCallback(
+    (_event: MouseEvent) =>
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.SetActiveSelector(patternSelector, true, false)
+      ),
+    [dispatchSchemaEditorState, patternSelector]
+  );
+
+  // const handleDropdownItemClick = useCallback(
+  //   ({ id }: { id: string }) => {
+  //     switch (id) {
+  //       case 'delete':
+  //         dispatchSchemaEditorState(new SchemaEditorActions.DeleteType(patternSelector));
+  //         break;
+  //       case 'rename':
+  //         onAddOrRenameType(patternSelector);
+  //         break;
+  //     }
+  //   },
+  //   [dispatchSchemaEditorState, onAddOrRenameType, patternSelector]
+  // );
+
+  // const dropDownItems = canDeleteOrRename
+  //   ? [
+  //       { id: 'rename', title: 'Rename type' },
+  //       { id: 'delete', title: 'Delete type' },
+  //     ]
+  //   : [];
+
+  return (
+    <>
+      <FullscreenContainer.Row id={`pattern-${patternDraft.name}-header`} sticky>
+        <Level paddingHorizontal={3}>
+          <Level.Left>
+            <Level.Item>
+              <Text textStyle="headline4">{patternDraft.name}</Text>
+            </Level.Item>
+          </Level.Left>
+          {/* {patternDraft.status !== '' ? (
+            <Level.Right>
+              <Level.Item>
+                {dropDownItems.length > 0 ? (
+                  <ButtonDropdown
+                    items={dropDownItems}
+                    left
+                    renderItem={(item) => item.title}
+                    onItemClick={handleDropdownItemClick}
+                  />
+                ) : null}
+                <TypeDraftStatusTag status={patternDraft.status} />
+              </Level.Item>
+            </Level.Right>
+          ) : null} */}
+        </Level>
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row
+        gap={2}
+        paddingVertical={4}
+        paddingHorizontal={3}
+        marginBottom={4}
+        data-kind="pattern"
+        data-pattern-name={patternDraft.name}
+        onClick={handleClick}
+      >
+        <SchemaPatternEditor
+          selector={patternSelector}
+          patternDraft={patternDraft}
+          schemaEditorState={schemaEditorState}
+          dispatchSchemaEditorState={dispatchSchemaEditorState}
+        />
+      </FullscreenContainer.Row>
+    </>
+  );
+}
+
 function useSelectorFocused(
   schemaEditorState: SchemaEditorState,
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
@@ -282,10 +383,15 @@ function useSelectorFocused(
         );
         const kind = selectorElement?.dataset.kind;
         const typeName = selectorElement?.dataset.typename;
+        const patternName = selectorElement?.dataset['pattern-name'];
 
         if ((kind === 'entity' || kind === 'value') && typeName) {
           dispatchSchemaEditorState(
             new SchemaEditorActions.SetActiveSelector({ kind, typeName }, true, false)
+          );
+        } else if (kind === 'pattern' && patternName) {
+          dispatchSchemaEditorState(
+            new SchemaEditorActions.SetActiveSelector({ kind, name: patternName }, true, false)
           );
         }
       }
