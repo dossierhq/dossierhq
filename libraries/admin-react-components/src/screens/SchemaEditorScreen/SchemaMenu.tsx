@@ -6,6 +6,7 @@ import type {
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
+  SchemaPatternSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
@@ -56,7 +57,7 @@ function TypeDraftItem({
   typeDraft,
   dispatchEditorState,
 }: {
-  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector;
+  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector;
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
@@ -91,7 +92,7 @@ function typeDraftToSelector(
 
 function isTypeDraftActive(
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft,
-  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector
+  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector
 ) {
   if (!activeSelector) return false;
   return (

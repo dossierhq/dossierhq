@@ -19,6 +19,11 @@ export interface SchemaFieldSelector extends SchemaTypeSelector {
   fieldName: string;
 }
 
+export interface SchemaPatternSelector {
+  kind: 'pattern';
+  name: string;
+}
+
 export interface SchemaTypeDraft {
   name: string;
   status: 'new' | '' | 'changed';
@@ -65,7 +70,7 @@ export interface SchemaEditorState {
   valueTypes: SchemaValueTypeDraft[];
   patterns: SchemaPatternDraft[];
 
-  activeSelector: null | SchemaTypeSelector;
+  activeSelector: null | SchemaTypeSelector | SchemaFieldSelector | SchemaPatternSelector;
   activeSelectorEditorScrollSignal: number;
   activeSelectorMenuScrollSignal: number;
 }
@@ -329,6 +334,31 @@ class AddFieldAction extends TypeAction {
     const fields = [...typeSpec.fields, field];
 
     return { ...typeSpec, fields };
+  }
+}
+
+class AddPatternAction implements SchemaEditorStateAction {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const patternDraft: SchemaPatternDraft = {
+      status: 'new',
+      name: this.name,
+      pattern: '',
+    };
+    const newState: SchemaEditorState = {
+      ...state,
+      patterns: [...state.patterns, patternDraft].sort((a, b) => a.name.localeCompare(b.name)),
+      activeSelector: { kind: 'pattern', name: this.name },
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
+    };
+    newState.status = resolveSchemaStatus(newState);
+    return newState;
   }
 }
 
@@ -827,6 +857,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddField: AddFieldAction,
+  AddPattern: AddPatternAction,
   ChangeFieldAdminOnly: ChangeFieldAdminOnlyAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
   ChangeFieldAllowedLinkEntityTypes: ChangeFieldAllowedLinkEntityTypesAction,
@@ -861,11 +892,18 @@ export function getSchemaSpecificationUpdateFromEditorState(
     .filter((it) => it.status !== '')
     .map(getTypeUpdateFromEditorState);
 
+  const patterns = state.patterns
+    .filter((it) => it.status !== '')
+    .map(({ name, pattern }) => ({ name, pattern }));
+
   if (entityTypes.length > 0) {
     update.entityTypes = entityTypes;
   }
   if (valueTypes.length > 0) {
     update.valueTypes = valueTypes;
+  }
+  if (patterns.length > 0) {
+    update.patterns = patterns;
   }
 
   return update;

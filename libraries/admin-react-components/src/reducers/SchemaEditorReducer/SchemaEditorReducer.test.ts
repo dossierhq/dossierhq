@@ -779,6 +779,20 @@ describe('AddFieldAction', () => {
   });
 });
 
+describe('AddPatternAction', () => {
+  test('add pattern to empty schema', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
+      new SchemaEditorActions.AddPattern('my-pattern')
+    );
+
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('ChangeFieldAdminOnlyAction', () => {
   test('make new field admin only in existing entity type', () => {
     const state = reduceSchemaEditorStateActions(

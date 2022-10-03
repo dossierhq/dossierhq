@@ -17,6 +17,7 @@ import type {
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
+  SchemaPatternSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
@@ -79,13 +80,8 @@ export function SchemaEditorScreen({
   const isEmpty =
     schemaEditorState.entityTypes.length === 0 && schemaEditorState.valueTypes.length === 0;
 
-  const menuScrollToId = schemaEditorState.activeSelector
-    ? `${schemaEditorState.activeSelector.typeName}-menuItem`
-    : undefined;
-
-  const editorScrollToId = schemaEditorState.activeSelector
-    ? `${schemaEditorState.activeSelector.typeName}-header`
-    : undefined;
+  const menuScrollToId = getElementIdForSelector(schemaEditorState.activeSelector, 'menuItem');
+  const editorScrollToId = getElementIdForSelector(schemaEditorState.activeSelector, 'header');
 
   return (
     <FullscreenContainer>
@@ -269,6 +265,19 @@ function TypeEditorRows({
       </FullscreenContainer.Row>
     </>
   );
+}
+
+function getElementIdForSelector(
+  selector: SchemaTypeSelector | SchemaPatternSelector | null,
+  section: 'menuItem' | 'header'
+) {
+  if (!selector) {
+    return undefined;
+  }
+  if (selector.kind === 'pattern') {
+    return `pattern-${selector.name}-${section}`;
+  }
+  return `${selector.typeName}-${section}`;
 }
 
 function useSelectorFocused(
