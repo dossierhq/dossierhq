@@ -1,6 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { AdminSchema, ok } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
+import { AdminSchema, NoOpLogger, ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import {
   createTestAuthorizationAdapter,
@@ -8,8 +7,9 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
+import { Database } from 'bun:sqlite';
 import { describe, it } from 'bun:test';
-import { createAdapter } from '../ServerUtils.js';
+import { createBunSqliteAdapter } from '../BunSqliteAdapter.js';
 
 export interface ServerInit {
   server: Server;
@@ -27,8 +27,11 @@ export function registerTestSuite(suiteName: string, testSuite: TestSuite): void
 export async function initializeIntegrationTestServer(
   filename: string
 ): PromiseResult<ServerInit, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const database = Database.open(filename);
   const serverResult = await createServer({
-    databaseAdapter: (await createAdapter({ logger: NoOpLogger }, filename)).valueOrThrow(),
+    databaseAdapter: (
+      await createBunSqliteAdapter({ logger: NoOpLogger }, database)
+    ).valueOrThrow(),
     authorizationAdapter: createTestAuthorizationAdapter(),
   });
   if (serverResult.isError()) return serverResult;

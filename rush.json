@@ -396,6 +396,10 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-database-adapter-sqlite-bun",
+      "projectFolder": "libraries/database-adapter-sqlite-bun"
+    },
+    {
       "packageName": "@jonasb/datadata-database-adapter-sqlite-core",
       "projectFolder": "libraries/database-adapter-sqlite-core"
     },
@@ -477,6 +481,10 @@
     {
       "packageName": "@jonasb/datadata-template-library",
       "projectFolder": "templates/library"
+    },
+    {
+      "packageName": "@jonasb/datadata-template-library-esm-only",
+      "projectFolder": "templates/library-esm-only"
     },
     {
       "packageName": "@jonasb/datadata-template-tool",
