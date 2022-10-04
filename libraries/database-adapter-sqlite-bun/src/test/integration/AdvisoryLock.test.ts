@@ -1,6 +1,6 @@
 import { createAdvisoryLockTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
-import { initializeIntegrationTestServer, registerTestSuite } from './TestUtils.js';
+import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
 registerTestSuite(
   'AdvisoryLockTest',

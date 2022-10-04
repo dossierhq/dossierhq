@@ -55,6 +55,9 @@ async function main(args) {
       case "deno":
         await addTripleSlashTypeDirectiveForDeno("lib/esm");
         break;
+      case "deno-esm-only":
+        await addTripleSlashTypeDirectiveForDeno("lib");
+        break;
       case "cjs-package-json":
         await addCommonJsPackageJson("lib/cjs");
         break;

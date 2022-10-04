@@ -1,0 +1,42 @@
+{
+  "name": "@jonasb/datadata-template-library-esm-only",
+  "version": "0.1.11",
+  "description": "",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js"
+    }
+  },
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno-esm-only",
+    "build:watch": "heft build --watch",
+    "clean": "heft clean",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "devDependencies": {
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
+    "@rushstack/heft": "~0.48.0",
+    "eslint": "^8.16.0",
+    "prettier": "2.7.1",
+    "typescript": "^4.8.4",
+    "vitest": "~0.23.1"
+  },
+  "dependencies": {
+    "tslib": "~2.4.0"
+  }
+}
