@@ -48,6 +48,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": true,
@@ -92,6 +93,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": true,
@@ -115,6 +117,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -162,6 +165,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -193,6 +197,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`]
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -230,6 +235,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 2`]
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -254,6 +260,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -319,6 +326,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 2`]
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -350,6 +358,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -418,6 +427,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -462,6 +472,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -528,6 +539,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -568,6 +580,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -596,6 +609,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -637,6 +651,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": null,
       "fields": [
         {
           "adminOnly": false,
@@ -732,6 +747,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "entityTypes": [
     {
       "adminOnly": false,
+      "authKeyPattern": "pattern-one",
       "fields": [],
       "kind": "entity",
       "name": "Foo",
