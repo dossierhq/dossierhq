@@ -1,4 +1,4 @@
-import { Button, ButtonDropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown, Input } from '@jonasb/datadata-design';
 import type { Dispatch, ReactNode } from 'react';
 import { useCallback } from 'react';
 import type {
@@ -48,7 +48,9 @@ export function PatternSelector({
   );
 
   if (readOnly) {
-    return <Button disabled>{value ?? <i>Not set</i>}</Button>;
+    return (
+      <Input readOnly value={value ?? undefined} placeholder={!value ? 'Not set' : undefined} />
+    );
   }
 
   return (
