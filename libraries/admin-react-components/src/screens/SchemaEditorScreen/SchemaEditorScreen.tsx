@@ -89,7 +89,9 @@ export function SchemaEditorScreen({
   useSelectorFocused(schemaEditorState, dispatchSchemaEditorState);
 
   const isEmpty =
-    schemaEditorState.entityTypes.length === 0 && schemaEditorState.valueTypes.length === 0;
+    schemaEditorState.entityTypes.length === 0 &&
+    schemaEditorState.valueTypes.length === 0 &&
+    schemaEditorState.patterns.length === 0;
 
   const menuScrollToId = getElementIdForSelector(schemaEditorState.activeSelector, 'menuItem');
   const editorScrollToId = getElementIdForSelector(schemaEditorState.activeSelector, 'header');

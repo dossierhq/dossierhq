@@ -109,7 +109,7 @@ export function reduceSchemaEditorState(
 
 function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['status'] {
   if (state.status === 'uninitialized') state.status;
-  for (const type of [...state.entityTypes, ...state.valueTypes]) {
+  for (const type of [...state.entityTypes, ...state.valueTypes, ...state.patterns]) {
     if (type.status !== '') return 'changed';
   }
   return '';
