@@ -1,5 +1,4 @@
 import type { ChangeEventHandler, CSSProperties } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
 import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';

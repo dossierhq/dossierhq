@@ -31,3 +31,6 @@ LeftIcon.args = { iconLeft: 'map' };
 
 export const Number = Template.bind({});
 Number.args = { type: 'number', min: 0, max: 100, step: 1 };
+
+export const CodeTextStyle = Template.bind({});
+CodeTextStyle.args = { textStyle: 'code1' };
