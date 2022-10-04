@@ -3,8 +3,8 @@ import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-componen
 import type { PublishedEntity } from '@jonasb/datadata-core';
 import { useCallback, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { NavBar } from '../components/NavBar';
-import { ROUTE } from '../utils/RouteUtils';
+import { NavBar } from '../components/NavBar.js';
+import { ROUTE } from '../utils/RouteUtils.js';
 
 //TODO fix type of EntitySearchStateUrlQuery in arc to work better with react-router
 type EntitySearchStateUrlQueryRecord = Record<'query' | 'paging' | 'sampling', string>;

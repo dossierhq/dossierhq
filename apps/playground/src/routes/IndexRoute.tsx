@@ -1,7 +1,7 @@
 import { FullscreenContainer, Message, Text, toSpacingClassName } from '@jonasb/datadata-design';
-import { ChangeDatabaseMessage } from '../components/ChangeDatabaseMessage';
-import { DatabaseInfoMessage } from '../components/DatabaseInfoMessage';
-import { NavBar } from '../components/NavBar';
+import { ChangeDatabaseMessage } from '../components/ChangeDatabaseMessage.js';
+import { DatabaseInfoMessage } from '../components/DatabaseInfoMessage.js';
+import { NavBar } from '../components/NavBar.js';
 
 export function IndexRoute() {
   return (

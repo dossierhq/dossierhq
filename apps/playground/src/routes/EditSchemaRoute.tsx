@@ -1,7 +1,7 @@
 import { SchemaEditorScreen } from '@jonasb/datadata-admin-react-components';
 import { useState } from 'react';
-import { NavBar } from '../components/NavBar';
-import { useWarningOnExit } from '../hooks/useWarningOnExit';
+import { NavBar } from '../components/NavBar.js';
+import { useWarningOnExit } from '../hooks/useWarningOnExit.js';
 
 export function EditSchemaRoute() {
   const [hasChanges, setHasChanges] = useState(false);

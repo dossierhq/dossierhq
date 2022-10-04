@@ -1,8 +1,8 @@
 import { EntityEditorScreen } from '@jonasb/datadata-admin-react-components';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { NavBar } from '../components/NavBar';
-import { useWarningOnExit } from '../hooks/useWarningOnExit';
+import { NavBar } from '../components/NavBar.js';
+import { useWarningOnExit } from '../hooks/useWarningOnExit.js';
 
 export function EditEntitiesRoute() {
   const [searchParams, setSearchParams] = useSearchParams();

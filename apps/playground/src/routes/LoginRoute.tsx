@@ -1,10 +1,10 @@
 import { FullscreenContainer } from '@jonasb/datadata-design';
 import { useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { NavBar } from '../components/NavBar';
-import { LoginContext } from '../contexts/LoginContext';
-import { UserContext } from '../contexts/UserContext';
-import { ROUTE } from '../utils/RouteUtils';
+import { NavBar } from '../components/NavBar.js';
+import { LoginContext } from '../contexts/LoginContext.js';
+import { UserContext } from '../contexts/UserContext.js';
+import { ROUTE } from '../utils/RouteUtils.js';
 
 export function LoginRoute() {
   const { userId } = useParams();
