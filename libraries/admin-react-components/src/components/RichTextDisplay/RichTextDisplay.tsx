@@ -1,8 +1,8 @@
 import type { EntityReference, PublishedFieldSpecification, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
 import type { LexicalEditor } from 'lexical/LexicalEditor.js';
 import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';

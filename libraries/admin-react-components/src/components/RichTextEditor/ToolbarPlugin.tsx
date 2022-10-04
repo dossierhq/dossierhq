@@ -1,7 +1,7 @@
 import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import { RichTextNodeType } from '@jonasb/datadata-core';
 import { ButtonDropdown, IconButton, Row } from '@jonasb/datadata-design';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { mergeRegister } from '@lexical/utils';
 import {
   $getSelection,

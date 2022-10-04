@@ -1,6 +1,6 @@
 import { Card2 } from '@jonasb/datadata-design';
-import type { FieldEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import { FieldEditor } from './FieldEditor';
+import type { FieldEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import { FieldEditor } from './FieldEditor.js';
 
 interface Props {
   field: FieldEditorState;

@@ -3,7 +3,7 @@ import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../..';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
   SearchEntityState,

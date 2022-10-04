@@ -10,11 +10,11 @@ import {
   toFlexItemClassName,
 } from '@jonasb/datadata-design';
 import { useContext, useState } from 'react';
-import { StatusTag } from '../../components/StatusTag/StatusTag';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory';
-import { useAdminPublishingHistory } from '../../hooks/useAdminPublishingHistory';
-import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import { StatusTag } from '../../components/StatusTag/StatusTag.js';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
+import { useAdminPublishingHistory } from '../../hooks/useAdminPublishingHistory.js';
+import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { AdminEntityLinks } from './AdminEntityLinks.js';
 
 interface Props {

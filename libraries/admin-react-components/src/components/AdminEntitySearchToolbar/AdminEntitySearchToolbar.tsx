@@ -2,11 +2,11 @@ import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb
 import { IconButton } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEventHandler } from 'react';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../..';
-import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector';
-import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector';
-import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector';
-import { EntityTypeSelector } from '../../shared/components/EntityTypeSelector/EntityTypeSelector';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
+import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
+import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
+import { EntityTypeSelector } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
 import { SearchEntitySearchInput } from '../../shared/components/SearchEntitySearchInput/SearchEntitySearchInput.js';
 import type {
   SearchEntityState,

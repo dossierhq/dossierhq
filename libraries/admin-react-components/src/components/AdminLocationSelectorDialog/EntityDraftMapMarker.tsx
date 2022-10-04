@@ -1,8 +1,7 @@
 import type { Location } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
-import React from 'react';
-import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 interface Props {
   draftState: EntityEditorDraftState;

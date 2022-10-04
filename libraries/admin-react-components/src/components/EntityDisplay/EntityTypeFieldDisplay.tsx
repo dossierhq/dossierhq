@@ -6,7 +6,7 @@ import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispat
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
-import type { FieldDisplayProps } from './FieldDisplay';
+import type { FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props extends FieldDisplayProps<EntityReference> {
   className?: string;

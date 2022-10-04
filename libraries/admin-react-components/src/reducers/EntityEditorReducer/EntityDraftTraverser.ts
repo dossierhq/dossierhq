@@ -1,6 +1,6 @@
 import type { AdminSchema, ItemTraverseNode } from '@jonasb/datadata-core';
 import { traverseItemField } from '@jonasb/datadata-core';
-import type { EntityEditorDraftState } from './EntityEditorReducer';
+import type { EntityEditorDraftState } from './EntityEditorReducer.js';
 
 export function* traverseEntityEditorDraft(
   schema: AdminSchema,

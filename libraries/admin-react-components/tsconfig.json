@@ -2,6 +2,6 @@
   "extends": "./node_modules/@jonasb/datadata-heft-node-rig/profiles/library-react/tsconfig-base.json",
   "compilerOptions": {
     "importsNotUsedAsValues": "preserve",
-    "moduleResolution": "Node"
+    "moduleResolution": "node"
   }
 }

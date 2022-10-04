@@ -1,7 +1,6 @@
 import type { RichText } from '@jonasb/datadata-core';
-import React from 'react';
-import { RichTextEditor } from '../RichTextEditor/RichTextEditor';
-import type { FieldEditorProps } from './FieldEditor';
+import { RichTextEditor } from '../RichTextEditor/RichTextEditor.js';
+import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<RichText>;
 

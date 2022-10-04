@@ -15,7 +15,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo, ok } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 
 const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name;
 const defaultRequestedCount = 25;

@@ -11,7 +11,7 @@ import {
   isEntityNameAsRequested,
   normalizeFieldValue,
 } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 
 type EntityEditorSelector = { id: string } | { id: string; newType: string };
 

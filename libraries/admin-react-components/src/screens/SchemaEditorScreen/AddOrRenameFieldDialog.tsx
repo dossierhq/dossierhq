@@ -1,14 +1,14 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { Card, Dialog, Field, Input } from '@jonasb/datadata-design';
 import type { ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEvent } from 'react';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaFieldSelector,
   SchemaTypeSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   selector: SchemaFieldSelector | SchemaTypeSelector | null;

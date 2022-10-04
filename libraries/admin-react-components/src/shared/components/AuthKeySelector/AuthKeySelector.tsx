@@ -11,9 +11,8 @@ import {
   reduceMultipleSelectorState,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React from 'react';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
-import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag';
+import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag.js';
 
 export interface AuthKeyItem extends MultipleSelectorItem {
   displayName: string;

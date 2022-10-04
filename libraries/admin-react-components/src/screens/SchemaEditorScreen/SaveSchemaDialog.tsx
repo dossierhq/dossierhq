@@ -1,16 +1,16 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useCallback, useContext, useMemo } from 'react';
-import { AdminDataDataContext } from '../..';
+import { useCallback, useContext, useMemo } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   SchemaEditorActions,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 export function SaveSchemaDialog({
   show,

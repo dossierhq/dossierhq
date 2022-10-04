@@ -7,11 +7,11 @@ import type {
   SchemaPatternSelector,
   SchemaSelector,
   SchemaTypeSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getElementIdForSelector,
   SchemaEditorActions,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 export function SchemaMenu({
   schemaEditorState,

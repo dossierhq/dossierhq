@@ -5,8 +5,8 @@ import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaPatternSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   selector: SchemaPatternSelector | 'add' | null;

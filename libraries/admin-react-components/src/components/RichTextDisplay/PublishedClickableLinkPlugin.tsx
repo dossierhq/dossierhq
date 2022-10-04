@@ -1,5 +1,5 @@
 import type { EntityReference } from '@jonasb/datadata-core';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { LexicalEditor } from 'lexical';
 import { $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection } from 'lexical';
 import { useEffect } from 'react';

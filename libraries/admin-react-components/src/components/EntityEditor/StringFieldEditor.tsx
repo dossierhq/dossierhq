@@ -1,7 +1,7 @@
 import { Input, TextArea } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
-import React, { useCallback } from 'react';
-import type { FieldEditorProps } from './FieldEditor';
+import { useCallback } from 'react';
+import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<string>;
 

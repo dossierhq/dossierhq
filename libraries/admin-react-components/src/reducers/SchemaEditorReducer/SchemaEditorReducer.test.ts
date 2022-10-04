@@ -1,14 +1,14 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
+import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer.js';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
   ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
-} from './SchemaEditorReducer';
+} from './SchemaEditorReducer.js';
 
 function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
   return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })

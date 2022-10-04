@@ -3,19 +3,19 @@ import type { NotificationInfo } from '@jonasb/datadata-design';
 import { Button, Field, Input, NotificationContext, Row } from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useCallback, useContext, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import type {
   EntityEditorDraftState,
   EntityEditorStateAction,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
   EntityEditorActions,
   getEntityCreateFromDraftState,
   getEntityUpdateFromDraftState,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import { AuthKeyPicker } from './AuthKeyPicker';
-import { EntityFieldEditor } from './EntityFieldEditor';
-import { PublishingButton } from './PublishingButton';
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import { AuthKeyPicker } from './AuthKeyPicker.js';
+import { EntityFieldEditor } from './EntityFieldEditor.js';
+import { PublishingButton } from './PublishingButton.js';
 
 interface Props {
   draftState: EntityEditorDraftState;

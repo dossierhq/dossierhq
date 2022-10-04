@@ -1,11 +1,11 @@
 import type { AdminFieldSpecification, EntityReference, RichText } from '@jonasb/datadata-core';
 import { ClassName, toClassName } from '@jonasb/datadata-design';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin.js';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
 import type { EditorState, LexicalEditor } from 'lexical';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash/debounce.js';
 import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -16,7 +16,7 @@ import { AdminEntityNode } from './AdminEntityNode.js';
 import { AdminValueItemNode } from './AdminValueItemNode.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
-import { ToolbarPlugin } from './ToolbarPlugin';
+import { ToolbarPlugin } from './ToolbarPlugin.js';
 import { ValueItemPlugin } from './ValueItemPlugin.js';
 
 interface Props {

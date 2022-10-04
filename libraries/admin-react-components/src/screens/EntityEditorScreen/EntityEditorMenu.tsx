@@ -1,14 +1,12 @@
-import { Delete } from '@jonasb/datadata-design';
-import { HoverRevealContainer } from '@jonasb/datadata-design';
-import { Menu, Text } from '@jonasb/datadata-design';
+import { Delete, HoverRevealContainer, Menu, Text } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import type {
   EntityEditorDraftState,
   EntityEditorState,
   EntityEditorStateAction,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 interface Props {
   entityEditorState: Readonly<EntityEditorState>;

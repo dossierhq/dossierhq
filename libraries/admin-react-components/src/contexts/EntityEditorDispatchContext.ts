@@ -1,6 +1,6 @@
 import type { Dispatch } from 'react';
 import { createContext } from 'react';
-import type { EntityEditorStateAction } from '../reducers/EntityEditorReducer/EntityEditorReducer';
+import type { EntityEditorStateAction } from '../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 export const EntityEditorDispatchContext = createContext<Dispatch<EntityEditorStateAction>>({
   defaultContextValue: true,
