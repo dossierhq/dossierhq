@@ -1,16 +1,13 @@
-import { AdminSchema, Logger } from '@jonasb/datadata-core';
+import type { Logger } from '@jonasb/datadata-core';
+import { AdminSchema } from '@jonasb/datadata-core';
 import {
   createDatabase,
   createSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import {
-  AuthorizationAdapter,
-  createServer,
-  NoneAndSubjectAuthorizationAdapter,
-  Server,
-} from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { Database } from 'sqlite3';
-import { schemaSpecification } from './schema';
+import { schemaSpecification } from './schema.js';
 
 const SQLITE3_DATABASE = 'data/foo.sqlite';
 
