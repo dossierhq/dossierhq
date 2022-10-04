@@ -6,6 +6,7 @@ const schemaSpecification = {
     {
       name: 'Foo',
       adminOnly: false,
+      authKeyPattern: 'none',
       fields: [
         { name: 'title', type: 'String', isName: true, required: true },
         { name: 'tags', type: 'String', list: true },
@@ -39,29 +40,30 @@ const schemaSpecification = {
           name: 'bodyBar',
           type: 'RichText',
           entityTypes: ['Bar'],
-          richTextBlocks: [{ type: 'entity' }, { type: 'paragraph' }],
+          richTextNodes: ['root', 'paragraph', 'text', 'entity'],
         },
         {
           name: 'bodyNested',
           type: 'RichText',
           valueTypes: ['NestedValueItem'],
-          richTextBlocks: [{ type: 'valueItem' }, { type: 'paragraph' }],
+          richTextNodes: ['root', 'paragraph', 'text', 'valueItem'],
         },
         {
           name: 'bodyItalicOnly',
           type: 'RichText',
-          richTextBlocks: [{ type: 'paragraph', inlineTypes: ['italic'] }],
+          //TODO support limiting formatting
         },
         {
           name: 'bodyNoInline',
           type: 'RichText',
-          richTextBlocks: [{ type: 'paragraph', inlineTypes: [] }],
+          richTextNodes: ['root', 'paragraph', 'text'],
         },
       ],
     },
     {
       name: 'Qux',
       adminOnly: true,
+      authKeyPattern: 'subject',
       fields: [{ name: 'title', type: 'String', isName: true }],
     },
   ],
@@ -89,6 +91,10 @@ const schemaSpecification = {
         { name: 'child', type: 'ValueType', valueTypes: ['NestedValueItem'] },
       ],
     },
+  ],
+  patterns: [
+    { name: 'none', pattern: '^none$' },
+    { name: 'subject', pattern: '^subject$' },
   ],
 };
 
