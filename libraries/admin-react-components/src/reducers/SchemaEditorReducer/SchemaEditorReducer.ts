@@ -34,6 +34,7 @@ export interface SchemaTypeDraft {
 
 export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
   kind: 'entity';
+  authKeyPattern: string | null;
 }
 
 export interface SchemaValueTypeDraft extends SchemaTypeDraft {
@@ -328,7 +329,10 @@ class AddTypeAction implements SchemaEditorStateAction {
       activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
     };
     if (this.kind === 'entity') {
-      newState.entityTypes = [...newState.entityTypes, { ...typeDraft, kind: 'entity' }];
+      newState.entityTypes = [
+        ...newState.entityTypes,
+        { ...typeDraft, kind: 'entity', authKeyPattern: null },
+      ];
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
       newState.valueTypes = [...newState.valueTypes, { ...typeDraft, kind: 'value' }];
@@ -820,12 +824,13 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const entityTypes = this.schema.spec.entityTypes.map((entityTypeSpec) =>
-      this.convertField('entity', entityTypeSpec)
-    );
+    const entityTypes = this.schema.spec.entityTypes.map((entityTypeSpec) => ({
+      ...this.convertType('entity', entityTypeSpec),
+      authKeyPattern: entityTypeSpec.authKeyPattern,
+    }));
 
     const valueTypes = this.schema.spec.valueTypes.map((valueTypeSpec) =>
-      this.convertField('value', valueTypeSpec)
+      this.convertType('value', valueTypeSpec)
     );
 
     const patterns = this.schema.spec.patterns.map<SchemaPatternDraft>((patternSpec) => ({
@@ -846,7 +851,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     };
   }
 
-  convertField<TKind extends 'entity' | 'value'>(
+  convertType<TKind extends 'entity' | 'value'>(
     kind: TKind,
     typeSpec: AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecification
   ): SchemaTypeDraft & { kind: TKind } {
@@ -956,7 +961,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
 }
 
 function getTypeUpdateFromEditorState(
-  draftType: SchemaTypeDraft
+  draftType: SchemaValueTypeDraft | SchemaEntityTypeDraft
 ): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
     let richTextNodes = draftField.richTextNodes;
@@ -992,6 +997,7 @@ function getTypeUpdateFromEditorState(
   return {
     name: draftType.name,
     adminOnly: draftType.adminOnly,
+    ...('authKeyPattern' in draftType ? { authKeyPattern: draftType.authKeyPattern } : undefined),
     fields,
   };
 }

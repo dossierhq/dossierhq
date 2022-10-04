@@ -67,6 +67,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Foo",
@@ -92,6 +93,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "name": "Foo",
           },
@@ -171,6 +173,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Bar",
@@ -178,6 +181,7 @@ describe('AddTypeAction', () => {
           },
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Foo",
@@ -210,6 +214,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "name": "Bar",
           },
@@ -303,6 +308,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Anaconda",
@@ -310,6 +316,7 @@ describe('AddTypeAction', () => {
           },
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "ZooKeeper",
@@ -335,11 +342,13 @@ describe('AddTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "name": "Anaconda",
           },
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "name": "ZooKeeper",
           },
@@ -430,6 +439,7 @@ describe('AddFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -474,6 +484,7 @@ describe('AddFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -586,6 +597,7 @@ describe('AddFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -649,6 +661,7 @@ describe('AddFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -838,6 +851,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -884,6 +898,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -961,6 +976,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1011,6 +1027,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1247,6 +1264,7 @@ describe('ChangeFieldRequiredAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1291,6 +1309,7 @@ describe('ChangeFieldRequiredAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1330,6 +1349,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1373,6 +1393,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1489,6 +1510,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1533,6 +1555,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1570,6 +1593,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1614,6 +1638,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1667,6 +1692,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
         "entityTypes": [
           {
             "adminOnly": true,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Foo",
@@ -1692,6 +1718,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
         "entityTypes": [
           {
             "adminOnly": true,
+            "authKeyPattern": null,
             "fields": [],
             "name": "Foo",
           },
@@ -1723,6 +1750,7 @@ describe('DeleteFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1866,6 +1894,7 @@ describe('RenameFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1929,6 +1958,7 @@ describe('RenameFieldAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -1973,6 +2003,7 @@ describe('RenameTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Bar",
@@ -1998,6 +2029,7 @@ describe('RenameTypeAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "name": "Bar",
           },
@@ -2102,6 +2134,7 @@ describe('SetActiveSelectorAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Foo",
@@ -2153,6 +2186,7 @@ describe('SetActiveSelectorAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "Foo",
@@ -2237,6 +2271,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -2329,6 +2364,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -2501,6 +2537,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -2632,6 +2669,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [
               {
                 "adminOnly": false,
@@ -2779,6 +2817,7 @@ describe('SchemaEditorReducer scenarios', () => {
         "entityTypes": [
           {
             "adminOnly": false,
+            "authKeyPattern": null,
             "fields": [],
             "kind": "entity",
             "name": "NewType",
