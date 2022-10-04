@@ -33,7 +33,7 @@
     "@graphiql/toolkit": "~0.8.0",
     "@jonasb/eslint-config-datadata-react": "workspace:*",
     "@types/codemirror": "~5.60.5",
-    "@types/react": "~18.0.0",
+    "@types/react": "~18.0.21",
     "@types/react-dom": "~18.0.0",
     "@types/sql.js": "~1.4.2",
     "@vitejs/plugin-react": "~2.1.0",
