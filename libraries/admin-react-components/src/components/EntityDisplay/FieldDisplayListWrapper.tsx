@@ -1,5 +1,4 @@
 import { Column } from '@jonasb/datadata-design';
-import React from 'react';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props<Item> extends FieldDisplayProps<Item[]> {
