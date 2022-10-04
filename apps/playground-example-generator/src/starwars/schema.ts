@@ -5,6 +5,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Film',
+      authKeyPattern: 'none',
       fields: [
         { name: 'title', type: FieldType.String, required: true, isName: true },
         { name: 'episodeId', type: FieldType.String, required: true },
@@ -51,6 +52,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Person',
+      authKeyPattern: 'none',
       fields: [
         { name: 'name', type: FieldType.String, required: true, isName: true },
         { name: 'gender', type: FieldType.String, required: true },
@@ -65,6 +67,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Planet',
+      authKeyPattern: 'none',
       fields: [
         { name: 'name', type: FieldType.String, required: true, isName: true },
         { name: 'climate', type: FieldType.String, list: true, required: true },
@@ -79,6 +82,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Species',
+      authKeyPattern: 'none',
       fields: [
         { name: 'name', type: FieldType.String, required: true, isName: true },
         { name: 'classification', type: FieldType.String, required: true },
@@ -95,6 +99,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Starship',
+      authKeyPattern: 'none',
       fields: [
         { name: 'starshipClass', type: FieldType.String, required: true, isName: true },
         { name: 'mglt', type: FieldType.String, required: true },
@@ -104,6 +109,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Transport',
+      authKeyPattern: 'none',
       fields: [
         { name: 'name', type: FieldType.String, required: true, isName: true },
         { name: 'model', type: FieldType.String, required: true },
@@ -119,10 +125,12 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Vehicle',
+      authKeyPattern: 'none',
       fields: [
         { name: 'vehicleClass', type: FieldType.String, required: true, isName: true },
         { name: 'pilots', type: FieldType.EntityType, list: true, entityTypes: ['Person'] },
       ],
     },
   ],
+  patterns: [{ name: 'none', pattern: '^none$' }],
 };
