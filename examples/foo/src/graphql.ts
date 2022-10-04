@@ -1,6 +1,5 @@
-import 'dotenv/config';
-//
-import { AdminSchema, createConsoleLogger, notOk, ok } from '@jonasb/datadata-core';
+import type { AdminSchema } from '@jonasb/datadata-core';
+import { createConsoleLogger, notOk, ok } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { Server } from '@jonasb/datadata-server';
@@ -8,7 +7,7 @@ import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import type { IncomingHttpHeaders } from 'http';
-import { initializeServer, updateSchema } from './server';
+import { initializeServer, updateSchema } from './server.js';
 
 type GraphQlMiddleware = ReturnType<typeof graphqlHTTP>;
 
