@@ -24,7 +24,7 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
     },
   },
   "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
+  "status": "changed",
   "valueTypes": [],
 }
 `;
@@ -501,7 +501,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
     },
   },
   "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
+  "status": "changed",
   "valueTypes": [],
 }
 `;
