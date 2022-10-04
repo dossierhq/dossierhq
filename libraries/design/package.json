@@ -47,7 +47,7 @@
     "@storybook/react": "^6.5.12",
     "@types/lodash": "~4.14.181",
     "@types/react-dom": "~18.0.0",
-    "@types/react": "~18.0.0",
+    "@types/react": "~18.0.21",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "babel-loader": "^8.2.4",

@@ -4,7 +4,7 @@ import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import * as base64 from 'base-64';
 import { randomUUID } from 'node:crypto';
-import initSqlJs from 'sql.js';
+import * as SqlJs from 'sql.js';
 import { test } from 'vitest';
 import { createSqlJsAdapter } from '../SqlJsAdapter.js';
 
@@ -12,7 +12,7 @@ export async function createSqlJsTestAdapter(): PromiseResult<
   DatabaseAdapter,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const SQL = await initSqlJs();
+  const SQL = await SqlJs.default();
   const db = new SQL.Database();
   return await createSqlJsAdapter({ logger: NoOpLogger }, db);
 }

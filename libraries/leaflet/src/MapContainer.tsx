@@ -2,7 +2,7 @@ import type { Map } from 'leaflet';
 import { control } from 'leaflet';
 import 'leaflet.locatecontrol';
 import type { CSSProperties, FunctionComponent } from 'react';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
