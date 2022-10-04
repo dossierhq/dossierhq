@@ -7,12 +7,12 @@ import {
   toSpacingClassName,
 } from '@jonasb/datadata-design';
 import blogUrl from 'playground-example-generator/dist/blog.sqlite?url';
-import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
 import reviewsUrl from 'playground-example-generator/dist/reviews.sqlite?url';
+import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
 import type { ChangeEvent } from 'react';
 import { useCallback, useContext } from 'react';
-import { DatabaseContext } from '../contexts/DatabaseContext';
-import { loadDatabaseFromUrl, resetDatabase, uploadDatabase } from '../utils/DatabaseUtils';
+import { DatabaseContext } from '../contexts/DatabaseContext.js';
+import { loadDatabaseFromUrl, resetDatabase, uploadDatabase } from '../utils/DatabaseUtils.js';
 
 interface Props {
   className?: string;

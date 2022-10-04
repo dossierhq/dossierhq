@@ -5,10 +5,10 @@ import type { Server } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { useContext, useEffect, useState } from 'react';
 import type { Database } from 'sql.js';
-import { SERVER_LOGGER } from '../config/LoggerConfig';
-import { DatabaseContext } from '../contexts/DatabaseContext';
-import type { ServerContextValue } from '../contexts/ServerContext';
-import { ServerContext } from '../contexts/ServerContext';
+import { SERVER_LOGGER } from '../config/LoggerConfig.js';
+import { DatabaseContext } from '../contexts/DatabaseContext.js';
+import type { ServerContextValue } from '../contexts/ServerContext.js';
+import { ServerContext } from '../contexts/ServerContext.js';
 
 interface Props {
   children: React.ReactNode;

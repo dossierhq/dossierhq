@@ -1,9 +1,9 @@
 import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext';
-import { ROUTE } from '../utils/RouteUtils';
+import { UserContext } from '../contexts/UserContext.js';
+import { ROUTE } from '../utils/RouteUtils.js';
 
 interface Props {
   current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'graphiql';

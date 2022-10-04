@@ -1,7 +1,7 @@
 #!/usr/bin/env -S bun
 import { createConsoleLogger, FieldType } from '@jonasb/datadata-core';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
-import { createAdapter } from './ServerUtils';
+import { createAdapter } from './ServerUtils.js';
 
 const logger = createConsoleLogger(console);
 

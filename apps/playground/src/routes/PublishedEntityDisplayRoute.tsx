@@ -1,7 +1,7 @@
 import { PublishedEntityDisplayScreen } from '@jonasb/datadata-admin-react-components';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { NavBar } from '../components/NavBar';
+import { NavBar } from '../components/NavBar.js';
 
 export function PublishedEntityDisplayRoute() {
   const [searchParams, setSearchParams] = useSearchParams();

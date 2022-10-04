@@ -4,10 +4,10 @@ import {
 } from '@jonasb/datadata-admin-react-components';
 import { EmptyStateMessage, FullscreenContainer } from '@jonasb/datadata-design';
 import { useContext, lazy, Suspense } from 'react';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-import { NavBar } from '../components/NavBar';
+import { ErrorBoundary } from '../components/ErrorBoundary.js';
+import { NavBar } from '../components/NavBar.js';
 
-const GraphiQLEditor = lazy(() => import('../components/GraphiQLEditor'));
+const GraphiQLEditor = lazy(() => import('../components/GraphiQLEditor.js'));
 
 export function GraphiQLRoute(): JSX.Element {
   const { schema: adminSchema } = useContext(AdminDataDataContext);

@@ -5,7 +5,7 @@ import '@jonasb/datadata-leaflet/main.css';
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App';
+import App from './App.js';
 import './main.css';
 
 //TODO bundle CSS in ARC and remove need to add all css files here and to have direct dependencies to design/dd-leaflet/leaflet

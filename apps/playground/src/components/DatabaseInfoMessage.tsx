@@ -1,9 +1,9 @@
 import { Button, Message } from '@jonasb/datadata-design';
 import { useCallback, useContext } from 'react';
 import useSWR from 'swr';
-import { DatabaseContext } from '../contexts/DatabaseContext';
-import { downloadDatabase, queryDatabaseSize } from '../utils/DatabaseUtils';
-import { bytesToHumanSize } from '../utils/DisplayUtils';
+import { DatabaseContext } from '../contexts/DatabaseContext.js';
+import { downloadDatabase, queryDatabaseSize } from '../utils/DatabaseUtils.js';
+import { bytesToHumanSize } from '../utils/DisplayUtils.js';
 
 interface Props {
   className?: string;

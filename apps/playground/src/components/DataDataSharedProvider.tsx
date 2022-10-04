@@ -18,12 +18,12 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 import type { Cache } from 'swr';
 import { useSWRConfig } from 'swr';
 import type { ScopedMutator } from 'swr/dist/types';
-import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig';
-import { ContextAdapter } from '../config/ContextAdapter';
-import { SESSION_LOGGER } from '../config/LoggerConfig';
-import { LoginContext } from '../contexts/LoginContext';
-import { ServerContext } from '../contexts/ServerContext';
-import { UserContext } from '../contexts/UserContext';
+import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig.js';
+import { ContextAdapter } from '../config/ContextAdapter.js';
+import { SESSION_LOGGER } from '../config/LoggerConfig.js';
+import { LoginContext } from '../contexts/LoginContext.js';
+import { ServerContext } from '../contexts/ServerContext.js';
+import { UserContext } from '../contexts/UserContext.js';
 
 type SessionResult = Result<
   CreateSessionPayload,
