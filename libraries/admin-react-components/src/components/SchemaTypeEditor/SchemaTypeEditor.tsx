@@ -9,6 +9,7 @@ import type {
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { PatternSelector } from './PatternSelector.js';
 import { SchemaFieldEditor } from './SchemaFieldEditor.js';
 
 interface Props {
@@ -27,6 +28,7 @@ export function SchemaTypeEditor({
   onAddOrRenameField,
 }: Props) {
   const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
+  const canChangeAuthKeyPattern = typeSelector.kind === 'entity' && typeDraft.status === 'new';
 
   return (
     <>
@@ -45,6 +47,20 @@ export function SchemaTypeEditor({
           </Checkbox>
         </Field.Control>
       </Field>
+      {'authKeyPattern' in typeDraft ? (
+        <Field>
+          <Field.Label>Auth key pattern</Field.Label>
+          <Field.Control>
+            <PatternSelector
+              readOnly={!canChangeAuthKeyPattern}
+              typeSelector={typeSelector}
+              value={typeDraft.authKeyPattern}
+              schemaEditorState={schemaEditorState}
+              dispatchSchemaEditorState={dispatchSchemaEditorState}
+            />
+          </Field.Control>
+        </Field>
+      ) : undefined}
       <Field>
         <Field.Control>
           <Button onClick={() => onAddOrRenameField(typeSelector)}>Add field</Button>
