@@ -32,8 +32,9 @@ export function SchemaTypeEditor({
 
   return (
     <>
-      <Field>
-        <Field.Control>
+      <Field horizontal>
+        <Field.LabelColumn />
+        <Field.BodyColumn>
           <Checkbox
             checked={typeDraft.adminOnly}
             disabled={!canChangeAdminOnly}
@@ -45,12 +46,14 @@ export function SchemaTypeEditor({
           >
             Admin only
           </Checkbox>
-        </Field.Control>
+        </Field.BodyColumn>
       </Field>
       {'authKeyPattern' in typeDraft ? (
-        <Field>
-          <Field.Label>Auth key pattern</Field.Label>
-          <Field.Control>
+        <Field horizontal>
+          <Field.LabelColumn>
+            <Field.Label>Auth key pattern</Field.Label>
+          </Field.LabelColumn>
+          <Field.BodyColumn>
             <PatternSelector
               readOnly={!canChangeAuthKeyPattern}
               typeSelector={typeSelector}
@@ -58,13 +61,14 @@ export function SchemaTypeEditor({
               schemaEditorState={schemaEditorState}
               dispatchSchemaEditorState={dispatchSchemaEditorState}
             />
-          </Field.Control>
+          </Field.BodyColumn>
         </Field>
       ) : undefined}
-      <Field>
-        <Field.Control>
+      <Field horizontal>
+        <Field.LabelColumn />
+        <Field.BodyColumn>
           <Button onClick={() => onAddOrRenameField(typeSelector)}>Add field</Button>
-        </Field.Control>
+        </Field.BodyColumn>
       </Field>
       {typeDraft.fields.map((fieldDraft) => (
         <SchemaFieldEditor
