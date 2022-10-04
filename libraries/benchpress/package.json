@@ -2,31 +2,34 @@
   "name": "benchpress",
   "version": "0.1.0",
   "description": "",
-  "main": "./lib/src/index.js",
-  "types": "./lib/src/index.d.ts",
+  "type": "module",
   "exports": {
-    ".": "./lib/src/index.js"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   },
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "heft build && npm run prettier:check",
+    "build": "npm run prettier:check && heft build --clean && post-process-build deno cjs-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
-    "examples:timer-benchmark": "node ./lib/examples/timer-benchmark.js",
+    "examples:timer-benchmark": "node ./lib/esm/examples/timer-benchmark.js",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "ts:check": "tsc --noEmit",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "prettier:fix": "prettier --write ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "~0.48.0",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "@typescript-eslint/parser": "^5.26.0",
     "eslint": "^8.16.0",
     "prettier": "2.7.1",
     "typescript": "^4.8.4"

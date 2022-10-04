@@ -1,5 +1,5 @@
-import type { BenchPressClock } from '.';
-import { createClock } from './Clock';
+import type { BenchPressClock } from './Clock.js';
+import { createClock } from './Clock.js';
 
 export interface BenchPressOptions {
   testName: string;
