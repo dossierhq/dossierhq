@@ -648,6 +648,22 @@ class ChangeTypeAdminOnlyAction extends TypeAction {
   }
 }
 
+class ChangeTypeAuthKeyPatternAction extends TypeAction {
+  pattern: string | null;
+
+  constructor(typeSelector: SchemaTypeSelector, pattern: string | null) {
+    super(typeSelector);
+    this.pattern = pattern;
+  }
+
+  reduceType(typeDraft: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+    if (typeDraft.authKeyPattern === this.pattern) {
+      return typeDraft;
+    }
+    return { ...typeDraft, authKeyPattern: this.pattern };
+  }
+}
+
 class DeleteFieldAction extends TypeAction {
   fieldName: string;
 
@@ -919,6 +935,7 @@ export const SchemaEditorActions = {
   ChangeFieldType: ChangeFieldTypeAction,
   ChangePatternPattern: ChangePatternPatternAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
+  ChangeTypeAuthKeyPattern: ChangeTypeAuthKeyPatternAction,
   DeleteField: DeleteFieldAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,

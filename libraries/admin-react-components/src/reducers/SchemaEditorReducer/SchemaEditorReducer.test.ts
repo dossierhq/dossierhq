@@ -1869,6 +1869,24 @@ describe('DeleteTypeAction', () => {
   });
 });
 
+describe('ChangeTypeAuthKeyPatternAction', () => {
+  test('change pattern for new entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(createAdminSchema({})),
+      new SchemaEditorActions.AddType('entity', 'Foo'),
+      new SchemaEditorActions.AddPattern('my-pattern'),
+      new SchemaEditorActions.ChangeTypeAuthKeyPattern(
+        { kind: 'entity', typeName: 'Foo' },
+        'my-pattern'
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('RenameFieldAction', () => {
   test('add and rename field', () => {
     const state = reduceSchemaEditorStateActions(
