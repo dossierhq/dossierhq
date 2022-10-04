@@ -528,6 +528,63 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
 }
 `;
 
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "my-pattern",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": "my-pattern",
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "patterns": [
+    {
+      "name": "my-pattern",
+      "pattern": "",
+      "status": "new",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": {
+      "entityTypes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": "my-pattern",
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "patterns": [
+    {
+      "name": "my-pattern",
+      "pattern": "",
+    },
+  ],
+}
+`;
+
 exports[`RenameTypeAction > add and rename entity type with fields referring to itself 1`] = `
 {
   "activeSelector": {
