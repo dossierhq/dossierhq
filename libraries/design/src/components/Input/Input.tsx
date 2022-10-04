@@ -1,8 +1,9 @@
 import type { ChangeEventHandler, KeyboardEventHandler } from 'react';
-import React from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
+import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
 import type { IconName } from '../index.js';
 import { Icon } from '../index.js';
 
@@ -11,6 +12,7 @@ export interface InputProps {
   iconLeft?: IconName;
   placeholder?: string;
   readOnly?: boolean;
+  textStyle?: TextStyle;
   type?: 'text' | 'number';
   min?: number;
   max?: number;
@@ -26,6 +28,7 @@ export function Input({
   placeholder,
   type,
   readOnly,
+  textStyle,
   min,
   max,
   step,
@@ -37,7 +40,11 @@ export function Input({
   return (
     <div className={className}>
       <input
-        className={toClassName('input', toColorClassName(color))}
+        className={toClassName(
+          'input',
+          toColorClassName(color),
+          textStyle && toTextStyleClassName(textStyle)
+        )}
         type={type ?? 'text'}
         {...{ min, max, step, placeholder, readOnly, value, onChange, onKeyDown }}
       />

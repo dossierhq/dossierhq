@@ -22,7 +22,7 @@ export function SchemaPatternEditor({
   schemaEditorState: _2,
   dispatchSchemaEditorState,
 }: Props) {
-  const canChangePattern = patternDraft.status === 'new'; //TODO too restrictive
+  const canChangePattern = patternDraft.status === 'new';
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +37,12 @@ export function SchemaPatternEditor({
     <Field>
       <Field.Label>Pattern</Field.Label>
       <Field.Control>
-        <Input readOnly={!canChangePattern} value={patternDraft.pattern} onChange={handleChange} />
+        <Input
+          readOnly={!canChangePattern}
+          value={patternDraft.pattern}
+          textStyle="code1"
+          onChange={handleChange}
+        />
       </Field.Control>
     </Field>
   );
