@@ -1,11 +1,11 @@
-import childProcess from 'child_process';
-import fs from 'fs';
-import path from 'path';
+import * as childProcess from 'child_process';
+import * as fs from 'fs';
+import * as path from 'path';
 import { promisify } from 'util';
-import type { BenchPressResult } from '.';
-import type { BenchPressProcessedResult } from './Process';
-import { processResults } from './Process';
-import { ms_to_hz } from './Units';
+import type { BenchPressProcessedResult } from './Process.js';
+import { processResults } from './Process.js';
+import type { BenchPressResult } from './Runner.js';
+import { ms_to_hz } from './Units.js';
 
 export interface BenchPressReportOptions {
   percentiles: number[];

@@ -1,5 +1,5 @@
-import type { BenchPressResult } from '.';
-import { ns_to_ms } from './Units';
+import type { BenchPressResult } from './Runner.js';
+import { ns_to_ms } from './Units.js';
 
 export interface BenchPressProcessOptions {
   percentiles: number[];

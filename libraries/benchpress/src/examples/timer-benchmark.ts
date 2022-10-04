@@ -1,5 +1,5 @@
-import path from 'path';
-import { delay, runTest, reportResult, fileTimestamp } from '../src/';
+import * as path from 'node:path';
+import { delay, fileTimestamp, reportResult, runTest } from '../index.js';
 
 async function main(runName: string, variant: string) {
   const result = await runTest(
@@ -14,19 +14,17 @@ async function main(runName: string, variant: string) {
 
   await reportResult(result, {
     percentiles: [50, 90, 95],
-    folder: path.join(__dirname, 'output'),
+    folder: path.join(process.cwd(), 'output'),
     baseName: `${runName}-${variant}-set-timeout`,
     tsvFilename: 'benchmark.tsv',
   });
 }
 
-if (require.main === module) {
-  const runName = process.argv[2] || '';
-  const variant = 'main';
-  const timestamp = fileTimestamp();
-  const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
-  main(fullRunName, variant).catch((error) => {
-    console.warn(error);
-    process.exitCode = 1;
-  });
-}
+const runName = process.argv[2] || '';
+const variant = 'main';
+const timestamp = fileTimestamp();
+const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
+main(fullRunName, variant).catch((error) => {
+  console.warn(error);
+  process.exitCode = 1;
+});
