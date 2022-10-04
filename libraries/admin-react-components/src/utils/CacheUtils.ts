@@ -6,8 +6,9 @@ import type {
   EntityVersionReference,
 } from '@jonasb/datadata-core';
 import { copyEntity } from '@jonasb/datadata-core';
-import type { Cache } from 'swr';
-import type { ScopedMutator } from 'swr/dist/types';
+import type { Cache, useSWRConfig } from 'swr';
+
+export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 
 export const CACHE_KEYS = {
   adminEntity(reference: EntityReference | EntityVersionReference) {
@@ -46,11 +47,11 @@ export function updateCacheEntity<T extends AdminEntity<string, object> = AdminE
 }
 
 export function updateCacheEntityInfo<TEffect>(
-  mutate: ScopedMutator<AdminEntity>,
+  mutate: ScopedMutator,
   payload: AdminEntityPublishingPayload<TEffect>
 ) {
   const key = CACHE_KEYS.adminEntity({ id: payload.id });
-  mutate(key, (entity) => {
+  mutate(key, (entity: AdminEntity) => {
     if (!entity) return entity;
     return copyEntity(entity, { info: { status: payload.status, updatedAt: payload.updatedAt } });
   });

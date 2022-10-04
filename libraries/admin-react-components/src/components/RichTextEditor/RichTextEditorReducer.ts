@@ -1,5 +1,5 @@
 import type { RichText } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 
 interface RichTextState {
   initialized: boolean;

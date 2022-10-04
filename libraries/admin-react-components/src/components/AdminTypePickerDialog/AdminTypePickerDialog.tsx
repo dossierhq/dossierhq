@@ -1,6 +1,6 @@
 import { Card2, Dialog, Table } from '@jonasb/datadata-design';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../..';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
 import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
 

@@ -13,7 +13,7 @@ import {
   Text,
 } from '@jonasb/datadata-design';
 import { useCallback, useContext, useEffect, useReducer } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
 import type { VersionItem } from './VersionSelectionReducer.js';

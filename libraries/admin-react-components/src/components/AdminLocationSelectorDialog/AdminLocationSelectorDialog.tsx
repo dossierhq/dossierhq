@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminSchema, Location } from '@jonasb/datadata-core';
-import { ItemTraverseNodeType, isLocationItemField } from '@jonasb/datadata-core';
+import { isLocationItemField, ItemTraverseNodeType } from '@jonasb/datadata-core';
 import {
   Dialog,
   FullscreenContainer,
@@ -18,20 +18,20 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext';
-import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
-import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/EntityDraftTraverser';
-import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext.js';
+import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
+import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/EntityDraftTraverser.js';
+import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
-import { EntityDraftMapMarker } from './EntityDraftMapMarker';
-import { initializeLocationState, reduceLocation } from './LocationReducer';
+import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
+import { EntityDraftMapMarker } from './EntityDraftMapMarker.js';
+import { initializeLocationState, reduceLocation } from './LocationReducer.js';
 
 interface AdminLocationSelectorDialogProps {
   show: boolean;

@@ -10,9 +10,9 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { AdminDataDataContext } from '../..';
-import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor';
-import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
+import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
+import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -22,19 +22,19 @@ import type {
   SchemaPatternSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getElementIdForSelector,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
   SchemaEditorActions,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog';
-import { AddOrRenamePatternDialog } from './AddOrRenamePatternDialog';
-import { AddOrRenameTypeDialog } from './AddOrRenameTypeDialog';
-import { SaveSchemaDialog } from './SaveSchemaDialog';
-import { SchemaMenu } from './SchemaMenu';
-import { TypeDraftStatusTag } from './TypeDraftStatusTag';
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog.js';
+import { AddOrRenamePatternDialog } from './AddOrRenamePatternDialog.js';
+import { AddOrRenameTypeDialog } from './AddOrRenameTypeDialog.js';
+import { SaveSchemaDialog } from './SaveSchemaDialog.js';
+import { SchemaMenu } from './SchemaMenu.js';
+import { TypeDraftStatusTag } from './TypeDraftStatusTag.js';
 
 export interface SchemaEditorScreenProps {
   header?: React.ReactNode;

@@ -1,19 +1,19 @@
 import type { AdminSearchQuery } from '@jonasb/datadata-core';
 import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb/datadata-design';
 import { initializeMultipleSelectorState } from '@jonasb/datadata-design';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 import type { Dispatch } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { AdminDataDataContext } from '..';
 import {
   initializeStatusSelectorState,
   reduceStatusSelectorState,
 } from '../components/StatusSelector/StatusSelector.js';
+import { AdminDataDataContext } from '../contexts/AdminDataDataContext.js';
 import {
   initializeAuthKeySelectorState,
   reduceAuthKeySelectorState,
 } from '../shared/components/AuthKeySelector/AuthKeySelector.js';
-import type { EntityTypeItem } from '../shared/components/EntityTypeSelector/EntityTypeSelector';
+import type { EntityTypeItem } from '../shared/components/EntityTypeSelector/EntityTypeSelector.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,

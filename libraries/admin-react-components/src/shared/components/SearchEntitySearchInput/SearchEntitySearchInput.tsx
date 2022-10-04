@@ -1,7 +1,7 @@
 import { Input } from '@jonasb/datadata-design';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash/debounce.js';
 import type { Dispatch } from 'react';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,

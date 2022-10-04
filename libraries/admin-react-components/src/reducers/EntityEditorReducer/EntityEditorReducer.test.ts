@@ -7,14 +7,14 @@ import {
   FieldType,
 } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
+import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
 import {
   EntityEditorActions,
   getEntityCreateFromDraftState,
   getEntityUpdateFromDraftState,
   initializeEntityEditorState,
   reduceEntityEditorState,
-} from './EntityEditorReducer';
+} from './EntityEditorReducer.js';
 
 function reduceEntityEditorStateActions(
   state: EntityEditorState,

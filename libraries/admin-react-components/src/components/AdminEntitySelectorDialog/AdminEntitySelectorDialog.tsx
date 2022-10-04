@@ -7,9 +7,9 @@ import {
   toSizeClassName,
 } from '@jonasb/datadata-design';
 import { useCallback, useContext, useReducer, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
-import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
+import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
@@ -19,10 +19,10 @@ import {
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { AdminEntityList } from '../AdminEntityList/AdminEntityList';
-import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
-import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar';
-import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector';
+import { AdminEntityList } from '../AdminEntityList/AdminEntityList.js';
+import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
+import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';
+import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector.js';
 
 interface AdminEntitySelectorDialogProps {
   show: boolean;

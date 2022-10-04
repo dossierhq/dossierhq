@@ -2,8 +2,8 @@ import type { AdminClient, AdminEntity, AdminEntityTypeSpecification } from '@jo
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import type { NotificationInfo } from '@jonasb/datadata-design';
 import { Button, ButtonDropdown, NotificationContext, Row } from '@jonasb/datadata-design';
-import React, { useContext, useMemo } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { useContext, useMemo } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 
 interface Props {
   disabled?: boolean;

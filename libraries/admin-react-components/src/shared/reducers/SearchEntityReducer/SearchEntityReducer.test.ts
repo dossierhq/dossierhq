@@ -7,12 +7,12 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, ok } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer';
+import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';
 import {
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-} from './SearchEntityReducer';
+} from './SearchEntityReducer.js';
 
 function createPublishedEntity(id: string): PublishedEntity {
   return {

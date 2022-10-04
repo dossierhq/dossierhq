@@ -36,8 +36,8 @@ import type {
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
 } from '../published/contexts/PublishedDataDataContext.js';
-import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
-import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
+import type { SwrConfigRef } from '../utils/CachingAdminMiddleware.js';
+import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 
 interface BackendContext {
   logger: Logger;

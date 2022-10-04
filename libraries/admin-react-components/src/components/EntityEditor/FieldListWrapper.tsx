@@ -1,6 +1,6 @@
 import { Column } from '@jonasb/datadata-design';
 import React, { useCallback } from 'react';
-import type { FieldEditorProps } from './FieldEditor';
+import type { FieldEditorProps } from './FieldEditor.js';
 
 interface Props<Item> extends FieldEditorProps<Item[]> {
   Editor: React.JSXElementConstructor<FieldEditorProps<Item>>;

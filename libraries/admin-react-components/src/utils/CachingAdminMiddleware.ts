@@ -6,14 +6,15 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminClientOperationName, AdminSchema, assertIsDefined } from '@jonasb/datadata-core';
 import type { RefObject } from 'react';
-import type { Cache, ScopedMutator } from 'swr/dist/types';
+import type { Cache } from 'swr';
+import type { ScopedMutator } from './CacheUtils.js';
 import {
   invalidateEntityHistory,
   invalidatePublishingHistory,
   updateCacheEntity,
   updateCacheEntityInfo,
   updateCacheSchemas,
-} from './CacheUtils';
+} from './CacheUtils.js';
 
 export type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
 

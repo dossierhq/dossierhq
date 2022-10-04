@@ -1,11 +1,11 @@
 import type { AdminEntity, Location } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
-import React, { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
-import { AdminLocationSelectorDialog } from '../AdminLocationSelectorDialog/AdminLocationSelectorDialog';
-import type { FieldEditorProps } from './FieldEditor';
+import { AdminLocationSelectorDialog } from '../AdminLocationSelectorDialog/AdminLocationSelectorDialog.js';
+import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<Location>;
 

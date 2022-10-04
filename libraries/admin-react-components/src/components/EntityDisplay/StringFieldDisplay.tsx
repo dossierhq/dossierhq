@@ -1,5 +1,5 @@
 import { Input, TextArea } from '@jonasb/datadata-design';
-import type { FieldDisplayProps } from './FieldDisplay';
+import type { FieldDisplayProps } from './FieldDisplay.js';
 
 type Props = FieldDisplayProps<string>;
 

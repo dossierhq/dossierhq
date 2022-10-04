@@ -2,13 +2,13 @@ import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
 import { Button, Column, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
-import { useAdminEntity } from '../../hooks/useAdminEntity';
-import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog';
-import { StatusTag } from '../StatusTag/StatusTag';
-import type { FieldEditorProps } from './FieldEditor';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
+import { useAdminEntity } from '../../hooks/useAdminEntity.js';
+import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
+import { StatusTag } from '../StatusTag/StatusTag.js';
+import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<EntityReference>;
 

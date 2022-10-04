@@ -1,4 +1,4 @@
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
 import {

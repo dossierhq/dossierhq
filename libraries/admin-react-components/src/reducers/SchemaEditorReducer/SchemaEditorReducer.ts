@@ -7,7 +7,7 @@ import type {
   AdminValueTypeSpecificationUpdate,
 } from '@jonasb/datadata-core';
 import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 
 export type SchemaSelector = SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector;
 

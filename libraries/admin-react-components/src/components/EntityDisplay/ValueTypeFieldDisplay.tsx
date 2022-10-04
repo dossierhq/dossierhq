@@ -3,8 +3,8 @@ import { FieldType } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { Fragment, useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
-import type { FieldDisplayProps } from './FieldDisplay';
-import { FieldDisplay } from './FieldDisplay';
+import type { FieldDisplayProps } from './FieldDisplay.js';
+import { FieldDisplay } from './FieldDisplay.js';
 
 interface Props extends FieldDisplayProps<ValueItem> {
   className?: string;

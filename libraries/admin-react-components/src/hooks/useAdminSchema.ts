@@ -2,7 +2,7 @@ import type { AdminClient, ErrorResult, ErrorType } from '@jonasb/datadata-core'
 import { AdminSchema } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { CACHE_KEYS } from '../utils/CacheUtils';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 export function useAdminSchema(adminClient: AdminClient): {
   schema: AdminSchema | undefined;

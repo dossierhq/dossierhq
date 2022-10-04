@@ -1,6 +1,6 @@
 import { ButtonDropdown } from '@jonasb/datadata-design';
 import { useContext, useEffect } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 
 interface Props {
   patternName: string | null;

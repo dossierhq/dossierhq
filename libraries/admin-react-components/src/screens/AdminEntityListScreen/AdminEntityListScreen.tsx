@@ -1,12 +1,12 @@
 import type { AdminEntity } from '@jonasb/datadata-core';
 import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
-import { AdminDataDataContext } from '../..';
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../../components/AdminEntityMapMarker/AdminEntityMapMarker.js';
-import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar';
+import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';
 import { StatusTagSelector } from '../../components/StatusTagSelector/StatusTagSelector.js';
-import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';

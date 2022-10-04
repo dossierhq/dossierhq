@@ -2,10 +2,10 @@ import type { AdminFieldSpecification, ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
 import { Fragment, useCallback, useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker';
-import type { FieldEditorProps } from './FieldEditor';
-import { FieldEditor } from './FieldEditor';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
+import type { FieldEditorProps } from './FieldEditor.js';
+import { FieldEditor } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ValueItem>;
 

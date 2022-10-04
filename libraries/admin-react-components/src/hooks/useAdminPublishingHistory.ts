@@ -7,7 +7,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { CACHE_KEYS } from '../utils/CacheUtils';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 export function useAdminPublishingHistory(
   adminClient: AdminClient,

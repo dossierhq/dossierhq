@@ -15,13 +15,13 @@ import {
 } from '@jonasb/datadata-core';
 import { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
-import { BooleanFieldEditor } from './BooleanFieldEditor';
-import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
-import { FieldListWrapper } from './FieldListWrapper';
-import { LocationFieldEditor } from './LocationFieldEditor';
-import { RichTextFieldEditor } from './RichTextFieldEditor';
-import { StringFieldEditor } from './StringFieldEditor';
-import { ValueTypeFieldEditor } from './ValueTypeFieldEditor';
+import { BooleanFieldEditor } from './BooleanFieldEditor.js';
+import { EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
+import { FieldListWrapper } from './FieldListWrapper.js';
+import { LocationFieldEditor } from './LocationFieldEditor.js';
+import { RichTextFieldEditor } from './RichTextFieldEditor.js';
+import { StringFieldEditor } from './StringFieldEditor.js';
+import { ValueTypeFieldEditor } from './ValueTypeFieldEditor.js';
 
 export interface FieldEditorProps<T> {
   fieldSpec: AdminFieldSpecification;

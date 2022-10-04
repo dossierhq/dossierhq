@@ -12,29 +12,29 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog';
-import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog';
-import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
-import { EntityEditor } from '../../components/EntityEditor/EntityEditor';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
-import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext';
-import { useAdminEntity } from '../../hooks/useAdminEntity';
+import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';
+import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
+import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker.js';
+import { EntityEditor } from '../../components/EntityEditor/EntityEditor.js';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
+import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext.js';
+import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import type {
   EntityEditorDraftState,
   EntityEditorState,
   EntityEditorStateAction,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
   EntityEditorActions,
   reduceEntityEditorState,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
   initializeEditorEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndEntityEditorState,
-} from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
-import { EntityEditorDraftSidebar } from './EntityEditorDraftSidebar';
-import { EntityEditorMenu } from './EntityEditorMenu';
+} from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer.js';
+import { EntityEditorDraftSidebar } from './EntityEditorDraftSidebar.js';
+import { EntityEditorMenu } from './EntityEditorMenu.js';
 
 export interface EntityEditorScreenProps {
   header?: React.ReactNode;
