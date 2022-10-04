@@ -139,7 +139,7 @@ async function updateEntity(
 }
 
 function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
-  const name = faker.company.companyName();
+  const name = faker.company.name();
   return cleanupEntity({
     info: { authKey: 'none', type: 'Organization', name },
     fields: {
