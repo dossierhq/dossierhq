@@ -161,7 +161,6 @@ importers:
   ../../examples/bun:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-bun': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
@@ -174,7 +173,6 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-bun': link:../../libraries/database-adapter-sqlite-bun
       '@jonasb/datadata-server': link:../../libraries/server
     devDependencies:
-      '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       bun-types: 0.1.11
       eslint: 8.16.0
@@ -671,7 +669,6 @@ importers:
   ../../libraries/database-adapter-test-integration:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
@@ -685,7 +682,6 @@ importers:
       uuid: ^9.0.0
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-server': link:../server
       tslib: 2.4.0
       uuid: 9.0.0
