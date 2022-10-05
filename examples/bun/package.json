@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "bun-types": "~0.1.11",
     "eslint": "^8.16.0",

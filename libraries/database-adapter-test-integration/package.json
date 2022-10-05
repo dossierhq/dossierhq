@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "tslib": "~2.4.0",
     "uuid": "^9.0.0"

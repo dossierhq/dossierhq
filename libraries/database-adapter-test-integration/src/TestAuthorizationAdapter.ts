@@ -1,6 +1,9 @@
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '@jonasb/datadata-server';
+import type {
+  AuthorizationAdapter,
+  ResolvedAuthKey,
+  SessionContext,
+} from '@jonasb/datadata-server';
 
 export function createTestAuthorizationAdapter(): AuthorizationAdapter {
   return {
