@@ -26,6 +26,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+      - name: Use bun
+        uses: antongolub/action-setup-bun@v1
       - name: Install gnuplot
         run: |
           sudo apt-get update # to avoid error: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
