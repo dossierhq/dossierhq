@@ -1,8 +1,10 @@
 declare global {
-  const Bun: {
-    write(a: unknown, b: unknown): void;
-    stdout: unknown;
-  };
+  const Bun:
+    | {
+        write(a: unknown, b: unknown): void;
+        stdout: unknown;
+      }
+    | undefined;
 }
 
 export function replaceStdoutLineIfSupported(message: string) {
@@ -10,7 +12,7 @@ export function replaceStdoutLineIfSupported(message: string) {
     process.stdout.write(`\x1b[0G${message}`);
     return true;
   }
-  if (Bun) {
+  if (typeof Bun !== 'undefined') {
     Bun.write(Bun.stdout, `\x1b[0G${message}`);
   }
   return false;
