@@ -10,9 +10,10 @@ import type { Database } from 'bun:sqlite';
 
 export type BunSqliteDatabaseAdapter = DatabaseAdapter;
 
-export function createBunSqliteAdapter(
+export async function createBunSqliteAdapter(
   context: Context,
-  database: Database
+  database: Database,
+  options: { journalMode?: 'wal' } = {}
 ): PromiseResult<BunSqliteDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -48,7 +49,15 @@ export function createBunSqliteAdapter(
     randomUUID: crypto.randomUUID,
   };
 
-  return createSqliteDatabaseAdapterAdapter(context, adapter);
+  const adapterAdapterResult = await createSqliteDatabaseAdapterAdapter(context, adapter);
+
+  if (adapterAdapterResult.isOk()) {
+    if (options.journalMode === 'wal') {
+      await adapter.query('PRAGMA journal_mode=WAL', undefined);
+    }
+  }
+
+  return adapterAdapterResult;
 }
 
 function isSqlite3Error(error: unknown): error is Error {

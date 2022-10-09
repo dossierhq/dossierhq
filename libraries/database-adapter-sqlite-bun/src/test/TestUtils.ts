@@ -30,7 +30,7 @@ export async function initializeIntegrationTestServer(
   const database = Database.open(filename);
   const serverResult = await createServer({
     databaseAdapter: (
-      await createBunSqliteAdapter({ logger: NoOpLogger }, database)
+      await createBunSqliteAdapter({ logger: NoOpLogger }, database, { journalMode: 'wal' })
     ).valueOrThrow(),
     authorizationAdapter: createTestAuthorizationAdapter(),
   });
