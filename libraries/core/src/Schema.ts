@@ -81,6 +81,7 @@ interface FieldSpecification {
    * can either be a standard RichTextNodeType or any type that's supported.
    */
   richTextNodes?: (RichTextNodeType | string)[];
+  matchPattern?: string;
 }
 
 export interface AdminFieldSpecification extends FieldSpecification {
@@ -134,7 +135,8 @@ export class AdminSchema {
   }
 
   validate(): Result<void, typeof ErrorType.BadRequest> {
-    const usedNames = new Set();
+    const usedNames = new Set<string>();
+    const usedPatterns = new Set<string>();
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
       const isValueType = this.spec.valueTypes.includes(typeSpec);
 
@@ -296,10 +298,25 @@ export class AdminSchema {
             }
           }
         }
+
+        if (fieldSpec.matchPattern) {
+          if (fieldSpec.type !== FieldType.String) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify matchPattern`
+            );
+          }
+
+          const pattern = this.getPattern(fieldSpec.matchPattern);
+          if (!pattern) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Unknown matchPattern (${fieldSpec.matchPattern})`
+            );
+          }
+          usedPatterns.add(fieldSpec.matchPattern);
+        }
       }
     }
 
-    const usedPatterns = new Set();
     for (const patternSpec of this.spec.patterns) {
       if (usedPatterns.has(patternSpec.name)) {
         return notOk.BadRequest(`${patternSpec.name}: Duplicate pattern name`);
