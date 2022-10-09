@@ -188,6 +188,12 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
   await fs.promises.writeFile(gnuPlotScriptPath, pngGnuPlotScript);
   console.log(`Writing to ${gnuPlotDataPath}`);
   await fs.promises.writeFile(gnuPlotDataPath, gnuPlotData);
+
+  if (!childProcess.execFile) {
+    //TODO support Bun.spawn when available
+    console.log('No child_process.execFile module available, skipping gnuplot execution');
+    return;
+  }
   try {
     await promisify(childProcess.execFile)('gnuplot', [gnuPlotScriptPath], {
       cwd: options.folder,
