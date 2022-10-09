@@ -13,10 +13,10 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@jonasb/datadata-core';
+import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
 import * as path from 'node:path';
-import type { DatabaseAdapterSelector } from './server.js';
 import { initializeServer } from './server.js';
 
 const outputFolder = path.join(process.cwd(), 'output');
@@ -468,13 +468,26 @@ async function runTests(
   );
 }
 
-async function initializeAndRunTests(
-  runName: string,
-  variant: string,
-  tsvFilename: string,
-  databaseSelector: DatabaseAdapterSelector
-) {
-  const serverResult = await initializeServer(databaseSelector);
+export async function initializeAndRunTests({
+  runName,
+  variant,
+  databaseAdapter,
+  ciOrLocal,
+}: {
+  runName: string;
+  variant: string;
+  databaseAdapter: DatabaseAdapter;
+  ciOrLocal: 'ci' | 'local';
+}) {
+  if (ciOrLocal === 'ci') {
+    assertIsDefined(process.env.GITHUB_SHA);
+    runName = process.env.GITHUB_SHA.slice(0, 8); // use short sha
+  } else {
+    const timestamp = fileTimestamp();
+    runName = runName ? `${timestamp}-${runName}` : timestamp;
+  }
+
+  const serverResult = await initializeServer(databaseAdapter);
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
   try {
@@ -487,45 +500,10 @@ async function initializeAndRunTests(
 
     const adminClient = server.createAdminClient(sessionResult.value.context);
 
+    const tsvFilename = ciOrLocal === 'ci' ? 'ci-benchmark.tsv' : 'local-benchmark.tsv';
     await runTests(runName, variant, tsvFilename, adminClient);
   } finally {
     await server.shutdown();
   }
   return ok(undefined);
 }
-
-async function main(runName: string, tsvFilename: string) {
-  assertIsDefined(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
-  const variants: { variant: string; adapter: DatabaseAdapterSelector }[] = [
-    {
-      variant: 'postgres',
-      adapter: { postgresConnectionString: process.env.EXAMPLES_BENCHMARK_DATABASE_URL },
-    },
-    {
-      variant: 'sqlite',
-      adapter: { sqliteDatabasePath: 'output/db.sqlite' },
-    },
-  ];
-  for (const { variant, adapter } of variants) {
-    const result = await initializeAndRunTests(runName, variant, tsvFilename, adapter);
-    result.throwIfError();
-  }
-}
-
-const runNameOrCiSwitch = process.argv[2] || '';
-let runName;
-let tsvFilename;
-if (runNameOrCiSwitch === 'ci') {
-  assertIsDefined(process.env.GITHUB_SHA);
-  runName = process.env.GITHUB_SHA.slice(0, 8); // use short sha
-  tsvFilename = 'ci-benchmark.tsv';
-} else {
-  const timestamp = fileTimestamp();
-  runName = runNameOrCiSwitch ? `${timestamp}-${runNameOrCiSwitch}` : timestamp;
-  tsvFilename = 'local-benchmark.tsv';
-}
-
-main(runName, tsvFilename).catch((error) => {
-  console.warn(error);
-  process.exitCode = 1;
-});

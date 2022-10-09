@@ -1,4 +1,4 @@
-import type { Context } from '@jonasb/datadata-database-adapter';
+import type { Context } from '@jonasb/datadata-database-adapter-sqlite-bun';
 import { createBunSqliteAdapter } from '@jonasb/datadata-database-adapter-sqlite-bun';
 import { Database } from 'bun:sqlite';
 
