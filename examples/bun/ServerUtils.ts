@@ -4,5 +4,5 @@ import { Database } from 'bun:sqlite';
 
 export function createAdapter(context: Context, filename: string) {
   const database = Database.open(filename);
-  return createBunSqliteAdapter(context, database);
+  return createBunSqliteAdapter(context, database, { journalMode: 'wal' });
 }
