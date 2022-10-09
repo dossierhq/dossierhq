@@ -5,7 +5,6 @@ import type {
   AdminEntityUpdate,
   AdminFieldSpecification,
   AdminSchema,
-  EntityLike,
   EntityReference,
   ErrorType,
   ItemTraverseNode,
@@ -391,7 +390,11 @@ export async function encodeAdminEntity(
     return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
   }
 
-  // Validate entity fields
+  // Collect values and validate entity fields
+  const ftsCollector = createFullTextSearchCollector();
+  const referencesCollector = createRequestedReferencesCollector();
+  const locationsCollector = createLocationsCollector();
+
   // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
   const validateOptions = { validatePublish: false };
@@ -402,6 +405,9 @@ export async function encodeAdminEntity(
         `${visitorPathToString(validationError.path)}: ${validationError.message}`
       );
     }
+    ftsCollector.collect(node);
+    referencesCollector.collect(node);
+    locationsCollector.collect(node);
   }
 
   const result: EncodeAdminEntityResult = {
@@ -427,22 +433,16 @@ export async function encodeAdminEntity(
     }
   }
 
-  const { requestedReferences, locations, fullTextSearchText } = collectDataFromEntity(
-    schema,
-    entity
-  );
   const resolveResult = await resolveRequestedEntityReferences(
     databaseAdapter,
     context,
-    requestedReferences
+    referencesCollector.result
   );
-  if (resolveResult.isError()) {
-    return resolveResult;
-  }
+  if (resolveResult.isError()) return resolveResult;
 
   result.referenceIds.push(...resolveResult.value);
-  result.locations.push(...locations);
-  result.fullTextSearchText = fullTextSearchText;
+  result.locations.push(...locationsCollector.result);
+  result.fullTextSearchText = ftsCollector.result;
 
   return ok(result);
 }
@@ -550,32 +550,6 @@ function encodeRichTextField(
   return ok(data);
 }
 
-//TODO remove to only traverse once
-export function collectDataFromEntity(
-  adminSchema: AdminSchema,
-  entity: EntityLike
-): {
-  requestedReferences: RequestedReference[];
-  locations: Location[];
-  fullTextSearchText: string;
-} {
-  const ftsCollector = createFullTextSearchCollector();
-  const referencesCollector = createRequestedReferencesCollector();
-  const locationsCollector = createLocationsCollector();
-
-  for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
-    ftsCollector.collect(node);
-    referencesCollector.collect(node);
-    locationsCollector.collect(node);
-  }
-
-  return {
-    requestedReferences: referencesCollector.result,
-    locations: locationsCollector.result,
-    fullTextSearchText: ftsCollector.result,
-  };
-}
-
 export function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const fullTextSearchText: string[] = [];
   return {
@@ -627,7 +601,9 @@ export function createReferencesCollector<TSchema extends AdminSchema | Publishe
   };
 }
 
-function createRequestedReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+export function createRequestedReferencesCollector<
+  TSchema extends AdminSchema | PublishedSchema
+>() {
   const requestedReferences: RequestedReference[] = [];
   return {
     collect: (node: ItemTraverseNode<TSchema>) => {
@@ -730,7 +706,3 @@ async function resolveRequestedEntityReferences(
 
   return ok(items.map(({ entityInternalId }) => ({ entityInternalId })));
 }
-
-export const forTest = {
-  collectDataFromEntity,
-};

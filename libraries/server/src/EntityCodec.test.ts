@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification, EntityLike } from '@jonasb/datadata-core';
 import {
   AdminSchema,
   createRichTextEntityLinkNode,
@@ -9,11 +9,14 @@ import {
   createRichTextTextNode,
   createRichTextValueItemNode,
   FieldType,
+  traverseEntity,
 } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
-import { forTest } from './EntityCodec.js';
-
-const { collectDataFromEntity } = forTest;
+import {
+  createFullTextSearchCollector,
+  createLocationsCollector,
+  createRequestedReferencesCollector,
+} from './EntityCodec.js';
 
 const schemaSpec: AdminSchemaSpecification = {
   entityTypes: [
@@ -60,6 +63,24 @@ const schemaSpec: AdminSchemaSpecification = {
 };
 
 const schema = new AdminSchema(schemaSpec);
+
+function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
+  const ftsCollector = createFullTextSearchCollector();
+  const referencesCollector = createRequestedReferencesCollector();
+  const locationsCollector = createLocationsCollector();
+
+  for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
+    ftsCollector.collect(node);
+    referencesCollector.collect(node);
+    locationsCollector.collect(node);
+  }
+
+  return {
+    requestedReferences: referencesCollector.result,
+    locations: locationsCollector.result,
+    fullTextSearchText: ftsCollector.result,
+  };
+}
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {
