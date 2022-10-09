@@ -1,5 +1,6 @@
 import type { BenchPressClock } from './Clock.js';
 import { createClock } from './Clock.js';
+import { replaceStdoutLineIfSupported } from './LogUtils.js';
 
 export interface BenchPressOptions {
   testName: string;
@@ -27,9 +28,7 @@ export async function runTest(
     `Warming up '${options.testName}' - ${options.variant} (${options.warmup} iterations)`
   );
   for (let i = 0; i < options.warmup; i += 1) {
-    if (process.stdout.isTTY) {
-      process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
-    }
+    replaceStdoutLineIfSupported(`Iteration [${i + 1}/${options.warmup}]`);
     controlClock.reset();
     const _success = await iteration(clock);
   }
@@ -39,10 +38,7 @@ export async function runTest(
   );
   const iterationDurations_ms = new Array<bigint | null>(options.iterations).fill(null);
   for (let i = 0; i < options.iterations; i += 1) {
-    if (process.stdout.isTTY) {
-      process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.iterations}]`);
-    }
-
+    replaceStdoutLineIfSupported(`Iteration [${i + 1}/${options.iterations}]`);
     controlClock.reset();
     const success = await iteration(clock);
 
