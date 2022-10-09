@@ -607,6 +607,44 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Boolean (i.e. non-String) with matchPattern', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'boolean', type: FieldType.Boolean, matchPattern: 'foo' }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [{ name: 'foo', pattern: '^foo$' }],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.boolean: Field with type Boolean shouldn’t specify matchPattern'
+    );
+  });
+
+  test('Error: matchPattern with missing pattern name', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'string', type: FieldType.String, matchPattern: 'foo' }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.string: Unknown matchPattern (foo)'
+    );
+  });
+
   test('Error: duplicate pattern', () => {
     expectErrorResult(
       new AdminSchema({
