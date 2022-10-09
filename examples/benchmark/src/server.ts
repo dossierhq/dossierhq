@@ -1,42 +1,10 @@
-import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
-import { NoOpLogger, ok } from '@jonasb/datadata-core';
-import {
-  createPostgresAdapter,
-  type PgDatabaseAdapter,
-} from '@jonasb/datadata-database-adapter-postgres-pg';
-import {
-  createDatabase,
-  createSqlite3Adapter,
-  type Sqlite3DatabaseAdapter,
-} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import type { AuthorizationAdapter } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, DatabaseAdapter } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
-import * as fs from 'node:fs/promises';
-import * as PG from 'pg';
-import * as Sqlite from 'sqlite3';
 import { schemaSpecification } from './schema.js';
 
-// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
-const { Client: PGClient } = (PG as unknown as { default: typeof PG }).default;
-// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
-const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
-
-export type DatabaseAdapterSelector =
-  | { postgresConnectionString: string }
-  | { sqliteDatabasePath: string };
-
-export async function initializeServer(adapterSelector: DatabaseAdapterSelector) {
-  const databaseAdapterResult: Result<
-    Sqlite3DatabaseAdapter,
-    typeof ErrorType.BadRequest | typeof ErrorType.Generic
-  > =
-    'sqliteDatabasePath' in adapterSelector
-      ? await createSqliteDatabaseAdapter(adapterSelector.sqliteDatabasePath)
-      : await createPostgresDatabaseAdapter(adapterSelector.postgresConnectionString);
-  if (databaseAdapterResult.isError()) return databaseAdapterResult;
-
+export async function initializeServer(databaseAdapter: DatabaseAdapter) {
   const serverResult = await createServer({
-    databaseAdapter: databaseAdapterResult.value,
+    databaseAdapter,
     authorizationAdapter: createAuthorizationAdapter(),
   });
   if (serverResult.isError()) return serverResult;
@@ -54,43 +22,6 @@ export async function initializeServer(adapterSelector: DatabaseAdapterSelector)
   if (schemaResult.isError()) return schemaResult;
 
   return serverResult;
-}
-
-async function createPostgresDatabaseAdapter(
-  connectionString: string
-): PromiseResult<PgDatabaseAdapter, typeof ErrorType.Generic> {
-  // delete database to have consistent results
-  const client = new PGClient({ connectionString });
-  await client.connect();
-  const {
-    rows: [{ count }],
-  } = await client.query('SELECT COUNT(*) FROM entities');
-  if (count > 0) {
-    console.log(`Deleting ${count} entities from database`);
-    await client.query('DELETE FROM entities');
-  }
-  await client.end();
-
-  const databaseAdapter = createPostgresAdapter({ connectionString });
-  return ok(databaseAdapter);
-}
-
-async function createSqliteDatabaseAdapter(databasePath: string) {
-  try {
-    // delete database to have consistent results
-    await fs.unlink(databasePath);
-  } catch (error) {
-    // ignore
-  }
-
-  const context = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(context, SqliteDatabase, {
-    filename: databasePath,
-    journalMode: 'wal',
-  });
-  if (databaseResult.isError()) return databaseResult;
-  const adapterResult = await createSqlite3Adapter(context, databaseResult.value);
-  return adapterResult;
 }
 
 function createAuthorizationAdapter(): AuthorizationAdapter {
