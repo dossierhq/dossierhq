@@ -30,21 +30,6 @@ export function expectResultValue<TOk, TError extends ErrorType>(
   expectedValue: TOk
 ): void {
   if (expectOkResult(result)) {
-    const actualCopy = deepCopyForIsEqual(result.value);
-    const expectedCopy = deepCopyForIsEqual(expectedValue);
-    expect(actualCopy).toEqual<TOk>(expectedCopy);
+    expect(result.value).toEqual<TOk>(expectedValue);
   }
-}
-
-//TODO remove when no longer using Temporal?
-function deepCopyForIsEqual<T>(obj: T): T {
-  if (obj === null || obj === undefined) return obj;
-  if (typeof obj === 'object') {
-    const copy = { ...obj };
-    for (const [key, value] of Object.entries(obj)) {
-      copy[key as keyof T] = deepCopyForIsEqual(value);
-    }
-    return copy;
-  }
-  return obj;
 }
