@@ -59,7 +59,7 @@
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.7.1",
     "sass": "~1.55.0",
-    "sass-loader": "~13.0.0",
+    "sass-loader": "~13.1.0",
     "svgo": "~2.8.0",
     "typescript": "^4.8.4"
   },
