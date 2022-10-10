@@ -728,7 +728,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       sass: ~1.55.0
-      sass-loader: ~13.0.0
+      sass-loader: ~13.1.0
       svgo: ~2.8.0
       tslib: ~2.4.0
       typescript: ^4.8.4
@@ -748,7 +748,7 @@ importers:
       '@storybook/addon-links': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.12_cejys3agzsze6hgmp4xjhmqvkm
       '@storybook/manager-webpack5': 6.5.12_cejys3agzsze6hgmp4xjhmqvkm
-      '@storybook/preset-scss': 1.0.3_sass-loader@13.0.0
+      '@storybook/preset-scss': 1.0.3_sass-loader@13.1.0
       '@storybook/react': 6.5.12_pje443blwtknoqtf4dmqakfsaa
       '@types/lodash': 4.14.181
       '@types/react': 18.0.21
@@ -764,7 +764,7 @@ importers:
       mini-svg-data-uri: 1.4.4
       prettier: 2.7.1
       sass: 1.55.0
-      sass-loader: 13.0.0_sass@1.55.0
+      sass-loader: 13.1.0_sass@1.55.0
       svgo: 2.8.0
       typescript: 4.8.4
 
@@ -1068,7 +1068,7 @@ importers:
       react-router-dom: ~6.3.0
       rollup-plugin-visualizer: ~5.8.0
       sass: ~1.55.0
-      sass-loader: ~13.0.0
+      sass-loader: ~13.1.0
       sql.js: ~1.8.0
       sqlite3: ~5.1.1
       svgo: ~2.8.0
@@ -1098,7 +1098,7 @@ importers:
       '@storybook/addon-links': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.12_cejys3agzsze6hgmp4xjhmqvkm
       '@storybook/manager-webpack5': 6.5.12_cejys3agzsze6hgmp4xjhmqvkm
-      '@storybook/preset-scss': 1.0.3_sass-loader@13.0.0
+      '@storybook/preset-scss': 1.0.3_sass-loader@13.1.0
       '@storybook/react': 6.5.12_g3l62276yakjdr4kjucxkut5hq
       '@types/base-64': 1.0.0
       '@types/codemirror': 5.60.5
@@ -1151,7 +1151,7 @@ importers:
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
       rollup-plugin-visualizer: 5.8.0
       sass: 1.55.0
-      sass-loader: 13.0.0_sass@1.55.0
+      sass-loader: 13.1.0_sass@1.55.0
       sql.js: 1.8.0
       sqlite3: 5.1.1
       svgo: 2.8.0
@@ -6557,14 +6557,14 @@ packages:
     dependencies:
       core-js: 3.19.1
 
-  /@storybook/preset-scss/1.0.3_sass-loader@13.0.0:
+  /@storybook/preset-scss/1.0.3_sass-loader@13.1.0:
     resolution: {integrity: sha512-o9Iz6wxPeNENrQa2mKlsDKynBfqU2uWaRP80HeWp4TkGgf7/x3DVF2O7yi9N0x/PI1qzzTTpxlQ90D62XmpiTw==}
     peerDependencies:
       css-loader: '*'
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 13.0.0_sass@1.55.0
+      sass-loader: 13.1.0_sass@1.55.0
 
   /@storybook/preview-web/6.5.12_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-Q5mduCJsY9zhmlsrhHvtOBA3Jt2n45bhfVkiUEqtj8fDit45/GW+eLoffv8GaVTGjV96/Y1JFwDZUwU6mEfgGQ==}
@@ -15440,8 +15440,8 @@ packages:
       minimist: 1.2.6
       walker: 1.0.8
 
-  /sass-loader/13.0.0_sass@1.55.0:
-    resolution: {integrity: sha512-IHCFecI+rbPvXE2zO/mqdVFe8MU7ElGrwga9hh2H65Ru4iaBJAMRteum1c4Gsxi9Cq1FOtTEDd6+/AEYuQDM4Q==}
+  /sass-loader/13.1.0_sass@1.55.0:
+    resolution: {integrity: sha512-tZS1RJQ2n2+QNyf3CCAo1H562WjL/5AM6Gi8YcPVVoNxQX8d19mx8E+8fRrMWsyc93ZL6Q8vZDSM0FHVTJaVnQ==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       fibers: '>= 3.1.0'
