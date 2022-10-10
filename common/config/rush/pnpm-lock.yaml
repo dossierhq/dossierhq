@@ -1007,7 +1007,7 @@ importers:
       '@lexical/react': ~0.5.0
       '@lexical/selection': ~0.5.0
       '@lexical/utils': ~0.5.0
-      '@microsoft/rush-lib': ~5.80.0
+      '@microsoft/rush-lib': ~5.81.0
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': ~0.48.0
       '@storybook/addon-actions': ^6.5.12
@@ -1080,7 +1080,7 @@ importers:
       vite: ~3.1.4
       vitest: ~0.23.1
     dependencies:
-      '@microsoft/rush-lib': 5.80.0
+      '@microsoft/rush-lib': 5.81.0
     optionalDependencies:
       '@babel/core': 7.19.3
       '@cloudinary/url-gen': 1.8.6
@@ -4642,8 +4642,8 @@ packages:
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
 
-  /@microsoft/rush-lib/5.80.0:
-    resolution: {integrity: sha512-SOCp0ctMy+HbgU0SfgQX1mJ5+X3g/qYVXP9Tw8PSUhCbTOJ8Ii4ht409LCxSE3EKD1Xs9859M60NMD0idGTbLA==}
+  /@microsoft/rush-lib/5.81.0:
+    resolution: {integrity: sha512-VuRSsO8ocamJVlnNBPgBdGHbhyzftV0KsOnNTrt9ZTO+VinSxXzeb1KG3VabUt/cd1eBuFLCxKbUA4zHPmfUBA==}
     engines: {node: '>=5.6.0'}
     dependencies:
       '@pnpm/link-bins': 5.3.25
@@ -4651,8 +4651,8 @@ packages:
       '@rushstack/node-core-library': 3.53.0
       '@rushstack/package-deps-hash': 3.2.53
       '@rushstack/rig-package': 0.3.16
-      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.80.0
-      '@rushstack/rush-azure-storage-build-cache-plugin': 5.80.0
+      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.81.0
+      '@rushstack/rush-azure-storage-build-cache-plugin': 5.81.0
       '@rushstack/stream-collator': 4.0.207
       '@rushstack/terminal': 0.3.76
       '@rushstack/ts-command-line': 4.12.4
@@ -5281,11 +5281,11 @@ packages:
       resolve: 1.17.0
       strip-json-comments: 3.1.1
 
-  /@rushstack/rush-amazon-s3-build-cache-plugin/5.80.0:
-    resolution: {integrity: sha512-pR897530soHoGKjqy779PZTiBaBcom7QDrXeP/9mlaHJLN/Tgz9O+nqEqNYXukztC/0hcWEuIeK+f5s3649Dew==}
+  /@rushstack/rush-amazon-s3-build-cache-plugin/5.81.0:
+    resolution: {integrity: sha512-34agP1AR7lI+2C4lnuqXVhvZeERBk1oyregGjwdNUDANsay89Tp+eYxJjZTs0c4Jvs3YLxsYNc2l2otZ/mYO9g==}
     dependencies:
       '@rushstack/node-core-library': 3.53.0
-      '@rushstack/rush-sdk': 5.80.0
+      '@rushstack/rush-sdk': 5.81.0
       https-proxy-agent: 5.0.0
       node-fetch: 2.6.7
     transitivePeerDependencies:
@@ -5293,21 +5293,21 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-azure-storage-build-cache-plugin/5.80.0:
-    resolution: {integrity: sha512-uUxN6avYmyFhniB6v1mGRPaMS6Xt75OlX6t5JROlmCBdDpLN+20219m8jb1NB4boiuNoNVoroNJASky/nFyBQA==}
+  /@rushstack/rush-azure-storage-build-cache-plugin/5.81.0:
+    resolution: {integrity: sha512-xFjBd8IMFPnCPXAuzppg+299KefJSvIHGI/G+VVT3upxbOVk+bPn9iKqjWFd4kjDbEPAiow2xBQe+UPSrTtoKA==}
     dependencies:
       '@azure/identity': 2.1.0
       '@azure/storage-blob': 12.11.0
       '@rushstack/node-core-library': 3.53.0
-      '@rushstack/rush-sdk': 5.80.0
+      '@rushstack/rush-sdk': 5.81.0
       '@rushstack/terminal': 0.3.76
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: false
 
-  /@rushstack/rush-sdk/5.80.0:
-    resolution: {integrity: sha512-SCfYlUd4LJ0hQyVpu75qMEwg7kW84BXByMsmDRaWzrvR+B0n9u15AI02Ti+Qt2L27R1NrNcOcEJWEtVlyWavYA==}
+  /@rushstack/rush-sdk/5.81.0:
+    resolution: {integrity: sha512-bCkOAccW+LIVg7q2bJ3pQMoaQjbtOKuaCsIESz8yMVsb9Eyu3M6aJfYXdh3RJD1Vk4mEiXRK/5hi8idMAkg0Pg==}
     dependencies:
       '@rushstack/node-core-library': 3.53.0
       '@types/node-fetch': 1.6.9
