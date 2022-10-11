@@ -56,6 +56,28 @@ describe('mergeWith()', () => {
     expect(result.spec).toMatchSnapshot();
     expect(result.spec.patterns.length).toBe(0);
   });
+
+  test('field with matchPattern', () => {
+    const result = new AdminSchema({
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+    })
+      .mergeWith({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'title', type: FieldType.String, matchPattern: 'a-pattern' }],
+          },
+        ],
+        patterns: [{ name: 'a-pattern', pattern: '^pattern$' }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.getPattern('a-pattern')?.pattern).toBe('^pattern$');
+  });
 });
 
 describe('validate()', () => {
@@ -718,6 +740,33 @@ describe('AdminSchema.toPublishedSchema()', () => {
       ],
       valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
       patterns: [],
+    });
+  });
+
+  test('1 entity type with pattern used by matchPattern', () => {
+    expect(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'field1', type: FieldType.String, matchPattern: 'a-pattern' }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+      }).toPublishedSchema().spec
+    ).toEqual({
+      entityTypes: [
+        {
+          name: 'Foo',
+          authKeyPattern: null,
+          fields: [{ name: 'field1', type: FieldType.String, matchPattern: 'a-pattern' }],
+        },
+      ],
+      valueTypes: [],
+      patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
     });
   });
 

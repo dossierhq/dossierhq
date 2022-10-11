@@ -136,7 +136,6 @@ export class AdminSchema {
 
   validate(): Result<void, typeof ErrorType.BadRequest> {
     const usedNames = new Set<string>();
-    const usedPatterns = new Set<string>();
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
       const isValueType = this.spec.valueTypes.includes(typeSpec);
 
@@ -312,11 +311,11 @@ export class AdminSchema {
               `${typeSpec.name}.${fieldSpec.name}: Unknown matchPattern (${fieldSpec.matchPattern})`
             );
           }
-          usedPatterns.add(fieldSpec.matchPattern);
         }
       }
     }
 
+    const usedPatterns = new Set<string>();
     for (const patternSpec of this.spec.patterns) {
       if (usedPatterns.has(patternSpec.name)) {
         return notOk.BadRequest(`${patternSpec.name}: Duplicate pattern name`);
@@ -416,11 +415,19 @@ export class AdminSchema {
     const usedPatterns = new Set(
       schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[]
     );
+    for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
+      for (const fieldSpec of typeSpec.fields) {
+        if (fieldSpec.matchPattern) {
+          usedPatterns.add(fieldSpec.matchPattern);
+        }
+      }
+    }
+
     for (const patternName of [...usedPatterns].sort()) {
       const pattern =
         other.patterns?.find((it) => it.name === patternName) ?? this.getPattern(patternName);
       if (!pattern) {
-        return notOk.BadRequest(`Pattern ${patternName} is used by entity types, but not defined`);
+        return notOk.BadRequest(`Pattern ${patternName} is used, but not defined`);
       }
       schemaSpec.patterns.push(pattern);
     }
@@ -464,6 +471,14 @@ export class AdminSchema {
         continue;
       }
       spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
+    }
+
+    for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
+      for (const fieldSpec of typeSpec.fields) {
+        if (fieldSpec.matchPattern) {
+          usedPatternNames.add(fieldSpec.matchPattern);
+        }
+      }
     }
     for (const patternName of [...usedPatternNames].sort()) {
       const pattern = this.spec.patterns.find((it) => it.name === patternName);
