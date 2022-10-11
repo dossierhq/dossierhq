@@ -62,6 +62,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishWithSubjectAuthKey,
   createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
+  createEntity_withMatchingPattern,
   createEntity_withRichTextField,
   createEntity_withRichTextListField,
   createEntity_withRichTextFieldWithReference,
@@ -71,6 +72,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withMultipleLocations,
   createEntity_errorAuthKeyNotMatchingPattern,
   createEntity_errorMultilineStringInTitle,
+  createEntity_errorStringNotMatchingMatchPattern,
+  createEntity_errorStringListNotMatchingMatchPattern,
   createEntity_errorRichTextWithUnsupportedEntityNode,
   createEntity_errorRichTextWithUnsupportedLinkEntityType,
   createEntity_errorPublishWithoutRequiredTitle,
@@ -295,6 +298,36 @@ async function createEntity_withMultilineField({ server }: AdminEntityTestContex
     id,
     info: { name, createdAt, updatedAt },
     fields: { multiline: 'one\ntwo\nthree' },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminStrings(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withMatchingPattern({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { pattern: 'foo', patternList: ['foo', 'bar', 'baz'] } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(STRINGS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { pattern: 'foo', patternList: ['foo', 'bar', 'baz'] },
   });
 
   assertResultValue(createResult, {
@@ -628,6 +661,34 @@ async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityT
 
   const getResult = await client.getEntity({ id });
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
+}
+
+async function createEntity_errorStringNotMatchingMatchPattern({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const id = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { id, fields: { pattern: 'not matching' } })
+  );
+  assertErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    'entity.fields.pattern: Value does not match pattern foo-bar-baz'
+  );
+}
+
+async function createEntity_errorStringListNotMatchingMatchPattern({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const id = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { id, fields: { patternList: ['foo', 'not matching'] } })
+  );
+  assertErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    'entity.fields.patternList[1]: Value does not match pattern foo-bar-baz'
+  );
 }
 
 async function createEntity_errorRichTextWithUnsupportedEntityNode({
