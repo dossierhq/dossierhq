@@ -152,16 +152,29 @@ describe('generateTypescriptForSchema', () => {
               fields: [
                 { name: 'valueType', type: FieldType.ValueType, required: true },
                 {
-                  name: 'valueTypeBar',
+                  name: 'valueTypeFoo',
                   type: FieldType.ValueType,
                   valueTypes: ['Foo'],
                   required: true,
                 },
+                {
+                  name: 'valueTypeFooBar',
+                  type: FieldType.ValueType,
+                  valueTypes: ['Foo', 'Bar'],
+                  required: true,
+                },
                 { name: 'valueTypeList', type: FieldType.ValueType, list: true, required: true },
                 {
-                  name: 'valueTypeListBar',
+                  name: 'valueTypeListFoo',
                   type: FieldType.ValueType,
                   valueTypes: ['Foo'],
+                  list: true,
+                  required: true,
+                },
+                {
+                  name: 'valueTypeListFooBar',
+                  type: FieldType.ValueType,
+                  valueTypes: ['Foo', 'Bar'],
                   list: true,
                   required: true,
                 },
@@ -171,6 +184,11 @@ describe('generateTypescriptForSchema', () => {
           valueTypes: [
             {
               name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'string', type: FieldType.String, required: true }],
+            },
+            {
+              name: 'Bar',
               adminOnly: false,
               fields: [{ name: 'string', type: FieldType.String, required: true }],
             },

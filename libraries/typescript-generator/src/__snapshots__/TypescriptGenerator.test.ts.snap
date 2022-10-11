@@ -5,7 +5,7 @@ exports[`generateTypescriptForSchema > Booleans 1`] = `
 
 export interface AdminBooleansFields {
   boolean: boolean | null;
-  booleanList: Array<boolean> | null;
+  booleanList: boolean[] | null;
 }
 
 export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields>;
@@ -29,7 +29,7 @@ exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 
 export interface AdminEntityTypesFields {
   entityType: EntityReference | null;
-  entityTypeList: Array<EntityReference> | null;
+  entityTypeList: EntityReference[] | null;
 }
 
 export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields>;
@@ -74,7 +74,7 @@ exports[`generateTypescriptForSchema > Locations 1`] = `
 
 export interface AdminLocationsFields {
   location: Location | null;
-  locationList: Array<Location> | null;
+  locationList: Location[] | null;
 }
 
 export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
@@ -98,7 +98,7 @@ exports[`generateTypescriptForSchema > RichTexts 1`] = `
 
 export interface AdminRichTextsFields {
   richText: RichText | null;
-  richTextList: Array<RichText> | null;
+  richTextList: RichText[] | null;
 }
 
 export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
@@ -122,7 +122,7 @@ exports[`generateTypescriptForSchema > Strings 1`] = `
 
 export interface AdminStringsFields {
   string: string | null;
-  stringList: Array<string> | null;
+  stringList: string[] | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
@@ -183,9 +183,11 @@ exports[`generateTypescriptForSchema > ValueTypes 1`] = `
 
 export interface AdminValueTypesFields {
   valueType: AllAdminValueItems | null;
-  valueTypeBar: AdminFoo | null;
-  valueTypeList: Array<AllAdminValueItems> | null;
-  valueTypeListBar: Array<AdminFoo> | null;
+  valueTypeFoo: AdminFoo | null;
+  valueTypeFooBar: AdminFoo | AdminBar | null;
+  valueTypeList: AllAdminValueItems[] | null;
+  valueTypeListFoo: AdminFoo[] | null;
+  valueTypeListFooBar: Array<AdminFoo | AdminBar> | null;
 }
 
 export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields>;
@@ -200,7 +202,7 @@ export function assertIsAdminValueTypes(entity: AdminEntity | AdminValueTypes): 
   }
 }
 
-export type AllAdminValueItems = AdminFoo;
+export type AllAdminValueItems = AdminFoo | AdminBar;
 
 export interface AdminFooFields {
   string: string | null;
@@ -215,6 +217,22 @@ export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): val
 export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
   if (valueItem.type !== 'Foo') {
     throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
+  }
+}
+
+export interface AdminBarFields {
+  string: string | null;
+}
+
+export type AdminBar = ValueItem<'Bar', AdminBarFields>;
+
+export function isAdminBar(valueItem: ValueItem<string, object> | AdminBar): valueItem is AdminBar {
+  return valueItem.type === 'Bar';
+}
+
+export function assertIsAdminBar(valueItem: ValueItem<string, object> | AdminBar): asserts valueItem is AdminBar {
+  if (valueItem.type !== 'Bar') {
+    throw new Error('Expected type = Bar (but was ' + valueItem.type + ')');
   }
 }
 "

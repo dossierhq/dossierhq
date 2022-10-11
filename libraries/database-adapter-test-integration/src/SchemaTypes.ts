@@ -9,7 +9,7 @@ import type {
 
 export interface AdminLocationsFields {
   location: Location | null;
-  locationList: Array<Location> | null;
+  locationList: Location[] | null;
   locationAdminOnly: Location | null;
 }
 
@@ -47,7 +47,7 @@ export function assertIsAdminReadOnly(
 
 export interface AdminReferencesFields {
   any: EntityReference | null;
-  anyList: Array<EntityReference> | null;
+  anyList: EntityReference[] | null;
   anyAdminOnly: EntityReference | null;
   titleOnly: EntityReference | null;
 }
@@ -70,7 +70,7 @@ export function assertIsAdminReferences(
 
 export interface AdminRichTextsFields {
   richText: RichText | null;
-  richTextList: Array<RichText> | null;
+  richTextList: RichText[] | null;
   richTextOnlyParagraphAndText: RichText | null;
   richTextLimitedTypes: RichText | null;
 }
@@ -93,7 +93,7 @@ export interface AdminStringsFields {
   multiline: string | null;
   stringAdminOnly: string | null;
   pattern: string | null;
-  patternList: Array<string> | null;
+  patternList: string[] | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
@@ -232,7 +232,7 @@ export function assertIsAdminReferencesValue(
 
 export interface PublishedLocationsFields {
   location: Location | null;
-  locationList: Array<Location> | null;
+  locationList: Location[] | null;
 }
 
 export type PublishedLocations = PublishedEntity<'Locations', PublishedLocationsFields>;
@@ -273,7 +273,7 @@ export function assertIsPublishedReadOnly(
 
 export interface PublishedReferencesFields {
   any: EntityReference | null;
-  anyList: Array<EntityReference> | null;
+  anyList: EntityReference[] | null;
   titleOnly: EntityReference | null;
 }
 
@@ -295,7 +295,7 @@ export function assertIsPublishedReferences(
 
 export interface PublishedRichTextsFields {
   richText: RichText | null;
-  richTextList: Array<RichText> | null;
+  richTextList: RichText[] | null;
   richTextOnlyParagraphAndText: RichText | null;
   richTextLimitedTypes: RichText | null;
 }
@@ -319,7 +319,7 @@ export function assertIsPublishedRichTexts(
 export interface PublishedStringsFields {
   multiline: string | null;
   pattern: string | null;
-  patternList: Array<string> | null;
+  patternList: string[] | null;
 }
 
 export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields>;

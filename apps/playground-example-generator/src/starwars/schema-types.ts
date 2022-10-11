@@ -4,14 +4,14 @@ export interface AdminFilmFields {
   title: string | null;
   episodeId: string | null;
   director: string | null;
-  producers: Array<string> | null;
+  producers: string[] | null;
   releaseDate: string | null;
   openingCrawl: string | null;
-  characters: Array<EntityReference> | null;
-  starships: Array<EntityReference> | null;
-  vehicles: Array<EntityReference> | null;
-  planets: Array<EntityReference> | null;
-  species: Array<EntityReference> | null;
+  characters: EntityReference[] | null;
+  starships: EntityReference[] | null;
+  vehicles: EntityReference[] | null;
+  planets: EntityReference[] | null;
+  species: EntityReference[] | null;
 }
 
 export type AdminFilm = AdminEntity<'Film', AdminFilmFields>;
@@ -29,9 +29,9 @@ export function assertIsAdminFilm(entity: AdminEntity | AdminFilm): asserts enti
 export interface AdminPersonFields {
   name: string | null;
   gender: string | null;
-  skinColors: Array<string> | null;
-  hairColors: Array<string> | null;
-  eyeColors: Array<string> | null;
+  skinColors: string[] | null;
+  hairColors: string[] | null;
+  eyeColors: string[] | null;
   height: string | null;
   mass: string | null;
   homeworld: EntityReference | null;
@@ -54,10 +54,10 @@ export function assertIsAdminPerson(
 
 export interface AdminPlanetFields {
   name: string | null;
-  climate: Array<string> | null;
+  climate: string[] | null;
   surfaceWater: string | null;
   diameter: string | null;
-  terrain: Array<string> | null;
+  terrain: string[] | null;
   gravity: string | null;
   rotationPeriod: string | null;
   orbitalPeriod: string | null;
@@ -82,13 +82,13 @@ export interface AdminSpeciesFields {
   name: string | null;
   classification: string | null;
   designation: string | null;
-  skinColors: Array<string> | null;
-  hairColors: Array<string> | null;
-  eyeColors: Array<string> | null;
+  skinColors: string[] | null;
+  hairColors: string[] | null;
+  eyeColors: string[] | null;
   language: string | null;
   averageLifespan: string | null;
   averageHeight: string | null;
-  people: Array<EntityReference> | null;
+  people: EntityReference[] | null;
   homeworld: EntityReference | null;
 }
 
@@ -110,7 +110,7 @@ export interface AdminStarshipFields {
   starshipClass: string | null;
   mglt: string | null;
   hyperdriveRating: string | null;
-  pilots: Array<EntityReference> | null;
+  pilots: EntityReference[] | null;
 }
 
 export type AdminStarship = AdminEntity<'Starship', AdminStarshipFields>;
@@ -130,7 +130,7 @@ export function assertIsAdminStarship(
 export interface AdminTransportFields {
   name: string | null;
   model: string | null;
-  manufacturers: Array<string> | null;
+  manufacturers: string[] | null;
   consumables: string | null;
   cargoCapacity: string | null;
   crew: string | null;
@@ -156,7 +156,7 @@ export function assertIsAdminTransport(
 
 export interface AdminVehicleFields {
   vehicleClass: string | null;
-  pilots: Array<EntityReference> | null;
+  pilots: EntityReference[] | null;
 }
 
 export type AdminVehicle = AdminEntity<'Vehicle', AdminVehicleFields>;

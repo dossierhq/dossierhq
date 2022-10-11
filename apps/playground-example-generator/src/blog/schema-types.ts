@@ -5,8 +5,8 @@ export interface AdminBlogPostFields {
   heroImage: AdminCloudinaryImage | null;
   description: RichText | null;
   body: RichText | null;
-  authors: Array<EntityReference> | null;
-  tags: Array<string> | null;
+  authors: EntityReference[] | null;
+  tags: string[] | null;
 }
 
 export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields>;

@@ -231,5 +231,8 @@ function fieldType(
       }
       break;
   }
-  return fieldSpec.list ? `Array<${type}> | null` : `${type} | null`;
+  if (!fieldSpec.list) {
+    return `${type} | null`;
+  }
+  return type.includes('|') ? `Array<${type}> | null` : `${type}[] | null`;
 }
