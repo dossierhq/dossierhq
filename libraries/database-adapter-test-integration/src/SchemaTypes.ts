@@ -92,6 +92,8 @@ export function assertIsAdminRichTexts(
 export interface AdminStringsFields {
   multiline: string | null;
   stringAdminOnly: string | null;
+  pattern: string | null;
+  patternList: Array<string> | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
@@ -316,6 +318,8 @@ export function assertIsPublishedRichTexts(
 
 export interface PublishedStringsFields {
   multiline: string | null;
+  pattern: string | null;
+  patternList: Array<string> | null;
 }
 
 export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields>;

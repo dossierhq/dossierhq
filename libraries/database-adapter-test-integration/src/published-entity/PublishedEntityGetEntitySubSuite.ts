@@ -145,7 +145,11 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
   const getResult = await publishedClient.getEntity({ id });
   const entity = getResult.valueOrThrow();
   assertIsPublishedStrings(entity);
-  assertEquals(entity.fields, { multiline: 'multiline\nmultiline' });
+  assertEquals(entity.fields, {
+    multiline: 'multiline\nmultiline',
+    pattern: null,
+    patternList: null,
+  });
   assertEquals(entity.fields.stringAdminOnly, undefined);
 }
 

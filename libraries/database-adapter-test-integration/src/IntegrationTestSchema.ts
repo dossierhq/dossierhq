@@ -51,6 +51,8 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'multiline', type: FieldType.String, multiline: true },
         { name: 'stringAdminOnly', type: FieldType.String, adminOnly: true },
+        { name: 'pattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },
+        { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'foo-bar-baz' },
       ],
     },
     {
@@ -82,5 +84,8 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.EntityType }] },
   ],
-  patterns: [{ name: 'subject', pattern: '^subject$' }],
+  patterns: [
+    { name: 'subject', pattern: '^subject$' },
+    { name: 'foo-bar-baz', pattern: '^foo|bar|baz$' },
+  ],
 };
