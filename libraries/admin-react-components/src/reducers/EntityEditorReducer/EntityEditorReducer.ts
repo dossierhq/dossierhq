@@ -5,11 +5,14 @@ import type {
   AdminEntityUpdate,
   AdminFieldSpecification,
   AdminSchema,
+  ValidationError,
 } from '@jonasb/datadata-core';
 import {
   assertIsDefined,
   isEntityNameAsRequested,
   normalizeFieldValue,
+  traverseItemField,
+  validateTraverseNode,
 } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
@@ -44,6 +47,7 @@ export interface FieldEditorState {
   fieldSpec: AdminFieldSpecification;
   value: unknown;
   normalizedValue: unknown;
+  validationErrors: ValidationError[];
 }
 
 export interface EntityEditorStateAction {
@@ -322,8 +326,9 @@ class SetFieldAction extends EntityEditorFieldAction {
     }
 
     const normalizedValue = normalizeFieldValue(schema, fieldState.fieldSpec, this.value);
+    const validationErrors = validateField(schema, fieldState.fieldSpec, normalizedValue);
 
-    return { ...fieldState, value: this.value, normalizedValue };
+    return { ...fieldState, value: this.value, normalizedValue, validationErrors };
   }
 
   override reduceDraft(
@@ -499,6 +504,19 @@ export const EntityEditorActions = {
 
 // HELPERS
 
+function validateField(
+  schema: AdminSchema,
+  fieldSpec: AdminFieldSpecification,
+  value: unknown
+): ValidationError[] {
+  const errors: ValidationError[] = [];
+  for (const node of traverseItemField(schema, [], fieldSpec, value)) {
+    const error = validateTraverseNode(schema, node, { validatePublish: true });
+    if (error) errors.push(error);
+  }
+  return errors;
+}
+
 function createEditorEntityDraftState(
   schema: AdminSchema,
   entitySpec: AdminEntityTypeSpecification,
@@ -507,7 +525,8 @@ function createEditorEntityDraftState(
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
     const normalizedValue = normalizeFieldValue(schema, fieldSpec, value);
-    return { status: '', fieldSpec, value, normalizedValue };
+    const validationErrors = validateField(schema, fieldSpec, normalizedValue);
+    return { status: '', fieldSpec, value, normalizedValue, validationErrors };
   });
 
   // Check if name is linked to a field

@@ -328,6 +328,30 @@ describe('SetFieldAction', () => {
     );
     expect(state).toMatchSnapshot();
   });
+
+  test('set invalid value (matchPattern) on field of new draft', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [{ name: 'string', type: FieldType.String, matchPattern: 'foo' }],
+            },
+          ],
+          valueTypes: [],
+          patterns: [{ name: 'foo', pattern: '^foo$' }],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.SetField(id, 'string', 'not-foo')
+    );
+    expect(state).toMatchSnapshot();
+  });
 });
 
 describe('SetAuthKeyAction', () => {
