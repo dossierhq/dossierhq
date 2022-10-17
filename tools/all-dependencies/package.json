@@ -12,7 +12,7 @@
     "@babel/core": "^7.17.9",
     "@cloudinary/url-gen": "~1.8.6",
     "@creativebulma/bulma-badge": "~1.0.1",
-    "@faker-js/faker": "~7.5.0",
+    "@faker-js/faker": "~7.6.0",
     "@fortawesome/free-solid-svg-icons": "~6.2.0",
     "@graphiql/toolkit": "~0.8.0",
     "@lexical/react": "~0.5.0",
