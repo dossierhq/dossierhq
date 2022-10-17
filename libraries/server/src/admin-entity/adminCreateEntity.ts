@@ -46,16 +46,15 @@ export async function adminCreateEntity(
   if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
 
   if (entitySpec.authKeyPattern) {
-    const authKeyPattern = adminSchema.getPattern(entitySpec.authKeyPattern);
-    if (!authKeyPattern) {
+    const authKeyRegExp = adminSchema.getPatternRegExp(entitySpec.authKeyPattern);
+    if (!authKeyRegExp) {
       return notOk.Generic(
         `Pattern '${entitySpec.authKeyPattern}' for authKey of type '${entitySpec.name}' not found`
       );
     }
-    const authKeyRegExp = new RegExp(authKeyPattern.pattern);
     if (!authKeyRegExp.test(createEntity.info.authKey)) {
       return notOk.BadRequest(
-        `AuthKey '${createEntity.info.authKey}' does not match pattern '${authKeyPattern.name}' (${authKeyPattern.pattern})`
+        `AuthKey '${createEntity.info.authKey}' does not match pattern '${entitySpec.authKeyPattern}' (${authKeyRegExp.source})`
       );
     }
   }

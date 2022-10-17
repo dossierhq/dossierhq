@@ -129,9 +129,11 @@ export interface SchemaSpecificationUpdatePayload {
 
 export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
+  private cachedPatternRegExps: Record<string, RegExp>;
 
   constructor(spec: AdminSchemaSpecification) {
     this.spec = spec;
+    this.cachedPatternRegExps = {};
   }
 
   validate(): Result<void, typeof ErrorType.BadRequest> {
@@ -364,6 +366,18 @@ export class AdminSchema {
 
   getPattern(name: string): SchemaPatternSpecification | null {
     return this.spec.patterns.find((it) => it.name === name) ?? null;
+  }
+
+  getPatternRegExp(name: string): RegExp | null {
+    let regexp = this.cachedPatternRegExps[name];
+    if (regexp) return regexp;
+
+    const pattern = this.getPattern(name);
+    if (!pattern) return null;
+
+    regexp = new RegExp(pattern.pattern);
+    this.cachedPatternRegExps[name] = regexp;
+    return regexp;
   }
 
   mergeWith(

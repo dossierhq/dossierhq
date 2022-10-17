@@ -17,6 +17,7 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
     },
   ],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -69,6 +70,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [
         {
@@ -141,6 +143,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [
         {
@@ -218,6 +221,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`]
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -296,6 +300,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [
         {
@@ -394,6 +399,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [
         {
@@ -448,6 +454,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [
         {
@@ -505,6 +512,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
     },
   ],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -554,6 +562,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
     },
   ],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -620,6 +629,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -691,6 +701,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   ],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -740,6 +751,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
   "entityTypes": [],
   "patterns": [],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
       "patterns": [],
@@ -819,6 +831,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
     },
   ],
   "schema": AdminSchema {
+    "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [
         {
