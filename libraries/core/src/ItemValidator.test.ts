@@ -53,6 +53,7 @@ describe('validateTraverseNode', () => {
           "entity",
           "foo",
         ],
+        "type": "save",
       }
     `);
   });
@@ -81,6 +82,7 @@ describe('validateTraverseNode', () => {
             "fields",
             "pattern",
           ],
+          "type": "save",
         },
       ]
     `);
@@ -117,6 +119,7 @@ describe('validateTraverseNode', () => {
             "patternList",
             1,
           ],
+          "type": "save",
         },
       ]
     `);

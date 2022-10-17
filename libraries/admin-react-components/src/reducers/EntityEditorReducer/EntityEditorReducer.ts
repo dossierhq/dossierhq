@@ -31,6 +31,8 @@ export interface EntityEditorState {
 export interface EntityEditorDraftState {
   id: string;
   status: '' | 'changed';
+  hasSaveErrors: boolean;
+  hasPublishErrors: boolean;
   draft: {
     entitySpec: AdminEntityTypeSpecification;
     authKey: string | null;
@@ -118,6 +120,28 @@ function resolveFieldStatus(
   return isEqual(existingValue, field.normalizedValue) ? '' : 'changed';
 }
 
+function resolveDraftErrors(
+  fields: FieldEditorState[] | undefined
+): Pick<EntityEditorDraftState, 'hasPublishErrors' | 'hasSaveErrors'> {
+  let hasSaveErrors = false;
+  let hasPublishErrors = false;
+  if (fields) {
+    for (const field of fields) {
+      if (hasSaveErrors && hasPublishErrors) {
+        break;
+      }
+      for (const error of field.validationErrors) {
+        if (error.type === 'publish') {
+          hasPublishErrors = true;
+        } else if (error.type === 'save') {
+          hasSaveErrors = true;
+        }
+      }
+    }
+  }
+  return { hasSaveErrors, hasPublishErrors };
+}
+
 // ACTION HELPERS
 
 abstract class EntityEditorDraftAction implements EntityEditorStateAction {
@@ -183,7 +207,14 @@ abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
     const newFields = [...draftState.draft.fields];
     newFields[fieldIndex] = newField;
 
-    return { ...draftState, draft: { ...draftState.draft, fields: newFields } };
+    const { hasPublishErrors, hasSaveErrors } = resolveDraftErrors(newFields);
+
+    return {
+      ...draftState,
+      draft: { ...draftState.draft, fields: newFields },
+      hasPublishErrors,
+      hasSaveErrors,
+    };
   }
 
   abstract reduceField(
@@ -222,6 +253,8 @@ class AddDraftAction implements EntityEditorStateAction {
     const draft: EntityEditorDraftState = {
       id: this.selector.id,
       status: '',
+      hasSaveErrors: false,
+      hasPublishErrors: false,
       draft: null,
       entity: null,
       entityWillBeUpdatedDueToUpsert: false,
@@ -231,6 +264,10 @@ class AddDraftAction implements EntityEditorStateAction {
       const entitySpec = schema.getEntityTypeSpecification(this.selector.newType);
       assertIsDefined(entitySpec);
       draft.draft = createEditorEntityDraftState(schema, entitySpec, null);
+
+      const { hasPublishErrors, hasSaveErrors } = resolveDraftErrors(draft.draft?.fields);
+      draft.hasPublishErrors = hasPublishErrors;
+      draft.hasSaveErrors = hasSaveErrors;
 
       // Delay scroll signals when opening a new entity
       activeEntityEditorScrollSignal++;
@@ -464,9 +501,14 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     const entitySpec = schema.getEntityTypeSpecification(this.entity.info.type);
     assertIsDefined(entitySpec);
 
+    const draft = createEditorEntityDraftState(schema, entitySpec, this.entity);
+    const { hasPublishErrors, hasSaveErrors } = resolveDraftErrors(draft?.fields);
+
     return {
       ...draftState,
-      draft: createEditorEntityDraftState(schema, entitySpec, this.entity),
+      draft,
+      hasPublishErrors,
+      hasSaveErrors,
       entity: this.entity,
     };
   }
