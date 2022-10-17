@@ -40,6 +40,7 @@ describe('mergeWith()', () => {
 
     expect(result.spec).toMatchSnapshot();
     expect(result.getPattern('a-pattern')?.pattern).toBe('^new-pattern$');
+    expect(result.getPatternRegExp('a-pattern')?.source).toBe('^new-pattern$');
   });
 
   test('unused pattern is removed', () => {

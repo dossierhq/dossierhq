@@ -27,14 +27,13 @@ export function validateTraverseNode(
     case ItemTraverseNodeType.fieldItem:
       if (isStringItemField(node.fieldSpec, node.value) && node.value) {
         if (node.fieldSpec.matchPattern) {
-          const pattern = schema.getPattern(node.fieldSpec.matchPattern);
-          assertIsDefined(pattern);
-          const regexp = new RegExp(pattern.pattern);
+          const regexp = schema.getPatternRegExp(node.fieldSpec.matchPattern);
+          assertIsDefined(regexp);
           if (!regexp.test(node.value)) {
             return {
               type: 'save',
               path: node.path,
-              message: `Value does not match pattern ${pattern.name}`,
+              message: `Value does not match pattern ${node.fieldSpec.matchPattern}`,
             };
           }
         }

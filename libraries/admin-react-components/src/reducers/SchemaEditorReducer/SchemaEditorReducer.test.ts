@@ -76,6 +76,7 @@ describe('AddTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -120,6 +121,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -190,6 +192,7 @@ describe('AddTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -243,6 +246,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -325,6 +329,7 @@ describe('AddTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -376,6 +381,7 @@ describe('AddTypeAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -460,6 +466,7 @@ describe('AddFieldAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -517,6 +524,7 @@ describe('AddFieldAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -632,6 +640,7 @@ describe('AddFieldAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -706,6 +715,7 @@ describe('AddFieldAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -874,6 +884,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1003,6 +1014,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1081,6 +1093,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -1285,6 +1298,7 @@ describe('ChangeFieldRequiredAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1369,6 +1383,7 @@ describe('ChangeFieldTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1431,6 +1446,7 @@ describe('ChangeFieldTypeAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -1531,6 +1547,7 @@ describe('ChangeFieldTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1614,6 +1631,7 @@ describe('ChangeFieldTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1701,6 +1719,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -1774,6 +1793,7 @@ describe('DeleteFieldAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -1819,6 +1839,7 @@ describe('DeleteTypeAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -1852,6 +1873,7 @@ describe('DeleteTypeAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -1947,6 +1969,7 @@ describe('RenameFieldAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2030,6 +2053,7 @@ describe('RenameTypeAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -2161,6 +2185,7 @@ describe('SetActiveSelectorAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2213,6 +2238,7 @@ describe('SetActiveSelectorAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2250,6 +2276,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -2314,6 +2341,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2418,6 +2446,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2475,6 +2504,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "entityTypes": [],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
             "patterns": [],
@@ -2584,6 +2614,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2716,6 +2747,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
@@ -2844,6 +2876,7 @@ describe('SchemaEditorReducer scenarios', () => {
         ],
         "patterns": [],
         "schema": AdminSchema {
+          "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [
               {
