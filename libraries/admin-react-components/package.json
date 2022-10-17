@@ -28,9 +28,7 @@
     "storybook:build": "build-storybook --quiet",
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
-    "test:watch": "vitest --watch",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "test:watch": "vitest --watch"
   },
   "author": "",
   "license": "ISC",

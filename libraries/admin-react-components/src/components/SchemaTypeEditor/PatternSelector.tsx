@@ -1,19 +1,13 @@
 import { ButtonDropdown, Input } from '@jonasb/datadata-design';
-import type { Dispatch, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useCallback } from 'react';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaTypeSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import type { SchemaEditorState } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   readOnly: boolean;
-  typeSelector: SchemaTypeSelector;
   value: string | null;
   schemaEditorState: SchemaEditorState;
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onChange: (value: string | null) => void;
 }
 
 interface Item {
@@ -23,28 +17,15 @@ interface Item {
 
 const EMPTY_ID = '  empty  ';
 
-export function PatternSelector({
-  readOnly,
-  typeSelector,
-  value,
-  schemaEditorState,
-  dispatchSchemaEditorState,
-}: Props) {
+export function PatternSelector({ readOnly, value, schemaEditorState, onChange }: Props) {
   const items: Item[] = [
     { id: EMPTY_ID, label: <i>Not set</i> },
     ...schemaEditorState.patterns.map((pattern) => ({ id: pattern.name, label: pattern.name })),
   ];
 
   const handleItemClick = useCallback(
-    (item: Item) => {
-      dispatchSchemaEditorState(
-        new SchemaEditorActions.ChangeTypeAuthKeyPattern(
-          typeSelector,
-          item.id === EMPTY_ID ? null : item.id
-        )
-      );
-    },
-    [dispatchSchemaEditorState, typeSelector]
+    (item: Item) => onChange(item.id === EMPTY_ID ? null : item.id),
+    [onChange]
   );
 
   if (readOnly) {

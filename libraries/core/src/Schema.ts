@@ -81,7 +81,7 @@ interface FieldSpecification {
    * can either be a standard RichTextNodeType or any type that's supported.
    */
   richTextNodes?: (RichTextNodeType | string)[];
-  matchPattern?: string;
+  matchPattern?: string | null;
 }
 
 export interface AdminFieldSpecification extends FieldSpecification {

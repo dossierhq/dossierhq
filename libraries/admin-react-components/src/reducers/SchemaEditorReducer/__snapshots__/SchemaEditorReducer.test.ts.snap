@@ -99,6 +99,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "fields": [
         {
           "adminOnly": true,
+          "matchPattern": null,
           "multiline": false,
           "name": "bar",
           "required": false,
@@ -244,6 +245,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 2`]
         {
           "adminOnly": false,
           "isName": true,
+          "matchPattern": null,
           "multiline": false,
           "name": "title",
           "required": false,
@@ -275,6 +277,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
           },
           "isName": false,
           "list": false,
+          "matchPattern": null,
           "multiline": false,
           "name": "title",
           "required": false,
@@ -335,6 +338,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 2`]
       "fields": [
         {
           "adminOnly": false,
+          "matchPattern": null,
           "multiline": false,
           "name": "title",
           "required": false,
@@ -343,6 +347,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 2`]
         {
           "adminOnly": false,
           "isName": true,
+          "matchPattern": null,
           "multiline": false,
           "name": "other",
           "required": false,
@@ -374,6 +379,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
           },
           "isName": true,
           "list": false,
+          "matchPattern": null,
           "multiline": false,
           "name": "title",
           "required": false,
@@ -422,6 +428,78 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldMatchPattern > set pattern on new string field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "matchPattern": "a-pattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldMatchPattern > set pattern on new string field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "matchPattern": "a-pattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
 }
 `;
 
@@ -483,6 +561,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "fields": [
         {
           "adminOnly": false,
+          "matchPattern": null,
           "multiline": true,
           "name": "bar",
           "required": false,
@@ -845,6 +924,79 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
         {
           "name": "pattern-one",
           "pattern": "^foo$",
+        },
+      ],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "matchPattern": "a-pattern",
+            "multiline": true,
+            "name": "string",
+            "type": "String",
+          },
+          "isName": false,
+          "list": false,
+          "matchPattern": "a-pattern",
+          "multiline": true,
+          "name": "string",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "String",
+      "status": "",
+    },
+  ],
+  "patterns": [
+    {
+      "name": "a-pattern",
+      "pattern": "^a-pattern$",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "matchPattern": "a-pattern",
+              "multiline": true,
+              "name": "string",
+              "type": "String",
+            },
+          ],
+          "name": "String",
+        },
+      ],
+      "patterns": [
+        {
+          "name": "a-pattern",
+          "pattern": "^a-pattern$",
         },
       ],
       "valueTypes": [],

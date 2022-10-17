@@ -50,6 +50,7 @@ export interface SchemaFieldDraft {
   adminOnly: boolean;
   isName: boolean;
   multiline?: boolean;
+  matchPattern?: string | null;
   richTextNodes?: string[];
   entityTypes?: string[];
   linkEntityTypes?: string[];
@@ -533,6 +534,23 @@ class ChangeFieldIsNameAction extends FieldAction {
   }
 }
 
+class ChangeFieldMatchPatternAction extends FieldAction {
+  pattern: string | null;
+
+  constructor(fieldSelector: SchemaFieldSelector, pattern: string | null) {
+    super(fieldSelector);
+    this.pattern = pattern;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.matchPattern === this.pattern) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, matchPattern: this.pattern };
+  }
+}
+
 class ChangeFieldMultilineAction extends FieldAction {
   multiline: boolean;
 
@@ -889,6 +907,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         };
         if (fieldSpec.type === FieldType.String) {
           fieldDraft.multiline = !!fieldSpec.multiline;
+          fieldDraft.matchPattern = fieldSpec.matchPattern ?? null;
         }
         if (fieldSpec.type === FieldType.RichText) {
           let richTextNodes = fieldSpec.richTextNodes ?? [];
@@ -930,6 +949,7 @@ export const SchemaEditorActions = {
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldIsName: ChangeFieldIsNameAction,
+  ChangeFieldMatchPattern: ChangeFieldMatchPatternAction,
   ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
@@ -997,13 +1017,14 @@ function getTypeUpdateFromEditorState(
       adminOnly: draftField.adminOnly,
       ...(draftField.isName ? { isName: true } : undefined),
       ...(draftField.list ? { list: draftField.list } : undefined),
-      ...(draftField.type === FieldType.String ? { multiline: draftField.multiline } : undefined),
-      ...(draftField.type === FieldType.RichText ? { richTextNodes } : undefined),
-      ...(draftField.type === FieldType.EntityType || draftField.type === FieldType.RichText
-        ? { entityTypes: draftField.entityTypes ?? [] }
+      ...(draftField.type === FieldType.String
+        ? { multiline: draftField.multiline, matchPattern: draftField.matchPattern ?? null }
         : undefined),
       ...(draftField.type === FieldType.RichText
-        ? { linkEntityTypes: draftField.linkEntityTypes ?? [] }
+        ? { richTextNodes, linkEntityTypes: draftField.linkEntityTypes ?? [] }
+        : undefined),
+      ...(draftField.type === FieldType.EntityType || draftField.type === FieldType.RichText
+        ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
       ...(draftField.type === FieldType.ValueType || draftField.type === FieldType.RichText
         ? { valueTypes: draftField.valueTypes ?? [] }
