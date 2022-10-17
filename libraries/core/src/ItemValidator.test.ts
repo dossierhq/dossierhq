@@ -18,7 +18,7 @@ const schema = new AdminSchema({
     },
   ],
   valueTypes: [],
-  patterns: [{ name: 'foo-bar-baz', pattern: '^foo|bar|baz$' }],
+  patterns: [{ name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' }],
 });
 schema.validate().throwIfError();
 

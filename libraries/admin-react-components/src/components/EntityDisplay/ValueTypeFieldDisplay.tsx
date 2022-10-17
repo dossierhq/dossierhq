@@ -25,7 +25,7 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
 
   return (
     <Column className={className} gap={1}>
-      <Text textStyle="body2" noBottomMargin>
+      <Text textStyle="body2" marginBottom={0}>
         {type}
       </Text>
       {valueSpec.fields.map((valueFieldSpec) => {
@@ -34,7 +34,7 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
         );
         return (
           <Fragment key={valueFieldSpec.name}>
-            <Text textStyle="subtitle1" noBottomMargin>
+            <Text textStyle="subtitle1" marginBottom={0}>
               {valueFieldSpec.name}
             </Text>
             {valueFieldSpec.type === FieldType.ValueType ? (

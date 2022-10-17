@@ -9,6 +9,7 @@ interface Props<Item> extends FieldEditorProps<Item[]> {
 export function FieldListWrapper<Item>({
   value,
   fieldSpec,
+  validationErrors,
   onChange,
   Editor,
 }: Props<Item>): JSX.Element {
@@ -37,6 +38,8 @@ export function FieldListWrapper<Item>({
             <Editor
               value={it}
               fieldSpec={fieldSpec}
+              // TODO pass on correct validation errors
+              validationErrors={validationErrors}
               onChange={(newItemValue) => handleItemChange(newItemValue, index)}
             />
           </div>

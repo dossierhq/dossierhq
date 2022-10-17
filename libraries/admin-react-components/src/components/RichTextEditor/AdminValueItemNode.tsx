@@ -70,6 +70,8 @@ function AdminValueItemComponent({
         <ValueItemFieldEditorWithoutClear
           className="rich-text-item-indentation"
           value={data}
+          //TODO validation errors
+          validationErrors={[]}
           onChange={setValue}
         />
       )}

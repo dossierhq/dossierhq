@@ -10,6 +10,7 @@ const schemaSpecification = {
       fields: [
         { name: 'title', type: 'String', isName: true, required: true },
         { name: 'tags', type: 'String', list: true },
+        { name: 'stringMatchPattern', type: 'String', matchPattern: 'foo-bar-baz' },
         { name: 'location', type: 'Location' },
         { name: 'locations', type: 'Location', list: true },
         { name: 'bar', type: 'EntityType', entityTypes: ['Bar'] },
@@ -93,6 +94,7 @@ const schemaSpecification = {
     },
   ],
   patterns: [
+    { name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' },
     { name: 'none', pattern: '^none$' },
     { name: 'subject', pattern: '^subject$' },
   ],

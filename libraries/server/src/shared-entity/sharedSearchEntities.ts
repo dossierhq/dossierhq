@@ -73,7 +73,7 @@ export async function sharedSearchEntities<
   paging: PagingInfo,
   searchResult: TSearchResult,
   hasMoreOppositeDirection: boolean,
-  decoder: (schema: TSchema, values: TSearchResult['entities'][0]) => TEntity
+  decoder: (schema: TSchema, values: TSearchResult['entities'][number]) => TEntity
 ): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
   if (entities.length === 0) {
