@@ -1,8 +1,9 @@
 import type { AdminFieldSpecification, ValidationError, ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
-import { Fragment, useCallback, useContext } from 'react';
+import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { FieldEditor } from './FieldEditor.js';
@@ -39,6 +40,8 @@ export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onCha
   );
 }
 
+const noErrors: ValidationError[] = [];
+
 export function ValueItemFieldEditorWithoutClear({
   className,
   value,
@@ -50,6 +53,11 @@ export function ValueItemFieldEditorWithoutClear({
   validationErrors: ValidationError[];
   onChange: (value: ValueItem) => void;
 }) {
+  const fieldValidationErrors = useMemo(
+    () => groupValidationErrorsByTopLevelPath(validationErrors),
+    [validationErrors]
+  );
+
   const { schema } = useContext(AdminDataDataContext);
   if (!schema) {
     return null;
@@ -67,9 +75,15 @@ export function ValueItemFieldEditorWithoutClear({
         {type}
       </Text>
       {valueSpec.fields.map((valueFieldSpec) => {
-        // TODO correct validation errors
         const fieldEditor = (
-          <ValueItemField {...{ value, valueFieldSpec, onChange, validationErrors }} />
+          <ValueItemField
+            {...{
+              value,
+              valueFieldSpec,
+              onChange,
+              validationErrors: fieldValidationErrors.get(valueFieldSpec.name) ?? noErrors,
+            }}
+          />
         );
         return (
           <Fragment key={valueFieldSpec.name}>

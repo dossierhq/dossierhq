@@ -88,7 +88,7 @@ const schemaSpecification = {
       name: 'NestedValueItem',
       adminOnly: false,
       fields: [
-        { name: 'text', type: 'String' },
+        { name: 'text', type: 'String', matchPattern: 'foo-bar-baz' },
         { name: 'child', type: 'ValueType', valueTypes: ['NestedValueItem'] },
       ],
     },
