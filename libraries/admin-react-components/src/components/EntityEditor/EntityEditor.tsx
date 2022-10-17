@@ -66,6 +66,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
   const isSubmittable =
     !submitLoading &&
     draftState.status === 'changed' &&
+    !draftState.hasSaveErrors &&
     draftState.draft.name &&
     draftState.draft.authKey;
 

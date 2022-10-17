@@ -6,6 +6,7 @@ import { isStringItemField } from './ItemUtils.js';
 import type { AdminSchema } from './Schema.js';
 
 export interface ValidationError {
+  type: 'save' | 'publish';
   path: ItemValuePath;
   message: string;
 }
@@ -31,6 +32,7 @@ export function validateTraverseNode(
           const regexp = new RegExp(pattern.pattern);
           if (!regexp.test(node.value)) {
             return {
+              type: 'save',
               path: node.path,
               message: `Value does not match pattern ${pattern.name}`,
             };
@@ -39,11 +41,12 @@ export function validateTraverseNode(
       }
       break;
     case ItemTraverseNodeType.error:
-      return { path: node.path, message: node.message };
+      return { type: 'save', path: node.path, message: node.message };
     case ItemTraverseNodeType.richTextNode:
       if (node.fieldSpec.richTextNodes && node.fieldSpec.richTextNodes.length > 0) {
         if (!node.fieldSpec.richTextNodes.includes(node.node.type)) {
           return {
+            type: 'save',
             path: node.path,
             message: `Rich text node type ${
               node.node.type
