@@ -363,7 +363,12 @@ class SetFieldAction extends EntityEditorFieldAction {
     }
 
     const normalizedValue = normalizeFieldValue(schema, fieldState.fieldSpec, this.value);
-    const validationErrors = validateField(schema, fieldState.fieldSpec, normalizedValue);
+    const validationErrors = validateField(
+      schema,
+      fieldState.fieldSpec,
+      normalizedValue,
+      fieldState.validationErrors
+    );
 
     return { ...fieldState, value: this.value, normalizedValue, validationErrors };
   }
@@ -549,12 +554,17 @@ export const EntityEditorActions = {
 function validateField(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
-  value: unknown
+  value: unknown,
+  previousErrors: ValidationError[]
 ): ValidationError[] {
   const errors: ValidationError[] = [];
   for (const node of traverseItemField(schema, [], fieldSpec, value)) {
     const error = validateTraverseNode(schema, node, { validatePublish: true });
     if (error) errors.push(error);
+  }
+
+  if (isEqual(errors, previousErrors)) {
+    return previousErrors;
   }
   return errors;
 }
@@ -567,7 +577,7 @@ function createEditorEntityDraftState(
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
     const normalizedValue = normalizeFieldValue(schema, fieldSpec, value);
-    const validationErrors = validateField(schema, fieldSpec, normalizedValue);
+    const validationErrors = validateField(schema, fieldSpec, normalizedValue, []);
     return { status: '', fieldSpec, value, normalizedValue, validationErrors };
   });
 
