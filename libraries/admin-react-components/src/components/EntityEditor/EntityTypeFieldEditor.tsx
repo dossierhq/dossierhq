@@ -46,7 +46,7 @@ export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
       {entity ? (
         <HoverRevealContainer gap={2}>
           <HoverRevealContainer.Item forceVisible flexGrow={1}>
-            <Text textStyle="body2" noBottomMargin>
+            <Text textStyle="body2" marginBottom={0}>
               {entity.info.type}
             </Text>
             <Text textStyle="body1">
@@ -104,7 +104,7 @@ export function EntityTypeFieldEditorWithoutClear({
   return (
     <Column className={className}>
       <Column.Item flexGrow={1}>
-        <Text textStyle="body2" noBottomMargin>
+        <Text textStyle="body2" marginBottom={0}>
           {entity.info.type}
         </Text>
         <Text textStyle="body1">

@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification, ValueItem } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, ValidationError, ValueItem } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
 import { Fragment, useCallback, useContext } from 'react';
@@ -9,7 +9,7 @@ import { FieldEditor } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ValueItem>;
 
-export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
+export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   const handleCreate = useCallback((type: string) => onChange({ type }), [onChange]);
 
@@ -30,7 +30,11 @@ export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
       <HoverRevealStack.Item top right>
         <Delete onClick={handleDeleteClick} />
       </HoverRevealStack.Item>
-      <ValueItemFieldEditorWithoutClear value={value} onChange={onChange} />
+      <ValueItemFieldEditorWithoutClear
+        value={value}
+        validationErrors={validationErrors}
+        onChange={onChange}
+      />
     </HoverRevealStack>
   );
 }
@@ -38,10 +42,12 @@ export function ValueTypeFieldEditor({ fieldSpec, value, onChange }: Props) {
 export function ValueItemFieldEditorWithoutClear({
   className,
   value,
+  validationErrors,
   onChange,
 }: {
   className?: string;
   value: ValueItem;
+  validationErrors: ValidationError[];
   onChange: (value: ValueItem) => void;
 }) {
   const { schema } = useContext(AdminDataDataContext);
@@ -57,14 +63,17 @@ export function ValueItemFieldEditorWithoutClear({
 
   return (
     <Column className={className} gap={1}>
-      <Text textStyle="body2" noBottomMargin>
+      <Text textStyle="body2" marginBottom={0}>
         {type}
       </Text>
       {valueSpec.fields.map((valueFieldSpec) => {
-        const fieldEditor = <ValueItemField {...{ value, valueFieldSpec, onChange }} />;
+        // TODO correct validation errors
+        const fieldEditor = (
+          <ValueItemField {...{ value, valueFieldSpec, onChange, validationErrors }} />
+        );
         return (
           <Fragment key={valueFieldSpec.name}>
-            <Text textStyle="subtitle1" noBottomMargin>
+            <Text textStyle="subtitle1" marginBottom={0}>
               {valueFieldSpec.name}
             </Text>
             {valueFieldSpec.type === FieldType.ValueType ? (
@@ -82,10 +91,12 @@ export function ValueItemFieldEditorWithoutClear({
 function ValueItemField({
   value,
   valueFieldSpec,
+  validationErrors,
   onChange,
 }: {
   value: ValueItem;
   valueFieldSpec: AdminFieldSpecification;
+  validationErrors: ValidationError[];
   onChange: (value: ValueItem) => void;
 }) {
   const handleFieldChanged = useCallback(
@@ -101,6 +112,7 @@ function ValueItemField({
     <FieldEditor
       fieldSpec={valueFieldSpec}
       value={value[valueFieldSpec.name]}
+      validationErrors={validationErrors}
       onChange={handleFieldChanged}
     />
   );

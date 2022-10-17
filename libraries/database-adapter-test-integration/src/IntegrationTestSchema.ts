@@ -86,6 +86,6 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   ],
   patterns: [
     { name: 'subject', pattern: '^subject$' },
-    { name: 'foo-bar-baz', pattern: '^foo|bar|baz$' },
+    { name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' },
   ],
 };

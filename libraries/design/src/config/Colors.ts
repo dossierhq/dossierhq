@@ -48,6 +48,12 @@ export function toColorClassName(color: Color | undefined): string | undefined {
   return `is-${colorName}`;
 }
 
+export function toTextColorClassName(color: Color | undefined): string | undefined {
+  const colorName = resolveBulmaColor(color);
+  if (!colorName) return undefined;
+  return `has-text-${colorName}`;
+}
+
 export function toBackgroundColorClassName(
   color: Color | undefined,
   variant?: 'dark' | 'light'

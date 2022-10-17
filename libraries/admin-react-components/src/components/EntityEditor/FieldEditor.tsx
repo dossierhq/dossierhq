@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, ValidationError } from '@jonasb/datadata-core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -27,6 +27,7 @@ export interface FieldEditorProps<T> {
   fieldSpec: AdminFieldSpecification;
   value: T | null;
   onChange: (value: T | null) => void;
+  validationErrors: ValidationError[];
 }
 
 export function FieldEditor(props: FieldEditorProps<unknown>) {

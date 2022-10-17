@@ -16,7 +16,12 @@ export function EntityFieldEditor({ field, onValueChange }: Props) {
         {field.fieldSpec.required ? <Card2.HeaderTag>Required</Card2.HeaderTag> : null}
       </Card2.Header>
       <Card2.Content>
-        <FieldEditor fieldSpec={field.fieldSpec} value={field.value} onChange={onValueChange} />
+        <FieldEditor
+          fieldSpec={field.fieldSpec}
+          value={field.value}
+          onChange={onValueChange}
+          validationErrors={field.validationErrors}
+        />
       </Card2.Content>
     </Card2>
   );

@@ -31,3 +31,6 @@ WithNestedSpan.args = {
     </>
   ),
 };
+
+export const Danger = Template.bind({});
+Danger.args = { color: 'danger' };

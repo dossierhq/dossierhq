@@ -29,7 +29,7 @@ export function EntityTypeFieldDisplay({ className, value }: Props) {
 
   return entity ? (
     <Column className={className}>
-      <Text textStyle="body2" noBottomMargin>
+      <Text textStyle="body2" marginBottom={0}>
         {entity.info.type}
       </Text>
       <Text textStyle="body1">

@@ -1,14 +1,14 @@
 import type { CSSProperties, ReactNode } from 'react';
-import React from 'react';
+import { toTextColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
-import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
+import { toSpacingClassName, type MarginProps } from '../../utils/LayoutPropsUtils.js';
+import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
 
-export interface TextProps {
+export interface TextProps extends MarginProps {
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   textStyle: TextStyle;
-  noBottomMargin?: boolean;
   className?: string;
+  color?: Color;
   style?: CSSProperties;
   children: ReactNode;
 }
@@ -17,14 +17,20 @@ export function Text({
   as,
   className,
   textStyle,
-  noBottomMargin,
+  color,
   style,
   children,
+  ...props
 }: TextProps): JSX.Element {
   const Element = as ?? 'p';
   return (
     <Element
-      className={toClassName(toTextStyleClassName(textStyle), className, noBottomMargin && 'mb-0')}
+      className={toClassName(
+        toTextStyleClassName(textStyle),
+        className,
+        toTextColorClassName(color),
+        toSpacingClassName(props)
+      )}
       style={style}
     >
       {children}

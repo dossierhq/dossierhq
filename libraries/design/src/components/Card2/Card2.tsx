@@ -1,5 +1,4 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
-import { Tag } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
@@ -8,6 +7,7 @@ import { Dropdown } from '../Dropdown/Dropdown.js';
 import type { IconName } from '../Icon/Icon.js';
 import { Icon } from '../Icon/Icon.js';
 import type { TagProps } from '../Tag/Tag.js';
+import { Tag } from '../Tag/Tag.js';
 import { Text } from '../Text/Text.js';
 
 export interface CardProps {
@@ -111,7 +111,7 @@ Card2.HeaderTitle = ({ children }: CardHeaderTitleProps) => {
         toSpacingClassName({ paddingVertical: 2 })
       )}
       textStyle="headline5"
-      noBottomMargin
+      marginBottom={0}
     >
       {children}
     </Text>
