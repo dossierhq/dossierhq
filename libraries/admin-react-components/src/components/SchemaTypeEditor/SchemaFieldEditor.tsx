@@ -22,6 +22,7 @@ import type {
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
 import { FieldValueTypeSelector } from './FieldValueTypeSelector.js';
+import { PatternSelector } from './PatternSelector.js';
 import { RichTextNodeSelector } from './RichTextNodeSelector.js';
 
 interface Props {
@@ -71,6 +72,7 @@ export function SchemaFieldEditor({
   const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
   const canChangeMultiline = fieldDraft.status === 'new';
+  const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeRichTextNodes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
@@ -93,6 +95,14 @@ export function SchemaFieldEditor({
       }
     },
     [dispatchSchemaEditorState, fieldSelector, onAddOrRenameField]
+  );
+
+  const handleMatchPatternChange = useCallback(
+    (value: string | null) =>
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.ChangeFieldMatchPattern(fieldSelector, value)
+      ),
+    [dispatchSchemaEditorState, fieldSelector]
   );
 
   const dropDownItems = canDeleteOrRenameField
@@ -223,6 +233,21 @@ export function SchemaFieldEditor({
                   </Checkbox>
                 </Field.Control>
               </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
+        {fieldDraft.type === FieldType.String ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Match pattern</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <PatternSelector
+                readOnly={!canChangeMatchPattern}
+                value={fieldDraft.matchPattern ?? null}
+                schemaEditorState={schemaEditorState}
+                onChange={handleMatchPatternChange}
+              />
             </Field.BodyColumn>
           </Field>
         ) : null}

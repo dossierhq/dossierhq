@@ -56,10 +56,13 @@ export function SchemaTypeEditor({
           <Field.BodyColumn>
             <PatternSelector
               readOnly={!canChangeAuthKeyPattern}
-              typeSelector={typeSelector}
               value={typeDraft.authKeyPattern}
               schemaEditorState={schemaEditorState}
-              dispatchSchemaEditorState={dispatchSchemaEditorState}
+              onChange={(value) =>
+                dispatchSchemaEditorState(
+                  new SchemaEditorActions.ChangeTypeAuthKeyPattern(typeSelector, value)
+                )
+              }
             />
           </Field.BodyColumn>
         </Field>

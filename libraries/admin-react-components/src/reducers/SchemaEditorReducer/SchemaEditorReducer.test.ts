@@ -495,6 +495,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -571,6 +572,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -615,6 +617,7 @@ describe('AddFieldAction', () => {
                 },
                 "isName": false,
                 "list": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -674,6 +677,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -681,6 +685,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -747,6 +752,7 @@ describe('AddFieldAction', () => {
                 },
                 "isName": false,
                 "list": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -781,6 +787,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -788,6 +795,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
                 "required": false,
@@ -1234,6 +1242,31 @@ describe('ChangeFieldIsNameAction', () => {
   });
 });
 
+describe('ChangeFieldMatchPattern', () => {
+  test('set pattern on new string field in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        createAdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          patterns: [{ name: 'a-pattern', pattern: '^.+$' }],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldMatchPattern(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        'a-pattern'
+      )
+    );
+    expect(state).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe('a-pattern');
+    expect(schemaUpdate.entityTypes?.[0].fields[0].matchPattern).toBe('a-pattern');
+  });
+});
+
 describe('ChangeFieldMultilineAction', () => {
   test('make new multiline field in existing entity type', () => {
     const state = reduceSchemaEditorStateActions(
@@ -1327,6 +1360,7 @@ describe('ChangeFieldRequiredAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
                 "required": true,
@@ -1779,6 +1813,7 @@ describe('DeleteFieldAction', () => {
                 },
                 "isName": false,
                 "list": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -1944,6 +1979,7 @@ describe('RenameFieldAction', () => {
                 },
                 "isName": false,
                 "list": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -2003,6 +2039,7 @@ describe('RenameFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -2010,6 +2047,7 @@ describe('RenameFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "baz",
                 "required": false,
@@ -2327,6 +2365,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 },
                 "isName": true,
                 "list": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
@@ -2366,6 +2405,38 @@ describe('UpdateSchemaSpecificationAction', () => {
         "valueTypes": [],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+  });
+
+  test('one entity type with string field', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        createAdminSchema({
+          entityTypes: [
+            {
+              name: 'String',
+              adminOnly: false,
+              fields: [
+                {
+                  name: 'string',
+                  type: FieldType.String,
+                  multiline: true,
+                  matchPattern: 'a-pattern',
+                },
+              ],
+            },
+          ],
+          patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+        })
+      )
+    );
+
+    expect(state.entityTypes[0].fields[0].multiline).toBe(true);
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe('a-pattern');
+
+    expect(state).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
@@ -2536,6 +2607,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 },
                 "isName": false,
                 "list": false,
+                "matchPattern": null,
                 "multiline": false,
                 "name": "title",
                 "required": false,
