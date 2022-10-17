@@ -74,7 +74,7 @@ importers:
 
   ../../apps/playground-example-generator:
     specifiers:
-      '@faker-js/faker': ~7.5.0
+      '@faker-js/faker': ~7.6.0
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
@@ -94,7 +94,7 @@ importers:
       undici: ~5.11.0
       uuid: ^9.0.0
     dependencies:
-      '@faker-js/faker': 7.5.0
+      '@faker-js/faker': 7.6.0
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-server': link:../../libraries/server
@@ -117,7 +117,7 @@ importers:
 
   ../../examples/benchmark:
     specifiers:
-      '@faker-js/faker': ~7.5.0
+      '@faker-js/faker': ~7.6.0
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-bun': workspace:*
@@ -138,7 +138,7 @@ importers:
       tslib: ~2.4.0
       typescript: ^4.8.4
     dependencies:
-      '@faker-js/faker': 7.5.0
+      '@faker-js/faker': 7.6.0
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
       '@jonasb/datadata-database-adapter-sqlite-bun': link:../../libraries/database-adapter-sqlite-bun
@@ -1001,7 +1001,7 @@ importers:
       '@babel/core': ^7.17.9
       '@cloudinary/url-gen': ~1.8.6
       '@creativebulma/bulma-badge': ~1.0.1
-      '@faker-js/faker': ~7.5.0
+      '@faker-js/faker': ~7.6.0
       '@fortawesome/free-solid-svg-icons': ~6.2.0
       '@graphiql/toolkit': ~0.8.0
       '@lexical/react': ~0.5.0
@@ -1085,7 +1085,7 @@ importers:
       '@babel/core': 7.19.3
       '@cloudinary/url-gen': 1.8.6
       '@creativebulma/bulma-badge': 1.0.1
-      '@faker-js/faker': 7.5.0
+      '@faker-js/faker': 7.6.0
       '@fortawesome/free-solid-svg-icons': 6.2.0
       '@graphiql/toolkit': 0.8.0_ifcizhisiadnhcbtffrevaejam
       '@lexical/react': 0.5.0_emgchuarwwe7b6xeirmfn74mla
@@ -3924,8 +3924,8 @@ packages:
       '@f/map-obj': 1.2.2
     dev: false
 
-  /@faker-js/faker/7.5.0:
-    resolution: {integrity: sha512-8wNUCCUHvfvI0gQpDUho/3gPzABffnCn5um65F8dzQ86zz6dlt4+nmAA7PQUc8L+eH+9RgR/qzy5N/8kN0Ozdw==}
+  /@faker-js/faker/7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: false
 

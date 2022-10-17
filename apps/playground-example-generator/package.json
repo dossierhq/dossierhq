@@ -16,7 +16,7 @@
     "generate:starwars": "node lib/starwars/starwars-generator.js"
   },
   "dependencies": {
-    "@faker-js/faker": "~7.5.0",
+    "@faker-js/faker": "~7.6.0",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
