@@ -1,5 +1,10 @@
-import type { RichTextValueItemNode, ValueItem } from '@jonasb/datadata-core';
-import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-core';
+import type { RichTextValueItemNode, ValidationError, ValueItem } from '@jonasb/datadata-core';
+import {
+  createRichTextValueItemNode,
+  RichTextNodeType,
+  traverseValueItem,
+  validateTraverseNode,
+} from '@jonasb/datadata-core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
@@ -12,7 +17,8 @@ import type {
   NodeKey,
 } from 'lexical';
 import { $getNodeByKey, createCommand } from 'lexical';
-import { useCallback, useContext } from 'react';
+import isEqual from 'lodash/isEqual.js';
+import { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
 
@@ -45,7 +51,8 @@ function AdminValueItemComponent({
   data: ValueItem;
 }) {
   const [editor] = useLexicalComposerContext();
-  const { adapter } = useContext(AdminDataDataContext);
+  const { adapter, schema } = useContext(AdminDataDataContext);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
   const setValue = useCallback(
     (value: ValueItem) => {
@@ -55,8 +62,23 @@ function AdminValueItemComponent({
           node.setData(value);
         }
       });
+
+      const newValidationErrors: ValidationError[] = [];
+      if (schema) {
+        for (const node of traverseValueItem(schema, [], value)) {
+          const error = validateTraverseNode(schema, node, { validatePublish: true });
+          if (error) {
+            newValidationErrors.push(error);
+          }
+        }
+        setValidationErrors((oldValidationErrors) =>
+          isEqual(oldValidationErrors, newValidationErrors)
+            ? oldValidationErrors
+            : newValidationErrors
+        );
+      }
     },
-    [editor, nodeKey]
+    [editor, nodeKey, schema]
   );
 
   const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
@@ -70,8 +92,7 @@ function AdminValueItemComponent({
         <ValueItemFieldEditorWithoutClear
           className="rich-text-item-indentation"
           value={data}
-          //TODO validation errors
-          validationErrors={[]}
+          validationErrors={validationErrors}
           onChange={setValue}
         />
       )}
