@@ -605,8 +605,10 @@ class ChangeFieldTypeAction extends FieldAction {
 
     if (this.fieldType === FieldType.String) {
       newFieldDraft.multiline = !!newFieldDraft.multiline;
+      newFieldDraft.matchPattern = newFieldDraft.matchPattern ?? null;
     } else {
       delete newFieldDraft.multiline;
+      delete newFieldDraft.matchPattern;
     }
 
     if (this.fieldType === FieldType.RichText) {
