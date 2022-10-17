@@ -25,7 +25,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "~7.5.0",
+    "@faker-js/faker": "~7.6.0",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-bun": "workspace:*",
