@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Replace Temporal.Instant with Date. Upgrade dependencies. More settings for Text.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}

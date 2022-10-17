@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-typescript-generator",
+      "comment": "Use [] instead of Array when one type. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-typescript-generator"
+}

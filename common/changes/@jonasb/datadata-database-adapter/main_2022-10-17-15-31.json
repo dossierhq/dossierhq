@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter",
+      "comment": "Replace Temporal.Instant with Date. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter"
+}
