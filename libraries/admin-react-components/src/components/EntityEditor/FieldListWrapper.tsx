@@ -1,10 +1,14 @@
+import type { ValidationError } from '@jonasb/datadata-core';
 import { Column } from '@jonasb/datadata-design';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
 interface Props<Item> extends FieldEditorProps<Item[]> {
   Editor: React.JSXElementConstructor<FieldEditorProps<Item>>;
 }
+
+const noErrors: ValidationError[] = [];
 
 export function FieldListWrapper<Item>({
   value,
@@ -28,6 +32,11 @@ export function FieldListWrapper<Item>({
     [value, onChange]
   );
 
+  const indexValidationErrors = useMemo(
+    () => groupValidationErrorsByTopLevelPath(validationErrors),
+    [validationErrors]
+  );
+
   const itemsAndNew = value ? [...value, null] : [null];
 
   return (
@@ -38,8 +47,7 @@ export function FieldListWrapper<Item>({
             <Editor
               value={it}
               fieldSpec={fieldSpec}
-              // TODO pass on correct validation errors
-              validationErrors={validationErrors}
+              validationErrors={indexValidationErrors.get(index) ?? noErrors}
               onChange={(newItemValue) => handleItemChange(newItemValue, index)}
             />
           </div>

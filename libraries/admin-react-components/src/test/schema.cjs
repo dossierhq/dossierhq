@@ -9,7 +9,7 @@ const schemaSpecification = {
       authKeyPattern: 'none',
       fields: [
         { name: 'title', type: 'String', isName: true, required: true },
-        { name: 'tags', type: 'String', list: true },
+        { name: 'tags', type: 'String', list: true, matchPattern: 'tag' },
         { name: 'stringMatchPattern', type: 'String', matchPattern: 'foo-bar-baz' },
         { name: 'location', type: 'Location' },
         { name: 'locations', type: 'Location', list: true },
@@ -97,6 +97,7 @@ const schemaSpecification = {
     { name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' },
     { name: 'none', pattern: '^none$' },
     { name: 'subject', pattern: '^subject$' },
+    { name: 'tag', pattern: '^[a-z]+$' },
   ],
 };
 
