@@ -95,6 +95,7 @@ export interface AdminStringsFields {
   pattern: string | null;
   patternList: string[] | null;
   unique: string | null;
+  uniqueGenericIndex: string | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
@@ -322,6 +323,7 @@ export interface PublishedStringsFields {
   pattern: string | null;
   patternList: string[] | null;
   unique: string | null;
+  uniqueGenericIndex: string | null;
 }
 
 export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields>;
