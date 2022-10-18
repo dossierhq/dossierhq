@@ -78,6 +78,47 @@ describe('mergeWith()', () => {
     expect(result.spec).toMatchSnapshot();
     expect(result.getPattern('a-pattern')?.pattern).toBe('^pattern$');
   });
+
+  test('unused index is removed', () => {
+    const result = new AdminSchema({
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          fields: [{ name: 'string', type: FieldType.String, index: 'an-index' }],
+        },
+      ],
+      valueTypes: [],
+      patterns: [],
+      indexes: [{ name: 'an-index', type: 'unique' }],
+    })
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.indexes.length).toBe(0);
+  });
+
+  test('field with index', () => {
+    const result = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
+      .mergeWith({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'title', type: FieldType.String, index: 'unique-index' }],
+          },
+        ],
+        indexes: [{ name: 'unique-index', type: 'unique' }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.getIndex('unique-index')).toEqual({ name: 'unique-index', type: 'unique' });
+  });
 });
 
 describe('validate()', () => {
@@ -733,6 +774,62 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'a-pattern: Invalid regex'
+    );
+  });
+
+  test('Error: Boolean (i.e. non-String) with index', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'boolean', type: FieldType.Boolean, index: 'an-index' }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [{ name: 'an-index', type: 'unique' }],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.boolean: Field with type Boolean shouldn’t specify index'
+    );
+  });
+
+  test('Error: index with missing index name', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'string', type: FieldType.String, index: 'foo' }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.string: Unknown index (foo)'
+    );
+  });
+
+  test('Error: duplicate index', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [],
+        patterns: [],
+        indexes: [
+          { name: 'an-index', type: 'unique' },
+          { name: 'an-index', type: 'unique' },
+        ],
+      }).validate(),
+      ErrorType.BadRequest,
+      'an-index: Duplicate index name'
     );
   });
 });
