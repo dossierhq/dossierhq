@@ -6,19 +6,20 @@ import { AdminSchema, FieldType, RichTextNodeType } from './Schema.js';
 describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
     expect(
-      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
         .mergeWith({})
         .valueOrThrow().spec
     ).toEqual({
       entityTypes: [],
       valueTypes: [],
       patterns: [],
+      indexes: [],
     });
   });
 
   test('empty->entity with pattern', () => {
     expect(
-      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
         .mergeWith({
           entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
           patterns: [{ name: 'a-pattern', pattern: '^hello$' }],
@@ -32,6 +33,7 @@ describe('mergeWith()', () => {
       entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: 'a-pattern', fields: [] }],
       valueTypes: [],
       patterns: [{ name: 'a-pattern', pattern: '^old-pattern$' }],
+      indexes: [],
     })
       .mergeWith({
         patterns: [{ name: 'a-pattern', pattern: '^new-pattern$' }],
@@ -48,6 +50,7 @@ describe('mergeWith()', () => {
       entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: 'a-pattern', fields: [] }],
       valueTypes: [],
       patterns: [{ name: 'a-pattern', pattern: '^pattern$' }],
+      indexes: [],
     })
       .mergeWith({
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
@@ -59,11 +62,7 @@ describe('mergeWith()', () => {
   });
 
   test('field with matchPattern', () => {
-    const result = new AdminSchema({
-      entityTypes: [],
-      valueTypes: [],
-      patterns: [],
-    })
+    const result = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
       .mergeWith({
         entityTypes: [
           {
@@ -83,7 +82,9 @@ describe('mergeWith()', () => {
 
 describe('validate()', () => {
   test('Empty spec validates', () => {
-    expectOkResult(new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] }).validate());
+    expectOkResult(
+      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }).validate()
+    );
   });
 
   test('Limit value and entity types on rich text', () => {
@@ -120,6 +121,7 @@ describe('validate()', () => {
           },
         ],
         patterns: [],
+        indexes: [],
       }).validate()
     );
   });
@@ -137,6 +139,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Specified type Invalid doesn’t exist'
@@ -152,6 +155,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo: Duplicate type name'
@@ -164,6 +168,7 @@ describe('validate()', () => {
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
         valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo: Duplicate type name'
@@ -182,6 +187,7 @@ describe('validate()', () => {
           },
         ],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.type: Invalid field name for a value type'
@@ -201,6 +207,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.boolean: Field with type Boolean shouldn’t specify multiline'
@@ -220,6 +227,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in entityTypes Invalid doesn’t exist'
@@ -239,6 +247,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in linkEntityTypes Invalid doesn’t exist'
@@ -259,6 +268,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify entityTypes'
@@ -278,6 +288,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Value type in valueTypes Invalid doesn’t exist'
@@ -298,6 +309,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify linkEntityTypes'
@@ -318,6 +330,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify valueTypes'
@@ -343,6 +356,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify richTextNodes'
@@ -368,6 +382,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes with type paragraph is duplicated'
@@ -393,6 +408,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes must include root, paragraph, text'
@@ -418,6 +434,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes must include paragraph'
@@ -443,6 +460,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes must include text'
@@ -473,6 +491,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: entityTypes is specified for field, but richTextNodes is missing entity'
@@ -503,6 +522,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: linkEntityTypes is specified for field, but richTextNodes is missing entityLink'
@@ -533,6 +553,7 @@ describe('validate()', () => {
         ],
         valueTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: valueTypes is specified for field, but richTextNodes is missing valueItem'
@@ -564,6 +585,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but Foo isn’t'
@@ -595,6 +617,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but Foo isn’t'
@@ -624,6 +647,7 @@ describe('validate()', () => {
           },
         ],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced value type in valueTypes (Bar) is adminOnly, but Foo isn’t'
@@ -643,6 +667,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [{ name: 'foo', pattern: '^foo$' }],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.boolean: Field with type Boolean shouldn’t specify matchPattern'
@@ -662,6 +687,7 @@ describe('validate()', () => {
         ],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.string: Unknown matchPattern (foo)'
@@ -677,6 +703,7 @@ describe('validate()', () => {
           { name: 'a-pattern', pattern: '^a-pattern$' },
           { name: 'a-pattern', pattern: '^duplicate$' },
         ],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'a-pattern: Duplicate pattern name'
@@ -689,6 +716,7 @@ describe('validate()', () => {
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: 'missing', fields: [] }],
         valueTypes: [],
         patterns: [],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo: Unknown authKeyPattern (missing)'
@@ -701,6 +729,7 @@ describe('validate()', () => {
         entityTypes: [],
         valueTypes: [],
         patterns: [{ name: 'a-pattern', pattern: 'invalid\\' }],
+        indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'a-pattern: Invalid regex'
@@ -711,7 +740,12 @@ describe('validate()', () => {
 describe('AdminSchema.toPublishedSchema()', () => {
   test('empty->empty', () => {
     expect(
-      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] }).toPublishedSchema().spec
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [],
       valueTypes: [],
@@ -734,6 +768,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
           { name: 'Bar', adminOnly: false, fields: [{ name: 'field1', type: FieldType.Location }] },
         ],
         patterns: [],
+        indexes: [],
       }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [
@@ -757,6 +792,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         ],
         valueTypes: [],
         patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+        indexes: [],
       }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [
@@ -786,6 +822,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
           { name: 'Bar', adminOnly: true, fields: [{ name: 'field1', type: FieldType.Location }] },
         ],
         patterns: [],
+        indexes: [],
       }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [],
@@ -813,6 +850,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
           },
         ],
         patterns: [],
+        indexes: [],
       }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [{ name: 'Foo', authKeyPattern: null, fields: [] }],

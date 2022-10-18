@@ -20,6 +20,7 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -80,6 +81,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
           "name": "Foo",
         },
       ],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -154,6 +156,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
           "name": "Foo",
         },
       ],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -225,6 +228,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`]
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -319,6 +323,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
           "name": "TitleOnly",
         },
       ],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -421,6 +426,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
           "name": "TitleOnly",
         },
       ],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -471,6 +477,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
           "name": "Foo",
         },
       ],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -542,6 +549,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
           "name": "Foo",
         },
       ],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -594,6 +602,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -644,6 +653,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -711,6 +721,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -783,6 +794,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -833,6 +845,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
     "cachedPatternRegExps": {},
     "spec": {
       "entityTypes": [],
+      "indexes": [],
       "patterns": [],
       "valueTypes": [],
     },
@@ -920,6 +933,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
           "name": "Foo",
         },
       ],
+      "indexes": [],
       "patterns": [
         {
           "name": "pattern-one",
@@ -993,6 +1007,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
           "name": "String",
         },
       ],
+      "indexes": [],
       "patterns": [
         {
           "name": "a-pattern",

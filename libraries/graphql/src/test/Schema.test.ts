@@ -5,7 +5,7 @@ import { describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 
 function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
-  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
     .mergeWith(update)
     .valueOrThrow();
 }

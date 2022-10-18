@@ -60,6 +60,7 @@ const schemaSpec: AdminSchemaSpecification = {
     },
   ],
   patterns: [],
+  indexes: [],
 };
 
 const schema = new AdminSchema(schemaSpec);

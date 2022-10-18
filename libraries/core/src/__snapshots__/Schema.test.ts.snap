@@ -10,6 +10,7 @@ exports[`mergeWith() > empty->entity with pattern 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",
@@ -36,6 +37,7 @@ exports[`mergeWith() > field with matchPattern 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",
@@ -56,6 +58,7 @@ exports[`mergeWith() > unused pattern is removed 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "valueTypes": [],
 }
@@ -71,6 +74,7 @@ exports[`mergeWith() > update pattern 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",

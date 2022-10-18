@@ -18,7 +18,7 @@ describe('AdminSchema getSchema', () => {
     const result = await getSchemaSpecification(databaseAdapter, context);
 
     // defaults to empty spec
-    expectResultValue(result, { entityTypes: [], valueTypes: [], patterns: [] });
+    expectResultValue(result, { entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
         [
@@ -37,6 +37,7 @@ describe('AdminSchema getSchema', () => {
       entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
       patterns: [],
+      indexes: [],
     };
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await getSchemaSpecification(databaseAdapter, context);
