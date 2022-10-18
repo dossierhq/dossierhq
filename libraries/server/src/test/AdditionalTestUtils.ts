@@ -37,6 +37,9 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
   adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
   adminEntitySearchTotalCount: MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
+  adminEntityUniqueIndexUpsertValues: MockedFunction<
+    DatabaseAdapter['adminEntityUniqueIndexUpsertValues']
+  >;
   adminEntityUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityUpdateEntity']>;
   adminEntityUpdateGetEntityInfo: MockedFunction<DatabaseAdapter['adminEntityUpdateGetEntityInfo']>;
   advisoryLockAcquire: MockedFunction<DatabaseAdapter['advisoryLockAcquire']>;
@@ -115,6 +118,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntitySampleEntities: vi.fn(),
     adminEntitySearchEntities: vi.fn(),
     adminEntitySearchTotalCount: vi.fn(),
+    adminEntityUniqueIndexUpsertValues: vi.fn(),
     adminEntityUpdateEntity: vi.fn(),
     adminEntityUpdateGetEntityInfo: vi.fn(),
     adminEntityUnpublishGetEntitiesInfo: vi.fn(),

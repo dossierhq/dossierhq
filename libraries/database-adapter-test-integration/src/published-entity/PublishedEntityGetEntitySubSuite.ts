@@ -149,6 +149,7 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
     multiline: 'multiline\nmultiline',
     pattern: null,
     patternList: null,
+    unique: null,
   });
   assertEquals(entity.fields.stringAdminOnly, undefined);
 }

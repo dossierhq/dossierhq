@@ -114,7 +114,13 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
     updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
-  fields: { multiline: 'Hello\nWorld', stringAdminOnly: null, pattern: null, patternList: null },
+  fields: {
+    multiline: 'Hello\nWorld',
+    stringAdminOnly: null,
+    pattern: null,
+    patternList: null,
+    unique: null,
+  },
 };
 
 export const SUBJECT_ONLY_CREATE: Readonly<AdminEntityCreate<AdminSubjectOnly>> = {

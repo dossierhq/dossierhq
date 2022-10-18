@@ -63,6 +63,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
   createEntity_withMatchingPattern,
+  createEntity_withUniqueIndexValue,
   createEntity_withRichTextField,
   createEntity_withRichTextListField,
   createEntity_withRichTextFieldWithReference,
@@ -73,6 +74,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_errorAuthKeyNotMatchingPattern,
   createEntity_errorMultilineStringInTitle,
   createEntity_errorStringNotMatchingMatchPattern,
+  createEntity_errorDuplicateUniqueIndexValue,
   createEntity_errorStringListNotMatchingMatchPattern,
   createEntity_errorRichTextWithUnsupportedEntityNode,
   createEntity_errorRichTextWithUnsupportedLinkEntityType,
@@ -328,6 +330,36 @@ async function createEntity_withMatchingPattern({ server }: AdminEntityTestConte
     id,
     info: { name, createdAt, updatedAt },
     fields: { pattern: 'foo', patternList: ['foo', 'bar', 'baz'] },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminStrings(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await client.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.valueOrThrow();
+
+  const expectedEntity = copyEntity(STRINGS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { unique },
   });
 
   assertResultValue(createResult, {
@@ -673,6 +705,23 @@ async function createEntity_errorStringNotMatchingMatchPattern({ server }: Admin
     createResult,
     ErrorType.BadRequest,
     'entity.fields.pattern: Value does not match pattern foo-bar-baz'
+  );
+}
+
+async function createEntity_errorDuplicateUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const firstResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
+  assertOkResult(firstResult);
+
+  const secondResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertErrorResult(
+    secondResult,
+    ErrorType.Conflict,
+    'entity.fields.unique: Value is not unique (index: strings-unique)'
   );
 }
 

@@ -21,7 +21,15 @@ describe('Admin adminCreateEntity', () => {
       Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
     );
     databaseAdapter.adminEntityCreate.mockReturnValueOnce(
-      Promise.resolve(ok({ id: '123', name: 'TitleOnly name', createdAt: now, updatedAt: now }))
+      Promise.resolve(
+        ok({
+          entityInternalId: 123,
+          id: '123',
+          name: 'TitleOnly name',
+          createdAt: now,
+          updatedAt: now,
+        })
+      )
     );
 
     const result = await adminCreateEntity(
