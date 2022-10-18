@@ -21,6 +21,33 @@ exports[`mergeWith() > empty->entity with pattern 1`] = `
 }
 `;
 
+exports[`mergeWith() > field with index 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "index": "unique-index",
+          "name": "title",
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "unique-index",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [],
+}
+`;
+
 exports[`mergeWith() > field with matchPattern 1`] = `
 {
   "entityTypes": [
@@ -44,6 +71,22 @@ exports[`mergeWith() > field with matchPattern 1`] = `
       "pattern": "^pattern$",
     },
   ],
+  "valueTypes": [],
+}
+`;
+
+exports[`mergeWith() > unused index is removed 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
   "valueTypes": [],
 }
 `;

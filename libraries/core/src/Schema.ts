@@ -325,6 +325,21 @@ export class AdminSchema {
             );
           }
         }
+
+        if (fieldSpec.index) {
+          if (fieldSpec.type !== FieldType.String) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify index`
+            );
+          }
+
+          const index = this.getIndex(fieldSpec.index);
+          if (!index) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Unknown index (${fieldSpec.index})`
+            );
+          }
+        }
       }
     }
 
@@ -340,6 +355,14 @@ export class AdminSchema {
       } catch (e) {
         return notOk.BadRequest(`${patternSpec.name}: Invalid regex`);
       }
+    }
+
+    const usedIndexes = new Set<string>();
+    for (const indexSpec of this.spec.indexes) {
+      if (usedIndexes.has(indexSpec.name)) {
+        return notOk.BadRequest(`${indexSpec.name}: Duplicate index name`);
+      }
+      usedIndexes.add(indexSpec.name);
     }
 
     return ok(undefined);
@@ -442,17 +465,23 @@ export class AdminSchema {
       }
     }
 
+    // Check with patterns and indexes are used
     const usedPatterns = new Set(
       schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[]
     );
+    const usedIndexes = new Set<string>();
     for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
         if (fieldSpec.matchPattern) {
           usedPatterns.add(fieldSpec.matchPattern);
         }
+        if (fieldSpec.index) {
+          usedIndexes.add(fieldSpec.index);
+        }
       }
     }
 
+    // Merge used patterns
     for (const patternName of [...usedPatterns].sort()) {
       const pattern =
         other.patterns?.find((it) => it.name === patternName) ?? this.getPattern(patternName);
@@ -460,6 +489,15 @@ export class AdminSchema {
         return notOk.BadRequest(`Pattern ${patternName} is used, but not defined`);
       }
       schemaSpec.patterns.push(pattern);
+    }
+
+    // Merge used indexes
+    for (const indexName of [...usedIndexes].sort()) {
+      const index = other.indexes?.find((it) => it.name === indexName) ?? this.getIndex(indexName);
+      if (!index) {
+        return notOk.BadRequest(`Index ${indexName} is used, but not defined`);
+      }
+      schemaSpec.indexes.push(index);
     }
 
     // TODO normalize
