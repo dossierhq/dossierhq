@@ -56,7 +56,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   fieldsData: Record<string, unknown>;
 }
 
-export interface DatabaseAdminEntityCreatePayload {
+export interface DatabaseAdminEntityCreatePayload extends DatabaseResolvedEntityReference {
   id: string;
   name: string;
   createdAt: Date;
@@ -360,6 +360,16 @@ export interface DatabaseAdapter {
     query: AdminQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
+  adminEntityUniqueIndexUpsertValues(
+    context: TransactionContext,
+    entity: DatabaseResolvedEntityReference,
+    values: Map<string, string[]>,
+    options: {
+      setLatest: boolean;
+      setPublished: boolean;
+    }
+  ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 
   adminEntityUpdateGetEntityInfo(
     context: TransactionContext,

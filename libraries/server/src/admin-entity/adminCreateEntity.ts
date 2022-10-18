@@ -16,6 +16,7 @@ import type { SessionContext } from '../Context.js';
 import { encodeAdminEntity, resolveCreateEntity } from '../EntityCodec.js';
 import { randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
+import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminCreateEntity(
   adminSchema: AdminSchema,
@@ -76,10 +77,7 @@ export async function adminCreateEntity(
       locations: encodeEntityResult.locations,
       fieldsData: encodeEntityResult.data,
     });
-    if (createResult.isError()) {
-      return createResult;
-    }
-
+    if (createResult.isError()) return createResult;
     const { id, name, createdAt, updatedAt } = createResult.value;
 
     let effect: AdminEntityCreatePayload['effect'] = 'created';
@@ -105,13 +103,21 @@ export async function adminCreateEntity(
         context,
         { id, version: result.info.version }
       );
-      if (publishResult.isError()) {
-        return publishResult;
-      }
+      if (publishResult.isError()) return publishResult;
+
       effect = 'createdAndPublished';
       result.info.status = publishResult.value.status;
       result.info.updatedAt = publishResult.value.updatedAt;
     }
+
+    const uniqueIndexResult = await updateUniqueIndexesForEntity(
+      databaseAdapter,
+      context,
+      createResult.value,
+      encodeEntityResult.uniqueIndexValues,
+      !!options?.publish
+    );
+    if (uniqueIndexResult.isError()) return uniqueIndexResult;
 
     return ok({ effect, entity: result });
   });

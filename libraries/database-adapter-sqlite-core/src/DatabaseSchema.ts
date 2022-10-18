@@ -83,6 +83,7 @@ export interface UniqueConstraint {
 
 const AdvisoryLocksTable = 'advisory_locks';
 const EntitiesTable = 'entities';
+const EntityUniqueIndexesTable = 'entity_unique_indexes';
 const PrincipalsTable = 'principals';
 
 export const AdvisoryLocksUniqueNameConstraint: UniqueConstraint = {
@@ -98,6 +99,11 @@ export const EntitiesUniqueNameConstraint: UniqueConstraint = {
 export const EntitiesUniqueUuidConstraint: UniqueConstraint = {
   table: EntitiesTable,
   columns: ['uuid'],
+};
+
+export const EntitiesUniqueIndexValueConstraint: UniqueConstraint = {
+  table: EntityUniqueIndexesTable,
+  columns: ['index_name', 'value'],
 };
 
 export const PrincipalsUniqueProviderIdentifierConstraint: UniqueConstraint = {

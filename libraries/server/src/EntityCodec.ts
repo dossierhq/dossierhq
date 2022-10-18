@@ -8,6 +8,7 @@ import type {
   EntityReference,
   ErrorType,
   ItemTraverseNode,
+  ItemValuePath,
   Location,
   PromiseResult,
   PublishedEntity,
@@ -21,6 +22,7 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
+  assertIsDefined,
   FieldType,
   isEntityTypeItemField,
   isFieldValueEqual,
@@ -61,6 +63,12 @@ export interface EncodeAdminEntityResult {
   referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
   fullTextSearchText: string;
+  uniqueIndexValues: Map<string, UniqueIndexValue[]>;
+}
+
+export interface UniqueIndexValue {
+  path: ItemValuePath;
+  value: string;
 }
 
 interface RequestedReference {
@@ -394,6 +402,7 @@ export async function encodeAdminEntity(
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
+  const uniqueIndexCollector = createUniqueIndexCollector(schema);
 
   // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
@@ -408,6 +417,7 @@ export async function encodeAdminEntity(
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
+    uniqueIndexCollector.collect(node);
   }
 
   const result: EncodeAdminEntityResult = {
@@ -415,8 +425,9 @@ export async function encodeAdminEntity(
     name,
     data: {},
     referenceIds: [],
-    locations: [],
-    fullTextSearchText: '',
+    locations: locationsCollector.result,
+    fullTextSearchText: ftsCollector.result,
+    uniqueIndexValues: uniqueIndexCollector.result,
   };
   for (const fieldSpec of entitySpec.fields) {
     if (entity.fields && fieldSpec.name in entity.fields) {
@@ -439,10 +450,7 @@ export async function encodeAdminEntity(
     referencesCollector.result
   );
   if (resolveResult.isError()) return resolveResult;
-
   result.referenceIds.push(...resolveResult.value);
-  result.locations.push(...locationsCollector.result);
-  result.fullTextSearchText = ftsCollector.result;
 
   return ok(result);
 }
@@ -636,6 +644,38 @@ export function createRequestedReferencesCollector<
     },
     get result(): RequestedReference[] {
       return requestedReferences;
+    },
+  };
+}
+
+function createUniqueIndexCollector(schema: AdminSchema) {
+  const uniqueIndexValues = new Map<string, UniqueIndexValue[]>();
+  return {
+    collect: (node: ItemTraverseNode<AdminSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem: {
+          const indexName = node.fieldSpec.index;
+          if (indexName && isStringItemField(node.fieldSpec, node.value) && node.value) {
+            const indexValues = uniqueIndexValues.get(indexName);
+            if (indexValues) {
+              //TODO fail on duplicates?
+              if (!indexValues.find((it) => it.value === node.value)) {
+                indexValues.push({ path: node.path, value: node.value });
+              }
+            } else {
+              const index = schema.getIndex(indexName);
+              assertIsDefined(index);
+              if (index.type === 'unique') {
+                uniqueIndexValues.set(indexName, [{ path: node.path, value: node.value }]);
+              }
+            }
+          }
+          break;
+        }
+      }
+    },
+    get result(): Map<string, UniqueIndexValue[]> {
+      return uniqueIndexValues;
     },
   };
 }
