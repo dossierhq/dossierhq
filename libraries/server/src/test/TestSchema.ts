@@ -11,6 +11,7 @@ export const adminTestSchema = new AdminSchema({
   ],
   valueTypes: [],
   patterns: [],
+  indexes: [],
 });
 
 export const publishedTestSchema = adminTestSchema.toPublishedSchema();

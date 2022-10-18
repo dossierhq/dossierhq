@@ -81,7 +81,10 @@ interface FieldSpecification {
    * can either be a standard RichTextNodeType or any type that's supported.
    */
   richTextNodes?: (RichTextNodeType | string)[];
+  /** Applicable when type is String */
   matchPattern?: string | null;
+  /** Applicable when type is String */
+  index?: string | null;
 }
 
 export interface AdminFieldSpecification extends FieldSpecification {
@@ -104,22 +107,30 @@ export interface SchemaPatternSpecification {
   pattern: string;
 }
 
+export interface SchemaIndexSpecification {
+  name: string;
+  type: 'unique';
+}
+
 export interface PublishedSchemaSpecification {
   entityTypes: PublishedEntityTypeSpecification[];
   valueTypes: PublishedValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
+  //TODO add indexes?
 }
 
 export interface AdminSchemaSpecification {
   entityTypes: AdminEntityTypeSpecification[];
   valueTypes: AdminValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
+  indexes: SchemaIndexSpecification[];
 }
 
 export interface AdminSchemaSpecificationUpdate {
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
   valueTypes?: AdminValueTypeSpecificationUpdate[];
   patterns?: SchemaPatternSpecification[];
+  indexes?: SchemaIndexSpecification[];
 }
 
 export interface SchemaSpecificationUpdatePayload {
@@ -380,6 +391,10 @@ export class AdminSchema {
     return regexp;
   }
 
+  getIndex(name: string): SchemaIndexSpecification | null {
+    return this.spec.indexes.find((it) => it.name === name) ?? null;
+  }
+
   mergeWith(
     other: AdminSchemaSpecificationUpdate
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
@@ -387,6 +402,7 @@ export class AdminSchema {
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
       patterns: [],
+      indexes: [],
     };
 
     if (other.entityTypes) {

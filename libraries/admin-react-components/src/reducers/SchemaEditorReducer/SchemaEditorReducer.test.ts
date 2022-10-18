@@ -11,7 +11,7 @@ import {
 } from './SchemaEditorReducer.js';
 
 function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
-  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
     .mergeWith(update)
     .valueOrThrow();
 }
@@ -79,6 +79,7 @@ describe('AddTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -124,6 +125,7 @@ describe('AddTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -202,6 +204,7 @@ describe('AddTypeAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -249,6 +252,7 @@ describe('AddTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -332,6 +336,7 @@ describe('AddTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -384,6 +389,7 @@ describe('AddTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -476,6 +482,7 @@ describe('AddFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -528,6 +535,7 @@ describe('AddFieldAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -658,6 +666,7 @@ describe('AddFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -723,6 +732,7 @@ describe('AddFieldAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -902,6 +912,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1032,6 +1043,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1104,6 +1116,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -1341,6 +1354,7 @@ describe('ChangeFieldRequiredAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1427,6 +1441,7 @@ describe('ChangeFieldTypeAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1483,6 +1498,7 @@ describe('ChangeFieldTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -1591,6 +1607,7 @@ describe('ChangeFieldTypeAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1675,6 +1692,7 @@ describe('ChangeFieldTypeAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1756,6 +1774,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1843,6 +1862,7 @@ describe('DeleteFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1877,6 +1897,7 @@ describe('DeleteTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -1911,6 +1932,7 @@ describe('DeleteTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2020,6 +2042,7 @@ describe('RenameFieldAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2094,6 +2117,7 @@ describe('RenameTypeAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2233,6 +2257,7 @@ describe('SetActiveSelectorAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2286,6 +2311,7 @@ describe('SetActiveSelectorAction', () => {
                 "name": "Foo",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2317,6 +2343,7 @@ describe('UpdateSchemaSpecificationAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2396,6 +2423,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "TitleOnly",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2538,6 +2566,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "TitleOnly",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },
@@ -2578,6 +2607,7 @@ describe('UpdateSchemaSpecificationAction', () => {
           "cachedPatternRegExps": {},
           "spec": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -2704,6 +2734,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "EntityReference",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -2837,6 +2868,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "name": "EntityWithValueItem",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [
               {
@@ -2958,6 +2990,7 @@ describe('SchemaEditorReducer scenarios', () => {
                 "name": "NewType",
               },
             ],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },

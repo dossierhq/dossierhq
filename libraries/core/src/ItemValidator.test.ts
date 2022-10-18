@@ -19,6 +19,7 @@ const schema = new AdminSchema({
   ],
   valueTypes: [],
   patterns: [{ name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' }],
+  indexes: [],
 });
 schema.validate().throwIfError();
 
