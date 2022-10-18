@@ -64,6 +64,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withMultilineField,
   createEntity_withMatchingPattern,
   createEntity_withUniqueIndexValue,
+  createEntity_withUniqueIndexValueSameValueInTwoIndexes,
   createEntity_withRichTextField,
   createEntity_withRichTextListField,
   createEntity_withRichTextFieldWithReference,
@@ -363,6 +364,46 @@ async function createEntity_withUniqueIndexValue({ server }: AdminEntityTestCont
   });
 
   assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminStrings(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withUniqueIndexValueSameValueInTwoIndexes({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  (
+    await client.createEntity<AdminStrings>(
+      copyEntity(STRINGS_CREATE, { fields: { uniqueGenericIndex: unique } })
+    )
+  ).throwIfError();
+
+  // This would fail unless there weren't two separate indexes
+  const secondCreateResult = await client.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = secondCreateResult.valueOrThrow();
+
+  const expectedEntity = copyEntity(STRINGS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { unique },
+  });
+
+  assertResultValue(secondCreateResult, {
     effect: 'created',
     entity: expectedEntity,
   });

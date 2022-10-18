@@ -150,6 +150,7 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
     pattern: null,
     patternList: null,
     unique: null,
+    uniqueGenericIndex: null,
   });
   assertEquals(entity.fields.stringAdminOnly, undefined);
 }
