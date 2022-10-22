@@ -843,11 +843,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         patterns: [],
         indexes: [],
       }).toPublishedSchema().spec
-    ).toEqual({
-      entityTypes: [],
-      valueTypes: [],
-      patterns: [],
-    });
+    ).toEqual({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
   });
 
   test('1 entity type and 1 value type', () => {
@@ -873,6 +869,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
       ],
       valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
       patterns: [],
+      indexes: [],
     });
   });
 
@@ -901,6 +898,36 @@ describe('AdminSchema.toPublishedSchema()', () => {
       ],
       valueTypes: [],
       patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+      indexes: [],
+    });
+  });
+
+  test('1 entity type with index', () => {
+    expect(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [{ name: 'field1', type: FieldType.String, index: 'an-index' }],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [{ name: 'an-index', type: 'unique' }],
+      }).toPublishedSchema().spec
+    ).toEqual({
+      entityTypes: [
+        {
+          name: 'Foo',
+          authKeyPattern: null,
+          fields: [{ name: 'field1', type: FieldType.String, index: 'an-index' }],
+        },
+      ],
+      valueTypes: [],
+      patterns: [],
+      indexes: [{ name: 'an-index', type: 'unique' }],
     });
   });
 
@@ -925,6 +952,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
       entityTypes: [],
       valueTypes: [],
       patterns: [],
+      indexes: [],
     });
   });
 
@@ -953,6 +981,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
       entityTypes: [{ name: 'Foo', authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],
       patterns: [],
+      indexes: [],
     });
   });
 });

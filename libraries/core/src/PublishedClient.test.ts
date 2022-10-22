@@ -222,7 +222,7 @@ describe('PublishedClient forward operation over JSON', () => {
         { logger: NoOpLogger },
         PublishedClientOperationName.getSchemaSpecification,
         async (_context, operation) => {
-          operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [] }));
+          operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }));
         }
       );
 
@@ -231,6 +231,7 @@ describe('PublishedClient forward operation over JSON', () => {
       expect(result.value).toMatchInlineSnapshot(`
         {
           "entityTypes": [],
+          "indexes": [],
           "patterns": [],
           "valueTypes": [],
         }
