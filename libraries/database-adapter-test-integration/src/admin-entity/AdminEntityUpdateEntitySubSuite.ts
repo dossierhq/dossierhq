@@ -25,12 +25,14 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_withMultilineField,
   updateEntity_withTwoReferences,
   updateEntity_withMultipleLocations,
+  updateEntity_removingUniqueIndexValueReleasesOwnership,
   updateEntity_errorInvalidId,
   updateEntity_errorDifferentType,
   updateEntity_errorTryingToChangeAuthKey,
   updateEntity_errorMultilineStringInTitle,
   updateEntity_errorPublishWithoutRequiredTitle,
   updateEntity_errorInvalidField,
+  updateEntity_errorDuplicateUniqueIndexValue,
 ];
 
 async function updateEntity_minimal({ server }: AdminEntityTestContext) {
@@ -436,6 +438,27 @@ async function updateEntity_withMultipleLocations({ server }: AdminEntityTestCon
   assertResultValue(getResult, expectedEntity);
 }
 
+async function updateEntity_removingUniqueIndexValueReleasesOwnership({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const createResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertOkResult(createResult);
+
+  const updateResult = await client.updateEntity({
+    id: createResult.value.entity.id,
+    fields: { unique: null },
+  });
+  assertOkResult(updateResult);
+
+  const otherResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
+  assertOkResult(otherResult);
+}
+
 async function updateEntity_errorInvalidId({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const result = await client.updateEntity({
@@ -538,4 +561,25 @@ async function updateEntity_errorInvalidField({ server }: AdminEntityTestContext
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, createResult.value.entity);
+}
+
+async function updateEntity_errorDuplicateUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const otherResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
+  assertOkResult(otherResult);
+
+  const createResult = await client.createEntity(STRINGS_CREATE);
+  assertOkResult(createResult);
+
+  const updateResult = await client.updateEntity({
+    id: createResult.value.entity.id,
+    fields: { unique },
+  });
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'entity.fields.unique: Value is not unique (index: strings-unique)'
+  );
 }

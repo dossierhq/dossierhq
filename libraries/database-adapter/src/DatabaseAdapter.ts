@@ -152,6 +152,24 @@ export interface DatabaseAdminEntitySearchPayloadEntity extends DatabaseAdminEnt
   cursor: string;
 }
 
+export interface DatabaseAdminEntityUniqueIndexReference {
+  index: string;
+  value: string;
+}
+
+export interface DatabaseAdminEntityUniqueIndexValue {
+  index: string;
+  value: string;
+  latest: boolean;
+  published: boolean;
+}
+
+export interface DatabaseAdminEntityUniqueIndexArg {
+  add: DatabaseAdminEntityUniqueIndexValue[];
+  update: DatabaseAdminEntityUniqueIndexValue[];
+  remove: DatabaseAdminEntityUniqueIndexReference[];
+}
+
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
   type: string;
   name: string;
@@ -361,14 +379,15 @@ export interface DatabaseAdapter {
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
-  adminEntityUniqueIndexUpsertValues(
+  adminEntityUniqueIndexGetValues(
+    context: TransactionContext,
+    entity: DatabaseResolvedEntityReference
+  ): PromiseResult<DatabaseAdminEntityUniqueIndexValue[], typeof ErrorType.Generic>;
+
+  adminEntityUniqueIndexUpdateValues(
     context: TransactionContext,
     entity: DatabaseResolvedEntityReference,
-    values: Map<string, string[]>,
-    options: {
-      setLatest: boolean;
-      setPublished: boolean;
-    }
+    values: DatabaseAdminEntityUniqueIndexArg
   ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 
   adminEntityUpdateGetEntityInfo(
