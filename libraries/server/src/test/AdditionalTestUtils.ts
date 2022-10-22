@@ -8,8 +8,8 @@ import type {
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
-import { SessionContextImpl } from '../Context.js';
 import type { SessionContext } from '../Context.js';
+import { SessionContextImpl } from '../Context.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
@@ -37,8 +37,11 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
   adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
   adminEntitySearchTotalCount: MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
-  adminEntityUniqueIndexUpsertValues: MockedFunction<
-    DatabaseAdapter['adminEntityUniqueIndexUpsertValues']
+  adminEntityUniqueIndexGetValues: MockedFunction<
+    DatabaseAdapter['adminEntityUniqueIndexGetValues']
+  >;
+  adminEntityUniqueIndexUpdateValues: MockedFunction<
+    DatabaseAdapter['adminEntityUniqueIndexUpdateValues']
   >;
   adminEntityUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityUpdateEntity']>;
   adminEntityUpdateGetEntityInfo: MockedFunction<DatabaseAdapter['adminEntityUpdateGetEntityInfo']>;
@@ -118,7 +121,8 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntitySampleEntities: vi.fn(),
     adminEntitySearchEntities: vi.fn(),
     adminEntitySearchTotalCount: vi.fn(),
-    adminEntityUniqueIndexUpsertValues: vi.fn(),
+    adminEntityUniqueIndexGetValues: vi.fn(),
+    adminEntityUniqueIndexUpdateValues: vi.fn(),
     adminEntityUpdateEntity: vi.fn(),
     adminEntityUpdateGetEntityInfo: vi.fn(),
     adminEntityUnpublishGetEntitiesInfo: vi.fn(),

@@ -22,6 +22,8 @@ import {
 } from './admin-entity/publishEntities.js';
 import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
+import { adminEntityUniqueIndexGetValues } from './admin-entity/uniqueIndexGetValues.js';
+import { adminEntityUniqueIndexUpdateValues } from './admin-entity/uniqueIndexUpdateValues.js';
 import {
   adminEntityUnpublishEntities,
   adminEntityUnpublishGetEntitiesInfo,
@@ -95,6 +97,10 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(databaseAdapter, ...args),
+    adminEntityUniqueIndexGetValues: (...args) =>
+      adminEntityUniqueIndexGetValues(databaseAdapter, ...args),
+    adminEntityUniqueIndexUpdateValues: (...args) =>
+      adminEntityUniqueIndexUpdateValues(databaseAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(databaseAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(databaseAdapter, ...args),

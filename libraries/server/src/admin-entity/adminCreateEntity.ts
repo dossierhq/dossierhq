@@ -115,6 +115,7 @@ export async function adminCreateEntity(
       context,
       createResult.value,
       encodeEntityResult.uniqueIndexValues,
+      true,
       !!options?.publish
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;

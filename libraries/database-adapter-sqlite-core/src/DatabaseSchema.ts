@@ -44,6 +44,15 @@ export interface EntityPublishingEventsTable {
   published_at: string;
 }
 
+export interface EntityUniqueIndexesTable {
+  id: number;
+  entities_id: number;
+  index_name: string;
+  value: string;
+  latest: boolean;
+  published: boolean;
+}
+
 export interface EntityVersionsTable {
   id: number;
   entities_id: number;
