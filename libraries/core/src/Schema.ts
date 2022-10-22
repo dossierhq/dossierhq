@@ -116,7 +116,7 @@ export interface PublishedSchemaSpecification {
   entityTypes: PublishedEntityTypeSpecification[];
   valueTypes: PublishedValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
-  //TODO add indexes?
+  indexes: SchemaIndexSpecification[];
 }
 
 export interface AdminSchemaSpecification {
@@ -509,6 +509,7 @@ export class AdminSchema {
       entityTypes: [],
       valueTypes: [],
       patterns: [],
+      indexes: [],
     };
 
     function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
@@ -541,17 +542,29 @@ export class AdminSchema {
       spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
     }
 
+    const usedIndexNames = new Set();
     for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
         if (fieldSpec.matchPattern) {
           usedPatternNames.add(fieldSpec.matchPattern);
         }
+        if (fieldSpec.index) {
+          usedIndexNames.add(fieldSpec.index);
+        }
       }
     }
+
     for (const patternName of [...usedPatternNames].sort()) {
       const pattern = this.spec.patterns.find((it) => it.name === patternName);
       if (pattern) {
         spec.patterns.push(pattern);
+      }
+    }
+
+    for (const indexName of [...usedIndexNames].sort()) {
+      const index = this.spec.indexes.find((it) => it.name === indexName);
+      if (index) {
+        spec.indexes.push(index);
       }
     }
 
@@ -594,5 +607,9 @@ export class PublishedSchema {
     fieldName: string
   ): PublishedFieldSpecification | null {
     return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
+  }
+
+  getIndex(name: string): SchemaIndexSpecification | null {
+    return this.spec.indexes.find((it) => it.name === name) ?? null;
   }
 }
