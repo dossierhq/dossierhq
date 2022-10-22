@@ -166,7 +166,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-bun': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      bun-types: ~0.1.11
+      bun-types: ~0.2.0
       eslint: ^8.16.0
       prettier: 2.7.1
       typescript: ^4.8.4
@@ -176,7 +176,7 @@ importers:
       '@jonasb/datadata-server': link:../../libraries/server
     devDependencies:
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
-      bun-types: 0.1.11
+      bun-types: 0.2.0
       eslint: 8.16.0
       prettier: 2.7.1
       typescript: 4.8.4
@@ -548,7 +548,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': ~0.48.0
-      bun-types: ~0.1.11
+      bun-types: ~0.2.0
       eslint: ^8.16.0
       prettier: 2.7.1
       typescript: ^4.8.4
@@ -562,7 +562,7 @@ importers:
       '@jonasb/datadata-server': link:../server
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.48.0
-      bun-types: 0.1.11
+      bun-types: 0.2.0
       eslint: 8.16.0
       prettier: 2.7.1
       typescript: 4.8.4
@@ -1036,7 +1036,7 @@ importers:
       babel-loader: ^8.2.4
       base-64: ~1.0.0
       bulma: ~0.9.3
-      bun-types: ~0.1.11
+      bun-types: ~0.2.0
       cloudinary: ~1.32.0
       dotenv: ^16.0.0
       eslint: ^8.16.0
@@ -1119,7 +1119,7 @@ importers:
       babel-loader: 8.2.5_@babel+core@7.19.3
       base-64: 1.0.0
       bulma: 0.9.3
-      bun-types: 0.1.11
+      bun-types: 0.2.0
       cloudinary: 1.32.0
       dotenv: 16.0.0
       eslint: 8.16.0
@@ -8666,8 +8666,8 @@ packages:
   /bulma/0.9.3:
     resolution: {integrity: sha512-0d7GNW1PY4ud8TWxdNcP6Cc8Bu7MxcntD/RRLGWuiw/s0a9P+XlH/6QoOIrmbj6o8WWJzJYhytiu9nFjTszk1g==}
 
-  /bun-types/0.1.11:
-    resolution: {integrity: sha512-a5G9LZtF5qBsDMjGnS5FfTvIeg1bS0PzI3Q2LqShEjJWdhZTB56xO8ewqZ83J+3my5rW/PPPWT/udAofRQ3zdg==}
+  /bun-types/0.2.0:
+    resolution: {integrity: sha512-nKAfN6mZHNT9lwmEAr2mDATFuyn8uc8Rxa+0wv6Aeme62ziMaKqBkDMciDk3T9UfGK/9R53fnBszEtS0GneqYw==}
 
   /busboy/1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
