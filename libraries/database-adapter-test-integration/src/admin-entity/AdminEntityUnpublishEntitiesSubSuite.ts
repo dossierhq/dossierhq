@@ -2,10 +2,11 @@ import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core'
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
+  publishedClientForMainPrincipal,
 } from '../shared-entity/TestClients.js';
 
 export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -13,6 +14,7 @@ export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestConte
   unpublishEntities_errorInvalidId,
   unpublishEntities_errorDuplicateIds,
   unpublishEntities_errorWrongAuthKey,
+  unpublishEntities_errorUniqueIndexValue,
 ];
 
 async function unpublishEntities_minimal({ server }: AdminEntityTestContext) {
@@ -82,4 +84,33 @@ async function unpublishEntities_errorWrongAuthKey({ server }: AdminEntityTestCo
     ErrorType.NotAuthorized,
     `entity(${id}): Wrong authKey provided`
   );
+}
+
+async function unpublishEntities_errorUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+
+  const firstPublishedGetResult = await publishedClient.getEntity({
+    index: 'strings-unique',
+    value: unique,
+  });
+  assertOkResult(firstPublishedGetResult);
+
+  const unpublishResult = await adminClient.unpublishEntities([
+    { id: createResult.value.entity.id },
+  ]);
+  assertOkResult(unpublishResult);
+
+  const secondPublishedGetResult = await publishedClient.getEntity({
+    index: 'strings-unique',
+    value: unique,
+  });
+  assertErrorResult(secondPublishedGetResult, ErrorType.NotFound, 'No such entity');
 }
