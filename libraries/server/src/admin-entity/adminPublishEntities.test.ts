@@ -43,6 +43,7 @@ describe('Admin adminPublishEntities', () => {
       ok(undefined)
     );
     databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(ok(undefined));
+    databaseAdapter.adminEntityUniqueIndexGetValues.mockResolvedValueOnce(ok([]));
 
     const result = await adminPublishEntities(
       adminTestSchema,
@@ -106,6 +107,12 @@ describe('Admin adminPublishEntities', () => {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
               },
+            },
+          ],
+          [
+            "adminEntityUniqueIndexGetValues",
+            {
+              "entityInternalId": 999,
             },
           ],
           [

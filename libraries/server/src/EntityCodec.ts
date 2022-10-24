@@ -648,10 +648,12 @@ export function createRequestedReferencesCollector<
   };
 }
 
-function createUniqueIndexCollector(schema: AdminSchema) {
+export function createUniqueIndexCollector<TSchema extends AdminSchema | PublishedSchema>(
+  schema: TSchema
+) {
   const uniqueIndexValues = new Map<string, UniqueIndexValue[]>();
   return {
-    collect: (node: ItemTraverseNode<AdminSchema>) => {
+    collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem: {
           const indexName = node.fieldSpec.index;
