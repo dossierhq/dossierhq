@@ -200,7 +200,10 @@ export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = 
   fields: {},
 };
 
-export function adminToPublishedEntity(schema: AdminSchema, entity: AdminEntity): PublishedEntity {
+export function adminToPublishedEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  schema: AdminSchema,
+  entity: T
+): PublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);
   const {
     id,
@@ -215,7 +218,7 @@ export function adminToPublishedEntity(schema: AdminSchema, entity: AdminEntity)
       authKey,
       createdAt,
     },
-    fields,
+    fields: fields as Record<string, unknown>,
   };
   publishedEntity = deepMapEntity(schema, publishedEntity, {
     mapField: (fieldSpec, value) => {

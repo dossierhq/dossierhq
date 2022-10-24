@@ -37,6 +37,7 @@ import {
   assertIsAdminTitleOnly,
 } from '../SchemaTypes.js';
 import {
+  adminToPublishedEntity,
   LOCATIONS_ADMIN_ENTITY,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
@@ -50,7 +51,10 @@ import {
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -60,6 +64,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
+  createEntity_publishWithUniqueIndexValue,
   createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
   createEntity_withMatchingPattern,
@@ -251,6 +256,24 @@ async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTes
   assertOkResult(getResult);
   assertIsAdminTitleOnly(getResult.value);
   assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_publishWithUniqueIndexValue({
+  adminSchema,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await adminClient.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { unique } }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+
+  const getResult = await publishedClient.getEntity({ index: 'strings-unique', value: unique });
+  assertOkResult(getResult);
+  assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
 }
 
 async function createEntity_withAuthKeyMatchingPattern({ server }: AdminEntityTestContext) {

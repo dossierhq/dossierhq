@@ -236,14 +236,10 @@ async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEnti
   const adminClient = adminClientForMainPrincipal(server);
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity(
-    copyEntity(STRINGS_CREATE, { fields: { unique } })
+    copyEntity(STRINGS_CREATE, { fields: { unique } }),
+    { publish: true }
   );
   assertOkResult(createResult);
-
-  const publishResult = await adminClient.publishEntities([
-    { id: createResult.value.entity.id, version: createResult.value.entity.info.version },
-  ]);
-  assertOkResult(publishResult);
 
   const getResult = await publishedClientForMainPrincipal(server).getEntity({
     index: 'strings-unique',
