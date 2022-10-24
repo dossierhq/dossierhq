@@ -168,7 +168,13 @@ describe('PublishedClient forward operation over JSON', () => {
         PublishedClientOperationName.getEntity,
         async (_context, operation) => {
           const [reference] = operation.args;
-          operation.resolve(ok(createDummyEntity({ id: reference.id })));
+          operation.resolve(
+            ok(
+              createDummyEntity({
+                id: 'id' in reference ? reference.id : `${reference.index}/${reference.value}`,
+              })
+            )
+          );
         }
       );
 

@@ -452,7 +452,13 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.getEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
-        operation.resolve(ok(createDummyEntity({ id: reference.id }) as unknown as AdminEntity));
+        operation.resolve(
+          ok(
+            createDummyEntity({
+              id: 'id' in reference ? reference.id : `${reference.index}/${reference.value}`,
+            }) as unknown as AdminEntity
+          )
+        );
       }
     );
 

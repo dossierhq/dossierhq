@@ -23,6 +23,7 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  EntityUniqueIndexReference,
   Paging,
   PublishedEntity,
   PublishedQuery,
@@ -33,7 +34,7 @@ export interface PublishedClient {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference
+    reference: EntityReference | EntityUniqueIndexReference
   ): PromiseResult<
     PublishedEntity,
     | typeof ErrorType.BadRequest
