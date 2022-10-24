@@ -16,6 +16,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
   getEntity_usingUniqueIndex,
   getEntity_errorInvalidId,
   getEntity_errorInvalidVersion,
+  getEntity_errorInvalidUniqueIndexValue,
   getEntity_errorWrongAuthKey,
 ];
 
@@ -84,6 +85,12 @@ async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext)
 
   const resultOne = await client.getEntity({ id, version: 1 });
   assertErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
+}
+
+async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const result = await client.getEntity({ index: 'unknown-index', value: 'unknown-value' });
+  assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
 async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {

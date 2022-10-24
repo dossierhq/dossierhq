@@ -41,6 +41,8 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded,
   getEntity_usingUniqueIndex,
   getEntity_errorInvalidId,
+  getEntity_errorInvalidUniqueIndexValue,
+  getEntity_errorUniqueIndexValueFromAdminOnlyField,
   getEntity_errorWrongAuthKey,
   getEntity_errorArchivedEntity,
 ];
@@ -259,6 +261,34 @@ async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEnti
 async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {
   const publishedClient = publishedClientForMainPrincipal(server);
   const result = await publishedClient.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
+  assertErrorResult(result, ErrorType.NotFound, 'No such entity');
+}
+
+async function getEntity_errorInvalidUniqueIndexValue({ server }: PublishedEntityTestContext) {
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const result = await publishedClient.getEntity({
+    index: 'unknown-index',
+    value: 'unknown-value',
+  });
+  assertErrorResult(result, ErrorType.NotFound, 'No such entity');
+}
+
+async function getEntity_errorUniqueIndexValueFromAdminOnlyField({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, {
+      fields: { uniqueAdminOnly: unique },
+    }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+
+  const result = await publishedClient.getEntity({ index: 'strings-unique', value: unique });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
