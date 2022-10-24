@@ -95,6 +95,7 @@ export interface AdminStringsFields {
   pattern: string | null;
   patternList: string[] | null;
   unique: string | null;
+  uniqueAdminOnly: string | null;
   uniqueGenericIndex: string | null;
 }
 

@@ -120,6 +120,7 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     pattern: null,
     patternList: null,
     unique: null,
+    uniqueAdminOnly: null,
     uniqueGenericIndex: null,
   },
 };
