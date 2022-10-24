@@ -62,12 +62,16 @@ export async function adminGetEntity(
 async function getEntityWithLatestVersion(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference | UniqueIndexReference
 ) {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
-      FROM entities e, entity_versions ev
-      WHERE e.uuid = ${reference.id} AND e.latest_draft_entity_versions_id = ev.id`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data`;
+  if ('id' in reference) {
+    sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
+  } else {
+    sql`FROM entities e, entity_versions ev, unique_index_values uiv WHERE uiv.index_name = ${reference.index} AND uiv.value = ${reference.value} AND uiv.latest AND uiv.entities_id = e.id`;
+  }
+  sql`AND e.latest_draft_entity_versions_id = ev.id`;
 
   const result = await queryNoneOrOne<
     Pick<
@@ -83,9 +87,7 @@ async function getEntityWithLatestVersion(
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(databaseAdapter, context, query);
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
