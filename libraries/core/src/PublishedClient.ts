@@ -23,18 +23,18 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
-  EntityUniqueIndexReference,
   Paging,
   PublishedEntity,
   PublishedQuery,
   PublishedSearchQuery,
+  UniqueIndexReference,
 } from './Types.js';
 
 export interface PublishedClient {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference | EntityUniqueIndexReference
+    reference: EntityReference | UniqueIndexReference
   ): PromiseResult<
     PublishedEntity,
     | typeof ErrorType.BadRequest

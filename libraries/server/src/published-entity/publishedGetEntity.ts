@@ -1,10 +1,10 @@
 import type {
   EntityReference,
-  EntityUniqueIndexReference,
   ErrorType,
   PromiseResult,
   PublishedEntity,
   PublishedSchema,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -18,7 +18,7 @@ export async function publishedGetEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference | EntityUniqueIndexReference
+  reference: EntityReference | UniqueIndexReference
 ): PromiseResult<
   PublishedEntity,
   | typeof ErrorType.BadRequest

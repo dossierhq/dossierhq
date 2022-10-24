@@ -1,9 +1,9 @@
 import type {
   EntityReference,
-  EntityUniqueIndexReference,
   EntityVersionReference,
   ErrorType,
   PromiseResult,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
@@ -19,7 +19,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 export async function adminGetEntity(
   database: Database,
   context: TransactionContext,
-  reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference
 ): PromiseResult<
   DatabaseAdminEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -62,7 +62,7 @@ export async function adminGetEntity(
 async function getEntityWithLatestVersion(
   database: Database,
   context: TransactionContext,
-  reference: EntityReference | EntityUniqueIndexReference
+  reference: EntityReference | UniqueIndexReference
 ) {
   const { sql, query } = createSqliteSqlQuery();
   sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields`;

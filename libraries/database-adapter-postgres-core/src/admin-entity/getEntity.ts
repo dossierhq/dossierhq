@@ -1,9 +1,9 @@
 import type {
   EntityReference,
-  EntityUniqueIndexReference,
   EntityVersionReference,
   ErrorType,
   PromiseResult,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
@@ -11,15 +11,15 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { createPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminGetEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference
 ): PromiseResult<
   DatabaseAdminEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

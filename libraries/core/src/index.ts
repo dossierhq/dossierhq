@@ -173,7 +173,6 @@ export type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
-  EntityUniqueIndexReference,
   EntityVersionInfo,
   EntityVersionReference,
   Location,
@@ -192,6 +191,7 @@ export type {
   RichTextNode,
   RichTextTextNode,
   RichTextValueItemNode,
+  UniqueIndexReference,
   ValueItem,
 } from './Types.js';
 export {

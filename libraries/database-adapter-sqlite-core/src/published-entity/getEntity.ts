@@ -1,8 +1,8 @@
 import type {
   EntityReference,
-  EntityUniqueIndexReference,
   ErrorType,
   PromiseResult,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
@@ -17,7 +17,7 @@ import { queryNoneOrOne } from '../QueryFunctions.js';
 export async function publishedEntityGetOne(
   database: Database,
   context: TransactionContext,
-  reference: EntityReference | EntityUniqueIndexReference
+  reference: EntityReference | UniqueIndexReference
 ): PromiseResult<
   DatabasePublishedEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

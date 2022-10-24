@@ -40,7 +40,7 @@ export interface EntityVersionReference {
   version: number;
 }
 
-export interface EntityUniqueIndexReference {
+export interface UniqueIndexReference {
   index: string;
   value: string;
 }
