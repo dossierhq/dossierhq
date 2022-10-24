@@ -3,7 +3,7 @@ import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } fr
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminTitleOnly } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
@@ -13,6 +13,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
   getEntity_getLatestVersion,
+  getEntity_usingUniqueIndex,
   getEntity_errorInvalidId,
   getEntity_errorInvalidVersion,
   getEntity_errorWrongAuthKey,
@@ -48,6 +49,19 @@ async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {
   const result = await adminClient.getEntity({ id });
   assertOkResult(result);
   assertResultValue(result, updateResult.value.entity);
+}
+
+async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertOkResult(createResult);
+
+  const result = await adminClient.getEntity({ index: 'strings-unique', value: unique });
+  assertOkResult(result);
+  assertResultValue(result, createResult.value.entity);
 }
 
 async function getEntity_errorInvalidId({ server }: AdminEntityTestContext) {

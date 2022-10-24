@@ -173,6 +173,7 @@ export type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  EntityUniqueIndexReference,
   EntityVersionInfo,
   EntityVersionReference,
   Location,

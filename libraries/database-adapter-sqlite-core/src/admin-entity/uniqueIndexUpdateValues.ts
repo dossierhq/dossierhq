@@ -9,7 +9,7 @@ import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntityUniqueIndexesTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueIndexValueConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryMany, queryNone } from '../QueryFunctions.js';
+import { queryNone, queryOne } from '../QueryFunctions.js';
 
 export async function adminEntityUniqueIndexUpdateValues(
   database: Database,
@@ -66,35 +66,21 @@ async function updateValues(
   entity: DatabaseResolvedEntityReference,
   values: DatabaseAdminEntityUniqueIndexArg
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  const query = buildSqliteSqlQuery(({ sql, addValue }) => {
-    sql`INSERT INTO entity_unique_indexes (index_name, value, latest, published) VALUES`;
-    const trueValue = addValue(1);
-    const falseValue = addValue(0);
-
-    for (const { index, value, latest, published } of values.add) {
-      sql`(${index}, ${value}, ${latest ? trueValue : falseValue}, ${
-        published ? trueValue : falseValue
-      })`;
-    }
-    sql`ON CONFLICT (index_name, value) DO UPDATE SET latest = excluded.latest, published = excluded.published`;
-    sql`RETURNING entities_id`;
-  });
-
-  const updateResult = await queryMany<Pick<EntityUniqueIndexesTable, 'entities_id'>>(
-    database,
-    context,
-    query
-  );
-  if (updateResult.isError()) return updateResult;
-
-  for (const { entities_id } of updateResult.value) {
-    if (entities_id !== entity.entityInternalId) {
-      return notOk.Generic(
-        `Updated value of another entity (got: ${entities_id} expected: ${entity.entityInternalId})`
-      );
+  for (const { index, value, latest, published } of values.update) {
+    const result = await queryOne<Pick<EntityUniqueIndexesTable, 'entities_id'>>(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql }) => {
+        sql`UPDATE entity_unique_indexes SET latest = ${latest ? 1 : 0}, published = ${
+          published ? 1 : 0
+        } WHERE index_name = ${index} AND value = ${value} RETURNING entities_id`;
+      })
+    );
+    if (result.isError()) return result;
+    if (result.value.entities_id !== entity.entityInternalId) {
+      return notOk.Generic('Conflict with unique index value');
     }
   }
-
   return ok(undefined);
 }
 

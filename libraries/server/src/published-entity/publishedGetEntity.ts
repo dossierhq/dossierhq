@@ -1,5 +1,6 @@
 import type {
   EntityReference,
+  EntityUniqueIndexReference,
   ErrorType,
   PromiseResult,
   PublishedEntity,
@@ -17,7 +18,7 @@ export async function publishedGetEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference
+  reference: EntityReference | EntityUniqueIndexReference
 ): PromiseResult<
   PublishedEntity,
   | typeof ErrorType.BadRequest

@@ -5,6 +5,7 @@ import type {
   AdminSchemaSpecification,
   AdminSearchQuery,
   EntityReference,
+  EntityUniqueIndexReference,
   EntityVersionReference,
   ErrorType,
   Location,
@@ -283,7 +284,7 @@ export interface DatabaseAdapter {
 
   adminEntityGetOne(
     context: TransactionContext,
-    reference: EntityReference | EntityVersionReference
+    reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
   ): PromiseResult<
     DatabaseAdminEntityGetOnePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -463,7 +464,7 @@ export interface DatabaseAdapter {
 
   publishedEntityGetOne(
     context: TransactionContext,
-    reference: EntityReference
+    reference: EntityReference | EntityUniqueIndexReference
   ): PromiseResult<
     DatabasePublishedEntityGetOnePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic

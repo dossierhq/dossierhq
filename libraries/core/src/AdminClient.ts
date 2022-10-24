@@ -59,6 +59,7 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  EntityUniqueIndexReference,
   EntityVersionReference,
   Paging,
   PublishingHistory,
@@ -75,7 +76,7 @@ export interface AdminClient {
   >;
 
   getEntity(
-    reference: EntityReference | EntityVersionReference
+    reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
   ): PromiseResult<
     AdminEntity,
     | typeof ErrorType.BadRequest

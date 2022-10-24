@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminSchema,
   EntityReference,
+  EntityUniqueIndexReference,
   EntityVersionReference,
   ErrorType,
   PromiseResult,
@@ -18,7 +19,7 @@ export async function adminGetEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference | EntityVersionReference
+  reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.BadRequest

@@ -1,5 +1,6 @@
 import type {
   EntityReference,
+  EntityUniqueIndexReference,
   EntityVersionReference,
   ErrorType,
   PromiseResult,
@@ -18,7 +19,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 export async function adminGetEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference | EntityVersionReference
+  reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
 ): PromiseResult<
   DatabaseAdminEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

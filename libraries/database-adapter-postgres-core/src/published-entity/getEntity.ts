@@ -1,17 +1,22 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type {
+  EntityReference,
+  EntityUniqueIndexReference,
+  ErrorType,
+  PromiseResult,
+} from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function publishedEntityGetOne(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference | EntityUniqueIndexReference
 ): PromiseResult<
   DatabasePublishedEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

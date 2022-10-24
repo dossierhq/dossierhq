@@ -39,6 +39,7 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_entityAdminOnlyFieldIsExcluded,
   getEntity_valueItemAdminOnlyFieldIsExcluded,
   getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded,
+  getEntity_usingUniqueIndex,
   getEntity_errorInvalidId,
   getEntity_errorWrongAuthKey,
   getEntity_errorArchivedEntity,
@@ -229,6 +230,34 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
     location: { lat: 12, lng: 34 },
   });
   assertEquals('locationAdminOnly' in publishedLocationsValueItem, false);
+}
+
+async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertOkResult(createResult);
+
+  const publishResult = await adminClient.publishEntities([
+    { id: createResult.value.entity.id, version: createResult.value.entity.info.version },
+  ]);
+  assertOkResult(publishResult);
+
+  const getResult = await publishedClientForMainPrincipal(server).getEntity({
+    index: 'strings-unique',
+    value: unique,
+  });
+  assertOkResult(getResult);
+  assertIsPublishedStrings(getResult.value);
+  assertEquals(
+    getResult.value,
+    adminToPublishedEntity(
+      adminSchema,
+      copyEntity(createResult.value.entity, { info: { status: 'published' } })
+    )
+  );
 }
 
 async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {
