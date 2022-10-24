@@ -114,9 +114,9 @@ export async function adminCreateEntity(
       databaseAdapter,
       context,
       createResult.value,
-      encodeEntityResult.uniqueIndexValues,
       true,
-      !!options?.publish
+      encodeEntityResult.uniqueIndexValues,
+      null // TODO collect published index values if publish is true
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;
 

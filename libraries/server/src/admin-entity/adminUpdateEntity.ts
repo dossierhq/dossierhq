@@ -140,9 +140,9 @@ export async function adminUpdateEntity(
       databaseAdapter,
       context,
       { entityInternalId },
-      encodeResult.value.uniqueIndexValues,
       false,
-      !!options?.publish
+      encodeResult.value.uniqueIndexValues,
+      null // TODO collect published index values if publish is true
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;
 

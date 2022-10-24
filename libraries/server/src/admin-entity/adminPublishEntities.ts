@@ -24,13 +24,16 @@ import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
+import type { UniqueIndexValue } from '../EntityCodec.js';
 import {
   createFullTextSearchCollector,
   createLocationsCollector,
   createReferencesCollector,
+  createUniqueIndexCollector,
   decodeAdminEntityFields,
 } from '../EntityCodec.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
+import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 interface VersionInfoToBePublished {
   effect: 'published';
@@ -41,6 +44,7 @@ interface VersionInfoToBePublished {
   fullTextSearchText: string;
   references: EntityReference[];
   locations: Location[];
+  uniqueIndexValues: Map<string, UniqueIndexValue[]>;
 }
 
 interface VersionInfoAlreadyPublished {
@@ -117,6 +121,19 @@ export async function adminPublishEntities(
     );
     if (publishEventResult.isError()) {
       return publishEventResult;
+    }
+
+    // Step 5: Update unique value indexes
+    for (const versionInfo of publishVersionsInfo) {
+      const updateUniqueValueIndexResult = await updateUniqueIndexesForEntity(
+        databaseAdapter,
+        context,
+        { entityInternalId: versionInfo.entityInternalId },
+        false,
+        null,
+        versionInfo.uniqueIndexValues
+      );
+      if (updateUniqueValueIndexResult.isError()) return updateUniqueValueIndexResult;
     }
 
     //
@@ -198,7 +215,8 @@ async function collectVersionsInfo(
       if (verifyFieldsResult.isError()) {
         return verifyFieldsResult;
       }
-      const { fullTextSearchText, references, locations } = verifyFieldsResult.value;
+      const { fullTextSearchText, references, locations, uniqueIndexValues } =
+        verifyFieldsResult.value;
 
       versionsInfo.push({
         effect: 'published',
@@ -208,6 +226,7 @@ async function collectVersionsInfo(
         fullTextSearchText,
         references,
         locations,
+        uniqueIndexValues,
         status: versionIsLatest ? AdminEntityStatus.published : AdminEntityStatus.modified,
       });
     }
@@ -228,7 +247,12 @@ function verifyFieldValuesAndCollectInformation(
   type: string,
   entityFields: Record<string, unknown>
 ): Result<
-  { fullTextSearchText: string; references: EntityReference[]; locations: Location[] },
+  {
+    fullTextSearchText: string;
+    references: EntityReference[];
+    locations: Location[];
+    uniqueIndexValues: Map<string, UniqueIndexValue[]>;
+  },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const entity: EntityLike = {
@@ -239,11 +263,13 @@ function verifyFieldValuesAndCollectInformation(
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
   const locationsCollector = createLocationsCollector();
+  const uniqueIndexCollector = createUniqueIndexCollector(publishedSchema);
 
   for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
+    uniqueIndexCollector.collect(node);
 
     switch (node.type) {
       case ItemTraverseNodeType.error:
@@ -270,6 +296,7 @@ function verifyFieldValuesAndCollectInformation(
     fullTextSearchText: ftsCollector.result,
     references: referencesCollector.result,
     locations: locationsCollector.result,
+    uniqueIndexValues: uniqueIndexCollector.result,
   });
 }
 
