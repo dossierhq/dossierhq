@@ -5,7 +5,6 @@ import type {
   AdminSchemaSpecification,
   AdminSearchQuery,
   EntityReference,
-  EntityUniqueIndexReference,
   EntityVersionReference,
   ErrorType,
   Location,
@@ -15,6 +14,7 @@ import type {
   PublishedSchema,
   PublishedSearchQuery,
   PublishingEvent,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import type { ResolvedAuthKey, Session } from './Session.js';
 import type { Transaction, TransactionContext } from './TransactionContext.js';
@@ -284,7 +284,7 @@ export interface DatabaseAdapter {
 
   adminEntityGetOne(
     context: TransactionContext,
-    reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference
   ): PromiseResult<
     DatabaseAdminEntityGetOnePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -464,7 +464,7 @@ export interface DatabaseAdapter {
 
   publishedEntityGetOne(
     context: TransactionContext,
-    reference: EntityReference | EntityUniqueIndexReference
+    reference: EntityReference | UniqueIndexReference
   ): PromiseResult<
     DatabasePublishedEntityGetOnePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic

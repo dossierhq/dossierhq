@@ -59,10 +59,10 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
-  EntityUniqueIndexReference,
   EntityVersionReference,
   Paging,
   PublishingHistory,
+  UniqueIndexReference,
 } from './Types.js';
 
 export interface AdminClient {
@@ -76,7 +76,7 @@ export interface AdminClient {
   >;
 
   getEntity(
-    reference: EntityReference | EntityVersionReference | EntityUniqueIndexReference
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference
   ): PromiseResult<
     AdminEntity,
     | typeof ErrorType.BadRequest
