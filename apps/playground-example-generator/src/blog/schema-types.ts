@@ -2,6 +2,7 @@ import type { AdminEntity, EntityReference, RichText, ValueItem } from '@jonasb/
 
 export interface AdminBlogPostFields {
   title: string | null;
+  slug: string | null;
   heroImage: AdminCloudinaryImage | null;
   description: RichText | null;
   body: RichText | null;
