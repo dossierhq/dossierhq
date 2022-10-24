@@ -44,15 +44,6 @@ export interface EntityPublishingEventsTable {
   published_at: string;
 }
 
-export interface EntityUniqueIndexesTable {
-  id: number;
-  entities_id: number;
-  index_name: string;
-  value: string;
-  latest: boolean;
-  published: boolean;
-}
-
 export interface EntityVersionsTable {
   id: number;
   entities_id: number;
@@ -85,6 +76,15 @@ export interface SchemaVersionsTable {
   specification: string;
 }
 
+export interface UniqueIndexValuesTable {
+  id: number;
+  entities_id: number;
+  index_name: string;
+  value: string;
+  latest: boolean;
+  published: boolean;
+}
+
 export interface UniqueConstraint {
   table: string;
   columns: string[];
@@ -92,8 +92,8 @@ export interface UniqueConstraint {
 
 const AdvisoryLocksTable = 'advisory_locks';
 const EntitiesTable = 'entities';
-const EntityUniqueIndexesTable = 'entity_unique_indexes';
 const PrincipalsTable = 'principals';
+const UniqueIndexValuesTable = 'unique_index_values';
 
 export const AdvisoryLocksUniqueNameConstraint: UniqueConstraint = {
   table: AdvisoryLocksTable,
@@ -110,12 +110,12 @@ export const EntitiesUniqueUuidConstraint: UniqueConstraint = {
   columns: ['uuid'],
 };
 
-export const EntitiesUniqueIndexValueConstraint: UniqueConstraint = {
-  table: EntityUniqueIndexesTable,
-  columns: ['index_name', 'value'],
-};
-
 export const PrincipalsUniqueProviderIdentifierConstraint: UniqueConstraint = {
   table: PrincipalsTable,
   columns: ['provider', 'identifier'],
+};
+
+export const UniqueIndexValueConstraint: UniqueConstraint = {
+  table: UniqueIndexValuesTable,
+  columns: ['index_name', 'value'],
 };

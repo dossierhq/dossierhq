@@ -164,7 +164,7 @@ const VERSION_5: QueryOrQueryAndValues[] = [
 ];
 
 const VERSION_6: QueryOrQueryAndValues[] = [
-  `CREATE TABLE entity_unique_indexes (
+  `CREATE TABLE unique_index_values (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     index_name TEXT NOT NULL,
@@ -172,8 +172,9 @@ const VERSION_6: QueryOrQueryAndValues[] = [
     latest INTEGER NOT NULL DEFAULT FALSE,
     published INTEGER NOT NULL DEFAULT FALSE,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
-    CONSTRAINT entity_unique_index_value UNIQUE (index_name, value)
+    CONSTRAINT unique_index_values_index_value UNIQUE (index_name, value)
   ) STRICT`,
+  `CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id)`,
 ];
 
 const VERSIONS: QueryOrQueryAndValues[][] = [

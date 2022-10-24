@@ -69,7 +69,7 @@ async function getEntityWithLatestVersion(
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
-    sql`FROM entities e, entity_versions ev, entity_unique_indexes eui WHERE eui.index_name = ${reference.index} AND eui.value = ${reference.value} AND eui.latest AND eui.entities_id = e.id`;
+    sql`FROM entities e, entity_versions ev, unique_index_values uiv WHERE uiv.index_name = ${reference.index} AND uiv.value = ${reference.value} AND uiv.latest AND uiv.entities_id = e.id`;
   }
   sql`AND e.latest_entity_versions_id = ev.id`;
 

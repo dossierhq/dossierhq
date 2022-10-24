@@ -6,8 +6,8 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
-import type { EntityUniqueIndexesTable } from '../DatabaseSchema.js';
-import { EntitiesUniqueIndexValueConstraint } from '../DatabaseSchema.js';
+import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
+import { UniqueIndexValueConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
 
@@ -40,7 +40,7 @@ async function addValues(
   values: DatabaseAdminEntityUniqueIndexArg
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const query = buildSqliteSqlQuery(({ sql, addValue }) => {
-    sql`INSERT INTO entity_unique_indexes (entities_id, index_name, value, latest, published) VALUES`;
+    sql`INSERT INTO unique_index_values (entities_id, index_name, value, latest, published) VALUES`;
     const entityId = addValue(entity.entityInternalId as number);
     const trueValue = addValue(1);
     const falseValue = addValue(0);
@@ -53,7 +53,7 @@ async function addValues(
   });
 
   return queryNone(database, context, query, (error) => {
-    if (database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueIndexValueConstraint)) {
+    if (database.adapter.isUniqueViolationOfConstraint(error, UniqueIndexValueConstraint)) {
       return notOk.Conflict('Conflict with unique index value');
     }
     return notOk.GenericUnexpectedException(context, error);
@@ -67,11 +67,11 @@ async function updateValues(
   values: DatabaseAdminEntityUniqueIndexArg
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const { index, value, latest, published } of values.update) {
-    const result = await queryOne<Pick<EntityUniqueIndexesTable, 'entities_id'>>(
+    const result = await queryOne<Pick<UniqueIndexValuesTable, 'entities_id'>>(
       database,
       context,
       buildSqliteSqlQuery(({ sql }) => {
-        sql`UPDATE entity_unique_indexes SET latest = ${latest ? 1 : 0}, published = ${
+        sql`UPDATE unique_index_values SET latest = ${latest ? 1 : 0}, published = ${
           published ? 1 : 0
         } WHERE index_name = ${index} AND value = ${value} RETURNING entities_id`;
       })
@@ -95,7 +95,7 @@ async function removeValues(
       database,
       context,
       buildSqliteSqlQuery(({ sql }) => {
-        sql`DELETE FROM entity_unique_indexes WHERE index_name = ${index} AND value = ${value}`;
+        sql`DELETE FROM unique_index_values WHERE index_name = ${index} AND value = ${value}`;
       })
     );
     if (result.isError()) return result;
