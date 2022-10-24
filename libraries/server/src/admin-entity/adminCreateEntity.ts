@@ -94,6 +94,16 @@ export async function adminCreateEntity(
       fields: createEntity.fields ?? {},
     };
 
+    const uniqueIndexResult = await updateUniqueIndexesForEntity(
+      databaseAdapter,
+      context,
+      createResult.value,
+      true,
+      encodeEntityResult.uniqueIndexValues,
+      null // TODO publishEntityAfterMutation is updating the values
+    );
+    if (uniqueIndexResult.isError()) return uniqueIndexResult;
+
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(
         adminSchema,
@@ -109,16 +119,6 @@ export async function adminCreateEntity(
       result.info.status = publishResult.value.status;
       result.info.updatedAt = publishResult.value.updatedAt;
     }
-
-    const uniqueIndexResult = await updateUniqueIndexesForEntity(
-      databaseAdapter,
-      context,
-      createResult.value,
-      true,
-      encodeEntityResult.uniqueIndexValues,
-      null // TODO collect published index values if publish is true
-    );
-    if (uniqueIndexResult.isError()) return uniqueIndexResult;
 
     return ok({ effect, entity: result });
   });
