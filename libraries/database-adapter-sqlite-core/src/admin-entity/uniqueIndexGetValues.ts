@@ -31,8 +31,8 @@ export async function adminEntityUniqueIndexGetValues(
     rows.map((row) => ({
       index: row.index_name,
       value: row.value,
-      latest: row.latest,
-      published: row.published,
+      latest: !!row.latest,
+      published: !!row.published,
     }))
   );
 }

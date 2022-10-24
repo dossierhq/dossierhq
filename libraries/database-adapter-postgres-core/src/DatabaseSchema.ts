@@ -5,6 +5,7 @@ export const UniqueConstraints = {
   entities_name_key: 'entities_name_key',
   entities_uuid_key: 'entities_uuid_key',
   principals_provider_identifier_key: 'principals_provider_identifier_key',
+  unique_index_values_index_name_value_key: 'unique_index_values_index_name_value_key',
 } as const;
 export type UniqueConstraints = keyof typeof UniqueConstraints;
 
@@ -72,4 +73,13 @@ export interface EntityPublishingEventsTable {
   kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
   published_by: number;
   published_at: Date;
+}
+
+export interface UniqueIndexValuesTable {
+  id: number;
+  entities_id: number;
+  index_name: string;
+  value: string;
+  latest: boolean;
+  published: boolean;
 }

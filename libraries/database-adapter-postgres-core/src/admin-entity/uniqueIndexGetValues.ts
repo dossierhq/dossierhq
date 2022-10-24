@@ -1,28 +1,26 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityUniqueIndexValue,
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
+import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
+import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryMany } from '../QueryFunctions.js';
 
 export async function adminEntityUniqueIndexGetValues(
-  _databaseAdapter: PostgresDatabaseAdapter,
-  _context: TransactionContext,
-  _entity: DatabaseResolvedEntityReference
+  databaseAdapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  entity: DatabaseResolvedEntityReference
 ): PromiseResult<DatabaseAdminEntityUniqueIndexValue[], typeof ErrorType.Generic> {
-  return ok([]);
-  /*
   const result = await queryMany<
-    Pick<EntityUniqueIndexesTable, 'index_name' | 'value' | 'latest' | 'published'>
+    Pick<UniqueIndexValuesTable, 'index_name' | 'value' | 'latest' | 'published'>
   >(
-    database,
+    databaseAdapter,
     context,
-    buildSqliteSqlQuery(({ sql }) => {
-      sql`SELECT index_name, value, latest, published FROM entity_unique_indexes WHERE entities_id = ${
-        entity.entityInternalId as number
-      }`;
+    buildPostgresSqlQuery(({ sql }) => {
+      sql`SELECT index_name, value, latest, published FROM unique_index_values WHERE entities_id = ${entity.entityInternalId}`;
     })
   );
   if (result.isError()) return result;
@@ -34,5 +32,5 @@ export async function adminEntityUniqueIndexGetValues(
       latest: row.latest,
       published: row.published,
     }))
-  );*/
+  );
 }

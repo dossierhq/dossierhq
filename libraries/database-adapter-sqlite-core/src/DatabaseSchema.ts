@@ -81,8 +81,8 @@ export interface UniqueIndexValuesTable {
   entities_id: number;
   index_name: string;
   value: string;
-  latest: boolean;
-  published: boolean;
+  latest: number; // boolean
+  published: number; // boolean
 }
 
 export interface UniqueConstraint {
