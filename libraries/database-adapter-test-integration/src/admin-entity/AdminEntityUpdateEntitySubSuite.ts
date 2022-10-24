@@ -4,13 +4,17 @@ import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminReferences } from '../SchemaTypes.js';
 import { assertIsAdminReferences } from '../SchemaTypes.js';
 import {
+  adminToPublishedEntity,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -20,6 +24,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_minimalWithoutProvidingSubjectAuthKey,
   updateEntity_updateAndPublishEntity,
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
+  updateEntity_updateAndPublishEntityWithUniqueIndexValue,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_withMultilineField,
@@ -245,6 +250,38 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
+  adminSchema,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity(STRINGS_CREATE);
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const unique = Math.random().toString();
+  const updateResult = await adminClient.updateEntity(
+    { id, fields: { unique } },
+    { publish: true }
+  );
+  assertOkResult(updateResult);
+
+  const getAdminResult = await adminClient.getEntity({ index: 'strings-unique', value: unique });
+  assertResultValue(getAdminResult, updateResult.value.entity);
+
+  const getPublishedResult = await publishedClient.getEntity({
+    index: 'strings-unique',
+    value: unique,
+  });
+  assertResultValue(
+    getPublishedResult,
+    adminToPublishedEntity(adminSchema, updateResult.value.entity)
+  );
 }
 
 async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntityTestContext) {
