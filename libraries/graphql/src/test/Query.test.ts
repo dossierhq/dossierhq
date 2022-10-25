@@ -1,5 +1,6 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import {
+  assertOkResult,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
@@ -842,5 +843,87 @@ describe('nodes()', () => {
       nodes: [null],
     });
     expect(result.errors).toBeFalsy();
+  });
+});
+
+describe('publishedEntity()', () => {
+  test('Query all fields of created entity', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity(
+      {
+        info: { type: 'QueryFoo', name: 'Howdy name', authKey: 'none' },
+        fields: {
+          title: 'Howdy title',
+          summary: 'Howdy summary',
+          location: { lat: 55.60498, lng: 13.003822 },
+          locations: [
+            { lat: 55.60498, lng: 13.003822 },
+            { lat: 56.381561, lng: 13.99286 },
+          ],
+          tags: ['one', 'two', 'three'],
+        },
+      },
+      { publish: true }
+    );
+    assertOkResult(createResult);
+    const {
+      entity: {
+        id,
+        info: { name, createdAt },
+      },
+    } = createResult.value;
+
+    const result = await graphql({
+      schema,
+      source: `
+          query Entity($id: ID!) {
+            publishedEntity(id: $id) {
+              __typename
+              id
+              ... on PublishedQueryFoo {
+                info {
+                  name
+                  authKey
+                  createdAt
+                }
+                fields {
+                  title
+                  summary
+                  tags
+                  location {
+                    lat
+                    lng
+                  }
+                  locations {
+                    lat
+                    lng
+                  }
+                }
+              }
+            }
+          }
+        `,
+      contextValue: createContext(),
+      variableValues: { id },
+    });
+    expect(result).toEqual({
+      data: {
+        publishedEntity: {
+          __typename: 'PublishedQueryFoo',
+          id,
+          info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
+          fields: {
+            title: 'Howdy title',
+            summary: 'Howdy summary',
+            tags: ['one', 'two', 'three'],
+            location: { lat: 55.60498, lng: 13.003822 },
+            locations: [
+              { lat: 55.60498, lng: 13.003822 },
+              { lat: 56.381561, lng: 13.99286 },
+            ],
+          },
+        },
+      },
+    });
   });
 });

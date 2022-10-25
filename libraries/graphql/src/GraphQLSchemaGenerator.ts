@@ -1152,7 +1152,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadPublishedEntity(publishedSchema, context, args.id);
+        return await loadPublishedEntity(publishedSchema, context, args);
       },
     });
   }
@@ -1167,6 +1167,46 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       },
       resolve: async (_source, args, context, _info) => {
         return await loadPublishedEntities(publishedSchema, context, args.ids);
+      },
+    });
+  }
+
+  buildQueryFieldPublishedEntity<TSource>(
+    publishedSchema: PublishedSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
+    if (publishedSchema.spec.indexes.length === 0) {
+      return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+        type: this.getInterface('PublishedEntity'),
+        args: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+        },
+        resolve: async (_source, args, context, _info) => {
+          return await loadPublishedEntity(publishedSchema, context, args);
+        },
+      });
+    }
+
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { id: string | null; index: string | null; value: string | null }
+    >({
+      type: this.getInterface('PublishedEntity'),
+      args: {
+        id: { type: GraphQLID },
+        index: { type: GraphQLString },
+        value: { type: GraphQLString },
+      },
+      resolve: async (_source, args, context, _info) => {
+        let reference;
+        if (args.id) {
+          reference = { id: args.id };
+        } else if (args.index && args.value) {
+          reference = { index: args.index, value: args.value };
+        } else {
+          throw new Error('Either id or index and value must be specified');
+        }
+        return await loadPublishedEntity(publishedSchema, context, reference);
       },
     });
   }
@@ -1346,6 +1386,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           ? {
               node: this.buildQueryFieldNode(this.publishedSchema),
               nodes: this.buildQueryFieldNodes(this.publishedSchema),
+              publishedEntity: this.buildQueryFieldPublishedEntity(this.publishedSchema),
               publishedSampleEntities: this.buildQueryFieldPublishedSampleEntities(
                 this.publishedSchema
               ),
