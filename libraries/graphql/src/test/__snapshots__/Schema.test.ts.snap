@@ -4863,6 +4863,10 @@ interface AdminEntity {
   info: AdminEntityInfo!
 }
 
+enum AdminUniqueIndex {
+  fooUnique
+}
+
 type AdminEntityEdge {
   node: AdminEntity
   cursor: String!
@@ -5053,7 +5057,7 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -5385,6 +5389,10 @@ interface AdminEntity {
   info: AdminEntityInfo!
 }
 
+enum AdminUniqueIndex {
+  fooUnique
+}
+
 type AdminEntityEdge {
   node: AdminEntity
   cursor: String!
@@ -5575,7 +5583,7 @@ type Query {
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection

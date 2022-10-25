@@ -28,7 +28,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       name: 'QueryFoo',
       fields: [
         { name: 'title', type: FieldType.String, isName: true },
-        { name: 'slug', type: FieldType.String, index: 'slug' },
+        { name: 'slug', type: FieldType.String, index: 'queryPublishedSlug' },
         { name: 'summary', type: FieldType.String },
         { name: 'tags', type: FieldType.String, list: true },
         { name: 'body', type: FieldType.RichText },
@@ -50,7 +50,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
-  indexes: [{ name: 'slug', type: 'unique' }],
+  indexes: [{ name: 'queryPublishedSlug', type: 'unique' }],
 };
 
 const PUBLISHED_FOO_QUERY = `
@@ -905,7 +905,7 @@ describe('publishedEntity()', () => {
       schema,
       source: PUBLISHED_FOO_QUERY,
       contextValue: createContext(),
-      variableValues: { index: 'slug', value: slug },
+      variableValues: { index: 'queryPublishedSlug', value: slug },
     });
     expect(result).toEqual({
       data: {
@@ -1006,7 +1006,7 @@ describe('publishedEntity()', () => {
       schema,
       source: PUBLISHED_FOO_QUERY,
       contextValue: createContext(),
-      variableValues: { index: 'slug' },
+      variableValues: { index: 'queryPublishedSlug' },
     });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`

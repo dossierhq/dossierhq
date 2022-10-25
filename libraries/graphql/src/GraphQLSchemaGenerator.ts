@@ -592,6 +592,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       })
     );
 
+    // AdminUniqueIndex
+    const uniqueIndexNames = adminSchema.spec.indexes
+      .filter((it) => it.type === 'unique')
+      .map((it) => it.name);
+    if (uniqueIndexNames.length > 0) {
+      const uniqueIndexEnumValues: GraphQLEnumValueConfigMap = {};
+      for (const indexName of uniqueIndexNames) {
+        uniqueIndexEnumValues[indexName] = {};
+      }
+      this.addType(
+        new GraphQLEnumType({
+          name: 'AdminUniqueIndex',
+          values: uniqueIndexEnumValues,
+        })
+      );
+    }
+
     // AdminEntityEdge
     this.addType(
       new GraphQLObjectType({
@@ -1231,14 +1248,50 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   buildQueryFieldAdminEntity<TSource>(
     adminSchema: AdminSchema
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
+    if (adminSchema.spec.indexes.length === 0) {
+      return fieldConfigWithArgs<TSource, TContext, { id: string; version?: number | null }>({
+        type: this.getInterface('AdminEntity'),
+        args: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          version: { type: GraphQLInt },
+        },
+        resolve: async (_source, args, context, _info) => {
+          let reference;
+          if (typeof args.version === 'number') {
+            reference = { id: args.id, version: args.version };
+          } else {
+            reference = { id: args.id };
+          }
+
+          return await loadAdminEntity(adminSchema, context, reference);
+        },
+      });
+    }
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { id?: string | null; version?: number | null; index?: string | null; value?: string | null }
+    >({
       type: this.getInterface('AdminEntity'),
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLID },
         version: { type: GraphQLInt },
+        index: { type: this.getInputType('AdminUniqueIndex') },
+        value: { type: GraphQLString },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntity(adminSchema, context, args.id, args.version);
+        let reference;
+        if (args.id && typeof args.version === 'number') {
+          reference = { id: args.id, version: args.version };
+        } else if (args.id) {
+          reference = { id: args.id };
+        } else if (args.index && args.value) {
+          reference = { index: args.index, value: args.value };
+        } else {
+          throw new Error('Either (id), (id and version) or (index and value) must be specified');
+        }
+
+        return await loadAdminEntity(adminSchema, context, reference);
       },
     });
   }
