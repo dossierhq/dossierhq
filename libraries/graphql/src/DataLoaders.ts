@@ -22,6 +22,7 @@ import type {
   PublishedValueTypeSpecification,
   PublishingHistory,
   RichText,
+  UniqueIndexReference,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -63,10 +64,10 @@ interface Edge<T> {
 export async function loadPublishedEntity<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  id: string
+  reference: EntityReference | UniqueIndexReference
 ): Promise<PublishedEntity> {
   const publishedClient = getPublishedClient(context);
-  const result = await publishedClient.getEntity({ id });
+  const result = await publishedClient.getEntity(reference);
   if (result.isError()) {
     throw result.toError();
   }
@@ -294,7 +295,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin
           ? loadAdminEntity(schema as AdminSchema, context, value.id, null)
-          : loadPublishedEntity(schema, context, value.id);
+          : loadPublishedEntity(schema, context, value);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
