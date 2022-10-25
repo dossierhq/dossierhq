@@ -4759,6 +4759,836 @@ type Mutation {
 }"
 `;
 
+exports[`One entity type with unique index schema spec > Generated QL schema (admin only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar DateTime
+
+input EntityReferenceInput {
+  id: ID!
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum AdminEntityType {
+  Foo
+}
+
+enum AdminEntityStatus {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  authKey: String!
+  status: AdminEntityStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+  authKey: String!
+}
+
+enum AdminEntityCreateEffect {
+  created
+  createdAndPublished
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+  authKey: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+  authKey: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  createdAndPublished
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
+enum AdminQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: AdminQueryOrder
+  reverse: Boolean
+}
+
+input EntityVersionReferenceInput {
+  id: ID!
+  version: Int!
+}
+
+type AdminRichText {
+  root: JSON!
+  entities: [AdminEntity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+input AdminRichTextInput {
+  root: JSON!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type EntityHistory {
+  id: ID!
+  versions: [EntityVersionInfo]!
+}
+
+type PublishingEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: DateTime!
+}
+
+type PublishingHistory {
+  id: ID!
+  events: [PublishingEvent]!
+}
+
+enum AdminEntityPublishEffect {
+  published
+  none
+}
+
+type AdminEntityPublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityPublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnpublishEffect {
+  unpublished
+  none
+}
+
+type AdminEntityUnpublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnpublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityArchiveEffect {
+  archived
+  none
+}
+
+type AdminEntityArchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityArchiveEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnarchiveEffect {
+  unarchived
+  none
+}
+
+type AdminEntityUnarchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnarchiveEffect!
+  updatedAt: DateTime!
+}
+
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
+type AdminFooFields {
+  bar: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  bar: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type Query {
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishingHistory(id: ID!): PublishingHistory
+}
+
+type Mutation {
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
+}"
+`;
+
+exports[`One entity type with unique index schema spec > Generated QL schema (published only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar DateTime
+
+input EntityReferenceInput {
+  id: ID!
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+}
+
+type PublishedEntityInfo {
+  name: String!
+  authKey: String!
+  createdAt: DateTime!
+}
+
+interface PublishedEntity implements Node {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+type PublishedRichText {
+  root: JSON!
+  entities: [PublishedEntity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type PublishedEntityEdge {
+  node: PublishedEntity
+  cursor: String!
+}
+
+type PublishedEntityConnection {
+  pageInfo: PageInfo!
+  edges: [PublishedEntityEdge]
+  totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input PublishedQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: QueryOrder
+  reverse: Boolean
+}
+
+type PublishedFooFields {
+  bar: String
+}
+
+type PublishedFoo implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  publishedEntity(id: ID, index: String, value: String): PublishedEntity
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+}"
+`;
+
+exports[`One entity type with unique index schema spec > Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar DateTime
+
+input EntityReferenceInput {
+  id: ID!
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+}
+
+type PublishedEntityInfo {
+  name: String!
+  authKey: String!
+  createdAt: DateTime!
+}
+
+interface PublishedEntity implements Node {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+type PublishedRichText {
+  root: JSON!
+  entities: [PublishedEntity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type PublishedEntityEdge {
+  node: PublishedEntity
+  cursor: String!
+}
+
+type PublishedEntityConnection {
+  pageInfo: PageInfo!
+  edges: [PublishedEntityEdge]
+  totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input PublishedQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: QueryOrder
+  reverse: Boolean
+}
+
+type PublishedFooFields {
+  bar: String
+}
+
+type PublishedFoo implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
+}
+
+enum AdminEntityType {
+  Foo
+}
+
+enum AdminEntityStatus {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  authKey: String!
+  status: AdminEntityStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+  authKey: String!
+}
+
+enum AdminEntityCreateEffect {
+  created
+  createdAndPublished
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+  authKey: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+  authKey: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  createdAndPublished
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
+enum AdminQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: AdminQueryOrder
+  reverse: Boolean
+}
+
+input EntityVersionReferenceInput {
+  id: ID!
+  version: Int!
+}
+
+type AdminRichText {
+  root: JSON!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  root: JSON!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type EntityHistory {
+  id: ID!
+  versions: [EntityVersionInfo]!
+}
+
+type PublishingEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: DateTime!
+}
+
+type PublishingHistory {
+  id: ID!
+  events: [PublishingEvent]!
+}
+
+enum AdminEntityPublishEffect {
+  published
+  none
+}
+
+type AdminEntityPublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityPublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnpublishEffect {
+  unpublished
+  none
+}
+
+type AdminEntityUnpublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnpublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityArchiveEffect {
+  archived
+  none
+}
+
+type AdminEntityArchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityArchiveEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnarchiveEffect {
+  unarchived
+  none
+}
+
+type AdminEntityUnarchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnarchiveEffect!
+  updatedAt: DateTime!
+}
+
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
+type AdminFooFields {
+  bar: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  bar: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  publishedEntity(id: ID, index: String, value: String): PublishedEntity
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishingHistory(id: ID!): PublishingHistory
+}
+
+type Mutation {
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
+}"
+`;
+
 exports[`Required fields schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
