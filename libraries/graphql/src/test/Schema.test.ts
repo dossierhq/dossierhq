@@ -390,6 +390,7 @@ describe('Two entity types with reference schema spec', () => {
       },
     ],
   });
+
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
@@ -672,6 +673,34 @@ describe('Required fields schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String, required: true }],
       },
     ],
+  });
+
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(adminSchema, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(adminSchema, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('One entity type with unique index schema spec', () => {
+  const adminSchema = createAdminSchema({
+    entityTypes: [
+      {
+        name: 'Foo',
+        adminOnly: false,
+        fields: [{ name: 'bar', type: FieldType.String, index: 'foo-unique' }],
+      },
+    ],
+    indexes: [{ name: 'foo-unique', type: 'unique' }],
   });
 
   test('Generated QL schema', () => {
