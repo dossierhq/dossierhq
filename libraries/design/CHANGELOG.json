@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-design",
   "entries": [
     {
+      "version": "0.1.34",
+      "tag": "@jonasb/datadata-design_v0.1.34",
+      "date": "Tue, 25 Oct 2022 15:23:52 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.33",
       "tag": "@jonasb/datadata-design_v0.1.33",
       "date": "Mon, 17 Oct 2022 15:41:41 GMT",
