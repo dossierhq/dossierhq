@@ -1,6 +1,5 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { AdminSchema, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import {
   createDatabase,
   createSqlite3Adapter,
@@ -8,6 +7,7 @@ import {
 import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
+import assert from 'node:assert';
 import { Database } from 'sqlite3';
 import { schemaSpecification } from './schema';
 
@@ -79,22 +79,15 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
 }
 
 async function createDatabaseAdapter() {
-  if (process.env.DATABASE_SQLITE_FILE) {
-    const context = { logger: NoOpLogger };
-    const databaseResult = await createDatabase(context, Database, {
-      filename: process.env.DATABASE_SQLITE_FILE,
-      journalMode: 'wal',
-    });
-    if (databaseResult.isError()) return databaseResult;
-    const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value);
-    return databaseAdapterResult;
-  }
-
-  return ok(
-    createPostgresAdapter({
-      connectionString: process.env.DATABASE_URL!,
-    })
-  );
+  assert.ok(process.env.DATABASE_SQLITE_FILE);
+  const context = { logger: NoOpLogger };
+  const databaseResult = await createDatabase(context, Database, {
+    filename: process.env.DATABASE_SQLITE_FILE,
+    journalMode: 'wal',
+  });
+  if (databaseResult.isError()) return databaseResult;
+  const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value);
+  return databaseAdapterResult;
 }
 
 function createAuthenticationAdapter(): AuthorizationAdapter {

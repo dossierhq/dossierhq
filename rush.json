@@ -354,6 +354,10 @@
       "projectFolder": "tools/generic-tools"
     },
     {
+      "packageName": "blog",
+      "projectFolder": "apps/blog"
+    },
+    {
       "packageName": "playground",
       "projectFolder": "apps/playground"
     },
