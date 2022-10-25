@@ -452,7 +452,13 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.getEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
-        operation.resolve(ok(createDummyEntity({ id: reference.id }) as unknown as AdminEntity));
+        operation.resolve(
+          ok(
+            createDummyEntity({
+              id: 'id' in reference ? reference.id : `${reference.index}/${reference.value}`,
+            }) as unknown as AdminEntity
+          )
+        );
       }
     );
 
@@ -648,7 +654,7 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.getSchemaSpecification,
       async (_context, operation) => {
-        operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [] }));
+        operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }));
       }
     );
 
@@ -657,6 +663,7 @@ describe('AdminClient forward operation over JSON', () => {
       expect(result.value).toMatchInlineSnapshot(`
         {
           "entityTypes": [],
+          "indexes": [],
           "patterns": [],
           "valueTypes": [],
         }
@@ -1311,7 +1318,7 @@ describe('AdminClient forward operation over JSON', () => {
         operation.resolve(
           ok({
             effect: 'updated',
-            schemaSpecification: { entityTypes: [], valueTypes: [], patterns: [] },
+            schemaSpecification: { entityTypes: [], valueTypes: [], patterns: [], indexes: [] },
           })
         );
       }
@@ -1324,6 +1331,7 @@ describe('AdminClient forward operation over JSON', () => {
           "effect": "updated",
           "schemaSpecification": {
             "entityTypes": [],
+            "indexes": [],
             "patterns": [],
             "valueTypes": [],
           },

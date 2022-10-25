@@ -191,6 +191,7 @@ export type {
   RichTextNode,
   RichTextTextNode,
   RichTextValueItemNode,
+  UniqueIndexReference,
   ValueItem,
 } from './Types.js';
 export {

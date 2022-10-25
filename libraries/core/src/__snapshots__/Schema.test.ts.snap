@@ -10,12 +10,40 @@ exports[`mergeWith() > empty->entity with pattern 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",
       "pattern": "^hello$",
     },
   ],
+  "valueTypes": [],
+}
+`;
+
+exports[`mergeWith() > field with index 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "index": "unique-index",
+          "name": "title",
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "unique-index",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
   "valueTypes": [],
 }
 `;
@@ -36,12 +64,29 @@ exports[`mergeWith() > field with matchPattern 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",
       "pattern": "^pattern$",
     },
   ],
+  "valueTypes": [],
+}
+`;
+
+exports[`mergeWith() > unused index is removed 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
   "valueTypes": [],
 }
 `;
@@ -56,6 +101,7 @@ exports[`mergeWith() > unused pattern is removed 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "valueTypes": [],
 }
@@ -71,6 +117,7 @@ exports[`mergeWith() > update pattern 1`] = `
       "name": "Foo",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",

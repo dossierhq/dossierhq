@@ -40,6 +40,11 @@ export interface EntityVersionReference {
   version: number;
 }
 
+export interface UniqueIndexReference {
+  index: string;
+  value: string;
+}
+
 export type RichText = SerializedEditorState;
 
 export type RichTextNode = SerializedLexicalNode;

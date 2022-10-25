@@ -3,7 +3,7 @@ import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } fr
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminTitleOnly } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
@@ -13,8 +13,10 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
   getEntity_getLatestVersion,
+  getEntity_usingUniqueIndex,
   getEntity_errorInvalidId,
   getEntity_errorInvalidVersion,
+  getEntity_errorInvalidUniqueIndexValue,
   getEntity_errorWrongAuthKey,
 ];
 
@@ -50,6 +52,19 @@ async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {
   assertResultValue(result, updateResult.value.entity);
 }
 
+async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await adminClient.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertOkResult(createResult);
+
+  const result = await adminClient.getEntity({ index: 'stringsUnique', value: unique });
+  assertOkResult(result);
+  assertResultValue(result, createResult.value.entity);
+}
+
 async function getEntity_errorInvalidId({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const result = await client.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
@@ -70,6 +85,12 @@ async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext)
 
   const resultOne = await client.getEntity({ id, version: 1 });
   assertErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
+}
+
+async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const result = await client.getEntity({ index: 'unknown-index', value: 'unknown-value' });
+  assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
 async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {

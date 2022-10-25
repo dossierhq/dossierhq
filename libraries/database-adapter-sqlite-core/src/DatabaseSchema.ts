@@ -76,6 +76,15 @@ export interface SchemaVersionsTable {
   specification: string;
 }
 
+export interface UniqueIndexValuesTable {
+  id: number;
+  entities_id: number;
+  index_name: string;
+  value: string;
+  latest: number; // boolean
+  published: number; // boolean
+}
+
 export interface UniqueConstraint {
   table: string;
   columns: string[];
@@ -84,6 +93,7 @@ export interface UniqueConstraint {
 const AdvisoryLocksTable = 'advisory_locks';
 const EntitiesTable = 'entities';
 const PrincipalsTable = 'principals';
+const UniqueIndexValuesTable = 'unique_index_values';
 
 export const AdvisoryLocksUniqueNameConstraint: UniqueConstraint = {
   table: AdvisoryLocksTable,
@@ -103,4 +113,9 @@ export const EntitiesUniqueUuidConstraint: UniqueConstraint = {
 export const PrincipalsUniqueProviderIdentifierConstraint: UniqueConstraint = {
   table: PrincipalsTable,
   columns: ['provider', 'identifier'],
+};
+
+export const UniqueIndexValueConstraint: UniqueConstraint = {
+  table: UniqueIndexValuesTable,
+  columns: ['index_name', 'value'],
 };

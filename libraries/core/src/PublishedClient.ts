@@ -27,13 +27,14 @@ import type {
   PublishedEntity,
   PublishedQuery,
   PublishedSearchQuery,
+  UniqueIndexReference,
 } from './Types.js';
 
 export interface PublishedClient {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference
+    reference: EntityReference | UniqueIndexReference
   ): PromiseResult<
     PublishedEntity,
     | typeof ErrorType.BadRequest

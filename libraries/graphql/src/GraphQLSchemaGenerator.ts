@@ -284,6 +284,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       })
     );
 
+    // PublishedUniqueIndex
+    const uniqueIndexNames = publishedSchema.spec.indexes
+      .filter((it) => it.type === 'unique')
+      .map((it) => it.name);
+    if (uniqueIndexNames.length > 0) {
+      const uniqueIndexEnumValues: GraphQLEnumValueConfigMap = {};
+      for (const indexName of uniqueIndexNames) {
+        uniqueIndexEnumValues[indexName] = {};
+      }
+      this.addType(
+        new GraphQLEnumType({
+          name: 'PublishedUniqueIndex',
+          values: uniqueIndexEnumValues,
+        })
+      );
+    }
+
     // PublishedEntityEdge
     this.addType(
       new GraphQLObjectType({
@@ -574,6 +591,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         },
       })
     );
+
+    // AdminUniqueIndex
+    const uniqueIndexNames = adminSchema.spec.indexes
+      .filter((it) => it.type === 'unique')
+      .map((it) => it.name);
+    if (uniqueIndexNames.length > 0) {
+      const uniqueIndexEnumValues: GraphQLEnumValueConfigMap = {};
+      for (const indexName of uniqueIndexNames) {
+        uniqueIndexEnumValues[indexName] = {};
+      }
+      this.addType(
+        new GraphQLEnumType({
+          name: 'AdminUniqueIndex',
+          values: uniqueIndexEnumValues,
+        })
+      );
+    }
 
     // AdminEntityEdge
     this.addType(
@@ -1152,7 +1186,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadPublishedEntity(publishedSchema, context, args.id);
+        return await loadPublishedEntity(publishedSchema, context, args);
       },
     });
   }
@@ -1171,17 +1205,93 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
+  buildQueryFieldPublishedEntity<TSource>(
+    publishedSchema: PublishedSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
+    if (publishedSchema.spec.indexes.length === 0) {
+      return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+        type: this.getInterface('PublishedEntity'),
+        args: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+        },
+        resolve: async (_source, args, context, _info) => {
+          return await loadPublishedEntity(publishedSchema, context, args);
+        },
+      });
+    }
+
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { id: string | null; index: string | null; value: string | null }
+    >({
+      type: this.getInterface('PublishedEntity'),
+      args: {
+        id: { type: GraphQLID },
+        index: { type: this.getInputType('PublishedUniqueIndex') },
+        value: { type: GraphQLString },
+      },
+      resolve: async (_source, args, context, _info) => {
+        let reference;
+        if (args.id) {
+          reference = { id: args.id };
+        } else if (args.index && args.value) {
+          reference = { index: args.index, value: args.value };
+        } else {
+          throw new Error('Either id or index and value must be specified');
+        }
+        return await loadPublishedEntity(publishedSchema, context, reference);
+      },
+    });
+  }
+
   buildQueryFieldAdminEntity<TSource>(
     adminSchema: AdminSchema
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
+    if (adminSchema.spec.indexes.length === 0) {
+      return fieldConfigWithArgs<TSource, TContext, { id: string; version?: number | null }>({
+        type: this.getInterface('AdminEntity'),
+        args: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          version: { type: GraphQLInt },
+        },
+        resolve: async (_source, args, context, _info) => {
+          let reference;
+          if (typeof args.version === 'number') {
+            reference = { id: args.id, version: args.version };
+          } else {
+            reference = { id: args.id };
+          }
+
+          return await loadAdminEntity(adminSchema, context, reference);
+        },
+      });
+    }
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { id?: string | null; version?: number | null; index?: string | null; value?: string | null }
+    >({
       type: this.getInterface('AdminEntity'),
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLID },
         version: { type: GraphQLInt },
+        index: { type: this.getInputType('AdminUniqueIndex') },
+        value: { type: GraphQLString },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntity(adminSchema, context, args.id, args.version);
+        let reference;
+        if (args.id && typeof args.version === 'number') {
+          reference = { id: args.id, version: args.version };
+        } else if (args.id) {
+          reference = { id: args.id };
+        } else if (args.index && args.value) {
+          reference = { index: args.index, value: args.value };
+        } else {
+          throw new Error('Either (id), (id and version) or (index and value) must be specified');
+        }
+
+        return await loadAdminEntity(adminSchema, context, reference);
       },
     });
   }
@@ -1346,6 +1456,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           ? {
               node: this.buildQueryFieldNode(this.publishedSchema),
               nodes: this.buildQueryFieldNodes(this.publishedSchema),
+              publishedEntity: this.buildQueryFieldPublishedEntity(this.publishedSchema),
               publishedSampleEntities: this.buildQueryFieldPublishedSampleEntities(
                 this.publishedSchema
               ),

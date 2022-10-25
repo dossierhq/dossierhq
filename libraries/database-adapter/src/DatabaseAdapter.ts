@@ -14,6 +14,7 @@ import type {
   PublishedSchema,
   PublishedSearchQuery,
   PublishingEvent,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import type { ResolvedAuthKey, Session } from './Session.js';
 import type { Transaction, TransactionContext } from './TransactionContext.js';
@@ -56,7 +57,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   fieldsData: Record<string, unknown>;
 }
 
-export interface DatabaseAdminEntityCreatePayload {
+export interface DatabaseAdminEntityCreatePayload extends DatabaseResolvedEntityReference {
   id: string;
   name: string;
   createdAt: Date;
@@ -150,6 +151,24 @@ export interface DatabaseAdminEntitySearchPayload {
 
 export interface DatabaseAdminEntitySearchPayloadEntity extends DatabaseAdminEntityPayload {
   cursor: string;
+}
+
+export interface DatabaseAdminEntityUniqueIndexReference {
+  index: string;
+  value: string;
+}
+
+export interface DatabaseAdminEntityUniqueIndexValue {
+  index: string;
+  value: string;
+  latest: boolean;
+  published: boolean;
+}
+
+export interface DatabaseAdminEntityUniqueIndexArg {
+  add: DatabaseAdminEntityUniqueIndexValue[];
+  update: DatabaseAdminEntityUniqueIndexValue[];
+  remove: DatabaseAdminEntityUniqueIndexReference[];
 }
 
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
@@ -265,7 +284,7 @@ export interface DatabaseAdapter {
 
   adminEntityGetOne(
     context: TransactionContext,
-    reference: EntityReference | EntityVersionReference
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference
   ): PromiseResult<
     DatabaseAdminEntityGetOnePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -361,6 +380,17 @@ export interface DatabaseAdapter {
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
+  adminEntityUniqueIndexGetValues(
+    context: TransactionContext,
+    entity: DatabaseResolvedEntityReference
+  ): PromiseResult<DatabaseAdminEntityUniqueIndexValue[], typeof ErrorType.Generic>;
+
+  adminEntityUniqueIndexUpdateValues(
+    context: TransactionContext,
+    entity: DatabaseResolvedEntityReference,
+    values: DatabaseAdminEntityUniqueIndexArg
+  ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
+
   adminEntityUpdateGetEntityInfo(
     context: TransactionContext,
     reference: EntityReference
@@ -434,7 +464,7 @@ export interface DatabaseAdapter {
 
   publishedEntityGetOne(
     context: TransactionContext,
-    reference: EntityReference
+    reference: EntityReference | UniqueIndexReference
   ): PromiseResult<
     DatabasePublishedEntityGetOnePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic

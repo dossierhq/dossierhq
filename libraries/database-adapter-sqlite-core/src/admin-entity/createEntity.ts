@@ -81,7 +81,7 @@ export async function adminCreateEntity(
   );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
-  return ok({ id: uuid, name: actualName, createdAt, updatedAt });
+  return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
 }
 
 async function createEntityRow(

@@ -114,7 +114,15 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
     updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
-  fields: { multiline: 'Hello\nWorld', stringAdminOnly: null, pattern: null, patternList: null },
+  fields: {
+    multiline: 'Hello\nWorld',
+    stringAdminOnly: null,
+    pattern: null,
+    patternList: null,
+    unique: null,
+    uniqueAdminOnly: null,
+    uniqueGenericIndex: null,
+  },
 };
 
 export const SUBJECT_ONLY_CREATE: Readonly<AdminEntityCreate<AdminSubjectOnly>> = {
@@ -193,7 +201,10 @@ export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = 
   fields: {},
 };
 
-export function adminToPublishedEntity(schema: AdminSchema, entity: AdminEntity): PublishedEntity {
+export function adminToPublishedEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  schema: AdminSchema,
+  entity: T
+): PublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);
   const {
     id,
@@ -208,7 +219,7 @@ export function adminToPublishedEntity(schema: AdminSchema, entity: AdminEntity)
       authKey,
       createdAt,
     },
-    fields,
+    fields: fields as Record<string, unknown>,
   };
   publishedEntity = deepMapEntity(schema, publishedEntity, {
     mapField: (fieldSpec, value) => {

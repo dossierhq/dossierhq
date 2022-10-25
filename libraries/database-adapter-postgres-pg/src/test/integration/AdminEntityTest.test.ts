@@ -28,8 +28,8 @@ registerTestSuite(
   createAdminEntityTestSuite({
     before: async () => {
       assertIsDefined(serverInit);
-      const { server } = serverInit;
-      return [{ server, readOnlyEntityRepository }, undefined];
+      const { adminSchema, server } = serverInit;
+      return [{ adminSchema, server, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty

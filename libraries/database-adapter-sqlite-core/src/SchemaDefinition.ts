@@ -163,6 +163,20 @@ const VERSION_5: QueryOrQueryAndValues[] = [
   `DROP TABLE entity_version_locations`,
 ];
 
+const VERSION_6: QueryOrQueryAndValues[] = [
+  `CREATE TABLE unique_index_values (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    index_name TEXT NOT NULL,
+    value TEXT NOT NULL,
+    latest INTEGER NOT NULL DEFAULT FALSE,
+    published INTEGER NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
+    CONSTRAINT unique_index_values_index_value UNIQUE (index_name, value)
+  ) STRICT`,
+  `CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id)`,
+];
+
 const VERSIONS: QueryOrQueryAndValues[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -170,6 +184,7 @@ const VERSIONS: QueryOrQueryAndValues[][] = [
   VERSION_3,
   VERSION_4,
   VERSION_5,
+  VERSION_6,
 ];
 
 export async function migrateDatabaseIfNecessary(

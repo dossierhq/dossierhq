@@ -110,6 +110,7 @@ describe('AddDraftAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -133,6 +134,7 @@ describe('AddDraftAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -176,6 +178,7 @@ describe('DeleteDraftAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -200,6 +203,7 @@ describe('SetActiveEntityAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({
@@ -234,6 +238,7 @@ describe('SetNameAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -264,6 +269,7 @@ describe('SetNameAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -296,6 +302,7 @@ describe('SetFieldAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -320,6 +327,7 @@ describe('SetFieldAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -345,6 +353,7 @@ describe('SetFieldAction', () => {
           ],
           valueTypes: [],
           patterns: [{ name: 'foo', pattern: '^foo$' }],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -371,6 +380,7 @@ describe('SetAuthKeyAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
@@ -398,6 +408,7 @@ describe('UpdateEntityAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -442,6 +453,7 @@ describe('UpdateEntityAction', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -474,7 +486,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceEntityEditorState(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
+        new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
       )
     );
     expect(state).toMatchSnapshot();
@@ -504,6 +516,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       )
     );
@@ -549,6 +562,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -609,6 +623,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -675,6 +690,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -765,6 +781,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id }),
@@ -808,6 +825,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         })
       ),
       new EntityEditorActions.AddDraft({ id: firstId }),

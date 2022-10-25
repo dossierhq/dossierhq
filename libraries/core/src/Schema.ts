@@ -81,7 +81,10 @@ interface FieldSpecification {
    * can either be a standard RichTextNodeType or any type that's supported.
    */
   richTextNodes?: (RichTextNodeType | string)[];
+  /** Applicable when type is String */
   matchPattern?: string | null;
+  /** Applicable when type is String */
+  index?: string | null;
 }
 
 export interface AdminFieldSpecification extends FieldSpecification {
@@ -104,28 +107,38 @@ export interface SchemaPatternSpecification {
   pattern: string;
 }
 
+export interface SchemaIndexSpecification {
+  name: string;
+  type: 'unique';
+}
+
 export interface PublishedSchemaSpecification {
   entityTypes: PublishedEntityTypeSpecification[];
   valueTypes: PublishedValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
+  indexes: SchemaIndexSpecification[];
 }
 
 export interface AdminSchemaSpecification {
   entityTypes: AdminEntityTypeSpecification[];
   valueTypes: AdminValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
+  indexes: SchemaIndexSpecification[];
 }
 
 export interface AdminSchemaSpecificationUpdate {
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
   valueTypes?: AdminValueTypeSpecificationUpdate[];
   patterns?: SchemaPatternSpecification[];
+  indexes?: SchemaIndexSpecification[];
 }
 
 export interface SchemaSpecificationUpdatePayload {
   effect: 'updated' | 'none';
   schemaSpecification: AdminSchemaSpecification;
 }
+
+const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
 
 export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
@@ -314,6 +327,21 @@ export class AdminSchema {
             );
           }
         }
+
+        if (fieldSpec.index) {
+          if (fieldSpec.type !== FieldType.String) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify index`
+            );
+          }
+
+          const index = this.getIndex(fieldSpec.index);
+          if (!index) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Unknown index (${fieldSpec.index})`
+            );
+          }
+        }
       }
     }
 
@@ -329,6 +357,19 @@ export class AdminSchema {
       } catch (e) {
         return notOk.BadRequest(`${patternSpec.name}: Invalid regex`);
       }
+    }
+
+    const usedIndexes = new Set<string>();
+    for (const indexSpec of this.spec.indexes) {
+      if (usedIndexes.has(indexSpec.name)) {
+        return notOk.BadRequest(`${indexSpec.name}: Duplicate index name`);
+      }
+      if (!CAMEL_CASE_PATTERN.test(indexSpec.name)) {
+        return notOk.BadRequest(
+          `${indexSpec.name}: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123`
+        );
+      }
+      usedIndexes.add(indexSpec.name);
     }
 
     return ok(undefined);
@@ -380,6 +421,10 @@ export class AdminSchema {
     return regexp;
   }
 
+  getIndex(name: string): SchemaIndexSpecification | null {
+    return this.spec.indexes.find((it) => it.name === name) ?? null;
+  }
+
   mergeWith(
     other: AdminSchemaSpecificationUpdate
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
@@ -387,6 +432,7 @@ export class AdminSchema {
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
       patterns: [],
+      indexes: [],
     };
 
     if (other.entityTypes) {
@@ -426,17 +472,23 @@ export class AdminSchema {
       }
     }
 
+    // Check with patterns and indexes are used
     const usedPatterns = new Set(
       schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[]
     );
+    const usedIndexes = new Set<string>();
     for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
         if (fieldSpec.matchPattern) {
           usedPatterns.add(fieldSpec.matchPattern);
         }
+        if (fieldSpec.index) {
+          usedIndexes.add(fieldSpec.index);
+        }
       }
     }
 
+    // Merge used patterns
     for (const patternName of [...usedPatterns].sort()) {
       const pattern =
         other.patterns?.find((it) => it.name === patternName) ?? this.getPattern(patternName);
@@ -444,6 +496,15 @@ export class AdminSchema {
         return notOk.BadRequest(`Pattern ${patternName} is used, but not defined`);
       }
       schemaSpec.patterns.push(pattern);
+    }
+
+    // Merge used indexes
+    for (const indexName of [...usedIndexes].sort()) {
+      const index = other.indexes?.find((it) => it.name === indexName) ?? this.getIndex(indexName);
+      if (!index) {
+        return notOk.BadRequest(`Index ${indexName} is used, but not defined`);
+      }
+      schemaSpec.indexes.push(index);
     }
 
     // TODO normalize
@@ -455,6 +516,7 @@ export class AdminSchema {
       entityTypes: [],
       valueTypes: [],
       patterns: [],
+      indexes: [],
     };
 
     function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
@@ -487,17 +549,29 @@ export class AdminSchema {
       spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
     }
 
+    const usedIndexNames = new Set();
     for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
         if (fieldSpec.matchPattern) {
           usedPatternNames.add(fieldSpec.matchPattern);
         }
+        if (fieldSpec.index) {
+          usedIndexNames.add(fieldSpec.index);
+        }
       }
     }
+
     for (const patternName of [...usedPatternNames].sort()) {
       const pattern = this.spec.patterns.find((it) => it.name === patternName);
       if (pattern) {
         spec.patterns.push(pattern);
+      }
+    }
+
+    for (const indexName of [...usedIndexNames].sort()) {
+      const index = this.spec.indexes.find((it) => it.name === indexName);
+      if (index) {
+        spec.indexes.push(index);
       }
     }
 
@@ -540,5 +614,9 @@ export class PublishedSchema {
     fieldName: string
   ): PublishedFieldSpecification | null {
     return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
+  }
+
+  getIndex(name: string): SchemaIndexSpecification | null {
+    return this.spec.indexes.find((it) => it.name === name) ?? null;
   }
 }

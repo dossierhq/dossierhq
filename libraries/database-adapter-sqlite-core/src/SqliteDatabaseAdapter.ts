@@ -28,6 +28,8 @@ import {
 } from './admin-entity/publishEntities.js';
 import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
+import { adminEntityUniqueIndexGetValues } from './admin-entity/uniqueIndexGetValues.js';
+import { adminEntityUniqueIndexUpdateValues } from './admin-entity/uniqueIndexUpdateValues.js';
 import {
   adminEntityUnpublishEntities,
   adminEntityUnpublishGetEntitiesInfo,
@@ -120,6 +122,10 @@ function createOuterAdapter(database: Database): DatabaseAdapter {
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(database, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(database, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(database, ...args),
+    adminEntityUniqueIndexGetValues: (...args) =>
+      adminEntityUniqueIndexGetValues(database, ...args),
+    adminEntityUniqueIndexUpdateValues: (...args) =>
+      adminEntityUniqueIndexUpdateValues(database, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(database, ...args),
     adminEntityUpdateGetEntityInfo: (...args) => adminEntityUpdateGetEntityInfo(database, ...args),
     adminEntityUpdateStatus: (...args) => adminEntityUpdateStatus(database, ...args),

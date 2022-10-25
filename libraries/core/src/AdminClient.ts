@@ -62,6 +62,7 @@ import type {
   EntityVersionReference,
   Paging,
   PublishingHistory,
+  UniqueIndexReference,
 } from './Types.js';
 
 export interface AdminClient {
@@ -75,7 +76,7 @@ export interface AdminClient {
   >;
 
   getEntity(
-    reference: EntityReference | EntityVersionReference
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference
   ): PromiseResult<
     AdminEntity,
     | typeof ErrorType.BadRequest
