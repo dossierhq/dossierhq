@@ -5135,6 +5135,10 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
+enum PublishedUniqueIndex {
+  fooUnique
+}
+
 type PublishedEntityEdge {
   node: PublishedEntity
   cursor: String!
@@ -5190,7 +5194,7 @@ type PublishedFoo implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedEntity(id: ID, index: String, value: String): PublishedEntity
+  publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
@@ -5255,6 +5259,10 @@ type PublishedRichText {
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
 scalar JSON
+
+enum PublishedUniqueIndex {
+  fooUnique
+}
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -5564,7 +5572,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedEntity(id: ID, index: String, value: String): PublishedEntity
+  publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity

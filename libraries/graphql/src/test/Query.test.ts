@@ -54,7 +54,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
 };
 
 const PUBLISHED_FOO_QUERY = `
-query PublishedFooEntity($id: ID, $index: String, $value: String) {
+query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
   publishedEntity(id: $id, index: $index, value: $value) {
     __typename
     id
@@ -993,7 +993,7 @@ describe('publishedEntity()', () => {
         "Either id or index and value must be specified
 
       GraphQL request:3:3
-      2 | query PublishedFooEntity($id: ID, $index: String, $value: String) {
+      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
       3 |   publishedEntity(id: $id, index: $index, value: $value) {
         |   ^
       4 |     __typename",
@@ -1014,7 +1014,7 @@ describe('publishedEntity()', () => {
         "Either id or index and value must be specified
 
       GraphQL request:3:3
-      2 | query PublishedFooEntity($id: ID, $index: String, $value: String) {
+      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
       3 |   publishedEntity(id: $id, index: $index, value: $value) {
         |   ^
       4 |     __typename",
@@ -1035,10 +1035,31 @@ describe('publishedEntity()', () => {
         "Either id or index and value must be specified
 
       GraphQL request:3:3
-      2 | query PublishedFooEntity($id: ID, $index: String, $value: String) {
+      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
       3 |   publishedEntity(id: $id, index: $index, value: $value) {
         |   ^
       4 |     __typename",
+      ]
+    `);
+  });
+
+  test('Error: invalid index name', async () => {
+    const result = await graphql({
+      schema,
+      source: PUBLISHED_FOO_QUERY,
+      contextValue: createContext(),
+      variableValues: { index: 'unknownIndex', value: '123' },
+    });
+    const errorStrings = result.errors?.map((it) => it.toString());
+    expect(errorStrings).toMatchInlineSnapshot(`
+      [
+        "Variable \\"$index\\" got invalid value \\"unknownIndex\\"; Value \\"unknownIndex\\" does not exist in \\"PublishedUniqueIndex\\" enum.
+
+      GraphQL request:2:35
+      1 |
+      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
+        |                                   ^
+      3 |   publishedEntity(id: $id, index: $index, value: $value) {",
       ]
     `);
   });
