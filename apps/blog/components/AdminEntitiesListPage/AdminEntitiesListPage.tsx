@@ -32,7 +32,7 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
         <title>Entities</title>
       </Head>
       <AdminEntityListScreen
-        header={<NavBar current="entities" />}
+        header={<NavBar current="admin-entities" />}
         urlQuery={router.query}
         onUrlQueryChanged={handleUrlQueryChanged}
         onCreateEntity={handleCreateEntity}
