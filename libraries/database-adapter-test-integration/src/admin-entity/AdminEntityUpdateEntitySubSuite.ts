@@ -271,11 +271,11 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
   );
   assertOkResult(updateResult);
 
-  const getAdminResult = await adminClient.getEntity({ index: 'strings-unique', value: unique });
+  const getAdminResult = await adminClient.getEntity({ index: 'stringsUnique', value: unique });
   assertResultValue(getAdminResult, updateResult.value.entity);
 
   const getPublishedResult = await publishedClient.getEntity({
-    index: 'strings-unique',
+    index: 'stringsUnique',
     value: unique,
   });
   assertResultValue(
@@ -617,6 +617,6 @@ async function updateEntity_errorDuplicateUniqueIndexValue({ server }: AdminEnti
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.fields.unique: Value is not unique (index: strings-unique)'
+    'entity.fields.unique: Value is not unique (index: stringsUnique)'
   );
 }
