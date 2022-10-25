@@ -4,13 +4,17 @@ import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminReferences } from '../SchemaTypes.js';
 import { assertIsAdminReferences } from '../SchemaTypes.js';
 import {
+  adminToPublishedEntity,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -20,17 +24,20 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_minimalWithoutProvidingSubjectAuthKey,
   updateEntity_updateAndPublishEntity,
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
+  updateEntity_updateAndPublishEntityWithUniqueIndexValue,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_withMultilineField,
   updateEntity_withTwoReferences,
   updateEntity_withMultipleLocations,
+  updateEntity_removingUniqueIndexValueReleasesOwnership,
   updateEntity_errorInvalidId,
   updateEntity_errorDifferentType,
   updateEntity_errorTryingToChangeAuthKey,
   updateEntity_errorMultilineStringInTitle,
   updateEntity_errorPublishWithoutRequiredTitle,
   updateEntity_errorInvalidField,
+  updateEntity_errorDuplicateUniqueIndexValue,
 ];
 
 async function updateEntity_minimal({ server }: AdminEntityTestContext) {
@@ -245,6 +252,38 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
   assertResultValue(getResult, expectedEntity);
 }
 
+async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
+  adminSchema,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity(STRINGS_CREATE);
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const unique = Math.random().toString();
+  const updateResult = await adminClient.updateEntity(
+    { id, fields: { unique } },
+    { publish: true }
+  );
+  assertOkResult(updateResult);
+
+  const getAdminResult = await adminClient.getEntity({ index: 'stringsUnique', value: unique });
+  assertResultValue(getAdminResult, updateResult.value.entity);
+
+  const getPublishedResult = await publishedClient.getEntity({
+    index: 'stringsUnique',
+    value: unique,
+  });
+  assertResultValue(
+    getPublishedResult,
+    adminToPublishedEntity(adminSchema, updateResult.value.entity)
+  );
+}
+
 async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
@@ -436,6 +475,27 @@ async function updateEntity_withMultipleLocations({ server }: AdminEntityTestCon
   assertResultValue(getResult, expectedEntity);
 }
 
+async function updateEntity_removingUniqueIndexValueReleasesOwnership({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const createResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertOkResult(createResult);
+
+  const updateResult = await client.updateEntity({
+    id: createResult.value.entity.id,
+    fields: { unique: null },
+  });
+  assertOkResult(updateResult);
+
+  const otherResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
+  assertOkResult(otherResult);
+}
+
 async function updateEntity_errorInvalidId({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const result = await client.updateEntity({
@@ -538,4 +598,25 @@ async function updateEntity_errorInvalidField({ server }: AdminEntityTestContext
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, createResult.value.entity);
+}
+
+async function updateEntity_errorDuplicateUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const otherResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
+  assertOkResult(otherResult);
+
+  const createResult = await client.createEntity(STRINGS_CREATE);
+  assertOkResult(createResult);
+
+  const updateResult = await client.updateEntity({
+    id: createResult.value.entity.id,
+    fields: { unique },
+  });
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'entity.fields.unique: Value is not unique (index: stringsUnique)'
+  );
 }

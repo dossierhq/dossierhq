@@ -15,6 +15,7 @@ import type { SessionContext } from '../Context.js';
 import { encodeAdminEntity, resolveUpdateEntity } from '../EntityCodec.js';
 import { randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
+import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminUpdateEntity(
   adminSchema: AdminSchema,
@@ -110,13 +111,21 @@ export async function adminUpdateEntity(
         locations,
       }
     );
-    if (updateResult.isError()) {
-      return updateResult;
-    }
+    if (updateResult.isError()) return updateResult;
 
     let effect: AdminEntityUpdatePayload['effect'] = 'updated';
     updatedEntity.info.name = updateResult.value.name;
     updatedEntity.info.updatedAt = updateResult.value.updatedAt;
+
+    const uniqueIndexResult = await updateUniqueIndexesForEntity(
+      databaseAdapter,
+      context,
+      { entityInternalId },
+      false,
+      encodeResult.value.uniqueIndexValues,
+      null // TODO publishEntityAfterMutation is updating the values
+    );
+    if (uniqueIndexResult.isError()) return uniqueIndexResult;
 
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(
@@ -130,9 +139,8 @@ export async function adminUpdateEntity(
           version: updatedEntity.info.version,
         }
       );
-      if (publishResult.isError()) {
-        return publishResult;
-      }
+      if (publishResult.isError()) return publishResult;
+
       effect = 'updatedAndPublished';
       updatedEntity.info.status = publishResult.value.status;
       updatedEntity.info.updatedAt = publishResult.value.updatedAt;

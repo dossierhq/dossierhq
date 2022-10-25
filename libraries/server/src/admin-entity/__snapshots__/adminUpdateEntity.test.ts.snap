@@ -3,6 +3,12 @@
 exports[`Admin adminUpdateEntity > Minimal 1`] = `
 [
   [
+    "adminEntityUniqueIndexGetValues",
+    {
+      "entityInternalId": "internal-123",
+    },
+  ],
+  [
     "adminEntityUpdateEntity",
     [Function],
     {

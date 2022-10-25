@@ -6,7 +6,12 @@ describe('generateTypescriptForSchema', () => {
   test('empty', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] }),
+        adminSchema: new AdminSchema({
+          entityTypes: [],
+          valueTypes: [],
+          patterns: [],
+          indexes: [],
+        }),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -19,6 +24,7 @@ describe('generateTypescriptForSchema', () => {
           entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -42,6 +48,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -65,6 +72,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -88,6 +96,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -111,6 +120,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -134,6 +144,7 @@ describe('generateTypescriptForSchema', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -194,6 +205,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -220,6 +232,7 @@ describe('generateTypescriptForSchema', () => {
             },
           ],
           patterns: [],
+          indexes: [],
         }),
         publishedSchema: null,
       })
@@ -236,6 +249,7 @@ describe('generateTypescriptForSchema published', () => {
           entityTypes: [],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }).toPublishedSchema(),
       })
     ).toMatchSnapshot();
@@ -256,6 +270,7 @@ describe('generateTypescriptForSchema published', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }).toPublishedSchema(),
       })
     ).toMatchSnapshot();
@@ -276,6 +291,7 @@ describe('generateTypescriptForSchema published', () => {
           ],
           valueTypes: [],
           patterns: [],
+          indexes: [],
         }).toPublishedSchema(),
       })
     ).toMatchSnapshot();

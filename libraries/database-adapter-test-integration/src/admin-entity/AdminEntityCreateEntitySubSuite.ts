@@ -37,6 +37,7 @@ import {
   assertIsAdminTitleOnly,
 } from '../SchemaTypes.js';
 import {
+  adminToPublishedEntity,
   LOCATIONS_ADMIN_ENTITY,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
@@ -50,7 +51,10 @@ import {
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -60,9 +64,12 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
+  createEntity_publishWithUniqueIndexValue,
   createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
   createEntity_withMatchingPattern,
+  createEntity_withUniqueIndexValue,
+  createEntity_withUniqueIndexValueSameValueInTwoIndexes,
   createEntity_withRichTextField,
   createEntity_withRichTextListField,
   createEntity_withRichTextFieldWithReference,
@@ -73,6 +80,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_errorAuthKeyNotMatchingPattern,
   createEntity_errorMultilineStringInTitle,
   createEntity_errorStringNotMatchingMatchPattern,
+  createEntity_errorDuplicateUniqueIndexValue,
   createEntity_errorStringListNotMatchingMatchPattern,
   createEntity_errorRichTextWithUnsupportedEntityNode,
   createEntity_errorRichTextWithUnsupportedLinkEntityType,
@@ -250,6 +258,24 @@ async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTes
   assertEquals(getResult.value, expectedEntity);
 }
 
+async function createEntity_publishWithUniqueIndexValue({
+  adminSchema,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await adminClient.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { unique } }),
+    { publish: true }
+  );
+  assertOkResult(createResult);
+
+  const getResult = await publishedClient.getEntity({ index: 'stringsUnique', value: unique });
+  assertOkResult(getResult);
+  assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
+}
+
 async function createEntity_withAuthKeyMatchingPattern({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity<AdminSubjectOnly>(SUBJECT_ONLY_CREATE);
@@ -331,6 +357,76 @@ async function createEntity_withMatchingPattern({ server }: AdminEntityTestConte
   });
 
   assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminStrings(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+  const createResult = await client.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.valueOrThrow();
+
+  const expectedEntity = copyEntity(STRINGS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { unique },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertOkResult(getResult);
+  assertIsAdminStrings(getResult.value);
+  assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withUniqueIndexValueSameValueInTwoIndexes({
+  server,
+}: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  (
+    await client.createEntity<AdminStrings>(
+      copyEntity(STRINGS_CREATE, { fields: { uniqueGenericIndex: unique } })
+    )
+  ).throwIfError();
+
+  // This would fail unless there weren't two separate indexes
+  const secondCreateResult = await client.createEntity<AdminStrings>(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = secondCreateResult.valueOrThrow();
+
+  const expectedEntity = copyEntity(STRINGS_ADMIN_ENTITY, {
+    id,
+    info: { name, createdAt, updatedAt },
+    fields: { unique },
+  });
+
+  assertResultValue(secondCreateResult, {
     effect: 'created',
     entity: expectedEntity,
   });
@@ -673,6 +769,23 @@ async function createEntity_errorStringNotMatchingMatchPattern({ server }: Admin
     createResult,
     ErrorType.BadRequest,
     'entity.fields.pattern: Value does not match pattern foo-bar-baz'
+  );
+}
+
+async function createEntity_errorDuplicateUniqueIndexValue({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const unique = Math.random().toString();
+
+  const firstResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
+  assertOkResult(firstResult);
+
+  const secondResult = await client.createEntity(
+    copyEntity(STRINGS_CREATE, { fields: { unique } })
+  );
+  assertErrorResult(
+    secondResult,
+    ErrorType.BadRequest,
+    'entity.fields.unique: Value is not unique (index: stringsUnique)'
   );
 }
 

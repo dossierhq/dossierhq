@@ -5,6 +5,7 @@ import type {
   EntityVersionReference,
   ErrorType,
   PromiseResult,
+  UniqueIndexReference,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
@@ -18,7 +19,7 @@ export async function adminGetEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference | EntityVersionReference
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.BadRequest

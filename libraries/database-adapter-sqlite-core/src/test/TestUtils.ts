@@ -103,7 +103,7 @@ export function getQueryCalls(adapter: MockedSqliteDatabaseAdapter): [string, ..
 }
 
 export function createTestAdminSchema(): AdminSchema {
-  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] });
+  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
 }
 
 export function resolvePaging(

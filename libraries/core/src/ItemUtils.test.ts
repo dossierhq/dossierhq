@@ -29,6 +29,7 @@ const schema = new AdminSchema({
     },
   ],
   patterns: [],
+  indexes: [],
 });
 
 function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: string) {

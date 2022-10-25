@@ -10,6 +10,13 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'title', type: FieldType.String, required: true, isName: true },
         {
+          name: 'slug',
+          type: FieldType.String,
+          required: true,
+          index: 'slug',
+          matchPattern: 'slug',
+        },
+        {
           name: 'heroImage',
           type: FieldType.ValueType,
           required: true,
@@ -62,6 +69,16 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'none',
       pattern: '^none$',
+    },
+    {
+      name: 'slug',
+      pattern: '^[a-z0-9-]+$',
+    },
+  ],
+  indexes: [
+    {
+      name: 'slug',
+      type: 'unique',
     },
   ],
 };

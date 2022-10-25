@@ -32,6 +32,7 @@ const adminSchema = new AdminSchema({
     },
   ],
   patterns: [],
+  indexes: [],
 });
 
 const publishedSchema = adminSchema.toPublishedSchema();

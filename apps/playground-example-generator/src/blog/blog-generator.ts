@@ -40,6 +40,7 @@ async function createBlogPost(
         info: { type: 'BlogPost', authKey: 'none', name: title },
         fields: {
           title,
+          slug: faker.helpers.slugify(title.toLowerCase()),
           heroImage: faker.helpers.arrayElement(images),
           authors: faker.helpers
             .arrayElements(persons, Math.random() < 0.2 ? 2 : 1)

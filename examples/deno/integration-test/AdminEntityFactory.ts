@@ -14,13 +14,13 @@ export function registerAdminEntityTestSuite(suitePage: {
 }) {
   const testSuite = createAdminEntityTestSuite({
     before: async () => {
-      const { server } = (await initializeIntegrationTestServer())
+      const { adminSchema, server } = (await initializeIntegrationTestServer())
         .valueOrThrow();
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server)
       ).valueOrThrow();
 
-      return [{ server, readOnlyEntityRepository }, { server }];
+      return [{ adminSchema, server, readOnlyEntityRepository }, { server }];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();

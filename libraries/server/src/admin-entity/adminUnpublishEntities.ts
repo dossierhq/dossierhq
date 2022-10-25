@@ -16,6 +16,7 @@ import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
+import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 interface EntityInfoToBeUnpublished {
   effect: 'unpublished';
@@ -47,16 +48,12 @@ export async function adminUnpublishEntities(
   | typeof ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
-  if (uniqueIdCheck.isError()) {
-    return uniqueIdCheck;
-  }
+  if (uniqueIdCheck.isError()) return uniqueIdCheck;
 
   return context.withTransaction(async (context) => {
     // Step 1: Resolve entities and check if all entities exist
     const collectResult = await collectEntityInfo(databaseAdapter, context, references);
-    if (collectResult.isError()) {
-      return collectResult;
-    }
+    if (collectResult.isError()) return collectResult;
     const entitiesInfo = collectResult.value;
     const unpublishEntitiesInfo = entitiesInfo.filter(
       ({ effect }) => effect === 'unpublished'
@@ -83,9 +80,7 @@ export async function adminUnpublishEntities(
       entitiesInfo,
       unpublishEntitiesInfo
     );
-    if (unpublishResult.isError()) {
-      return unpublishResult;
-    }
+    if (unpublishResult.isError()) return unpublishResult;
 
     // Step 4: Check if references are ok
     const checkReferencedEntitiesResult = await ensureReferencedEntitiesAreNotPublished(
@@ -93,9 +88,7 @@ export async function adminUnpublishEntities(
       context,
       unpublishEntitiesInfo
     );
-    if (checkReferencedEntitiesResult.isError()) {
-      return checkReferencedEntitiesResult;
-    }
+    if (checkReferencedEntitiesResult.isError()) return checkReferencedEntitiesResult;
 
     // Step 5: Create publish event
     const unpublishEventsResult = await createUnpublishEvents(
@@ -103,8 +96,19 @@ export async function adminUnpublishEntities(
       context,
       unpublishEntitiesInfo
     );
-    if (unpublishEventsResult.isError()) {
-      return unpublishEventsResult;
+    if (unpublishEventsResult.isError()) return unpublishEventsResult;
+
+    // Step 6: Remove unique values
+    for (const entity of unpublishEntitiesInfo) {
+      const uniqueResult = await updateUniqueIndexesForEntity(
+        databaseAdapter,
+        context,
+        { entityInternalId: entity.entityInternalId },
+        false,
+        null,
+        new Map()
+      );
+      if (uniqueResult.isError()) return uniqueResult;
     }
 
     //

@@ -41,6 +41,7 @@ describe('Admin adminUpdateEntity', () => {
     databaseAdapter.adminEntityUpdateEntity.mockReturnValueOnce(
       Promise.resolve(ok({ name: 'Updated name#123456', version: 1, updatedAt: now }))
     );
+    databaseAdapter.adminEntityUniqueIndexGetValues.mockReturnValueOnce(Promise.resolve(ok([])));
 
     const result = await adminUpdateEntity(
       adminTestSchema,

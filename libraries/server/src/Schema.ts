@@ -20,7 +20,7 @@ export async function getSchemaSpecification(
   const specification = result.value;
   if (!specification) {
     logger.info('No schema set, defaulting to empty');
-    return ok({ entityTypes: [], valueTypes: [], patterns: [] });
+    return ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
   }
 
   // Handle old schema format which lacked patterns

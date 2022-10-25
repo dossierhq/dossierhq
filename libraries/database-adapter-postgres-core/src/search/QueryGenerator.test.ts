@@ -25,6 +25,7 @@ const schema = new AdminSchema({
   ],
   valueTypes: [],
   patterns: [],
+  indexes: [],
 });
 
 const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
