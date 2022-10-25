@@ -284,6 +284,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       })
     );
 
+    // PublishedUniqueIndex
+    const uniqueIndexNames = publishedSchema.spec.indexes
+      .filter((it) => it.type === 'unique')
+      .map((it) => it.name);
+    if (uniqueIndexNames.length > 0) {
+      const uniqueIndexEnumValues: GraphQLEnumValueConfigMap = {};
+      for (const indexName of uniqueIndexNames) {
+        uniqueIndexEnumValues[indexName] = {};
+      }
+      this.addType(
+        new GraphQLEnumType({
+          name: 'PublishedUniqueIndex',
+          values: uniqueIndexEnumValues,
+        })
+      );
+    }
+
     // PublishedEntityEdge
     this.addType(
       new GraphQLObjectType({
@@ -1194,7 +1211,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       type: this.getInterface('PublishedEntity'),
       args: {
         id: { type: GraphQLID },
-        index: { type: GraphQLString },
+        index: { type: this.getInputType('PublishedUniqueIndex') },
         value: { type: GraphQLString },
       },
       resolve: async (_source, args, context, _info) => {

@@ -697,10 +697,10 @@ describe('One entity type with unique index schema spec', () => {
       {
         name: 'Foo',
         adminOnly: false,
-        fields: [{ name: 'bar', type: FieldType.String, index: 'foo-unique' }],
+        fields: [{ name: 'bar', type: FieldType.String, index: 'fooUnique' }],
       },
     ],
-    indexes: [{ name: 'foo-unique', type: 'unique' }],
+    indexes: [{ name: 'fooUnique', type: 'unique' }],
   });
 
   test('Generated QL schema', () => {
