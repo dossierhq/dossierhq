@@ -7,7 +7,7 @@ import { useWarningOnExit } from '../../hooks/useWarningOnExit';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
 
-export default function EntityEditorPage(): JSX.Element {
+export default function AdminEntityEditorPage(): JSX.Element {
   const { onUrlSearchParamsChange, urlSearchParams } = useUrlSearchParams();
   const [hasChanges, setHasChanges] = useState(false);
 

@@ -8,7 +8,7 @@ import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
 
-export default function EntitiesListPage(): JSX.Element | null {
+export default function AdminEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const handleCreateEntity = useCallback(
     (type: string) => router.push(urls.editPageNew(type, crypto.randomUUID())),
