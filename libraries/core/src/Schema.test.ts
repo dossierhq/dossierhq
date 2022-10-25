@@ -86,12 +86,12 @@ describe('mergeWith()', () => {
           name: 'Foo',
           adminOnly: false,
           authKeyPattern: null,
-          fields: [{ name: 'string', type: FieldType.String, index: 'an-index' }],
+          fields: [{ name: 'string', type: FieldType.String, index: 'anIndex' }],
         },
       ],
       valueTypes: [],
       patterns: [],
-      indexes: [{ name: 'an-index', type: 'unique' }],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
     })
       .mergeWith({
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
@@ -785,12 +785,12 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'boolean', type: FieldType.Boolean, index: 'an-index' }],
+            fields: [{ name: 'boolean', type: FieldType.Boolean, index: 'anIndex' }],
           },
         ],
         valueTypes: [],
         patterns: [],
-        indexes: [{ name: 'an-index', type: 'unique' }],
+        indexes: [{ name: 'anIndex', type: 'unique' }],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.boolean: Field with type Boolean shouldn’t specify index'
@@ -824,12 +824,25 @@ describe('validate()', () => {
         valueTypes: [],
         patterns: [],
         indexes: [
-          { name: 'an-index', type: 'unique' },
-          { name: 'an-index', type: 'unique' },
+          { name: 'anIndex', type: 'unique' },
+          { name: 'anIndex', type: 'unique' },
         ],
       }).validate(),
       ErrorType.BadRequest,
-      'an-index: Duplicate index name'
+      'anIndex: Duplicate index name'
+    );
+  });
+
+  test('Error: non-camelCase index', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [],
+        patterns: [],
+        indexes: [{ name: 'an-index', type: 'unique' }],
+      }).validate(),
+      ErrorType.BadRequest,
+      'an-index: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123'
     );
   });
 });
@@ -910,24 +923,24 @@ describe('AdminSchema.toPublishedSchema()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'field1', type: FieldType.String, index: 'an-index' }],
+            fields: [{ name: 'field1', type: FieldType.String, index: 'anIndex' }],
           },
         ],
         valueTypes: [],
         patterns: [],
-        indexes: [{ name: 'an-index', type: 'unique' }],
+        indexes: [{ name: 'anIndex', type: 'unique' }],
       }).toPublishedSchema().spec
     ).toEqual({
       entityTypes: [
         {
           name: 'Foo',
           authKeyPattern: null,
-          fields: [{ name: 'field1', type: FieldType.String, index: 'an-index' }],
+          fields: [{ name: 'field1', type: FieldType.String, index: 'anIndex' }],
         },
       ],
       valueTypes: [],
       patterns: [],
-      indexes: [{ name: 'an-index', type: 'unique' }],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
     });
   });
 

@@ -60,7 +60,7 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
   );
   assertOkResult(createResult);
 
-  const result = await adminClient.getEntity({ index: 'strings-unique', value: unique });
+  const result = await adminClient.getEntity({ index: 'stringsUnique', value: unique });
   assertOkResult(result);
   assertResultValue(result, createResult.value.entity);
 }

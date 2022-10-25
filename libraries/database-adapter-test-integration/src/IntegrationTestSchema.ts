@@ -53,14 +53,14 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'stringAdminOnly', type: FieldType.String, adminOnly: true },
         { name: 'pattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },
         { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'foo-bar-baz' },
-        { name: 'unique', type: FieldType.String, index: 'strings-unique' },
+        { name: 'unique', type: FieldType.String, index: 'stringsUnique' },
         {
           name: 'uniqueAdminOnly',
           type: FieldType.String,
           adminOnly: true,
-          index: 'strings-unique',
+          index: 'stringsUnique',
         },
-        { name: 'uniqueGenericIndex', type: FieldType.String, index: 'generic-unique' },
+        { name: 'uniqueGenericIndex', type: FieldType.String, index: 'genericUnique' },
       ],
     },
     {
@@ -97,7 +97,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     { name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' },
   ],
   indexes: [
-    { name: 'generic-unique', type: 'unique' },
-    { name: 'strings-unique', type: 'unique' },
+    { name: 'genericUnique', type: 'unique' },
+    { name: 'stringsUnique', type: 'unique' },
   ],
 };

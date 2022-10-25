@@ -244,7 +244,7 @@ async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEnti
   assertOkResult(createResult);
 
   const getResult = await publishedClientForMainPrincipal(server).getEntity({
-    index: 'strings-unique',
+    index: 'stringsUnique',
     value: unique,
   });
   assertOkResult(getResult);
@@ -288,7 +288,7 @@ async function getEntity_errorUniqueIndexValueFromAdminOnlyField({
   );
   assertOkResult(createResult);
 
-  const result = await publishedClient.getEntity({ index: 'strings-unique', value: unique });
+  const result = await publishedClient.getEntity({ index: 'stringsUnique', value: unique });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 

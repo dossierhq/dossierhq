@@ -98,7 +98,7 @@ async function unpublishEntities_errorUniqueIndexValue({ server }: AdminEntityTe
   assertOkResult(createResult);
 
   const firstPublishedGetResult = await publishedClient.getEntity({
-    index: 'strings-unique',
+    index: 'stringsUnique',
     value: unique,
   });
   assertOkResult(firstPublishedGetResult);
@@ -109,7 +109,7 @@ async function unpublishEntities_errorUniqueIndexValue({ server }: AdminEntityTe
   assertOkResult(unpublishResult);
 
   const secondPublishedGetResult = await publishedClient.getEntity({
-    index: 'strings-unique',
+    index: 'stringsUnique',
     value: unique,
   });
   assertErrorResult(secondPublishedGetResult, ErrorType.NotFound, 'No such entity');

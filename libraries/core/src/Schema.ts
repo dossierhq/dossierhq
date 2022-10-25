@@ -138,6 +138,8 @@ export interface SchemaSpecificationUpdatePayload {
   schemaSpecification: AdminSchemaSpecification;
 }
 
+const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
+
 export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
   private cachedPatternRegExps: Record<string, RegExp>;
@@ -361,6 +363,11 @@ export class AdminSchema {
     for (const indexSpec of this.spec.indexes) {
       if (usedIndexes.has(indexSpec.name)) {
         return notOk.BadRequest(`${indexSpec.name}: Duplicate index name`);
+      }
+      if (!CAMEL_CASE_PATTERN.test(indexSpec.name)) {
+        return notOk.BadRequest(
+          `${indexSpec.name}: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123`
+        );
       }
       usedIndexes.add(indexSpec.name);
     }
