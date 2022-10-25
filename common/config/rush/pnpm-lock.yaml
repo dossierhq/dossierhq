@@ -5,6 +5,57 @@ importers:
   .:
     specifiers: {}
 
+  ../../apps/blog:
+    specifiers:
+      '@jonasb/datadata-admin-react-components': workspace:*
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
+      '@jonasb/datadata-design': workspace:*
+      '@jonasb/datadata-graphql': workspace:*
+      '@jonasb/datadata-leaflet': workspace:*
+      '@jonasb/datadata-server': workspace:*
+      '@types/react': ~18.0.21
+      '@types/sqlite3': ~3.1.8
+      '@typescript-eslint/eslint-plugin': ^5.26.0
+      eslint: ^8.16.0
+      eslint-config-next: ~12.3.0
+      graphql: ~16.6.0
+      graphql-voyager: ~1.0.0-rc.31
+      leaflet: ~1.9.1
+      next: ~12.3.0
+      prettier: 2.7.1
+      react: ~18.2.0
+      react-dom: ~18.2.0
+      sqlite3: ~5.1.1
+      swr: ~1.3.0
+      typescript: ^4.8.4
+      vitest: ~0.24.0
+    dependencies:
+      '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
+      '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
+      '@jonasb/datadata-design': link:../../libraries/design
+      '@jonasb/datadata-graphql': link:../../libraries/graphql
+      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
+      '@jonasb/datadata-server': link:../../libraries/server
+      graphql: 16.6.0
+      graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
+      leaflet: 1.9.1
+      next: 12.3.0_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      sqlite3: 5.1.1
+      swr: 1.3.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.21
+      '@types/sqlite3': 3.1.8
+      '@typescript-eslint/eslint-plugin': 5.26.0_xlfkn4jejkelnl5fv2yyquzblu
+      eslint: 8.16.0
+      eslint-config-next: 12.3.0_xlfkn4jejkelnl5fv2yyquzblu
+      prettier: 2.7.1
+      typescript: 4.8.4
+      vitest: 0.24.0
+
   ../../apps/playground:
     specifiers:
       '@cloudinary/url-gen': ~1.8.6
@@ -3893,7 +3944,7 @@ packages:
       - supports-color
 
   /@f/animate/1.0.1:
-    resolution: {integrity: sha1-oDE5itrfmgvTpWOYzskx+HfYhIU=}
+    resolution: {integrity: sha512-NnO441T2cK7D7g8medxsrZbDGui6JW//m/+Fpm413B1Ey/MqIDG8lX+XkXYLuGG5O1qUIuWE9T6blMU2/S3FmQ==}
     dependencies:
       '@f/elapsed-time': 1.0.0
       '@f/raf': 1.0.3
@@ -3901,25 +3952,25 @@ packages:
     dev: false
 
   /@f/elapsed-time/1.0.0:
-    resolution: {integrity: sha1-ageaYQSocni/W0CARE7wLRtZVEk=}
+    resolution: {integrity: sha512-nQ2e8vTQq08s8J4dINEgnLVtzFE9NC+DpHlNVEkmco//hXcBy5VXHcHKmhtyCyHLO70eT/7dI58W+Y5XOrlCKw==}
     dependencies:
       '@f/timestamp': 1.0.0
     dev: false
 
   /@f/map-obj/1.2.2:
-    resolution: {integrity: sha1-2an4vXbKoq4RtjPdok2cbMzB5g0=}
+    resolution: {integrity: sha512-OddOglR7m1yOqmFLkoQJZYLpioLCB1/Cn/HzI2uae8ZwLEirUjgAI7HaL0cl6c7glsAF+RMBtGAvNlorQcbfsQ==}
     dev: false
 
   /@f/raf/1.0.3:
-    resolution: {integrity: sha1-Mt3KN940WyDIw4QwGMxRuPiXkU0=}
+    resolution: {integrity: sha512-ErqINoGMQ/LWWp4pZIx5Mmb8Jg/bJ13dcPImag0kufp5BaoZH11H4kJKLL09WkCJDbTGQRr/zFGfIpdPp1AH/w==}
     dev: false
 
   /@f/timestamp/1.0.0:
-    resolution: {integrity: sha1-MqkWbiUW5cy5sPz9yJIjgZcQ6Iw=}
+    resolution: {integrity: sha512-Zj1pvas/VbhvdWh3uJGNQzGtOb2uK7l5Seh/H81Ntmxv6xhDRBTh7VnX76hBSdls1l8aFNKmeXDeWZOfCo0/NA==}
     dev: false
 
   /@f/tween/1.0.1:
-    resolution: {integrity: sha1-GK73nEl15UQVrfMm5LXg0FPSB/A=}
+    resolution: {integrity: sha512-jH6yX2M9qoBTVTPqXHZWSuxYdtiqIldfaZ1U6fgTqt9Q5+Q3TdxReolRGFF/M8P6Q7Ni8iR/2wlXObvqX2TcwQ==}
     dependencies:
       '@f/map-obj': 1.2.2
     dev: false
@@ -4543,11 +4594,12 @@ packages:
   /@material-ui/core/3.9.4_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-r8QFLSexcYZbnqy/Hn4v8xzmAJV41yaodUVjmbGLi1iGDLG3+W941hEtEiBmxTRRqv2BdK3r4ijILcqKmDv/Sw==}
     engines: {node: '>=6.0.0'}
+    deprecated: 'You can now upgrade to @mui/material. See the guide: https://mui.com/guides/migration-v4/'
     peerDependencies:
       react: ^16.3.0
       react-dom: ^16.3.0
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       '@material-ui/system': 3.0.0-alpha.2_biqbaboplfbrettd7655fr4n2y
       '@material-ui/utils': 3.0.0-alpha.3_biqbaboplfbrettd7655fr4n2y
       '@types/jss': 9.5.8
@@ -4569,7 +4621,7 @@ packages:
       jss-vendor-prefixer: 7.0.0_jss@9.8.7
       normalize-scroll-left: 0.1.2
       popper.js: 1.16.1
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-event-listener: 0.6.6_react@18.2.0
@@ -4581,11 +4633,12 @@ packages:
   /@material-ui/system/3.0.0-alpha.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-odmxQ0peKpP7RQBQ8koly06YhsPzcoVib1vByVPBH4QhwqBXuYoqlCjt02846fYspAqkrWzjxnWUD311EBbxOA==}
     engines: {node: '>=6.0.0'}
+    deprecated: 'You can now upgrade to @mui/system. See the guide: https://mui.com/guides/migration-v4/'
     peerDependencies:
       react: ^16.3.0
       react-dom: ^16.3.0
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       deepmerge: 3.3.0
       prop-types: 15.8.1
       react: 18.2.0
@@ -4600,7 +4653,7 @@ packages:
       react: ^16.3.0
       react-dom: ^16.3.0
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -8063,7 +8116,7 @@ packages:
     resolution: {integrity: sha512-o/HelwhuKpTj/frsOsbNLNgnNGVIFsVP/SW2BSF14gVl7kAfMOJ6/8wUAUvG1R1NHKrfG+2sHZTu0yauT1qBrA==}
     engines: {node: '>=6.0'}
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       '@babel/runtime-corejs3': 7.16.3
 
   /arr-diff/4.0.0:
@@ -8891,7 +8944,7 @@ packages:
       supports-color: 7.2.0
 
   /change-emitter/0.1.6:
-    resolution: {integrity: sha1-6LL+PX8at9aaMhma/5HqaTFAlRU=}
+    resolution: {integrity: sha512-YXzt1cQ4a2jqazhcuSWEOc1K2q8g9H6eWNsyZgi640LDzRWVQ2eDe+Y/kVdftH+vYdPF2rgDb3dLdpxE1jvAxw==}
     dev: false
 
   /character-entities-legacy/1.1.4:
@@ -9292,8 +9345,8 @@ packages:
     requiresBuild: true
 
   /core-js/1.2.7:
-    resolution: {integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=}
-    deprecated: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+    resolution: {integrity: sha512-ZiPp9pZlgxpWRu0M+YWbm6+aQ84XEfH1JRXvfOc/fILWI0VKhLC2LX13X1NYq4fULzLMq7Hfh43CSo2/aIaUPA==}
+    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
     dev: false
 
   /core-js/3.19.1:
@@ -9491,7 +9544,7 @@ packages:
       source-map-js: 1.0.2
 
   /css-vendor/0.3.8:
-    resolution: {integrity: sha1-ZCHP0wNM5mT+dnOXL9ARn8KJQfo=}
+    resolution: {integrity: sha512-Vx/Vl3zsHj32Z+WTNzGjd2iSbSIJTYHMmyGUT2nzCjj0Xk4qLfwpQ8nF6TQ5oo3Cf0s/An3DTc7LclH1BkAXbQ==}
     dependencies:
       is-in-browser: 1.1.3
     dev: false
@@ -9773,7 +9826,7 @@ packages:
   /dom-helpers/3.4.0:
     resolution: {integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==}
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
     dev: false
 
   /dom-serializer/1.3.2:
@@ -10316,7 +10369,7 @@ packages:
     resolution: {integrity: sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==}
     dependencies:
       debug: 3.2.7
-      resolve: 1.22.0
+      resolve: 1.22.1
 
   /eslint-import-resolver-typescript/2.7.1_btspkuwbqkl4adpiufzbathtpi:
     resolution: {integrity: sha512-00UbgGwV8bSgUv34igBDbTOtKhqoRMy9bFjNehT40bXg6585PNIct8HhXZ0SybqB9rWtXj9crcku8ndDn/gIqQ==}
@@ -10330,7 +10383,7 @@ packages:
       eslint-plugin-import: 2.26.0_eslint@8.16.0
       glob: 7.2.0
       is-glob: 4.0.3
-      resolve: 1.22.0
+      resolve: 1.22.1
       tsconfig-paths: 3.14.1
     transitivePeerDependencies:
       - supports-color
@@ -10369,7 +10422,7 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       aria-query: 4.2.2
       array-includes: 3.1.5
       ast-types-flow: 0.0.7
@@ -11439,7 +11492,7 @@ packages:
       slash: 2.0.0
 
   /good-listener/1.2.2:
-    resolution: {integrity: sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=}
+    resolution: {integrity: sha512-goW1b+d9q/HIwbVYZzZ6SsTr4IgE+WA44A0GmPIQstuOrgsFcT7VEJ48nmr9GaRtNu0XTKacFLGnBPAM6Afouw==}
     dependencies:
       delegate: 3.2.0
     dev: false
@@ -11583,7 +11636,7 @@ packages:
       commonmark: 0.29.3
       graphql: 16.6.0
       lodash: 4.17.21
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       svg-pan-zoom: 3.6.1
@@ -12293,7 +12346,7 @@ packages:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
 
   /is-in-browser/1.1.3:
-    resolution: {integrity: sha1-Vv9NtoOgeMYILrldrX3GLh0E+DU=}
+    resolution: {integrity: sha512-FeXIBgG/CPGd/WUxuEyvgGTEfwiG9Z4EKGxjNMRqviiIIfsmgrpnHLffEDdwUHqNva1VEW91o3xBT/m8Elgl9g==}
     dev: false
 
   /is-lambda/1.0.1:
@@ -12463,7 +12516,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   /isomorphic-fetch/2.2.1:
-    resolution: {integrity: sha1-YRrhrPFPXoH3KVB0coGf6XM1WKk=}
+    resolution: {integrity: sha512-9c4TNAKYXM5PRyVcwUZrF3W09nQ+sO7+jydgs4ZGW9dhsLG2VOlISJABombdQqQRXCwuYG3sYV/puGf5rp0qmA==}
     dependencies:
       node-fetch: 1.7.3
       whatwg-fetch: 3.6.2
@@ -14647,14 +14700,6 @@ packages:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
-  /prop-types/15.7.2:
-    resolution: {integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react-is: 16.13.1
-    dev: false
-
   /prop-types/15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
     dependencies:
@@ -14882,7 +14927,7 @@ packages:
     peerDependencies:
       react: ^16.3.0
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       prop-types: 15.8.1
       react: 18.2.0
       warning: 4.0.3
@@ -15180,7 +15225,7 @@ packages:
     peerDependencies:
       react: ^0.14.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.19.0
       change-emitter: 0.1.6
       fbjs: 0.8.18
       hoist-non-react-statics: 2.5.5
@@ -15589,7 +15634,7 @@ packages:
       ajv-keywords: 3.5.2_ajv@6.12.6
 
   /select/1.1.2:
-    resolution: {integrity: sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=}
+    resolution: {integrity: sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==}
     dev: false
 
   /semver/5.7.1:
@@ -15689,7 +15734,7 @@ packages:
     dev: false
 
   /setimmediate/1.0.5:
-    resolution: {integrity: sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=}
+    resolution: {integrity: sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==}
 
   /setprototypeof/1.1.1:
     resolution: {integrity: sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==}
@@ -16047,7 +16092,7 @@ packages:
       es-abstract: 1.20.1
 
   /string.prototype.repeat/0.2.0:
-    resolution: {integrity: sha1-q6Nt4I3O5qWjN9SbLqHaGyj8Ds8=}
+    resolution: {integrity: sha512-1BH+X+1hSthZFW+X+JaUkjkkUPwIlLEMJBLANN3hOob3RhEk5snLWNECDnYbgn/m5c5JV7Ersu1Yubaf+05cIA==}
     dev: false
 
   /string.prototype.trimend/1.0.4:
@@ -17180,7 +17225,7 @@ packages:
       makeerror: 1.0.12
 
   /warning/3.0.0:
-    resolution: {integrity: sha1-MuU3fLVy3kqwR1O9+IIcAe1gW3w=}
+    resolution: {integrity: sha512-jMBt6pUrKn5I+OGgtQ4YZLdhIeJmObddh6CsibPxyQ5yPZm1XExSyzC1LCNX7BzhxWgiHmizBWJTHJIjMjTQYQ==}
     dependencies:
       loose-envify: 1.4.0
     dev: false

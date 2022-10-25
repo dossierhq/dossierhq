@@ -53,5 +53,5 @@ export default function GraphiQLEditor({
     [graphQlSchema, graphQlSession]
   );
 
-  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} editorTheme="light" />;
+  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} editorTheme="graphiql-light" />;
 }
