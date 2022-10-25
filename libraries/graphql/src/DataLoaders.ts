@@ -10,6 +10,7 @@ import type {
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  EntityVersionReference,
   ItemTraverseNode,
   PageInfo,
   Paging,
@@ -169,14 +170,9 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
 export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  id: string,
-  version: number | undefined | null
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference
 ): Promise<AdminEntity> {
   const adminClient = getAdminClient(context);
-  const reference = {
-    id,
-    ...(typeof version === 'number' ? { version } : {}),
-  };
   const result = await adminClient.getEntity(reference);
   if (result.isError()) {
     throw result.toError();
@@ -294,7 +290,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     } else if (isEntityTypeField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin
-          ? loadAdminEntity(schema as AdminSchema, context, value.id, null)
+          ? loadAdminEntity(schema as AdminSchema, context, value)
           : loadPublishedEntity(schema, context, value);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {

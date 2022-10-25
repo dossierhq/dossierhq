@@ -6,6 +6,7 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
+  assertOkResult,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -37,6 +38,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       name: 'QueryAdminFoo',
       fields: [
         { name: 'title', type: FieldType.String, isName: true },
+        { name: 'slug', type: FieldType.String, index: 'queryAdminSlug' },
         { name: 'summary', type: FieldType.String },
         { name: 'tags', type: FieldType.String, list: true },
         { name: 'body', type: FieldType.RichText },
@@ -66,6 +68,65 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
+  indexes: [
+    {
+      name: 'queryAdminSlug',
+      type: 'unique',
+    },
+  ],
+};
+
+const ADMIN_FOO_QUERY = `
+query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+  adminEntity(id: $id, version: $version, index: $index, value: $value) {
+    __typename
+    id
+    info {
+      type
+      name
+      version
+      authKey
+      status
+    }
+    ... on AdminQueryAdminFoo {
+      fields {
+        title
+        slug
+        summary
+        tags
+        active
+        activeList
+        bar { id }
+        bars { id }
+        location {
+          lat
+          lng
+        }
+        locations {
+          lat
+          lng
+        }
+        stringedBar {
+          type
+        }
+      }
+    }
+  }
+}
+`;
+
+const ADMIN_FOO_EMPTY_FIELDS = {
+  title: null,
+  slug: null,
+  summary: null,
+  tags: null,
+  active: null,
+  activeList: null,
+  bar: null,
+  bars: null,
+  location: null,
+  locations: null,
+  stringedBar: null,
 };
 
 beforeAll(async () => {
@@ -189,6 +250,54 @@ function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
 }
 
 describe('adminEntity()', () => {
+  test('With unique index', async () => {
+    const { adminClient } = server;
+    const slug = Math.random().toString();
+    const createResult = await adminClient.createEntity({
+      info: { type: 'QueryAdminFoo', name: 'Howdy name', authKey: 'none' },
+      fields: {
+        title: 'Howdy title',
+        summary: 'Howdy summary',
+        slug,
+      },
+    });
+    assertOkResult(createResult);
+    const {
+      entity: {
+        id,
+        info: { name },
+      },
+    } = createResult.value;
+
+    const result = await graphql({
+      schema,
+      source: ADMIN_FOO_QUERY,
+      contextValue: createContext(),
+      variableValues: { index: 'queryAdminSlug', value: slug },
+    });
+    expect(result).toEqual({
+      data: {
+        adminEntity: {
+          __typename: 'AdminQueryAdminFoo',
+          id,
+          info: {
+            version: 0,
+            type: 'QueryAdminFoo',
+            name,
+            authKey: 'none',
+            status: AdminEntityStatus.draft,
+          },
+          fields: {
+            ...ADMIN_FOO_EMPTY_FIELDS,
+            title: 'Howdy title',
+            summary: 'Howdy summary',
+            slug,
+          },
+        },
+      },
+    });
+  });
+
   test('Query all fields of created entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
@@ -216,40 +325,7 @@ describe('adminEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
-          query AdminEntity($id: ID!) {
-            adminEntity(id: $id) {
-              __typename
-              id
-              info {
-                __typename
-                type
-                name
-                version
-                authKey
-                status
-              }
-              ... on AdminQueryAdminFoo {
-                fields {
-                  title
-                  summary
-                  tags
-                  active
-                  activeList
-                  location {
-                    lat
-                    lng
-                  }
-                  locations {
-                    lat
-                    lng
-                  }
-                }
-              }
-            }
-          }
-        `,
-
+        source: ADMIN_FOO_QUERY,
         contextValue: createContext(),
         variableValues: { id },
       });
@@ -259,7 +335,6 @@ describe('adminEntity()', () => {
             __typename: 'AdminQueryAdminFoo',
             id,
             info: {
-              __typename: 'AdminEntityInfo',
               version: 0,
               type: 'QueryAdminFoo',
               name,
@@ -267,6 +342,7 @@ describe('adminEntity()', () => {
               status: AdminEntityStatus.draft,
             },
             fields: {
+              ...ADMIN_FOO_EMPTY_FIELDS,
               title: 'Howdy title',
               summary: 'Howdy summary',
               tags: ['one', 'two', 'three'],
@@ -300,47 +376,7 @@ describe('adminEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
-          query AdminEntity($id: ID!) {
-            adminEntity(id: $id) {
-              __typename
-              id
-              info {
-                type
-                name
-                version
-                authKey
-                status
-              }
-              ... on AdminQueryAdminFoo {
-                fields {
-                  title
-                  summary
-                  tags
-                  active
-                  activeList
-                  bar {
-                    id
-                  }
-                  bars {
-                    id
-                  }
-                  location {
-                    lat
-                    lng
-                  }
-                  locations {
-                    lat
-                    lng
-                  }
-                  stringedBar {
-                    type
-                  }
-                }
-              }
-            }
-          }
-        `,
+        source: ADMIN_FOO_QUERY,
         contextValue: createContext(),
         variableValues: { id },
       });
@@ -356,18 +392,7 @@ describe('adminEntity()', () => {
               authKey: 'none',
               status: AdminEntityStatus.draft,
             },
-            fields: {
-              title: null,
-              summary: null,
-              tags: null,
-              active: null,
-              activeList: null,
-              bar: null,
-              bars: null,
-              location: null,
-              locations: null,
-              stringedBar: null,
-            },
+            fields: ADMIN_FOO_EMPTY_FIELDS,
           },
         },
       });
@@ -1120,6 +1145,50 @@ GraphQL request:3:11
 4 |             id`,
       ]);
     }
+  });
+
+  test('Error: No args', async () => {
+    const result = await graphql({
+      schema,
+      source: ADMIN_FOO_QUERY,
+      contextValue: createContext(),
+      variableValues: {},
+    });
+    expect(result.data).toEqual({ adminEntity: null });
+    const errorStrings = result.errors?.map((it) => it.toString());
+    expect(errorStrings).toMatchInlineSnapshot(`
+      [
+        "Either (id), (id and version) or (index and value) must be specified
+
+      GraphQL request:3:3
+      2 | query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      3 |   adminEntity(id: $id, version: $version, index: $index, value: $value) {
+        |   ^
+      4 |     __typename",
+      ]
+    `);
+  });
+
+  test('Error: Index, no value', async () => {
+    const result = await graphql({
+      schema,
+      source: ADMIN_FOO_QUERY,
+      contextValue: createContext(),
+      variableValues: { index: 'queryAdminSlug' },
+    });
+    expect(result.data).toEqual({ adminEntity: null });
+    const errorStrings = result.errors?.map((it) => it.toString());
+    expect(errorStrings).toMatchInlineSnapshot(`
+      [
+        "Either (id), (id and version) or (index and value) must be specified
+
+      GraphQL request:3:3
+      2 | query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      3 |   adminEntity(id: $id, version: $version, index: $index, value: $value) {
+        |   ^
+      4 |     __typename",
+      ]
+    `);
   });
 });
 
