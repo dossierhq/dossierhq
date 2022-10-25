@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-graphql",
+      "comment": "Support unique index. Add publishedEntity()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-graphql"
+}
