@@ -41,8 +41,8 @@ export function NavBar({
 function NavItemRender(text: string, href: string) {
   const renderer = ({ className }: { className: string }) => {
     return (
-      <Link href={href}>
-        <a className={className}>{text}</a>
+      <Link className={className} href={href}>
+        {text}
       </Link>
     );
   };
