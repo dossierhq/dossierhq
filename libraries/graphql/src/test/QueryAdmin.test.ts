@@ -19,7 +19,7 @@ import {
 } from '@jonasb/datadata-core';
 import { expectOkResult } from '@jonasb/datadata-core-vitest';
 import type { GraphQLSchema } from 'graphql';
-import { graphql, printError } from 'graphql';
+import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
@@ -508,7 +508,7 @@ describe('adminEntity()', () => {
           },
         },
       });
-      const errorStrings = result.errors?.map(printError);
+      const errorStrings = result.errors?.map((it) => it.toString());
       expect(errorStrings).toMatchInlineSnapshot(`
         [
           "NotFound: No such entity or version
@@ -1068,7 +1068,7 @@ describe('adminEntity()', () => {
     expect(result.data).toEqual({
       adminEntity: null,
     });
-    const errorStrings = result.errors?.map(printError);
+    const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toEqual([
       `NotFound: No such entity
 
@@ -1096,7 +1096,7 @@ GraphQL request:3:11
     expect(result.data).toEqual({
       adminEntity: null,
     });
-    const errorStrings = result.errors?.map(printError);
+    const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toEqual([
       `NotAuthenticated: No adminClient
 
@@ -1134,7 +1134,7 @@ GraphQL request:3:11
       expect(result.data).toEqual({
         adminEntity: null,
       });
-      const errorStrings = result.errors?.map(printError);
+      const errorStrings = result.errors?.map((it) => it.toString());
       expect(errorStrings).toEqual([
         `NotAuthorized: Wrong authKey provided
 
