@@ -20,10 +20,11 @@ jobs:
           path: |
             common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Cache next-web next
+      - name: Cache blog/next-web next
         uses: actions/cache@v3
         with:
           path: |
+            app/blog/.next/cache/
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Use Node.js
