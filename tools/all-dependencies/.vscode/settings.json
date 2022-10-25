@@ -8,7 +8,6 @@
     "graphiql",
     "locatecontrol",
     "postgrator",
-    "rushstack",
-    "undici"
+    "rushstack"
   ]
 }
