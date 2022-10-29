@@ -20,7 +20,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "dependencies": {
-    "pg": "^8.7.1",
-    "postgrator": "^7.1.0"
+    "pg": "~8.8.0",
+    "postgrator": "~7.1.1"
   }
 }
