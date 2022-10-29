@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 const PublishedEntitiesListPage = dynamic(
-  () => import('../../components/PublishedEntitiesListPage/PublishedEntitiesListPage'),
+  () => import('../../../components/PublishedEntitiesListPage/PublishedEntitiesListPage'),
   { ssr: false }
 );
 

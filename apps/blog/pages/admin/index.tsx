@@ -1,6 +1,6 @@
 import { FullscreenContainer } from '@jonasb/datadata-design';
 import Head from 'next/head';
-import { NavBar } from '../components/NavBar/NavBar';
+import { NavBar } from '../../components/NavBar/NavBar';
 
 export default function Home(): JSX.Element {
   return (

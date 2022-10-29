@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 const AdminEntitiesListPage = dynamic(
-  () => import('../../components/AdminEntitiesListPage/AdminEntitiesListPage'),
+  () => import('../../../components/AdminEntitiesListPage/AdminEntitiesListPage'),
   { ssr: false }
 );
 

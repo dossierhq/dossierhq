@@ -1,14 +1,14 @@
 export const urls = {
   home: '/',
-  adminEntities: '/admin-entities',
-  editPage: (ids: string[]): string => `/admin-entities/edit?id=${ids.join('&id=')}`,
+  adminEntities: '/admin/admin-entities',
+  editPage: (ids: string[]): string => `/admin/admin-entities/edit?id=${ids.join('&id=')}`,
   editPageNew: (entityType: string, id: string): string =>
-    `/admin-entities/edit?new=${entityType}:${id}`,
-  isEditPage: (url: string): boolean => url.startsWith('/admin-entities/edit'),
-  graphiql: '/graphiql',
-  publishedEntities: '/published-entities',
+    `/admin/admin-entities/edit?new=${entityType}:${id}`,
+  isEditPage: (url: string): boolean => url.startsWith('/admin/admin-entities/edit'),
+  graphiql: '/admin/graphiql',
+  publishedEntities: '/admin/published-entities',
   publishedEntityDisplay: (ids: string[]): string =>
-    `/published-entities/display?id=${ids.join('&id=')}`,
-  schemaEditor: '/schema',
-  voyager: '/voyager',
+    `/admin/published-entities/display?id=${ids.join('&id=')}`,
+  schemaEditor: '/admin/schema',
+  voyager: '/admin/voyager',
 };
