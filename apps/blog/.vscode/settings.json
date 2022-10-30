@@ -4,5 +4,7 @@
   "editor.formatOnSave": true,
   "editor.rulers": [100],
   "editor.tabSize": 2,
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

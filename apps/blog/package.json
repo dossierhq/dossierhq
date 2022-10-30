@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run prettier:check && npm run eslint:check && npm run test && npm run build-app",
+    "build": "npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1",
     "clean": "rm -rf .next/ && rm -f datadata-examples-next-web.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",

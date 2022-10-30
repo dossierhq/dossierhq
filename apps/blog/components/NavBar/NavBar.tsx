@@ -1,3 +1,5 @@
+'use client';
+
 import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
 import Link from 'next/link';
 import { useState } from 'react';
