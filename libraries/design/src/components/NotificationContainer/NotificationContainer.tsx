@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import type { NotificationInfo } from '../../contexts/NotificationContext.js';
 import { NotificationContext } from '../../contexts/NotificationContext.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';

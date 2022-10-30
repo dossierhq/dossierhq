@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createClientContext } from '../utils/ContextUtils.js';
 
 export interface NotificationInfo {
   color: 'error' | 'success';
@@ -9,6 +9,4 @@ interface NotificationContextValue {
   showNotification(notification: NotificationInfo): void;
 }
 
-export const NotificationContext = createContext<NotificationContextValue>(
-  undefined as unknown as NotificationContextValue
-);
+export const NotificationContext = createClientContext<NotificationContextValue>(undefined);

@@ -1,5 +1,4 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
-import { toSizeClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
 import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
@@ -9,8 +8,12 @@ import type {
   PaddingProps,
   SizeProps,
 } from '../../utils/LayoutPropsUtils.js';
-import { extractLayoutProps, toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
-import { Scrollable } from '../index.js';
+import {
+  extractLayoutProps,
+  toSizeClassName,
+  toSpacingClassName,
+} from '../../utils/LayoutPropsUtils.js';
+import { Scrollable } from '../Scrollable/Scrollable.js';
 
 export interface FullscreenContainerProps {
   card?: boolean;
