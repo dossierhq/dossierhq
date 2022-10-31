@@ -866,7 +866,7 @@ importers:
       '@types/react': ~18.0.21
       eslint: ~8.26.0
       leaflet: ~1.9.1
-      leaflet.locatecontrol: ~0.76.1
+      leaflet.locatecontrol: ~0.77.0
       mini-svg-data-uri: ~1.4.4
       prettier: 2.7.1
       react: ~18.2.0
@@ -876,7 +876,7 @@ importers:
       typescript: ~4.8.4
     dependencies:
       leaflet: 1.9.1
-      leaflet.locatecontrol: 0.76.1
+      leaflet.locatecontrol: 0.77.0
       react: 18.2.0
       react-leaflet: 4.1.0_leaflet@1.9.1+react@18.2.0
       tslib: 2.4.0
@@ -1103,7 +1103,7 @@ importers:
       graphql-ws: ~5.11.1
       history: ~5.3.0
       leaflet: ~1.9.1
-      leaflet.locatecontrol: ~0.76.1
+      leaflet.locatecontrol: ~0.77.0
       lexical: ~0.5.0
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
@@ -1185,7 +1185,7 @@ importers:
       graphql-ws: 5.11.1_graphql@16.6.0
       history: 5.3.0
       leaflet: 1.9.1
-      leaflet.locatecontrol: 0.76.1
+      leaflet.locatecontrol: 0.77.0
       lexical: 0.5.0
       lodash: 4.17.21
       mini-svg-data-uri: 1.4.4
@@ -11468,8 +11468,10 @@ packages:
       dotenv: 8.6.0
       dotenv-expand: 5.1.0
 
-  /leaflet.locatecontrol/0.76.1:
-    resolution: {integrity: sha512-qA92Mxs2N1jgVx+EdmxtDrdzFD+f2llPJbqaKvmW1epZMSIvD6KNsBjpQYUIxz4XtJkOleqRSwWQcrm5P5NnYw==}
+  /leaflet.locatecontrol/0.77.0:
+    resolution: {integrity: sha512-yh2SX7Dcey7eR2zH4PXaa4WgNk0mg8hTdrVfVNTvM4/t7+IUKa122SjnL0XD2zc7gz2bQMddaMXL9142yl6mpg==}
+    peerDependencies:
+      postcss: ^8.3.3
     dev: false
 
   /leaflet/1.9.1:
