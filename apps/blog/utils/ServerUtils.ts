@@ -9,6 +9,7 @@ import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datada
 import type { NextApiRequest } from 'next';
 import assert from 'node:assert';
 import { Database } from 'sqlite3';
+import { SYSTEM_USERS } from '../config/SystemUsers';
 import { schemaSpecification } from './schema';
 
 let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
@@ -57,21 +58,15 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
         databaseAdapter,
         authorizationAdapter: createAuthenticationAdapter(),
       });
-      if (serverResult.isError()) throw serverResult.toError();
-      const server = serverResult.value;
+      const server = serverResult.valueOrThrow();
 
-      const schemaLoaderSession = await server.createSession({
-        provider: 'sys',
-        identifier: 'schemaloader',
-        defaultAuthKeys: [],
-      });
-      if (schemaLoaderSession.isError()) throw schemaLoaderSession.toError();
-      const client = server.createAdminClient(schemaLoaderSession.value.context);
+      const schemaLoaderSession = await server.createSession(SYSTEM_USERS.schemaLoader);
+      const client = server.createAdminClient(schemaLoaderSession.valueOrThrow().context);
       const updateSchemaResult = await client.updateSchemaSpecification(schemaSpecification);
-      if (updateSchemaResult.isError()) {
-        throw updateSchemaResult.toError();
-      }
-      return { server, schema: new AdminSchema(updateSchemaResult.value.schemaSpecification) };
+      return {
+        server,
+        schema: new AdminSchema(updateSchemaResult.valueOrThrow().schemaSpecification),
+      };
     })();
   }
 

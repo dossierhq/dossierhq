@@ -9,12 +9,14 @@ importers:
     specifiers:
       '@jonasb/datadata-admin-react-components': workspace:*
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-sql.js': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@types/react': ~18.0.21
+      '@types/sql.js': ~1.4.2
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ~5.41.0
       eslint: ~8.26.0
@@ -26,6 +28,7 @@ importers:
       prettier: 2.7.1
       react: ~18.2.0
       react-dom: ~18.2.0
+      sql.js: ~1.8.0
       sqlite3: ~5.1.1
       swr: ~1.3.0
       typescript: ~4.8.4
@@ -33,6 +36,7 @@ importers:
     dependencies:
       '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
       '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
@@ -44,10 +48,12 @@ importers:
       next: 13.0.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      sql.js: 1.8.0
       sqlite3: 5.1.1
       swr: 1.3.0_react@18.2.0
     devDependencies:
       '@types/react': 18.0.21
+      '@types/sql.js': 1.4.3
       '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
       eslint: 8.26.0
