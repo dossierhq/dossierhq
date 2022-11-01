@@ -78,6 +78,7 @@ async function createDatabaseAdapter() {
   const context = { logger: NoOpLogger };
   const databaseResult = await createDatabase(context, Database, {
     filename: process.env.DATABASE_SQLITE_FILE,
+    journalMode: 'wal',
   });
   if (databaseResult.isError()) return databaseResult;
   const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value);
