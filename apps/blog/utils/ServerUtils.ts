@@ -10,6 +10,7 @@ import type { NextApiRequest } from 'next';
 import assert from 'node:assert';
 import { Database } from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers';
+import { createFilesystemAdminMiddleware } from './FileSystemSerializer';
 import { schemaSpecification } from './schema';
 
 let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
@@ -34,7 +35,9 @@ export async function getSessionContextForRequest(
     );
   }
   const { context } = sessionResult.value;
-  const adminClient = server.createAdminClient(context);
+  const adminClient = server.createAdminClient(context, [
+    createFilesystemAdminMiddleware(server.createAdminClient(context)),
+  ]);
   const publishedClient = server.createPublishedClient(context);
   return ok({ adminClient, publishedClient });
 }
