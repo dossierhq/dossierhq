@@ -52,6 +52,11 @@ jobs:
           npm run db:make-users:superuser
           npm run db:migrate:all
           npm run db:make-users:no-superuser
+      - name: blog, create database
+        run: |
+          cd apps/blog
+          ./scripts/create-database-from-disk.ts data/database.sqlite
+          echo "DATABASE_SQLITE_FILE=data/database.sqlite" > .env
       - name: rush build
         run: |
           node common/scripts/install-run-rush.js build --verbose

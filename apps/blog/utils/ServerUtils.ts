@@ -1,17 +1,21 @@
-import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
-import { AdminSchema, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminSchema,
+  ErrorType,
+  PromiseResult,
+  PublishedClient,
+} from '@jonasb/datadata-core';
+import { NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
 import {
   createDatabase,
   createSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import assert from 'node:assert';
 import { Database } from 'sqlite3';
-import { SYSTEM_USERS } from '../config/SystemUsers';
 import { createFilesystemAdminMiddleware } from './FileSystemSerializer';
-import { schemaSpecification } from './schema';
+import { createServerAndInitializeSchema } from './SharedServerUtils';
 
 let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
 
@@ -57,19 +61,7 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = (await createDatabaseAdapter()).valueOrThrow();
-      const serverResult = await createServer({
-        databaseAdapter,
-        authorizationAdapter: createAuthenticationAdapter(),
-      });
-      const server = serverResult.valueOrThrow();
-
-      const schemaLoaderSession = await server.createSession(SYSTEM_USERS.schemaLoader);
-      const client = server.createAdminClient(schemaLoaderSession.valueOrThrow().context);
-      const updateSchemaResult = await client.updateSchemaSpecification(schemaSpecification);
-      return {
-        server,
-        schema: new AdminSchema(updateSchemaResult.valueOrThrow().schemaSpecification),
-      };
+      return (await createServerAndInitializeSchema(databaseAdapter)).valueOrThrow();
     })();
   }
 
@@ -86,8 +78,4 @@ async function createDatabaseAdapter() {
   if (databaseResult.isError()) return databaseResult;
   const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value);
   return databaseAdapterResult;
-}
-
-function createAuthenticationAdapter(): AuthorizationAdapter {
-  return NoneAndSubjectAuthorizationAdapter;
 }

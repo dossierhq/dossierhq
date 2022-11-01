@@ -32,7 +32,7 @@ export const urls = {
 
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },
-  input: RequestInfo,
+  input: string, // TODO bun-types requires string, should be RequestInfo
   init?: RequestInit
 ): PromiseResult<TOk, ErrorType> {
   try {

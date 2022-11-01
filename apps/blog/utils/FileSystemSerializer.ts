@@ -4,7 +4,11 @@ import type {
   AdminClientOperation,
   AdminEntity,
   AdminEntityInfo,
+  EntityReference,
+  ErrorType,
+  Logger,
   OkFromResult,
+  PromiseResult,
   RichTextElementNode,
 } from '@jonasb/datadata-core';
 import {
@@ -12,6 +16,7 @@ import {
   AdminSchema,
   isRichTextElementNode,
   notOk,
+  ok,
   traverseEntity,
 } from '@jonasb/datadata-core';
 import type { SessionContext } from '@jonasb/datadata-server';
@@ -91,4 +96,35 @@ function createCleanedUpEntity(adminSchema: AdminSchema, entity: AdminEntity<str
   }
 
   return copy;
+}
+
+export async function loadAllEntities(
+  adminClient: AdminClient,
+  logger: Logger
+): PromiseResult<EntityReference[], ErrorType> {
+  const loadedEntries: EntityReference[] = [];
+
+  const directoriesToLoad = [path.join('data', 'entities')];
+
+  while (directoriesToLoad.length > 0) {
+    const directory = directoriesToLoad.shift()!;
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    for (const entry of entries) {
+      const entryPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        directoriesToLoad.push(entryPath);
+      } else if (entry.isFile() && entry.name.endsWith('.json')) {
+        logger.info('Upsert entity: %s', entryPath);
+        const data = await fs.readFile(entryPath, { encoding: 'utf-8' });
+        const entity = JSON.parse(data);
+        const createResult = await adminClient.upsertEntity(entity);
+        if (createResult.isError()) {
+          return createResult;
+        }
+        logger.info('  Effect: %s', createResult.value.effect);
+        loadedEntries.push({ id: createResult.value.entity.id });
+      }
+    }
+  }
+  return ok(loadedEntries);
 }
