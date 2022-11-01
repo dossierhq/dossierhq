@@ -239,3 +239,27 @@ edit entity	bun-sqlite	5fa44533	5fa44533-bun-sqlite-edit-entity	1.332748	0.76	0.
 archive entity	bun-sqlite	5fa44533	5fa44533-bun-sqlite-archive-entity	0.536344	0.27	0.2883	0.529101	0.680201	0.767601	4.132306
 get admin entity	bun-sqlite	5fa44533	5fa44533-bun-sqlite-get-admin-entity	0.076058	0.01	0.059	0.0745	0.082801	0.0907	0.440701
 search admin entities (any, first 50)	bun-sqlite	5fa44533	5fa44533-bun-sqlite-search-admin-entities-any-first-50	0.370531	0.12	0.3219	0.355701	0.387901	0.408701	2.675505
+create entity	postgres	8d1b47d7	8d1b47d7-postgres-create-entity	4.930533	2.15	2.782812	4.458419	6.909928	8.459335	27.970317
+create entity organization	postgres	8d1b47d7	8d1b47d7-postgres-create-entity-organization	4.052022	1.70	2.59401	3.476314	5.648423	7.376031	18.809379
+create entity person	postgres	8d1b47d7	8d1b47d7-postgres-create-entity-person	4.68667	1.78	2.518811	4.251118	5.884525	7.912233	20.233784
+create and publish entity	postgres	8d1b47d7	8d1b47d7-postgres-create-publish-entity	10.462566	3.45	6.650227	9.797541	13.422756	15.869666	54.156026
+edit entity	postgres	8d1b47d7	8d1b47d7-postgres-edit-entity	6.457581	1.62	4.326918	6.177926	7.813933	9.221138	23.098196
+archive entity	postgres	8d1b47d7	8d1b47d7-postgres-archive-entity	2.586957	0.92	1.850808	2.46141	3.053613	3.298913	22.311393
+get admin entity	postgres	8d1b47d7	8d1b47d7-postgres-get-admin-entity	0.74329	0.31	0.517302	0.706103	0.880903	0.958304	5.786824
+search admin entities (any, first 50)	postgres	8d1b47d7	8d1b47d7-postgres-search-admin-entities-any-first-50	1.856491	0.56	1.414406	1.763607	2.106509	2.312809	10.008641
+create entity	sqlite	8d1b47d7	8d1b47d7-sqlite-create-entity	3.260817	1.56	1.572706	2.899911	4.290318	5.935024	15.985965
+create entity organization	sqlite	8d1b47d7	8d1b47d7-sqlite-create-entity-organization	2.76651	1.50	1.541106	2.48641	3.463814	4.563019	19.34258
+create entity person	sqlite	8d1b47d7	8d1b47d7-sqlite-create-entity-person	3.252993	1.04	1.767207	3.01111	4.056614	4.91772	15.706765
+create and publish entity	sqlite	8d1b47d7	8d1b47d7-sqlite-create-publish-entity	5.612246	2.01	3.527311	5.138916	6.747222	9.538731	30.193499
+edit entity	sqlite	8d1b47d7	8d1b47d7-sqlite-edit-entity	4.102051	1.94	2.456709	3.722314	4.952917	6.663423	47.45376
+archive entity	sqlite	8d1b47d7	8d1b47d7-sqlite-archive-entity	2.225731	0.94	0.943303	2.045007	2.824511	3.349713	12.341048
+get admin entity	sqlite	8d1b47d7	8d1b47d7-sqlite-get-admin-entity	0.296191	0.22	0.194299	0.264399	0.361798	0.413099	4.457182
+search admin entities (any, first 50)	sqlite	8d1b47d7	8d1b47d7-sqlite-search-admin-entities-any-first-50	1.195958	0.54	0.838403	1.110705	1.344006	1.455094	8.317611
+create entity	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-create-entity	1.865123	1.41	0.720303	1.532606	2.838811	4.201117	13.323553
+create entity organization	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-create-entity-organization	1.544142	0.86	0.753202	1.263005	2.335408	2.90001	11.275841
+create entity person	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-create-entity-person	1.893804	0.82	0.830803	1.786407	2.610209	3.00371	9.979436
+create and publish entity	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-create-publish-entity	3.238044	0.82	1.802708	3.098411	3.996518	4.62712	8.034336
+edit entity	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-edit-entity	2.58902	0.98	1.254206	2.373011	3.291614	3.710713	12.807457
+archive entity	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-archive-entity	1.531001	0.74	0.507102	1.407505	2.147808	2.448108	14.406651
+get admin entity	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-get-admin-entity	0.130263	0.07	0.091801	0.117101	0.165901	0.1891	1.997507
+search admin entities (any, first 50)	bun-sqlite	8d1b47d7	8d1b47d7-bun-sqlite-search-admin-entities-any-first-50	0.558005	0.22	0.401101	0.520202	0.661102	0.726202	3.972614
