@@ -1,6 +1,16 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef } from 'react';
 
+//TODO handle bun-types, this is workarounds for now
+declare global {
+  const window: any | undefined;
+  const history: any;
+}
+
+interface BeforeUnloadEvent {
+  returnValue: string;
+}
+
 // Based on https://github.com/vercel/next.js/discussions/32231#discussioncomment-2421565
 
 function throwFakeErrorToFoolNextRouter() {
