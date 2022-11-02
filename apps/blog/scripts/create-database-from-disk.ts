@@ -40,19 +40,8 @@ if (process.argv.length !== 3) {
   throw new Error(`Usage: ${process.argv[1]} database/path.sqlite`);
 }
 const filename = process.argv[2];
-try {
-  const stat = await fs.stat(filename);
-  console.log('stat', stat);
-  if (stat.isFile()) {
-    throw new Error(`File ${filename} already exists`);
-  }
-} catch (error) {
-  console.log('error', error);
-  const noSuchFile =
-    typeof error === 'object' &&
-    error &&
-    'code' in error &&
-    (error as { code: string }).code === 'ENOENT';
-  if (!noSuchFile) throw error;
+const stat = await fs.stat(filename);
+if (stat?.isFile()) {
+  throw new Error(`File ${filename} already exists`);
 }
 await main(filename);
