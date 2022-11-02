@@ -35,7 +35,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@babel/core": "~7.17.9",
+    "@babel/core": "~7.19.6",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.48.7",
     "@storybook/addon-actions": "~6.5.12",
