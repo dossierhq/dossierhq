@@ -55,7 +55,7 @@ jobs:
       - name: rush build blog dependencies, create database
         run: |
           cd apps/blog
-          rush build --verbose --to-except .
+          node ../../common/scripts/install-run-rush.js build --verbose --to-except .
           ./scripts/create-database-from-disk.ts data/database.sqlite
           echo "DATABASE_SQLITE_FILE=data/database.sqlite" > .env
       - name: rush build

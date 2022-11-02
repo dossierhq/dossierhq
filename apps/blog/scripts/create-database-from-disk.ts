@@ -41,10 +41,13 @@ if (process.argv.length !== 3) {
 }
 const filename = process.argv[2];
 try {
-  if ((await fs.stat(filename)).isFile()) {
+  const stat = await fs.stat(filename);
+  console.log('stat', stat);
+  if (stat.isFile()) {
     throw new Error(`File ${filename} already exists`);
   }
 } catch (error) {
+  console.log('error', error);
   const noSuchFile =
     typeof error === 'object' &&
     error &&
