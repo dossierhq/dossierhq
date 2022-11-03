@@ -1,0 +1,72 @@
+{
+  "id": "8f71d5d7-041b-4c6f-a088-33e978f27c48",
+  "info": {
+    "name": "Value item",
+    "type": "GlossaryTerm",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "title": "Value item",
+    "slug": "value-item",
+    "description": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "A piece of data of a certain ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "value type",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ". A value item is similar to an entity, but a value item doesn't have an identity and has to be stored in an entity. There are two views of a value item, the admin value item contains all fields of the entity. The published value item doesn't contain admin only fields (as specified by the value type).",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

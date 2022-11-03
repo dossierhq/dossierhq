@@ -1,0 +1,42 @@
+{
+  "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e",
+  "info": {
+    "name": "Value type",
+    "type": "GlossaryTerm",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "title": "Value type",
+    "slug": "value-type",
+    "description": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The description of the shape of value items.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

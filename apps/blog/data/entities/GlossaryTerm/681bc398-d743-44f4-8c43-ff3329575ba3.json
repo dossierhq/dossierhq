@@ -1,0 +1,72 @@
+{
+  "id": "681bc398-d743-44f4-8c43-ff3329575ba3",
+  "info": {
+    "name": "Entity",
+    "type": "GlossaryTerm",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "title": "Entity",
+    "slug": "entity",
+    "description": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "A piece of data of a certain ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "15e396c5-7498-4ba1-9f3e-0c3ce5759968"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "entity type",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ". The entity has a unique id, and one or more fields. There are two views of an entity, the admin entity contains all fields and metadata of the entity. The published entity only exist if the entity is published, and doesn't contain admin only fields (as specified by the entity type).",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

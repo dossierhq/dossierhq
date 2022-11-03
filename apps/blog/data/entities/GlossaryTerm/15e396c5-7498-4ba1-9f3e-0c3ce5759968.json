@@ -1,0 +1,42 @@
+{
+  "id": "15e396c5-7498-4ba1-9f3e-0c3ce5759968",
+  "info": {
+    "name": "Entity type",
+    "type": "GlossaryTerm",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "title": "Entity type",
+    "slug": "entity-type",
+    "description": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The description of the shape of entities.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
