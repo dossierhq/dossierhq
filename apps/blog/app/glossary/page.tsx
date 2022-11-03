@@ -1,11 +1,12 @@
 import { FullscreenContainer } from '@jonasb/datadata-design';
 import { NavBar } from '../../components/NavBar/NavBar';
+import { assertIsPublishedGlossaryTerm } from '../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../utils/ServerComponentUtils';
 
 export default async function Page() {
   const publishedClient = await getPublishedClientForServerComponent();
   const connection = (
-    await publishedClient.searchEntities({ entityTypes: ['BlogPost'], order: 'createdAt' })
+    await publishedClient.searchEntities({ entityTypes: ['GlossaryTerm'], order: 'name' })
   ).valueOrThrow();
 
   return (
@@ -17,7 +18,8 @@ export default async function Page() {
         <FullscreenContainer.Row>
           {connection?.edges.map((edge) => {
             const entity = edge.node.valueOrThrow();
-            return <p key={entity.id}>{entity.fields.title as string | null}</p>;
+            assertIsPublishedGlossaryTerm(entity);
+            return <p key={entity.id}>{entity.fields.title}</p>;
           })}
         </FullscreenContainer.Row>
       </FullscreenContainer>
