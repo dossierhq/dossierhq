@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1",
+    "build": "./scripts/generate-typescript.ts 2>&1 && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-database-adapter-sqlite-bun": "workspace:*",
+    "@jonasb/datadata-typescript-generator": "workspace:*",
     "@types/react": "~18.0.21",
     "@types/sqlite3": "~3.1.8",
     "@typescript-eslint/eslint-plugin": "~5.41.0",
