@@ -276,3 +276,27 @@ exports[`generateTypescriptForSchema published > empty 1`] = `
 export type AllPublishedValueItems = never;
 "
 `;
+
+exports[`generateTypescriptForSchema published > required fields 1`] = `
+"import type { PublishedEntity } from '@jonasb/datadata-core';
+
+export interface PublishedFooFields {
+  string: string;
+  stringList: string[];
+}
+
+export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields>;
+
+export function isPublishedFoo(entity: PublishedEntity | PublishedFoo): entity is PublishedFoo {
+  return entity.info.type === 'Foo';
+}
+
+export function assertIsPublishedFoo(entity: PublishedEntity | PublishedFoo): asserts entity is PublishedFoo {
+  if (entity.info.type !== 'Foo') {
+    throw new Error('Expected info.type = Foo (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AllPublishedValueItems = never;
+"
+`;

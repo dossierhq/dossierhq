@@ -1,9 +1,9 @@
 import type { PublishedEntity, RichText } from '@jonasb/datadata-core';
 
 export interface PublishedGlossaryTermFields {
-  title: string | null;
-  slug: string | null;
-  description: RichText | null;
+  title: string;
+  slug: string;
+  description: RichText;
 }
 
 export type PublishedGlossaryTerm = PublishedEntity<'GlossaryTerm', PublishedGlossaryTermFields>;

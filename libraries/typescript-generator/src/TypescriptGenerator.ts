@@ -231,8 +231,10 @@ function fieldType(
       }
       break;
   }
+  const nullable = adminOrPublished === 'Admin' || !fieldSpec.required;
+  const nullableSuffix = nullable ? ' | null' : '';
   if (!fieldSpec.list) {
-    return `${type} | null`;
+    return type + nullableSuffix;
   }
-  return type.includes('|') ? `Array<${type}> | null` : `${type}[] | null`;
+  return (type.includes('|') ? `Array<${type}>` : `${type}[]`) + nullableSuffix;
 }

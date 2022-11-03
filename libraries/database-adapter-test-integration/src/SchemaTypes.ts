@@ -255,7 +255,7 @@ export function assertIsPublishedLocations(
 }
 
 export interface PublishedReadOnlyFields {
-  message: string | null;
+  message: string;
 }
 
 export type PublishedReadOnly = PublishedEntity<'ReadOnly', PublishedReadOnlyFields>;
@@ -344,7 +344,7 @@ export function assertIsPublishedStrings(
 }
 
 export interface PublishedSubjectOnlyFields {
-  message: string | null;
+  message: string;
 }
 
 export type PublishedSubjectOnly = PublishedEntity<'SubjectOnly', PublishedSubjectOnlyFields>;
@@ -364,7 +364,7 @@ export function assertIsPublishedSubjectOnly(
 }
 
 export interface PublishedTitleOnlyFields {
-  title: string | null;
+  title: string;
 }
 
 export type PublishedTitleOnly = PublishedEntity<'TitleOnly', PublishedTitleOnlyFields>;

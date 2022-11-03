@@ -296,4 +296,28 @@ describe('generateTypescriptForSchema published', () => {
       })
     ).toMatchSnapshot();
   });
+
+  test('required fields', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: null,
+        publishedSchema: new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              authKeyPattern: null,
+              fields: [
+                { name: 'string', type: FieldType.String, required: true },
+                { name: 'stringList', type: FieldType.String, list: true, required: true },
+              ],
+            },
+          ],
+          valueTypes: [],
+          patterns: [],
+          indexes: [],
+        }).toPublishedSchema(),
+      })
+    ).toMatchSnapshot();
+  });
 });

@@ -123,7 +123,7 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
     copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
       id,
       info: { name, createdAt },
-      fields: { title: createResult.value.entity.fields.title },
+      fields: { title: createResult.value.entity.fields.title ?? '--no title--' },
     })
   );
 }
