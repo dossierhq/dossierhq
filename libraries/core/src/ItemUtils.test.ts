@@ -4,12 +4,10 @@ import { isEntityNameAsRequested, isFieldValueEqual, normalizeFieldValue } from 
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
 
-const schema = new AdminSchema({
+const schema = AdminSchema.createAndValidate({
   entityTypes: [
     {
       name: 'Foo',
-      adminOnly: false,
-      authKeyPattern: null,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
@@ -21,16 +19,13 @@ const schema = new AdminSchema({
   valueTypes: [
     {
       name: 'TwoStrings',
-      adminOnly: false,
       fields: [
         { name: 'string1', type: FieldType.String },
         { name: 'string2', type: FieldType.String },
       ],
     },
   ],
-  patterns: [],
-  indexes: [],
-});
+}).valueOrThrow();
 
 function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: string) {
   const entitySpec = schema.getEntityTypeSpecification(entityType);

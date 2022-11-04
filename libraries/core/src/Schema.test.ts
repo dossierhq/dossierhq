@@ -29,12 +29,11 @@ describe('mergeWith()', () => {
   });
 
   test('update pattern', () => {
-    const result = new AdminSchema({
-      entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: 'a-pattern', fields: [] }],
-      valueTypes: [],
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
       patterns: [{ name: 'a-pattern', pattern: '^old-pattern$' }],
-      indexes: [],
     })
+      .valueOrThrow()
       .mergeWith({
         patterns: [{ name: 'a-pattern', pattern: '^new-pattern$' }],
       })
@@ -46,12 +45,11 @@ describe('mergeWith()', () => {
   });
 
   test('unused pattern is removed', () => {
-    const result = new AdminSchema({
-      entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: 'a-pattern', fields: [] }],
-      valueTypes: [],
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
       patterns: [{ name: 'a-pattern', pattern: '^pattern$' }],
-      indexes: [],
     })
+      .valueOrThrow()
       .mergeWith({
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
       })
@@ -62,7 +60,8 @@ describe('mergeWith()', () => {
   });
 
   test('field with matchPattern', () => {
-    const result = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
+    const result = AdminSchema.createAndValidate({})
+      .valueOrThrow()
       .mergeWith({
         entityTypes: [
           {
@@ -80,19 +79,16 @@ describe('mergeWith()', () => {
   });
 
   test('unused index is removed', () => {
-    const result = new AdminSchema({
+    const result = AdminSchema.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: false,
-          authKeyPattern: null,
           fields: [{ name: 'string', type: FieldType.String, index: 'anIndex' }],
         },
       ],
-      valueTypes: [],
-      patterns: [],
       indexes: [{ name: 'anIndex', type: 'unique' }],
     })
+      .valueOrThrow()
       .mergeWith({
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
       })
@@ -103,7 +99,8 @@ describe('mergeWith()', () => {
   });
 
   test('field with index', () => {
-    const result = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
+    const result = AdminSchema.createAndValidate({})
+      .valueOrThrow()
       .mergeWith({
         entityTypes: [
           {
@@ -849,33 +846,27 @@ describe('validate()', () => {
 
 describe('AdminSchema.toPublishedSchema()', () => {
   test('empty->empty', () => {
-    expect(
-      new AdminSchema({
-        entityTypes: [],
-        valueTypes: [],
-        patterns: [],
-        indexes: [],
-      }).toPublishedSchema().spec
-    ).toEqual({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
+    expect(AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema().spec).toEqual({
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    });
   });
 
   test('1 entity type and 1 value type', () => {
     expect(
-      new AdminSchema({
+      AdminSchema.createAndValidate({
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
-            authKeyPattern: null,
             fields: [{ name: 'field1', type: FieldType.String }],
           },
         ],
-        valueTypes: [
-          { name: 'Bar', adminOnly: false, fields: [{ name: 'field1', type: FieldType.Location }] },
-        ],
-        patterns: [],
-        indexes: [],
-      }).toPublishedSchema().spec
+        valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
+      })
+        .valueOrThrow()
+        .toPublishedSchema().spec
     ).toEqual({
       entityTypes: [
         { name: 'Foo', authKeyPattern: null, fields: [{ name: 'field1', type: FieldType.String }] },
@@ -888,19 +879,17 @@ describe('AdminSchema.toPublishedSchema()', () => {
 
   test('1 entity type with pattern used by matchPattern', () => {
     expect(
-      new AdminSchema({
+      AdminSchema.createAndValidate({
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
-            authKeyPattern: null,
             fields: [{ name: 'field1', type: FieldType.String, matchPattern: 'a-pattern' }],
           },
         ],
-        valueTypes: [],
         patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
-        indexes: [],
-      }).toPublishedSchema().spec
+      })
+        .valueOrThrow()
+        .toPublishedSchema().spec
     ).toEqual({
       entityTypes: [
         {
@@ -917,19 +906,17 @@ describe('AdminSchema.toPublishedSchema()', () => {
 
   test('1 entity type with index', () => {
     expect(
-      new AdminSchema({
+      AdminSchema.createAndValidate({
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
-            authKeyPattern: null,
             fields: [{ name: 'field1', type: FieldType.String, index: 'anIndex' }],
           },
         ],
-        valueTypes: [],
-        patterns: [],
         indexes: [{ name: 'anIndex', type: 'unique' }],
-      }).toPublishedSchema().spec
+      })
+        .valueOrThrow()
+        .toPublishedSchema().spec
     ).toEqual({
       entityTypes: [
         {
@@ -946,21 +933,20 @@ describe('AdminSchema.toPublishedSchema()', () => {
 
   test('1 adminOnly entity type and 1 adminOnly value type', () => {
     expect(
-      new AdminSchema({
+      AdminSchema.createAndValidate({
         entityTypes: [
           {
             name: 'Foo',
             adminOnly: true,
-            authKeyPattern: null,
             fields: [{ name: 'field1', type: FieldType.String }],
           },
         ],
         valueTypes: [
           { name: 'Bar', adminOnly: true, fields: [{ name: 'field1', type: FieldType.Location }] },
         ],
-        patterns: [],
-        indexes: [],
-      }).toPublishedSchema().spec
+      })
+        .valueOrThrow()
+        .toPublishedSchema().spec
     ).toEqual({
       entityTypes: [],
       valueTypes: [],
@@ -971,12 +957,10 @@ describe('AdminSchema.toPublishedSchema()', () => {
 
   test('1 entity type with adminOnly field and 1 value type with adminOnly field', () => {
     expect(
-      new AdminSchema({
+      AdminSchema.createAndValidate({
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
-            authKeyPattern: null,
             fields: [{ name: 'field1', adminOnly: true, type: FieldType.String }],
           },
         ],
@@ -987,9 +971,9 @@ describe('AdminSchema.toPublishedSchema()', () => {
             fields: [{ name: 'field1', adminOnly: true, type: FieldType.Location }],
           },
         ],
-        patterns: [],
-        indexes: [],
-      }).toPublishedSchema().spec
+      })
+        .valueOrThrow()
+        .toPublishedSchema().spec
     ).toEqual({
       entityTypes: [{ name: 'Foo', authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],

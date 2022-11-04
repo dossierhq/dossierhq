@@ -25,7 +25,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         {
           name: 'description',
           type: FieldType.RichText,
-          multiline: true,
           required: true,
           richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
         },

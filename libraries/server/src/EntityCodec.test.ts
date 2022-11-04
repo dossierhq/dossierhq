@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecification, EntityLike } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate, EntityLike } from '@jonasb/datadata-core';
 import {
   AdminSchema,
   createRichTextEntityLinkNode,
@@ -18,7 +18,7 @@ import {
   createRequestedReferencesCollector,
 } from './EntityCodec.js';
 
-const schemaSpec: AdminSchemaSpecification = {
+const schemaSpec: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'EntityCodecFoo',
@@ -59,11 +59,9 @@ const schemaSpec: AdminSchemaSpecification = {
       ],
     },
   ],
-  patterns: [],
-  indexes: [],
 };
 
-const schema = new AdminSchema(schemaSpec);
+const schema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
 
 function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
   const ftsCollector = createFullTextSearchCollector();

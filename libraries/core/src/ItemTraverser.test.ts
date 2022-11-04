@@ -6,12 +6,10 @@ import { createRichTextRootNode, createRichTextValueItemNode } from './RichTextU
 import type { PublishedSchema } from './Schema.js';
 import { AdminSchema, FieldType } from './Schema.js';
 
-const adminSchema = new AdminSchema({
+const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
     {
       name: 'Foo',
-      adminOnly: false,
-      authKeyPattern: null,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
@@ -24,16 +22,13 @@ const adminSchema = new AdminSchema({
   valueTypes: [
     {
       name: 'TwoStrings',
-      adminOnly: false,
       fields: [
         { name: 'string1', type: FieldType.String },
         { name: 'string2', type: FieldType.String },
       ],
     },
   ],
-  patterns: [],
-  indexes: [],
-});
+}).valueOrThrow();
 
 const publishedSchema = adminSchema.toPublishedSchema();
 

@@ -1,14 +1,7 @@
-import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { AdminSchema, FieldType } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
-
-function createAdminSchema(update: AdminSchemaSpecificationUpdate): AdminSchema {
-  return new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
-    .mergeWith(update)
-    .valueOrThrow();
-}
 
 function buildSchema(
   adminSchema: AdminSchema,
@@ -39,7 +32,8 @@ async function querySchema(
 }
 
 describe('Empty schema spec', () => {
-  const adminSchema = createAdminSchema({});
+  const adminSchema = AdminSchema.createAndValidate({}).valueOrThrow();
+
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
@@ -57,9 +51,9 @@ describe('Empty schema spec', () => {
 });
 
 describe('One empty entity type schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -375,7 +369,7 @@ describe('One empty entity type schema spec', () => {
 });
 
 describe('Two entity types with reference schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       { name: 'Foo', adminOnly: false, fields: [{ name: 'fooField', type: FieldType.String }] },
       {
@@ -389,7 +383,7 @@ describe('Two entity types with reference schema spec', () => {
         ],
       },
     ],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -408,7 +402,7 @@ describe('Two entity types with reference schema spec', () => {
 });
 
 describe('Multiple references with entityTypes schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -432,7 +426,7 @@ describe('Multiple references with entityTypes schema spec', () => {
       { name: 'Bar', adminOnly: false, fields: [] },
       { name: 'Baz', adminOnly: false, fields: [] },
     ],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -451,7 +445,7 @@ describe('Multiple references with entityTypes schema spec', () => {
 });
 
 describe('List of strings, booleans, locations and references schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -465,7 +459,8 @@ describe('List of strings, booleans, locations and references schema spec', () =
       },
       { name: 'Bar', adminOnly: false, fields: [] },
     ],
-  });
+  }).valueOrThrow();
+
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
@@ -483,7 +478,7 @@ describe('List of strings, booleans, locations and references schema spec', () =
 });
 
 describe('Value type schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -531,7 +526,7 @@ describe('Value type schema spec', () => {
         ],
       },
     ],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -550,7 +545,7 @@ describe('Value type schema spec', () => {
 });
 
 describe('Rich text schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -558,7 +553,8 @@ describe('Rich text schema spec', () => {
         fields: [{ name: 'body', type: FieldType.RichText }],
       },
     ],
-  });
+  }).valueOrThrow();
+
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
     expect(result).toMatchSnapshot();
@@ -576,7 +572,7 @@ describe('Rich text schema spec', () => {
 });
 
 describe('Admin only entity and value schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -601,7 +597,7 @@ describe('Admin only entity and value schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String }],
       },
     ],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -620,7 +616,7 @@ describe('Admin only entity and value schema spec', () => {
 });
 
 describe('Admin only field in entity and value schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -635,7 +631,7 @@ describe('Admin only field in entity and value schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String, adminOnly: true }],
       },
     ],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -654,7 +650,7 @@ describe('Admin only field in entity and value schema spec', () => {
 });
 
 describe('Required fields schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -673,7 +669,7 @@ describe('Required fields schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String, required: true }],
       },
     ],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -692,7 +688,7 @@ describe('Required fields schema spec', () => {
 });
 
 describe('One entity type with unique index schema spec', () => {
-  const adminSchema = createAdminSchema({
+  const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -701,7 +697,7 @@ describe('One entity type with unique index schema spec', () => {
       },
     ],
     indexes: [{ name: 'fooUnique', type: 'unique' }],
-  });
+  }).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });

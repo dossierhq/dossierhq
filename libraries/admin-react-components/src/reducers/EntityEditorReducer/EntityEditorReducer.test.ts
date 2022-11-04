@@ -99,7 +99,7 @@ describe('AddDraftAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -108,10 +108,7 @@ describe('AddDraftAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
     );
@@ -123,19 +120,14 @@ describe('AddDraftAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -167,19 +159,14 @@ describe('DeleteDraftAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.DeleteDraft(id)
@@ -196,15 +183,12 @@ describe('SetActiveEntityAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
-            { name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] },
-            { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
+            { name: 'Foo', fields: [] },
+            { name: 'Bar', fields: [] },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({
         id: '619725d7-e583-4544-8bb0-23fc3c2870c0',
@@ -227,19 +211,14 @@ describe('SetNameAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetName(id, 'New name')
@@ -258,19 +237,14 @@ describe('SetNameAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetName(id, 'New name'),
@@ -291,19 +265,14 @@ describe('SetFieldAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetField(id, 'title', 'New title')
@@ -316,19 +285,14 @@ describe('SetFieldAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetName(id, 'New name'),
@@ -342,19 +306,15 @@ describe('SetFieldAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'string', type: FieldType.String, matchPattern: 'foo' }],
             },
           ],
-          valueTypes: [],
           patterns: [{ name: 'foo', pattern: '^foo$' }],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetField(id, 'string', 'not-foo')
@@ -369,19 +329,14 @@ describe('SetAuthKeyAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetAuthKey(id, 'subject')
@@ -397,19 +352,14 @@ describe('UpdateEntityAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -442,19 +392,14 @@ describe('UpdateEntityAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -486,7 +431,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceEntityEditorState(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
+        AdminSchema.createAndValidate({}).valueOrThrow()
       )
     );
     expect(state).toMatchSnapshot();
@@ -505,19 +450,14 @@ describe('EntityEditorReducer scenarios', () => {
     state = reduceEntityEditorState(
       state,
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       )
     );
     expect(state).toMatchSnapshot();
@@ -551,19 +491,14 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
     );
@@ -612,19 +547,14 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
     );
@@ -679,19 +609,14 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String, isName: true }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -770,19 +695,14 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity(entity)
@@ -814,19 +734,14 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        new AdminSchema({
+        AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'foo', type: FieldType.EntityType }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        })
+        }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id: firstId }),
       new EntityEditorActions.UpdateEntity({

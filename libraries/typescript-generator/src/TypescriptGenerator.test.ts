@@ -6,12 +6,7 @@ describe('generateTypescriptForSchema', () => {
   test('empty', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        adminSchema: AdminSchema.createAndValidate({}).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -20,12 +15,9 @@ describe('generateTypescriptForSchema', () => {
   test('Foo (no fields)', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
-          entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        adminSchema: AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -34,22 +26,17 @@ describe('generateTypescriptForSchema', () => {
   test('Booleans', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Booleans',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'boolean', type: FieldType.Boolean },
                 { name: 'booleanList', type: FieldType.Boolean, list: true },
               ],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -58,22 +45,17 @@ describe('generateTypescriptForSchema', () => {
   test('EntityTypes', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'EntityTypes',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'entityType', type: FieldType.EntityType },
                 { name: 'entityTypeList', type: FieldType.EntityType, list: true },
               ],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -82,22 +64,17 @@ describe('generateTypescriptForSchema', () => {
   test('Locations', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Locations',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'location', type: FieldType.Location },
                 { name: 'locationList', type: FieldType.Location, list: true },
               ],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -106,22 +83,17 @@ describe('generateTypescriptForSchema', () => {
   test('RichTexts', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'RichTexts',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'richText', type: FieldType.RichText },
                 { name: 'richTextList', type: FieldType.RichText, list: true },
               ],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -130,22 +102,17 @@ describe('generateTypescriptForSchema', () => {
   test('Strings', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Strings',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'string', type: FieldType.String, isName: true, required: true },
                 { name: 'stringList', type: FieldType.String, list: true, required: true },
               ],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }),
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -154,12 +121,10 @@ describe('generateTypescriptForSchema', () => {
   test('ValueTypes', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'ValueTypes',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'valueType', type: FieldType.ValueType, required: true },
                 {
@@ -195,18 +160,14 @@ describe('generateTypescriptForSchema', () => {
           valueTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
               fields: [{ name: 'string', type: FieldType.String, required: true }],
             },
             {
               name: 'Bar',
-              adminOnly: false,
               fields: [{ name: 'string', type: FieldType.String, required: true }],
             },
           ],
-          patterns: [],
-          indexes: [],
-        }),
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -215,25 +176,15 @@ describe('generateTypescriptForSchema', () => {
   test('ValueTypes (no fields)', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: new AdminSchema({
+        adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'ValueType',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'valueType', type: FieldType.ValueType, required: true }],
             },
           ],
-          valueTypes: [
-            {
-              name: 'Foo',
-              adminOnly: false,
-              fields: [],
-            },
-          ],
-          patterns: [],
-          indexes: [],
-        }),
+          valueTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
         publishedSchema: null,
       })
     ).toMatchSnapshot();
@@ -245,12 +196,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: new AdminSchema({
-          entityTypes: [],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }).toPublishedSchema(),
+        publishedSchema: AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema(),
       })
     ).toMatchSnapshot();
   });
@@ -259,19 +205,11 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: new AdminSchema({
-          entityTypes: [
-            {
-              name: 'Foo',
-              adminOnly: true,
-              authKeyPattern: null,
-              fields: [],
-            },
-          ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }).toPublishedSchema(),
+        publishedSchema: AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
+        })
+          .valueOrThrow()
+          .toPublishedSchema(),
       })
     ).toMatchSnapshot();
   });
@@ -280,19 +218,16 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: new AdminSchema({
+        publishedSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [{ name: 'field', adminOnly: true, type: FieldType.String }],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }).toPublishedSchema(),
+        })
+          .valueOrThrow()
+          .toPublishedSchema(),
       })
     ).toMatchSnapshot();
   });
@@ -301,22 +236,19 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: new AdminSchema({
+        publishedSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
               fields: [
                 { name: 'string', type: FieldType.String, required: true },
                 { name: 'stringList', type: FieldType.String, list: true, required: true },
               ],
             },
           ],
-          valueTypes: [],
-          patterns: [],
-          indexes: [],
-        }).toPublishedSchema(),
+        })
+          .valueOrThrow()
+          .toPublishedSchema(),
       })
     ).toMatchSnapshot();
   });

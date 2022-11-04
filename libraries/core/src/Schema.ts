@@ -144,6 +144,25 @@ export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
   private cachedPatternRegExps: Record<string, RegExp>;
 
+  static createAndValidate(
+    update: AdminSchemaSpecificationUpdate
+  ): Result<AdminSchema, typeof ErrorType.BadRequest> {
+    const emptySpec: AdminSchemaSpecification = {
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    };
+    const empty = new AdminSchema(emptySpec);
+    const mergeResult = empty.mergeWith(update);
+    if (mergeResult.isError()) return mergeResult;
+
+    const validateResult = mergeResult.value.validate();
+    if (validateResult.isError()) return validateResult;
+
+    return mergeResult;
+  }
+
   constructor(spec: AdminSchemaSpecification) {
     this.spec = spec;
     this.cachedPatternRegExps = {};

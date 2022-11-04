@@ -6,11 +6,9 @@ import { SCHEMA as REVIEWS_SCHEMA } from '../src/reviews/schema.ts';
 import { SCHEMA as STARWARS_SCHEMA } from '../src/starwars/schema.ts';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
-  const adminSchema = new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [] })
-    .mergeWith(schemaSpec)
-    .valueOrThrow();
+  const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
 
-  const sourceCode = generateTypescriptForSchema({ adminSchema });
+  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema: null });
   await Deno.writeTextFile(filename, sourceCode);
 
   await Deno.run({ cmd: ['npx', 'prettier', '-w', filename] }).status();

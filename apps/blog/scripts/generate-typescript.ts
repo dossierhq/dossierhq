@@ -5,15 +5,7 @@ import { writeFile } from 'node:fs/promises';
 import { schemaSpecification } from '../utils/schema.js';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
-  const adminSchema = new AdminSchema({
-    entityTypes: [],
-    valueTypes: [],
-    patterns: [],
-    indexes: [],
-  })
-    .mergeWith(schemaSpec)
-    .valueOrThrow();
-
+  const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({ adminSchema: null, publishedSchema });
   await writeFile(filename, sourceCode);

@@ -18,15 +18,12 @@ import {
   totalPublishedEntitiesQuery,
 } from './QueryGenerator.js';
 
-const schema = new AdminSchema({
+const schema = AdminSchema.createAndValidate({
   entityTypes: [
-    { name: 'QueryGeneratorFoo', adminOnly: false, authKeyPattern: null, fields: [] },
-    { name: 'QueryGeneratorBar', adminOnly: false, authKeyPattern: null, fields: [] },
+    { name: 'QueryGeneratorFoo', fields: [] },
+    { name: 'QueryGeneratorBar', fields: [] },
   ],
-  valueTypes: [],
-  patterns: [],
-  indexes: [],
-});
+}).valueOrThrow();
 
 const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
 

@@ -5,23 +5,18 @@ import { validateTraverseNode } from './ItemValidator.js';
 import { AdminSchema, FieldType } from './Schema.js';
 import type { EntityLike } from './Types.js';
 
-const schema = new AdminSchema({
+const schema = AdminSchema.createAndValidate({
   entityTypes: [
     {
       name: 'StringsEntity',
-      authKeyPattern: null,
-      adminOnly: false,
       fields: [
         { name: 'pattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },
         { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'foo-bar-baz' },
       ],
     },
   ],
-  valueTypes: [],
   patterns: [{ name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' }],
-  indexes: [],
-});
-schema.validate().throwIfError();
+}).valueOrThrow();
 
 function validateEntity(entity: EntityLike, options: ValidationOptions) {
   const errors: ValidationError[] = [];
