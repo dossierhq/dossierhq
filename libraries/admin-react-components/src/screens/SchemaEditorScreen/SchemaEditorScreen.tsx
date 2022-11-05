@@ -10,6 +10,7 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaIndexEditor.js';
 import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
@@ -18,6 +19,8 @@ import type {
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
+  SchemaIndexDraft,
+  SchemaIndexSelector,
   SchemaPatternDraft,
   SchemaPatternSelector,
   SchemaTypeSelector,
@@ -30,6 +33,7 @@ import {
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog.js';
+import { AddOrRenameIndexDialog } from './AddOrRenameIndexDialog.js';
 import { AddOrRenamePatternDialog } from './AddOrRenamePatternDialog.js';
 import { AddOrRenameTypeDialog } from './AddOrRenameTypeDialog.js';
 import { SaveSchemaDialog } from './SaveSchemaDialog.js';
@@ -59,6 +63,9 @@ export function SchemaEditorScreen({
   const [addOrRenameFieldSelector, setAddOrRenameFieldSelector] = useState<
     SchemaFieldSelector | SchemaTypeSelector | null
   >(null);
+  const [addOrRenameIndexSelector, setAddOrRenameIndexSelector] = useState<
+    SchemaIndexSelector | 'add' | null
+  >(null);
   const [addOrRenamePatternSelector, setAddOrRenamePatternSelector] = useState<
     SchemaPatternSelector | 'add' | null
   >(null);
@@ -68,6 +75,10 @@ export function SchemaEditorScreen({
   const handleCloseAddTypeDialog = useCallback(() => setAddOrRenameTypeSelector(null), []);
   const handleCloseAddOrRenameFieldDialog = useCallback(
     () => setAddOrRenameFieldSelector(null),
+    []
+  );
+  const handleCloseAddOrRenameIndexDialog = useCallback(
+    () => setAddOrRenameIndexSelector(null),
     []
   );
   const handleCloseAddOrRenamePatternDialog = useCallback(
@@ -109,6 +120,7 @@ export function SchemaEditorScreen({
         >
           <Button.Group centered noBottomMargin>
             <Button onClick={() => setAddOrRenameTypeSelector('add')}>Add type</Button>
+            <Button onClick={() => setAddOrRenameIndexSelector('add')}>Add index</Button>
             <Button onClick={() => setAddOrRenamePatternSelector('add')}>Add pattern</Button>
           </Button.Group>
           <Button
@@ -155,6 +167,13 @@ export function SchemaEditorScreen({
                   onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
+              {schemaEditorState.indexes.map((indexDraft) => (
+                <PatternIndexRows
+                  key={indexDraft.name}
+                  indexDraft={indexDraft}
+                  dispatchSchemaEditorState={dispatchSchemaEditorState}
+                />
+              ))}
               {schemaEditorState.patterns.map((patternDraft) => (
                 <PatternEditorRows
                   key={patternDraft.name}
@@ -179,6 +198,12 @@ export function SchemaEditorScreen({
         schemaEditorState={schemaEditorState}
         dispatchSchemaEditorState={dispatchSchemaEditorState}
         onClose={handleCloseAddOrRenameFieldDialog}
+      />
+      <AddOrRenameIndexDialog
+        selector={addOrRenameIndexSelector}
+        schemaEditorState={schemaEditorState}
+        dispatchSchemaEditorState={dispatchSchemaEditorState}
+        onClose={handleCloseAddOrRenameIndexDialog}
       />
       <AddOrRenamePatternDialog
         selector={addOrRenamePatternSelector}
@@ -297,6 +322,52 @@ function TypeEditorRows({
   );
 }
 
+function PatternIndexRows({
+  indexDraft,
+  dispatchSchemaEditorState,
+}: {
+  indexDraft: SchemaIndexDraft;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  const indexSelector = useMemo(
+    () => ({ kind: 'index', name: indexDraft.name } as const),
+    [indexDraft.name]
+  );
+
+  const handleClick = useCallback(
+    (_event: MouseEvent) =>
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.SetActiveSelector(indexSelector, true, false)
+      ),
+    [dispatchSchemaEditorState, indexSelector]
+  );
+
+  return (
+    <>
+      <FullscreenContainer.Row id={`index-${indexDraft.name}-header`} sticky>
+        <Level paddingHorizontal={3}>
+          <Level.Left>
+            <Level.Item>
+              <Text textStyle="headline4">{indexDraft.name}</Text>
+            </Level.Item>
+          </Level.Left>
+        </Level>
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row
+        gap={2}
+        paddingVertical={4}
+        paddingHorizontal={3}
+        marginBottom={4}
+        data-kind="index"
+        data-pattern-name={indexDraft.name}
+        onClick={handleClick}
+      >
+        <SchemaIndexEditor indexDraft={indexDraft} />
+      </FullscreenContainer.Row>
+    </>
+  );
+}
+
 function PatternEditorRows({
   patternDraft,
   schemaEditorState,
@@ -306,7 +377,7 @@ function PatternEditorRows({
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
-  const canDeleteOrRename = patternDraft.status === 'new'; //TODO too restrictive
+  const _canDeleteOrRename = patternDraft.status === 'new'; //TODO too restrictive
 
   const patternSelector = useMemo(
     () => ({ kind: 'pattern', name: patternDraft.name } as const),

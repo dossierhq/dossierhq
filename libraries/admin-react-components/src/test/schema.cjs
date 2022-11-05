@@ -9,6 +9,7 @@ const schemaSpecification = {
       authKeyPattern: 'none',
       fields: [
         { name: 'title', type: 'String', isName: true, required: true },
+        { name: 'slug', type: 'String', index: 'fooSlug' },
         { name: 'tags', type: 'String', list: true, matchPattern: 'tag' },
         { name: 'stringMatchPattern', type: 'String', matchPattern: 'foo-bar-baz' },
         { name: 'location', type: 'Location' },
@@ -93,6 +94,7 @@ const schemaSpecification = {
       ],
     },
   ],
+  indexes: [{ name: 'fooSlug', type: 'unique' }],
   patterns: [
     { name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' },
     { name: 'none', pattern: '^none$' },

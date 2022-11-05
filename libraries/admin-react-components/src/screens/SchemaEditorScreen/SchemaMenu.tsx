@@ -4,9 +4,7 @@ import React, { useCallback } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
-  SchemaPatternSelector,
   SchemaSelector,
-  SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getElementIdForSelector,
@@ -20,7 +18,7 @@ export function SchemaMenu({
   schemaEditorState: Readonly<SchemaEditorState>;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
-  const { activeSelector, entityTypes, valueTypes, patterns } = schemaEditorState;
+  const { activeSelector, entityTypes, valueTypes, indexes, patterns } = schemaEditorState;
   return (
     <Menu>
       {entityTypes.length > 0 ? (
@@ -61,6 +59,25 @@ export function SchemaMenu({
           </Menu.List>
         </>
       ) : null}
+      {indexes.length > 0 ? (
+        <>
+          <Menu.Label>Indexes</Menu.Label>
+          <Menu.List>
+            {indexes.map((indexDraft) => (
+              <DraftItem
+                key={indexDraft.name}
+                {...{
+                  activeSelector,
+                  selector: { kind: 'index', name: indexDraft.name },
+                  dispatchEditorState,
+                }}
+              >
+                {indexDraft.name}
+              </DraftItem>
+            ))}
+          </Menu.List>
+        </>
+      ) : null}
       {patterns.length > 0 ? (
         <>
           <Menu.Label>Patterns</Menu.Label>
@@ -91,7 +108,7 @@ function DraftItem({
   children,
 }: {
   activeSelector: SchemaSelector | null;
-  selector: SchemaTypeSelector | SchemaPatternSelector;
+  selector: SchemaSelector;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
   children: React.ReactNode;
 }) {
@@ -118,6 +135,9 @@ function DraftItem({
 function isDraftActive(selector: SchemaSelector, activeSelector: null | SchemaSelector) {
   if (!activeSelector) return false;
   if (selector.kind !== activeSelector.kind) return false;
+  if (selector.kind === 'index' && activeSelector.kind === 'index') {
+    return selector.name === activeSelector.name;
+  }
   if (selector.kind === 'pattern' && activeSelector.kind === 'pattern') {
     return selector.name === activeSelector.name;
   }
@@ -125,6 +145,6 @@ function isDraftActive(selector: SchemaSelector, activeSelector: null | SchemaSe
     (selector.kind === 'entity' && activeSelector.kind === 'entity') ||
     (selector.kind === 'value' && activeSelector.kind === 'value')
   ) {
-    return selector.typeName === activeSelector.typeName && !!('fieldName' in activeSelector);
+    return selector.typeName === activeSelector.typeName;
   }
 }
