@@ -6,7 +6,7 @@ export interface SerializedEditorState {
   root: SerializedRootNode;
 }
 
-type SerializedRootNode = SerializedElementNode;
+export type SerializedRootNode = SerializedElementNode;
 
 export type SerializedLexicalNode = {
   type: string;

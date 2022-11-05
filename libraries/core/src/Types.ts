@@ -5,6 +5,8 @@ import type {
   SerializedEditorState,
   SerializedElementNode,
   SerializedLexicalNode,
+  SerializedParagraphNode,
+  SerializedRootNode,
   SerializedTextNode,
   Spread,
 } from './third-party/Lexical.js';
@@ -52,6 +54,10 @@ export type RichTextNode = SerializedLexicalNode;
 export type RichTextElementNode = SerializedElementNode;
 
 export type RichTextTextNode = SerializedTextNode;
+
+export type RichTextRootNode = SerializedRootNode;
+
+export type RichTextParagraphNode = SerializedParagraphNode;
 
 export type RichTextEntityNode = Spread<
   {
