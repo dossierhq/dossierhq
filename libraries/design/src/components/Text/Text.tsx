@@ -6,6 +6,7 @@ import { toTextStyleClassName, type TextStyle } from '../../utils/TextStyleProps
 
 export interface TextProps extends MarginProps {
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  id?: string;
   textStyle: TextStyle;
   className?: string;
   color?: Color;
@@ -15,6 +16,7 @@ export interface TextProps extends MarginProps {
 
 export function Text({
   as,
+  id,
   className,
   textStyle,
   color,
@@ -31,6 +33,7 @@ export function Text({
         toTextColorClassName(color),
         toSpacingClassName(props)
       )}
+      id={id}
       style={style}
     >
       {children}

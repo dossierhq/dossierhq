@@ -58,6 +58,10 @@ tr.is-sticky-row :is(td, th),
   }
 }
 
+.is-scroll-behavior-smooth {
+  scroll-behavior: smooth;
+}
+
 .scrollable {
   overflow-y: scroll;
 }

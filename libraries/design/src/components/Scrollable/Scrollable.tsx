@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 import { useIsClippedObserver } from '../../hooks/useIsClippedObserver.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
@@ -23,7 +25,7 @@ export function Scrollable({
   children,
 }: ScrollableProps): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
-  const realClassName = toClassName('scrollable', className);
+  const realClassName = toClassName('scrollable is-scroll-behavior-smooth', className);
   const topShadow = !shadows || shadows === 'both' || shadows === 'top';
   const bottomShadow = !shadows || shadows === 'both' || shadows === 'bottom';
 
