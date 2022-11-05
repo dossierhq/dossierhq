@@ -1,5 +1,7 @@
-import { FullscreenContainer } from '@jonasb/datadata-design';
+import { FullscreenContainer, Text } from '@jonasb/datadata-design';
+import { Fragment } from 'react';
 import { NavBar } from '../../components/NavBar/NavBar';
+import { RichTextRenderer } from '../../components/RichTextRenderer/RichTextRenderer';
 import { assertIsPublishedGlossaryTerm } from '../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../utils/ServerComponentUtils';
 
@@ -19,7 +21,15 @@ export default async function Page() {
           {connection?.edges.map((edge) => {
             const entity = edge.node.valueOrThrow();
             assertIsPublishedGlossaryTerm(entity);
-            return <p key={entity.id}>{entity.fields.title}</p>;
+            return (
+              <Fragment key={entity.id}>
+                <a id={entity.fields.slug} />
+                <Text as="h4" textStyle="headline4">
+                  {entity.fields.title}
+                </Text>
+                <RichTextRenderer richText={entity.fields.description} />
+              </Fragment>
+            );
           })}
         </FullscreenContainer.Row>
       </FullscreenContainer>
