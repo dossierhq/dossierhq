@@ -2995,6 +2995,24 @@ describe('UpdateSchemaSpecificationAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
   });
+
+  test('entity type with index and one index', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, index: 'myIndex' }] },
+          ],
+          indexes: [{ name: 'myIndex', type: 'unique' }],
+        }).valueOrThrow()
+      )
+    );
+
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+  });
 });
 
 describe('SchemaEditorReducer scenarios', () => {

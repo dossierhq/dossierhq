@@ -1006,6 +1006,79 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
 }
 `;
 
+exports[`UpdateSchemaSpecificationAction > entity type with index and one index 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "index": "myIndex",
+            "name": "bar",
+            "type": "String",
+          },
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "myIndex",
+      "status": "",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "index": "myIndex",
+              "name": "bar",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [
+        {
+          "name": "myIndex",
+          "type": "unique",
+        },
+      ],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
 exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`] = `
 {
   "activeSelector": null,
