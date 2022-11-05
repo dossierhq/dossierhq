@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-leaflet",
   "entries": [
     {
+      "version": "0.1.35",
+      "tag": "@jonasb/datadata-leaflet_v0.1.35",
+      "date": "Sat, 05 Nov 2022 21:33:57 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.34",
       "tag": "@jonasb/datadata-leaflet_v0.1.34",
       "date": "Tue, 25 Oct 2022 15:23:52 GMT",

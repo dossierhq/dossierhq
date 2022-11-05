@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-design
 
-This log was last generated on Tue, 25 Oct 2022 15:23:52 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Nov 2022 21:33:57 GMT and should not be manually modified.
+
+## 0.1.35
+Sat, 05 Nov 2022 21:33:57 GMT
+
+### Updates
+
+- Support usage on Next.js server components. Support smooth scroll with anchor links. Upgrade dependencies.
 
 ## 0.1.34
 Tue, 25 Oct 2022 15:23:52 GMT
