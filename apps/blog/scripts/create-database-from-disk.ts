@@ -3,7 +3,7 @@ import type { Logger } from '@jonasb/datadata-core';
 import { createConsoleLogger, ok } from '@jonasb/datadata-core';
 import { createBunSqliteAdapter } from '@jonasb/datadata-database-adapter-sqlite-bun';
 import { Database } from 'bun:sqlite';
-import fs from 'fs/promises';
+import fs from 'fs';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
 import { createServerAndInitializeSchema } from '../utils/SharedServerUtils.js';
@@ -40,8 +40,16 @@ if (process.argv.length !== 3) {
   throw new Error(`Usage: ${process.argv[1]} database/path.sqlite`);
 }
 const filename = process.argv[2];
-const stat = await fs.stat(filename);
-if (stat?.isFile()) {
-  throw new Error(`File ${filename} already exists`);
+try {
+  const stat = fs.statSync(filename);
+  if (stat?.isFile()) {
+    throw new Error(`File ${filename} already exists`);
+  }
+} catch (error) {
+  const noSuchFile =
+    typeof error === 'object' && error && (error as { code?: string })['code'] === 'ENOENT';
+  if (!noSuchFile) {
+    throw error;
+  }
 }
 await main(filename);
