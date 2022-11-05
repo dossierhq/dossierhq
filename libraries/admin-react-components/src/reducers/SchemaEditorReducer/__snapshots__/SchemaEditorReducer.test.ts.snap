@@ -1,5 +1,48 @@
 // Vitest Snapshot v1
 
+exports[`AddIndexAction > add index to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "index",
+    "name": "myIndex",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "indexes": [
+    {
+      "name": "myIndex",
+      "status": "new",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddIndexAction > add index to empty schema 2`] = `
+{
+  "indexes": [
+    {
+      "name": "myIndex",
+      "type": "unique",
+    },
+  ],
+}
+`;
+
 exports[`AddPatternAction > add pattern to empty schema 1`] = `
 {
   "activeSelector": {
@@ -9,6 +52,7 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [],
+  "indexes": [],
   "patterns": [
     {
       "name": "my-pattern",
@@ -69,6 +113,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "status": "changed",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -144,6 +189,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       "status": "changed",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -223,6 +269,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`]
       "status": "new",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -305,6 +352,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
       "status": "changed",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -408,6 +456,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
       "status": "changed",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -465,6 +514,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       "status": "changed",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -537,6 +587,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "status": "changed",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -591,6 +642,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [],
+  "indexes": [],
   "patterns": [
     {
       "name": "foo",
@@ -642,6 +694,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
       "status": "new",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "my-pattern",
@@ -716,6 +769,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       "status": "new",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -789,6 +843,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
       "status": "new",
     },
   ],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -840,6 +895,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "entityTypes": [],
+  "indexes": [],
   "patterns": [],
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
@@ -915,6 +971,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
       "status": "",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "pattern-one",
@@ -982,6 +1039,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
       "status": "",
     },
   ],
+  "indexes": [],
   "patterns": [
     {
       "name": "a-pattern",

@@ -136,6 +136,7 @@ export type {
   PublishedFieldSpecification,
   PublishedSchemaSpecification,
   PublishedValueTypeSpecification,
+  SchemaIndexSpecification,
   SchemaPatternSpecification,
   SchemaSpecificationUpdatePayload,
 } from './Schema.js';

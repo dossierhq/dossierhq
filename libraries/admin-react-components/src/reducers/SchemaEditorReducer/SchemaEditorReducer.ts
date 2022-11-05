@@ -5,11 +5,17 @@ import type {
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
   AdminValueTypeSpecificationUpdate,
+  SchemaIndexSpecification,
+  SchemaPatternSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
-export type SchemaSelector = SchemaFieldSelector | SchemaTypeSelector | SchemaPatternSelector;
+export type SchemaSelector =
+  | SchemaFieldSelector
+  | SchemaTypeSelector
+  | SchemaIndexSelector
+  | SchemaPatternSelector;
 
 export interface SchemaTypeSelector {
   kind: 'entity' | 'value';
@@ -18,6 +24,11 @@ export interface SchemaTypeSelector {
 
 export interface SchemaFieldSelector extends SchemaTypeSelector {
   fieldName: string;
+}
+
+export interface SchemaIndexSelector {
+  kind: 'index';
+  name: string;
 }
 
 export interface SchemaPatternSelector {
@@ -58,10 +69,12 @@ export interface SchemaFieldDraft {
   existingFieldSpec: AdminFieldSpecification | null;
 }
 
-export interface SchemaPatternDraft {
-  name: string;
+export interface SchemaIndexDraft extends SchemaIndexSpecification {
   status: 'new' | '';
-  pattern: string;
+}
+
+export interface SchemaPatternDraft extends SchemaPatternSpecification {
+  status: 'new' | '';
 }
 
 export interface SchemaEditorState {
@@ -71,6 +84,7 @@ export interface SchemaEditorState {
 
   entityTypes: SchemaEntityTypeDraft[];
   valueTypes: SchemaValueTypeDraft[];
+  indexes: SchemaIndexDraft[];
   patterns: SchemaPatternDraft[];
 
   activeSelector: null | SchemaSelector;
@@ -91,6 +105,7 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     schemaWillBeUpdatedDueToSave: false,
     entityTypes: [],
     valueTypes: [],
+    indexes: [],
     patterns: [],
     activeSelector: null,
     activeSelectorMenuScrollSignal: 0,
@@ -111,7 +126,12 @@ export function reduceSchemaEditorState(
 
 function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['status'] {
   if (state.status === 'uninitialized') state.status;
-  for (const type of [...state.entityTypes, ...state.valueTypes, ...state.patterns]) {
+  for (const type of [
+    ...state.entityTypes,
+    ...state.valueTypes,
+    ...state.indexes,
+    ...state.patterns,
+  ]) {
     if (type.status !== '') return 'changed';
   }
   return '';
@@ -368,6 +388,31 @@ class AddFieldAction extends TypeAction {
     const fields = [...typeSpec.fields, field];
 
     return { ...typeSpec, fields };
+  }
+}
+
+class AddIndexAction implements SchemaEditorStateAction {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const indexDraft: SchemaIndexDraft = {
+      status: 'new',
+      name: this.name,
+      type: 'unique',
+    };
+    const newState: SchemaEditorState = {
+      ...state,
+      indexes: [...state.indexes, indexDraft].sort((a, b) => a.name.localeCompare(b.name)),
+      activeSelector: { kind: 'index', name: this.name },
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
+    };
+    newState.status = resolveSchemaStatus(newState);
+    return newState;
   }
 }
 
@@ -869,6 +914,11 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       this.convertType('value', valueTypeSpec)
     );
 
+    const indexes = this.schema.spec.indexes.map<SchemaIndexDraft>((indexSpec) => ({
+      ...indexSpec,
+      status: '',
+    }));
+
     const patterns = this.schema.spec.patterns.map<SchemaPatternDraft>((patternSpec) => ({
       ...patternSpec,
       status: '',
@@ -883,6 +933,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       schemaWillBeUpdatedDueToSave: false,
       entityTypes,
       valueTypes,
+      indexes,
       patterns,
     };
   }
@@ -942,6 +993,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 }
 
 export const SchemaEditorActions = {
+  AddIndex: AddIndexAction,
   AddType: AddTypeAction,
   AddField: AddFieldAction,
   AddPattern: AddPatternAction,
@@ -982,6 +1034,10 @@ export function getSchemaSpecificationUpdateFromEditorState(
     .filter((it) => it.status !== '')
     .map(getTypeUpdateFromEditorState);
 
+  const indexes = state.indexes
+    .filter((it) => it.status !== '')
+    .map(({ name, type }) => ({ name, type }));
+
   const patterns = state.patterns
     .filter((it) => it.status !== '')
     .map(({ name, pattern }) => ({ name, pattern }));
@@ -991,6 +1047,9 @@ export function getSchemaSpecificationUpdateFromEditorState(
   }
   if (valueTypes.length > 0) {
     update.valueTypes = valueTypes;
+  }
+  if (indexes.length > 0) {
+    update.indexes = indexes;
   }
   if (patterns.length > 0) {
     update.patterns = patterns;
@@ -1045,11 +1104,14 @@ function getTypeUpdateFromEditorState(
 // SELECTORS
 
 export function getElementIdForSelector(
-  selector: SchemaTypeSelector | SchemaPatternSelector | null,
+  selector: SchemaSelector | null,
   section: 'menuItem' | 'header'
 ) {
   if (!selector) {
     return undefined;
+  }
+  if (selector.kind === 'index') {
+    return `index-${selector.name}-${section}`;
   }
   if (selector.kind === 'pattern') {
     return `pattern-${selector.name}-${section}`;

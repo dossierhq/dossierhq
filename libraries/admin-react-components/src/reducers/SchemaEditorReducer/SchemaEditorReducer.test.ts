@@ -29,6 +29,7 @@ describe('initializeSchemaEditorState', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": null,
         "schemaWillBeUpdatedDueToSave": false,
@@ -69,6 +70,7 @@ describe('AddTypeAction', () => {
             "status": "new",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -117,6 +119,7 @@ describe('AddTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -189,6 +192,7 @@ describe('AddTypeAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -244,6 +248,7 @@ describe('AddTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -330,6 +335,7 @@ describe('AddTypeAction', () => {
             "status": "new",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -385,6 +391,7 @@ describe('AddTypeAction', () => {
         "activeSelectorEditorScrollSignal": 2,
         "activeSelectorMenuScrollSignal": 2,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -471,6 +478,7 @@ describe('AddFieldAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -531,6 +539,7 @@ describe('AddFieldAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -648,6 +657,7 @@ describe('AddFieldAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -724,6 +734,7 @@ describe('AddFieldAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -817,6 +828,22 @@ describe('AddFieldAction', () => {
   });
 });
 
+describe('AddIndexAction', () => {
+  test('add index to empty schema', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({}).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddIndex('myIndex')
+    );
+
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('AddPatternAction', () => {
   test('add pattern to empty schema', () => {
     const state = reduceSchemaEditorStateActions(
@@ -899,6 +926,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1030,6 +1058,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1110,6 +1139,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1344,6 +1374,7 @@ describe('ChangeFieldRequiredAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1431,6 +1462,7 @@ describe('ChangeFieldTypeAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1495,6 +1527,7 @@ describe('ChangeFieldTypeAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1597,6 +1630,7 @@ describe('ChangeFieldTypeAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1682,6 +1716,7 @@ describe('ChangeFieldTypeAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1775,6 +1810,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
             "status": "new",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1849,6 +1885,7 @@ describe('DeleteFieldAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1898,6 +1935,7 @@ describe('DeleteTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -1935,6 +1973,7 @@ describe('DeleteTypeAction', () => {
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2033,6 +2072,7 @@ describe('RenameFieldAction', () => {
             "status": "changed",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2122,6 +2162,7 @@ describe('RenameTypeAction', () => {
             "status": "new",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2261,6 +2302,7 @@ describe('SetActiveSelectorAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2313,6 +2355,7 @@ describe('SetActiveSelectorAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2354,6 +2397,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2420,6 +2464,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2556,6 +2601,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2609,6 +2655,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "activeSelectorEditorScrollSignal": 0,
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": [],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2723,6 +2770,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2855,6 +2903,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
@@ -2985,6 +3034,7 @@ describe('SchemaEditorReducer scenarios', () => {
             "status": "",
           },
         ],
+        "indexes": [],
         "patterns": [],
         "schema": AdminSchema {
           "cachedPatternRegExps": {},
