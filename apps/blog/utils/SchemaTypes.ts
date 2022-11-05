@@ -1,5 +1,27 @@
 import type { PublishedEntity, RichText } from '@jonasb/datadata-core';
 
+export interface PublishedArticleFields {
+  title: string;
+  slug: string;
+  body: RichText;
+}
+
+export type PublishedArticle = PublishedEntity<'Article', PublishedArticleFields>;
+
+export function isPublishedArticle(
+  entity: PublishedEntity | PublishedArticle
+): entity is PublishedArticle {
+  return entity.info.type === 'Article';
+}
+
+export function assertIsPublishedArticle(
+  entity: PublishedEntity | PublishedArticle
+): asserts entity is PublishedArticle {
+  if (entity.info.type !== 'Article') {
+    throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
+  }
+}
+
 export interface PublishedGlossaryTermFields {
   title: string;
   slug: string;

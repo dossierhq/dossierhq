@@ -1,0 +1,103 @@
+{
+  "entityTypes": [
+    {
+      "name": "Article",
+      "adminOnly": false,
+      "authKeyPattern": "none",
+      "fields": [
+        {
+          "name": "title",
+          "type": "String",
+          "required": true,
+          "adminOnly": false,
+          "isName": true,
+          "multiline": false,
+          "index": null,
+          "matchPattern": null
+        },
+        {
+          "name": "slug",
+          "type": "String",
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "index": "articleSlug",
+          "matchPattern": "slug"
+        },
+        {
+          "name": "body",
+          "type": "RichText",
+          "required": true,
+          "adminOnly": false,
+          "richTextNodes": [
+            "root",
+            "paragraph",
+            "text",
+            "entityLink"
+          ],
+          "linkEntityTypes": [
+            "GlossaryTerm",
+            "Article"
+          ],
+          "entityTypes": [],
+          "valueTypes": []
+        }
+      ]
+    },
+    {
+      "name": "GlossaryTerm",
+      "adminOnly": false,
+      "authKeyPattern": "none",
+      "fields": [
+        {
+          "name": "title",
+          "type": "String",
+          "isName": true,
+          "required": true
+        },
+        {
+          "name": "slug",
+          "type": "String",
+          "index": "glossarySlug",
+          "matchPattern": "slug",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "RichText",
+          "required": true,
+          "richTextNodes": [
+            "root",
+            "paragraph",
+            "text",
+            "entityLink"
+          ],
+          "linkEntityTypes": [
+            "GlossaryTerm"
+          ]
+        }
+      ]
+    }
+  ],
+  "valueTypes": [],
+  "patterns": [
+    {
+      "name": "none",
+      "pattern": "^none$"
+    },
+    {
+      "name": "slug",
+      "pattern": "^[a-z0-9-]+$"
+    }
+  ],
+  "indexes": [
+    {
+      "name": "articleSlug",
+      "type": "unique"
+    },
+    {
+      "name": "glossarySlug",
+      "type": "unique"
+    }
+  ]
+}

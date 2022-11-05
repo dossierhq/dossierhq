@@ -1,10 +1,4 @@
-import type {
-  AdminClient,
-  AdminSchema,
-  ErrorType,
-  PromiseResult,
-  PublishedClient,
-} from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
 import {
   createDatabase,
@@ -15,9 +9,9 @@ import type { NextApiRequest } from 'next';
 import assert from 'node:assert';
 import { Database } from 'sqlite3';
 import { createFilesystemAdminMiddleware } from './FileSystemSerializer';
-import { createServerAndInitializeSchema } from './SharedServerUtils';
+import { createBlogServer } from './SharedServerUtils';
 
-let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
+let serverConnectionPromise: Promise<{ server: Server }> | null = null;
 
 export async function getSessionContextForRequest(
   server: Server,
@@ -57,11 +51,11 @@ function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
   return defaultAuthKeys;
 }
 
-export async function getServerConnection(): Promise<{ server: Server; schema: AdminSchema }> {
+export async function getServerConnection(): Promise<{ server: Server }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = (await createDatabaseAdapter()).valueOrThrow();
-      return (await createServerAndInitializeSchema(databaseAdapter)).valueOrThrow();
+      return (await createBlogServer(databaseAdapter)).valueOrThrow();
     })();
   }
 

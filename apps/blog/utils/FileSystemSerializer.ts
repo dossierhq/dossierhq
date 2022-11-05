@@ -4,6 +4,7 @@ import type {
   AdminClientOperation,
   AdminEntity,
   AdminEntityInfo,
+  AdminSchemaSpecification,
   EntityReference,
   ErrorType,
   Logger,
@@ -41,6 +42,13 @@ export function createFilesystemAdminMiddleware(
             await updateEntityFile(backChannelAdminClient, payload.entity);
             break;
           }
+          case AdminClientOperationName.updateSchemaSpecification: {
+            const payload = result.value as OkFromResult<
+              ReturnType<AdminClient['updateSchemaSpecification']>
+            >;
+            await updateSchemaSpecification(payload.schemaSpecification);
+            break;
+          }
           case AdminClientOperationName.upsertEntity: {
             const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
             await updateEntityFile(backChannelAdminClient, payload.entity);
@@ -56,6 +64,12 @@ export function createFilesystemAdminMiddleware(
   };
 }
 
+async function updateSchemaSpecification(schemaSpecification: AdminSchemaSpecification) {
+  const schemaSpecificationPath = path.join('data', 'schema.json');
+  const schemaSpecificationJson = JSON.stringify(schemaSpecification, null, 2) + '\n';
+  await fs.writeFile(schemaSpecificationPath, schemaSpecificationJson);
+}
+
 async function updateEntityFile(
   backChannelAdminClient: AdminClient,
   entity: AdminEntity<string, object>
@@ -69,7 +83,7 @@ async function updateEntityFile(
   const directory = path.join('data', 'entities', entity.info.type);
   const jsonFilePath = path.join(directory, `${entity.id}.json`);
   await fs.mkdir(directory, { recursive: true });
-  await fs.writeFile(jsonFilePath, JSON.stringify(save, null, 2));
+  await fs.writeFile(jsonFilePath, JSON.stringify(save, null, 2) + '\n');
 }
 
 function createCleanedUpEntity(adminSchema: AdminSchema, entity: AdminEntity<string, object>) {
@@ -151,7 +165,10 @@ async function loadEntity(adminClient: AdminClient, logger: Logger, entryPath: s
   logger.info('Upsert entity: %s', entryPath);
   const data = await fs.readFile(entryPath, { encoding: 'utf-8' });
   const entity = JSON.parse(data);
-  const createResult = await adminClient.upsertEntity(entity);
+  if (entity.info.status !== 'published') {
+    throw new Error(`Entity ${entity.id} is not published, need to add support for this`);
+  }
+  const createResult = await adminClient.upsertEntity(entity, { publish: true });
   if (createResult.isError()) {
     return createResult;
   }

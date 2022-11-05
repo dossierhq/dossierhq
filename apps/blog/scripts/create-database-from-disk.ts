@@ -1,28 +1,44 @@
 #!/usr/bin/env -S bun
-import type { Logger } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate, Logger } from '@jonasb/datadata-core';
 import { createConsoleLogger, ok } from '@jonasb/datadata-core';
 import { createBunSqliteAdapter } from '@jonasb/datadata-database-adapter-sqlite-bun';
+import type { Server } from '@jonasb/datadata-server';
 import { Database } from 'bun:sqlite';
 import fs from 'fs';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
-import { createServerAndInitializeSchema } from '../utils/SharedServerUtils.js';
+import { createBlogServer } from '../utils/SharedServerUtils.js';
 
 async function initializeServer(logger: Logger, filename: string) {
   const database = Database.open(filename);
   const databaseAdapterResult = await createBunSqliteAdapter({ logger }, database);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
-  const serverResult = await createServerAndInitializeSchema(databaseAdapterResult.value);
+  const serverResult = await createBlogServer(databaseAdapterResult.value);
   if (serverResult.isError()) return serverResult;
 
   return ok(serverResult.value.server);
+}
+
+async function updateSchemaSpecification(server: Server, filename: string) {
+  const schemaSpecification = JSON.parse(
+    fs.readFileSync(filename, { encoding: 'utf8' })
+  ) as AdminSchemaSpecificationUpdate;
+
+  const sessionResult = await server.createSession(SYSTEM_USERS.schemaLoader);
+  if (sessionResult.isError()) return sessionResult;
+
+  const client = server.createAdminClient(sessionResult.value.context);
+  const schemaResult = await client.updateSchemaSpecification(schemaSpecification);
+  return schemaResult;
 }
 
 async function main(filename: string) {
   const logger = createConsoleLogger(console);
   const server = (await initializeServer(logger, filename)).valueOrThrow();
   try {
+    (await updateSchemaSpecification(server, 'data/schema.json')).throwIfError();
+
     const session = (await server.createSession(SYSTEM_USERS.serverRenderer)).valueOrThrow();
     const adminClient = server.createAdminClient(session.context);
     const entities = await loadAllEntities(adminClient, logger);

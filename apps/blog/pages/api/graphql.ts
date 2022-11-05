@@ -1,4 +1,4 @@
-import { ok } from '@jonasb/datadata-core';
+import { AdminSchema, ok } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
@@ -19,7 +19,7 @@ export default async function graphQlHandler(
   }
 
   await handleRequest(res, async () => {
-    const { server, schema } = await getServerConnection();
+    const { server } = await getServerConnection();
     const authResult = await getSessionContextForRequest(server, req);
     if (authResult.isError()) return authResult;
     const { adminClient, publishedClient } = authResult.value;
@@ -30,9 +30,12 @@ export default async function graphQlHandler(
     };
 
     if (!graphQLSchema) {
+      const adminSchemaResult = await adminClient.getSchemaSpecification();
+      if (adminSchemaResult.isError()) return adminSchemaResult;
+      const adminSchema = new AdminSchema(adminSchemaResult.value);
       graphQLSchema = new GraphQLSchemaGenerator({
-        adminSchema: schema,
-        publishedSchema: schema.toPublishedSchema(),
+        adminSchema,
+        publishedSchema: adminSchema.toPublishedSchema(),
       }).buildSchema();
     }
 

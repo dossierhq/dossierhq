@@ -1,8 +1,7 @@
 #!/usr/bin/env -S bun
 import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
-import { writeFile } from 'node:fs/promises';
-import { schemaSpecification } from '../utils/schema.js';
+import { readFile, writeFile } from 'node:fs/promises';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
   const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
@@ -13,4 +12,5 @@ async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filenam
   await Bun.spawn({ cmd: ['npx', 'prettier', '-w', filename] }).exited;
 }
 
-await generateTypes(schemaSpecification, './utils/SchemaTypes.ts');
+const schemaSpec = JSON.parse(await readFile('data/schema.json', 'utf8'));
+await generateTypes(schemaSpec, './utils/SchemaTypes.ts');
