@@ -105,7 +105,9 @@ export async function loadAllEntities(
   const loadedEntries: EntityReference[] = [];
 
   const directoriesToLoad = [path.join('data', 'entities')];
+  const entitiesToRetry: { entryPath: string }[] = [];
 
+  // Step 1: Traverse directories and attempt to load all entities (can fail on references)
   while (directoriesToLoad.length > 0) {
     const directory = directoriesToLoad.shift()!;
     const entries = await fs.readdir(directory, { withFileTypes: true });
@@ -114,17 +116,45 @@ export async function loadAllEntities(
       if (entry.isDirectory()) {
         directoriesToLoad.push(entryPath);
       } else if (entry.isFile() && entry.name.endsWith('.json')) {
-        logger.info('Upsert entity: %s', entryPath);
-        const data = await fs.readFile(entryPath, { encoding: 'utf-8' });
-        const entity = JSON.parse(data);
-        const createResult = await adminClient.upsertEntity(entity);
+        const createResult = await loadEntity(adminClient, logger, entryPath);
         if (createResult.isError()) {
-          return createResult;
+          entitiesToRetry.push({ entryPath });
+        } else {
+          loadedEntries.push({ id: createResult.value.entity.id });
         }
-        logger.info('  Effect: %s', createResult.value.effect);
-        loadedEntries.push({ id: createResult.value.entity.id });
       }
     }
   }
+
+  // Step 2: Retry loading entities that failed in step 1
+  let retryOneMoreRound = true;
+  while (retryOneMoreRound) {
+    retryOneMoreRound = false;
+    const entitiesToRetryThisRound = entitiesToRetry.splice(0);
+
+    logger.info(`Retrying loading ${entitiesToRetryThisRound.length} entities`);
+    for (const { entryPath } of entitiesToRetryThisRound) {
+      const createResult = await loadEntity(adminClient, logger, entryPath);
+      if (createResult.isError()) {
+        entitiesToRetry.push({ entryPath });
+      } else {
+        loadedEntries.push({ id: createResult.value.entity.id });
+        retryOneMoreRound = true;
+      }
+    }
+  }
+
   return ok(loadedEntries);
+}
+
+async function loadEntity(adminClient: AdminClient, logger: Logger, entryPath: string) {
+  logger.info('Upsert entity: %s', entryPath);
+  const data = await fs.readFile(entryPath, { encoding: 'utf-8' });
+  const entity = JSON.parse(data);
+  const createResult = await adminClient.upsertEntity(entity);
+  if (createResult.isError()) {
+    return createResult;
+  }
+  logger.info('  Effect: %s', createResult.value.effect);
+  return createResult;
 }
