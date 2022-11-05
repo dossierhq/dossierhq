@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Support usage on Next.js server components. Support smooth scroll with anchor links. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}

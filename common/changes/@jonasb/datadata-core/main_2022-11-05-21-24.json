@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Sort schema. Add AdminSchema.createAndValidate(). Add isRichTextRootNode and isRichTextParagraphNode. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
