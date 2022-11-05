@@ -454,6 +454,7 @@ export class AdminSchema {
       indexes: [],
     };
 
+    // Merge entity types
     if (other.entityTypes) {
       for (const entitySpecUpdate of other.entityTypes) {
         const entitySpec = {
@@ -474,6 +475,7 @@ export class AdminSchema {
       }
     }
 
+    // Merge value types
     if (other.valueTypes) {
       for (const valueSpecUpdate of other.valueTypes) {
         const valueSpec = {
@@ -525,6 +527,12 @@ export class AdminSchema {
       }
       schemaSpec.indexes.push(index);
     }
+
+    // Sort everything
+    schemaSpec.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
+    schemaSpec.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
+    schemaSpec.patterns.sort((a, b) => a.name.localeCompare(b.name));
+    schemaSpec.indexes.sort((a, b) => a.name.localeCompare(b.name));
 
     // TODO normalize
     return ok(new AdminSchema(schemaSpec));

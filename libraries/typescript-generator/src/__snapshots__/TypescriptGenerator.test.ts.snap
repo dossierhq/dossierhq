@@ -202,23 +202,7 @@ export function assertIsAdminValueTypes(entity: AdminEntity | AdminValueTypes): 
   }
 }
 
-export type AllAdminValueItems = AdminFoo | AdminBar;
-
-export interface AdminFooFields {
-  string: string | null;
-}
-
-export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
-
-export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): valueItem is AdminFoo {
-  return valueItem.type === 'Foo';
-}
-
-export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
-  if (valueItem.type !== 'Foo') {
-    throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
-  }
-}
+export type AllAdminValueItems = AdminBar | AdminFoo;
 
 export interface AdminBarFields {
   string: string | null;
@@ -233,6 +217,22 @@ export function isAdminBar(valueItem: ValueItem<string, object> | AdminBar): val
 export function assertIsAdminBar(valueItem: ValueItem<string, object> | AdminBar): asserts valueItem is AdminBar {
   if (valueItem.type !== 'Bar') {
     throw new Error('Expected type = Bar (but was ' + valueItem.type + ')');
+  }
+}
+
+export interface AdminFooFields {
+  string: string | null;
+}
+
+export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
+
+export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): valueItem is AdminFoo {
+  return valueItem.type === 'Foo';
+}
+
+export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
+  if (valueItem.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
   }
 }
 "

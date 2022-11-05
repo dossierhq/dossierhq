@@ -36,8 +36,8 @@ input BoundingBoxInput {
 }
 
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminValueType {
@@ -256,53 +256,6 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  body: String
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  body: String
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
 type AdminBarFields {
   body: String
 }
@@ -350,6 +303,53 @@ type AdminBarUpsertPayload {
   entity: AdminBar!
 }
 
+type AdminFooFields {
+  body: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  body: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
 type AdminValueOne implements AdminValue {
   type: AdminValueType!
   body: String
@@ -384,12 +384,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -656,8 +656,8 @@ type PublishedValueTwo implements PublishedValue {
 }
 
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminValueType {
@@ -871,53 +871,6 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  body: String
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  body: String
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
 type AdminBarFields {
   body: String
 }
@@ -965,6 +918,53 @@ type AdminBarUpsertPayload {
   entity: AdminBar!
 }
 
+type AdminFooFields {
+  body: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  body: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
 type AdminValueOne implements AdminValue {
   type: AdminValueType!
   body: String
@@ -1004,12 +1004,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -1983,8 +1983,8 @@ input BoundingBoxInput {
 }
 
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminEntityStatus {
@@ -2194,6 +2194,41 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
 type AdminFooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -2247,41 +2282,6 @@ type AdminFooUpsertPayload {
   entity: AdminFoo!
 }
 
-type AdminBar implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-}
-
-input AdminBarCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-}
-
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-}
-
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-}
-
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
-}
-
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -2296,12 +2296,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -2344,8 +2344,8 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
+  Foo
 }
 
 type PublishedEntityInfo {
@@ -2411,6 +2411,11 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
 type PublishedFooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -2422,11 +2427,6 @@ type PublishedFoo implements Node & PublishedEntity {
   id: ID!
   info: PublishedEntityInfo!
   fields: PublishedFooFields!
-}
-
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
 }
 
 type Query {
@@ -2474,8 +2474,8 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
+  Foo
 }
 
 type PublishedEntityInfo {
@@ -2541,6 +2541,11 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
 type PublishedFooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -2554,14 +2559,9 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminEntityStatus {
@@ -2766,6 +2766,41 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
 type AdminFooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -2819,41 +2854,6 @@ type AdminFooUpsertPayload {
   entity: AdminFoo!
 }
 
-type AdminBar implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-}
-
-input AdminBarCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-}
-
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-}
-
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-}
-
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
-}
-
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
@@ -2873,12 +2873,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -2921,9 +2921,9 @@ input BoundingBoxInput {
 }
 
 enum AdminEntityType {
-  Foo
   Bar
   Baz
+  Foo
 }
 
 enum AdminEntityStatus {
@@ -3131,61 +3131,6 @@ type AdvisoryLockPayload {
 
 type AdvisoryLockReleasePayload {
   name: String!
-}
-
-type AdminFooFields {
-  noMeansAll: AdminEntity
-  bar: AdminBar
-  bazBar: _AdminBarOrBaz
-  fooBarBaz: _AdminBarOrBazOrFoo
-  barBarBar: AdminBar
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  noMeansAll: EntityReferenceInput
-  bar: EntityReferenceInput
-  bazBar: EntityReferenceInput
-  fooBarBaz: EntityReferenceInput
-  barBarBar: EntityReferenceInput
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
 }
 
 type AdminBar implements AdminEntity {
@@ -3258,6 +3203,61 @@ type AdminBazUpsertPayload {
   entity: AdminBaz!
 }
 
+type AdminFooFields {
+  noMeansAll: AdminEntity
+  bar: AdminBar
+  bazBar: _AdminBarOrBaz
+  fooBarBaz: _AdminBarOrBazOrFoo
+  barBarBar: AdminBar
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  noMeansAll: EntityReferenceInput
+  bar: EntityReferenceInput
+  bazBar: EntityReferenceInput
+  fooBarBaz: EntityReferenceInput
+  barBarBar: EntityReferenceInput
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
 enum _AdminBarOrBaz {
   AdminBar
   AdminBaz
@@ -3283,15 +3283,15 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
   updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
   upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -3334,9 +3334,9 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
   Baz
+  Foo
 }
 
 type PublishedEntityInfo {
@@ -3402,6 +3402,16 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+type PublishedBaz implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
 type PublishedFooFields {
   noMeansAll: PublishedEntity
   bar: PublishedBar
@@ -3414,16 +3424,6 @@ type PublishedFoo implements Node & PublishedEntity {
   id: ID!
   info: PublishedEntityInfo!
   fields: PublishedFooFields!
-}
-
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-type PublishedBaz implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
 }
 
 enum _PublishedBarOrBaz {
@@ -3482,9 +3482,9 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
   Baz
+  Foo
 }
 
 type PublishedEntityInfo {
@@ -3550,6 +3550,16 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+type PublishedBaz implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
 type PublishedFooFields {
   noMeansAll: PublishedEntity
   bar: PublishedBar
@@ -3564,20 +3574,10 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-type PublishedBaz implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
 enum AdminEntityType {
-  Foo
   Bar
   Baz
+  Foo
 }
 
 enum AdminEntityStatus {
@@ -3782,61 +3782,6 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  noMeansAll: AdminEntity
-  bar: AdminBar
-  bazBar: _AdminBarOrBaz
-  fooBarBaz: _AdminBarOrBazOrFoo
-  barBarBar: AdminBar
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  noMeansAll: EntityReferenceInput
-  bar: EntityReferenceInput
-  bazBar: EntityReferenceInput
-  fooBarBaz: EntityReferenceInput
-  barBarBar: EntityReferenceInput
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
@@ -3907,6 +3852,61 @@ type AdminBazUpsertPayload {
   entity: AdminBaz!
 }
 
+type AdminFooFields {
+  noMeansAll: AdminEntity
+  bar: AdminBar
+  bazBar: _AdminBarOrBaz
+  fooBarBaz: _AdminBarOrBazOrFoo
+  barBarBar: AdminBar
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  noMeansAll: EntityReferenceInput
+  bar: EntityReferenceInput
+  bazBar: EntityReferenceInput
+  fooBarBaz: EntityReferenceInput
+  barBarBar: EntityReferenceInput
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
 enum _PublishedBarOrBaz {
   PublishedBar
   PublishedBaz
@@ -3948,15 +3948,15 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
   updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
   upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -7377,8 +7377,8 @@ input BoundingBoxInput {
 }
 
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminEntityStatus {
@@ -7588,53 +7588,6 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  fooField: String
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  fooField: String
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
 type AdminBarFields {
   barField1: String
   barField2: AdminEntity
@@ -7688,6 +7641,53 @@ type AdminBarUpsertPayload {
   entity: AdminBar!
 }
 
+type AdminFooFields {
+  fooField: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  fooField: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -7702,12 +7702,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -7750,8 +7750,8 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
+  Foo
 }
 
 type PublishedEntityInfo {
@@ -7817,16 +7817,6 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
-type PublishedFooFields {
-  fooField: String
-}
-
-type PublishedFoo implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-  fields: PublishedFooFields!
-}
-
 type PublishedBarFields {
   barField1: String
   barField2: PublishedEntity
@@ -7838,6 +7828,16 @@ type PublishedBar implements Node & PublishedEntity {
   id: ID!
   info: PublishedEntityInfo!
   fields: PublishedBarFields!
+}
+
+type PublishedFooFields {
+  fooField: String
+}
+
+type PublishedFoo implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
 type Query {
@@ -7885,8 +7885,8 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
+  Foo
 }
 
 type PublishedEntityInfo {
@@ -7952,16 +7952,6 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
-type PublishedFooFields {
-  fooField: String
-}
-
-type PublishedFoo implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-  fields: PublishedFooFields!
-}
-
 type PublishedBarFields {
   barField1: String
   barField2: PublishedEntity
@@ -7975,9 +7965,19 @@ type PublishedBar implements Node & PublishedEntity {
   fields: PublishedBarFields!
 }
 
+type PublishedFooFields {
+  fooField: String
+}
+
+type PublishedFoo implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
+}
+
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminEntityStatus {
@@ -8182,53 +8182,6 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  fooField: String
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  fooField: String
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
 type AdminBarFields {
   barField1: String
   barField2: AdminEntity
@@ -8282,6 +8235,53 @@ type AdminBarUpsertPayload {
   entity: AdminBar!
 }
 
+type AdminFooFields {
+  fooField: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  fooField: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
@@ -8301,12 +8301,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -8349,14 +8349,14 @@ input BoundingBoxInput {
 }
 
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminValueType {
-  ValueOne
-  ValueList
   NestedValue
+  ValueList
+  ValueOne
 }
 
 enum AdminEntityStatus {
@@ -8570,6 +8570,41 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
 type AdminFooFields {
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
@@ -8625,55 +8660,17 @@ type AdminFooUpsertPayload {
   entity: AdminFoo!
 }
 
-type AdminBar implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-}
-
-input AdminBarCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-}
-
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-}
-
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-}
-
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
-}
-
-type AdminValueOne implements AdminValue {
+type AdminNestedValue implements AdminValue {
   type: AdminValueType!
-  one: String
-  two: AdminBar
-  three: Location
-  four: Boolean
+  text: String
+  child: AdminNestedValue
 }
 
-input AdminValueOneInput {
+input AdminNestedValueInput {
   type: AdminValueType!
-  one: String
-  two: EntityReferenceInput
-  three: LocationInput
-  four: Boolean
+  text: String
+  childJson: String
+  child: AdminNestedValueInput
 }
 
 type AdminValueList implements AdminValue {
@@ -8692,17 +8689,20 @@ input AdminValueListInput {
   four: [Boolean!]
 }
 
-type AdminNestedValue implements AdminValue {
+type AdminValueOne implements AdminValue {
   type: AdminValueType!
-  text: String
-  child: AdminNestedValue
+  one: String
+  two: AdminBar
+  three: Location
+  four: Boolean
 }
 
-input AdminNestedValueInput {
+input AdminValueOneInput {
   type: AdminValueType!
-  text: String
-  childJson: String
-  child: AdminNestedValueInput
+  one: String
+  two: EntityReferenceInput
+  three: LocationInput
+  four: Boolean
 }
 
 enum _AdminValueListOrValueOne {
@@ -8724,12 +8724,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -8772,14 +8772,14 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum ValueType {
-  ValueOne
-  ValueList
   NestedValue
+  ValueList
+  ValueOne
 }
 
 type PublishedEntityInfo {
@@ -8849,6 +8849,11 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
 type PublishedFooFields {
   valueOne: PublishedValueOne
   unspecifiedValue: PublishedValue
@@ -8862,17 +8867,10 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-type PublishedValueOne implements PublishedValue {
+type PublishedNestedValue implements PublishedValue {
   type: ValueType!
-  one: String
-  two: PublishedBar
-  three: Location
-  four: Boolean
+  text: String
+  child: PublishedNestedValue
 }
 
 type PublishedValueList implements PublishedValue {
@@ -8883,10 +8881,12 @@ type PublishedValueList implements PublishedValue {
   four: [Boolean!]
 }
 
-type PublishedNestedValue implements PublishedValue {
+type PublishedValueOne implements PublishedValue {
   type: ValueType!
-  text: String
-  child: PublishedNestedValue
+  one: String
+  two: PublishedBar
+  three: Location
+  four: Boolean
 }
 
 enum _PublishedValueListOrValueOne {
@@ -8939,14 +8939,14 @@ input BoundingBoxInput {
 }
 
 enum EntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum ValueType {
-  ValueOne
-  ValueList
   NestedValue
+  ValueList
+  ValueOne
 }
 
 type PublishedEntityInfo {
@@ -9016,6 +9016,11 @@ input PublishedSearchQueryInput {
   reverse: Boolean
 }
 
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
 type PublishedFooFields {
   valueOne: PublishedValueOne
   unspecifiedValue: PublishedValue
@@ -9029,17 +9034,10 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-type PublishedValueOne implements PublishedValue {
+type PublishedNestedValue implements PublishedValue {
   type: ValueType!
-  one: String
-  two: PublishedBar
-  three: Location
-  four: Boolean
+  text: String
+  child: PublishedNestedValue
 }
 
 type PublishedValueList implements PublishedValue {
@@ -9050,21 +9048,23 @@ type PublishedValueList implements PublishedValue {
   four: [Boolean!]
 }
 
-type PublishedNestedValue implements PublishedValue {
+type PublishedValueOne implements PublishedValue {
   type: ValueType!
-  text: String
-  child: PublishedNestedValue
+  one: String
+  two: PublishedBar
+  three: Location
+  four: Boolean
 }
 
 enum AdminEntityType {
-  Foo
   Bar
+  Foo
 }
 
 enum AdminValueType {
-  ValueOne
-  ValueList
   NestedValue
+  ValueList
+  ValueOne
 }
 
 enum AdminEntityStatus {
@@ -9273,6 +9273,41 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
 type AdminFooFields {
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
@@ -9328,55 +9363,17 @@ type AdminFooUpsertPayload {
   entity: AdminFoo!
 }
 
-type AdminBar implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-}
-
-input AdminBarCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-}
-
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-}
-
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-}
-
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
-}
-
-type AdminValueOne implements AdminValue {
+type AdminNestedValue implements AdminValue {
   type: AdminValueType!
-  one: String
-  two: AdminBar
-  three: Location
-  four: Boolean
+  text: String
+  child: AdminNestedValue
 }
 
-input AdminValueOneInput {
+input AdminNestedValueInput {
   type: AdminValueType!
-  one: String
-  two: EntityReferenceInput
-  three: LocationInput
-  four: Boolean
+  text: String
+  childJson: String
+  child: AdminNestedValueInput
 }
 
 type AdminValueList implements AdminValue {
@@ -9395,17 +9392,20 @@ input AdminValueListInput {
   four: [Boolean!]
 }
 
-type AdminNestedValue implements AdminValue {
+type AdminValueOne implements AdminValue {
   type: AdminValueType!
-  text: String
-  child: AdminNestedValue
+  one: String
+  two: AdminBar
+  three: Location
+  four: Boolean
 }
 
-input AdminNestedValueInput {
+input AdminValueOneInput {
   type: AdminValueType!
-  text: String
-  childJson: String
-  child: AdminNestedValueInput
+  one: String
+  two: EntityReferenceInput
+  three: LocationInput
+  four: Boolean
 }
 
 enum _PublishedValueListOrValueOne {
@@ -9437,12 +9437,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!): AdminEntityArchivePayload
   unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
