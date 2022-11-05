@@ -146,6 +146,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "fields": [
         {
           "adminOnly": true,
+          "index": null,
           "matchPattern": null,
           "multiline": false,
           "name": "bar",
@@ -239,6 +240,124 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
 }
 `;
 
+exports[`ChangeFieldIndexAction > set index on new string field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "index": "anIndex",
+            "name": "existing",
+            "type": "String",
+          },
+          "index": "anIndex",
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "index": "anIndex",
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "status": "",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "index": "anIndex",
+              "name": "existing",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [
+        {
+          "name": "anIndex",
+          "type": "unique",
+        },
+      ],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldIndexAction > set index on new string field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`] = `
 {
   "activeSelector": {
@@ -295,6 +414,7 @@ exports[`ChangeFieldIsNameAction > make new string field is-name in new type 2`]
       "fields": [
         {
           "adminOnly": false,
+          "index": null,
           "isName": true,
           "matchPattern": null,
           "multiline": false,
@@ -326,6 +446,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
             "name": "title",
             "type": "String",
           },
+          "index": null,
           "isName": false,
           "list": false,
           "matchPattern": null,
@@ -391,6 +512,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 2`]
       "fields": [
         {
           "adminOnly": false,
+          "index": null,
           "matchPattern": null,
           "multiline": false,
           "name": "title",
@@ -399,6 +521,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 2`]
         },
         {
           "adminOnly": false,
+          "index": null,
           "isName": true,
           "matchPattern": null,
           "multiline": false,
@@ -430,6 +553,7 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
             "name": "title",
             "type": "String",
           },
+          "index": null,
           "isName": true,
           "list": false,
           "matchPattern": null,
@@ -547,6 +671,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       "fields": [
         {
           "adminOnly": false,
+          "index": null,
           "matchPattern": "a-pattern",
           "multiline": false,
           "name": "bar",
@@ -620,6 +745,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "fields": [
         {
           "adminOnly": false,
+          "index": null,
           "matchPattern": null,
           "multiline": true,
           "name": "bar",
@@ -1023,6 +1149,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
             "name": "bar",
             "type": "String",
           },
+          "index": "myIndex",
           "isName": false,
           "list": false,
           "matchPattern": null,
@@ -1097,6 +1224,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
             "name": "string",
             "type": "String",
           },
+          "index": null,
           "isName": false,
           "list": false,
           "matchPattern": "a-pattern",

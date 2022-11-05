@@ -22,6 +22,7 @@ import type {
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
 import { FieldValueTypeSelector } from './FieldValueTypeSelector.js';
+import { IndexSelector } from './IndexSelector.js';
 import { PatternSelector } from './PatternSelector.js';
 import { RichTextNodeSelector } from './RichTextNodeSelector.js';
 
@@ -72,6 +73,7 @@ export function SchemaFieldEditor({
   const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
   const canChangeMultiline = fieldDraft.status === 'new';
+  const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeRichTextNodes = fieldDraft.status === 'new'; //TODO too restrictive
@@ -102,6 +104,12 @@ export function SchemaFieldEditor({
       dispatchSchemaEditorState(
         new SchemaEditorActions.ChangeFieldMatchPattern(fieldSelector, value)
       ),
+    [dispatchSchemaEditorState, fieldSelector]
+  );
+
+  const handleIndexChange = useCallback(
+    (value: string | null) =>
+      dispatchSchemaEditorState(new SchemaEditorActions.ChangeFieldIndex(fieldSelector, value)),
     [dispatchSchemaEditorState, fieldSelector]
   );
 
@@ -233,6 +241,21 @@ export function SchemaFieldEditor({
                   </Checkbox>
                 </Field.Control>
               </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
+        {fieldDraft.type === FieldType.String ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Index</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <IndexSelector
+                readOnly={!canChangeIndex}
+                value={fieldDraft.index ?? null}
+                schemaEditorState={schemaEditorState}
+                onChange={handleIndexChange}
+              />
             </Field.BodyColumn>
           </Field>
         ) : null}

@@ -61,6 +61,7 @@ export interface SchemaFieldDraft {
   adminOnly: boolean;
   isName: boolean;
   multiline?: boolean;
+  index?: string | null;
   matchPattern?: string | null;
   richTextNodes?: string[];
   entityTypes?: string[];
@@ -534,6 +535,23 @@ class ChangeFieldAllowedValueTypesAction extends FieldAction {
   }
 }
 
+class ChangeFieldIndexAction extends FieldAction {
+  index: string | null;
+
+  constructor(fieldSelector: SchemaFieldSelector, index: string | null) {
+    super(fieldSelector);
+    this.index = index;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.index === this.index) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, index: this.index };
+  }
+}
+
 class ChangeFieldIsNameAction extends FieldAction {
   isName: boolean;
 
@@ -650,9 +668,11 @@ class ChangeFieldTypeAction extends FieldAction {
 
     if (this.fieldType === FieldType.String) {
       newFieldDraft.multiline = !!newFieldDraft.multiline;
+      newFieldDraft.index = newFieldDraft.index ?? null;
       newFieldDraft.matchPattern = newFieldDraft.matchPattern ?? null;
     } else {
       delete newFieldDraft.multiline;
+      delete newFieldDraft.index;
       delete newFieldDraft.matchPattern;
     }
 
@@ -960,6 +980,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         };
         if (fieldSpec.type === FieldType.String) {
           fieldDraft.multiline = !!fieldSpec.multiline;
+          fieldDraft.index = fieldSpec.index ?? null;
           fieldDraft.matchPattern = fieldSpec.matchPattern ?? null;
         }
         if (fieldSpec.type === FieldType.RichText) {
@@ -1002,6 +1023,7 @@ export const SchemaEditorActions = {
   ChangeFieldAllowedLinkEntityTypes: ChangeFieldAllowedLinkEntityTypesAction,
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
+  ChangeFieldIndex: ChangeFieldIndexAction,
   ChangeFieldIsName: ChangeFieldIsNameAction,
   ChangeFieldMatchPattern: ChangeFieldMatchPatternAction,
   ChangeFieldMultiline: ChangeFieldMultilineAction,
@@ -1079,7 +1101,11 @@ function getTypeUpdateFromEditorState(
       ...(draftField.isName ? { isName: true } : undefined),
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String
-        ? { multiline: draftField.multiline, matchPattern: draftField.matchPattern ?? null }
+        ? {
+            multiline: draftField.multiline,
+            index: draftField.index ?? null,
+            matchPattern: draftField.matchPattern ?? null,
+          }
         : undefined),
       ...(draftField.type === FieldType.RichText
         ? { richTextNodes, linkEntityTypes: draftField.linkEntityTypes ?? [] }

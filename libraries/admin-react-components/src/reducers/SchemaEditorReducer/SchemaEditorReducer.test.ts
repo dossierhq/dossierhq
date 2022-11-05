@@ -511,6 +511,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
@@ -590,6 +591,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
@@ -631,6 +633,7 @@ describe('AddFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "index": null,
                 "isName": false,
                 "list": false,
                 "matchPattern": null,
@@ -695,6 +698,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "title",
@@ -703,6 +707,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
@@ -768,6 +773,7 @@ describe('AddFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "index": null,
                 "isName": false,
                 "list": false,
                 "matchPattern": null,
@@ -805,6 +811,7 @@ describe('AddFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "title",
@@ -813,6 +820,7 @@ describe('AddFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
@@ -1208,6 +1216,36 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
   });
 });
 
+describe('ChangeFieldIndexAction', () => {
+  test('set index on new string field in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [{ name: 'existing', type: FieldType.String, index: 'anIndex' }],
+            },
+          ],
+          indexes: [{ name: 'anIndex', type: 'unique' }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldIndex(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        'anIndex'
+      )
+    );
+    expect(state).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].index).toBe('anIndex');
+    expect(schemaUpdate.entityTypes?.[0].fields[0].index).toBe('anIndex');
+  });
+});
+
 describe('ChangeFieldIsNameAction', () => {
   test('make new string field is-name in new type', () => {
     const state = reduceSchemaEditorStateActions(
@@ -1407,6 +1445,7 @@ describe('ChangeFieldRequiredAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "bar",
@@ -1870,6 +1909,7 @@ describe('DeleteFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "index": null,
                 "isName": false,
                 "list": false,
                 "matchPattern": null,
@@ -2046,6 +2086,7 @@ describe('RenameFieldAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "index": null,
                 "isName": false,
                 "list": false,
                 "matchPattern": null,
@@ -2110,6 +2151,7 @@ describe('RenameFieldAction', () => {
             "fields": [
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "title",
@@ -2118,6 +2160,7 @@ describe('RenameFieldAction', () => {
               },
               {
                 "adminOnly": false,
+                "index": null,
                 "matchPattern": null,
                 "multiline": false,
                 "name": "baz",
@@ -2449,6 +2492,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "index": null,
                 "isName": true,
                 "list": false,
                 "matchPattern": null,
@@ -2689,6 +2733,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                   "name": "title",
                   "type": "String",
                 },
+                "index": null,
                 "isName": false,
                 "list": false,
                 "matchPattern": null,
