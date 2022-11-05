@@ -1,4 +1,4 @@
-import { Field, Input } from '@jonasb/datadata-design';
+import { Field, Radio } from '@jonasb/datadata-design';
 import type { SchemaIndexDraft } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
@@ -6,13 +6,15 @@ interface Props {
 }
 
 export function SchemaIndexEditor({ indexDraft }: Props) {
-  const canChangeIndex = indexDraft.status === 'new';
+  // const canChangeIndex = indexDraft.status === 'new';
 
   return (
     <Field>
-      <Field.Label>Index</Field.Label>
+      <Field.Label>Index type</Field.Label>
       <Field.Control>
-        <Input readOnly={!canChangeIndex} value={indexDraft.type} />
+        <Radio name="type" checked>
+          {indexDraft.type}
+        </Radio>
       </Field.Control>
     </Field>
   );
