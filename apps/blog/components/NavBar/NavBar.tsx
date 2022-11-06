@@ -8,7 +8,14 @@ import { urls } from '../../utils/PageUtils';
 export function NavBar({
   current,
 }: {
-  current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'graphiql' | 'voyager';
+  current:
+    | 'home'
+    | 'docs'
+    | 'admin-entities'
+    | 'published-entities'
+    | 'schema'
+    | 'graphiql'
+    | 'voyager';
 }) {
   const [active, setActive] = useState(false);
   return (
@@ -20,6 +27,9 @@ export function NavBar({
         <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
+        <DesignNavbar.Item active={current === 'docs'}>
+          {NavItemRender('Docs', urls.docs)}
+        </DesignNavbar.Item>
         <DesignNavbar.Item active={current === 'admin-entities'}>
           {NavItemRender('Admin entities', urls.adminEntities)}
         </DesignNavbar.Item>

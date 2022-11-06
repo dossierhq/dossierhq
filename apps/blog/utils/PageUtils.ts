@@ -2,6 +2,7 @@ export const urls = {
   home: '/',
   adminEntities: '/admin/admin-entities',
   article: (slug: string) => `/docs/${slug}`,
+  docs: '/docs',
   editPage: (ids: string[]): string => `/admin/admin-entities/edit?id=${ids.join('&id=')}`,
   editPageNew: (entityType: string, id: string): string =>
     `/admin/admin-entities/edit?new=${entityType}:${id}`,

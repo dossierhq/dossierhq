@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: { articleSlug: string }
     <>
       <FullscreenContainer>
         <FullscreenContainer.Row fullWidth>
-          <NavBar current="home" />
+          <NavBar current="docs" />
         </FullscreenContainer.Row>
         <FullscreenContainer.ScrollableRow>
           <FullscreenContainer.Row>

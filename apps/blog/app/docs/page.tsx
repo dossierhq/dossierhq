@@ -16,7 +16,7 @@ export default async function Page() {
     <>
       <FullscreenContainer>
         <FullscreenContainer.Row fullWidth>
-          <NavBar current="home" />
+          <NavBar current="docs" />
         </FullscreenContainer.Row>
         <FullscreenContainer.ScrollableRow>
           <FullscreenContainer.Row>
