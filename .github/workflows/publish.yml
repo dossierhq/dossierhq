@@ -41,7 +41,7 @@ jobs:
       - name: Use bun
         uses: antongolub/action-setup-bun@v1
       - name: rush install
-        run: node common/scripts/install-run-rush.js install
+        run: node common/scripts/install-run-rush.js install --bypass-policy
       - name: rush change -v
         run: node common/scripts/install-run-rush.js change -v
       - name: start db
