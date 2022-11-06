@@ -1,7 +1,6 @@
-import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { promisify } from 'util';
+import { execFile, NoSuchCommand } from './ChildProcessUtils.js';
 import type { BenchPressProcessedResult } from './Process.js';
 import { processResults } from './Process.js';
 import type { BenchPressResult } from './Runner.js';
@@ -189,25 +188,15 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
   console.log(`Writing to ${gnuPlotDataPath}`);
   await fs.promises.writeFile(gnuPlotDataPath, gnuPlotData);
 
-  if (!childProcess.execFile) {
-    //TODO support Bun.spawn when available
-    console.log('No child_process.execFile module available, skipping gnuplot execution');
-    return;
-  }
-  try {
-    await promisify(childProcess.execFile)('gnuplot', [gnuPlotScriptPath], {
-      cwd: options.folder,
-    });
-    console.log(`Executing gnuplot (generating ${gnuPlotPngPath})`);
-  } catch (error) {
-    if (!isNoSuchFileError(error)) {
-      throw error;
-    }
+  const output = execFile('gnuplot', [gnuPlotScriptPath], { cwd: options.folder });
+  if (output === NoSuchCommand) {
     console.log('No gnuplot installed');
-    return;
-  }
+  } else {
+    console.log(`Executing gnuplot (generating ${gnuPlotPngPath})`);
+    // Log after execution since we want to check if gnuplot exists first
 
-  reportResultGnuPlotDumb(processed, options, gnuPlotDataPath);
+    reportResultGnuPlotDumb(processed, options, gnuPlotDataPath);
+  }
 }
 
 function reportResultGnuPlotDumb(
@@ -227,11 +216,15 @@ plot ${processed.max_ms} with points pt '-' title 'max',\
   ${processed.min_ms} with points pt '-' title 'min',\
   '${path.basename(gnuPlotDataPath)}' with points pt '*' title '${processed.testName}'`;
 
-  const output = childProcess.execFileSync('gnuplot', [], {
+  const output = execFile('gnuplot', [], {
     cwd: options.folder,
     input: dumbGnuPlotScript,
   });
-  console.log(output.toString());
+  if (output === NoSuchCommand) {
+    console.log('No gnuplot installed');
+  } else {
+    console.log(output.toString());
+  }
 }
 
 function isNoSuchFileError(error: unknown) {
