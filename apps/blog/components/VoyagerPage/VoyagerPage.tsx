@@ -13,7 +13,7 @@ export default function VoyagerPage(): JSX.Element {
         <FullscreenContainer.Row fullWidth>
           <NavBar current="voyager" />
         </FullscreenContainer.Row>
-        <Voyager introspection={introspectionProvider} />
+        <Voyager introspection={introspectionProvider} workerURI="/voyager.worker.js" />
       </FullscreenContainer>
     </>
   );
