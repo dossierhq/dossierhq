@@ -6,12 +6,11 @@
     "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/esm/index.js",
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/esm/index.js",
     "@jonasb/datadata-template-library": "../node_modules/@jonasb/datadata-template-library/lib/esm/index.js",
-    "@lexical/rich-text": "https://cdn.skypack.dev/@lexical/rich-text@~0.3.8?dts",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
-    "lexical": "https://cdn.skypack.dev/lexical@~0.3.8?dts",
-    "postgres": "https://deno.land/x/postgres@v0.16.1/mod.ts",
-    "std/": "https://deno.land/std@0.149.0/",
+    "lexical": "https://cdn.skypack.dev/lexical@~0.5.0?dts",
+    "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
+    "std/": "https://deno.land/std@0.162.0/",
     "tslib": "https://cdn.skypack.dev/tslib@~2.4.0?dts",
-    "uuid": "https://cdn.skypack.dev/uuid@^8.3.2?dts"
+    "uuid": "https://cdn.skypack.dev/uuid@~9.0.0?dts"
   }
 }

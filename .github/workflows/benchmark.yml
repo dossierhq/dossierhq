@@ -35,7 +35,7 @@ jobs:
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "1.26.0"
+          deno-version: "1.27.1"
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install --bypass-policy

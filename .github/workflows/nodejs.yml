@@ -34,7 +34,7 @@ jobs:
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "1.26.0"
+          deno-version: "1.27.1"
       - name: Use bun
         uses: antongolub/action-setup-bun@v1
       - name: rush install
