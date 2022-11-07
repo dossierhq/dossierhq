@@ -780,7 +780,7 @@ importers:
       prettier: 2.7.1
       react: ~18.2.0
       react-dom: ~18.2.0
-      sass: ~1.55.0
+      sass: ~1.56.0
       sass-loader: ~13.1.0
       svgo: ~3.0.0
       tslib: ~2.4.0
@@ -816,8 +816,8 @@ importers:
       eslint-plugin-storybook: 0.6.4_wyqvi574yv7oiwfeinomdzmc3m
       mini-svg-data-uri: 1.4.4
       prettier: 2.7.1
-      sass: 1.55.0
-      sass-loader: 13.1.0_sass@1.55.0
+      sass: 1.56.0
+      sass-loader: 13.1.0_sass@1.56.0
       svgo: 3.0.0
       typescript: 4.8.4
 
@@ -1120,7 +1120,7 @@ importers:
       react-leaflet: ~4.1.0
       react-router-dom: ~6.3.0
       rollup-plugin-visualizer: ~5.8.0
-      sass: ~1.55.0
+      sass: ~1.56.0
       sass-loader: ~13.1.0
       sql.js: ~1.8.0
       sqlite3: ~5.1.1
@@ -1193,7 +1193,7 @@ importers:
       lexical: 0.5.0
       lodash: 4.17.21
       mini-svg-data-uri: 1.4.4
-      next: 13.0.1_mk5yftg2men2cn3ayx4t7ddtvy
+      next: 13.0.1_g337hspijolejvj4jc6fk33bk4
       pg: 8.8.0
       postgrator: 7.1.1
       prettier: 2.7.1
@@ -1202,8 +1202,8 @@ importers:
       react-leaflet: 4.1.0_6yalbjtj7k4yykioxumfwzwadm
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
       rollup-plugin-visualizer: 5.8.0
-      sass: 1.55.0
-      sass-loader: 13.1.0_sass@1.55.0
+      sass: 1.56.0
+      sass-loader: 13.1.0_sass@1.56.0
       sql.js: 1.8.0
       sqlite3: 5.1.1
       svgo: 3.0.0
@@ -1211,8 +1211,8 @@ importers:
       tslib: 2.4.0
       typescript: 4.8.4
       uuid: 9.0.0
-      vite: 3.2.2_sass@1.55.0
-      vitest: 0.24.3_sass@1.55.0
+      vite: 3.2.2_sass@1.56.0
+      vitest: 0.24.3_sass@1.56.0
 
   ../../tools/generic-tools:
     specifiers:
@@ -5308,7 +5308,7 @@ packages:
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 13.1.0_sass@1.55.0
+      sass-loader: 13.1.0_sass@1.56.0
 
   /@storybook/preview-web/6.5.12_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-Q5mduCJsY9zhmlsrhHvtOBA3Jt2n45bhfVkiUEqtj8fDit45/GW+eLoffv8GaVTGjV96/Y1JFwDZUwU6mEfgGQ==}
@@ -6202,7 +6202,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.19.6_@babel+core@7.19.6
       magic-string: 0.26.7
       react-refresh: 0.14.0
-      vite: 3.2.2_sass@1.55.0
+      vite: 3.2.2_sass@1.56.0
     transitivePeerDependencies:
       - supports-color
 
@@ -12102,7 +12102,7 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /next/13.0.1_mk5yftg2men2cn3ayx4t7ddtvy:
+  /next/13.0.1_g337hspijolejvj4jc6fk33bk4:
     resolution: {integrity: sha512-ErCNBPIeZMKFn6hX+ZBSlqZVgJIeitEqhGTuQUNmYXJ07/A71DZ7AJI8eyHYUdBb686LUpV1/oBdTq9RpzRVPg==}
     engines: {node: '>=14.6.0'}
     hasBin: true
@@ -12126,7 +12126,7 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      sass: 1.55.0
+      sass: 1.56.0
       styled-jsx: 5.1.0_otspjrsspon4ofp37rshhlhp2y
       use-sync-external-store: 1.2.0_react@18.2.0
     optionalDependencies:
@@ -14047,7 +14047,7 @@ packages:
       minimist: 1.2.6
       walker: 1.0.8
 
-  /sass-loader/13.1.0_sass@1.55.0:
+  /sass-loader/13.1.0_sass@1.56.0:
     resolution: {integrity: sha512-tZS1RJQ2n2+QNyf3CCAo1H562WjL/5AM6Gi8YcPVVoNxQX8d19mx8E+8fRrMWsyc93ZL6Q8vZDSM0FHVTJaVnQ==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -14068,10 +14068,10 @@ packages:
     dependencies:
       klona: 2.0.5
       neo-async: 2.6.2
-      sass: 1.55.0
+      sass: 1.56.0
 
-  /sass/1.55.0:
-    resolution: {integrity: sha512-Pk+PMy7OGLs9WaxZGJMn7S96dvlyVBwwtToX895WmCpAOr5YiJYEUJfiJidMuKb613z2xNWcXCHEuOvjZbqC6A==}
+  /sass/1.56.0:
+    resolution: {integrity: sha512-WFJ9XrpkcnqZcYuLRJh5qiV6ibQOR4AezleeEjTjMsCocYW59dEG19U3fwTTXxzi2Ed3yjPBp727hbbj53pHFw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -15567,7 +15567,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/3.2.2_sass@1.55.0:
+  /vite/3.2.2_sass@1.56.0:
     resolution: {integrity: sha512-pLrhatFFOWO9kS19bQ658CnRYzv0WLbsPih6R+iFeEEhDOuYgYCX2rztUViMz/uy/V8cLCJvLFeiOK7RJEzHcw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -15593,7 +15593,7 @@ packages:
       postcss: 8.4.18
       resolve: 1.22.1
       rollup: 2.79.1
-      sass: 1.55.0
+      sass: 1.56.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -15639,7 +15639,7 @@ packages:
       - terser
     dev: true
 
-  /vitest/0.24.3_sass@1.55.0:
+  /vitest/0.24.3_sass@1.56.0:
     resolution: {integrity: sha512-aM0auuPPgMSstWvr851hB74g/LKaKBzSxcG3da7ejfZbx08Y21JpZmbmDYrMTCGhVZKqTGwzcnLMwyfz2WzkhQ==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -15671,7 +15671,7 @@ packages:
       tinybench: 2.3.0
       tinypool: 0.3.0
       tinyspy: 1.0.2
-      vite: 3.2.2_sass@1.55.0
+      vite: 3.2.2_sass@1.56.0
     transitivePeerDependencies:
       - less
       - sass
