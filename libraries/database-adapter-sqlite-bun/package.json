@@ -30,7 +30,7 @@
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "0.48.7",
     "bun-types": "~0.2.0",
-    "eslint": "~8.26.0",
+    "eslint": "~8.27.0",
     "prettier": "2.7.1",
     "typescript": "~4.8.4"
   },
