@@ -31,7 +31,7 @@ jobs:
       - name: rush check && rush update
         run: |
           node common/scripts/install-run-rush.js check
-          node common/scripts/install-run-rush.js update
+          node common/scripts/install-run-rush.js update --bypass-policy
       - name: Git status
         run: |
           git status
