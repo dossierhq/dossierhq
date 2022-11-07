@@ -1,4 +1,4 @@
-import * as childProcess from 'child_process';
+import * as childProcess from 'node:child_process';
 
 export const NoSuchCommand = Symbol('NoSuchCommand');
 
@@ -7,6 +7,9 @@ export function execFile(
   args: string[],
   options: { cwd: string; input?: string }
 ): Buffer | typeof NoSuchCommand {
+  if (typeof Deno !== 'undefined') {
+    return NoSuchCommand; //TODO implement
+  }
   if (typeof Bun !== 'undefined') {
     const resolvedFile = Bun.which(file);
     if (!resolvedFile) {

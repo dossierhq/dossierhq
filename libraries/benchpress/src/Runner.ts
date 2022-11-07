@@ -1,6 +1,6 @@
 import type { BenchPressClock } from './Clock.js';
 import { createClock } from './Clock.js';
-import { replaceStdoutLineIfSupported } from './LogUtils.js';
+import { replaceStdoutLineIfSupported } from './compat/LogUtils.js';
 
 export interface BenchPressOptions {
   testName: string;

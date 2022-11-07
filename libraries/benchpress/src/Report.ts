@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { execFile, NoSuchCommand } from './ChildProcessUtils.js';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { execFile, NoSuchCommand } from './compat/ChildProcessUtils.js';
 import type { BenchPressProcessedResult } from './Process.js';
 import { processResults } from './Process.js';
 import type { BenchPressResult } from './Runner.js';
@@ -171,8 +171,8 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
   }
 
   const pngGnuPlotScript = `# gnuplot script
-  set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8 size 1024,768
-  set output '${path.basename(gnuPlotPngPath)}'
+set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8 size 1024,768
+set output '${path.basename(gnuPlotPngPath)}'
   ${mainGnuPlotScript}`;
 
   const gnuPlotData = processed.iterations_ms.map((x) => (x === null ? 'NaN' : x)).join('\n');
@@ -188,7 +188,7 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
   console.log(`Writing to ${gnuPlotDataPath}`);
   await fs.promises.writeFile(gnuPlotDataPath, gnuPlotData);
 
-  const output = execFile('gnuplot', [gnuPlotScriptPath], { cwd: options.folder });
+  const output = execFile('gnuplot', [path.basename(gnuPlotScriptPath)], { cwd: options.folder });
   if (output === NoSuchCommand) {
     console.log('No gnuplot installed');
   } else {
