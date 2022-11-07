@@ -370,7 +370,7 @@ importers:
       '@types/uuid': ~8.3.4
       '@typescript-eslint/eslint-plugin': ~5.41.0
       '@typescript-eslint/parser': ~5.41.0
-      babel-loader: ~9.0.0
+      babel-loader: ~9.1.0
       eslint: ~8.26.0
       eslint-plugin-import: ~2.26.0
       eslint-plugin-react: ~7.31.1
@@ -420,7 +420,7 @@ importers:
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.41.0_huremdigmcnkianavgfk3x6iou
       '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
-      babel-loader: 9.0.0_@babel+core@7.19.6
+      babel-loader: 9.1.0_@babel+core@7.19.6
       eslint: 8.26.0
       eslint-plugin-import: 2.26.0_eslint@8.26.0
       eslint-plugin-react: 7.31.1_eslint@8.26.0
@@ -769,7 +769,7 @@ importers:
       '@types/react-dom': ~18.0.0
       '@typescript-eslint/eslint-plugin': ~5.41.0
       '@typescript-eslint/parser': ~5.41.0
-      babel-loader: ~9.0.0
+      babel-loader: ~9.1.0
       bulma: ~0.9.3
       eslint: ~8.26.0
       eslint-plugin-react: ~7.31.1
@@ -808,7 +808,7 @@ importers:
       '@types/react-dom': 18.0.0
       '@typescript-eslint/eslint-plugin': 5.41.0_huremdigmcnkianavgfk3x6iou
       '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
-      babel-loader: 9.0.0_@babel+core@7.19.6
+      babel-loader: 9.1.0_@babel+core@7.19.6
       bulma: 0.9.3
       eslint: 8.26.0
       eslint-plugin-react: 7.31.1_eslint@8.26.0
@@ -1086,7 +1086,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ~5.41.0
       '@typescript-eslint/parser': ~5.41.0
       '@vitejs/plugin-react': ~2.2.0
-      babel-loader: ~9.0.0
+      babel-loader: ~9.1.0
       base-64: ~1.0.0
       bulma: ~0.9.3
       bun-types: ~0.2.0
@@ -1168,7 +1168,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.41.0_huremdigmcnkianavgfk3x6iou
       '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
       '@vitejs/plugin-react': 2.2.0_vite@3.2.2
-      babel-loader: 9.0.0_@babel+core@7.19.6
+      babel-loader: 9.1.0_@babel+core@7.19.6
       base-64: 1.0.0
       bulma: 0.9.3
       bun-types: 0.2.0
@@ -6913,8 +6913,8 @@ packages:
       schema-utils: 2.7.1
       webpack: 5.63.0
 
-  /babel-loader/9.0.0_@babel+core@7.19.6:
-    resolution: {integrity: sha512-qVGQb0PNw/B1sGhPf0/KKsHZAPfa2Bk+JbjkW7yGjAHZyvjAULXYq0et0+/+7DL/rGYU+y8UoGPzA32NP29pVQ==}
+  /babel-loader/9.1.0_@babel+core@7.19.6:
+    resolution: {integrity: sha512-Antt61KJPinUMwHwIIz9T5zfMgevnfZkEVWYDWlG888fgdvRRGD0JTuf/fFozQnfT+uq64sk1bmdHDy/mOEWnA==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       '@babel/core': ^7.12.0
