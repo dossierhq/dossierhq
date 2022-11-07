@@ -7,8 +7,8 @@ export const urls = {
   editPageNew: (entityType: string, id: string): string =>
     `/admin/admin-entities/edit?new=${entityType}:${id}`,
   isEditPage: (url: string): boolean => url.startsWith('/admin/admin-entities/edit'),
-  glossary: '/glossary',
-  glossaryTerm: (slug: string) => `/glossary#${slug}`,
+  glossary: '/docs/glossary',
+  glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
   graphiql: '/admin/graphiql',
   publishedEntities: '/admin/published-entities',
   publishedEntityDisplay: (ids: string[]): string =>
