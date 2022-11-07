@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu } from '@jonasb/datadata-design';
+import { ClassName, Menu } from '@jonasb/datadata-design';
 import Link from 'next/link.js';
 import { useSelectedLayoutSegments } from 'next/navigation';
 
@@ -20,7 +20,7 @@ export function MenuLinkItem({
 
   return (
     <Menu.Item>
-      <Link className={isActive ? 'is-active' : ''} href={href}>
+      <Link className={isActive ? ClassName['is-active'] : ''} href={href}>
         {children}
       </Link>
     </Menu.Item>

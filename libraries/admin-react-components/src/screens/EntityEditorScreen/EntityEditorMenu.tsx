@@ -1,4 +1,4 @@
-import { Delete, HoverRevealContainer, Menu, Text } from '@jonasb/datadata-design';
+import { ClassName, Delete, HoverRevealContainer, Menu, Text } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import { useCallback } from 'react';
 import type {
@@ -65,7 +65,7 @@ function MenuItem({
     <Menu.Item key={draftState.id}>
       <a
         id={`${draftState.id}-menuItem`}
-        className={active ? 'is-active' : undefined}
+        className={active ? ClassName['is-active'] : undefined}
         onClick={handleItemClick}
       >
         <HoverRevealContainer>

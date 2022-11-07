@@ -1,4 +1,4 @@
-import { Delete, HoverRevealContainer, Menu, Text } from '@jonasb/datadata-design';
+import { ClassName, Delete, HoverRevealContainer, Menu, Text } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
@@ -63,7 +63,7 @@ function MenuItem({
     <Menu.Item>
       <a
         id={`${entityId}-menuItem`}
-        className={active ? 'is-active' : undefined}
+        className={active ? ClassName['is-active'] : undefined}
         onClick={handleItemClick}
       >
         <HoverRevealContainer>

@@ -63,6 +63,7 @@ export { toSizeClassName, toSpacingClassName } from './utils/LayoutPropsUtils.js
 export type { TextStyle } from './utils/TextStylePropsUtils.js';
 
 export const ClassName = {
+  // Rich Text
   'rich-text': 'rich-text',
   'is-bold': 'is-bold',
   'is-code': 'is-code',
@@ -73,4 +74,6 @@ export const ClassName = {
   'is-underline': 'is-underline',
   'is-underline-strike-through': 'is-underline-strike-through',
   'rich-text-editor': 'rich-text-editor',
-};
+  // Menu item a tag
+  'is-active': 'is-active',
+} as const;

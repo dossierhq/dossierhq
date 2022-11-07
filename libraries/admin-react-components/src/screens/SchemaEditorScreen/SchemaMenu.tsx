@@ -1,4 +1,4 @@
-import { Menu } from '@jonasb/datadata-design';
+import { ClassName, Menu } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback } from 'react';
 import type {
@@ -123,7 +123,7 @@ function DraftItem({
     <Menu.Item>
       <a
         id={getElementIdForSelector(selector, 'menuItem')}
-        className={isDraftActive(selector, activeSelector) ? 'is-active' : undefined}
+        className={isDraftActive(selector, activeSelector) ? ClassName['is-active'] : undefined}
         onClick={handleClick}
       >
         {children}
