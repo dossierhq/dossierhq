@@ -14,7 +14,7 @@ export interface BenchPressResult {
   testName: string;
   variant: string;
   runName: string;
-  iterationDurations_ns: Array<bigint | null>;
+  iterationDurations_ms: Array<number | null>;
   iterationCount: number;
 }
 
@@ -36,14 +36,14 @@ export async function runTest(
   console.log(
     `\nStarting test '${options.testName}' - ${options.variant} (${options.iterations} iterations)`
   );
-  const iterationDurations_ms = new Array<bigint | null>(options.iterations).fill(null);
+  const iterationDurations_ms = new Array<number | null>(options.iterations).fill(null);
   for (let i = 0; i < options.iterations; i += 1) {
     replaceStdoutLineIfSupported(`Iteration [${i + 1}/${options.iterations}]`);
     controlClock.reset();
     const success = await iteration(clock);
 
     if (success) {
-      iterationDurations_ms[i] = controlClock.duration_ns();
+      iterationDurations_ms[i] = controlClock.duration_ms();
     }
   }
   console.log();
@@ -52,7 +52,7 @@ export async function runTest(
     testName: options.testName,
     variant: options.variant,
     runName: options.runName,
-    iterationDurations_ns: iterationDurations_ms,
+    iterationDurations_ms,
     iterationCount: options.iterations,
   };
 }

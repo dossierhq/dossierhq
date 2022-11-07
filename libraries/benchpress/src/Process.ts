@@ -1,5 +1,4 @@
 import type { BenchPressResult } from './Runner.js';
-import { ns_to_ms } from './Units.js';
 
 export interface BenchPressProcessOptions {
   percentiles: number[];
@@ -25,21 +24,20 @@ export function processResults(
   result: BenchPressResult,
   options: BenchPressProcessOptions
 ): BenchPressProcessedResult {
-  const successfulIterations_ns = result.iterationDurations_ns.filter(
-    (x) => x !== null
-  ) as bigint[];
-  const resultSorted_ns = [...successfulIterations_ns].sort((a, b) => Number(a - b));
-  const iterations_ms = result.iterationDurations_ns.map((x) => (x === null ? null : ns_to_ms(x)));
+  const successfulIterations_ms = result.iterationDurations_ms.filter(
+    (it) => it !== null
+  ) as number[];
+  const resultSorted_ms = [...successfulIterations_ms].sort((a, b) => a - b);
+  const iterations_ms = result.iterationDurations_ms;
 
-  const successCount = successfulIterations_ns.length;
-  const successDuration_ns = successfulIterations_ns.reduce((sum, val) => sum + val, 0n);
-  const min_ms = resultSorted_ns.length > 0 ? ns_to_ms(resultSorted_ns[0]) : null;
-  const max_ms =
-    resultSorted_ns.length > 0 ? ns_to_ms(resultSorted_ns[resultSorted_ns.length - 1]) : null;
-  const mean_ms = successCount > 0 ? ns_to_ms(successDuration_ns / BigInt(successCount)) : null;
-  const standardDeviation_ms = getStandardDeviation_ms(successfulIterations_ns);
+  const successCount = successfulIterations_ms.length;
+  const successDuration_ms = successfulIterations_ms.reduce((sum, val) => sum + val, 0);
+  const min_ms = resultSorted_ms.length > 0 ? resultSorted_ms[0] : null;
+  const max_ms = resultSorted_ms.length > 0 ? resultSorted_ms[resultSorted_ms.length - 1] : null;
+  const mean_ms = successCount > 0 ? successDuration_ms / successCount : null;
+  const standardDeviation_ms = getStandardDeviation_ms(successfulIterations_ms);
   const percentiles_ms = Object.fromEntries(
-    options.percentiles.map((p) => [p, percentile_ms(resultSorted_ns, p)])
+    options.percentiles.map((p) => [p, percentile_ms(resultSorted_ms, p)])
   );
 
   return {
@@ -49,8 +47,8 @@ export function processResults(
     iterationCount: result.iterationCount,
     successCount,
     failureCount: result.iterationCount - successCount,
-    successDuration_ms: ns_to_ms(successDuration_ns),
-    standardDeviation_ms: standardDeviation_ms,
+    successDuration_ms,
+    standardDeviation_ms,
     mean_ms,
     min_ms,
     max_ms,
@@ -59,22 +57,21 @@ export function processResults(
   };
 }
 
-function getStandardDeviation_ms(data_ns: bigint[]) {
-  const data_ms = data_ns.map(ns_to_ms);
+function getStandardDeviation_ms(data_ms: number[]) {
   const count = data_ms.length;
   const mean_ms = data_ms.reduce((sum, val) => sum + val, 0) / count;
   const squaredDiff_ms = data_ms.reduce((diffSq, x) => diffSq + (x - mean_ms) ** 2, 0);
   return Math.sqrt(squaredDiff_ms / (count - 1));
 }
 
-function percentile_ms(resultSorted_ns: bigint[], percentile: number) {
-  if (resultSorted_ns.length === 0) {
+function percentile_ms(resultSorted_ms: number[], percentile: number) {
+  if (resultSorted_ms.length === 0) {
     return null;
   }
-  let index = Math.round((resultSorted_ns.length * percentile) / 100);
-  if (index >= resultSorted_ns.length) {
-    index = resultSorted_ns.length - 1;
+  let index = Math.round((resultSorted_ms.length * percentile) / 100);
+  if (index >= resultSorted_ms.length) {
+    index = resultSorted_ms.length - 1;
   }
 
-  return ns_to_ms(resultSorted_ns[index]);
+  return resultSorted_ms[index];
 }

@@ -5,12 +5,12 @@ export interface BenchPressClock {
 
 interface ControlClock {
   reset: () => void;
-  duration_ns: () => bigint;
+  duration_ms: () => number;
 }
 
 export function createClock(): { clock: BenchPressClock; controlClock: ControlClock } {
-  let startTime: bigint | null = null;
-  let duration: bigint | null = null;
+  let startTime: number | null = null;
+  let duration: number | null = null;
 
   return {
     clock: {
@@ -18,11 +18,11 @@ export function createClock(): { clock: BenchPressClock; controlClock: ControlCl
         if (startTime !== null) {
           throw new Error('Called start() twice in a row');
         } else {
-          startTime = process.hrtime.bigint();
+          startTime = performance.now();
         }
       },
       stop: () => {
-        const now = process.hrtime.bigint();
+        const now = performance.now();
         if (startTime !== null) {
           duration = now - startTime;
         } else {
@@ -34,7 +34,7 @@ export function createClock(): { clock: BenchPressClock; controlClock: ControlCl
       reset: () => {
         startTime = duration = null;
       },
-      duration_ns: () => {
+      duration_ms: () => {
         if (duration === null) {
           throw new Error('Did not call clock.stop()');
         }
