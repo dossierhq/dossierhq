@@ -76,7 +76,10 @@ interface FullscreenContainerComponent extends FunctionComponent<FullscreenConta
 }
 
 const COLUMN_WIDTHS = {
+  '1/12': 'is-1',
+  '2/12': 'is-2',
   '3/12': 'is-3',
+  '4/12': 'is-4',
 };
 
 export const FullscreenContainer: FullscreenContainerComponent = ({
