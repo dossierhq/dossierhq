@@ -188,18 +188,20 @@ set output '${path.basename(gnuPlotPngPath)}'
   console.log(`Writing to ${gnuPlotDataPath}`);
   await fs.promises.writeFile(gnuPlotDataPath, gnuPlotData);
 
-  const output = execFile('gnuplot', [path.basename(gnuPlotScriptPath)], { cwd: options.folder });
+  const output = await execFile('gnuplot', [path.basename(gnuPlotScriptPath)], {
+    cwd: options.folder,
+  });
   if (output === NoSuchCommand) {
     console.log('No gnuplot installed');
   } else {
     console.log(`Executing gnuplot (generating ${gnuPlotPngPath})`);
     // Log after execution since we want to check if gnuplot exists first
 
-    reportResultGnuPlotDumb(processed, options, gnuPlotDataPath);
+    await reportResultGnuPlotDumb(processed, options, gnuPlotDataPath);
   }
 }
 
-function reportResultGnuPlotDumb(
+async function reportResultGnuPlotDumb(
   processed: BenchPressProcessedResult,
   options: BenchPressReportOptions,
   gnuPlotDataPath: string
@@ -216,7 +218,7 @@ plot ${processed.max_ms} with points pt '-' title 'max',\
   ${processed.min_ms} with points pt '-' title 'min',\
   '${path.basename(gnuPlotDataPath)}' with points pt '*' title '${processed.testName}'`;
 
-  const output = execFile('gnuplot', [], {
+  const output = await execFile('gnuplot', [], {
     cwd: options.folder,
     input: dumbGnuPlotScript,
   });
