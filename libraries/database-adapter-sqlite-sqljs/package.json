@@ -40,7 +40,7 @@
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "0.48.7",
+    "@rushstack/heft": "0.48.8",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.2",
     "base-64": "~1.0.0",
