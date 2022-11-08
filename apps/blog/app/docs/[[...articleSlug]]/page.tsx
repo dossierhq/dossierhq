@@ -20,3 +20,26 @@ export default async function Page({ params }: { params: { articleSlug: string }
     </>
   );
 }
+
+export async function generateStaticParams() {
+  const publishedClient = await getPublishedClientForServerComponent();
+  const connection = (
+    await publishedClient.searchEntities({ entityTypes: ['Article'], order: 'name' })
+  ).valueOrThrow();
+
+  if (connection?.pageInfo.hasNextPage) {
+    // TODO add support for pagination
+    throw new Error('Pagination not supported');
+  }
+
+  if (!connection) {
+    return [];
+  }
+
+  return connection.edges.map((edge) => {
+    const entity = edge.node.valueOrThrow();
+    assertIsPublishedArticle(entity);
+    const slug = entity.fields.slug === 'overview' ? [] : [entity.fields.slug];
+    return { articleSlug: slug };
+  });
+}
