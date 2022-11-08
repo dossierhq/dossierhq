@@ -39,7 +39,7 @@
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "0.48.7",
+    "@rushstack/heft": "0.48.8",
     "@types/sqlite3": "~3.1.8",
     "@types/uuid": "~8.3.4",
     "eslint": "~8.27.0",
