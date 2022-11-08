@@ -4,9 +4,7 @@ import { getPublishedClientForServerComponent } from '../../../utils/ServerCompo
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
 
 export default async function Page({ params }: { params: { articleSlug: string } }) {
-  console.log('ArticleSlug', params);
   const articleSlug = params.articleSlug ?? 'overview';
-  console.log('XXX', articleSlug);
   const publishedClient = await getPublishedClientForServerComponent();
   const entity = (
     await publishedClient.getEntity({ index: 'articleSlug', value: articleSlug })
