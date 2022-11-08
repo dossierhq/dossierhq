@@ -1,0 +1,42 @@
+{
+  "id": "e3ece01e-240a-4c1c-9a19-206dc234af2a",
+  "info": {
+    "name": "Overview",
+    "type": "Article",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "title": "Overview",
+    "slug": "overview",
+    "body": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Overview",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

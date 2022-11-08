@@ -27,11 +27,12 @@ export default async function Layout({ children }: Props) {
               {connection?.edges.map((edge) => {
                 const entity = edge.node.valueOrThrow();
                 assertIsPublishedArticle(entity);
+                const isOverview = entity.fields.slug === 'overview';
                 return (
                   <MenuLinkItem
                     key={entity.id}
                     href={urls.article(entity.fields.slug)}
-                    activeSegments={[entity.fields.slug]}
+                    activeSegments={isOverview ? [] : [entity.fields.slug]}
                   >
                     {entity.fields.title}
                   </MenuLinkItem>
