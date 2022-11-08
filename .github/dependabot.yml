@@ -9,9 +9,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
 
   - package-ecosystem: "npm"
     directory: "/tools/all-dependencies/"
     schedule:
       interval: "weekly"
+      day: "friday"
     open-pull-requests-limit: 10
