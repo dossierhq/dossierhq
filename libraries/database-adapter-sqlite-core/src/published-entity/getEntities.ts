@@ -4,7 +4,7 @@ import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
@@ -14,14 +14,12 @@ export async function publishedEntityGetEntities(
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
-  const qb =
-    new SqliteQueryBuilder(`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.fields
-    FROM entities e, entity_versions ev WHERE`);
-  qb.addQuery(
-    `e.uuid IN ${qb.addValueList(
-      references.map((it) => it.id)
-    )} AND e.published_entity_versions_id = ev.id`
-  );
+  const { addValueList, query, sql } = createSqliteSqlQuery();
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.fields`;
+  sql`FROM entities e, entity_versions ev WHERE e.uuid IN ${addValueList(
+    references.map((it) => it.id)
+  )}`;
+  sql`AND e.published_entity_versions_id = ev.id`;
 
   const result = await queryMany<
     Pick<
@@ -29,10 +27,8 @@ export async function publishedEntityGetEntities(
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
     > &
       Pick<EntityVersionsTable, 'fields'>
-  >(database, context, qb.build());
-  if (result.isError()) {
-    return result;
-  }
+  >(database, context, query);
+  if (result.isError()) return result;
 
   return ok(
     result.value.map((row) => ({

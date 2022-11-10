@@ -11,7 +11,7 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { buildSqliteSqlQuery, createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryNone } from '../QueryFunctions.js';
@@ -26,17 +26,14 @@ export async function adminEntityUnpublishGetEntitiesInfo(
   DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const qb = new SqliteQueryBuilder(
-    'SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE'
-  );
-  qb.addQuery(`e.uuid IN ${qb.addValueList(references.map(({ id }) => id))}`);
+  const { addValueList, query, sql } = createSqliteSqlQuery();
+  const uuids = addValueList(references.map(({ id }) => id));
+  sql`SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
 
   const result = await queryMany<
     Pick<EntitiesTable, 'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at'>
-  >(database, context, qb.build());
-  if (result.isError()) {
-    return result;
-  }
+  >(database, context, query);
+  if (result.isError()) return result;
   const entitiesInfo = result.value;
 
   const missingEntityIds = references
@@ -72,25 +69,19 @@ export async function adminEntityUnpublishEntities(
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
   const now = new Date();
-  const qb = new SqliteQueryBuilder(
-    `UPDATE entities
-     SET
-       published_entity_versions_id = NULL,
-       updated_at = ?1,
-       updated_seq = ?2,
-       status = ?3
-     WHERE`,
-    [now.toISOString(), updatedSeqResult.value, status]
+  const result = await queryMany<Pick<EntitiesTable, 'id'>>(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
+      const ids = addValueList(
+        references.map(({ entityInternalId }) => entityInternalId as number)
+      );
+      sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${now.toISOString()}, updated_seq = ${
+        updatedSeqResult.value
+      }, status = ${status} WHERE id IN ${ids} RETURNING id`;
+    })
   );
-  qb.addQuery(
-    `id IN ${qb.addValueList(
-      references.map(({ entityInternalId }) => entityInternalId as number)
-    )} RETURNING id`
-  );
-  const result = await queryMany<Pick<EntitiesTable, 'id'>>(database, context, qb.build());
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   const removeReferencesIndexResult = await queryNone(
     database,
@@ -114,13 +105,15 @@ export async function adminEntityUnpublishEntities(
   );
   if (removeLocationsIndexResult.isError()) return removeLocationsIndexResult;
 
-  const qbFts = new SqliteQueryBuilder(`DELETE FROM entities_published_fts WHERE`);
-  qbFts.addQuery(
-    `docid IN ${qbFts.addValueList(
-      references.map(({ entityInternalId }) => entityInternalId as number)
-    )}`
+  const ftsResult = await queryNone(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
+      sql`DELETE FROM entities_published_fts WHERE docid IN ${addValueList(
+        references.map(({ entityInternalId }) => entityInternalId as number)
+      )} `;
+    })
   );
-  const ftsResult = await queryNone(database, context, qbFts.build());
   if (ftsResult.isError()) return ftsResult;
 
   return ok(

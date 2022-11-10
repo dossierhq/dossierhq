@@ -4,7 +4,7 @@ import type {
   DatabaseAdminEntityGetReferenceEntityInfoPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
@@ -16,17 +16,18 @@ export async function adminEntityGetReferenceEntitiesInfo(
 ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic> {
   if (references.length === 0) return ok([]);
 
-  const qb = new SqliteQueryBuilder('SELECT id, uuid, type, status FROM entities WHERE');
-  qb.addQuery(`uuid IN ${qb.addValueList(references.map(({ id }) => id))}`);
+  const { addValueList, query, sql } = createSqliteSqlQuery();
+  sql`SELECT id, uuid, type, status FROM entities WHERE uuid IN ${addValueList(
+    references.map(({ id }) => id)
+  )}`;
 
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid' | 'status'>>(
     database,
     context,
-    qb.build()
+    query
   );
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   return ok(
     result.value.map((it) => ({
       entityInternalId: it.id,

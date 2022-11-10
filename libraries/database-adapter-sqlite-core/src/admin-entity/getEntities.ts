@@ -4,7 +4,7 @@ import type {
   DatabaseAdminEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
@@ -15,14 +15,10 @@ export async function adminEntityGetMultiple(
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<DatabaseAdminEntityGetOnePayload[], typeof ErrorType.Generic> {
-  const qb =
-    new SqliteQueryBuilder(`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-    FROM entities e, entity_versions ev`);
-  qb.addQuery(
-    `WHERE e.uuid IN ${qb.addValueList(
-      references.map((it) => it.id)
-    )} AND e.latest_entity_versions_id = ev.id`
-  );
+  const { addValueList, query, sql } = createSqliteSqlQuery();
+  const uuids = addValueList(references.map((it) => it.id));
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields`;
+  sql`FROM entities e, entity_versions ev WHERE e.uuid IN ${uuids} AND e.latest_entity_versions_id = ev.id`;
 
   const result = await queryMany<
     Pick<
@@ -37,11 +33,9 @@ export async function adminEntityGetMultiple(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(database, context, qb.build());
+  >(database, context, query);
 
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   return ok(
     result.value.map((row) => ({
