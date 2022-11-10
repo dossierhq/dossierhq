@@ -13,7 +13,7 @@ export const ErrorType = {
   NotFound: 'NotFound',
   Generic: 'Generic',
 } as const;
-export type ErrorType = keyof typeof ErrorType;
+export type ErrorType = typeof ErrorType[keyof typeof ErrorType];
 
 export type Result<TOk, TError extends ErrorType> =
   | OkResult<TOk, TError>

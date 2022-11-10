@@ -13,7 +13,7 @@ import { executeOperationPipeline } from './SharedClient.js';
 const TestClientOperationName = {
   foo: 'foo',
 } as const;
-type TestClientOperationName = keyof typeof TestClientOperationName;
+type TestClientOperationName = typeof TestClientOperationName[keyof typeof TestClientOperationName];
 
 interface TestClientOperationArguments {
   [TestClientOperationName.foo]: [string];

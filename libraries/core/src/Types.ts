@@ -125,7 +125,7 @@ export const AdminEntityStatus = {
   /** The entity is archived. */
   archived: 'archived',
 } as const;
-export type AdminEntityStatus = keyof typeof AdminEntityStatus;
+export type AdminEntityStatus = typeof AdminEntityStatus[keyof typeof AdminEntityStatus];
 
 export interface AdminEntity<
   TType extends string = string,
@@ -239,7 +239,7 @@ export const PublishingEventKind = {
   archive: 'archive',
   unarchive: 'unarchive',
 } as const;
-export type PublishingEventKind = keyof typeof PublishingEventKind;
+export type PublishingEventKind = typeof PublishingEventKind[keyof typeof PublishingEventKind];
 
 export interface PublishingEvent {
   kind: PublishingEventKind;
@@ -286,7 +286,7 @@ export const PublishedQueryOrder = {
   createdAt: 'createdAt',
   name: 'name',
 } as const;
-export type PublishedQueryOrder = keyof typeof PublishedQueryOrder;
+export type PublishedQueryOrder = typeof PublishedQueryOrder[keyof typeof PublishedQueryOrder];
 
 export interface PublishedQuery {
   authKeys?: string[];

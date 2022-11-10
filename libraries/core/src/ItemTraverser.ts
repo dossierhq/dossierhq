@@ -23,13 +23,14 @@ export const ItemTraverseNodeType = {
   valueItem: 'valueItem',
   richTextNode: 'richTextNode',
 } as const;
-export type ItemTraverseNodeType = keyof typeof ItemTraverseNodeType;
+export type ItemTraverseNodeType = typeof ItemTraverseNodeType[keyof typeof ItemTraverseNodeType];
 
 export const ItemTraverseNodeErrorType = {
   generic: 'generic',
   missingTypeSpec: 'missingTypeSpec',
 } as const;
-export type ItemTraverseNodeErrorType = keyof typeof ItemTraverseNodeErrorType;
+export type ItemTraverseNodeErrorType =
+  typeof ItemTraverseNodeErrorType[keyof typeof ItemTraverseNodeErrorType];
 
 export type ItemTraverseNode<TSchema extends AdminSchema | PublishedSchema> =
   | ItemTraverseNodeErrorGeneric

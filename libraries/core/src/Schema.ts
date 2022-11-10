@@ -49,7 +49,7 @@ export const FieldType = {
   //TODO rename to ValueItem?
   ValueType: 'ValueType',
 } as const;
-export type FieldType = keyof typeof FieldType;
+export type FieldType = typeof FieldType[keyof typeof FieldType];
 
 export const RichTextNodeType = {
   entity: 'entity',
@@ -59,7 +59,7 @@ export const RichTextNodeType = {
   text: 'text',
   valueItem: 'valueItem',
 } as const;
-export type RichTextNodeType = keyof typeof RichTextNodeType;
+export type RichTextNodeType = typeof RichTextNodeType[keyof typeof RichTextNodeType];
 
 interface FieldSpecification {
   name: string;

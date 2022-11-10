@@ -114,7 +114,9 @@ export function getAdapter(fieldSpec: AdminFieldSpecification): FieldTypeAdapter
   return getAdapterForType(fieldSpec.type as FieldType);
 }
 
-export function getAdapterForType(fieldType: keyof typeof FieldType): FieldTypeAdapter {
+export function getAdapterForType(
+  fieldType: typeof FieldType[keyof typeof FieldType]
+): FieldTypeAdapter {
   const result = adapters[fieldType];
   if (!result) {
     throw new Error(`Can't find field type (${fieldType})`);

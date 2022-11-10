@@ -22,7 +22,6 @@ const DialogStatus = {
   noChange: 'noChange',
   valid: 'valid',
 } as const;
-
 type DialogStatus = typeof DialogStatus[keyof typeof DialogStatus];
 
 //TODO move to core? add check to core

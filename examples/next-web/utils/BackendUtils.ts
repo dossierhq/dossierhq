@@ -13,7 +13,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   admin: (
-    operationName: keyof typeof AdminClientOperationName,
+    operationName: typeof AdminClientOperationName[keyof typeof AdminClientOperationName],
     operation?: AdminClientJsonOperation
   ): string =>
     buildUrlWithUrlQuery(
@@ -21,7 +21,7 @@ export const urls = {
       stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
     ),
   published: (
-    operationName: keyof typeof PublishedClientOperationName,
+    operationName: typeof PublishedClientOperationName[keyof typeof PublishedClientOperationName],
     operation?: PublishedClientJsonOperation
   ): string =>
     buildUrlWithUrlQuery(
