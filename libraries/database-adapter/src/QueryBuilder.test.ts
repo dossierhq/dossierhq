@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { PostgresQueryBuilder, SqliteQueryBuilder } from './QueryBuilder.js';
+import { PostgresQueryBuilder } from './QueryBuilder.js';
 
 describe('PostgresQueryBuilder', () => {
   test('Only original query', () => {
@@ -90,23 +90,6 @@ describe('PostgresQueryBuilder', () => {
       {
         "text": "INSERT INTO foo (a) VALUES (DEFAULT)",
         "values": [],
-      }
-    `);
-  });
-});
-
-describe('SqliteQueryBuilder', () => {
-  test('addList()', () => {
-    const qb = new SqliteQueryBuilder('SELECT * FROM foo WHERE');
-    qb.addQuery(`a IN ${qb.addValueList(['a', 'b', 'c'])}`);
-    expect(qb.build()).toMatchInlineSnapshot(`
-      {
-        "text": "SELECT * FROM foo WHERE a IN (?1, ?2, ?3)",
-        "values": [
-          "a",
-          "b",
-          "c",
-        ],
       }
     `);
   });

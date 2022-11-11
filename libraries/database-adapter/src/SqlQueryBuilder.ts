@@ -91,15 +91,32 @@ function addValueToQuery<TValue>(
 }
 
 function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boolean) {
+  let textToAdd = text;
+  if (query.text.endsWith('WHERE') && textToAdd.startsWith('AND')) {
+    textToAdd = textToAdd.slice('AND'.length).trimStart();
+  }
+
   let separator = '';
   if (query.text && addSeparator) {
+    //TODO simplify this
     const currentEndsWithBracket = endsWithBracket(query.text);
-    const newStartsWithBracket = startsWithBracket(text);
+    const newStartsWithBracket = startsWithBracket(textToAdd);
+    const currentEndsWithPeriod = endsWithPeriod(query.text);
+    const newStartsWithPeriod = startsWithPeriod(textToAdd);
     const currentEndsWithKeyword = endsWithKeyword(query.text);
-    const newStartsWithKeyword = startsWithKeyword(text);
+    const newStartsWithKeyword = startsWithKeyword(textToAdd);
+    const currentEndsWithOperator = endsWithOperator(query.text);
+    const newStartsWithOperator = startsWithOperator(textToAdd);
 
-    if (currentEndsWithBracket || newStartsWithBracket) {
+    if (
+      currentEndsWithBracket ||
+      newStartsWithBracket ||
+      currentEndsWithPeriod ||
+      newStartsWithPeriod
+    ) {
       separator = '';
+    } else if (currentEndsWithOperator || newStartsWithOperator) {
+      separator = ' ';
     } else if (currentEndsWithKeyword && !newStartsWithKeyword) {
       separator = ' ';
     } else if (!currentEndsWithKeyword && !newStartsWithKeyword) {
@@ -111,7 +128,7 @@ function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boole
     }
   }
 
-  query.text += separator + text;
+  query.text += separator + textToAdd;
 }
 
 function startsWithBracket(query: string) {
@@ -122,12 +139,28 @@ function endsWithBracket(query: string) {
   return query.endsWith('(');
 }
 
+function startsWithPeriod(query: string) {
+  return query.startsWith('.');
+}
+
+function endsWithPeriod(query: string) {
+  return query.endsWith('.');
+}
+
 function startsWithKeyword(query: string) {
   return !!query.match(/^[A-Z]+\w/);
 }
 
 function endsWithKeyword(query: string) {
   return !!query.match(/\w[A-Z]+$/);
+}
+
+function startsWithOperator(query: string) {
+  return !!query.match(/^[=!<>]+/);
+}
+
+function endsWithOperator(query: string) {
+  return !!query.match(/[=!<>]+$/);
 }
 
 // POSTGRES
@@ -146,7 +179,7 @@ export function buildPostgresSqlQuery(callback: SqlQueryBuilderCallback<unknown>
 
 type SqliteColumnValue = number | string | Uint8Array | null;
 
-interface SqliteQueryBuilder extends SqlQueryBuilder<SqliteColumnValue> {
+export interface SqliteQueryBuilder extends SqlQueryBuilder<SqliteColumnValue> {
   addValueList: (values: SqliteColumnValue[]) => RawSql;
 }
 

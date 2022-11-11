@@ -8,9 +8,19 @@ import type {
   PublishedSearchQuery,
   Result,
 } from '@jonasb/datadata-core';
-import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
-import type { DatabasePagingInfo, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
-import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import {
+  AdminQueryOrder,
+  assertExhaustive,
+  notOk,
+  ok,
+  PublishedQueryOrder,
+} from '@jonasb/datadata-core';
+import type {
+  DatabasePagingInfo,
+  ResolvedAuthKey,
+  SqliteQueryBuilder,
+} from '@jonasb/datadata-database-adapter';
+import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
@@ -85,37 +95,53 @@ function sharedSearchEntitiesQuery<
   if (cursorsResult.isError()) return cursorsResult;
   const resolvedCursors = cursorsResult.value;
 
-  const qb = new SqliteQueryBuilder('SELECT');
-  addEntityQuerySelectColumn(qb, query, published);
+  const queryBuilder = createSqliteSqlQuery();
+  const { sql } = queryBuilder;
+  sql`SELECT`;
+  addEntityQuerySelectColumn(queryBuilder, query, published);
 
-  qb.addQuery('WHERE');
+  sql`WHERE`;
 
-  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
+  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, true);
   if (filterResult.isError()) return filterResult;
 
   // Paging 1/2
   if (resolvedCursors.after !== null) {
-    let operator = query?.reverse ? '<' : '>';
-    if (paging.afterInclusive) operator += '=';
-    qb.addQuery(`AND e.${cursorName} ${operator} ${qb.addValue(resolvedCursors.after as string)}`);
+    const operator = query?.reverse ? '<' : '>';
+    sql`AND e.`;
+    addCursorNameOperatorAndValue(
+      queryBuilder,
+      cursorName,
+      operator,
+      paging.afterInclusive,
+      resolvedCursors.after as string
+    );
   }
   if (resolvedCursors.before !== null) {
-    let operator = query?.reverse ? '>' : '<';
-    if (paging.beforeInclusive) operator += '=';
-    qb.addQuery(`AND e.${cursorName} ${operator} ${qb.addValue(resolvedCursors.before as string)}`);
+    const operator = query?.reverse ? '>' : '<';
+    sql`AND e.`;
+    addCursorNameOperatorAndValue(
+      queryBuilder,
+      cursorName,
+      operator,
+      paging.beforeInclusive,
+      resolvedCursors.before as string
+    );
   }
 
   // Ordering
-  qb.addQuery(`ORDER BY e.${cursorName}`);
+  sql`ORDER BY e.`;
+  addCursorName(queryBuilder, cursorName);
   let ascending = !query?.reverse;
 
   // Paging 2/2
   if (!paging.forwards) ascending = !ascending;
   const countToRequest = paging.count + 1; // request one more to calculate hasMore
-  qb.addQuery(`${ascending ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
+  if (!ascending) sql`DESC`;
+  sql`LIMIT ${countToRequest}`;
 
   return ok({
-    sqlQuery: qb.build(),
+    sqlQuery: queryBuilder.query,
     cursorExtractor,
   });
 }
@@ -185,14 +211,55 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
   }
 }
 
-function addFilterStatusSqlSegment(query: AdminQuery, qb: SqliteQueryBuilder) {
+function addCursorName({ sql }: SqliteQueryBuilder, cursorName: CursorName) {
+  switch (cursorName) {
+    case 'id':
+      sql`id`;
+      break;
+    case 'name':
+      sql`name`;
+      break;
+    case 'updated_seq':
+      sql`updated_seq`;
+      break;
+    default:
+      assertExhaustive(cursorName);
+  }
+}
+
+function addCursorNameOperatorAndValue(
+  queryBuilder: SqliteQueryBuilder,
+  cursorName: CursorName,
+  operator: '>' | '<',
+  orEqual: boolean,
+  value: string
+) {
+  const { sql } = queryBuilder;
+
+  addCursorName(queryBuilder, cursorName);
+  switch (operator) {
+    case '>':
+      if (orEqual) sql`>=`;
+      else sql`>`;
+      break;
+    case '<':
+      if (orEqual) sql`<=`;
+      else sql`<`;
+      break;
+    default:
+      assertExhaustive(operator);
+  }
+  sql`${value}`;
+}
+
+function addFilterStatusSqlSegment(query: AdminQuery, { sql, addValueList }: SqliteQueryBuilder) {
   if (!query.status || query.status.length === 0) {
     return;
   }
   if (query.status.length === 1) {
-    qb.addQuery(`AND status = ${qb.addValue(query.status[0])}`);
+    sql`AND status = ${query.status[0]}`;
   } else {
-    qb.addQuery(`AND status IN ${qb.addValueList(query.status)}`);
+    sql`AND status IN ${addValueList(query.status)}`;
   }
 }
 
@@ -224,18 +291,21 @@ function sampleEntitiesQuery(
   authKeys: ResolvedAuthKey[],
   published: boolean
 ): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
-  const qb = new SqliteQueryBuilder('SELECT');
+  const queryBuilder = createSqliteSqlQuery();
+  const { sql } = queryBuilder;
 
-  addEntityQuerySelectColumn(qb, query, published);
+  sql`SELECT`;
 
-  qb.addQuery('WHERE');
+  addEntityQuerySelectColumn(queryBuilder, query, published);
 
-  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
+  sql`WHERE`;
+
+  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, true);
   if (filterResult.isError()) return filterResult;
 
-  qb.addQuery(`ORDER BY e.uuid LIMIT ${qb.addValue(limit)} OFFSET ${qb.addValue(offset)}`);
+  sql`ORDER BY e.uuid LIMIT ${limit} OFFSET ${offset}`;
 
-  return ok(qb.build());
+  return ok(queryBuilder.query);
 }
 
 export function totalAdminEntitiesQuery(
@@ -260,159 +330,166 @@ function totalCountQuery(
   query: AdminQuery | PublishedQuery | undefined,
   published: boolean
 ): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
-  const qb = new SqliteQueryBuilder('SELECT');
+  const queryBuilder = createSqliteSqlQuery();
+  const { sql } = queryBuilder;
+  sql`SELECT`;
   if (query?.boundingBox) {
-    qb.addQuery('COUNT(DISTINCT e.id)');
+    sql`COUNT(DISTINCT e.id)`;
   } else {
-    qb.addQuery('COUNT(e.id)');
+    sql`COUNT(e.id)`;
   }
-  qb.addQuery('AS count FROM entities e');
+  sql`AS count FROM entities e`;
 
   if (query?.linksTo) {
-    qb.addQuery(
-      published
-        ? 'entity_published_references er_to, entities e_to'
-        : 'entity_latest_references er_to, entities e_to'
-    );
+    if (published) {
+      sql`entity_published_references er_to, entities e_to`;
+    } else {
+      sql`entity_latest_references er_to, entities e_to`;
+    }
   }
   if (query?.linksFrom) {
-    qb.addQuery(
-      published
-        ? 'entity_published_references er_from, entities e_from'
-        : 'entity_latest_references er_from, entities e_from'
-    );
+    if (published) {
+      sql`entity_published_references er_from, entities e_from`;
+    } else {
+      sql`entity_latest_references er_from, entities e_from`;
+    }
   }
   if (query?.boundingBox) {
-    qb.addQuery(published ? 'entity_published_locations el' : 'entity_latest_locations el');
+    if (published) {
+      sql`entity_published_locations el`;
+    } else {
+      sql`entity_latest_locations el`;
+    }
   }
   if (query?.text) {
-    qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
+    if (published) {
+      sql`entities_published_fts fts`;
+    } else {
+      sql`entities_latest_fts fts`;
+    }
   }
 
-  qb.addQuery('WHERE');
+  sql`WHERE`;
 
-  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, false);
+  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, false);
   if (filterResult.isError()) return filterResult;
 
-  return ok(qb.build());
+  return ok(queryBuilder.query);
 }
 
 function addEntityQuerySelectColumn(
-  qb: SqliteQueryBuilder,
+  { sql }: SqliteQueryBuilder,
   query: PublishedQuery | AdminQuery | undefined,
   published: boolean
 ) {
   if (query?.boundingBox) {
-    qb.addQuery('DISTINCT');
+    sql`DISTINCT`;
   }
   if (published) {
-    qb.addQuery(
-      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev'
-    );
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev`;
   } else {
-    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
-  FROM entities e, entity_versions ev`);
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
+  FROM entities e, entity_versions ev`;
   }
   if (query?.linksTo) {
-    qb.addQuery(
-      published
-        ? 'entity_published_references er_to, entities e_to'
-        : 'entity_latest_references er_to, entities e_to'
-    );
+    if (published) {
+      sql`entity_published_references er_to, entities e_to`;
+    } else {
+      sql`entity_latest_references er_to, entities e_to`;
+    }
   }
   if (query?.linksFrom) {
-    qb.addQuery(
-      published
-        ? 'entities e_from, entity_published_references er_from'
-        : 'entities e_from, entity_latest_references er_from'
-    );
+    if (published) {
+      sql`entities e_from, entity_published_references er_from`;
+    } else {
+      sql`entities e_from, entity_latest_references er_from`;
+    }
   }
   if (query?.boundingBox) {
-    qb.addQuery(published ? 'entity_published_locations el' : 'entity_latest_locations el');
+    if (published) {
+      sql`entity_published_locations el`;
+    } else {
+      sql`entity_latest_locations el`;
+    }
   }
   if (query?.text) {
-    qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
+    if (published) {
+      sql`entities_published_fts fts`;
+    } else {
+      sql`entities_latest_fts fts`;
+    }
   }
 }
 
 function addQueryFilters(
-  qb: SqliteQueryBuilder,
+  queryBuilder: SqliteQueryBuilder,
   schema: AdminSchema | PublishedSchema,
   query: PublishedQuery | AdminQuery | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean,
   linkToEntityVersion: boolean
 ): Result<void, typeof ErrorType.BadRequest> {
+  const { addValueList, sql } = queryBuilder;
+
   if (linkToEntityVersion) {
     if (published) {
-      qb.addQuery('AND e.published_entity_versions_id = ev.id');
+      sql`AND e.published_entity_versions_id = ev.id`;
     } else {
-      qb.addQuery('AND e.latest_entity_versions_id = ev.id');
+      sql`AND e.latest_entity_versions_id = ev.id`;
     }
   } else if (published) {
-    qb.addQuery('AND e.published_entity_versions_id IS NOT NULL');
+    sql`AND e.published_entity_versions_id IS NOT NULL`;
   }
 
   // Filter: authKeys
   if (authKeys.length === 0) {
     return notOk.BadRequest('No authKeys provided');
   } else if (authKeys.length === 1) {
-    qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
+    sql`AND e.resolved_auth_key = ${authKeys[0].resolvedAuthKey}`;
   } else {
-    qb.addQuery(
-      `AND e.resolved_auth_key IN ${qb.addValueList(authKeys.map((it) => it.resolvedAuthKey))}`
-    );
+    sql`AND e.resolved_auth_key IN ${addValueList(authKeys.map((it) => it.resolvedAuthKey))}`;
   }
 
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(schema, query);
-  if (entityTypesResult.isError()) {
-    return entityTypesResult;
-  }
+  if (entityTypesResult.isError()) return entityTypesResult;
+
   if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND e.type IN ${qb.addValueList(entityTypesResult.value)}`);
+    sql`AND e.type IN ${addValueList(entityTypesResult.value)}`;
   }
 
   // Filter: status
   if (!published && query && 'status' in query) {
-    addFilterStatusSqlSegment(query, qb);
+    addFilterStatusSqlSegment(query, queryBuilder);
   }
 
   // Filter: linksTo
   if (query?.linksTo) {
-    qb.addQuery(
-      `AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ${qb.addValue(
-        query.linksTo.id
-      )}`
-    );
+    sql`AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ${query.linksTo.id}`;
   }
 
   // Filter: linksFrom
   if (query?.linksFrom) {
-    qb.addQuery(`AND e_from.uuid = ${qb.addValue(query.linksFrom.id)}`);
-    qb.addQuery(`AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id`);
+    sql`AND e_from.uuid = ${query.linksFrom.id}`;
+    sql`AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id`;
   }
 
   // Filter: bounding box
   if (query?.boundingBox) {
     const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
-    qb.addQuery(
-      `AND e.id = el.entities_id AND el.lat >= ${qb.addValue(minLat)} AND el.lat <= ${qb.addValue(
-        maxLat
-      )}`
-    );
+    sql`AND e.id = el.entities_id AND el.lat >= ${minLat} AND el.lat <= ${maxLat}`;
     if (minLng > 0 && maxLng < 0) {
       // wrapping around 180/-180 boundary
-      qb.addQuery(`AND (el.lng <= ${qb.addValue(minLng)} OR el.lng >= ${qb.addValue(maxLng)})`);
+      sql`AND (el.lng <= ${minLng} OR el.lng >= ${maxLng})`;
     } else {
-      qb.addQuery(`AND el.lng >= ${qb.addValue(minLng)} AND el.lng <= ${qb.addValue(maxLng)}`);
+      sql`AND el.lng >= ${minLng} AND el.lng <= ${maxLng}`;
     }
   }
 
   // Filter: text
   if (query?.text) {
     // fts points to different identical tables based on `published`
-    qb.addQuery(`AND fts.content match ${qb.addValue(query.text)} AND fts.docid = e.id`);
+    sql`AND fts.content match ${query.text} AND fts.docid = e.id`;
   }
 
   return ok(undefined);

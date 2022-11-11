@@ -61,18 +61,6 @@ export class QueryBuilder<TValue = unknown> {
   }
 }
 
-type SqliteColumnValue = number | string | Uint8Array | null;
-export class SqliteQueryBuilder extends QueryBuilder<SqliteColumnValue> {
-  constructor(query: string, values?: SqliteColumnValue[]) {
-    super('?', query, values);
-  }
-
-  addValueList(list: SqliteColumnValue[]) {
-    const values = list.map((it) => this.addValue(it));
-    return '(' + values.join(', ') + ')';
-  }
-}
-
 export class PostgresQueryBuilder extends QueryBuilder<unknown> {
   constructor(query: string, values?: unknown[]) {
     super('$', query, values);

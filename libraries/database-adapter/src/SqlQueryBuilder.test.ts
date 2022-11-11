@@ -74,6 +74,51 @@ describe('createPostgresSqlQuery', () => {
       }
     `);
   });
+
+  test('AND is removed when coming after WHERE', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE`;
+    if (String(true) === 'true') {
+      sql`AND bar IS NULL`;
+    }
+
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo WHERE bar IS NULL",
+        "values": [],
+      }
+    `);
+  });
+
+  test('no separator is added before/after .', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo f WHERE f.`;
+    sql`bar IS NULL OR f`;
+    sql`.baz IS NULL`;
+
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo f WHERE f.bar IS NULL OR f.baz IS NULL",
+        "values": [],
+      }
+    `);
+  });
+
+  test('comparison operator', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE bar`;
+    sql`>=`;
+    sql`${1 + 2}`;
+
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo WHERE bar >= $1",
+        "values": [
+          3,
+        ],
+      }
+    `);
+  });
 });
 
 describe('createSqliteSqlQuery', () => {
