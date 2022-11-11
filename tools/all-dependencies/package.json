@@ -78,7 +78,7 @@
     "react-router-dom": "~6.3.0",
     "rollup-plugin-visualizer": "~5.8.0",
     "sass": "~1.56.0",
-    "sass-loader": "~13.1.0",
+    "sass-loader": "~13.2.0",
     "sql.js": "~1.8.0",
     "sqlite3": "~5.1.1",
     "svgo": "~3.0.0",
