@@ -87,7 +87,7 @@
     "typescript": "~4.8.4",
     "uuid": "~9.0.0",
     "vite": "~3.2.2",
-    "vitest": "0.25.0"
+    "vitest": "0.25.1"
   },
   "dependencies": {
     "@microsoft/rush-lib": "~5.82.1"
