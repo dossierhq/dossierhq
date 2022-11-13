@@ -26,8 +26,7 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const handleClose = useCallback(
     (event: Event) => {
-      //TODO the bundled types for <dialog> are out of date
-      const dialog = dialogRef.current as null | (HTMLDialogElement & { returnValue: string });
+      const dialog = dialogRef.current;
       onClose(event, dialog?.returnValue ?? '');
       // reset returnValue since if next time we show the dialog we don't want the old value (esc key doesn't set returnValue)
       if (dialog) dialog.returnValue = '';
@@ -37,13 +36,7 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
 
   useEffect(() => {
     if (!dialogRef.current) return;
-    //TODO the bundled types for <dialog> are out of date
-    const dialog = dialogRef.current as HTMLDialogElement & {
-      showModal(): void;
-      show(): void;
-      close(): void;
-      open: boolean;
-    };
+    const dialog = dialogRef.current;
 
     // don't do anything if already in right state (due to useEffect double run)
     if (show === dialog.open) {
