@@ -3,7 +3,7 @@ import type {
   DatabaseAdminEntityPublishingCreateEventArg,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { createPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
@@ -13,17 +13,14 @@ export async function adminEntityPublishingCreateEvents(
   context: TransactionContext,
   event: DatabaseAdminEntityPublishingCreateEventArg
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  const qb = new PostgresQueryBuilder(
-    'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
-  );
-  const subjectValue = qb.addValue(getSessionSubjectInternalId(event.session));
-  const kindValue = qb.addValue(event.kind);
+  const { addValue, query, sql } = createPostgresSqlQuery();
+  sql`INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES`;
+  const subjectValue = addValue(getSessionSubjectInternalId(event.session));
+  const kindValue = addValue(event.kind);
   for (const reference of event.references) {
-    qb.addQuery(
-      `(${qb.addValue(reference.entityInternalId)}, ${qb.addValue(
-        'entityVersionInternalId' in reference ? reference.entityVersionInternalId : null
-      )}, ${subjectValue}, ${kindValue})`
-    );
+    sql`(${reference.entityInternalId}, ${
+      'entityVersionInternalId' in reference ? reference.entityVersionInternalId : null
+    }, ${subjectValue}, ${kindValue})`;
   }
-  return await queryNone(databaseAdapter, context, qb.build());
+  return await queryNone(databaseAdapter, context, query);
 }

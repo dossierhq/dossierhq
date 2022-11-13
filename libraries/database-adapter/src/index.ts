@@ -32,7 +32,6 @@ export type {
   DatabaseResolvedEntityReference,
   DatabaseResolvedEntityVersionReference,
 } from './DatabaseAdapter.js';
-export { PostgresQueryBuilder } from './QueryBuilder.js';
 export type { ResolvedAuthKey, Session } from './Session.js';
 export {
   buildPostgresSqlQuery,
@@ -40,6 +39,7 @@ export {
   createPostgresSqlQuery,
   createSqliteSqlQuery,
   DEFAULT,
+  type PostgresQueryBuilder,
   type SqliteQueryBuilder,
 } from './SqlQueryBuilder.js';
 export { TransactionContextImpl } from './TransactionContext.js';

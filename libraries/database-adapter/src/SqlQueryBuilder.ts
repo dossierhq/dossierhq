@@ -165,7 +165,9 @@ function endsWithOperator(query: string) {
 
 // POSTGRES
 
-export function createPostgresSqlQuery() {
+export type PostgresQueryBuilder = SqlQueryBuilder<unknown>;
+
+export function createPostgresSqlQuery(): PostgresQueryBuilder {
   return createSqlQuery<unknown>({ indexPrefix: '$' });
 }
 

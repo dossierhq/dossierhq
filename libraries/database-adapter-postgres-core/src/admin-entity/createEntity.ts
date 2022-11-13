@@ -1,6 +1,7 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
 import {
-  PostgresQueryBuilder,
+  createPostgresSqlQuery,
+  DEFAULT,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
@@ -82,21 +83,18 @@ async function createEntityRow(
     entity.name,
     randomNameGenerator,
     async (context, name, nameConflictErrorMessage) => {
-      const qb = new PostgresQueryBuilder(
-        'INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, latest_fts, status)'
-      );
-      qb.addQuery(
-        `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(
-          entity.type
-        )}, ${qb.addValue(entity.resolvedAuthKey.authKey)}, ${qb.addValue(
-          entity.resolvedAuthKey.resolvedAuthKey
-        )}, to_tsvector(${qb.addValue(entity.fullTextSearchText)}), 'draft')`
-      );
-      qb.addQuery('RETURNING id, uuid, created_at, updated_at');
+      const { sql, query } = createPostgresSqlQuery();
+      sql`INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, latest_fts, status)`;
+      sql`VALUES (${entity.id ?? DEFAULT}, ${name}, ${entity.type}, ${
+        entity.resolvedAuthKey.authKey
+      }, ${entity.resolvedAuthKey.resolvedAuthKey}, to_tsvector(${
+        entity.fullTextSearchText
+      }), 'draft')`;
+      sql`RETURNING id, uuid, created_at, updated_at`;
       const createResult = await queryOne<
         Pick<EntitiesTable, 'id' | 'uuid' | 'created_at' | 'updated_at'>,
         typeof ErrorType.Conflict
-      >(databaseAdapter, context, qb.build(), (error) => {
+      >(databaseAdapter, context, query, (error) => {
         if (
           databaseAdapter.isUniqueViolationOfConstraint(error, UniqueConstraints.entities_name_key)
         ) {
