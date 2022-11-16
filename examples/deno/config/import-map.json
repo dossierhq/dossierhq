@@ -7,7 +7,7 @@
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/esm/index.js",
     "@jonasb/datadata-template-library": "../node_modules/@jonasb/datadata-template-library/lib/esm/index.js",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
-    "lexical": "npm:lexical@~0.5.0",
+    "lexical": "npm:lexical@~0.6.0",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
     "std/": "https://deno.land/std@0.162.0/",
     "tslib": "npm:tslib@~2.4.0",

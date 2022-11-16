@@ -2,6 +2,7 @@ import type { EntityReference, PublishedFieldSpecification, RichText } from '@jo
 import { ClassName, toClassName } from '@jonasb/datadata-design';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
 import type { LexicalEditor } from 'lexical/LexicalEditor.js';
 import { useCallback, useContext } from 'react';
@@ -55,6 +56,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
             />
           }
           placeholder=""
+          ErrorBoundary={LexicalErrorBoundary}
         />
         <PublishedClickableLinkPlugin onClick={handleEntityLinkClick} />
       </LexicalComposer>
