@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   postgres:
-    image: postgis/postgis:13-3.0-alpine
+    image: postgis/postgis:15-3.3-alpine
     ports:
       - published: 5432
         target: 5432
