@@ -104,3 +104,10 @@ export function createRichTextValueItemNode<T extends ValueItem<string, object>>
 ): RichTextValueItemNode {
   return { type: RichTextNodeType.valueItem, data, format: '', version: 1 };
 }
+
+export function richTextTextNodeHasFormat(
+  node: SerializedTextNode,
+  format: TextFormatType
+): boolean {
+  return (node.format & TEXT_TYPE_TO_FORMAT[format]) !== 0;
+}

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { createRichTextTextNode } from './RichTextUtils.js';
+import { createRichTextTextNode, richTextTextNodeHasFormat } from './RichTextUtils.js';
 
 describe('createRichTextTextNode', () => {
   test('format: bold', () => {
@@ -14,5 +14,19 @@ describe('createRichTextTextNode', () => {
         "version": 1,
       }
     `);
+  });
+});
+
+describe('richTextTextNodeHasFormat', () => {
+  test('format: bold is bold', () => {
+    expect(
+      richTextTextNodeHasFormat(createRichTextTextNode('hello', { format: ['bold'] }), 'bold')
+    ).toBe(true);
+  });
+
+  test('format: italic is not bold', () => {
+    expect(
+      richTextTextNodeHasFormat(createRichTextTextNode('hello', { format: ['italic'] }), 'bold')
+    ).toBe(false);
   });
 });

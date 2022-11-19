@@ -121,6 +121,7 @@ export {
   createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
+  richTextTextNodeHasFormat,
 } from './RichTextUtils.js';
 export { AdminSchema, FieldType, PublishedSchema, RichTextNodeType } from './Schema.js';
 export type {
