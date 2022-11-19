@@ -1,0 +1,14 @@
+{
+  "imports": {
+    "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/esm/index.js",
+    "@jonasb/datadata-database-adapter": "../node_modules/@jonasb/datadata-database-adapter/lib/esm/index.js",
+    "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/esm/index.js",
+    "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/esm/index.js",
+    "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/esm/index.js",
+    "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
+    "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
+    "std/": "https://deno.land/std@0.162.0/",
+    "tslib": "npm:tslib@~2.4.0",
+    "uuid": "npm:uuid@~9.0.0"
+  }
+}

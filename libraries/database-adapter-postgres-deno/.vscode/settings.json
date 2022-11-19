@@ -1,0 +1,10 @@
+{
+  "cSpell.words": ["datadata", "jonasb", "rushstack"],
+  "deno.enable": true,
+  "deno.lint": true,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true
+}

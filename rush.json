@@ -396,6 +396,10 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-deno",
+      "projectFolder": "libraries/database-adapter-postgres-deno"
+    },
+    {
       "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
       "projectFolder": "libraries/database-adapter-postgres-pg",
       "versionPolicyName": "DataDataFramework"

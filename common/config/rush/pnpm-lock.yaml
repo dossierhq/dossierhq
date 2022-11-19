@@ -546,6 +546,22 @@ importers:
       typescript: 4.8.4
       vitest: 0.25.2
 
+  ../../libraries/database-adapter-postgres-deno:
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-core': workspace:*
+      '@jonasb/datadata-database-adapter-test-integration': workspace:*
+      '@jonasb/datadata-postgres': workspace:*
+      '@jonasb/datadata-server': workspace:*
+    devDependencies:
+      '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-database-adapter': link:../database-adapter
+      '@jonasb/datadata-database-adapter-postgres-core': link:../database-adapter-postgres-core
+      '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
+      '@jonasb/datadata-postgres': link:../postgres
+      '@jonasb/datadata-server': link:../server
+
   ../../libraries/database-adapter-postgres-pg:
     specifiers:
       '@jonasb/datadata-core': workspace:*

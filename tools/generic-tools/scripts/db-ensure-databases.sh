@@ -48,4 +48,8 @@ function grant_access_for_user {
   create_user "examplesnextwebuser" "examplesnextwebpass"
   create_database "datadata-examples-next-web"
   grant_access_for_user "datadata-examples-next-web" "examplesnextwebuser"
+
+  create_user "librariesdenouser" "librariesdenopass"
+  create_database "datadata-libraries-deno"
+  grant_access_for_user "datadata-libraries-deno" "librariesdenouser"
 )

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://deno.land/x/deno@v1.28.1/cli/schemas/config-file.v1.json",
+  "importMap": "./config/import-map.json",
+  "fmt": {
+    "files": {
+      "exclude": ["node_modules/"]
+    }
+  },
+  "lint": {
+    "files": {
+      "include": ["src/"],
+      "exclude": ["node_modules/"]
+    }
+  },
+  "test": {
+    "files": {
+      "include": ["src/"]
+    }
+  }
+}

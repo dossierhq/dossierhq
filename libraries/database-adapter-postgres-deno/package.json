@@ -1,0 +1,22 @@
+{
+  "name": "@jonasb/datadata-database-adapter-postgres-deno",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "deno lint -q && (deno fmt --check 2>&1) && deno check -q src/mod.ts && (npm run test 2>&1)",
+    "db:cli": "./scripts/db-cli.sh",
+    "db:migrate": "./scripts/db-migrate.sh",
+    "postinstall": "deno cache --reload external-dependencies.ts",
+    "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jonasb/datadata-core": "workspace:*",
+    "@jonasb/datadata-database-adapter": "workspace:*",
+    "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
+    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
+    "@jonasb/datadata-postgres": "workspace:*",
+    "@jonasb/datadata-server": "workspace:*"
+  }
+}
