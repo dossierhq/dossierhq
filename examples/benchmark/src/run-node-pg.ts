@@ -29,7 +29,7 @@ async function createPostgresDatabaseAdapter(
   return ok(databaseAdapter);
 }
 
-async function main(runName: string, ciOrLocal: 'ci' | 'local') {
+async function main(runName: string, ciOrLocal: { githubSha: string | undefined } | 'local') {
   assertIsDefined(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
   const adapter = await createPostgresDatabaseAdapter(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
   const result = await initializeAndRunTests({
@@ -42,7 +42,10 @@ async function main(runName: string, ciOrLocal: 'ci' | 'local') {
 }
 
 const runNameOrCiSwitch = process.argv[2] || '';
-main(runNameOrCiSwitch, runNameOrCiSwitch === 'ci' ? 'ci' : 'local').catch((error) => {
+main(
+  runNameOrCiSwitch,
+  runNameOrCiSwitch === 'ci' ? { githubSha: process.env.GITHUB_SHA } : 'local'
+).catch((error) => {
   console.warn(error);
   process.exit(1);
 });

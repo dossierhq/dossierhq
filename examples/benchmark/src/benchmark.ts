@@ -1,5 +1,3 @@
-import 'dotenv/config';
-//
 import { faker } from '@faker-js/faker';
 import type {
   AdminClient,
@@ -16,10 +14,9 @@ import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@jona
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
-import * as path from 'node:path';
 import { initializeServer } from './server.js';
 
-const outputFolder = path.join(process.cwd(), 'output');
+const outputFolder = 'output';
 
 interface CreateEntityOptions {
   publishable?: boolean;
@@ -477,11 +474,12 @@ export async function initializeAndRunTests({
   runName: string;
   variant: string;
   databaseAdapter: DatabaseAdapter;
-  ciOrLocal: 'ci' | 'local';
+  ciOrLocal: { githubSha: string | undefined } | 'local';
 }) {
-  if (ciOrLocal === 'ci') {
-    assertIsDefined(process.env.GITHUB_SHA);
-    runName = process.env.GITHUB_SHA.slice(0, 8); // use short sha
+  const isCI = typeof ciOrLocal === 'object';
+  if (isCI) {
+    assertIsDefined(ciOrLocal.githubSha);
+    runName = ciOrLocal.githubSha.slice(0, 8); // use short sha
   } else {
     const timestamp = fileTimestamp();
     runName = runName ? `${timestamp}-${runName}` : timestamp;
@@ -500,7 +498,7 @@ export async function initializeAndRunTests({
 
     const adminClient = server.createAdminClient(sessionResult.value.context);
 
-    const tsvFilename = ciOrLocal === 'ci' ? 'ci-benchmark.tsv' : 'local-benchmark.tsv';
+    const tsvFilename = isCI ? 'ci-benchmark.tsv' : 'local-benchmark.tsv';
     await runTests(runName, variant, tsvFilename, adminClient);
   } finally {
     await server.shutdown();
