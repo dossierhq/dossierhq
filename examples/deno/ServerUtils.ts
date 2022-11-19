@@ -1,5 +1,5 @@
+import { createPostgresAdapter } from "@jonasb/datadata-database-adapter-postgres-deno";
 import { config } from "dotenv";
-import { createPostgresAdapter } from "./PostgresAdapter.ts";
 
 export function createDotenvAdapter() {
   return createPostgresAdapter(

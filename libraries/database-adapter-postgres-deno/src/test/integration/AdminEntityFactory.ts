@@ -8,15 +8,16 @@ import {
   registerTestSuite,
 } from "../TestUtils.ts";
 
-registerTestSuite(
-  createAdminEntityTestSuite({
+export function registerAdminEntityTestSuite(suitePage: {
+  page: number;
+  totalPages: number;
+}) {
+  const testSuite = createAdminEntityTestSuite({
     before: async () => {
-      const { adminSchema, server } = (
-        await initializeIntegrationTestServer()
-      ).valueOrThrow();
-
+      const { adminSchema, server } = (await initializeIntegrationTestServer())
+        .valueOrThrow();
       const readOnlyEntityRepository = (
-        await createReadOnlyEntityRepository(server, "admin-entity")
+        await createReadOnlyEntityRepository(server)
       ).valueOrThrow();
 
       return [{ adminSchema, server, readOnlyEntityRepository }, { server }];
@@ -24,5 +25,7 @@ registerTestSuite(
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();
     },
-  }),
-);
+  });
+
+  registerTestSuite(testSuite, suitePage);
+}

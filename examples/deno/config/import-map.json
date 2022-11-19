@@ -3,6 +3,7 @@
     "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/esm/index.js",
     "@jonasb/datadata-database-adapter": "../node_modules/@jonasb/datadata-database-adapter/lib/esm/index.js",
     "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/esm/index.js",
+    "@jonasb/datadata-database-adapter-postgres-deno": "../node_modules/@jonasb/datadata-database-adapter-postgres-deno/src/mod.ts",
     "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/esm/index.js",
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/esm/index.js",
     "@jonasb/datadata-template-library": "../node_modules/@jonasb/datadata-template-library/lib/esm/index.js",
