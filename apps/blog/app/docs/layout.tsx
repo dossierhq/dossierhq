@@ -44,9 +44,8 @@ export default async function Layout({ children }: Props) {
             </Menu.List>
           </Menu>
         </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn width="4/12">
-          {children}
-        </FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn>{children}</FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.Column width="2/12" />
       </FullscreenContainer.Columns>
     </FullscreenContainer>
   );
