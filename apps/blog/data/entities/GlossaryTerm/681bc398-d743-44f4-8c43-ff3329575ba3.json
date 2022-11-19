@@ -29,7 +29,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "A piece of data of a certain ",
+                "text": "A piece of content of a certain ",
                 "type": "text",
                 "version": 1
               },
@@ -59,7 +59,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ". The entity has a unique id, and one or more fields. There are two views of an entity, the admin entity contains all fields and metadata of the entity. The published entity only exist if the entity is published, and doesn't contain admin only fields (as specified by the entity type).",
+                "text": ". An entity has a unique id and one or more fields. There are two views of an entity, an admin entity contains all fields and metadata of the entity. A published entity only exist if the entity is published, and doesn't contain admin only fields (as specified by the entity type).",
                 "type": "text",
                 "version": 1
               }

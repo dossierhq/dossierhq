@@ -10,6 +10,7 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
+  richTextTextNodeHasFormat,
 } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
 import Link from 'next/link.js';
@@ -55,7 +56,11 @@ async function renderNode(
     );
   }
   if (isRichTextTextNode(node)) {
-    return node.text;
+    let formattedText: ReactNode = node.text;
+    if (richTextTextNodeHasFormat(node, 'code')) {
+      formattedText = <code key={key}>{formattedText}</code>;
+    }
+    return formattedText;
   }
   if (isRichTextEntityLinkNode(node)) {
     const entityResult = await context.publishedClient.getEntity(node.reference);
