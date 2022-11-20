@@ -39,7 +39,8 @@
 - Bun is automatically using the latest version on GitHub Actions
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
 - Upgrade individual dependencies in `tools/all-dependencies/`:
-  - `rush add --package typescript@latest --dev --make-consistent` :
+  - `rush add --package typescript@latest --dev --make-consistent`
+  - or `rush upgrade-interactive`
 - Upgrade dependencies in `examples/deno/config/import-map.json`
 - Upgrade the postgres version in `./docker-compose.yml`
 
