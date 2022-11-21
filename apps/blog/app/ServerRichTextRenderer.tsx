@@ -7,6 +7,7 @@ import type {
 import {
   isRichTextElementNode,
   isRichTextEntityLinkNode,
+  isRichTextHeadingNode,
   isRichTextListItemNode,
   isRichTextListNode,
   isRichTextParagraphNode,
@@ -87,6 +88,14 @@ async function renderNode(
         );
       }
     }
+  }
+  if (isRichTextHeadingNode(node)) {
+    const HeadingTag = node.tag;
+    return (
+      <HeadingTag key={key} className={LexicalTheme.heading[node.tag]}>
+        {await renderChildren(context, node)}
+      </HeadingTag>
+    );
   }
   if (isRichTextListNode(node)) {
     const Tag = node.tag === 'ol' ? 'ol' : 'ul';
