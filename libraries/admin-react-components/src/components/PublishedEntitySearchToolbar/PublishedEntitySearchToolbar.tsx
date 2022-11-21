@@ -34,7 +34,7 @@ export function PublishedEntitySearchToolbar({
   dispatchAuthKeyFilterState,
   onToggleMapClick,
 }: Props) {
-  const { schema } = useContext(PublishedDataDataContext);
+  const { authKeys, schema } = useContext(PublishedDataDataContext);
   return (
     <>
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
@@ -45,7 +45,11 @@ export function PublishedEntitySearchToolbar({
       >
         Entity type
       </EntityTypeSelector>
-      <AuthKeySelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState}>
+      <AuthKeySelector
+        state={authKeyFilterState}
+        authKeys={authKeys}
+        dispatch={dispatchAuthKeyFilterState}
+      >
         Auth keys
       </AuthKeySelector>
       <IconButton icon={showMap ? 'list' : 'map'} onClick={onToggleMapClick} />

@@ -2,7 +2,7 @@ import type { AdminQueryOrder, PublishedEntity } from '@jonasb/datadata-core';
 import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AuthKeyTag } from '../../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
   SearchEntityState,
@@ -99,12 +99,7 @@ function EntityListRow({
       <Table.Cell>{entity.info.name}</Table.Cell>
       <Table.Cell>{entity.info.type}</Table.Cell>
       <Table.Cell narrow>
-        <AuthKeyTag
-          authKey={entity.info.authKey}
-          displayName={
-            authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
-          }
-        />
+        <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
       </Table.Cell>
     </Table.Row>
   );

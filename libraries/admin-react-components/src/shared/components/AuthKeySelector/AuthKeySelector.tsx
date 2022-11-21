@@ -26,7 +26,9 @@ export type AuthKeySelectorInitArgs = {
 export type AuthKeySelectorState = MultipleSelectorState<AuthKeyItem>;
 export type AuthKeySelectorDispatch = Dispatch<MultipleSelectorStateAction<AuthKeyItem>>;
 
-type Props = Omit<DropdownSelectorProps<AuthKeyItem>, 'renderItem'>;
+type Props = Omit<DropdownSelectorProps<AuthKeyItem>, 'renderItem'> & {
+  authKeys: DisplayAuthKey[];
+};
 
 export function initializeAuthKeySelectorState({
   authKeys,
@@ -48,7 +50,7 @@ export function AuthKeySelector(props: Props): JSX.Element {
   return (
     <DropdownSelector<AuthKeyItem>
       {...props}
-      renderItem={(item) => <AuthKeyTag authKey={item.id} displayName={item.displayName} />}
+      renderItem={(item) => <AuthKeyTag authKey={item.id} authKeys={props.authKeys} />}
     />
   );
 }

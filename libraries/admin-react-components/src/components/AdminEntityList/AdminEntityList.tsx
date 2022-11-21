@@ -134,12 +134,7 @@ function EntityListRow({
         <StatusTag status={entity.info.status} />
       </Table.Cell>
       <Table.Cell narrow>
-        <AuthKeyTag
-          authKey={entity.info.authKey}
-          displayName={
-            authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
-          }
-        />
+        <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
       </Table.Cell>
       <Table.Cell narrow>
         <DateDisplay date={entity.info.createdAt} />

@@ -43,7 +43,7 @@ export function AdminEntitySearchToolbar({
   onToggleMapClick,
   onCreateEntity,
 }: Props) {
-  const { schema } = useContext(AdminDataDataContext);
+  const { authKeys, schema } = useContext(AdminDataDataContext);
   return (
     <>
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
@@ -57,7 +57,11 @@ export function AdminEntitySearchToolbar({
       <StatusSelector state={statusFilterState} dispatch={dispatchStatusFilterState}>
         Status
       </StatusSelector>
-      <AuthKeySelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState}>
+      <AuthKeySelector
+        state={authKeyFilterState}
+        authKeys={authKeys}
+        dispatch={dispatchAuthKeyFilterState}
+      >
         Auth keys
       </AuthKeySelector>
       <IconButton icon={showMap ? 'list' : 'map'} onClick={onToggleMapClick} />

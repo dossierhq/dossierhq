@@ -1,20 +1,13 @@
 import type { AdminClient, EntityReference, PublishingEvent } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
-import {
-  Button,
-  DateDisplay,
-  Row,
-  TabContainer,
-  Tag,
-  Text,
-  toFlexItemClassName,
-} from '@jonasb/datadata-design';
+import { Button, DateDisplay, Row, TabContainer, Tag, Text } from '@jonasb/datadata-design';
 import { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
 import { useAdminPublishingHistory } from '../../hooks/useAdminPublishingHistory.js';
 import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import { AdminEntityLinks } from './AdminEntityLinks.js';
 
 interface Props {
@@ -36,7 +29,7 @@ const ActivityFilter = {
 type ActivityFilter = typeof ActivityFilter[keyof typeof ActivityFilter];
 
 export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistory }: Props) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient, authKeys } = useContext(AdminDataDataContext);
   const { activeEntityId } = entityEditorState;
 
   const [activityFilter, setActivityFilter] = useState<ActivityFilter>(ActivityFilter.All);
@@ -55,10 +48,10 @@ export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistor
       {entity ? (
         <>
           <Text textStyle="body2">{entity.id}</Text>
-          <StatusTag
-            className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-            status={entity.info.status}
-          />
+          <Row gap={2}>
+            <StatusTag status={entity.info.status} />
+            <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
+          </Row>
           <AdminEntityLinks entityReference={{ id: entity.id }} />
           {entity.info.version > 0 ? (
             <Button onClick={() => onShowEntityHistory({ id: entity.id })}>Entity history</Button>
