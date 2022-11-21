@@ -8,7 +8,7 @@ import type {
   SchemaIndexSpecification,
   SchemaPatternSpecification,
 } from '@jonasb/datadata-core';
-import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
+import { assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
 export type SchemaSelector =
@@ -97,7 +97,21 @@ export interface SchemaEditorStateAction {
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState>;
 }
 
-export const ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER = 'root, paragraph, text';
+interface NodePlaceholderConfig {
+  name: string;
+  nodes: string[];
+}
+
+export const RichTextNodePlaceholders: NodePlaceholderConfig[] = [
+  [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
+  [RichTextNodeType.list, RichTextNodeType.listitem],
+].map((nodes) => ({ name: nodes.join(', '), nodes }));
+
+const RichTextNodesInPlaceholders = new Set(
+  RichTextNodePlaceholders.flatMap((placeholder) => placeholder.nodes)
+);
+
+export const ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER = RichTextNodePlaceholders[0];
 
 export function initializeSchemaEditorState(): SchemaEditorState {
   return {
@@ -509,8 +523,8 @@ class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
     let newRichTextNodes = this.richTextNodes;
 
     if (newRichTextNodes.length > 0) {
-      if (!newRichTextNodes.includes(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER)) {
-        newRichTextNodes = [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER, ...newRichTextNodes];
+      if (!newRichTextNodes.includes(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name)) {
+        newRichTextNodes = [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name, ...newRichTextNodes];
       }
     }
 
@@ -986,15 +1000,22 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         if (fieldSpec.type === FieldType.RichText) {
           let richTextNodes = fieldSpec.richTextNodes ?? [];
           if (richTextNodes.length > 0) {
-            const nodes: string[] = [
-              RichTextNodeType.root,
-              RichTextNodeType.paragraph,
-              RichTextNodeType.text,
-            ];
-            richTextNodes = [
-              ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
-              ...richTextNodes.filter((it) => !nodes.includes(it)),
-            ];
+            const placeholders: string[] = [];
+            richTextNodes = richTextNodes.filter((richTextNode) => {
+              if (RichTextNodesInPlaceholders.has(richTextNode)) {
+                const placeholder = RichTextNodePlaceholders.find((it) =>
+                  it.nodes.includes(richTextNode)
+                );
+                assertIsDefined(placeholder);
+                if (!placeholders.includes(placeholder.name)) {
+                  placeholders.push(placeholder.name);
+                }
+                return false;
+              }
+              return true;
+            });
+
+            richTextNodes = [...placeholders, ...richTextNodes];
           }
           fieldDraft.richTextNodes = richTextNodes;
         }
@@ -1086,12 +1107,13 @@ function getTypeUpdateFromEditorState(
   const fields = draftType.fields.map((draftField) => {
     let richTextNodes = draftField.richTextNodes;
     if (richTextNodes && richTextNodes.length > 0) {
-      richTextNodes = [
-        RichTextNodeType.root,
-        RichTextNodeType.paragraph,
-        RichTextNodeType.text,
-        ...richTextNodes.filter((it) => it !== ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER),
-      ];
+      richTextNodes = richTextNodes.flatMap((it) => {
+        const placeholder = RichTextNodePlaceholders.find((placeholder) => placeholder.name === it);
+        if (placeholder) {
+          return placeholder.nodes;
+        }
+        return it;
+      });
     }
     return {
       name: draftField.name,

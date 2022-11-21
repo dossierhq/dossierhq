@@ -5,7 +5,6 @@ import {
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
-  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
 } from './SchemaEditorReducer.js';
 
@@ -1030,7 +1029,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       )
     );
     expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
-      ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+      'root, paragraph, text',
       RichTextNodeType.entity,
     ]);
     expect(state).toMatchInlineSnapshot(`
@@ -2588,6 +2587,8 @@ describe('UpdateSchemaSpecificationAction', () => {
                     RichTextNodeType.root,
                     RichTextNodeType.paragraph,
                     RichTextNodeType.text,
+                    RichTextNodeType.list,
+                    RichTextNodeType.listitem,
                     RichTextNodeType.entity,
                   ],
                 },
@@ -2599,7 +2600,8 @@ describe('UpdateSchemaSpecificationAction', () => {
     );
 
     expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
-      ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+      'root, paragraph, text',
+      'list, listitem',
       RichTextNodeType.entity,
     ]);
 
@@ -2622,6 +2624,8 @@ describe('UpdateSchemaSpecificationAction', () => {
                     "root",
                     "paragraph",
                     "text",
+                    "list",
+                    "listitem",
                     "entity",
                   ],
                   "type": "RichText",
@@ -2633,6 +2637,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "required": false,
                 "richTextNodes": [
                   "root, paragraph, text",
+                  "list, listitem",
                   "entity",
                 ],
                 "status": "",
@@ -2661,6 +2666,8 @@ describe('UpdateSchemaSpecificationAction', () => {
                       "root",
                       "paragraph",
                       "text",
+                      "list",
+                      "listitem",
                       "entity",
                     ],
                     "type": "RichText",

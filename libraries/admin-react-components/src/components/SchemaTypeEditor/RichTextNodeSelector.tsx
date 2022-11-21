@@ -7,13 +7,12 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import { useEffect, useMemo, useReducer } from 'react';
-import type {
-  SchemaEditorStateAction,
-  SchemaFieldSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
+  RichTextNodePlaceholders,
   ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
+  SchemaEditorStateAction,
+  SchemaFieldSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 function useSynchronizeMultipleSelectorState(
@@ -23,12 +22,15 @@ function useSynchronizeMultipleSelectorState(
 ) {
   const items = useMemo(
     () => [
-      {
-        id: ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+      ...RichTextNodePlaceholders.map((placeholder) => ({
+        id: placeholder.name,
         removable:
-          selectedIds.length === 0 ||
-          (selectedIds.length === 1 && selectedIds[0] === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER),
-      },
+          placeholder === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER
+            ? selectedIds.length === 0 ||
+              (selectedIds.length === 1 &&
+                selectedIds[0] === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name)
+            : true,
+      })),
       { id: RichTextNodeType.entity },
       { id: RichTextNodeType.entityLink },
       { id: RichTextNodeType.valueItem },
