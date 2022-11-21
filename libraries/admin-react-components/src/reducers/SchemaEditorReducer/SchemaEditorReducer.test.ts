@@ -22,22 +22,9 @@ function reduceSchemaEditorStateActions(
 describe('initializeSchemaEditorState', () => {
   test('no args', () => {
     const state = initializeSchemaEditorState();
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": null,
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "uninitialized",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 });
 
@@ -51,53 +38,9 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('entity', 'Foo')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Foo",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "new",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add value type to empty schema', () => {
@@ -109,51 +52,9 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('value', 'Foo')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "value",
-          "typeName": "Foo",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [],
-            "kind": "value",
-            "name": "Foo",
-            "status": "new",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add entity type to schema with existing type', () => {
@@ -165,68 +66,9 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('entity', 'Bar')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Bar",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Bar",
-            "status": "new",
-          },
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "name": "Bar",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add value type to schema with existing type', () => {
@@ -238,64 +80,9 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('value', 'Bar')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "value",
-          "typeName": "Bar",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [],
-            "kind": "value",
-            "name": "Bar",
-            "status": "new",
-          },
-          {
-            "adminOnly": false,
-            "fields": [],
-            "kind": "value",
-            "name": "Foo",
-            "status": "",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [],
-            "name": "Bar",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add two entity types (orders)', () => {
@@ -308,67 +95,9 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('entity', 'Anaconda')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Anaconda",
-        },
-        "activeSelectorEditorScrollSignal": 2,
-        "activeSelectorMenuScrollSignal": 2,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Anaconda",
-            "status": "new",
-          },
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "ZooKeeper",
-            "status": "new",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "name": "Anaconda",
-          },
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "name": "ZooKeeper",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add two value types (orders)', () => {
@@ -381,63 +110,9 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('value', 'Anaconda')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "value",
-          "typeName": "Anaconda",
-        },
-        "activeSelectorEditorScrollSignal": 2,
-        "activeSelectorMenuScrollSignal": 2,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [],
-            "kind": "value",
-            "name": "Anaconda",
-            "status": "new",
-          },
-          {
-            "adminOnly": false,
-            "fields": [],
-            "kind": "value",
-            "name": "ZooKeeper",
-            "status": "new",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [],
-            "name": "Anaconda",
-          },
-          {
-            "adminOnly": false,
-            "fields": [],
-            "name": "ZooKeeper",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -450,79 +125,9 @@ describe('AddFieldAction', () => {
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add field to existing value type (without any fields)', () => {
@@ -533,76 +138,9 @@ describe('AddFieldAction', () => {
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "value",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add field to existing entity type (with existing fields)', () => {
@@ -616,109 +154,9 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "title",
-                  "type": "String",
-                },
-                "index": null,
-                "isName": false,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "status": "",
-                "type": "String",
-              },
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "name": "title",
-                    "type": "String",
-                  },
-                ],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "type": "String",
-              },
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add field to existing value type (with existing fields)', () => {
@@ -732,106 +170,9 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [
-                  {
-                    "name": "title",
-                    "type": "String",
-                  },
-                ],
-                "name": "Foo",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "title",
-                  "type": "String",
-                },
-                "index": null,
-                "isName": false,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "status": "",
-                "type": "String",
-              },
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "value",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "type": "String",
-              },
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "bar",
-                "required": false,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -904,81 +245,9 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
         ['Foo']
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [
-                  "Foo",
-                ],
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "name": "foo",
-                "required": false,
-                "status": "new",
-                "type": "EntityType",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [
-                  "Foo",
-                ],
-                "name": "foo",
-                "required": false,
-                "type": "EntityType",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1032,93 +301,9 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       'root, paragraph, text',
       RichTextNodeType.entity,
     ]);
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [
-                  "Foo",
-                ],
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "name": "foo",
-                "required": false,
-                "richTextNodes": [
-                  "root, paragraph, text",
-                  "entity",
-                ],
-                "status": "new",
-                "type": "RichText",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [
-                  "Foo",
-                ],
-                "linkEntityTypes": [],
-                "name": "foo",
-                "required": false,
-                "richTextNodes": [
-                  "root",
-                  "paragraph",
-                  "text",
-                  "entity",
-                ],
-                "type": "RichText",
-                "valueTypes": [],
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1140,78 +325,9 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         ['Foo']
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "name": "foo",
-                "required": false,
-                "status": "new",
-                "type": "ValueType",
-                "valueTypes": [
-                  "Foo",
-                ],
-              },
-            ],
-            "kind": "value",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "name": "foo",
-                "required": false,
-                "type": "ValueType",
-                "valueTypes": [
-                  "Foo",
-                ],
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1384,79 +500,9 @@ describe('ChangeFieldRequiredAction', () => {
         true
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "multiline": false,
-                "name": "bar",
-                "required": true,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "bar",
-                "required": true,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1474,76 +520,9 @@ describe('ChangeFieldTypeAction', () => {
         true
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": true,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "Location",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "list": true,
-                "name": "bar",
-                "required": false,
-                "type": "Location",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('from string to location list (new field of existing value type)', () => {
@@ -1559,73 +538,9 @@ describe('ChangeFieldTypeAction', () => {
         true
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": true,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "Location",
-              },
-            ],
-            "kind": "value",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "list": true,
-                "name": "bar",
-                "required": false,
-                "type": "Location",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('from string to entity (new field of existing entity type)', () => {
@@ -1641,77 +556,9 @@ describe('ChangeFieldTypeAction', () => {
         false
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [],
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "EntityType",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [],
-                "name": "bar",
-                "required": false,
-                "type": "EntityType",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('from string to value (new field of existing entity type)', () => {
@@ -1727,77 +574,9 @@ describe('ChangeFieldTypeAction', () => {
         false
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "name": "bar",
-                "required": false,
-                "status": "new",
-                "type": "ValueType",
-                "valueTypes": [],
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "name": "bar",
-                "required": false,
-                "type": "ValueType",
-                "valueTypes": [],
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1830,53 +609,9 @@ describe('ChangeTypeAdminOnlyAction', () => {
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true)
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Foo",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [
-          {
-            "adminOnly": true,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "new",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": true,
-            "authKeyPattern": null,
-            "fields": [],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1892,68 +627,9 @@ describe('DeleteFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "title",
-                  "type": "String",
-                },
-                "index": null,
-                "isName": false,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "status": "",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "name": "title",
-                    "type": "String",
-                  },
-                ],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 });
 
@@ -1968,30 +644,9 @@ describe('DeleteTypeAction', () => {
       new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
 
     expect(state.status).toBe(''); // should be reset
   });
@@ -2006,30 +661,9 @@ describe('DeleteTypeAction', () => {
       new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
     expect(state.status).toBe(''); // should be reset
   });
 });
@@ -2069,109 +703,9 @@ describe('RenameFieldAction', () => {
         'baz'
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "title",
-                  "type": "String",
-                },
-                "index": null,
-                "isName": false,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "status": "",
-                "type": "String",
-              },
-              {
-                "adminOnly": false,
-                "existingFieldSpec": null,
-                "isName": false,
-                "list": false,
-                "multiline": false,
-                "name": "baz",
-                "required": false,
-                "status": "new",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "changed",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "name": "title",
-                    "type": "String",
-                  },
-                ],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "type": "String",
-              },
-              {
-                "adminOnly": false,
-                "index": null,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "baz",
-                "required": false,
-                "type": "String",
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -2186,53 +720,9 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Bar",
-        },
-        "activeSelectorEditorScrollSignal": 2,
-        "activeSelectorMenuScrollSignal": 2,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Bar",
-            "status": "new",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
-      {
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "name": "Bar",
-          },
-        ],
-      }
-    `);
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('add and rename entity type with fields referring to itself', () => {
@@ -2326,49 +816,9 @@ describe('SetActiveSelectorAction', () => {
       ),
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, false)
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Foo",
-        },
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('set to type with editor scroll', () => {
@@ -2379,49 +829,9 @@ describe('SetActiveSelectorAction', () => {
       ),
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, true)
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "Foo",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "Foo",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "Foo",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 });
 
@@ -2433,30 +843,9 @@ describe('UpdateSchemaSpecificationAction', () => {
         AdminSchema.createAndValidate({}).valueOrThrow()
       )
     );
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('one entity type', () => {
@@ -2474,70 +863,9 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "isName": true,
-                  "name": "title",
-                  "type": "String",
-                },
-                "index": null,
-                "isName": true,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "status": "",
-                "type": "String",
-              },
-            ],
-            "kind": "entity",
-            "name": "TitleOnly",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "isName": true,
-                    "name": "title",
-                    "type": "String",
-                  },
-                ],
-                "name": "TitleOnly",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('one entity type with string field', () => {
@@ -2568,7 +896,7 @@ describe('UpdateSchemaSpecificationAction', () => {
 
     expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('one entity type with rich text field', () => {
@@ -2605,89 +933,9 @@ describe('UpdateSchemaSpecificationAction', () => {
       RichTextNodeType.entity,
     ]);
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [],
-                "existingFieldSpec": {
-                  "name": "richText",
-                  "richTextNodes": [
-                    "root",
-                    "paragraph",
-                    "text",
-                    "list",
-                    "listitem",
-                    "entity",
-                  ],
-                  "type": "RichText",
-                },
-                "isName": false,
-                "linkEntityTypes": [],
-                "list": false,
-                "name": "richText",
-                "required": false,
-                "richTextNodes": [
-                  "root, paragraph, text",
-                  "list, listitem",
-                  "entity",
-                ],
-                "status": "",
-                "type": "RichText",
-                "valueTypes": [],
-              },
-            ],
-            "kind": "entity",
-            "name": "TitleOnly",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "name": "richText",
-                    "richTextNodes": [
-                      "root",
-                      "paragraph",
-                      "text",
-                      "list",
-                      "listitem",
-                      "entity",
-                    ],
-                    "type": "RichText",
-                  },
-                ],
-                "name": "TitleOnly",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('one value type', () => {
@@ -2700,66 +948,9 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [
-                  {
-                    "name": "title",
-                    "type": "String",
-                  },
-                ],
-                "name": "TitleOnly",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "title",
-                  "type": "String",
-                },
-                "index": null,
-                "isName": false,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "status": "",
-                "type": "String",
-              },
-            ],
-            "kind": "value",
-            "name": "TitleOnly",
-            "status": "",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('entity type field', () => {
@@ -2787,116 +978,9 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [
-                  "EntityReference",
-                ],
-                "existingFieldSpec": {
-                  "entityTypes": [
-                    "EntityReference",
-                  ],
-                  "name": "reference",
-                  "type": "EntityType",
-                },
-                "isName": false,
-                "list": false,
-                "name": "reference",
-                "required": false,
-                "status": "",
-                "type": "EntityType",
-              },
-            ],
-            "kind": "entity",
-            "name": "EntityReference",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "entityTypes": [
-                      "EntityReference",
-                    ],
-                    "name": "reference",
-                    "type": "EntityType",
-                  },
-                ],
-                "name": "EntityReference",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [
-                  {
-                    "entityTypes": [
-                      "EntityReference",
-                    ],
-                    "name": "reference",
-                    "type": "EntityType",
-                  },
-                ],
-                "name": "ValueReference",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "entityTypes": [
-                  "EntityReference",
-                ],
-                "existingFieldSpec": {
-                  "entityTypes": [
-                    "EntityReference",
-                  ],
-                  "name": "reference",
-                  "type": "EntityType",
-                },
-                "isName": false,
-                "list": false,
-                "name": "reference",
-                "required": false,
-                "status": "",
-                "type": "EntityType",
-              },
-            ],
-            "kind": "value",
-            "name": "ValueReference",
-            "status": "",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('value type field', () => {
@@ -2920,116 +1004,9 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
 
-    expect(state).toMatchInlineSnapshot(`
-      {
-        "activeSelector": null,
-        "activeSelectorEditorScrollSignal": 0,
-        "activeSelectorMenuScrollSignal": 0,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "valueItem",
-                  "type": "ValueType",
-                  "valueTypes": [
-                    "ValueItem",
-                  ],
-                },
-                "isName": false,
-                "list": false,
-                "name": "valueItem",
-                "required": false,
-                "status": "",
-                "type": "ValueType",
-                "valueTypes": [
-                  "ValueItem",
-                ],
-              },
-            ],
-            "kind": "entity",
-            "name": "EntityWithValueItem",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [
-                  {
-                    "name": "valueItem",
-                    "type": "ValueType",
-                    "valueTypes": [
-                      "ValueItem",
-                    ],
-                  },
-                ],
-                "name": "EntityWithValueItem",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [
-              {
-                "adminOnly": false,
-                "fields": [
-                  {
-                    "name": "valueItem",
-                    "type": "ValueType",
-                    "valueTypes": [
-                      "ValueItem",
-                    ],
-                  },
-                ],
-                "name": "ValueItem",
-              },
-            ],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [
-          {
-            "adminOnly": false,
-            "fields": [
-              {
-                "adminOnly": false,
-                "existingFieldSpec": {
-                  "name": "valueItem",
-                  "type": "ValueType",
-                  "valueTypes": [
-                    "ValueItem",
-                  ],
-                },
-                "isName": false,
-                "list": false,
-                "name": "valueItem",
-                "required": false,
-                "status": "",
-                "type": "ValueType",
-                "valueTypes": [
-                  "ValueItem",
-                ],
-              },
-            ],
-            "kind": "value",
-            "name": "ValueItem",
-            "status": "",
-          },
-        ],
-      }
-    `);
+    expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('entity type with auth key pattern', () => {
@@ -3045,7 +1022,7 @@ describe('UpdateSchemaSpecificationAction', () => {
 
     expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
   test('entity type with index and one index', () => {
@@ -3063,7 +1040,7 @@ describe('UpdateSchemaSpecificationAction', () => {
 
     expect(state).toMatchSnapshot();
 
-    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot('{}');
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 });
 
@@ -3086,46 +1063,6 @@ describe('SchemaEditorReducer scenarios', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema)
     );
 
-    expect(afterSaveState).toMatchInlineSnapshot(`
-      {
-        "activeSelector": {
-          "kind": "entity",
-          "typeName": "NewType",
-        },
-        "activeSelectorEditorScrollSignal": 1,
-        "activeSelectorMenuScrollSignal": 1,
-        "entityTypes": [
-          {
-            "adminOnly": false,
-            "authKeyPattern": null,
-            "fields": [],
-            "kind": "entity",
-            "name": "NewType",
-            "status": "",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schema": AdminSchema {
-          "cachedPatternRegExps": {},
-          "spec": {
-            "entityTypes": [
-              {
-                "adminOnly": false,
-                "authKeyPattern": null,
-                "fields": [],
-                "name": "NewType",
-              },
-            ],
-            "indexes": [],
-            "patterns": [],
-            "valueTypes": [],
-          },
-        },
-        "schemaWillBeUpdatedDueToSave": false,
-        "status": "",
-        "valueTypes": [],
-      }
-    `);
+    expect(afterSaveState).toMatchSnapshot();
   });
 });

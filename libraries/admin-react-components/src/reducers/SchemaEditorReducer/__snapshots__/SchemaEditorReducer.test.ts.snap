@@ -1,5 +1,355 @@
 // Vitest Snapshot v1
 
+exports[`AddFieldAction > add field to existing entity type (with existing fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "title",
+            "type": "String",
+          },
+          "index": null,
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (with existing fields) 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (without any fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (without any fields) 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`AddFieldAction > add field to existing value type (with existing fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "title",
+            "type": "String",
+          },
+          "index": null,
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`AddFieldAction > add field to existing value type (with existing fields) 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`AddFieldAction > add field to existing value type (without any fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`AddFieldAction > add field to existing value type (without any fields) 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`AddIndexAction > add index to empty schema 1`] = `
 {
   "activeSelector": {
@@ -86,6 +436,342 @@ exports[`AddPatternAction > add pattern to empty schema 2`] = `
 }
 `;
 
+exports[`AddTypeAction > add entity type to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddTypeAction > add entity type to empty schema 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Bar",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddTypeAction > add entity type to schema with existing type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add two entity types (orders) 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Anaconda",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Anaconda",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "ZooKeeper",
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`AddTypeAction > add two entity types (orders) 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Anaconda",
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "ZooKeeper",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add two value types (orders) 1`] = `
+{
+  "activeSelector": {
+    "kind": "value",
+    "typeName": "Anaconda",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "kind": "value",
+      "name": "Anaconda",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "fields": [],
+      "kind": "value",
+      "name": "ZooKeeper",
+      "status": "new",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add two value types (orders) 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Anaconda",
+    },
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "ZooKeeper",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add value type to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "value",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "kind": "value",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add value type to empty schema 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add value type to schema with existing type 1`] = `
+{
+  "activeSelector": {
+    "kind": "value",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "kind": "value",
+      "name": "Bar",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "fields": [],
+      "kind": "value",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+}
+`;
+
+exports[`AddTypeAction > add value type to schema with existing type 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 1`] = `
 {
   "activeSelector": null,
@@ -152,6 +838,82 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
           "name": "bar",
           "required": false,
           "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new entity field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "status": "new",
+          "type": "EntityType",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new entity field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "type": "EntityType",
         },
       ],
       "name": "Foo",
@@ -232,6 +994,167 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
           "richTextNodes": [],
           "type": "RichText",
           "valueTypes": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of a new rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [
+            "root, paragraph, text",
+            "entity",
+          ],
+          "status": "new",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of a new rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "linkEntityTypes": [],
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [
+            "root",
+            "paragraph",
+            "text",
+            "entity",
+          ],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entity field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "status": "new",
+          "type": "ValueType",
+          "valueTypes": [
+            "Foo",
+          ],
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entity field 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "name": "foo",
+          "required": false,
+          "type": "ValueType",
+          "valueTypes": [
+            "Foo",
+          ],
         },
       ],
       "name": "Foo",
@@ -759,6 +1682,363 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
 }
 `;
 
+exports[`ChangeFieldRequiredAction > make new field required in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": true,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldRequiredAction > make new field required in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": true,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to entity (new field of existing entity type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "EntityType",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to entity (new field of existing entity type) 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "name": "bar",
+          "required": false,
+          "type": "EntityType",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing entity type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Location",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing entity type) 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "type": "Location",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing value type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Location",
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing value type) 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "type": "Location",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to value (new field of existing entity type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "ValueType",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to value (new field of existing entity type) 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "name": "bar",
+          "required": false,
+          "type": "ValueType",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
 {
   "activeSelector": {
@@ -797,6 +2077,54 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
     {
       "name": "foo",
       "pattern": "^this is a new pattern$",
+    },
+  ],
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": true,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": true,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
     },
   ],
 }
@@ -857,6 +2185,217 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 2`]
     {
       "name": "my-pattern",
       "pattern": "",
+    },
+  ],
+}
+`;
+
+exports[`DeleteFieldAction > add and delete field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "title",
+            "type": "String",
+          },
+          "index": null,
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added value type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameFieldAction > add and rename field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "title",
+            "type": "String",
+          },
+          "index": null,
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "isName": false,
+          "list": false,
+          "multiline": false,
+          "name": "baz",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameFieldAction > add and rename field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "baz",
+          "required": false,
+          "type": "String",
+        },
+      ],
+      "name": "Foo",
     },
   ],
 }
@@ -1012,6 +2551,54 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
 }
 `;
 
+exports[`RenameTypeAction > add and rename type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Bar",
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameTypeAction > add and rename type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+}
+`;
+
 exports[`RenameTypeAction > add and rename value type with fields referring to itself 1`] = `
 {
   "activeSelector": {
@@ -1077,6 +2664,264 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
         },
       ],
       "name": "Bar",
+    },
+  ],
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "NewType",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "NewType",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "NewType",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`SetActiveSelectorAction > set to type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "EntityReference",
+          ],
+          "existingFieldSpec": {
+            "entityTypes": [
+              "EntityReference",
+            ],
+            "name": "reference",
+            "type": "EntityType",
+          },
+          "isName": false,
+          "list": false,
+          "name": "reference",
+          "required": false,
+          "status": "",
+          "type": "EntityType",
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityReference",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "entityTypes": [
+                "EntityReference",
+              ],
+              "name": "reference",
+              "type": "EntityType",
+            },
+          ],
+          "name": "EntityReference",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "entityTypes": [
+                "EntityReference",
+              ],
+              "name": "reference",
+              "type": "EntityType",
+            },
+          ],
+          "name": "ValueReference",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "EntityReference",
+          ],
+          "existingFieldSpec": {
+            "entityTypes": [
+              "EntityReference",
+            ],
+            "name": "reference",
+            "type": "EntityType",
+          },
+          "isName": false,
+          "list": false,
+          "name": "reference",
+          "required": false,
+          "status": "",
+          "type": "EntityType",
+        },
+      ],
+      "kind": "value",
+      "name": "ValueReference",
+      "status": "",
     },
   ],
 }
@@ -1206,6 +3051,151 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
 }
 `;
 
+exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "isName": true,
+            "name": "title",
+            "type": "String",
+          },
+          "index": null,
+          "isName": true,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "isName": true,
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingFieldSpec": {
+            "name": "richText",
+            "richTextNodes": [
+              "root",
+              "paragraph",
+              "text",
+              "list",
+              "listitem",
+              "entity",
+            ],
+            "type": "RichText",
+          },
+          "isName": false,
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [
+            "root, paragraph, text",
+            "list, listitem",
+            "entity",
+          ],
+          "status": "",
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "name": "richText",
+              "richTextNodes": [
+                "root",
+                "paragraph",
+                "text",
+                "list",
+                "listitem",
+                "entity",
+              ],
+              "type": "RichText",
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
 exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`] = `
 {
   "activeSelector": null,
@@ -1278,6 +3268,189 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "title",
+            "type": "String",
+          },
+          "index": null,
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+        },
+      ],
+      "kind": "value",
+      "name": "TitleOnly",
+      "status": "",
+    },
+  ],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "valueItem",
+            "type": "ValueType",
+            "valueTypes": [
+              "ValueItem",
+            ],
+          },
+          "isName": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "",
+          "type": "ValueType",
+          "valueTypes": [
+            "ValueItem",
+          ],
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityWithValueItem",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "name": "valueItem",
+              "type": "ValueType",
+              "valueTypes": [
+                "ValueItem",
+              ],
+            },
+          ],
+          "name": "EntityWithValueItem",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "name": "valueItem",
+              "type": "ValueType",
+              "valueTypes": [
+                "ValueItem",
+              ],
+            },
+          ],
+          "name": "ValueItem",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "name": "valueItem",
+            "type": "ValueType",
+            "valueTypes": [
+              "ValueItem",
+            ],
+          },
+          "isName": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "",
+          "type": "ValueType",
+          "valueTypes": [
+            "ValueItem",
+          ],
+        },
+      ],
+      "kind": "value",
+      "name": "ValueItem",
+      "status": "",
+    },
+  ],
+}
+`;
+
+exports[`initializeSchemaEditorState > no args 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": null,
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "uninitialized",
   "valueTypes": [],
 }
 `;
