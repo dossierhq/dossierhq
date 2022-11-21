@@ -54,6 +54,8 @@ export type FieldType = typeof FieldType[keyof typeof FieldType];
 export const RichTextNodeType = {
   entity: 'entity',
   entityLink: 'entityLink',
+  list: 'list',
+  listitem: 'listitem',
   paragraph: 'paragraph',
   root: 'root',
   text: 'text',
@@ -139,6 +141,10 @@ export interface SchemaSpecificationUpdatePayload {
 }
 
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
+
+const GROUPED_RICH_TEXT_NODE_TYPES: RichTextNodeType[][] = [
+  [RichTextNodeType.list, RichTextNodeType.listitem],
+];
 
 export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
@@ -276,7 +282,7 @@ export class AdminSchema {
             );
           }
 
-          const usedRichTextNodes = new Set();
+          const usedRichTextNodes = new Set<string>();
           for (const richTextNode of fieldSpec.richTextNodes) {
             if (usedRichTextNodes.has(richTextNode)) {
               return notOk.BadRequest(
@@ -297,6 +303,18 @@ export class AdminSchema {
                 fieldSpec.name
               }: richTextNodes must include ${missingNodeTypes.join(', ')}`
             );
+          }
+
+          for (const nodeGroup of GROUPED_RICH_TEXT_NODE_TYPES) {
+            const usedNodesInGroup = nodeGroup.filter((it) => usedRichTextNodes.has(it));
+            if (usedNodesInGroup.length > 0 && usedNodesInGroup.length !== nodeGroup.length) {
+              const unusedNodesInGroup = nodeGroup.filter((it) => !usedRichTextNodes.has(it));
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: richTextNodes includes ${usedNodesInGroup.join(
+                  ', '
+                )} but must also include related ${unusedNodesInGroup.join(', ')}`
+              );
+            }
           }
 
           if (usedRichTextNodes.size > 0) {

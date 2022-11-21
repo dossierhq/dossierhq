@@ -505,6 +505,68 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: richTextNodes with list without listitem', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
+                  RichTextNodeType.list,
+                ],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes includes list but must also include related listitem'
+    );
+  });
+
+  test('Error: richTextNodes with listitem without list', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
+                  RichTextNodeType.listitem,
+                ],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes includes listitem but must also include related list'
+    );
+  });
+
   test('Error: entityTypes specified but not entity richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
