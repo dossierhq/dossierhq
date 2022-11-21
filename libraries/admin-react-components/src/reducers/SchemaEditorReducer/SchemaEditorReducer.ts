@@ -64,6 +64,7 @@ export interface SchemaFieldDraft {
   index?: string | null;
   matchPattern?: string | null;
   richTextNodes?: string[];
+  existingRichTextNodesWithPlaceholders?: string[];
   entityTypes?: string[];
   linkEntityTypes?: string[];
   valueTypes?: string[];
@@ -166,6 +167,12 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
     return 'new';
   }
   if (!!state.existingFieldSpec.isName !== state.isName) return 'changed';
+  if (
+    state.richTextNodes &&
+    !isEqual(state.richTextNodes, state.existingRichTextNodesWithPlaceholders)
+  ) {
+    return 'changed';
+  }
   // TODO expand when supporting changing more properties of a field
   return '';
 }
@@ -998,26 +1005,8 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           fieldDraft.matchPattern = fieldSpec.matchPattern ?? null;
         }
         if (fieldSpec.type === FieldType.RichText) {
-          let richTextNodes = fieldSpec.richTextNodes ?? [];
-          if (richTextNodes.length > 0) {
-            const placeholders: string[] = [];
-            richTextNodes = richTextNodes.filter((richTextNode) => {
-              if (RichTextNodesInPlaceholders.has(richTextNode)) {
-                const placeholder = RichTextNodePlaceholders.find((it) =>
-                  it.nodes.includes(richTextNode)
-                );
-                assertIsDefined(placeholder);
-                if (!placeholders.includes(placeholder.name)) {
-                  placeholders.push(placeholder.name);
-                }
-                return false;
-              }
-              return true;
-            });
-
-            richTextNodes = [...placeholders, ...richTextNodes];
-          }
-          fieldDraft.richTextNodes = richTextNodes;
+          fieldDraft.richTextNodes = this.getRichTextNodesWithPlaceholders(fieldSpec.richTextNodes);
+          fieldDraft.existingRichTextNodesWithPlaceholders = [...fieldDraft.richTextNodes];
         }
         if (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
@@ -1031,6 +1020,29 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         return fieldDraft;
       }),
     };
+  }
+
+  private getRichTextNodesWithPlaceholders(richTextNodes: string[] | undefined) {
+    let result = richTextNodes ?? [];
+    if (result.length > 0) {
+      const placeholders: string[] = [];
+      result = result.filter((richTextNode) => {
+        if (RichTextNodesInPlaceholders.has(richTextNode)) {
+          const placeholder = RichTextNodePlaceholders.find((it) =>
+            it.nodes.includes(richTextNode)
+          );
+          assertIsDefined(placeholder);
+          if (!placeholders.includes(placeholder.name)) {
+            placeholders.push(placeholder.name);
+          }
+          return false;
+        }
+        return true;
+      });
+
+      result = [...placeholders, ...result];
+    }
+    return result;
   }
 }
 

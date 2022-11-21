@@ -17,29 +17,43 @@ import {
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
+const RichTextNodesNotInPlaceholders: string[] = [
+  RichTextNodeType.heading,
+  RichTextNodeType.entity,
+  RichTextNodeType.entityLink,
+  RichTextNodeType.valueItem,
+];
+
 function useSynchronizeMultipleSelectorState(
   fieldSelector: SchemaFieldSelector,
   selectedIds: string[],
+  unremovableIds: string[] | undefined,
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
 ) {
-  const items = useMemo(
-    () => [
-      ...RichTextNodePlaceholders.map((placeholder) => ({
-        id: placeholder.name,
-        removable:
-          placeholder === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER
-            ? selectedIds.length === 0 ||
-              (selectedIds.length === 1 &&
-                selectedIds[0] === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name)
-            : true,
-      })),
-      { id: RichTextNodeType.heading },
-      { id: RichTextNodeType.entity },
-      { id: RichTextNodeType.entityLink },
-      { id: RichTextNodeType.valueItem },
-    ],
-    [selectedIds]
-  );
+  const items = useMemo(() => {
+    const result: { id: string; removable: boolean }[] = [];
+    for (const placeholder of RichTextNodePlaceholders) {
+      let removable = true;
+      if (placeholder === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER) {
+        if (selectedIds.length > 1) {
+          removable = false;
+        }
+      }
+      if (unremovableIds && unremovableIds.some((it) => placeholder.nodes.includes(it))) {
+        removable = false;
+      }
+      result.push({ id: placeholder.name, removable });
+    }
+
+    for (const nodeType of RichTextNodesNotInPlaceholders) {
+      let removable = true;
+      if (unremovableIds && unremovableIds.includes(nodeType)) {
+        removable = false;
+      }
+      result.push({ id: nodeType, removable });
+    }
+    return result;
+  }, [selectedIds.length, unremovableIds]);
 
   const [state, dispatch] = useReducer(
     reduceMultipleSelectorState,
@@ -68,17 +82,20 @@ function useSynchronizeMultipleSelectorState(
 interface Props {
   fieldSelector: SchemaFieldSelector;
   richTextNodes: string[];
+  existingRichTextNodes: string[] | undefined;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
 export function RichTextNodeSelector({
   fieldSelector,
   richTextNodes,
+  existingRichTextNodes,
   dispatchSchemaEditorState,
 }: Props) {
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
     richTextNodes,
+    existingRichTextNodes,
     dispatchSchemaEditorState
   );
   return (

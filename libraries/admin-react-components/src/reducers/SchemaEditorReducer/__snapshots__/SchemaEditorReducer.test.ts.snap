@@ -1090,6 +1090,118 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
 }
 `;
 
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of an existing rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingFieldSpec": {
+            "name": "rt",
+            "richTextNodes": [
+              "root",
+              "paragraph",
+              "text",
+              "heading",
+            ],
+            "type": "RichText",
+          },
+          "existingRichTextNodesWithPlaceholders": [
+            "root, paragraph, text",
+            "heading",
+          ],
+          "isName": false,
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "rt",
+          "required": false,
+          "richTextNodes": [
+            "root, paragraph, text",
+            "heading",
+            "entity",
+          ],
+          "status": "changed",
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "name": "rt",
+              "richTextNodes": [
+                "root",
+                "paragraph",
+                "text",
+                "heading",
+              ],
+              "type": "RichText",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of an existing rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "rt",
+          "required": false,
+          "richTextNodes": [
+            "root",
+            "paragraph",
+            "text",
+            "heading",
+            "entity",
+          ],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entity field 1`] = `
 {
   "activeSelector": null,
@@ -3139,6 +3251,11 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
             ],
             "type": "RichText",
           },
+          "existingRichTextNodesWithPlaceholders": [
+            "root, paragraph, text",
+            "list, listitem",
+            "entity",
+          ],
           "isName": false,
           "linkEntityTypes": [],
           "list": false,
