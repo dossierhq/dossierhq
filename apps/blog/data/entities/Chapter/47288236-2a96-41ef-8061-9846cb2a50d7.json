@@ -1,0 +1,40 @@
+{
+  "id": "47288236-2a96-41ef-8061-9846cb2a50d7",
+  "info": {
+    "name": "Main chapter",
+    "type": "Chapter",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "items": [
+      {
+        "type": "ArticleTocItem",
+        "article": {
+          "id": "e3ece01e-240a-4c1c-9a19-206dc234af2a"
+        },
+        "title": "Overview"
+      },
+      {
+        "type": "ArticleTocItem",
+        "article": {
+          "id": "6384629e-72aa-482c-b070-bc26d90e0fc6"
+        },
+        "title": "Content"
+      },
+      {
+        "type": "TocItem",
+        "title": "Development",
+        "items": [
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "6985480d-e397-45e7-b793-b3411b65f906"
+            },
+            "title": "Getting started"
+          }
+        ]
+      }
+    ]
+  }
+}

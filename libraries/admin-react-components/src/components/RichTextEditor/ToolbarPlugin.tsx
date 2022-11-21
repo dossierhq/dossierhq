@@ -84,6 +84,7 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
+      //TODO why can't we only use nodes, why looking at the dom?
       const anchorNode = selection.anchor.getNode();
       let element =
         anchorNode.getKey() === 'root'

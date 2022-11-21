@@ -1,8 +1,15 @@
+import type { PublishedClient } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@jonasb/datadata-core';
 import { FullscreenContainer, Menu } from '@jonasb/datadata-design';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { urls } from '../../utils/PageUtils';
-import { assertIsPublishedArticle } from '../../utils/SchemaTypes';
+import type { PublishedArticleTocItem, PublishedTocItem } from '../../utils/SchemaTypes';
+import {
+  assertIsPublishedArticle,
+  assertIsPublishedChapter,
+  isPublishedArticleTocItem,
+} from '../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../utils/ServerComponentUtils';
 
 interface Props {
@@ -12,8 +19,14 @@ interface Props {
 export default async function Layout({ children }: Props) {
   const publishedClient = await getPublishedClientForServerComponent();
   const connection = (
-    await publishedClient.searchEntities({ entityTypes: ['Article'], order: 'name' })
+    await publishedClient.searchEntities({ entityTypes: ['Chapter'] })
   ).valueOrThrow();
+
+  //TODO for now we only support one chapter
+  const chapter = connection?.edges[0].node.valueOrThrow() ?? null;
+  assertIsDefined(chapter);
+  if (connection?.edges.length !== 1) throw new Error('Expected exactly one chapter');
+  assertIsPublishedChapter(chapter);
 
   return (
     <FullscreenContainer>
@@ -24,20 +37,21 @@ export default async function Layout({ children }: Props) {
         <FullscreenContainer.ScrollableColumn width="2/12" padding={2}>
           <Menu>
             <Menu.List>
-              {connection?.edges.map((edge) => {
-                const entity = edge.node.valueOrThrow();
-                assertIsPublishedArticle(entity);
-                const isOverview = entity.fields.slug === 'overview';
-                return (
-                  <MenuLinkItem
-                    key={entity.id}
-                    href={urls.article(entity.fields.slug)}
-                    activeSegments={isOverview ? [] : [entity.fields.slug]}
-                  >
-                    {entity.fields.title}
-                  </MenuLinkItem>
-                );
+              {chapter.fields.items.map((item, index) => {
+                if (isPublishedArticleTocItem(item)) {
+                  return (
+                    // @ts-ignore TODO Typescript async components are not supported yet
+                    <ArticleItem
+                      key={item.article.id}
+                      item={item}
+                      publishedClient={publishedClient}
+                    />
+                  );
+                } else {
+                  return <ChapterItem key={index} item={item} publishedClient={publishedClient} />;
+                }
               })}
+              <Menu.Label>Reference</Menu.Label>
               <MenuLinkItem href={urls.glossary} activeSegments={['glossary']}>
                 Glossary
               </MenuLinkItem>
@@ -48,5 +62,51 @@ export default async function Layout({ children }: Props) {
         <FullscreenContainer.Column width="2/12" />
       </FullscreenContainer.Columns>
     </FullscreenContainer>
+  );
+}
+
+function ChapterItem({
+  item,
+  publishedClient,
+}: {
+  item: PublishedTocItem;
+  publishedClient: PublishedClient;
+}) {
+  return (
+    <>
+      <Menu.Label>{item.title}</Menu.Label>
+      {item.items.map((item, index) => {
+        if (isPublishedArticleTocItem(item)) {
+          return (
+            // @ts-ignore TODO Typescript async components are not supported yet
+            <ArticleItem key={item.article.id} item={item} publishedClient={publishedClient} />
+          );
+        } else {
+          return <ChapterItem key={index} item={item} publishedClient={publishedClient} />;
+        }
+      })}
+    </>
+  );
+}
+
+async function ArticleItem({
+  item,
+  publishedClient,
+}: {
+  item: PublishedArticleTocItem;
+  publishedClient: PublishedClient;
+}) {
+  const entity = (await publishedClient.getEntity(item.article)).valueOrThrow();
+  assertIsPublishedArticle(entity);
+  const isOverview = entity.fields.slug === 'overview';
+
+  return (
+    <MenuLinkItem
+      key={entity.id}
+      href={urls.article(entity.fields.slug)}
+      activeSegments={isOverview ? [] : [entity.fields.slug]}
+    >
+      {entity.fields.title}
+    </MenuLinkItem>
   );
 }

@@ -47,6 +47,24 @@
       ]
     },
     {
+      "name": "Chapter",
+      "adminOnly": false,
+      "authKeyPattern": "none",
+      "fields": [
+        {
+          "name": "items",
+          "type": "ValueType",
+          "required": true,
+          "adminOnly": false,
+          "list": true,
+          "valueTypes": [
+            "ArticleTocItem",
+            "TocItem"
+          ]
+        }
+      ]
+    },
+    {
       "name": "GlossaryTerm",
       "adminOnly": false,
       "authKeyPattern": "none",
@@ -81,7 +99,58 @@
       ]
     }
   ],
-  "valueTypes": [],
+  "valueTypes": [
+    {
+      "name": "ArticleTocItem",
+      "adminOnly": false,
+      "fields": [
+        {
+          "name": "title",
+          "type": "String",
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "index": null,
+          "matchPattern": null
+        },
+        {
+          "name": "article",
+          "type": "EntityType",
+          "required": true,
+          "adminOnly": false,
+          "entityTypes": [
+            "Article"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TocItem",
+      "adminOnly": false,
+      "fields": [
+        {
+          "name": "title",
+          "type": "String",
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "index": null,
+          "matchPattern": null
+        },
+        {
+          "name": "items",
+          "type": "ValueType",
+          "required": true,
+          "adminOnly": false,
+          "list": true,
+          "valueTypes": [
+            "ArticleTocItem",
+            "TocItem"
+          ]
+        }
+      ]
+    }
+  ],
   "patterns": [
     {
       "name": "none",
