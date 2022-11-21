@@ -33,7 +33,9 @@
             "root",
             "paragraph",
             "text",
-            "entityLink"
+            "entityLink",
+            "list",
+            "listitem"
           ],
           "linkEntityTypes": [
             "GlossaryTerm",
