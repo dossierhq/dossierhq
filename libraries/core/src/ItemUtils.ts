@@ -11,6 +11,7 @@ import type {
   RichTextElementNode,
   RichTextEntityLinkNode,
   RichTextEntityNode,
+  RichTextHeadingNode,
   RichTextListItemNode,
   RichTextListNode,
   RichTextNode,
@@ -191,6 +192,10 @@ export function isRichTextEntityLinkNode(node: RichTextNode): node is RichTextEn
 
 export function isRichTextValueItemNode(node: RichTextNode): node is RichTextValueItemNode {
   return node.type === RichTextNodeType.valueItem;
+}
+
+export function isRichTextHeadingNode(node: RichTextNode): node is RichTextHeadingNode {
+  return node.type === RichTextNodeType.heading;
 }
 
 export function isRichTextListNode(node: RichTextNode): node is RichTextListNode {

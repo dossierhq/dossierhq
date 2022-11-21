@@ -4,6 +4,7 @@ import type {
   SerializedDecoratorBlockNode,
   SerializedEditorState,
   SerializedElementNode,
+  SerializedHeadingNode,
   SerializedLexicalNode,
   SerializedListItemNode,
   SerializedListNode,
@@ -60,6 +61,8 @@ export type RichTextTextNode = SerializedTextNode;
 export type RichTextRootNode = SerializedRootNode;
 
 export type RichTextParagraphNode = SerializedParagraphNode;
+
+export type RichTextHeadingNode = SerializedHeadingNode;
 
 export type RichTextListNode = SerializedListNode;
 
