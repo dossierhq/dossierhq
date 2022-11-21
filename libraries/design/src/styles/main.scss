@@ -166,6 +166,24 @@ tr.is-sticky-row :is(td, th),
 }
 
 .rich-text {
+  .li {
+  }
+
+  .ol {
+    list-style-position: inside;
+    margin-bottom: 0.5rem;
+  }
+
+  .paragraph {
+    margin-bottom: 0.5rem;
+  }
+
+  .ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-bottom: 0.5rem;
+  }
+
   .is-bold {
     font-weight: bold;
   }

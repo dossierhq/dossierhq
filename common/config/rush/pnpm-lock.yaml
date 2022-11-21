@@ -359,7 +359,9 @@ importers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@lexical/list': ~0.6.0
       '@lexical/react': ~0.6.0
+      '@lexical/rich-text': ~0.6.0
       '@lexical/selection': ~0.6.0
       '@lexical/utils': ~0.6.0
       '@rushstack/heft': 0.48.8
@@ -397,7 +399,9 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
       '@jonasb/datadata-leaflet': link:../leaflet
+      '@lexical/list': 0.6.0_lexical@0.6.0
       '@lexical/react': 0.6.0_6fhz367lkjrjgqa2bb2vqca4nq
+      '@lexical/rich-text': 0.6.0_pn3nccdp6tlx57bqblvtzyeubi
       '@lexical/selection': 0.6.0_lexical@0.6.0
       '@lexical/utils': 0.6.0_lexical@0.6.0
       leaflet: 1.9.1
@@ -1079,7 +1083,9 @@ importers:
       '@faker-js/faker': ~7.6.0
       '@fortawesome/free-solid-svg-icons': ~6.2.0
       '@graphiql/toolkit': ~0.8.0
+      '@lexical/list': ~0.6.0
       '@lexical/react': ~0.6.0
+      '@lexical/rich-text': ~0.6.0
       '@lexical/selection': ~0.6.0
       '@lexical/utils': ~0.6.0
       '@microsoft/rush-lib': ~5.83.4
@@ -1162,7 +1168,9 @@ importers:
       '@faker-js/faker': 7.6.0
       '@fortawesome/free-solid-svg-icons': 6.2.0
       '@graphiql/toolkit': 0.8.0_dz5y4i4q3czbnfzgbkxl5d6nzm
+      '@lexical/list': 0.6.0_lexical@0.6.0
       '@lexical/react': 0.6.0_6fhz367lkjrjgqa2bb2vqca4nq
+      '@lexical/rich-text': 0.6.0_pn3nccdp6tlx57bqblvtzyeubi
       '@lexical/selection': 0.6.0_lexical@0.6.0
       '@lexical/utils': 0.6.0_lexical@0.6.0
       '@rushstack/eslint-patch': 1.2.0
@@ -3401,6 +3409,19 @@ packages:
       lexical: 0.6.0
     dependencies:
       '@lexical/clipboard': 0.6.0_lexical@0.6.0
+      '@lexical/selection': 0.6.0_lexical@0.6.0
+      '@lexical/utils': 0.6.0_lexical@0.6.0
+      lexical: 0.6.0
+    dev: false
+
+  /@lexical/rich-text/0.6.0_pn3nccdp6tlx57bqblvtzyeubi:
+    resolution: {integrity: sha512-shGN15bjjXG1FRcxuKdlM1/eSq/s91yGbI1T9y7ezMihbDyUa+Ytf0xP51QPYTLEmXtqZrUOFoFZm+tqGNugYQ==}
+    peerDependencies:
+      '@lexical/clipboard': 0.6.0
+      '@lexical/selection': 0.6.0
+      '@lexical/utils': 0.6.0
+      lexical: 0.6.0
+    dependencies:
       '@lexical/selection': 0.6.0_lexical@0.6.0
       '@lexical/utils': 0.6.0_lexical@0.6.0
       lexical: 0.6.0

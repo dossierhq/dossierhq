@@ -10,9 +10,11 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
+  RichTextNodeType,
   richTextTextNodeHasFormat,
 } from '@jonasb/datadata-core';
-import { Text } from '@jonasb/datadata-design';
+import type { SerializedElementNode } from '@jonasb/datadata-core/lib/esm/third-party/Lexical.js';
+import { ClassName, LexicalTheme } from '@jonasb/datadata-design';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
 import { urls } from '../utils/PageUtils';
@@ -46,19 +48,23 @@ async function renderNode(
   key: Key | null
 ): Promise<ReactNode> {
   if (isRichTextRootNode(node)) {
-    return renderChildren(context, node);
+    return <div className={ClassName['rich-text']}>{await renderChildren(context, node)}</div>;
   }
   if (isRichTextParagraphNode(node)) {
     return (
-      <Text key={key} textStyle="body1">
+      <p key={key} className={LexicalTheme.paragraph}>
         {await renderChildren(context, node)}
-      </Text>
+      </p>
     );
   }
   if (isRichTextTextNode(node)) {
     let formattedText: ReactNode = node.text;
     if (richTextTextNodeHasFormat(node, 'code')) {
-      formattedText = <code key={key}>{formattedText}</code>;
+      formattedText = (
+        <code key={key} className={LexicalTheme.text.code}>
+          {formattedText}
+        </code>
+      );
     }
     return formattedText;
   }
@@ -81,6 +87,20 @@ async function renderNode(
         );
       }
     }
+  }
+  if (node.type === RichTextNodeType.list) {
+    return (
+      <ul key={key} className={LexicalTheme.list.ul}>
+        {await renderChildren(context, node as SerializedElementNode)}
+      </ul>
+    );
+  }
+  if (node.type === RichTextNodeType.listitem) {
+    return (
+      <li key={key} className={LexicalTheme.list.listitem}>
+        {await renderChildren(context, node as SerializedElementNode)}
+      </li>
+    );
   }
 
   // fallback for unknown element nodes

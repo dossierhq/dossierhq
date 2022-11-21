@@ -1,16 +1,18 @@
 import type { AdminFieldSpecification, EntityReference, RichText } from '@jonasb/datadata-core';
-import { ClassName, toClassName } from '@jonasb/datadata-design';
+import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
+import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin.js';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin.js';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
+import { HeadingNode } from '@lexical/rich-text';
 import type { EditorState, LexicalEditor } from 'lexical';
 import debounce from 'lodash/debounce.js';
 import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
-import { LexicalTheme } from '../../utils/LexicalTheme.js';
 import { AdminClickableLinkPlugin } from './AdminClickableLinkPlugin.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
@@ -52,7 +54,14 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
     namespace: 'datadata',
     onError: handleError,
-    nodes: [AdminEntityNode, AdminEntityLinkNode, AdminValueItemNode],
+    nodes: [
+      AdminEntityLinkNode,
+      AdminEntityNode,
+      AdminValueItemNode,
+      HeadingNode,
+      ListItemNode,
+      ListNode,
+    ],
     theme: LexicalTheme,
     editorState: value
       ? (editor: LexicalEditor) => {
@@ -74,6 +83,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
         placeholder=""
         ErrorBoundary={LexicalErrorBoundary}
       />
+      <ListPlugin />
       <EntityPlugin />
       <EntityLinkPlugin />
       <AdminClickableLinkPlugin onClick={handleEntityLinkClick} />

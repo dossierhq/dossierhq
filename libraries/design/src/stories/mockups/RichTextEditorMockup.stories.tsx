@@ -1,5 +1,12 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import { ButtonDropdown, ClassName, IconButton, Row, Text, toClassName } from '../../index.js';
+import {
+  ButtonDropdown,
+  ClassName,
+  IconButton,
+  LexicalTheme,
+  Row,
+  toClassName,
+} from '../../index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ScreenProps {}
@@ -60,11 +67,21 @@ function Screen(): JSX.Element {
         className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
         contentEditable
       >
-        <Text textStyle="body1">
-          Lorem <strong>ipsum</strong>.
-          <span className={ClassName['is-strike-through']}>Strikethrough</span>{' '}
-          <span className={ClassName['is-underline']}>Underline</span>
-        </Text>
+        <p className={LexicalTheme.paragraph}>
+          Lorem <strong className={LexicalTheme.text.bold}>ipsum</strong>.{' '}
+          <span className={LexicalTheme.text.strikethrough}>Strikethrough</span>{' '}
+          <span className={LexicalTheme.text.underline}>Underline</span>
+        </p>
+        <p className={LexicalTheme.paragraph}>
+          Second paragraph. H<sup className={LexicalTheme.text.superscript}>2</sup>O
+        </p>
+        <ul className={LexicalTheme.list.ul}>
+          <li className={LexicalTheme.list.listitem}>Item one</li>
+        </ul>
+        <ol className={LexicalTheme.list.ol}>
+          <li className={LexicalTheme.list.listitem}>Item one</li>
+          <li className={LexicalTheme.list.listitem}>Item two</li>
+        </ol>
       </div>
     </>
   );

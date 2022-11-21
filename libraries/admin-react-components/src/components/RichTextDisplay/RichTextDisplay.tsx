@@ -1,14 +1,15 @@
 import type { EntityReference, PublishedFieldSpecification, RichText } from '@jonasb/datadata-core';
-import { ClassName, toClassName } from '@jonasb/datadata-design';
+import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
+import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
+import { HeadingNode } from '@lexical/rich-text';
 import type { LexicalEditor } from 'lexical/LexicalEditor.js';
 import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
-import { LexicalTheme } from '../../utils/LexicalTheme.js';
 import { PublishedClickableLinkPlugin } from './PublishedClickableLinkPlugin.js';
 import { PublishedEntityLinkNode } from './PublishedEntityLinkNode.js';
 import { PublishedEntityNode } from './PublishedEntityNode.js';
@@ -35,7 +36,14 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
   const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
     namespace: 'datadata',
     onError: handleError,
-    nodes: [PublishedEntityNode, PublishedEntityLinkNode, PublishedValueItemNode],
+    nodes: [
+      PublishedEntityNode,
+      PublishedEntityLinkNode,
+      PublishedValueItemNode,
+      HeadingNode,
+      ListItemNode,
+      ListNode,
+    ],
     editable: false,
     theme: LexicalTheme,
     editorState: value

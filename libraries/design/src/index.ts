@@ -49,6 +49,7 @@ export type {
   MultipleSelectorStateAction,
 } from './components/index.js';
 export { Color, StatusColor } from './config/Colors.js';
+export { LexicalTheme } from './config/LexicalTheme.js';
 export { NotificationContext } from './contexts/NotificationContext.js';
 export type { NotificationInfo } from './contexts/NotificationContext.js';
 export { useDocumentEventListener } from './hooks/useDocumentEventListener.js';
@@ -65,14 +66,6 @@ export type { TextStyle } from './utils/TextStylePropsUtils.js';
 export const ClassName = {
   // Rich Text
   'rich-text': 'rich-text',
-  'is-bold': 'is-bold',
-  'is-code': 'is-code',
-  'is-italic': 'is-italic',
-  'is-strike-through': 'is-strike-through',
-  'is-subscript': 'is-subscript',
-  'is-superscript': 'is-superscript',
-  'is-underline': 'is-underline',
-  'is-underline-strike-through': 'is-underline-strike-through',
   'rich-text-editor': 'rich-text-editor',
   // Menu item a tag
   'is-active': 'is-active',
