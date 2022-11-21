@@ -33,18 +33,31 @@ import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './Admi
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 
-const blockTypeToBlockName = {
-  [RichTextNodeType.paragraph]: 'Paragraph',
-  bullet: 'Bulleted list',
-  number: 'Numbered list',
-  check: 'Check list',
-  h1: 'Heading 1',
-  h2: 'Heading 2',
-  h3: 'Heading 3',
-  h4: 'Heading 4',
-  h5: 'Heading 5',
-  h6: 'Heading 6',
+type BlockTypeName =
+  | 'paragraph'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'bullet'
+  | 'check'
+  | 'number';
+
+const blockTypeToBlockName: Record<BlockTypeName, { title: string; node: RichTextNodeType }> = {
+  paragraph: { title: 'Paragraph', node: RichTextNodeType.paragraph },
+  bullet: { title: 'Bulleted list', node: RichTextNodeType.list },
+  number: { title: 'Numbered list', node: RichTextNodeType.list },
+  check: { title: 'Check list', node: RichTextNodeType.list },
+  h1: { title: 'Heading 1', node: RichTextNodeType.heading },
+  h2: { title: 'Heading 2', node: RichTextNodeType.heading },
+  h3: { title: 'Heading 3', node: RichTextNodeType.heading },
+  h4: { title: 'Heading 4', node: RichTextNodeType.heading },
+  h5: { title: 'Heading 5', node: RichTextNodeType.heading },
+  h6: { title: 'Heading 6', node: RichTextNodeType.heading },
 };
+//TODO Could use Typescript 4.9 satisfies to make this more readable
 
 export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
   const { schema } = useContext(AdminDataDataContext);
@@ -150,7 +163,12 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
 
   return (
     <Row gap={2} marginBottom={2}>
-      <BlockFormatDropDown disabled={!editor.isEditable()} blockType={blockType} editor={editor} />
+      <BlockFormatDropDown
+        disabled={!editor.isEditable()}
+        blockType={blockType}
+        editor={editor}
+        fieldSpec={fieldSpec}
+      />
       <IconButton.Group condensed skipBottomMargin>
         <IconButton
           icon="bold"
@@ -222,15 +240,22 @@ function BlockFormatDropDown({
   editor,
   blockType,
   disabled = false,
+  fieldSpec,
 }: {
   blockType: keyof typeof blockTypeToBlockName;
   editor: LexicalEditor;
-  disabled?: boolean;
+  disabled: boolean;
+  fieldSpec: AdminFieldSpecification;
 }): JSX.Element {
-  const items = Object.entries(blockTypeToBlockName).map(([blockType, blockName]) => ({
-    id: blockType as keyof typeof blockTypeToBlockName,
-    name: blockName,
-  }));
+  const items: { id: BlockTypeName; name: string }[] = Object.entries(blockTypeToBlockName)
+    .filter(([_blockType, blockConfig]) => {
+      if (!fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0) return true;
+      return fieldSpec.richTextNodes.includes(blockConfig.node);
+    })
+    .map(([blockType, blockName]) => ({
+      id: blockType as keyof typeof blockTypeToBlockName,
+      name: blockName.title,
+    }));
 
   const handleItemClick = useCallback(
     (item: typeof items[number]) => {
@@ -299,7 +324,7 @@ function BlockFormatDropDown({
       renderItem={(item) => item.name}
       onItemClick={handleItemClick}
     >
-      {blockTypeToBlockName[blockType]}
+      {blockTypeToBlockName[blockType].title}
     </ButtonDropdown>
   );
 }
