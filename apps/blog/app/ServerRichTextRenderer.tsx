@@ -7,13 +7,13 @@ import type {
 import {
   isRichTextElementNode,
   isRichTextEntityLinkNode,
+  isRichTextListItemNode,
+  isRichTextListNode,
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
-  RichTextNodeType,
   richTextTextNodeHasFormat,
 } from '@jonasb/datadata-core';
-import type { SerializedElementNode } from '@jonasb/datadata-core/lib/esm/third-party/Lexical.js';
 import { ClassName, LexicalTheme } from '@jonasb/datadata-design';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
@@ -88,17 +88,18 @@ async function renderNode(
       }
     }
   }
-  if (node.type === RichTextNodeType.list) {
+  if (isRichTextListNode(node)) {
+    const Tag = node.tag === 'ol' ? 'ol' : 'ul';
     return (
-      <ul key={key} className={LexicalTheme.list.ul}>
-        {await renderChildren(context, node as SerializedElementNode)}
-      </ul>
+      <Tag key={key} className={LexicalTheme.list[node.tag]}>
+        {await renderChildren(context, node)}
+      </Tag>
     );
   }
-  if (node.type === RichTextNodeType.listitem) {
+  if (isRichTextListItemNode(node)) {
     return (
       <li key={key} className={LexicalTheme.list.listitem}>
-        {await renderChildren(context, node as SerializedElementNode)}
+        {await renderChildren(context, node)}
       </li>
     );
   }
