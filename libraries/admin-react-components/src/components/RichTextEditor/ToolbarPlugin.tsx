@@ -1,6 +1,7 @@
 import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
-import { ButtonDropdown, IconButton, Row } from '@jonasb/datadata-design';
+import { IconName, toSpacingClassName } from '@jonasb/datadata-design';
+import { ButtonDropdown, Icon, IconButton, Row } from '@jonasb/datadata-design';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -45,17 +46,20 @@ type BlockTypeName =
   | 'check'
   | 'number';
 
-const blockTypeToBlockName: Record<BlockTypeName, { title: string; node: RichTextNodeType }> = {
-  paragraph: { title: 'Paragraph', node: RichTextNodeType.paragraph },
-  bullet: { title: 'Bulleted list', node: RichTextNodeType.list },
-  number: { title: 'Numbered list', node: RichTextNodeType.list },
-  check: { title: 'Check list', node: RichTextNodeType.list },
-  h1: { title: 'Heading 1', node: RichTextNodeType.heading },
-  h2: { title: 'Heading 2', node: RichTextNodeType.heading },
-  h3: { title: 'Heading 3', node: RichTextNodeType.heading },
-  h4: { title: 'Heading 4', node: RichTextNodeType.heading },
-  h5: { title: 'Heading 5', node: RichTextNodeType.heading },
-  h6: { title: 'Heading 6', node: RichTextNodeType.heading },
+const blockTypeToBlockName: Record<
+  BlockTypeName,
+  { title: string; node: RichTextNodeType; icon: IconName }
+> = {
+  paragraph: { title: 'Paragraph', node: RichTextNodeType.paragraph, icon: 'paragraph' },
+  bullet: { title: 'Bulleted list', node: RichTextNodeType.list, icon: 'listUl' },
+  number: { title: 'Numbered list', node: RichTextNodeType.list, icon: 'listOl' },
+  check: { title: 'Check list', node: RichTextNodeType.list, icon: 'listCheck' },
+  h1: { title: 'Heading 1', node: RichTextNodeType.heading, icon: 'heading' },
+  h2: { title: 'Heading 2', node: RichTextNodeType.heading, icon: 'heading' },
+  h3: { title: 'Heading 3', node: RichTextNodeType.heading, icon: 'heading' },
+  h4: { title: 'Heading 4', node: RichTextNodeType.heading, icon: 'heading' },
+  h5: { title: 'Heading 5', node: RichTextNodeType.heading, icon: 'heading' },
+  h6: { title: 'Heading 6', node: RichTextNodeType.heading, icon: 'heading' },
 };
 //TODO Could use Typescript 4.9 satisfies to make this more readable
 
@@ -247,15 +251,20 @@ function BlockFormatDropDown({
   disabled: boolean;
   fieldSpec: AdminFieldSpecification;
 }): JSX.Element {
-  const items: { id: BlockTypeName; name: string }[] = Object.entries(blockTypeToBlockName)
+  const items: { id: BlockTypeName; name: string; icon: IconName }[] = Object.entries(
+    blockTypeToBlockName
+  )
     .filter(([_blockType, blockConfig]) => {
       if (!fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0) return true;
       return fieldSpec.richTextNodes.includes(blockConfig.node);
     })
-    .map(([blockType, blockName]) => ({
+    .map(([blockType, blockConfig]) => ({
       id: blockType as keyof typeof blockTypeToBlockName,
-      name: blockName.title,
+      name: blockConfig.title,
+      icon: blockConfig.icon,
     }));
+
+  const currentBlockConfig = blockTypeToBlockName[blockType];
 
   const handleItemClick = useCallback(
     (item: typeof items[number]) => {
@@ -321,10 +330,20 @@ function BlockFormatDropDown({
     <ButtonDropdown
       disabled={disabled}
       items={items}
-      renderItem={(item) => item.name}
+      iconLeft={currentBlockConfig.icon}
+      renderItem={(item) => (
+        <>
+          <Icon
+            className={toSpacingClassName({ marginRight: 2, paddingTop: 2 })}
+            icon={item.icon}
+            size="small"
+          />
+          {item.name}
+        </>
+      )}
       onItemClick={handleItemClick}
     >
-      {blockTypeToBlockName[blockType].title}
+      {currentBlockConfig.title}
     </ButtonDropdown>
   );
 }
