@@ -1,11 +1,25 @@
 import type { AdminFieldSpecification } from '@jonasb/datadata-core';
-import { RichTextNodeType } from '@jonasb/datadata-core';
+import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
 import { ButtonDropdown, IconButton, Row } from '@jonasb/datadata-design';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
-import { mergeRegister } from '@lexical/utils';
 import {
+  $isListNode,
+  INSERT_CHECK_LIST_COMMAND,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  ListNode,
+  REMOVE_LIST_COMMAND,
+} from '@lexical/list';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
+import type { HeadingTagType } from '@lexical/rich-text';
+import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text';
+import { $wrapNodes } from '@lexical/selection';
+import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
+import type { LexicalEditor } from 'lexical';
+import {
+  $createParagraphNode,
   $getSelection,
   $isRangeSelection,
+  $isRootOrShadowRoot,
   COMMAND_PRIORITY_CRITICAL,
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
@@ -19,9 +33,24 @@ import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './Admi
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 
+const blockTypeToBlockName = {
+  [RichTextNodeType.paragraph]: 'Paragraph',
+  bullet: 'Bulleted list',
+  number: 'Numbered list',
+  check: 'Check list',
+  h1: 'Heading 1',
+  h2: 'Heading 2',
+  h3: 'Heading 3',
+  h4: 'Heading 4',
+  h5: 'Heading 5',
+  h6: 'Heading 6',
+};
+
 export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
   const { schema } = useContext(AdminDataDataContext);
   const [editor] = useLexicalComposerContext();
+
+  const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
 
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
@@ -38,6 +67,23 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
+      const anchorNode = selection.anchor.getNode();
+      let element =
+        anchorNode.getKey() === 'root'
+          ? anchorNode
+          : $findMatchingParent(anchorNode, (e) => {
+              const parent = e.getParent();
+              return parent !== null && $isRootOrShadowRoot(parent);
+            });
+
+      if (element === null) {
+        element = anchorNode.getTopLevelElementOrThrow();
+      }
+
+      const elementKey = element.getKey();
+      const elementDOM = editor.getElementByKey(elementKey);
+
+      // Text formatting
       setIsBold(selection.hasFormat('bold'));
       setIsItalic(selection.hasFormat('italic'));
       setIsSubscript(selection.hasFormat('subscript'));
@@ -49,8 +95,22 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
       const node = getSelectedNode(selection);
       const parent = node.getParent();
       setIsEntityLink($isAdminEntityLinkNode(parent) || $isAdminEntityLinkNode(node));
+
+      if (elementDOM !== null) {
+        // setSelectedElementKey(elementKey);
+        if ($isListNode(element)) {
+          const parentList = $getNearestNodeOfType<ListNode>(anchorNode, ListNode);
+          const type = parentList ? parentList.getListType() : element.getListType();
+          setBlockType(type);
+        } else {
+          const type = $isHeadingNode(element) ? element.getTag() : element.getType();
+          if (type in blockTypeToBlockName) {
+            setBlockType(type as keyof typeof blockTypeToBlockName);
+          }
+        }
+      }
     }
-  }, []);
+  }, [editor]);
 
   useEffect(() => {
     return mergeRegister(
@@ -90,6 +150,7 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
 
   return (
     <Row gap={2} marginBottom={2}>
+      <BlockFormatDropDown disabled={!editor.isEditable()} blockType={blockType} editor={editor} />
       <IconButton.Group condensed skipBottomMargin>
         <IconButton
           icon="bold"
@@ -154,6 +215,92 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecificatio
         />
       ) : null}
     </Row>
+  );
+}
+
+function BlockFormatDropDown({
+  editor,
+  blockType,
+  disabled = false,
+}: {
+  blockType: keyof typeof blockTypeToBlockName;
+  editor: LexicalEditor;
+  disabled?: boolean;
+}): JSX.Element {
+  const items = Object.entries(blockTypeToBlockName).map(([blockType, blockName]) => ({
+    id: blockType as keyof typeof blockTypeToBlockName,
+    name: blockName,
+  }));
+
+  const handleItemClick = useCallback(
+    (item: typeof items[number]) => {
+      switch (item.id) {
+        case 'paragraph':
+          if (blockType !== 'paragraph') {
+            editor.update(() => {
+              const selection = $getSelection();
+
+              if ($isRangeSelection(selection)) {
+                $wrapNodes(selection, () => $createParagraphNode());
+              }
+            });
+          }
+          break;
+        case 'h1':
+        case 'h2':
+        case 'h3':
+        case 'h4':
+        case 'h5':
+        case 'h6': {
+          const headingLevel: HeadingTagType = item.id;
+          if (blockType !== headingLevel) {
+            editor.update(() => {
+              const selection = $getSelection();
+
+              if ($isRangeSelection(selection)) {
+                $wrapNodes(selection, () => $createHeadingNode(headingLevel));
+              }
+            });
+          }
+          break;
+        }
+        case 'bullet':
+          if (blockType !== 'bullet') {
+            editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+          } else {
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          }
+          break;
+        case 'check':
+          if (blockType !== 'check') {
+            editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
+          } else {
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          }
+          break;
+        case 'number':
+          if (blockType !== 'number') {
+            editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+          } else {
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          }
+          break;
+        default:
+          assertExhaustive(item.id);
+      }
+    },
+    [blockType, editor]
+  );
+
+  return (
+    <ButtonDropdown
+      disabled={disabled}
+      items={items}
+      renderItem={(item) => item.name}
+      onItemClick={handleItemClick}
+    >
+      {blockTypeToBlockName[blockType]}
+    </ButtonDropdown>
   );
 }
 
