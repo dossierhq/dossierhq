@@ -22,6 +22,6 @@
     "@rushstack/heft": "0.48.8",
     "eslint": "~8.27.0",
     "prettier": "2.7.1",
-    "typescript": "~4.8.4"
+    "typescript": "~4.9.3"
   }
 }
