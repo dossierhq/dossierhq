@@ -33,9 +33,10 @@
             "root",
             "paragraph",
             "text",
-            "entityLink",
             "list",
-            "listitem"
+            "listitem",
+            "entityLink",
+            "heading"
           ],
           "linkEntityTypes": [
             "GlossaryTerm",
@@ -72,20 +73,27 @@
         {
           "name": "title",
           "type": "String",
+          "required": true,
+          "adminOnly": false,
           "isName": true,
-          "required": true
+          "multiline": false,
+          "index": null,
+          "matchPattern": null
         },
         {
           "name": "slug",
           "type": "String",
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
           "index": "glossarySlug",
-          "matchPattern": "slug",
-          "required": true
+          "matchPattern": "slug"
         },
         {
           "name": "description",
           "type": "RichText",
           "required": true,
+          "adminOnly": false,
           "richTextNodes": [
             "root",
             "paragraph",
@@ -94,7 +102,9 @@
           ],
           "linkEntityTypes": [
             "GlossaryTerm"
-          ]
+          ],
+          "entityTypes": [],
+          "valueTypes": []
         }
       ]
     }

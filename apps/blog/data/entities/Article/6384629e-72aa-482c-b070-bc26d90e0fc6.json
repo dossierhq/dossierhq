@@ -21,6 +21,25 @@
             "direction": "ltr",
             "format": "",
             "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Entity",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
             "type": "paragraph",
             "version": 1,
             "children": [
@@ -221,6 +240,25 @@
             "direction": "ltr",
             "format": "",
             "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Authorization key",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
             "type": "paragraph",
             "version": 1,
             "children": [
@@ -230,6 +268,25 @@
                 "mode": "normal",
                 "style": "",
                 "text": "Another property of an entity is the authorization key, which defines who can read or write to the entity. We'll get back to authorization keys later, but for now this article has the key \"none\", which means that anyone can read it.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Publishing and entity status",
                 "type": "text",
                 "version": 1
               }
@@ -472,6 +529,25 @@
                 "mode": "normal",
                 "style": "",
                 "text": "As of now you can't delete an entity which means you will never lose content since old versions are stored forever. The closest to deleting is archiving, so you can ensure you don't accidentally publish it in future.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Value item",
                 "type": "text",
                 "version": 1
               }
