@@ -5,6 +5,8 @@ export const LexicalTheme = {
     ol: 'ol',
     ul: 'ul',
     listitem: 'li',
+    listitemChecked: 'PlaygroundEditorTheme__listItemChecked',
+    listitemUnchecked: 'PlaygroundEditorTheme__listItemUnchecked',
   },
   paragraph: 'paragraph',
   text: {

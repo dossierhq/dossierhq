@@ -82,6 +82,18 @@ function Screen(): JSX.Element {
           <li className={LexicalTheme.list.listitem}>Item one</li>
           <li className={LexicalTheme.list.listitem}>Item two</li>
         </ol>
+        <ul className={LexicalTheme.list.ul}>
+          <li
+            className={toClassName(LexicalTheme.list.listitem, LexicalTheme.list.listitemUnchecked)}
+          >
+            Unchecked item
+          </li>
+          <li
+            className={toClassName(LexicalTheme.list.listitem, LexicalTheme.list.listitemChecked)}
+          >
+            Checked item
+          </li>
+        </ul>
       </div>
     </>
   );
