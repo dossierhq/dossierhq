@@ -5,6 +5,8 @@ import type {
   SerializedEditorState,
   SerializedElementNode,
   SerializedLexicalNode,
+  SerializedListItemNode,
+  SerializedListNode,
   SerializedParagraphNode,
   SerializedRootNode,
   SerializedTextNode,
@@ -58,6 +60,10 @@ export type RichTextTextNode = SerializedTextNode;
 export type RichTextRootNode = SerializedRootNode;
 
 export type RichTextParagraphNode = SerializedParagraphNode;
+
+export type RichTextListNode = SerializedListNode;
+
+export type RichTextListItemNode = SerializedListItemNode;
 
 export type RichTextEntityNode = Spread<
   {

@@ -74,6 +74,33 @@ export const TEXT_TYPE_TO_FORMAT = {
   underline: IS_UNDERLINE,
 } as const;
 
+// from @lexical/list
+
+export type SerializedListNode = Spread<
+  {
+    listType: ListType;
+    start: number;
+    tag: ListNodeTagType;
+    type: 'list';
+    version: 1;
+  },
+  SerializedElementNode
+>;
+
+export type ListType = 'number' | 'bullet' | 'check';
+
+export type ListNodeTagType = 'ul' | 'ol';
+
+export type SerializedListItemNode = Spread<
+  {
+    checked: boolean | undefined;
+    type: 'listitem';
+    value: number;
+    version: 1;
+  },
+  SerializedElementNode
+>;
+
 // from @lexical/react
 
 export type SerializedDecoratorBlockNode = Spread<
@@ -84,8 +111,6 @@ export type SerializedDecoratorBlockNode = Spread<
 >;
 
 // from @lexical/rich-text
-
-// deno had issue resolving the types on skypack, so copy instead
 
 export type HeadingTagType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
