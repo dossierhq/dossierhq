@@ -70,7 +70,8 @@ function Screen(): JSX.Element {
         <p className={LexicalTheme.paragraph}>
           Lorem <strong className={LexicalTheme.text.bold}>ipsum</strong>.{' '}
           <span className={LexicalTheme.text.strikethrough}>Strikethrough</span>{' '}
-          <span className={LexicalTheme.text.underline}>Underline</span>
+          <span className={LexicalTheme.text.underline}>Underline</span>{' '}
+          <code className={LexicalTheme.text.code}>Code</code>
         </p>
         <p className={LexicalTheme.paragraph}>
           Second paragraph. H<sup className={LexicalTheme.text.superscript}>2</sup>O
