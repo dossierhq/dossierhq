@@ -94,6 +94,12 @@ function Screen(): JSX.Element {
             Checked item
           </li>
         </ul>
+        <h1 className={LexicalTheme.heading.h1}>Heading one</h1>
+        <h2 className={LexicalTheme.heading.h2}>Heading two</h2>
+        <h3 className={LexicalTheme.heading.h3}>Heading three</h3>
+        <h4 className={LexicalTheme.heading.h4}>Heading four</h4>
+        <h5 className={LexicalTheme.heading.h5}>Heading five</h5>
+        <h6 className={LexicalTheme.heading.h6}>Heading six</h6>
       </div>
     </>
   );
