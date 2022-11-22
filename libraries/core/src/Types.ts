@@ -276,9 +276,9 @@ export const AdminQueryOrder = {
 } as const;
 export type AdminQueryOrder = keyof typeof AdminQueryOrder;
 
-export interface AdminQuery {
+export interface AdminQuery<TEntityType extends string = string> {
   authKeys?: string[];
-  entityTypes?: string[];
+  entityTypes?: TEntityType[];
   status?: AdminEntityStatus[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
@@ -286,7 +286,8 @@ export interface AdminQuery {
   text?: string;
 }
 
-export interface AdminSearchQuery extends AdminQuery {
+export interface AdminSearchQuery<TEntityType extends string = string>
+  extends AdminQuery<TEntityType> {
   order?: AdminQueryOrder;
   reverse?: boolean;
 }
@@ -297,16 +298,17 @@ export const PublishedQueryOrder = {
 } as const;
 export type PublishedQueryOrder = typeof PublishedQueryOrder[keyof typeof PublishedQueryOrder];
 
-export interface PublishedQuery {
+export interface PublishedQuery<TEntityType extends string = string> {
   authKeys?: string[];
-  entityTypes?: string[];
+  entityTypes?: TEntityType[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
   boundingBox?: BoundingBox;
   text?: string;
 }
 
-export interface PublishedSearchQuery extends PublishedQuery {
+export interface PublishedSearchQuery<TEntityType extends string = string>
+  extends PublishedQuery<TEntityType> {
   order?: PublishedQueryOrder;
   reverse?: boolean;
 }

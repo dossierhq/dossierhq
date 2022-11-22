@@ -65,7 +65,7 @@ import type {
   UniqueIndexReference,
 } from './Types.js';
 
-export interface AdminClient<TAdminEntity = AdminEntity> {
+export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = AdminEntity> {
   getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
   updateSchemaSpecification(
@@ -99,7 +99,7 @@ export interface AdminClient<TAdminEntity = AdminEntity> {
   >;
 
   sampleEntities(
-    query?: AdminQuery,
+    query?: AdminQuery<TAdminEntity['info']['type']>,
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<TAdminEntity>,
@@ -107,7 +107,7 @@ export interface AdminClient<TAdminEntity = AdminEntity> {
   >;
 
   searchEntities(
-    query?: AdminSearchQuery,
+    query?: AdminSearchQuery<TAdminEntity['info']['type']>,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<TAdminEntity, ErrorType>> | null,
@@ -115,7 +115,7 @@ export interface AdminClient<TAdminEntity = AdminEntity> {
   >;
 
   getTotalCount(
-    query?: AdminQuery
+    query?: AdminQuery<TAdminEntity['info']['type']>
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

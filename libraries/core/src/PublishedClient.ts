@@ -59,7 +59,7 @@ export interface PublishedClient<
   >;
 
   sampleEntities(
-    query?: PublishedQuery,
+    query?: PublishedQuery<TPublishedEntity['info']['type']>,
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<TPublishedEntity>,
@@ -67,7 +67,7 @@ export interface PublishedClient<
   >;
 
   searchEntities(
-    query?: PublishedSearchQuery,
+    query?: PublishedSearchQuery<TPublishedEntity['info']['type']>,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<TPublishedEntity, ErrorType>> | null,
@@ -75,7 +75,7 @@ export interface PublishedClient<
   >;
 
   getTotalCount(
-    query?: PublishedQuery
+    query?: PublishedQuery<TPublishedEntity['info']['type']>
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
