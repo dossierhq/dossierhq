@@ -1,4 +1,4 @@
-import type { AdminEntity, Location } from '@jonasb/datadata-core';
+import type { AdminEntity, Location, LocationFieldSpecification } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
@@ -7,7 +7,7 @@ import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEd
 import { AdminLocationSelectorDialog } from '../AdminLocationSelectorDialog/AdminLocationSelectorDialog.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
-type Props = FieldEditorProps<Location>;
+type Props = FieldEditorProps<LocationFieldSpecification, Location>;
 
 export function LocationFieldEditor({ value, onChange }: Props) {
   const [showSelector, setShowSelector] = useState(false);

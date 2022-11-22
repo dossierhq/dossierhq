@@ -23,7 +23,13 @@ import type {
   Result,
   ValueItem,
 } from '@jonasb/datadata-core';
-import { FieldType, isItemValueItem, isValueTypeField, notOk } from '@jonasb/datadata-core';
+import {
+  assertExhaustive,
+  FieldType,
+  isItemValueItem,
+  isValueTypeField,
+  notOk,
+} from '@jonasb/datadata-core';
 import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
@@ -1102,7 +1108,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   ): void {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
-      switch (fieldSpec.type as FieldType) {
+      switch (fieldSpec.type) {
         case FieldType.Boolean:
           fieldType = GraphQLBoolean;
           break;
@@ -1122,7 +1128,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           fieldType = this.getOrCreateValueUnion(isAdmin, fieldSpec.valueTypes ?? []);
           break;
         default:
-          throw new Error(`Unexpected type (${fieldSpec.type})`);
+          assertExhaustive(fieldSpec);
       }
 
       if (fieldSpec.list) {
@@ -1166,7 +1172,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           break;
         }
         default:
-          throw new Error(`Unexpected type (${fieldSpec.type})`);
+          assertExhaustive(fieldSpec);
       }
 
       if (fieldType) {

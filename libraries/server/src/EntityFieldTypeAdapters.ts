@@ -5,6 +5,7 @@ import type {
   FieldValueTypeMap,
   Location,
   Result,
+  StringFieldSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType, notOk, ok } from '@jonasb/datadata-core';
 
@@ -74,7 +75,7 @@ const locationCodec: FieldTypeAdapter<
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (fieldSpec: AdminFieldSpecification, prefix: string, data) => {
+  encodeData: (fieldSpec: StringFieldSpecification, prefix: string, data) => {
     if (typeof data !== 'string') {
       return notOk.BadRequest(
         `${prefix}: expected string, got ${Array.isArray(data) ? 'list' : typeof data}`

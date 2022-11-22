@@ -1,3 +1,4 @@
+import type { StringFieldSpecification } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
 import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer.js';
@@ -403,7 +404,9 @@ describe('ChangeFieldIndexAction', () => {
     expect(schemaUpdate).toMatchSnapshot();
 
     expect(state.entityTypes[0].fields[0].index).toBe('anIndex');
-    expect(schemaUpdate.entityTypes?.[0].fields[0].index).toBe('anIndex');
+    expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).index).toBe(
+      'anIndex'
+    );
   });
 });
 
@@ -426,7 +429,9 @@ describe('ChangeFieldIsNameAction', () => {
     expect(schemaUpdate).toMatchSnapshot();
 
     expect(state.entityTypes[0].fields[0].isName).toBe(true);
-    expect(schemaUpdate?.entityTypes?.[0].fields[0].isName).toBe(true);
+    expect((schemaUpdate?.entityTypes?.[0].fields[0] as StringFieldSpecification).isName).toBe(
+      true
+    );
   });
 
   test('make other field is-name, and switch back', () => {
@@ -505,7 +510,9 @@ describe('ChangeFieldMatchPattern', () => {
     expect(schemaUpdate).toMatchSnapshot();
 
     expect(state.entityTypes[0].fields[0].matchPattern).toBe('a-pattern');
-    expect(schemaUpdate.entityTypes?.[0].fields[0].matchPattern).toBe('a-pattern');
+    expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).matchPattern).toBe(
+      'a-pattern'
+    );
   });
 });
 
@@ -529,7 +536,9 @@ describe('ChangeFieldMultilineAction', () => {
     expect(schemaUpdate).toMatchSnapshot();
 
     expect(state.entityTypes[0].fields[0].multiline).toBe(true);
-    expect(schemaUpdate?.entityTypes?.[0].fields[0].multiline).toBe(true);
+    expect((schemaUpdate?.entityTypes?.[0].fields[0] as StringFieldSpecification).multiline).toBe(
+      true
+    );
   });
 });
 

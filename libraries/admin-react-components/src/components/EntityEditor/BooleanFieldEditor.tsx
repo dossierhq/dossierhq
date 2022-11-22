@@ -1,9 +1,10 @@
+import type { BooleanFieldSpecification } from '@jonasb/datadata-core';
 import { Checkbox, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 
-type Props = FieldEditorProps<boolean>;
+type Props = FieldEditorProps<BooleanFieldSpecification, boolean>;
 
 export function BooleanFieldEditor({ value, onChange }: Props) {
   const handleChange = useCallback(

@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, RichTextFieldSpecification } from '@jonasb/datadata-core';
 import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
 import type { IconName } from '@jonasb/datadata-design';
 import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@jonasb/datadata-design';
@@ -63,7 +63,11 @@ const blockTypeToBlockName: Record<
 };
 //TODO Could use Typescript 4.9 satisfies to make this more readable
 
-export function ToolbarPlugin({ fieldSpec }: { fieldSpec: AdminFieldSpecification }) {
+export function ToolbarPlugin({
+  fieldSpec,
+}: {
+  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+}) {
   const { schema } = useContext(AdminDataDataContext);
   const [editor] = useLexicalComposerContext();
 
@@ -250,7 +254,7 @@ function BlockFormatDropDown({
   blockType: keyof typeof blockTypeToBlockName;
   editor: LexicalEditor;
   disabled: boolean;
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
 }): JSX.Element {
   const items: { id: BlockTypeName; name: string; icon: IconName }[] = Object.entries(
     blockTypeToBlockName
@@ -353,7 +357,7 @@ function AddEntityDialog({
   fieldSpec,
   onClose,
 }: {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
   onClose: () => void;
 }) {
   const [editor] = useLexicalComposerContext();
@@ -376,7 +380,7 @@ function AddValueItemButton({
   fieldSpec,
   onClose,
 }: {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
   onClose: () => void;
 }) {
   const [editor] = useLexicalComposerContext();
@@ -400,7 +404,7 @@ function EntityLinkButton({
   fieldSpec,
   isEntityLink,
 }: {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
   isEntityLink: boolean;
 }) {
   const [editor] = useLexicalComposerContext();

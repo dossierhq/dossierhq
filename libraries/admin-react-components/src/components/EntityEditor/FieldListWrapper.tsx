@@ -1,24 +1,25 @@
-import type { ValidationError } from '@jonasb/datadata-core';
+import type { FieldSpecification, ValidationError } from '@jonasb/datadata-core';
 import { Column } from '@jonasb/datadata-design';
 import React, { useCallback, useMemo } from 'react';
 import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
-interface Props<Item> extends FieldEditorProps<Item[]> {
-  Editor: React.JSXElementConstructor<FieldEditorProps<Item>>;
+interface Props<TFieldSpec extends FieldSpecification, TItem>
+  extends FieldEditorProps<TFieldSpec, TItem[]> {
+  Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
 
 const noErrors: ValidationError[] = [];
 
-export function FieldListWrapper<Item>({
+export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   value,
   fieldSpec,
   validationErrors,
   onChange,
   Editor,
-}: Props<Item>): JSX.Element {
+}: Props<TFieldSpec, TItem>): JSX.Element {
   const handleItemChange = useCallback(
-    (itemValue: Item | null, index: number) => {
+    (itemValue: TItem | null, index: number) => {
       if (onChange) {
         const newValue = value ? [...value] : [];
         if (itemValue === null || itemValue === undefined) {

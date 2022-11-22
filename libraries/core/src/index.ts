@@ -135,14 +135,21 @@ export type {
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
   AdminValueTypeSpecificationUpdate,
+  BooleanFieldSpecification,
+  EntityFieldSpecification,
+  FieldSpecification,
   FieldValueTypeMap,
+  LocationFieldSpecification,
   PublishedEntityTypeSpecification,
   PublishedFieldSpecification,
   PublishedSchemaSpecification,
   PublishedValueTypeSpecification,
+  RichTextFieldSpecification,
   SchemaIndexSpecification,
   SchemaPatternSpecification,
   SchemaSpecificationUpdatePayload,
+  StringFieldSpecification,
+  ValueItemFieldSpecification,
 } from './Schema.js';
 export { LoggingClientMiddleware } from './SharedClient.js';
 export type { ClientContext, ContextProvider } from './SharedClient.js';

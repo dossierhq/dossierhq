@@ -64,35 +64,63 @@ export const RichTextNodeType = {
 } as const;
 export type RichTextNodeType = typeof RichTextNodeType[keyof typeof RichTextNodeType];
 
-interface FieldSpecification {
+interface SharedFieldSpecification {
   name: string;
-  /** The type of the field, only values from {@link FieldType} as accepted. */
-  type: FieldType;
   list?: boolean;
   required?: boolean;
-  adminOnly?: boolean;
-  isName?: boolean;
-  /** Applicable when type is String */
-  multiline?: boolean;
-  /** Applicable when type is EntityType or RichText */
+}
+
+export interface BooleanFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.Boolean;
+}
+
+export interface EntityFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.EntityType;
   entityTypes?: string[];
-  /** Applicable when type is RichText */
+}
+
+export interface LocationFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.Location;
+}
+
+export interface RichTextFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.RichText;
+  entityTypes?: string[];
   linkEntityTypes?: string[];
-  /** Applicable when type is ValueType or RichText */
   valueTypes?: string[];
-  /** Applicable when type is RichText. All node types are enabled if none are specified. The type
-   * can either be a standard RichTextNodeType or any type that's supported.
+  /** All node types are enabled if none are specified.
+   *
+   * The type can either be a standard RichTextNodeType or any type that's supported by the
+   * application.
    */
   richTextNodes?: (RichTextNodeType | string)[];
-  /** Applicable when type is String */
+}
+
+export interface StringFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.String;
+  isName?: boolean;
+  multiline?: boolean;
   matchPattern?: string | null;
-  /** Applicable when type is String */
   index?: string | null;
 }
 
-export interface AdminFieldSpecification extends FieldSpecification {
-  adminOnly?: boolean;
+export interface ValueItemFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.ValueType;
+  valueTypes?: string[];
 }
+
+export type FieldSpecification =
+  | BooleanFieldSpecification
+  | EntityFieldSpecification
+  | LocationFieldSpecification
+  | RichTextFieldSpecification
+  | StringFieldSpecification
+  | ValueItemFieldSpecification;
+
+export type AdminFieldSpecification<TFieldSpec extends FieldSpecification = FieldSpecification> =
+  TFieldSpec & {
+    adminOnly?: boolean;
+  };
 
 export type PublishedFieldSpecification = FieldSpecification;
 
@@ -146,6 +174,41 @@ const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
 const GROUPED_RICH_TEXT_NODE_TYPES: RichTextNodeType[][] = [
   [RichTextNodeType.list, RichTextNodeType.listitem],
 ];
+
+const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
+  'name',
+  'list',
+  'required',
+  'adminOnly',
+  'type',
+] as const;
+const ADMIN_FIELD_SPECIFICATION_KEYS: {
+  Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
+  EntityType: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
+  Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
+  RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
+  String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
+  ValueType: readonly (keyof AdminFieldSpecification<ValueItemFieldSpecification>)[];
+} = {
+  [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.EntityType]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
+  [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.RichText]: [
+    ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+    'entityTypes',
+    'linkEntityTypes',
+    'valueTypes',
+    'richTextNodes',
+  ],
+  [FieldType.String]: [
+    ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+    'isName',
+    'multiline',
+    'matchPattern',
+    'index',
+  ],
+  [FieldType.ValueType]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
+};
 
 export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
@@ -207,18 +270,19 @@ export class AdminSchema {
           );
         }
 
-        if ('multiline' in fieldSpec && fieldSpec.type !== FieldType.String) {
-          return notOk.BadRequest(
-            `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify multiline`
-          );
-        }
-
-        if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
-          if (fieldSpec.type !== FieldType.EntityType && fieldSpec.type !== FieldType.RichText) {
+        for (const key of Object.keys(fieldSpec)) {
+          if (!(ADMIN_FIELD_SPECIFICATION_KEYS[fieldSpec.type] as string[]).includes(key)) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify ${key}`
             );
           }
+        }
+
+        if (
+          (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) &&
+          fieldSpec.entityTypes &&
+          fieldSpec.entityTypes.length > 0
+        ) {
           for (const referencedTypeName of fieldSpec.entityTypes) {
             const referencedEntityType = this.getEntityTypeSpecification(referencedTypeName);
             if (!referencedEntityType) {
@@ -234,12 +298,11 @@ export class AdminSchema {
           }
         }
 
-        if (fieldSpec.linkEntityTypes && fieldSpec.linkEntityTypes.length > 0) {
-          if (fieldSpec.type !== FieldType.RichText) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify linkEntityTypes`
-            );
-          }
+        if (
+          fieldSpec.type === FieldType.RichText &&
+          fieldSpec.linkEntityTypes &&
+          fieldSpec.linkEntityTypes.length > 0
+        ) {
           for (const referencedTypeName of fieldSpec.linkEntityTypes) {
             const referencedEntityType = this.getEntityTypeSpecification(referencedTypeName);
             if (!referencedEntityType) {
@@ -255,12 +318,11 @@ export class AdminSchema {
           }
         }
 
-        if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
-          if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify valueTypes`
-            );
-          }
+        if (
+          (fieldSpec.type === FieldType.ValueType || fieldSpec.type === FieldType.RichText) &&
+          fieldSpec.valueTypes &&
+          fieldSpec.valueTypes.length > 0
+        ) {
           for (const referencedTypeName of fieldSpec.valueTypes) {
             const referencedValueType = this.getValueTypeSpecification(referencedTypeName);
             if (!referencedValueType) {
@@ -276,13 +338,11 @@ export class AdminSchema {
           }
         }
 
-        if (fieldSpec.richTextNodes && fieldSpec.richTextNodes.length > 0) {
-          if (fieldSpec.type !== FieldType.RichText) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify richTextNodes`
-            );
-          }
-
+        if (
+          fieldSpec.type === FieldType.RichText &&
+          fieldSpec.richTextNodes &&
+          fieldSpec.richTextNodes.length > 0
+        ) {
           const usedRichTextNodes = new Set<string>();
           for (const richTextNode of fieldSpec.richTextNodes) {
             if (usedRichTextNodes.has(richTextNode)) {
@@ -351,13 +411,7 @@ export class AdminSchema {
           }
         }
 
-        if (fieldSpec.matchPattern) {
-          if (fieldSpec.type !== FieldType.String) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify matchPattern`
-            );
-          }
-
+        if (fieldSpec.type === FieldType.String && fieldSpec.matchPattern) {
           const pattern = this.getPattern(fieldSpec.matchPattern);
           if (!pattern) {
             return notOk.BadRequest(
@@ -366,13 +420,7 @@ export class AdminSchema {
           }
         }
 
-        if (fieldSpec.index) {
-          if (fieldSpec.type !== FieldType.String) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify index`
-            );
-          }
-
+        if (fieldSpec.type === FieldType.String && fieldSpec.index) {
           const index = this.getIndex(fieldSpec.index);
           if (!index) {
             return notOk.BadRequest(
@@ -519,6 +567,7 @@ export class AdminSchema {
     const usedIndexes = new Set<string>();
     for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
+        if (fieldSpec.type !== FieldType.String) continue;
         if (fieldSpec.matchPattern) {
           usedPatterns.add(fieldSpec.matchPattern);
         }
@@ -598,6 +647,7 @@ export class AdminSchema {
     const usedIndexNames = new Set();
     for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
+        if (fieldSpec.type !== FieldType.String) continue;
         if (fieldSpec.matchPattern) {
           usedPatternNames.add(fieldSpec.matchPattern);
         }

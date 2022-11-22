@@ -1,15 +1,17 @@
+import type { PublishedFieldSpecification } from '@jonasb/datadata-core';
 import { Column } from '@jonasb/datadata-design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-interface Props<Item> extends FieldDisplayProps<Item[]> {
-  Display: React.JSXElementConstructor<FieldDisplayProps<Item>>;
+interface Props<TFieldSpec extends PublishedFieldSpecification, TItem>
+  extends FieldDisplayProps<TFieldSpec, TItem[]> {
+  Display: React.JSXElementConstructor<FieldDisplayProps<TFieldSpec, TItem>>;
 }
 
-export function FieldDisplayListWrapper<Item>({
+export function FieldDisplayListWrapper<TFieldSpec extends PublishedFieldSpecification, Item>({
   value,
   fieldSpec,
   Display,
-}: Props<Item>): JSX.Element | null {
+}: Props<TFieldSpec, Item>): JSX.Element | null {
   if (!value) return null;
   return (
     <Column gap={3}>

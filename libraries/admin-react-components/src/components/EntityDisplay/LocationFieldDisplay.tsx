@@ -1,4 +1,4 @@
-import type { Location, PublishedEntity } from '@jonasb/datadata-core';
+import type { Location, LocationFieldSpecification, PublishedEntity } from '@jonasb/datadata-core';
 import { Button } from '@jonasb/datadata-design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
@@ -6,7 +6,7 @@ import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/Entity
 import { PublishedLocationDisplayDialog } from '../PublishedLocationDisplayDialog/PublishedLocationDisplayDialog.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-type Props = FieldDisplayProps<Location>;
+type Props = FieldDisplayProps<LocationFieldSpecification, Location>;
 
 export function LocationFieldDisplay({ value }: Props) {
   const [showSelector, setShowSelector] = useState(false);

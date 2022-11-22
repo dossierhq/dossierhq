@@ -1,4 +1,8 @@
-import type { ValueItem } from '@jonasb/datadata-core';
+import type {
+  RichTextFieldSpecification,
+  ValueItem,
+  ValueItemFieldSpecification,
+} from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { Fragment, useContext } from 'react';
@@ -6,7 +10,8 @@ import { PublishedDataDataContext } from '../../published/contexts/PublishedData
 import type { FieldDisplayProps } from './FieldDisplay.js';
 import { FieldDisplay } from './FieldDisplay.js';
 
-interface Props extends FieldDisplayProps<ValueItem> {
+interface Props
+  extends FieldDisplayProps<ValueItemFieldSpecification | RichTextFieldSpecification, ValueItem> {
   className?: string;
 }
 

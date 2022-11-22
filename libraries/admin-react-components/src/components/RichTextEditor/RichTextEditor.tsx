@@ -1,4 +1,9 @@
-import type { AdminFieldSpecification, EntityReference, RichText } from '@jonasb/datadata-core';
+import type {
+  AdminFieldSpecification,
+  EntityReference,
+  RichText,
+  RichTextFieldSpecification,
+} from '@jonasb/datadata-core';
 import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin.js';
@@ -24,7 +29,7 @@ import { ToolbarPlugin } from './ToolbarPlugin.js';
 import { ValueItemPlugin } from './ValueItemPlugin.js';
 
 interface Props {
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
   value: RichText | null;
   onChange: (value: RichText | null) => void;
 }

@@ -78,7 +78,8 @@ export function SchemaFieldEditor({
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeRichTextNodes =
     fieldDraft.status === 'new' ||
-    (fieldDraft.existingFieldSpec?.richTextNodes &&
+    (fieldDraft.existingFieldSpec?.type === FieldType.RichText &&
+      fieldDraft.existingFieldSpec.richTextNodes &&
       fieldDraft.existingFieldSpec.richTextNodes.length > 0);
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeLinkEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
@@ -289,7 +290,7 @@ export function SchemaFieldEditor({
                     <RichTextNodeSelector
                       fieldSelector={fieldSelector}
                       richTextNodes={fieldDraft.richTextNodes ?? []}
-                      existingRichTextNodes={fieldDraft.existingFieldSpec?.richTextNodes}
+                      existingRichTextNodes={fieldDraft.existingRichTextNodesWithPlaceholders}
                       dispatchSchemaEditorState={dispatchSchemaEditorState}
                     />
                   ) : (

@@ -16,7 +16,7 @@ export interface RichTextValueItemEditorProps {
 }
 
 export interface AdminDataDataContextAdapter {
-  renderAdminFieldEditor(props: FieldEditorProps<unknown>): JSX.Element | null;
+  renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null;
   renderAdminRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null;
 }
 

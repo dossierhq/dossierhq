@@ -1,9 +1,10 @@
+import type { StringFieldSpecification } from '@jonasb/datadata-core';
 import { Input, Text, TextArea } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 
-type Props = FieldEditorProps<string>;
+type Props = FieldEditorProps<StringFieldSpecification, string>;
 
 export function StringFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
   const handleChange = useCallback(

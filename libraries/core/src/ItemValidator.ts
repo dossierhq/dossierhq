@@ -3,7 +3,11 @@ import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeType } from './ItemTraverser.js';
 import type { ItemValuePath } from './ItemUtils.js';
 import { isStringItemField } from './ItemUtils.js';
-import type { AdminSchema } from './Schema.js';
+import type {
+  AdminSchema,
+  RichTextFieldSpecification,
+  StringFieldSpecification,
+} from './Schema.js';
 
 export interface ValidationError {
   type: 'save' | 'publish';
@@ -26,14 +30,15 @@ export function validateTraverseNode(
       break;
     case ItemTraverseNodeType.fieldItem:
       if (isStringItemField(node.fieldSpec, node.value) && node.value) {
-        if (node.fieldSpec.matchPattern) {
-          const regexp = schema.getPatternRegExp(node.fieldSpec.matchPattern);
+        const stringFieldSpec = node.fieldSpec as StringFieldSpecification;
+        if (stringFieldSpec.matchPattern) {
+          const regexp = schema.getPatternRegExp(stringFieldSpec.matchPattern);
           assertIsDefined(regexp);
           if (!regexp.test(node.value)) {
             return {
               type: 'save',
               path: node.path,
-              message: `Value does not match pattern ${node.fieldSpec.matchPattern}`,
+              message: `Value does not match pattern ${stringFieldSpec.matchPattern}`,
             };
           }
         }
@@ -41,21 +46,23 @@ export function validateTraverseNode(
       break;
     case ItemTraverseNodeType.error:
       return { type: 'save', path: node.path, message: node.message };
-    case ItemTraverseNodeType.richTextNode:
-      if (node.fieldSpec.richTextNodes && node.fieldSpec.richTextNodes.length > 0) {
-        if (!node.fieldSpec.richTextNodes.includes(node.node.type)) {
+    case ItemTraverseNodeType.richTextNode: {
+      const richTextFieldSpec = node.fieldSpec as RichTextFieldSpecification;
+      if (richTextFieldSpec.richTextNodes && richTextFieldSpec.richTextNodes.length > 0) {
+        if (!richTextFieldSpec.richTextNodes.includes(node.node.type)) {
           return {
             type: 'save',
             path: node.path,
             message: `Rich text node type ${
               node.node.type
-            } is not allowed in field (supported nodes: ${node.fieldSpec.richTextNodes.join(
+            } is not allowed in field (supported nodes: ${richTextFieldSpec.richTextNodes.join(
               ', '
             )})`,
           };
         }
       }
       break;
+    }
     case ItemTraverseNodeType.valueItem:
       break;
     default:

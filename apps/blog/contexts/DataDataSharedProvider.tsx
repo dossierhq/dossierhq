@@ -1,7 +1,10 @@
 import type {
   AdminDataDataContextAdapter,
   DisplayAuthKey,
+  FieldDisplayProps,
   FieldEditorProps,
+  PublishedDataDataContextAdapter,
+  RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
   SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
@@ -10,17 +13,11 @@ import {
   createCachingAdminMiddleware,
   PublishedDataDataProvider,
 } from '@jonasb/datadata-admin-react-components';
-import type { FieldDisplayProps } from '@jonasb/datadata-admin-react-components';
-import type {
-  PublishedDataDataContextAdapter,
-  RichTextValueItemDisplayProps,
-} from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
   ClientContext,
   ErrorType,
-  Logger,
   PublishedClient,
   PublishedClientOperation,
   Result,
@@ -32,6 +29,7 @@ import {
   convertPublishedClientOperationToJson,
   createBaseAdminClient,
   createBasePublishedClient,
+  createConsoleLogger,
 } from '@jonasb/datadata-core';
 import { useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
@@ -47,23 +45,10 @@ const AUTH_KEYS_HEADER = {
 
 type BackendContext = ClientContext;
 
-const logger: Logger = {
-  error(message, ...args) {
-    console.error(`error: ${message}`, ...args);
-  },
-  warn(message, ...args) {
-    console.warn(`warn: ${message}`, ...args);
-  },
-  info(message, ...args) {
-    console.info(`info: ${message}`, ...args);
-  },
-  debug(message, ...args) {
-    console.debug(`debug: ${message}`, ...args);
-  },
-};
+const logger = createConsoleLogger(console);
 
 export class AdminContextAdapter implements AdminDataDataContextAdapter {
-  renderAdminFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+  renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
   renderAdminRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
@@ -72,11 +57,11 @@ export class AdminContextAdapter implements AdminDataDataContextAdapter {
 }
 
 export class PublishedContextAdapter implements PublishedDataDataContextAdapter {
-  renderPublishedFieldDisplay(props: FieldDisplayProps<unknown>): JSX.Element | null {
+  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;
   }
   renderPublishedRichTextValueItemDisplay(
-    props: RichTextValueItemDisplayProps
+    _props: RichTextValueItemDisplayProps
   ): JSX.Element | null {
     return null;
   }

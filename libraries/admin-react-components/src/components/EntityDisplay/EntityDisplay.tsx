@@ -1,6 +1,6 @@
 import type {
-  AdminFieldSpecification,
   PublishedEntity,
+  PublishedFieldSpecification,
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { Field } from '@jonasb/datadata-design';
@@ -34,7 +34,7 @@ function EntityFieldDisplay({
   fieldSpec,
 }: {
   value: unknown;
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: PublishedFieldSpecification;
 }) {
   return (
     <Field>

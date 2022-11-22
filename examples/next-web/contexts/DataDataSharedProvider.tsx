@@ -1,7 +1,10 @@
 import type {
   AdminDataDataContextAdapter,
   DisplayAuthKey,
+  FieldDisplayProps,
   FieldEditorProps,
+  PublishedDataDataContextAdapter,
+  RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
   SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
@@ -9,11 +12,6 @@ import {
   AdminDataDataProvider,
   createCachingAdminMiddleware,
   PublishedDataDataProvider,
-} from '@jonasb/datadata-admin-react-components';
-import type { FieldDisplayProps } from '@jonasb/datadata-admin-react-components';
-import type {
-  PublishedDataDataContextAdapter,
-  RichTextValueItemDisplayProps,
 } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
@@ -63,7 +61,7 @@ const logger: Logger = {
 };
 
 export class AdminContextAdapter implements AdminDataDataContextAdapter {
-  renderAdminFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+  renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
   renderAdminRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
@@ -72,11 +70,11 @@ export class AdminContextAdapter implements AdminDataDataContextAdapter {
 }
 
 export class PublishedContextAdapter implements PublishedDataDataContextAdapter {
-  renderPublishedFieldDisplay(props: FieldDisplayProps<unknown>): JSX.Element | null {
+  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;
   }
   renderPublishedRichTextValueItemDisplay(
-    props: RichTextValueItemDisplayProps
+    _props: RichTextValueItemDisplayProps
   ): JSX.Element | null {
     return null;
   }

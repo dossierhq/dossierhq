@@ -1,7 +1,8 @@
+import type { StringFieldSpecification } from '@jonasb/datadata-core';
 import { Input, TextArea } from '@jonasb/datadata-design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-type Props = FieldDisplayProps<string>;
+type Props = FieldDisplayProps<StringFieldSpecification, string>;
 
 export function StringFieldDisplay({ fieldSpec, value }: Props) {
   return fieldSpec.multiline ? (

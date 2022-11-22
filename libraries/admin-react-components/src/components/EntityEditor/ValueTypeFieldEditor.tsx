@@ -1,4 +1,9 @@
-import type { AdminFieldSpecification, ValidationError, ValueItem } from '@jonasb/datadata-core';
+import type {
+  AdminFieldSpecification,
+  ValidationError,
+  ValueItem,
+  ValueItemFieldSpecification,
+} from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
@@ -8,7 +13,7 @@ import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { FieldEditor } from './FieldEditor.js';
 
-type Props = FieldEditorProps<ValueItem>;
+type Props = FieldEditorProps<ValueItemFieldSpecification, ValueItem>;
 
 export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);

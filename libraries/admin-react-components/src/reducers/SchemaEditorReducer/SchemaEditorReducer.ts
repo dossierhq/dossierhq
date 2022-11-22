@@ -59,7 +59,7 @@ export interface SchemaFieldDraft {
   list: boolean;
   required: boolean;
   adminOnly: boolean;
-  isName: boolean;
+  isName?: boolean;
   multiline?: boolean;
   index?: string | null;
   matchPattern?: string | null;
@@ -166,7 +166,11 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   if (state.existingFieldSpec === null) {
     return 'new';
   }
-  if (!!state.existingFieldSpec.isName !== state.isName) return 'changed';
+  if (
+    state.existingFieldSpec.type === FieldType.String &&
+    !!state.existingFieldSpec.isName !== state.isName
+  )
+    return 'changed';
   if (
     state.richTextNodes &&
     !isEqual(state.richTextNodes, state.existingRichTextNodesWithPlaceholders)
@@ -996,10 +1000,10 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           list: !!fieldSpec.list,
           required: !!fieldSpec.required,
           adminOnly: !!fieldSpec.adminOnly,
-          isName: !!fieldSpec.isName,
           existingFieldSpec: fieldSpec,
         };
         if (fieldSpec.type === FieldType.String) {
+          fieldDraft.isName = !!fieldSpec.isName;
           fieldDraft.multiline = !!fieldSpec.multiline;
           fieldDraft.index = fieldSpec.index ?? null;
           fieldDraft.matchPattern = fieldSpec.matchPattern ?? null;

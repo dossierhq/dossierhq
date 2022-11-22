@@ -1,7 +1,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
-import type { ValueItem } from '@jonasb/datadata-core';
+import type { ValueItem, ValueItemFieldSpecification } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealStack, IconButton, Row } from '@jonasb/datadata-design';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig.js';
@@ -38,7 +38,9 @@ export function isPublishedCloudinaryImage(
 export function CloudinaryImageFieldEditor({
   value,
   onChange,
-}: FieldEditorProps<AdminCloudinaryImage> & { value: AdminCloudinaryImage }) {
+}: FieldEditorProps<ValueItemFieldSpecification, AdminCloudinaryImage> & {
+  value: AdminCloudinaryImage;
+}) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   return (
     <HoverRevealStack>

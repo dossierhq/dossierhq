@@ -5,6 +5,7 @@ import type {
   AdminEntityUpdate,
   AdminFieldSpecification,
   AdminSchema,
+  EntityFieldSpecification,
   EntityReference,
   ErrorType,
   ItemTraverseNode,
@@ -17,8 +18,10 @@ import type {
   PublishedSchema,
   Result,
   RichText,
+  RichTextFieldSpecification,
   RichTextValueItemNode,
   ValueItem,
+  ValueItemFieldSpecification,
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
@@ -470,7 +473,12 @@ function encodeFieldItemOrList(
     for (const decodedItem of data) {
       let encodedItemResult;
       if (isValueTypeItemField(fieldSpec, decodedItem)) {
-        encodedItemResult = encodeValueItemField(schema, fieldSpec, prefix, decodedItem);
+        encodedItemResult = encodeValueItemField(
+          schema,
+          fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
+          prefix,
+          decodedItem
+        );
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeRichTextField(decodedItem);
       } else {
@@ -485,7 +493,12 @@ function encodeFieldItemOrList(
   }
 
   if (isValueTypeField(fieldSpec, data)) {
-    return encodeValueItemField(schema, fieldSpec, prefix, data);
+    return encodeValueItemField(
+      schema,
+      fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
+      prefix,
+      data
+    );
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(data);
   }
@@ -494,7 +507,7 @@ function encodeFieldItemOrList(
 
 function encodeValueItemField(
   schema: AdminSchema,
-  fieldSpec: AdminFieldSpecification,
+  fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>,
   prefix: string,
   data: ValueItem | null
 ): Result<unknown, typeof ErrorType.BadRequest> {
@@ -618,11 +631,12 @@ export function createRequestedReferencesCollector<
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem:
           if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+            const entityItemFieldSpec = node.fieldSpec as EntityFieldSpecification;
             requestedReferences.push({
               prefix: visitorPathToString(node.path),
               uuids: [node.value.id], //TODO handle list field (optimization, one requested reference instead of one for each item in the list)
-              entityTypes: node.fieldSpec.entityTypes,
-              linkEntityTypes: node.fieldSpec.linkEntityTypes,
+              entityTypes: entityItemFieldSpec.entityTypes,
+              linkEntityTypes: undefined,
               isRichTextLink: false,
             });
           }
@@ -630,11 +644,12 @@ export function createRequestedReferencesCollector<
         case ItemTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
+            const richTextFieldSpecification = node.fieldSpec as RichTextFieldSpecification;
             requestedReferences.push({
               prefix: visitorPathToString(node.path),
               uuids: [richTextNode.reference.id],
-              entityTypes: node.fieldSpec.entityTypes,
-              linkEntityTypes: node.fieldSpec.linkEntityTypes,
+              entityTypes: richTextFieldSpecification.entityTypes,
+              linkEntityTypes: richTextFieldSpecification.linkEntityTypes,
               isRichTextLink: isRichTextEntityLinkNode(richTextNode),
             });
           }
@@ -656,7 +671,7 @@ export function createUniqueIndexCollector<TSchema extends AdminSchema | Publish
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem: {
-          const indexName = node.fieldSpec.index;
+          const indexName = 'index' in node.fieldSpec ? node.fieldSpec.index : undefined;
           if (indexName && isStringItemField(node.fieldSpec, node.value) && node.value) {
             const indexValues = uniqueIndexValues.get(indexName);
             if (indexValues) {

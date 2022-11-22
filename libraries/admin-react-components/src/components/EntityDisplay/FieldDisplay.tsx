@@ -1,4 +1,12 @@
-import type { PublishedFieldSpecification } from '@jonasb/datadata-core';
+import type {
+  BooleanFieldSpecification,
+  EntityFieldSpecification,
+  LocationFieldSpecification,
+  PublishedFieldSpecification,
+  RichTextFieldSpecification,
+  StringFieldSpecification,
+  ValueItemFieldSpecification,
+} from '@jonasb/datadata-core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -24,12 +32,15 @@ import { RichTextFieldDisplay } from './RichTextFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 import { ValueTypeFieldDisplay } from './ValueTypeFieldDisplay.js';
 
-export interface FieldDisplayProps<T> {
-  fieldSpec: PublishedFieldSpecification;
-  value: T | null;
+export interface FieldDisplayProps<
+  TFieldSpec extends PublishedFieldSpecification = PublishedFieldSpecification,
+  TValue = unknown
+> {
+  fieldSpec: TFieldSpec;
+  value: TValue | null;
 }
 
-export function FieldDisplay(props: FieldDisplayProps<unknown>) {
+export function FieldDisplay(props: FieldDisplayProps) {
   const { fieldSpec, value } = props;
   const { adapter } = useContext(PublishedDataDataContext);
 
@@ -48,29 +59,77 @@ export function FieldDisplay(props: FieldDisplayProps<unknown>) {
 
   let display;
   if (isBooleanField(fieldSpec, value)) {
-    display = <BooleanFieldDisplay {...props} value={value} />;
+    display = (
+      <BooleanFieldDisplay fieldSpec={fieldSpec as BooleanFieldSpecification} value={value} />
+    );
   } else if (isBooleanListField(fieldSpec, value)) {
-    display = <FieldDisplayListWrapper {...props} value={value} Display={BooleanFieldDisplay} />;
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as BooleanFieldSpecification}
+        value={value}
+        Display={BooleanFieldDisplay}
+      />
+    );
   } else if (isEntityTypeField(fieldSpec, value)) {
-    display = <EntityTypeFieldDisplay {...props} value={value} />;
+    display = (
+      <EntityTypeFieldDisplay fieldSpec={fieldSpec as EntityFieldSpecification} value={value} />
+    );
   } else if (isEntityTypeListField(fieldSpec, value)) {
-    display = <FieldDisplayListWrapper {...props} value={value} Display={EntityTypeFieldDisplay} />;
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as EntityFieldSpecification}
+        value={value}
+        Display={EntityTypeFieldDisplay}
+      />
+    );
   } else if (isLocationField(fieldSpec, value)) {
-    display = <LocationFieldDisplay {...props} value={value} />;
+    display = (
+      <LocationFieldDisplay fieldSpec={fieldSpec as LocationFieldSpecification} value={value} />
+    );
   } else if (isLocationListField(fieldSpec, value)) {
-    display = <FieldDisplayListWrapper {...props} value={value} Display={LocationFieldDisplay} />;
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as LocationFieldSpecification}
+        value={value}
+        Display={LocationFieldDisplay}
+      />
+    );
   } else if (isRichTextField(fieldSpec, value)) {
-    display = <RichTextFieldDisplay {...props} value={value} />;
+    display = (
+      <RichTextFieldDisplay fieldSpec={fieldSpec as RichTextFieldSpecification} value={value} />
+    );
   } else if (isRichTextListField(fieldSpec, value)) {
-    display = <FieldDisplayListWrapper {...props} value={value} Display={RichTextFieldDisplay} />;
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as RichTextFieldSpecification}
+        value={value}
+        Display={RichTextFieldDisplay}
+      />
+    );
   } else if (isStringField(fieldSpec, value)) {
-    display = <StringFieldDisplay {...props} value={value} />;
+    display = (
+      <StringFieldDisplay fieldSpec={fieldSpec as StringFieldSpecification} value={value} />
+    );
   } else if (isStringListField(fieldSpec, value)) {
-    display = <FieldDisplayListWrapper {...props} value={value} Display={StringFieldDisplay} />;
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as StringFieldSpecification}
+        value={value}
+        Display={StringFieldDisplay}
+      />
+    );
   } else if (isValueTypeField(fieldSpec, value)) {
-    display = <ValueTypeFieldDisplay {...props} value={value} />;
+    display = (
+      <ValueTypeFieldDisplay fieldSpec={fieldSpec as ValueItemFieldSpecification} value={value} />
+    );
   } else if (isValueTypeListField(fieldSpec, value)) {
-    display = <FieldDisplayListWrapper {...props} value={value} Display={ValueTypeFieldDisplay} />;
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as ValueItemFieldSpecification}
+        value={value}
+        Display={ValueTypeFieldDisplay}
+      />
+    );
   } else {
     display = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }

@@ -15,7 +15,7 @@ export interface RichTextValueItemDisplayProps {
 }
 
 export interface PublishedDataDataContextAdapter {
-  renderPublishedFieldDisplay(props: FieldDisplayProps<unknown>): JSX.Element | null;
+  renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null;
   renderPublishedRichTextValueItemDisplay(props: RichTextValueItemDisplayProps): JSX.Element | null;
 }
 

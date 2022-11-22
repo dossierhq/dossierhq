@@ -1,8 +1,8 @@
+import type { BooleanFieldSpecification } from '@jonasb/datadata-core';
 import { Checkbox } from '@jonasb/datadata-design';
-import React from 'react';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-type Props = FieldDisplayProps<boolean>;
+type Props = FieldDisplayProps<BooleanFieldSpecification, boolean>;
 
 export function BooleanFieldDisplay({ value }: Props) {
   return (

@@ -1,8 +1,8 @@
-import type { PublishedFieldSpecification } from '@jonasb/datadata-core';
+import type { RichTextFieldSpecification } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 
 interface RichTextDisplayContextValue {
-  fieldSpec: PublishedFieldSpecification;
+  fieldSpec: RichTextFieldSpecification;
 }
 
 export const RichTextDisplayContext = createContext<RichTextDisplayContextValue>({

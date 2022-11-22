@@ -7,6 +7,7 @@ import type {
   AdminSchema,
   ValidationError,
 } from '@jonasb/datadata-core';
+import { FieldType } from '@jonasb/datadata-core';
 import {
   assertIsDefined,
   isEntityNameAsRequested,
@@ -356,7 +357,8 @@ class SetFieldAction extends EntityEditorFieldAction {
     const { schema } = editorState;
     assertIsDefined(schema);
 
-    this.isNameField = !!fieldState.fieldSpec.isName;
+    this.isNameField =
+      fieldState.fieldSpec.type === FieldType.String && !!fieldState.fieldSpec.isName;
 
     if (fieldState.value === this.value) {
       return fieldState;
@@ -584,7 +586,7 @@ function createEditorEntityDraftState(
   // Check if name is linked to a field
   let nameIsLinkedToField = !entity; // default to true for new entities
   if (entity) {
-    const nameFieldSpec = entitySpec.fields.find((it) => it.isName);
+    const nameFieldSpec = entitySpec.fields.find((it) => it.type === FieldType.String && it.isName);
     if (nameFieldSpec) {
       const nameFieldValue = entity.fields[nameFieldSpec.name];
       if (nameFieldValue && typeof nameFieldValue === 'string') {

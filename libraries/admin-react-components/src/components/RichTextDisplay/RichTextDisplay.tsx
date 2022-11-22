@@ -1,4 +1,4 @@
-import type { EntityReference, PublishedFieldSpecification, RichText } from '@jonasb/datadata-core';
+import type { EntityReference, RichText, RichTextFieldSpecification } from '@jonasb/datadata-core';
 import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
@@ -17,7 +17,7 @@ import { PublishedValueItemNode } from './PublishedValueItemNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
-  fieldSpec: PublishedFieldSpecification;
+  fieldSpec: RichTextFieldSpecification;
   value: RichText | null;
 }
 

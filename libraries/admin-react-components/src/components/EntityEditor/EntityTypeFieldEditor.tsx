@@ -1,4 +1,4 @@
-import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityFieldSpecification, EntityReference } from '@jonasb/datadata-core';
 import { Button, Column, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext, useState } from 'react';
@@ -10,7 +10,7 @@ import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEnt
 import { StatusTag } from '../StatusTag/StatusTag.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
-type Props = FieldEditorProps<EntityReference>;
+type Props = FieldEditorProps<EntityFieldSpecification, EntityReference>;
 
 export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);

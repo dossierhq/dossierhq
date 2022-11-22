@@ -1,4 +1,8 @@
-import type { EntityReference } from '@jonasb/datadata-core';
+import type {
+  EntityFieldSpecification,
+  EntityReference,
+  RichTextFieldSpecification,
+} from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext } from 'react';
@@ -8,7 +12,11 @@ import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js'
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-interface Props extends FieldDisplayProps<EntityReference> {
+interface Props
+  extends FieldDisplayProps<
+    EntityFieldSpecification | RichTextFieldSpecification,
+    EntityReference
+  > {
   className?: string;
 }
 

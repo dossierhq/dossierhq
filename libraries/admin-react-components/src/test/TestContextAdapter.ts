@@ -190,7 +190,7 @@ export function createSlowPublishedMiddleware(): PublishedClientMiddleware<Clien
 export class TestContextAdapter
   implements AdminDataDataContextAdapter, PublishedDataDataContextAdapter
 {
-  renderPublishedFieldDisplay(_props: FieldDisplayProps<unknown>): JSX.Element | null {
+  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;
   }
   renderPublishedRichTextValueItemDisplay(
@@ -198,7 +198,7 @@ export class TestContextAdapter
   ): JSX.Element | null {
     return null;
   }
-  renderAdminFieldEditor(_props: FieldEditorProps<unknown>): JSX.Element | null {
+  renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
   renderAdminRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
