@@ -62,6 +62,7 @@ export { toClassName } from './utils/ClassNameUtils.js';
 export { findAscendantElement, findAscendantHTMLElement } from './utils/DOMUtils.js';
 export { toFlexItemClassName } from './utils/FlexboxUtils.js';
 export { toSizeClassName, toSpacingClassName } from './utils/LayoutPropsUtils.js';
+export { toTextStyleClassName } from './utils/TextStylePropsUtils.js';
 export type { TextStyle } from './utils/TextStylePropsUtils.js';
 
 export const ClassName = {
