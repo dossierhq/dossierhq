@@ -1,4 +1,5 @@
 import { Text } from '@jonasb/datadata-design';
+import { ArticleLexicalTheme } from '../../../style/ArticleLexicalTheme';
 import { assertIsPublishedArticle } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
@@ -13,10 +14,14 @@ export default async function Page({ params }: { params: { articleSlug: string }
 
   return (
     <>
-      <Text as="h4" textStyle="headline4">
+      <Text as="h1" textStyle="headline3">
         {entity.fields.title}
       </Text>
-      <ServerRichTextRenderer richText={entity.fields.body} publishedClient={publishedClient} />
+      <ServerRichTextRenderer
+        richText={entity.fields.body}
+        publishedClient={publishedClient}
+        theme={ArticleLexicalTheme}
+      />
     </>
   );
 }

@@ -11,6 +11,7 @@ import {
   richTextTextNodeHasFormat,
 } from '@jonasb/datadata-core';
 import { ClassName, LexicalTheme } from '@jonasb/datadata-design';
+import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
 import { urls } from '../utils/PageUtils';
@@ -20,11 +21,13 @@ import { isPublishedGlossaryTerm } from '../utils/SchemaTypes';
 interface Props {
   richText: RichText;
   publishedClient: AppPublishedClient;
+  theme?: EditorThemeClasses;
   isGlossaryPage?: boolean;
 }
 
 interface RenderContext {
   publishedClient: AppPublishedClient;
+  theme: EditorThemeClasses;
   isGlossaryPage: boolean;
 }
 
@@ -32,8 +35,13 @@ export function ServerRichTextRenderer({
   richText,
   publishedClient,
   isGlossaryPage,
+  theme,
 }: Props): JSX.Element {
-  const context: RenderContext = { publishedClient, isGlossaryPage: !!isGlossaryPage };
+  const context: RenderContext = {
+    publishedClient,
+    theme: theme ?? LexicalTheme,
+    isGlossaryPage: !!isGlossaryPage,
+  };
   const rendered = renderNode(context, richText.root, null);
   //TODO server side components can be async, but the current typescript types don't allow that
   return rendered as unknown as JSX.Element;
@@ -44,12 +52,14 @@ async function renderNode(
   node: RichTextNode,
   key: Key | null
 ): Promise<ReactNode> {
+  const { theme } = context;
+
   if (isRichTextRootNode(node)) {
     return <div className={ClassName['rich-text']}>{await renderChildren(context, node)}</div>;
   }
   if (isRichTextParagraphNode(node)) {
     return (
-      <p key={key} className={LexicalTheme.paragraph}>
+      <p key={key} className={theme.paragraph}>
         {await renderChildren(context, node)}
       </p>
     );
@@ -58,7 +68,7 @@ async function renderNode(
     let formattedText: ReactNode = node.text;
     if (richTextTextNodeHasFormat(node, 'code')) {
       formattedText = (
-        <code key={key} className={LexicalTheme.text.code}>
+        <code key={key} className={theme.text?.code}>
           {formattedText}
         </code>
       );
@@ -88,7 +98,7 @@ async function renderNode(
   if (isRichTextHeadingNode(node)) {
     const HeadingTag = node.tag;
     return (
-      <HeadingTag key={key} className={LexicalTheme.heading[node.tag]}>
+      <HeadingTag key={key} className={theme.heading?.[node.tag]}>
         {await renderChildren(context, node)}
       </HeadingTag>
     );
@@ -96,14 +106,14 @@ async function renderNode(
   if (isRichTextListNode(node)) {
     const Tag = node.tag === 'ol' ? 'ol' : 'ul';
     return (
-      <Tag key={key} className={LexicalTheme.list[node.tag]}>
+      <Tag key={key} className={theme.list?.[node.tag]}>
         {await renderChildren(context, node)}
       </Tag>
     );
   }
   if (isRichTextListItemNode(node)) {
     return (
-      <li key={key} className={LexicalTheme.list.listitem}>
+      <li key={key} className={theme.list?.listitem}>
         {await renderChildren(context, node)}
       </li>
     );

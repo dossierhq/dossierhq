@@ -24,6 +24,7 @@ importers:
       graphql: ~16.6.0
       graphql-voyager: ~1.0.0-rc.31
       leaflet: ~1.9.1
+      lexical: ~0.6.0
       next: ~13.0.1
       prettier: 2.7.1
       react: ~18.2.0
@@ -43,6 +44,7 @@ importers:
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
       leaflet: 1.9.1
+      lexical: 0.6.0
       next: 13.0.1_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
