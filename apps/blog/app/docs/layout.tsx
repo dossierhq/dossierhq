@@ -61,7 +61,9 @@ export default async function Layout({ children }: Props) {
             </Menu.List>
           </Menu>
         </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn>{children}</FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn paddingBottom={5}>
+          {children}
+        </FullscreenContainer.ScrollableColumn>
         <FullscreenContainer.Column width="2/12" />
       </FullscreenContainer.Columns>
     </FullscreenContainer>
@@ -109,7 +111,7 @@ async function ArticleItem({
       href={urls.article(entity.fields.slug)}
       activeSegments={isOverview ? [] : [entity.fields.slug]}
     >
-      {entity.fields.title}
+      {item.title}
     </MenuLinkItem>
   );
 }

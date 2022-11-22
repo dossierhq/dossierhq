@@ -1,13 +1,13 @@
 {
   "id": "6384629e-72aa-482c-b070-bc26d90e0fc6",
   "info": {
-    "name": "Content ",
+    "name": "Content – entities and value items",
     "type": "Article",
     "authKey": "none",
     "status": "published"
   },
   "fields": {
-    "title": "Content ",
+    "title": "Content – entities and value items",
     "slug": "content",
     "body": {
       "root": {
@@ -96,7 +96,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "An example of an entity is this article, it has",
+                "text": "An example of an entity is this article, it has the following properties:",
                 "type": "text",
                 "version": 1
               }
@@ -125,7 +125,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "id ",
+                    "text": "an id (",
                     "type": "text",
                     "version": 1
                   },
@@ -135,6 +135,15 @@
                     "mode": "normal",
                     "style": "",
                     "text": "6384629e-72aa-482c-b070-bc26d90e0fc6",
+                    "type": "text",
+                    "version": 1
+                  },
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": ")",
                     "type": "text",
                     "version": 1
                   }
@@ -153,7 +162,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "name \"Content\"",
+                    "text": "a name (\"Content – entities and value items\")",
                     "type": "text",
                     "version": 1
                   }
@@ -172,7 +181,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "a title field with \"Content\"",
+                    "text": "a title field with \"Content – entities and value items\"",
                     "type": "text",
                     "version": 1
                   }
@@ -230,7 +239,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Each entity has an entity type that defines the structure of the entity and its fields. That means that all entities of the same type will have the same fields. This article has the entity type \"Article\".",
+                "text": "Each entity has an ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "15e396c5-7498-4ba1-9f3e-0c3ce5759968"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "entity type",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " that defines the structure of the entity and its fields. That means that all entities of the same type will have the same fields. This article has the entity type \"Article\".",
                 "type": "text",
                 "version": 1
               }
@@ -267,7 +306,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Another property of an entity is the authorization key, which defines who can read or write to the entity. We'll get back to authorization keys later, but for now this article has the key \"none\", which means that anyone can read it.",
+                "text": "Another property of an entity is the ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "f30378c9-98eb-4573-8941-85c5a32bf6e8"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "authorization key",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ", which defines who can read or write to the entity. We'll get back to authorization keys later, but for now it's enough to know that this article has the key \"none\", which means that anyone can read it.",
                 "type": "text",
                 "version": 1
               }
@@ -304,7 +373,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "In addition to creating and changing entities, you can also perform a number of publishing actions on an entity:",
+                "text": "In addition to creating and changing the content of entities, you can also perform a number of publishing actions on an entity. Each action modifies the ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "9b64e342-fb75-49ee-969a-672ba782d947"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "status",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " of the entity. These are the actions that are available:",
                 "type": "text",
                 "version": 1
               }
@@ -333,7 +432,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "When you create a new entity is has the status ",
+                    "text": "A newly created entity has the status ",
                     "type": "text",
                     "version": 1
                   },
@@ -595,7 +694,123 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " for structured data. Value items have fields just an entities, but you can't manage value items on their own, they need to be part of an entity.",
+                "text": " for structured data. Value items have fields just an entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of an entity, which enables combining value items to create more complex data.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "An example of where a value item is used is in the menu to the left on this page. The menu is stored in an entity with the entity type \"Chapter\". In its \"items\" field there is a value item representing this article. The value item has the following fields:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "list",
+            "version": 1,
+            "listType": "bullet",
+            "start": 1,
+            "tag": "ul",
+            "children": [
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 1,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "a title field with \"Content\" (which is shorter than the article entity's title \"Content – entities and value items\")",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 2,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "an article field with a reference to the article entity",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Each value item has a ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "value type",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " that defines the structure of the value item and its fields. The value item representing this article in the menu, has the value type \"ArticleTocItem\".",
                 "type": "text",
                 "version": 1
               }

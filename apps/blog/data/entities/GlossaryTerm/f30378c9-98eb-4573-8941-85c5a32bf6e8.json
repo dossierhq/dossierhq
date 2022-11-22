@@ -1,0 +1,42 @@
+{
+  "id": "f30378c9-98eb-4573-8941-85c5a32bf6e8",
+  "info": {
+    "name": "Authorization key",
+    "type": "GlossaryTerm",
+    "authKey": "none",
+    "status": "published"
+  },
+  "fields": {
+    "title": "Authorization key",
+    "slug": "authorization-key",
+    "description": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Each entity is associated with an autorization key. Without the authorization key you're not allowed to access or modify the entity. This can be used to e.g. create entities that only you can access.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
