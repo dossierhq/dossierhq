@@ -1,4 +1,14 @@
-import type { AdminEntity, EntityReference, RichText, ValueItem } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminEntity,
+  EntityReference,
+  RichText,
+  ValueItem,
+} from '@jonasb/datadata-core';
+
+export type AppAdminClient = AdminClient<AllAdminEntities>;
+
+export type AllAdminEntities = AdminBlogPost | AdminPerson;
 
 export interface AdminBlogPostFields {
   title: string | null;
@@ -12,12 +22,12 @@ export interface AdminBlogPostFields {
 
 export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields>;
 
-export function isAdminBlogPost(entity: AdminEntity | AdminBlogPost): entity is AdminBlogPost {
+export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is AdminBlogPost {
   return entity.info.type === 'BlogPost';
 }
 
 export function assertIsAdminBlogPost(
-  entity: AdminEntity | AdminBlogPost
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminBlogPost {
   if (entity.info.type !== 'BlogPost') {
     throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
@@ -30,12 +40,12 @@ export interface AdminPersonFields {
 
 export type AdminPerson = AdminEntity<'Person', AdminPersonFields>;
 
-export function isAdminPerson(entity: AdminEntity | AdminPerson): entity is AdminPerson {
+export function isAdminPerson(entity: AdminEntity<string, object>): entity is AdminPerson {
   return entity.info.type === 'Person';
 }
 
 export function assertIsAdminPerson(
-  entity: AdminEntity | AdminPerson
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminPerson {
   if (entity.info.type !== 'Person') {
     throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');

@@ -1,6 +1,7 @@
 import type {
   AdminClient,
   AdminClientMiddleware,
+  AdminEntity,
   AdminSchemaSpecification,
   ContextProvider,
   ErrorType,
@@ -8,6 +9,7 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedClientMiddleware,
+  PublishedEntity,
   PublishedSchema,
   Result,
 } from '@jonasb/datadata-core';
@@ -34,14 +36,16 @@ export interface Server {
     defaultAuthKeys: readonly string[];
     logger?: Logger;
   }): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
-  createAdminClient(
+  createAdminClient<TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[]
-  ): AdminClient;
-  createPublishedClient(
+  ): TClient;
+  createPublishedClient<
+    TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  >(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: PublishedClientMiddleware<SessionContext>[]
-  ): PublishedClient;
+  ): TClient;
 }
 
 export class ServerImpl {
@@ -170,22 +174,30 @@ export async function createServer({
 
       return ok({ principalEffect, context: contextResult.value });
     },
-    createAdminClient: (context, middleware) =>
+    createAdminClient: <TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
+      context: SessionContext | ContextProvider<SessionContext>,
+      middleware?: AdminClientMiddleware<SessionContext>[]
+    ) =>
       createServerAdminClient({
         context,
         authorizationAdapter,
         databaseAdapter,
         serverImpl,
         middleware: middleware ?? [],
-      }),
-    createPublishedClient: (context, middleware) =>
+      }) as TClient,
+    createPublishedClient: <
+      TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+    >(
+      context: SessionContext | ContextProvider<SessionContext>,
+      middleware?: PublishedClientMiddleware<SessionContext>[]
+    ) =>
       createServerPublishedClient({
         context,
         authorizationAdapter,
         databaseAdapter,
         serverImpl,
         middleware: middleware ?? [],
-      }),
+      }) as TClient,
   };
 
   return ok(server);

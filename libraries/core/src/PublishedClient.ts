@@ -30,13 +30,15 @@ import type {
   UniqueIndexReference,
 } from './Types.js';
 
-export interface PublishedClient {
+export interface PublishedClient<
+  TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity
+> {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
     reference: EntityReference | UniqueIndexReference
   ): PromiseResult<
-    PublishedEntity,
+    TPublishedEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -47,7 +49,7 @@ export interface PublishedClient {
     references: EntityReference[]
   ): PromiseResult<
     Result<
-      PublishedEntity,
+      TPublishedEntity,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.NotFound
       | typeof ErrorType.NotAuthorized
@@ -60,7 +62,7 @@ export interface PublishedClient {
     query?: PublishedQuery,
     options?: EntitySamplingOptions
   ): PromiseResult<
-    EntitySamplingPayload<PublishedEntity>,
+    EntitySamplingPayload<TPublishedEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
@@ -68,7 +70,7 @@ export interface PublishedClient {
     query?: PublishedSearchQuery,
     paging?: Paging
   ): PromiseResult<
-    Connection<Edge<PublishedEntity, ErrorType>> | null,
+    Connection<Edge<TPublishedEntity, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 

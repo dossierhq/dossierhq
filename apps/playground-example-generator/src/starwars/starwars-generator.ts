@@ -1,4 +1,3 @@
-import type { AdminClient } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import { fetchJsonCached } from '../utils/fetchUtils.js';
 import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
@@ -10,6 +9,7 @@ import type {
   AdminStarship,
   AdminTransport,
   AdminVehicle,
+  AppAdminClient,
 } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
@@ -37,7 +37,7 @@ function splitCsv(value: string) {
   return value.trim().split(/\s*,\s*/);
 }
 
-async function createFilms(adminClient: AdminClient) {
+async function createFilms(adminClient: AppAdminClient) {
   const filmsData = await downloadFile('films.json');
   for (const film of filmsData) {
     (
@@ -65,7 +65,7 @@ async function createFilms(adminClient: AdminClient) {
   }
 }
 
-async function createPeople(adminClient: AdminClient) {
+async function createPeople(adminClient: AppAdminClient) {
   const peopleData = await downloadFile('people.json');
   for (const person of peopleData) {
     (
@@ -91,7 +91,7 @@ async function createPeople(adminClient: AdminClient) {
   }
 }
 
-async function createPlanets(adminClient: AdminClient) {
+async function createPlanets(adminClient: AppAdminClient) {
   const planetsData = await downloadFile('planets.json');
   for (const planet of planetsData) {
     (
@@ -117,7 +117,7 @@ async function createPlanets(adminClient: AdminClient) {
   }
 }
 
-async function createSpecies(adminClient: AdminClient) {
+async function createSpecies(adminClient: AppAdminClient) {
   const speciesData = await downloadFile('species.json');
   for (const species of speciesData) {
     (
@@ -147,7 +147,7 @@ async function createSpecies(adminClient: AdminClient) {
   }
 }
 
-async function createStarships(adminClient: AdminClient) {
+async function createStarships(adminClient: AppAdminClient) {
   const starshipsData = await downloadFile('starships.json');
   for (const starship of starshipsData) {
     (
@@ -168,7 +168,7 @@ async function createStarships(adminClient: AdminClient) {
   }
 }
 
-async function createTransports(adminClient: AdminClient) {
+async function createTransports(adminClient: AppAdminClient) {
   const transportsData = await downloadFile('transport.json');
   for (const transport of transportsData) {
     (
@@ -195,7 +195,7 @@ async function createTransports(adminClient: AdminClient) {
   }
 }
 
-async function createVehicles(adminClient: AdminClient) {
+async function createVehicles(adminClient: AppAdminClient) {
   const vehiclesData = await downloadFile('vehicles.json');
   for (const vehicle of vehiclesData) {
     (
@@ -216,7 +216,7 @@ async function createVehicles(adminClient: AdminClient) {
 
 async function main() {
   const database = await createNewDatabase('dist/starwars.sqlite');
-  const { adminClient, server } = await createAdapterAndServer(database, SCHEMA);
+  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
 
   // order is due to references between entities
   await createPlanets(adminClient);

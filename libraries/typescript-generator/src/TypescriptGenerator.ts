@@ -25,6 +25,8 @@ export function generateTypescriptForSchema({
   const paragraphs: string[] = [];
 
   if (adminSchema) {
+    paragraphs.push(...generateAdminClientTypes(context));
+    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entities'));
     for (const entitySpec of adminSchema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec));
     }
@@ -34,6 +36,10 @@ export function generateTypescriptForSchema({
     }
   }
   if (publishedSchema) {
+    paragraphs.push(...generatePublishedClientTypes(context));
+    paragraphs.push(
+      ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entities')
+    );
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       paragraphs.push(...generatePublishedEntityType(context, entitySpec));
     }
@@ -54,6 +60,16 @@ export function generateTypescriptForSchema({
   }
   paragraphs.push(''); // final newline
   return paragraphs.join('\n');
+}
+
+function generateAdminClientTypes(context: GeneratorContext) {
+  context.coreImports.add('AdminClient');
+  return ['', 'export type AppAdminClient = AdminClient<AllAdminEntities>;'];
+}
+
+function generatePublishedClientTypes(context: GeneratorContext) {
+  context.coreImports.add('PublishedClient');
+  return ['', 'export type AppPublishedClient = PublishedClient<AllPublishedEntities>;'];
 }
 
 function generateAllTypesUnion(
@@ -106,6 +122,7 @@ function generateEntityType(
 
   // entity type
   const parentTypeName = `${adminOrPublished}Entity`;
+  const genericEntityType = `${parentTypeName}<string, object>`;
   const entityTypeName = `${adminOrPublished}${entitySpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
@@ -115,7 +132,7 @@ function generateEntityType(
   // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function is${entityTypeName}(entity: ${parentTypeName} | ${entityTypeName}): entity is ${entityTypeName} {`
+    `export function is${entityTypeName}(entity: ${genericEntityType}): entity is ${entityTypeName} {`
   );
   paragraphs.push(`  return entity.info.type === '${entitySpec.name}';`);
   paragraphs.push(`}`);
@@ -123,7 +140,7 @@ function generateEntityType(
   // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIs${entityTypeName}(entity: ${parentTypeName} | ${entityTypeName}): asserts entity is ${entityTypeName} {`
+    `export function assertIs${entityTypeName}(entity: ${genericEntityType}): asserts entity is ${entityTypeName} {`
   );
   paragraphs.push(`  if (entity.info.type !== '${entitySpec.name}') {`);
   paragraphs.push(

@@ -65,7 +65,7 @@ import type {
   UniqueIndexReference,
 } from './Types.js';
 
-export interface AdminClient {
+export interface AdminClient<TAdminEntity = AdminEntity> {
   getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
   updateSchemaSpecification(
@@ -78,7 +78,7 @@ export interface AdminClient {
   getEntity(
     reference: EntityReference | EntityVersionReference | UniqueIndexReference
   ): PromiseResult<
-    AdminEntity,
+    TAdminEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -89,7 +89,7 @@ export interface AdminClient {
     references: EntityReference[]
   ): PromiseResult<
     Result<
-      AdminEntity,
+      TAdminEntity,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.NotFound
       | typeof ErrorType.NotAuthorized
@@ -102,7 +102,7 @@ export interface AdminClient {
     query?: AdminQuery,
     options?: EntitySamplingOptions
   ): PromiseResult<
-    EntitySamplingPayload<AdminEntity>,
+    EntitySamplingPayload<TAdminEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
@@ -110,7 +110,7 @@ export interface AdminClient {
     query?: AdminSearchQuery,
     paging?: Paging
   ): PromiseResult<
-    Connection<Edge<AdminEntity, ErrorType>> | null,
+    Connection<Edge<TAdminEntity, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 

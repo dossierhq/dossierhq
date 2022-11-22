@@ -1,10 +1,13 @@
-import type { PublishedClient } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { FullscreenContainer, Menu } from '@jonasb/datadata-design';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { urls } from '../../utils/PageUtils';
-import type { PublishedArticleTocItem, PublishedTocItem } from '../../utils/SchemaTypes';
+import type {
+  AppPublishedClient,
+  PublishedArticleTocItem,
+  PublishedTocItem,
+} from '../../utils/SchemaTypes';
 import {
   assertIsPublishedArticle,
   assertIsPublishedChapter,
@@ -70,7 +73,7 @@ function ChapterItem({
   publishedClient,
 }: {
   item: PublishedTocItem;
-  publishedClient: PublishedClient;
+  publishedClient: AppPublishedClient;
 }) {
   return (
     <>
@@ -94,7 +97,7 @@ async function ArticleItem({
   publishedClient,
 }: {
   item: PublishedArticleTocItem;
-  publishedClient: PublishedClient;
+  publishedClient: AppPublishedClient;
 }) {
   const entity = (await publishedClient.getEntity(item.article)).valueOrThrow();
   assertIsPublishedArticle(entity);

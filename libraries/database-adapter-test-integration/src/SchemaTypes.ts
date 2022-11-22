@@ -1,11 +1,25 @@
 import type {
+  AdminClient,
   AdminEntity,
   EntityReference,
   Location,
+  PublishedClient,
   PublishedEntity,
   RichText,
   ValueItem,
 } from '@jonasb/datadata-core';
+
+export type AppAdminClient = AdminClient<AllAdminEntities>;
+
+export type AllAdminEntities =
+  | AdminLocations
+  | AdminReadOnly
+  | AdminReferences
+  | AdminRichTexts
+  | AdminStrings
+  | AdminSubjectOnly
+  | AdminTitleOnly
+  | AdminValueItems;
 
 export interface AdminLocationsFields {
   location: Location | null;
@@ -15,12 +29,12 @@ export interface AdminLocationsFields {
 
 export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
 
-export function isAdminLocations(entity: AdminEntity | AdminLocations): entity is AdminLocations {
+export function isAdminLocations(entity: AdminEntity<string, object>): entity is AdminLocations {
   return entity.info.type === 'Locations';
 }
 
 export function assertIsAdminLocations(
-  entity: AdminEntity | AdminLocations
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminLocations {
   if (entity.info.type !== 'Locations') {
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
@@ -33,12 +47,12 @@ export interface AdminReadOnlyFields {
 
 export type AdminReadOnly = AdminEntity<'ReadOnly', AdminReadOnlyFields>;
 
-export function isAdminReadOnly(entity: AdminEntity | AdminReadOnly): entity is AdminReadOnly {
+export function isAdminReadOnly(entity: AdminEntity<string, object>): entity is AdminReadOnly {
   return entity.info.type === 'ReadOnly';
 }
 
 export function assertIsAdminReadOnly(
-  entity: AdminEntity | AdminReadOnly
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminReadOnly {
   if (entity.info.type !== 'ReadOnly') {
     throw new Error('Expected info.type = ReadOnly (but was ' + entity.info.type + ')');
@@ -54,14 +68,12 @@ export interface AdminReferencesFields {
 
 export type AdminReferences = AdminEntity<'References', AdminReferencesFields>;
 
-export function isAdminReferences(
-  entity: AdminEntity | AdminReferences
-): entity is AdminReferences {
+export function isAdminReferences(entity: AdminEntity<string, object>): entity is AdminReferences {
   return entity.info.type === 'References';
 }
 
 export function assertIsAdminReferences(
-  entity: AdminEntity | AdminReferences
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminReferences {
   if (entity.info.type !== 'References') {
     throw new Error('Expected info.type = References (but was ' + entity.info.type + ')');
@@ -77,12 +89,12 @@ export interface AdminRichTextsFields {
 
 export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
 
-export function isAdminRichTexts(entity: AdminEntity | AdminRichTexts): entity is AdminRichTexts {
+export function isAdminRichTexts(entity: AdminEntity<string, object>): entity is AdminRichTexts {
   return entity.info.type === 'RichTexts';
 }
 
 export function assertIsAdminRichTexts(
-  entity: AdminEntity | AdminRichTexts
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminRichTexts {
   if (entity.info.type !== 'RichTexts') {
     throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
@@ -101,12 +113,12 @@ export interface AdminStringsFields {
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
 
-export function isAdminStrings(entity: AdminEntity | AdminStrings): entity is AdminStrings {
+export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
   return entity.info.type === 'Strings';
 }
 
 export function assertIsAdminStrings(
-  entity: AdminEntity | AdminStrings
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminStrings {
   if (entity.info.type !== 'Strings') {
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
@@ -120,13 +132,13 @@ export interface AdminSubjectOnlyFields {
 export type AdminSubjectOnly = AdminEntity<'SubjectOnly', AdminSubjectOnlyFields>;
 
 export function isAdminSubjectOnly(
-  entity: AdminEntity | AdminSubjectOnly
+  entity: AdminEntity<string, object>
 ): entity is AdminSubjectOnly {
   return entity.info.type === 'SubjectOnly';
 }
 
 export function assertIsAdminSubjectOnly(
-  entity: AdminEntity | AdminSubjectOnly
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminSubjectOnly {
   if (entity.info.type !== 'SubjectOnly') {
     throw new Error('Expected info.type = SubjectOnly (but was ' + entity.info.type + ')');
@@ -139,12 +151,12 @@ export interface AdminTitleOnlyFields {
 
 export type AdminTitleOnly = AdminEntity<'TitleOnly', AdminTitleOnlyFields>;
 
-export function isAdminTitleOnly(entity: AdminEntity | AdminTitleOnly): entity is AdminTitleOnly {
+export function isAdminTitleOnly(entity: AdminEntity<string, object>): entity is AdminTitleOnly {
   return entity.info.type === 'TitleOnly';
 }
 
 export function assertIsAdminTitleOnly(
-  entity: AdminEntity | AdminTitleOnly
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminTitleOnly {
   if (entity.info.type !== 'TitleOnly') {
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
@@ -158,14 +170,12 @@ export interface AdminValueItemsFields {
 
 export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields>;
 
-export function isAdminValueItems(
-  entity: AdminEntity | AdminValueItems
-): entity is AdminValueItems {
+export function isAdminValueItems(entity: AdminEntity<string, object>): entity is AdminValueItems {
   return entity.info.type === 'ValueItems';
 }
 
 export function assertIsAdminValueItems(
-  entity: AdminEntity | AdminValueItems
+  entity: AdminEntity<string, object>
 ): asserts entity is AdminValueItems {
   if (entity.info.type !== 'ValueItems') {
     throw new Error('Expected info.type = ValueItems (but was ' + entity.info.type + ')');
@@ -233,6 +243,18 @@ export function assertIsAdminReferencesValue(
   }
 }
 
+export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+
+export type AllPublishedEntities =
+  | PublishedLocations
+  | PublishedReadOnly
+  | PublishedReferences
+  | PublishedRichTexts
+  | PublishedStrings
+  | PublishedSubjectOnly
+  | PublishedTitleOnly
+  | PublishedValueItems;
+
 export interface PublishedLocationsFields {
   location: Location | null;
   locationList: Location[] | null;
@@ -241,13 +263,13 @@ export interface PublishedLocationsFields {
 export type PublishedLocations = PublishedEntity<'Locations', PublishedLocationsFields>;
 
 export function isPublishedLocations(
-  entity: PublishedEntity | PublishedLocations
+  entity: PublishedEntity<string, object>
 ): entity is PublishedLocations {
   return entity.info.type === 'Locations';
 }
 
 export function assertIsPublishedLocations(
-  entity: PublishedEntity | PublishedLocations
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedLocations {
   if (entity.info.type !== 'Locations') {
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
@@ -261,13 +283,13 @@ export interface PublishedReadOnlyFields {
 export type PublishedReadOnly = PublishedEntity<'ReadOnly', PublishedReadOnlyFields>;
 
 export function isPublishedReadOnly(
-  entity: PublishedEntity | PublishedReadOnly
+  entity: PublishedEntity<string, object>
 ): entity is PublishedReadOnly {
   return entity.info.type === 'ReadOnly';
 }
 
 export function assertIsPublishedReadOnly(
-  entity: PublishedEntity | PublishedReadOnly
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedReadOnly {
   if (entity.info.type !== 'ReadOnly') {
     throw new Error('Expected info.type = ReadOnly (but was ' + entity.info.type + ')');
@@ -283,13 +305,13 @@ export interface PublishedReferencesFields {
 export type PublishedReferences = PublishedEntity<'References', PublishedReferencesFields>;
 
 export function isPublishedReferences(
-  entity: PublishedEntity | PublishedReferences
+  entity: PublishedEntity<string, object>
 ): entity is PublishedReferences {
   return entity.info.type === 'References';
 }
 
 export function assertIsPublishedReferences(
-  entity: PublishedEntity | PublishedReferences
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedReferences {
   if (entity.info.type !== 'References') {
     throw new Error('Expected info.type = References (but was ' + entity.info.type + ')');
@@ -306,13 +328,13 @@ export interface PublishedRichTextsFields {
 export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields>;
 
 export function isPublishedRichTexts(
-  entity: PublishedEntity | PublishedRichTexts
+  entity: PublishedEntity<string, object>
 ): entity is PublishedRichTexts {
   return entity.info.type === 'RichTexts';
 }
 
 export function assertIsPublishedRichTexts(
-  entity: PublishedEntity | PublishedRichTexts
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedRichTexts {
   if (entity.info.type !== 'RichTexts') {
     throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
@@ -330,13 +352,13 @@ export interface PublishedStringsFields {
 export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields>;
 
 export function isPublishedStrings(
-  entity: PublishedEntity | PublishedStrings
+  entity: PublishedEntity<string, object>
 ): entity is PublishedStrings {
   return entity.info.type === 'Strings';
 }
 
 export function assertIsPublishedStrings(
-  entity: PublishedEntity | PublishedStrings
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedStrings {
   if (entity.info.type !== 'Strings') {
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
@@ -350,13 +372,13 @@ export interface PublishedSubjectOnlyFields {
 export type PublishedSubjectOnly = PublishedEntity<'SubjectOnly', PublishedSubjectOnlyFields>;
 
 export function isPublishedSubjectOnly(
-  entity: PublishedEntity | PublishedSubjectOnly
+  entity: PublishedEntity<string, object>
 ): entity is PublishedSubjectOnly {
   return entity.info.type === 'SubjectOnly';
 }
 
 export function assertIsPublishedSubjectOnly(
-  entity: PublishedEntity | PublishedSubjectOnly
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedSubjectOnly {
   if (entity.info.type !== 'SubjectOnly') {
     throw new Error('Expected info.type = SubjectOnly (but was ' + entity.info.type + ')');
@@ -370,13 +392,13 @@ export interface PublishedTitleOnlyFields {
 export type PublishedTitleOnly = PublishedEntity<'TitleOnly', PublishedTitleOnlyFields>;
 
 export function isPublishedTitleOnly(
-  entity: PublishedEntity | PublishedTitleOnly
+  entity: PublishedEntity<string, object>
 ): entity is PublishedTitleOnly {
   return entity.info.type === 'TitleOnly';
 }
 
 export function assertIsPublishedTitleOnly(
-  entity: PublishedEntity | PublishedTitleOnly
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedTitleOnly {
   if (entity.info.type !== 'TitleOnly') {
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
@@ -390,13 +412,13 @@ export interface PublishedValueItemsFields {
 export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields>;
 
 export function isPublishedValueItems(
-  entity: PublishedEntity | PublishedValueItems
+  entity: PublishedEntity<string, object>
 ): entity is PublishedValueItems {
   return entity.info.type === 'ValueItems';
 }
 
 export function assertIsPublishedValueItems(
-  entity: PublishedEntity | PublishedValueItems
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedValueItems {
   if (entity.info.type !== 'ValueItems') {
     throw new Error('Expected info.type = ValueItems (but was ' + entity.info.type + ')');

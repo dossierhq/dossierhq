@@ -1,4 +1,14 @@
-import type { EntityReference, PublishedEntity, RichText, ValueItem } from '@jonasb/datadata-core';
+import type {
+  EntityReference,
+  PublishedClient,
+  PublishedEntity,
+  RichText,
+  ValueItem,
+} from '@jonasb/datadata-core';
+
+export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+
+export type AllPublishedEntities = PublishedArticle | PublishedChapter | PublishedGlossaryTerm;
 
 export interface PublishedArticleFields {
   title: string;
@@ -9,13 +19,13 @@ export interface PublishedArticleFields {
 export type PublishedArticle = PublishedEntity<'Article', PublishedArticleFields>;
 
 export function isPublishedArticle(
-  entity: PublishedEntity | PublishedArticle
+  entity: PublishedEntity<string, object>
 ): entity is PublishedArticle {
   return entity.info.type === 'Article';
 }
 
 export function assertIsPublishedArticle(
-  entity: PublishedEntity | PublishedArticle
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedArticle {
   if (entity.info.type !== 'Article') {
     throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
@@ -29,13 +39,13 @@ export interface PublishedChapterFields {
 export type PublishedChapter = PublishedEntity<'Chapter', PublishedChapterFields>;
 
 export function isPublishedChapter(
-  entity: PublishedEntity | PublishedChapter
+  entity: PublishedEntity<string, object>
 ): entity is PublishedChapter {
   return entity.info.type === 'Chapter';
 }
 
 export function assertIsPublishedChapter(
-  entity: PublishedEntity | PublishedChapter
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedChapter {
   if (entity.info.type !== 'Chapter') {
     throw new Error('Expected info.type = Chapter (but was ' + entity.info.type + ')');
@@ -51,13 +61,13 @@ export interface PublishedGlossaryTermFields {
 export type PublishedGlossaryTerm = PublishedEntity<'GlossaryTerm', PublishedGlossaryTermFields>;
 
 export function isPublishedGlossaryTerm(
-  entity: PublishedEntity | PublishedGlossaryTerm
+  entity: PublishedEntity<string, object>
 ): entity is PublishedGlossaryTerm {
   return entity.info.type === 'GlossaryTerm';
 }
 
 export function assertIsPublishedGlossaryTerm(
-  entity: PublishedEntity | PublishedGlossaryTerm
+  entity: PublishedEntity<string, object>
 ): asserts entity is PublishedGlossaryTerm {
   if (entity.info.type !== 'GlossaryTerm') {
     throw new Error('Expected info.type = GlossaryTerm (but was ' + entity.info.type + ')');

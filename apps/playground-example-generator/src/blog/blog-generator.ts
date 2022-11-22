@@ -1,7 +1,6 @@
 import 'dotenv/config';
 //
 import { faker } from '@faker-js/faker';
-import type { AdminClient } from '@jonasb/datadata-core';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -10,10 +9,15 @@ import {
 } from '@jonasb/datadata-core';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
 import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
-import type { AdminBlogPost, AdminCloudinaryImage, AdminPerson } from './schema-types.js';
+import type {
+  AdminBlogPost,
+  AdminCloudinaryImage,
+  AdminPerson,
+  AppAdminClient,
+} from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
-async function createPerson(adminClient: AdminClient) {
+async function createPerson(adminClient: AppAdminClient) {
   const name = faker.name.fullName();
 
   return (
@@ -28,7 +32,7 @@ async function createPerson(adminClient: AdminClient) {
 }
 
 async function createBlogPost(
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   persons: AdminPerson[],
   images: AdminCloudinaryImage[]
 ) {
@@ -62,7 +66,7 @@ async function createBlogPost(
 
 async function main() {
   const database = await createNewDatabase('dist/blog.sqlite');
-  const { adminClient, server } = await createAdapterAndServer(database, SCHEMA);
+  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);

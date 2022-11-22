@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import type { AdminClient, EntityReference, Location } from '@jonasb/datadata-core';
+import type { EntityReference, Location } from '@jonasb/datadata-core';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -11,6 +11,7 @@ import type {
   AdminPlaceOfBusiness,
   AdminReview,
   AdminReviewer,
+  AppAdminClient,
 } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
@@ -26,7 +27,7 @@ function* generateLocation(): Generator<Location, void> {
 }
 
 async function createPlaceOfBusiness(
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   locationGenerator: Generator<Location, void>
 ) {
   const name = faker.company.name();
@@ -59,7 +60,7 @@ async function createPlaceOfBusiness(
   ).valueOrThrow();
 }
 
-async function createReviewer(adminClient: AdminClient) {
+async function createReviewer(adminClient: AppAdminClient) {
   const name = faker.internet.userName();
   return (
     await adminClient.createEntity<AdminReviewer>(
@@ -73,7 +74,7 @@ async function createReviewer(adminClient: AdminClient) {
 }
 
 async function createReview(
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   placeOfBusiness: AdminPlaceOfBusiness,
   reviewer: EntityReference
 ) {
@@ -92,7 +93,10 @@ async function createReview(
   ).valueOrThrow();
 }
 
-async function createPersonalNote(adminClient: AdminClient, placeOfBusiness: AdminPlaceOfBusiness) {
+async function createPersonalNote(
+  adminClient: AppAdminClient,
+  placeOfBusiness: AdminPlaceOfBusiness
+) {
   return (
     await adminClient.createEntity<AdminPersonalNote>(
       {
@@ -116,7 +120,7 @@ async function createPersonalNote(adminClient: AdminClient, placeOfBusiness: Adm
 
 async function main() {
   const database = await createNewDatabase('dist/reviews.sqlite');
-  const { adminClient, server } = await createAdapterAndServer(database, SCHEMA);
+  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
 
   const placesOfBusiness: AdminPlaceOfBusiness[] = [];
   for (const _ of Array(100).keys()) {

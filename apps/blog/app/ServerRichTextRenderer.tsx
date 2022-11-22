@@ -1,9 +1,4 @@
-import type {
-  PublishedClient,
-  RichText,
-  RichTextElementNode,
-  RichTextNode,
-} from '@jonasb/datadata-core';
+import type { RichText, RichTextElementNode, RichTextNode } from '@jonasb/datadata-core';
 import {
   isRichTextElementNode,
   isRichTextEntityLinkNode,
@@ -19,16 +14,17 @@ import { ClassName, LexicalTheme } from '@jonasb/datadata-design';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
 import { urls } from '../utils/PageUtils';
+import type { AppPublishedClient } from '../utils/SchemaTypes';
 import { isPublishedGlossaryTerm } from '../utils/SchemaTypes';
 
 interface Props {
   richText: RichText;
-  publishedClient: PublishedClient;
+  publishedClient: AppPublishedClient;
   isGlossaryPage?: boolean;
 }
 
 interface RenderContext {
-  publishedClient: PublishedClient;
+  publishedClient: AppPublishedClient;
   isGlossaryPage: boolean;
 }
 
