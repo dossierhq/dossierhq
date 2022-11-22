@@ -4,6 +4,7 @@
     "deno",
     "EPSG",
     "jonasb",
+    "listitem",
     "middlewares",
     "pino",
     "postgres",

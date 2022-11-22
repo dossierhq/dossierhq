@@ -1,7 +1,7 @@
 import type { AdminFieldSpecification } from '@jonasb/datadata-core';
 import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
-import { IconName, toSpacingClassName } from '@jonasb/datadata-design';
-import { ButtonDropdown, Icon, IconButton, Row } from '@jonasb/datadata-design';
+import type { IconName } from '@jonasb/datadata-design';
+import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@jonasb/datadata-design';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /* eslint-env node */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const solidSvgIcons = require('@fortawesome/free-solid-svg-icons');
 const fs = require('fs/promises');
 const svgToDataUri = require('mini-svg-data-uri');
