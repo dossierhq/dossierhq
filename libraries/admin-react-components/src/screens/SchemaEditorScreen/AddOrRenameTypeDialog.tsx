@@ -31,7 +31,7 @@ const NAME_REGEXP = /^[A-Z][a-zA-Z0-9_]*$/;
 const NAME_DEFAULT_HELP_TEXT = 'The name of the type, such as MyType';
 const NAME_STATUS_HELP_TEST: Record<string, string> = {
   [DialogStatus.invalidFormat]:
-    'The name has to start with a upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123',
+    'The name has to start with an uppercase letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123',
   [DialogStatus.alreadyExist]: 'A type with that name already exists',
 };
 

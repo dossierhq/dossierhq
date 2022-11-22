@@ -10,17 +10,31 @@
     "items": [
       {
         "type": "ArticleTocItem",
+        "title": "Overview",
         "article": {
           "id": "e3ece01e-240a-4c1c-9a19-206dc234af2a"
-        },
-        "title": "Overview"
+        }
       },
       {
         "type": "ArticleTocItem",
+        "title": "Content",
         "article": {
           "id": "6384629e-72aa-482c-b070-bc26d90e0fc6"
-        },
-        "title": "Content"
+        }
+      },
+      {
+        "type": "ArticleTocItem",
+        "title": "Admin & published views",
+        "article": {
+          "id": "3b674111-90ab-41e3-97b2-7d7860e71f31"
+        }
+      },
+      {
+        "type": "ArticleTocItem",
+        "title": "Schema",
+        "article": {
+          "id": "91bf925b-22fc-48c3-af22-920e1f35d2d7"
+        }
       },
       {
         "type": "TocItem",
@@ -28,10 +42,10 @@
         "items": [
           {
             "type": "ArticleTocItem",
+            "title": "Getting started",
             "article": {
               "id": "6985480d-e397-45e7-b793-b3411b65f906"
-            },
-            "title": "Getting started"
+            }
           }
         ]
       }

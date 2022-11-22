@@ -66,6 +66,13 @@ async function renderNode(
   }
   if (isRichTextTextNode(node)) {
     let formattedText: ReactNode = node.text;
+    if (richTextTextNodeHasFormat(node, 'bold')) {
+      formattedText = (
+        <strong key={key} className={theme.text?.bold}>
+          {formattedText}
+        </strong>
+      );
+    }
     if (richTextTextNodeHasFormat(node, 'code')) {
       formattedText = (
         <code key={key} className={theme.text?.code}>
