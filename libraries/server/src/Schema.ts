@@ -23,14 +23,24 @@ export async function getSchemaSpecification(
     return ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
   }
 
-  // Handle old schema format which lacked patterns
+  // Handle old schema format which lacked patterns/indexes
   if (!specification.patterns) specification.patterns = [];
+  if (!specification.indexes) specification.indexes = [];
+
+  // Handle old schemas with renaming of field types
+  for (const typeSpec of [...specification.entityTypes, ...specification.valueTypes]) {
+    for (const fieldSpec of typeSpec.fields) {
+      if ((fieldSpec.type as string) === 'EntityType') fieldSpec.type = 'Entity';
+      if ((fieldSpec.type as string) === 'ValueType') fieldSpec.type = 'ValueItem';
+    }
+  }
 
   logger.info(
-    'Loaded schema with %d entity types, %d value types, %d patterns',
+    'Loaded schema with %d entity types, %d value types, %d patterns, %d indexes',
     specification.entityTypes.length,
     specification.valueTypes.length,
-    specification.patterns.length
+    specification.patterns.length,
+    specification.indexes.length
   );
   return ok(specification);
 }

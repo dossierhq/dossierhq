@@ -3,7 +3,7 @@ import {
   isRichTextElementNode,
   isRichTextItemField,
   isRichTextValueItemNode,
-  isValueTypeItemField,
+  isValueItemItemField,
 } from './ItemUtils.js';
 import type {
   AdminEntityTypeSpecification,
@@ -226,7 +226,7 @@ function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
   };
   yield fieldValueNode;
 
-  if (isValueTypeItemField(fieldSpec, itemValue) && itemValue) {
+  if (isValueItemItemField(fieldSpec, itemValue) && itemValue) {
     yield* traverseValueItem(schema, path, itemValue);
   } else if (isRichTextItemField(fieldSpec, itemValue) && itemValue) {
     if (typeof itemValue !== 'object') {

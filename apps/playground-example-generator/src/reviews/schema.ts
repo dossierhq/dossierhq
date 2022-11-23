@@ -20,7 +20,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'placeOfBusiness',
-          type: FieldType.EntityType,
+          type: FieldType.Entity,
           entityTypes: ['PlaceOfBusiness'],
           required: true,
         },
@@ -31,7 +31,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       authKeyPattern: 'none',
       fields: [
         { name: 'name', type: FieldType.String, isName: true, required: true },
-        { name: 'address', type: FieldType.ValueType, valueTypes: ['Address'] },
+        { name: 'address', type: FieldType.ValueItem, valueTypes: ['Address'] },
         { name: 'slogan', type: FieldType.String, required: true },
         { name: 'description', type: FieldType.String, multiline: true, required: true },
       ],
@@ -40,10 +40,10 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       name: 'Review',
       authKeyPattern: 'none',
       fields: [
-        { name: 'reviewer', type: FieldType.EntityType, entityTypes: ['Reviewer'], required: true },
+        { name: 'reviewer', type: FieldType.Entity, entityTypes: ['Reviewer'], required: true },
         {
           name: 'placeOfBusiness',
-          type: FieldType.EntityType,
+          type: FieldType.Entity,
           entityTypes: ['PlaceOfBusiness'],
           required: true,
         },

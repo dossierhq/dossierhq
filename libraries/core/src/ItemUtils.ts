@@ -51,28 +51,28 @@ export function isBooleanItemField(
   return fieldSpec.type === FieldType.Boolean;
 }
 
-/** Check if `value` with `fieldSpec` is a single EntityType field */
-export function isEntityTypeField(
+/** Check if `value` with `fieldSpec` is a single Entity field */
+export function isEntityField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[typeof FieldType.EntityType] | null {
-  return fieldSpec.type === FieldType.EntityType && !fieldSpec.list;
+): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
+  return fieldSpec.type === FieldType.Entity && !fieldSpec.list;
 }
 
-/** Check if `value` with `fieldSpec` is a list EntityType field */
-export function isEntityTypeListField(
+/** Check if `value` with `fieldSpec` is a list Entity field */
+export function isEntityListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[typeof FieldType.EntityType]> | null {
-  return fieldSpec.type === FieldType.EntityType && fieldSpec.list;
+): value is Array<FieldValueTypeMap[typeof FieldType.Entity]> | null {
+  return fieldSpec.type === FieldType.Entity && fieldSpec.list;
 }
 
-/** Check if `value` with `fieldSpec` is either a single EntityType field or an item in a list field */
-export function isEntityTypeItemField(
+/** Check if `value` with `fieldSpec` is either a single Entity field or an item in a list field */
+export function isEntityItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[typeof FieldType.EntityType] | null {
-  return fieldSpec.type === FieldType.EntityType;
+): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
+  return fieldSpec.type === FieldType.Entity;
 }
 
 /** Check if `value` with `fieldSpec` is a single Location field */
@@ -147,28 +147,28 @@ export function isRichTextItemField(
   return fieldSpec.type === FieldType.RichText;
 }
 
-/** Check if `value` with `fieldSpec` is a single ValueType field */
-export function isValueTypeField(
+/** Check if `value` with `fieldSpec` is a single ValueItem field */
+export function isValueItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[typeof FieldType.ValueType] | null {
-  return fieldSpec.type === FieldType.ValueType && !fieldSpec.list;
+): value is FieldValueTypeMap[typeof FieldType.ValueItem] | null {
+  return fieldSpec.type === FieldType.ValueItem && !fieldSpec.list;
 }
 
-/** Check if `value` with `fieldSpec` is a list ValueType field */
-export function isValueTypeListField(
+/** Check if `value` with `fieldSpec` is a list ValueItem field */
+export function isValueItemListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[typeof FieldType.ValueType]> | null {
-  return fieldSpec.type === FieldType.ValueType && fieldSpec.list;
+): value is Array<FieldValueTypeMap[typeof FieldType.ValueItem]> | null {
+  return fieldSpec.type === FieldType.ValueItem && fieldSpec.list;
 }
 
-/** Check if `value` with `fieldSpec` is either a single ValueType field or an item in a list field */
-export function isValueTypeItemField(
+/** Check if `value` with `fieldSpec` is either a single ValueItem field or an item in a list field */
+export function isValueItemItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[typeof FieldType.ValueType] | null {
-  return fieldSpec.type === FieldType.ValueType;
+): value is FieldValueTypeMap[typeof FieldType.ValueItem] | null {
+  return fieldSpec.type === FieldType.ValueItem;
 }
 
 export function isRichTextTextNode(node: RichTextNode): node is RichTextTextNode {
@@ -373,7 +373,7 @@ function normalizeFieldValueItem(
   const type = fieldSpec.type as FieldType;
   switch (type) {
     case FieldType.Boolean:
-    case FieldType.EntityType:
+    case FieldType.Entity:
     case FieldType.Location:
       return value;
     case FieldType.RichText: {
@@ -400,7 +400,7 @@ function normalizeFieldValueItem(
     case FieldType.String:
       //TODO support trimming of strings?
       return value ? value : null;
-    case FieldType.ValueType: {
+    case FieldType.ValueItem: {
       const valueItem = value as ValueItem;
       const newValueItem: ValueItem = { type: valueItem.type };
       let changed = false;

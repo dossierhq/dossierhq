@@ -16,7 +16,7 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'address',
-          type: 'ValueType',
+          type: 'ValueItem',
           valueTypes: ['PostalAddress'],
         },
         {
@@ -35,12 +35,12 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'address',
-          type: 'ValueType',
+          type: 'ValueItem',
           valueTypes: ['PostalAddress'],
         },
         {
           name: 'organization',
-          type: 'EntityType',
+          type: 'Entity',
           entityTypes: ['Organization'],
         },
       ],

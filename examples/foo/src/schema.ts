@@ -16,18 +16,18 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'category',
-          type: 'EntityType',
+          type: 'Entity',
           entityTypes: ['Category'],
         },
         {
           name: 'categories',
-          type: 'EntityType',
+          type: 'Entity',
           list: true,
           entityTypes: ['Category'],
         },
         {
           name: 'annotatedCategory',
-          type: 'ValueType',
+          type: 'ValueItem',
           valueTypes: ['AnnotatedCategory'],
         },
         {
@@ -62,7 +62,7 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'category',
-          type: 'EntityType',
+          type: 'Entity',
           entityTypes: ['Category'],
         },
       ],

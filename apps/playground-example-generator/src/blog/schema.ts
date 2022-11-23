@@ -18,7 +18,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'heroImage',
-          type: FieldType.ValueType,
+          type: FieldType.ValueItem,
           required: true,
           valueTypes: ['CloudinaryImage'],
         },
@@ -44,7 +44,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'authors',
-          type: FieldType.EntityType,
+          type: FieldType.Entity,
           list: true,
           required: true,
           entityTypes: ['Person'],

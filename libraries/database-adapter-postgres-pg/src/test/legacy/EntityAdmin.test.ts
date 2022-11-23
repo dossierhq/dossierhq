@@ -86,7 +86,7 @@ beforeAll(async () => {
         fields: [
           { name: 'title', type: FieldType.String, required: true, isName: true },
           { name: 'summary', type: FieldType.String },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
+          { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityAdminBar'] },
         ],
       },
       { name: 'EntityAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
@@ -94,8 +94,8 @@ beforeAll(async () => {
         name: 'EntityAdminBaz',
         fields: [
           { name: 'title', type: FieldType.String },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
-          { name: 'baz', type: FieldType.EntityType, entityTypes: ['EntityAdminBaz'] },
+          { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityAdminBar'] },
+          { name: 'baz', type: FieldType.Entity, entityTypes: ['EntityAdminBaz'] },
           { name: 'tags', type: FieldType.String, list: true },
           { name: 'active', type: FieldType.Boolean },
           { name: 'activeList', type: FieldType.Boolean, list: true },
@@ -105,55 +105,55 @@ beforeAll(async () => {
           { name: 'locations', type: FieldType.Location, list: true },
           {
             name: 'bars',
-            type: FieldType.EntityType,
+            type: FieldType.Entity,
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
           {
             name: 'oneString',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminOneString'],
           },
           {
             name: 'twoStrings',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminTwoStrings'],
           },
           {
             name: 'twoStringsList',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminTwoStrings'],
             list: true,
           },
           {
             name: 'booleanString',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminBooleanString'],
           },
           {
             name: 'stringReference',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminStringReference'],
           },
           {
             name: 'listFields',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminListFields'],
           },
           {
             name: 'listFieldsList',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             list: true,
             valueTypes: ['EntityAdminListFields'],
           },
           {
             name: 'nested',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminNested'],
           },
           {
             name: 'valueItem',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
           },
         ],
       },
@@ -187,7 +187,7 @@ beforeAll(async () => {
         name: 'EntityAdminStringReference',
         fields: [
           { name: 'string', type: FieldType.String },
-          { name: 'reference', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
+          { name: 'reference', type: FieldType.Entity, entityTypes: ['EntityAdminBar'] },
         ],
       },
       {
@@ -196,7 +196,7 @@ beforeAll(async () => {
           { name: 'stringList', type: FieldType.String, list: true },
           {
             name: 'referenceList',
-            type: FieldType.EntityType,
+            type: FieldType.Entity,
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
@@ -218,7 +218,7 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String },
           {
             name: 'child',
-            type: FieldType.ValueType,
+            type: FieldType.ValueItem,
             valueTypes: ['EntityAdminNested'],
           },
         ],
@@ -1317,7 +1317,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bar: Expected single EntityType got list'
+      'entity.fields.bar: Expected single Entity got list'
     );
   });
 
@@ -1518,7 +1518,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Expected single ValueType got list'
+      'entity.fields.twoStrings: Expected single ValueItem got list'
     );
   });
 });

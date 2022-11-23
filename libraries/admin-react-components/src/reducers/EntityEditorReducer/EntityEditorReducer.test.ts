@@ -738,7 +738,7 @@ describe('EntityEditorReducer scenarios', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'foo', type: FieldType.EntityType }],
+              fields: [{ name: 'foo', type: FieldType.Entity }],
             },
           ],
         }).valueOrThrow()

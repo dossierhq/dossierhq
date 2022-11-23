@@ -21,10 +21,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     {
       name: 'References',
       fields: [
-        { name: 'any', type: FieldType.EntityType },
-        { name: 'anyList', type: FieldType.EntityType, list: true },
-        { name: 'anyAdminOnly', type: FieldType.EntityType, adminOnly: true },
-        { name: 'titleOnly', type: FieldType.EntityType, entityTypes: ['TitleOnly'] },
+        { name: 'any', type: FieldType.Entity },
+        { name: 'anyList', type: FieldType.Entity, list: true },
+        { name: 'anyAdminOnly', type: FieldType.Entity, adminOnly: true },
+        { name: 'titleOnly', type: FieldType.Entity, entityTypes: ['TitleOnly'] },
       ],
     },
     {
@@ -76,8 +76,8 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     {
       name: 'ValueItems',
       fields: [
-        { name: 'any', type: FieldType.ValueType },
-        { name: 'anyAdminOnly', type: FieldType.ValueType, adminOnly: true },
+        { name: 'any', type: FieldType.ValueItem },
+        { name: 'anyAdminOnly', type: FieldType.ValueItem, adminOnly: true },
       ],
     },
   ],
@@ -90,7 +90,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'locationAdminOnly', type: FieldType.Location, adminOnly: true },
       ],
     },
-    { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.EntityType }] },
+    { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.Entity }] },
   ],
   patterns: [
     { name: 'subject', pattern: '^subject$' },

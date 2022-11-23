@@ -165,26 +165,26 @@ export type AllAdminValueItems = never;
 "
 `;
 
-exports[`generateTypescriptForSchema > ValueTypes (no fields) 1`] = `
+exports[`generateTypescriptForSchema > ValueItem (no fields) 1`] = `
 "import type { AdminClient, AdminEntity, ValueItem } from '@jonasb/datadata-core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
-export type AllAdminEntities = AdminValueType;
+export type AllAdminEntities = AdminValueItem;
 
-export interface AdminValueTypeFields {
-  valueType: AllAdminValueItems | null;
+export interface AdminValueItemFields {
+  valueItem: AllAdminValueItems | null;
 }
 
-export type AdminValueType = AdminEntity<'ValueType', AdminValueTypeFields>;
+export type AdminValueItem = AdminEntity<'ValueItem', AdminValueItemFields>;
 
-export function isAdminValueType(entity: AdminEntity<string, object>): entity is AdminValueType {
-  return entity.info.type === 'ValueType';
+export function isAdminValueItem(entity: AdminEntity<string, object>): entity is AdminValueItem {
+  return entity.info.type === 'ValueItem';
 }
 
-export function assertIsAdminValueType(entity: AdminEntity<string, object>): asserts entity is AdminValueType {
-  if (entity.info.type !== 'ValueType') {
-    throw new Error('Expected info.type = ValueType (but was ' + entity.info.type + ')');
+export function assertIsAdminValueItem(entity: AdminEntity<string, object>): asserts entity is AdminValueItem {
+  if (entity.info.type !== 'ValueItem') {
+    throw new Error('Expected info.type = ValueItem (but was ' + entity.info.type + ')');
   }
 }
 

@@ -306,7 +306,7 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.EntityType,
+                type: FieldType.Entity,
                 list: false,
                 required: false,
                 adminOnly: false,
@@ -397,7 +397,7 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.ValueType,
+                type: FieldType.ValueItem,
                 list: false,
                 required: false,
                 adminOnly: false,
@@ -825,7 +825,7 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.EntityType,
+                type: FieldType.Entity,
                 list: false,
                 required: false,
                 adminOnly: false,
@@ -898,7 +898,7 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.ValueType,
+                type: FieldType.ValueItem,
                 list: false,
                 required: false,
                 adminOnly: false,

@@ -30,7 +30,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
   decodeJson: (json) => json as boolean,
 };
 
-const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.EntityType], string> = {
+const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entity], string> = {
   encodeData: (_fieldSpec: AdminFieldSpecification, prefix: string, x) => {
     if (Array.isArray(x)) {
       return notOk.BadRequest(`${prefix}: expected reference, got list`);
@@ -90,7 +90,7 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], 
   decodeJson: (json) => json as string,
 };
 
-const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueType], unknown> = {
+const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueItem], unknown> = {
   encodeData: (_prefix, _data) => {
     throw new Error('Should not be used');
   },
@@ -104,11 +104,11 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueTyp
 
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.Boolean]: booleanCodec,
-  [FieldType.EntityType]: entityTypeCodec,
+  [FieldType.Entity]: entityTypeCodec,
   [FieldType.Location]: locationCodec,
   [FieldType.RichText]: invalidCodec,
   [FieldType.String]: stringCodec,
-  [FieldType.ValueType]: invalidCodec,
+  [FieldType.ValueItem]: invalidCodec,
 };
 
 export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {

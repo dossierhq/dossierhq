@@ -27,7 +27,7 @@ import {
   AdminEntityStatus,
   assertIsDefined,
   FieldType,
-  isEntityTypeItemField,
+  isEntityItemField,
   isFieldValueEqual,
   isLocationItemField,
   isRichTextEntityLinkNode,
@@ -37,8 +37,8 @@ import {
   isRichTextTextNode,
   isRichTextValueItemNode,
   isStringItemField,
-  isValueTypeField,
-  isValueTypeItemField,
+  isValueItemField,
+  isValueItemItemField,
   ItemTraverseNodeType,
   normalizeFieldValue,
   notOk,
@@ -131,7 +131,7 @@ function decodeFieldItemOrList(
     }
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
-      if (fieldSpec.type === FieldType.ValueType) {
+      if (fieldSpec.type === FieldType.ValueItem) {
         const decodedItem = decodeValueItemField(schema, fieldSpec, codecMode, encodedItem);
         decodedItems.push(decodedItem);
       } else if (fieldSpec.type === FieldType.RichText) {
@@ -146,7 +146,7 @@ function decodeFieldItemOrList(
     }
     return decodedItems;
   }
-  if (fieldSpec.type === FieldType.ValueType) {
+  if (fieldSpec.type === FieldType.ValueItem) {
     return decodeValueItemField(schema, fieldSpec, codecMode, fieldValue as ValueItem);
   }
   if (fieldSpec.type === FieldType.RichText) {
@@ -472,7 +472,7 @@ function encodeFieldItemOrList(
     const encodedItems: unknown[] = [];
     for (const decodedItem of data) {
       let encodedItemResult;
-      if (isValueTypeItemField(fieldSpec, decodedItem)) {
+      if (isValueItemItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeValueItemField(
           schema,
           fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
@@ -492,7 +492,7 @@ function encodeFieldItemOrList(
     return ok(encodedItems);
   }
 
-  if (isValueTypeField(fieldSpec, data)) {
+  if (isValueItemField(fieldSpec, data)) {
     return encodeValueItemField(
       schema,
       fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
@@ -603,7 +603,7 @@ export function createReferencesCollector<TSchema extends AdminSchema | Publishe
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem:
-          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+          if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             references.add(node.value.id);
           }
           break;
@@ -630,7 +630,7 @@ export function createRequestedReferencesCollector<
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem:
-          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+          if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             const entityItemFieldSpec = node.fieldSpec as EntityFieldSpecification;
             requestedReferences.push({
               prefix: visitorPathToString(node.path),

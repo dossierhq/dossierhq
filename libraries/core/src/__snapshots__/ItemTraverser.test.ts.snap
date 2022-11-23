@@ -43,7 +43,7 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueType",
+      "type": "ValueItem",
       "valueTypes": [
         "TwoStrings",
       ],
@@ -201,7 +201,7 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueType",
+      "type": "ValueItem",
       "valueTypes": [
         "TwoStrings",
       ],
@@ -375,7 +375,7 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueType",
+      "type": "ValueItem",
       "valueTypes": [
         "TwoStrings",
       ],
@@ -655,7 +655,7 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueType",
+      "type": "ValueItem",
       "valueTypes": [
         "TwoStrings",
       ],
@@ -783,7 +783,7 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueType",
+      "type": "ValueItem",
       "valueTypes": [
         "TwoStrings",
       ],

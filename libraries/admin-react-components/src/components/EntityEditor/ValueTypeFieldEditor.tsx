@@ -95,7 +95,7 @@ export function ValueItemFieldEditorWithoutClear({
             <Text textStyle="subtitle1" marginBottom={0}>
               {valueFieldSpec.name}
             </Text>
-            {valueFieldSpec.type === FieldType.ValueType ? (
+            {valueFieldSpec.type === FieldType.ValueItem ? (
               <div className="nested-value-item-indentation">{fieldEditor}</div>
             ) : (
               fieldEditor

@@ -10,16 +10,16 @@ import type {
 import {
   isBooleanField,
   isBooleanListField,
-  isEntityTypeField,
-  isEntityTypeListField,
+  isEntityField,
+  isEntityListField,
   isLocationField,
   isLocationListField,
   isRichTextField,
   isRichTextListField,
   isStringField,
   isStringListField,
-  isValueTypeField,
-  isValueTypeListField,
+  isValueItemField,
+  isValueItemListField,
 } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
 import { useContext } from 'react';
@@ -70,11 +70,11 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={BooleanFieldDisplay}
       />
     );
-  } else if (isEntityTypeField(fieldSpec, value)) {
+  } else if (isEntityField(fieldSpec, value)) {
     display = (
       <EntityTypeFieldDisplay fieldSpec={fieldSpec as EntityFieldSpecification} value={value} />
     );
-  } else if (isEntityTypeListField(fieldSpec, value)) {
+  } else if (isEntityListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
         fieldSpec={fieldSpec as EntityFieldSpecification}
@@ -118,11 +118,11 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={StringFieldDisplay}
       />
     );
-  } else if (isValueTypeField(fieldSpec, value)) {
+  } else if (isValueItemField(fieldSpec, value)) {
     display = (
       <ValueTypeFieldDisplay fieldSpec={fieldSpec as ValueItemFieldSpecification} value={value} />
     );
-  } else if (isValueTypeListField(fieldSpec, value)) {
+  } else if (isValueItemListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
         fieldSpec={fieldSpec as ValueItemFieldSpecification}

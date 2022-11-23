@@ -42,7 +42,7 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
             <Text textStyle="subtitle1" marginBottom={0}>
               {valueFieldSpec.name}
             </Text>
-            {valueFieldSpec.type === FieldType.ValueType ? (
+            {valueFieldSpec.type === FieldType.ValueItem ? (
               <div className="nested-value-item-indentation">{fieldDisplay}</div>
             ) : (
               fieldDisplay

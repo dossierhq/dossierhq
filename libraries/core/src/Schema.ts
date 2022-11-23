@@ -42,13 +42,11 @@ export interface PublishedValueTypeSpecification {
 
 export const FieldType = {
   Boolean: 'Boolean',
-  //TODO rename to Entity?
-  EntityType: 'EntityType',
+  Entity: 'Entity',
   Location: 'Location',
   RichText: 'RichText',
   String: 'String',
-  //TODO rename to ValueItem?
-  ValueType: 'ValueType',
+  ValueItem: 'ValueItem',
 } as const;
 export type FieldType = typeof FieldType[keyof typeof FieldType];
 
@@ -76,7 +74,7 @@ export interface BooleanFieldSpecification extends SharedFieldSpecification {
 }
 
 export interface EntityFieldSpecification extends SharedFieldSpecification {
-  type: typeof FieldType.EntityType;
+  type: typeof FieldType.Entity;
   entityTypes: string[];
 }
 
@@ -106,7 +104,7 @@ export interface StringFieldSpecification extends SharedFieldSpecification {
 }
 
 export interface ValueItemFieldSpecification extends SharedFieldSpecification {
-  type: typeof FieldType.ValueType;
+  type: typeof FieldType.ValueItem;
   valueTypes: string[];
 }
 
@@ -162,11 +160,11 @@ export type PublishedFieldSpecification = FieldSpecification;
 
 export interface FieldValueTypeMap {
   [FieldType.Boolean]: boolean;
-  [FieldType.EntityType]: EntityReference;
+  [FieldType.Entity]: EntityReference;
   [FieldType.Location]: Location;
   [FieldType.RichText]: RichText;
   [FieldType.String]: string;
-  [FieldType.ValueType]: ValueItem;
+  [FieldType.ValueItem]: ValueItem;
 }
 
 export interface SchemaPatternSpecification {
@@ -220,14 +218,14 @@ const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
 ] as const;
 const ADMIN_FIELD_SPECIFICATION_KEYS: {
   Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
-  EntityType: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
+  Entity: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
   Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
   RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
   String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
-  ValueType: readonly (keyof AdminFieldSpecification<ValueItemFieldSpecification>)[];
+  ValueItem: readonly (keyof AdminFieldSpecification<ValueItemFieldSpecification>)[];
 } = {
   [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
-  [FieldType.EntityType]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
+  [FieldType.Entity]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
   [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.RichText]: [
     ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
@@ -243,7 +241,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
     'matchPattern',
     'index',
   ],
-  [FieldType.ValueType]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
+  [FieldType.ValueItem]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
 };
 
 export class AdminSchema {
@@ -315,7 +313,7 @@ export class AdminSchema {
         }
 
         if (
-          (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) &&
+          (fieldSpec.type === FieldType.Entity || fieldSpec.type === FieldType.RichText) &&
           fieldSpec.entityTypes &&
           fieldSpec.entityTypes.length > 0
         ) {
@@ -355,7 +353,7 @@ export class AdminSchema {
         }
 
         if (
-          (fieldSpec.type === FieldType.ValueType || fieldSpec.type === FieldType.RichText) &&
+          (fieldSpec.type === FieldType.ValueItem || fieldSpec.type === FieldType.RichText) &&
           fieldSpec.valueTypes &&
           fieldSpec.valueTypes.length > 0
         ) {
@@ -721,7 +719,7 @@ function normalizeFieldSpecUpdate(
   switch (type) {
     case FieldType.Boolean:
       return { name, type, list, required, adminOnly };
-    case FieldType.EntityType:
+    case FieldType.Entity:
       return { name, type, list, required, adminOnly, entityTypes: fieldSpec.entityTypes ?? [] };
     case FieldType.Location:
       return { name, type, list, required, adminOnly };
@@ -749,7 +747,7 @@ function normalizeFieldSpecUpdate(
         matchPattern: fieldSpec.matchPattern ?? null,
         index: fieldSpec.index ?? null,
       };
-    case FieldType.ValueType:
+    case FieldType.ValueItem:
       return { name, type, list, required, adminOnly, valueTypes: fieldSpec.valueTypes ?? [] };
     default:
       assertExhaustive(type);

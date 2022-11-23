@@ -239,7 +239,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        FieldType.EntityType,
+        FieldType.Entity,
         false
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
@@ -364,7 +364,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'foo' },
-        FieldType.ValueType,
+        FieldType.ValueItem,
         false
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
@@ -607,7 +607,7 @@ describe('ChangeFieldTypeAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        FieldType.EntityType,
+        FieldType.Entity,
         false
       )
     );
@@ -625,7 +625,7 @@ describe('ChangeFieldTypeAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        FieldType.ValueType,
+        FieldType.ValueItem,
         false
       )
     );
@@ -790,7 +790,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
-        FieldType.EntityType,
+        FieldType.Entity,
         false
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
@@ -844,7 +844,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'self' },
-        FieldType.ValueType,
+        FieldType.ValueItem,
         false
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
@@ -1017,7 +1017,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             {
               name: 'EntityReference',
               fields: [
-                { name: 'reference', type: FieldType.EntityType, entityTypes: ['EntityReference'] },
+                { name: 'reference', type: FieldType.Entity, entityTypes: ['EntityReference'] },
               ],
             },
           ],
@@ -1025,7 +1025,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             {
               name: 'ValueReference',
               fields: [
-                { name: 'reference', type: FieldType.EntityType, entityTypes: ['EntityReference'] },
+                { name: 'reference', type: FieldType.Entity, entityTypes: ['EntityReference'] },
               ],
             },
           ],
@@ -1046,13 +1046,13 @@ describe('UpdateSchemaSpecificationAction', () => {
           entityTypes: [
             {
               name: 'EntityWithValueItem',
-              fields: [{ name: 'valueItem', type: FieldType.ValueType, valueTypes: ['ValueItem'] }],
+              fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['ValueItem'] }],
             },
           ],
           valueTypes: [
             {
               name: 'ValueItem',
-              fields: [{ name: 'valueItem', type: FieldType.ValueType, valueTypes: ['ValueItem'] }],
+              fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['ValueItem'] }],
             },
           ],
         }).valueOrThrow()

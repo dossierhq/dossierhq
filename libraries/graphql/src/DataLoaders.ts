@@ -27,15 +27,15 @@ import type {
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
-  isEntityTypeField,
-  isEntityTypeItemField,
-  isEntityTypeListField,
+  isEntityField,
+  isEntityItemField,
+  isEntityListField,
   isItemValueItem,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextField,
-  isValueTypeField,
-  isValueTypeListField,
+  isValueItemField,
+  isValueItemListField,
   ItemTraverseNodeType,
   traverseItemField,
 } from '@jonasb/datadata-core';
@@ -287,21 +287,21 @@ function resolveFields<TContext extends SessionGraphQLContext>(
                   : loadPublishedEntities(schema, context, ids);
               },
       };
-    } else if (isEntityTypeField(fieldSpec, value) && value) {
+    } else if (isEntityField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin
           ? loadAdminEntity(schema as AdminSchema, context, value)
           : loadPublishedEntity(schema, context, value);
-    } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
+    } else if (isEntityListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
         return isAdmin
           ? loadAdminEntities(schema as AdminSchema, context, ids)
           : loadPublishedEntities(schema, context, ids);
       };
-    } else if (isValueTypeField(fieldSpec, value) && value) {
+    } else if (isValueItemField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
-    } else if (isValueTypeListField(fieldSpec, value) && value && value.length > 0) {
+    } else if (isValueItemListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = value.map((x) => buildResolversForValue(schema, x, isAdmin));
     }
   }
@@ -326,7 +326,7 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem:
-          if (isEntityTypeItemField(node.fieldSpec, node.value) && node.value) {
+          if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             references.add(node.value.id);
           }
           break;

@@ -44,11 +44,11 @@ interface FieldTypeItem {
 
 const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
   FieldType.Boolean,
-  FieldType.EntityType,
+  FieldType.Entity,
   FieldType.Location,
   FieldType.RichText,
   FieldType.String,
-  FieldType.ValueType,
+  FieldType.ValueItem,
 ].flatMap((type) =>
   [false, true].map((list) => ({
     value: fieldTypeValue(type, list),
@@ -124,7 +124,7 @@ export function SchemaFieldEditor({
       ]
     : [];
   const showEntityTypes =
-    fieldDraft.type === FieldType.EntityType ||
+    fieldDraft.type === FieldType.Entity ||
     (fieldDraft.type === FieldType.RichText &&
       (!fieldDraft.richTextNodes ||
         fieldDraft.richTextNodes.length === 0 ||
@@ -135,7 +135,7 @@ export function SchemaFieldEditor({
       fieldDraft.richTextNodes.length === 0 ||
       fieldDraft.richTextNodes?.includes(RichTextNodeType.entityLink));
   const showValueTypes =
-    fieldDraft.type === FieldType.ValueType ||
+    fieldDraft.type === FieldType.ValueItem ||
     (fieldDraft.type === FieldType.RichText &&
       (!fieldDraft.richTextNodes ||
         fieldDraft.richTextNodes.length === 0 ||

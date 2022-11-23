@@ -225,7 +225,7 @@ function fieldType(
     case FieldType.Boolean:
       type = 'boolean';
       break;
-    case FieldType.EntityType:
+    case FieldType.Entity:
       coreImports.add('EntityReference');
       type = 'EntityReference';
       break;
@@ -240,7 +240,7 @@ function fieldType(
     case FieldType.String:
       type = 'string';
       break;
-    case FieldType.ValueType:
+    case FieldType.ValueItem:
       if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
         type = fieldSpec.valueTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
       } else {

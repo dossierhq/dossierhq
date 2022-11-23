@@ -54,7 +54,7 @@
       "fields": [
         {
           "name": "items",
-          "type": "ValueType",
+          "type": "ValueItem",
           "required": true,
           "adminOnly": false,
           "list": true,
@@ -125,7 +125,7 @@
         },
         {
           "name": "article",
-          "type": "EntityType",
+          "type": "Entity",
           "required": true,
           "adminOnly": false,
           "entityTypes": [
@@ -149,7 +149,7 @@
         },
         {
           "name": "items",
-          "type": "ValueType",
+          "type": "ValueItem",
           "required": true,
           "adminOnly": false,
           "list": true,

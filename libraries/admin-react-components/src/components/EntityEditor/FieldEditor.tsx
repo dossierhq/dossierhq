@@ -12,16 +12,16 @@ import type {
 import {
   isBooleanField,
   isBooleanListField,
-  isEntityTypeField,
-  isEntityTypeListField,
+  isEntityField,
+  isEntityListField,
   isLocationField,
   isLocationListField,
   isRichTextField,
   isRichTextListField,
   isStringField,
   isStringListField,
-  isValueTypeField,
-  isValueTypeListField,
+  isValueItemField,
+  isValueItemListField,
 } from '@jonasb/datadata-core';
 import { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
@@ -70,7 +70,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={BooleanFieldEditor}
       />
     );
-  } else if (isEntityTypeField(fieldSpec, value)) {
+  } else if (isEntityField(fieldSpec, value)) {
     editor = (
       <EntityTypeFieldEditor
         {...props}
@@ -78,7 +78,7 @@ export function FieldEditor(props: FieldEditorProps) {
         value={value}
       />
     );
-  } else if (isEntityTypeListField(fieldSpec, value)) {
+  } else if (isEntityListField(fieldSpec, value)) {
     editor = (
       <FieldListWrapper
         {...props}
@@ -138,7 +138,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={StringFieldEditor}
       />
     );
-  } else if (isValueTypeField(fieldSpec, value)) {
+  } else if (isValueItemField(fieldSpec, value)) {
     editor = (
       <ValueTypeFieldEditor
         {...props}
@@ -146,7 +146,7 @@ export function FieldEditor(props: FieldEditorProps) {
         value={value}
       />
     );
-  } else if (isValueTypeListField(fieldSpec, value)) {
+  } else if (isValueItemListField(fieldSpec, value)) {
     editor = (
       <FieldListWrapper
         {...props}

@@ -13,7 +13,7 @@ const adminSchema = AdminSchema.createAndValidate({
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
-        { name: 'twoStrings', type: FieldType.ValueType, valueTypes: ['TwoStrings'] },
+        { name: 'twoStrings', type: FieldType.ValueItem, valueTypes: ['TwoStrings'] },
         { name: 'richText', type: FieldType.RichText },
         { name: 'adminOnlyString', type: FieldType.String, adminOnly: true },
       ],

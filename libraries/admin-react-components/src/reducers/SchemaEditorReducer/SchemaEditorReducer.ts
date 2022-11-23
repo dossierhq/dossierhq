@@ -709,7 +709,7 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     //TODO handle rich text?
-    if (this.fieldType === FieldType.EntityType) {
+    if (this.fieldType === FieldType.Entity) {
       newFieldDraft.entityTypes = [];
     } else {
       delete newFieldDraft.entityTypes;
@@ -717,7 +717,7 @@ class ChangeFieldTypeAction extends FieldAction {
 
     //TODO handle linkEntityTypes?
 
-    if (this.fieldType === FieldType.ValueType) {
+    if (this.fieldType === FieldType.ValueItem) {
       newFieldDraft.valueTypes = [];
     } else {
       delete newFieldDraft.valueTypes;
@@ -1013,13 +1013,13 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           fieldDraft.richTextNodes = this.getRichTextNodesWithPlaceholders(fieldSpec.richTextNodes);
           fieldDraft.existingRichTextNodesWithPlaceholders = [...fieldDraft.richTextNodes];
         }
-        if (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) {
+        if (fieldSpec.type === FieldType.Entity || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes;
         }
         if (fieldSpec.type === FieldType.RichText) {
           fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes;
         }
-        if (fieldSpec.type === FieldType.ValueType || fieldSpec.type === FieldType.RichText) {
+        if (fieldSpec.type === FieldType.ValueItem || fieldSpec.type === FieldType.RichText) {
           fieldDraft.valueTypes = fieldSpec.valueTypes;
         }
         return fieldDraft;
@@ -1149,10 +1149,10 @@ function getTypeUpdateFromEditorState(
       ...(draftField.type === FieldType.RichText
         ? { richTextNodes, linkEntityTypes: draftField.linkEntityTypes ?? [] }
         : undefined),
-      ...(draftField.type === FieldType.EntityType || draftField.type === FieldType.RichText
+      ...(draftField.type === FieldType.Entity || draftField.type === FieldType.RichText
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
-      ...(draftField.type === FieldType.ValueType || draftField.type === FieldType.RichText
+      ...(draftField.type === FieldType.ValueItem || draftField.type === FieldType.RichText
         ? { valueTypes: draftField.valueTypes ?? [] }
         : undefined),
     };

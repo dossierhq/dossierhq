@@ -27,7 +27,7 @@ import {
   assertExhaustive,
   FieldType,
   isItemValueItem,
-  isValueTypeField,
+  isValueItemField,
   notOk,
 } from '@jonasb/datadata-core';
 import type {
@@ -1112,7 +1112,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.Boolean:
           fieldType = GraphQLBoolean;
           break;
-        case FieldType.EntityType:
+        case FieldType.Entity:
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
         case FieldType.Location:
@@ -1124,7 +1124,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.String:
           fieldType = GraphQLString;
           break;
-        case FieldType.ValueType:
+        case FieldType.ValueItem:
           fieldType = this.getOrCreateValueUnion(isAdmin, fieldSpec.valueTypes ?? []);
           break;
         default:
@@ -1152,7 +1152,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.Boolean:
           fieldType = GraphQLBoolean;
           break;
-        case FieldType.EntityType:
+        case FieldType.Entity:
           fieldType = this.getInputType('EntityReferenceInput');
           break;
         case FieldType.Location:
@@ -1164,7 +1164,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.String:
           fieldType = GraphQLString;
           break;
-        case FieldType.ValueType: {
+        case FieldType.ValueItem: {
           //TODO use GraphQLJSON. Is it still needed or is normal fieldType enough?
           fields[`${fieldSpec.name}Json`] = { type: GraphQLString };
 
@@ -1667,7 +1667,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           : adminSchema.getValueFieldSpecification(typeSpec, fieldName);
 
         // Traverse into value items
-        if (fieldSpec && isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
+        if (fieldSpec && isValueItemField(fieldSpec, fieldValue) && fieldValue) {
           const type = fieldValue.type;
           const valueSpec = adminSchema.getValueTypeSpecification(type);
           if (!valueSpec) {

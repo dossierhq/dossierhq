@@ -34,10 +34,10 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'body', type: FieldType.RichText },
-        { name: 'bar', type: FieldType.EntityType, entityTypes: ['PublishedEntityBar'] },
+        { name: 'bar', type: FieldType.Entity, entityTypes: ['PublishedEntityBar'] },
         {
           name: 'bars',
-          type: FieldType.EntityType,
+          type: FieldType.Entity,
           entityTypes: ['PublishedEntityBar'],
           list: true,
         },
@@ -47,7 +47,7 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       name: 'PublishedEntityBar',
       fields: [
         { name: 'title', type: FieldType.String, isName: true },
-        { name: 'entity', type: FieldType.EntityType },
+        { name: 'entity', type: FieldType.Entity },
       ],
     },
     {

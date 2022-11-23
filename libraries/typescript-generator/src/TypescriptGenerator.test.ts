@@ -50,8 +50,8 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'EntityTypes',
               fields: [
-                { name: 'entityType', type: FieldType.EntityType },
-                { name: 'entityTypeList', type: FieldType.EntityType, list: true },
+                { name: 'entityType', type: FieldType.Entity },
+                { name: 'entityTypeList', type: FieldType.Entity, list: true },
               ],
             },
           ],
@@ -126,30 +126,30 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'ValueTypes',
               fields: [
-                { name: 'valueType', type: FieldType.ValueType, required: true },
+                { name: 'valueType', type: FieldType.ValueItem, required: true },
                 {
                   name: 'valueTypeFoo',
-                  type: FieldType.ValueType,
+                  type: FieldType.ValueItem,
                   valueTypes: ['Foo'],
                   required: true,
                 },
                 {
                   name: 'valueTypeFooBar',
-                  type: FieldType.ValueType,
+                  type: FieldType.ValueItem,
                   valueTypes: ['Foo', 'Bar'],
                   required: true,
                 },
-                { name: 'valueTypeList', type: FieldType.ValueType, list: true, required: true },
+                { name: 'valueTypeList', type: FieldType.ValueItem, list: true, required: true },
                 {
                   name: 'valueTypeListFoo',
-                  type: FieldType.ValueType,
+                  type: FieldType.ValueItem,
                   valueTypes: ['Foo'],
                   list: true,
                   required: true,
                 },
                 {
                   name: 'valueTypeListFooBar',
-                  type: FieldType.ValueType,
+                  type: FieldType.ValueItem,
                   valueTypes: ['Foo', 'Bar'],
                   list: true,
                   required: true,
@@ -173,14 +173,14 @@ describe('generateTypescriptForSchema', () => {
     ).toMatchSnapshot();
   });
 
-  test('ValueTypes (no fields)', () => {
+  test('ValueItem (no fields)', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
-              name: 'ValueType',
-              fields: [{ name: 'valueType', type: FieldType.ValueType, required: true }],
+              name: 'ValueItem',
+              fields: [{ name: 'valueItem', type: FieldType.ValueItem, required: true }],
             },
           ],
           valueTypes: [{ name: 'Foo', fields: [] }],
