@@ -1,7 +1,13 @@
 import type { AdminFieldSpecification, RichTextFieldSpecification } from '@jonasb/datadata-core';
 import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
-import type { IconName } from '@jonasb/datadata-design';
-import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@jonasb/datadata-design';
+import {
+  ButtonDropdown,
+  Icon,
+  IconButton,
+  IconName,
+  Row,
+  toSpacingClassName,
+} from '@jonasb/datadata-design';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -34,22 +40,7 @@ import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './Admi
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 
-type BlockTypeName =
-  | 'paragraph'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'bullet'
-  | 'check'
-  | 'number';
-
-const blockTypeToBlockName: Record<
-  BlockTypeName,
-  { title: string; node: RichTextNodeType; icon: IconName }
-> = {
+const blockTypeToBlockName = {
   paragraph: { title: 'Paragraph', node: RichTextNodeType.paragraph, icon: 'paragraph' },
   bullet: { title: 'Bulleted list', node: RichTextNodeType.list, icon: 'listUl' },
   number: { title: 'Numbered list', node: RichTextNodeType.list, icon: 'listOl' },
@@ -60,8 +51,9 @@ const blockTypeToBlockName: Record<
   h4: { title: 'Heading 4', node: RichTextNodeType.heading, icon: 'heading' },
   h5: { title: 'Heading 5', node: RichTextNodeType.heading, icon: 'heading' },
   h6: { title: 'Heading 6', node: RichTextNodeType.heading, icon: 'heading' },
-};
-//TODO Could use Typescript 4.9 satisfies to make this more readable
+} satisfies Record<string, { title: string; node: RichTextNodeType; icon: IconName }>;
+
+type BlockTypeName = keyof typeof blockTypeToBlockName;
 
 export function ToolbarPlugin({
   fieldSpec,
