@@ -1,8 +1,8 @@
-import type { FieldSpecification } from '@jonasb/datadata-core';
 import type {
   AdminFieldSpecification,
   BooleanFieldSpecification,
   EntityFieldSpecification,
+  FieldSpecification,
   LocationFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,

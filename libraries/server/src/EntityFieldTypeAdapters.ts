@@ -2,10 +2,10 @@ import type {
   AdminFieldSpecification,
   EntityReference,
   ErrorType,
+  FieldSpecification,
   FieldValueTypeMap,
   Location,
   Result,
-  StringFieldSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType, notOk, ok } from '@jonasb/datadata-core';
 
@@ -75,13 +75,13 @@ const locationCodec: FieldTypeAdapter<
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (fieldSpec: StringFieldSpecification, prefix: string, data) => {
+  encodeData: (fieldSpec: AdminFieldSpecification, prefix: string, data) => {
     if (typeof data !== 'string') {
       return notOk.BadRequest(
         `${prefix}: expected string, got ${Array.isArray(data) ? 'list' : typeof data}`
       );
     }
-    if (!fieldSpec.multiline && data.includes('\n')) {
+    if (fieldSpec.type === FieldType.String && !fieldSpec.multiline && data.includes('\n')) {
       return notOk.BadRequest(`${prefix}: multiline string not allowed`);
     }
     return ok(data);
@@ -111,7 +111,7 @@ const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.ValueType]: invalidCodec,
 };
 
-export function getAdapter(fieldSpec: AdminFieldSpecification): FieldTypeAdapter {
+export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
   return getAdapterForType(fieldSpec.type as FieldType);
 }
 

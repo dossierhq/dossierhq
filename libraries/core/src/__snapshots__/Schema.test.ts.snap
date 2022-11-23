@@ -29,8 +29,14 @@ exports[`mergeWith() > field with index 1`] = `
       "authKeyPattern": null,
       "fields": [
         {
+          "adminOnly": false,
           "index": "unique-index",
+          "isName": false,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
           "name": "title",
+          "required": false,
           "type": "String",
         },
       ],
@@ -56,8 +62,14 @@ exports[`mergeWith() > field with matchPattern 1`] = `
       "authKeyPattern": null,
       "fields": [
         {
+          "adminOnly": false,
+          "index": null,
+          "isName": false,
+          "list": false,
           "matchPattern": "a-pattern",
+          "multiline": false,
           "name": "title",
+          "required": false,
           "type": "String",
         },
       ],

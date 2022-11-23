@@ -13,7 +13,14 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -54,7 +61,14 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -197,7 +211,14 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
           "adminOnly": false,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -215,7 +236,14 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -1104,7 +1132,12 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
           "adminOnly": false,
           "entityTypes": [],
           "existingFieldSpec": {
+            "adminOnly": false,
+            "entityTypes": [],
+            "linkEntityTypes": [],
+            "list": false,
             "name": "rt",
+            "required": false,
             "richTextNodes": [
               "root",
               "paragraph",
@@ -1112,6 +1145,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
               "heading",
             ],
             "type": "RichText",
+            "valueTypes": [],
           },
           "existingRichTextNodesWithPlaceholders": [
             "root, paragraph, text",
@@ -1147,7 +1181,12 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "entityTypes": [],
+              "linkEntityTypes": [],
+              "list": false,
               "name": "rt",
+              "required": false,
               "richTextNodes": [
                 "root",
                 "paragraph",
@@ -1155,6 +1194,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
                 "heading",
               ],
               "type": "RichText",
+              "valueTypes": [],
             },
           ],
           "name": "Foo",
@@ -1287,8 +1327,14 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
             "index": "anIndex",
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "existing",
+            "required": false,
             "type": "String",
           },
           "index": "anIndex",
@@ -1336,8 +1382,14 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
               "index": "anIndex",
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "existing",
+              "required": false,
               "type": "String",
             },
           ],
@@ -1476,8 +1528,14 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
             "isName": true,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -1518,8 +1576,14 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 1`]
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
               "isName": true,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -1583,8 +1647,14 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
             "isName": true,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -1625,8 +1695,14 @@ exports[`ChangeFieldIsNameAction > make other field is-name, and switch back 3`]
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
               "isName": true,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -2314,7 +2390,14 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -2344,7 +2427,14 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -2421,7 +2511,14 @@ exports[`RenameFieldAction > add and rename field 1`] = `
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -2462,7 +2559,14 @@ exports[`RenameFieldAction > add and rename field 1`] = `
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -2945,10 +3049,13 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
             "EntityReference",
           ],
           "existingFieldSpec": {
+            "adminOnly": false,
             "entityTypes": [
               "EntityReference",
             ],
+            "list": false,
             "name": "reference",
+            "required": false,
             "type": "EntityType",
           },
           "list": false,
@@ -2974,10 +3081,13 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
               "entityTypes": [
                 "EntityReference",
               ],
+              "list": false,
               "name": "reference",
+              "required": false,
               "type": "EntityType",
             },
           ],
@@ -2991,10 +3101,13 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "adminOnly": false,
               "entityTypes": [
                 "EntityReference",
               ],
+              "list": false,
               "name": "reference",
+              "required": false,
               "type": "EntityType",
             },
           ],
@@ -3015,10 +3128,13 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
             "EntityReference",
           ],
           "existingFieldSpec": {
+            "adminOnly": false,
             "entityTypes": [
               "EntityReference",
             ],
+            "list": false,
             "name": "reference",
+            "required": false,
             "type": "EntityType",
           },
           "list": false,
@@ -3099,8 +3215,14 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
             "index": "myIndex",
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "bar",
+            "required": false,
             "type": "String",
           },
           "index": "myIndex",
@@ -3136,8 +3258,14 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
               "index": "myIndex",
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "bar",
+              "required": false,
               "type": "String",
             },
           ],
@@ -3173,8 +3301,14 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
             "isName": true,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -3204,8 +3338,14 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
               "isName": true,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -3237,7 +3377,12 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
           "adminOnly": false,
           "entityTypes": [],
           "existingFieldSpec": {
+            "adminOnly": false,
+            "entityTypes": [],
+            "linkEntityTypes": [],
+            "list": false,
             "name": "richText",
+            "required": false,
             "richTextNodes": [
               "root",
               "paragraph",
@@ -3247,6 +3392,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
               "entity",
             ],
             "type": "RichText",
+            "valueTypes": [],
           },
           "existingRichTextNodesWithPlaceholders": [
             "root, paragraph, text",
@@ -3283,7 +3429,12 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "entityTypes": [],
+              "linkEntityTypes": [],
+              "list": false,
               "name": "richText",
+              "required": false,
               "richTextNodes": [
                 "root",
                 "paragraph",
@@ -3293,6 +3444,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
                 "entity",
               ],
               "type": "RichText",
+              "valueTypes": [],
             },
           ],
           "name": "TitleOnly",
@@ -3322,9 +3474,14 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "isName": false,
+            "list": false,
             "matchPattern": "a-pattern",
             "multiline": true,
             "name": "string",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -3360,9 +3517,14 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
+              "isName": false,
+              "list": false,
               "matchPattern": "a-pattern",
               "multiline": true,
               "name": "string",
+              "required": false,
               "type": "String",
             },
           ],
@@ -3404,7 +3566,14 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "adminOnly": false,
+              "index": null,
+              "isName": false,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
               "name": "title",
+              "required": false,
               "type": "String",
             },
           ],
@@ -3422,7 +3591,14 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "isName": false,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
             "name": "title",
+            "required": false,
             "type": "String",
           },
           "index": null,
@@ -3457,7 +3633,10 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "list": false,
             "name": "valueItem",
+            "required": false,
             "type": "ValueType",
             "valueTypes": [
               "ValueItem",
@@ -3489,7 +3668,10 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
           "authKeyPattern": null,
           "fields": [
             {
+              "adminOnly": false,
+              "list": false,
               "name": "valueItem",
+              "required": false,
               "type": "ValueType",
               "valueTypes": [
                 "ValueItem",
@@ -3506,7 +3688,10 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
           "adminOnly": false,
           "fields": [
             {
+              "adminOnly": false,
+              "list": false,
               "name": "valueItem",
+              "required": false,
               "type": "ValueType",
               "valueTypes": [
                 "ValueItem",
@@ -3527,7 +3712,10 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
         {
           "adminOnly": false,
           "existingFieldSpec": {
+            "adminOnly": false,
+            "list": false,
             "name": "valueItem",
+            "required": false,
             "type": "ValueType",
             "valueTypes": [
               "ValueItem",

@@ -7,7 +7,6 @@ import {
 } from './ItemUtils.js';
 import type {
   AdminEntityTypeSpecification,
-  AdminFieldSpecification,
   AdminSchema,
   AdminValueTypeSpecification,
   PublishedEntityTypeSpecification,
@@ -205,7 +204,7 @@ export function* traverseItemField<TSchema extends AdminSchema | PublishedSchema
 function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ItemValuePath,
-  fieldSpec: AdminFieldSpecification,
+  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   itemValue: unknown
 ): Generator<ItemTraverseNode<TSchema>> {
   if (Array.isArray(itemValue)) {
@@ -258,7 +257,7 @@ function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
 function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ItemValuePath,
-  fieldSpec: AdminFieldSpecification,
+  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   node: RichTextNode
 ): Generator<ItemTraverseNode<TSchema>> {
   if (typeof node !== 'object') {

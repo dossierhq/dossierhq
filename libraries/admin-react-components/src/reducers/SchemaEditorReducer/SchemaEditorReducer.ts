@@ -1,4 +1,5 @@
 import type {
+  AdminEntityTypeSpecification,
   AdminEntityTypeSpecificationUpdate,
   AdminFieldSpecification,
   AdminSchema,
@@ -985,49 +986,49 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
   convertType<TKind extends 'entity' | 'value'>(
     kind: TKind,
-    typeSpec: AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecification
+    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification
   ): SchemaTypeDraft & { kind: TKind } {
     return {
       kind,
       name: typeSpec.name,
       status: '',
-      adminOnly: !!typeSpec.adminOnly,
+      adminOnly: typeSpec.adminOnly,
       fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => {
         const fieldDraft: SchemaFieldDraft = {
           name: fieldSpec.name,
           status: '',
-          type: fieldSpec.type as FieldType,
-          list: !!fieldSpec.list,
-          required: !!fieldSpec.required,
-          adminOnly: !!fieldSpec.adminOnly,
+          type: fieldSpec.type,
+          list: fieldSpec.list,
+          required: fieldSpec.required,
+          adminOnly: fieldSpec.adminOnly,
           existingFieldSpec: fieldSpec,
         };
         if (fieldSpec.type === FieldType.String) {
-          fieldDraft.isName = !!fieldSpec.isName;
-          fieldDraft.multiline = !!fieldSpec.multiline;
-          fieldDraft.index = fieldSpec.index ?? null;
-          fieldDraft.matchPattern = fieldSpec.matchPattern ?? null;
+          fieldDraft.isName = fieldSpec.isName;
+          fieldDraft.multiline = fieldSpec.multiline;
+          fieldDraft.index = fieldSpec.index;
+          fieldDraft.matchPattern = fieldSpec.matchPattern;
         }
         if (fieldSpec.type === FieldType.RichText) {
           fieldDraft.richTextNodes = this.getRichTextNodesWithPlaceholders(fieldSpec.richTextNodes);
           fieldDraft.existingRichTextNodesWithPlaceholders = [...fieldDraft.richTextNodes];
         }
         if (fieldSpec.type === FieldType.EntityType || fieldSpec.type === FieldType.RichText) {
-          fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
+          fieldDraft.entityTypes = fieldSpec.entityTypes;
         }
         if (fieldSpec.type === FieldType.RichText) {
-          fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes ?? [];
+          fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes;
         }
         if (fieldSpec.type === FieldType.ValueType || fieldSpec.type === FieldType.RichText) {
-          fieldDraft.valueTypes = fieldSpec.valueTypes ?? [];
+          fieldDraft.valueTypes = fieldSpec.valueTypes;
         }
         return fieldDraft;
       }),
     };
   }
 
-  private getRichTextNodesWithPlaceholders(richTextNodes: string[] | undefined) {
-    let result = richTextNodes ?? [];
+  private getRichTextNodesWithPlaceholders(richTextNodes: string[]) {
+    let result = richTextNodes;
     if (result.length > 0) {
       const placeholders: string[] = [];
       result = result.filter((richTextNode) => {

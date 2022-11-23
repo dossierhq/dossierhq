@@ -9,7 +9,14 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -32,7 +39,10 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "list": false,
       "name": "twoStrings",
+      "required": false,
       "type": "ValueType",
       "valueTypes": [
         "TwoStrings",
@@ -53,8 +63,15 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -72,7 +89,13 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
   {
     "fieldSpec": {
       "adminOnly": true,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "adminOnlyString",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -95,7 +118,14 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -116,8 +146,14 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
       "list": true,
+      "matchPattern": null,
+      "multiline": false,
       "name": "stringList",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -131,8 +167,14 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
       "list": true,
+      "matchPattern": null,
+      "multiline": false,
       "name": "stringList",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -155,7 +197,10 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "list": false,
       "name": "twoStrings",
+      "required": false,
       "type": "ValueType",
       "valueTypes": [
         "TwoStrings",
@@ -189,7 +234,14 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string1",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -208,7 +260,14 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string2",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -227,8 +286,15 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -246,7 +312,13 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   {
     "fieldSpec": {
       "adminOnly": true,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "adminOnlyString",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -269,7 +341,14 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -292,7 +371,10 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "list": false,
       "name": "twoStrings",
+      "required": false,
       "type": "ValueType",
       "valueTypes": [
         "TwoStrings",
@@ -333,8 +415,15 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -366,8 +455,15 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "node": {
       "children": [
@@ -397,8 +493,15 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "node": {
       "data": {
@@ -434,7 +537,14 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string1",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -455,7 +565,14 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string2",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -477,7 +594,13 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   {
     "fieldSpec": {
       "adminOnly": true,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "adminOnlyString",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -500,7 +623,13 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
   },
   {
     "fieldSpec": {
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -523,7 +652,9 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
   },
   {
     "fieldSpec": {
+      "list": false,
       "name": "twoStrings",
+      "required": false,
       "type": "ValueType",
       "valueTypes": [
         "TwoStrings",
@@ -544,8 +675,14 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
   },
   {
     "fieldSpec": {
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -567,7 +704,14 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -588,8 +732,14 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
       "list": true,
+      "matchPattern": null,
+      "multiline": false,
       "name": "stringList",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -603,8 +753,14 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
       "list": true,
+      "matchPattern": null,
+      "multiline": false,
       "name": "stringList",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -623,7 +779,10 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "list": false,
       "name": "twoStrings",
+      "required": false,
       "type": "ValueType",
       "valueTypes": [
         "TwoStrings",
@@ -644,8 +803,15 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "entityTypes": [],
+      "linkEntityTypes": [],
+      "list": false,
       "name": "richText",
+      "required": false,
+      "richTextNodes": [],
       "type": "RichText",
+      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -663,7 +829,13 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   {
     "fieldSpec": {
       "adminOnly": true,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "adminOnlyString",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -693,7 +865,14 @@ exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string1",
+      "required": false,
       "type": "String",
     },
     "path": [
@@ -710,7 +889,14 @@ exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
   },
   {
     "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "isName": false,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
       "name": "string2",
+      "required": false,
       "type": "String",
     },
     "path": [

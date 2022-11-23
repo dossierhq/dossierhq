@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
 import { ErrorType } from './ErrorResult.js';
-import type { AdminFieldSpecification } from './Schema.js';
+import type {
+  AdminFieldSpecification,
+  BooleanFieldSpecification,
+  PublishedSchemaSpecification,
+} from './Schema.js';
 import { AdminSchema, FieldType, RichTextNodeType } from './Schema.js';
 
 describe('mergeWith()', () => {
@@ -138,9 +142,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                adminOnly: false,
+                required: false,
                 valueTypes: ['Value'],
                 entityTypes: ['Foo'],
                 linkEntityTypes: ['Foo'],
+                richTextNodes: [],
               },
             ],
           },
@@ -153,8 +161,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                adminOnly: false,
+                required: false,
                 valueTypes: ['Value'],
                 entityTypes: ['Foo'],
+                linkEntityTypes: [],
+                richTextNodes: [],
               },
             ],
           },
@@ -173,7 +186,15 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'bar', type: 'Invalid' as FieldType }],
+            fields: [
+              {
+                name: 'bar',
+                type: 'Invalid' as typeof FieldType.Boolean,
+                list: false,
+                adminOnly: false,
+                required: false,
+              },
+            ],
           },
         ],
         valueTypes: [],
@@ -222,7 +243,19 @@ describe('validate()', () => {
           {
             name: 'Foo',
             adminOnly: false,
-            fields: [{ name: 'type', type: FieldType.String }],
+            fields: [
+              {
+                name: 'type',
+                type: FieldType.String,
+                list: false,
+                multiline: false,
+                adminOnly: false,
+                required: false,
+                isName: false,
+                matchPattern: null,
+                index: null,
+              },
+            ],
           },
         ],
         patterns: [],
@@ -245,8 +278,11 @@ describe('validate()', () => {
               {
                 name: 'boolean',
                 type: FieldType.Boolean,
+                list: false,
+                adminOnly: false,
+                required: false,
                 multiline: true,
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
         ],
@@ -267,7 +303,16 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'bar', type: FieldType.EntityType, entityTypes: ['Invalid'] }],
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.EntityType,
+                list: false,
+                required: false,
+                adminOnly: false,
+                entityTypes: ['Invalid'],
+              },
+            ],
           },
         ],
         valueTypes: [],
@@ -287,7 +332,19 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'bar', type: FieldType.RichText, linkEntityTypes: ['Invalid'] }],
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                entityTypes: [],
+                linkEntityTypes: ['Invalid'],
+                valueTypes: [],
+                richTextNodes: [],
+              },
+            ],
           },
         ],
         valueTypes: [],
@@ -299,7 +356,7 @@ describe('validate()', () => {
     );
   });
 
-  test('Error: entityTypes specified on String field', () => {
+  test('Error: entityTypes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -310,9 +367,12 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.String,
+                type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
                 entityTypes: ['Bar'],
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
           { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
@@ -322,7 +382,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type String shouldn’t specify entityTypes'
+      'Foo.bar: Field with type Boolean shouldn’t specify entityTypes'
     );
   });
 
@@ -334,7 +394,16 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'bar', type: FieldType.ValueType, valueTypes: ['Invalid'] }],
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.ValueType,
+                list: false,
+                required: false,
+                adminOnly: false,
+                valueTypes: ['Invalid'],
+              },
+            ],
           },
         ],
         valueTypes: [],
@@ -346,7 +415,7 @@ describe('validate()', () => {
     );
   });
 
-  test('Error: linkEntityTypes specified on String field', () => {
+  test('Error: linkEntityTypes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -357,9 +426,12 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.String,
+                type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
                 linkEntityTypes: ['Bar'],
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
           { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
@@ -369,11 +441,11 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type String shouldn’t specify linkEntityTypes'
+      'Foo.bar: Field with type Boolean shouldn’t specify linkEntityTypes'
     );
   });
 
-  test('Error: valueTypes specified on String field', () => {
+  test('Error: valueTypes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -384,9 +456,12 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.String,
+                type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
                 valueTypes: ['Bar'],
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
           { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
@@ -396,11 +471,11 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type String shouldn’t specify valueTypes'
+      'Foo.bar: Field with type Boolean shouldn’t specify valueTypes'
     );
   });
 
-  test('Error: richTextNodes specified on String field', () => {
+  test('Error: richTextNodes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -411,9 +486,12 @@ describe('validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.String,
+                type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [RichTextNodeType.paragraph],
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
         ],
@@ -422,7 +500,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type String shouldn’t specify richTextNodes'
+      'Foo.bar: Field with type Boolean shouldn’t specify richTextNodes'
     );
   });
 
@@ -438,7 +516,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [RichTextNodeType.paragraph, RichTextNodeType.paragraph],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -464,7 +548,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [RichTextNodeType.entity],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -490,7 +580,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [RichTextNodeType.root, RichTextNodeType.text],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -516,7 +612,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -542,12 +644,18 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
                   RichTextNodeType.list,
                 ],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -573,12 +681,18 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
                   RichTextNodeType.listitem,
                 ],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -604,12 +718,17 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
                 entityTypes: ['Foo'],
                 richTextNodes: [
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
                 ],
+                linkEntityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -636,11 +755,16 @@ describe('validate()', () => {
                 name: 'bar',
                 type: FieldType.RichText,
                 linkEntityTypes: ['Foo'],
+                list: false,
+                required: false,
+                adminOnly: false,
                 richTextNodes: [
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
                 ],
+                entityTypes: [],
+                valueTypes: [],
               },
             ],
           },
@@ -666,6 +790,11 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                entityTypes: [],
+                linkEntityTypes: [],
                 valueTypes: ['Bar'],
                 richTextNodes: [
                   RichTextNodeType.root,
@@ -697,6 +826,9 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.EntityType,
+                list: false,
+                required: false,
+                adminOnly: false,
                 entityTypes: ['Bar'],
               },
             ],
@@ -729,7 +861,13 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                entityTypes: [],
+                valueTypes: [],
                 linkEntityTypes: ['Bar'],
+                richTextNodes: [],
               },
             ],
           },
@@ -761,6 +899,9 @@ describe('validate()', () => {
               {
                 name: 'bar',
                 type: FieldType.ValueType,
+                list: false,
+                required: false,
+                adminOnly: false,
                 valueTypes: ['Bar'],
               },
             ],
@@ -791,8 +932,11 @@ describe('validate()', () => {
               {
                 name: 'boolean',
                 type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
                 matchPattern: 'foo',
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
         ],
@@ -813,7 +957,19 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'string', type: FieldType.String, matchPattern: 'foo' }],
+            fields: [
+              {
+                name: 'string',
+                type: FieldType.String,
+                list: false,
+                required: false,
+                isName: false,
+                multiline: false,
+                adminOnly: false,
+                index: null,
+                matchPattern: 'foo',
+              },
+            ],
           },
         ],
         valueTypes: [],
@@ -879,8 +1035,11 @@ describe('validate()', () => {
               {
                 name: 'boolean',
                 type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
                 index: 'anIndex',
-              } as AdminFieldSpecification,
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
         ],
@@ -901,7 +1060,19 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
-            fields: [{ name: 'string', type: FieldType.String, index: 'foo' }],
+            fields: [
+              {
+                name: 'string',
+                type: FieldType.String,
+                list: false,
+                required: false,
+                isName: false,
+                multiline: false,
+                adminOnly: false,
+                matchPattern: null,
+                index: 'foo',
+              },
+            ],
           },
         ],
         valueTypes: [],
@@ -966,11 +1137,31 @@ describe('AdminSchema.toPublishedSchema()', () => {
       })
         .valueOrThrow()
         .toPublishedSchema().spec
-    ).toEqual({
+    ).toEqual<PublishedSchemaSpecification>({
       entityTypes: [
-        { name: 'Foo', authKeyPattern: null, fields: [{ name: 'field1', type: FieldType.String }] },
+        {
+          name: 'Foo',
+          authKeyPattern: null,
+          fields: [
+            {
+              name: 'field1',
+              type: FieldType.String,
+              list: false,
+              required: false,
+              isName: false,
+              multiline: false,
+              index: null,
+              matchPattern: null,
+            },
+          ],
+        },
       ],
-      valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
+      valueTypes: [
+        {
+          name: 'Bar',
+          fields: [{ name: 'field1', type: FieldType.Location, list: false, required: false }],
+        },
+      ],
       patterns: [],
       indexes: [],
     });
@@ -989,12 +1180,23 @@ describe('AdminSchema.toPublishedSchema()', () => {
       })
         .valueOrThrow()
         .toPublishedSchema().spec
-    ).toEqual({
+    ).toEqual<PublishedSchemaSpecification>({
       entityTypes: [
         {
           name: 'Foo',
           authKeyPattern: null,
-          fields: [{ name: 'field1', type: FieldType.String, matchPattern: 'a-pattern' }],
+          fields: [
+            {
+              name: 'field1',
+              type: FieldType.String,
+              list: false,
+              isName: false,
+              required: false,
+              multiline: false,
+              index: null,
+              matchPattern: 'a-pattern',
+            },
+          ],
         },
       ],
       valueTypes: [],
@@ -1016,12 +1218,23 @@ describe('AdminSchema.toPublishedSchema()', () => {
       })
         .valueOrThrow()
         .toPublishedSchema().spec
-    ).toEqual({
+    ).toEqual<PublishedSchemaSpecification>({
       entityTypes: [
         {
           name: 'Foo',
           authKeyPattern: null,
-          fields: [{ name: 'field1', type: FieldType.String, index: 'anIndex' }],
+          fields: [
+            {
+              name: 'field1',
+              type: FieldType.String,
+              list: false,
+              required: false,
+              isName: false,
+              multiline: false,
+              index: 'anIndex',
+              matchPattern: null,
+            },
+          ],
         },
       ],
       valueTypes: [],

@@ -6,8 +6,7 @@ import type {
   RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
 } from '@jonasb/datadata-admin-react-components';
-import type { ValueItemFieldSpecification } from '@jonasb/datadata-core';
-import { isValueTypeField } from '@jonasb/datadata-core';
+import { FieldType, isValueTypeField } from '@jonasb/datadata-core';
 import {
   CloudinaryImageFieldDisplay,
   CloudinaryImageFieldEditor,
@@ -21,10 +20,15 @@ export class ContextAdapter
 {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
-    if (isValueTypeField(fieldSpec, value) && value && isAdminCloudinaryImage(value)) {
+    if (
+      fieldSpec.type === FieldType.ValueType &&
+      isValueTypeField(fieldSpec, value) &&
+      value &&
+      isAdminCloudinaryImage(value)
+    ) {
       return CloudinaryImageFieldEditor({
         ...props,
-        fieldSpec: fieldSpec as ValueItemFieldSpecification,
+        fieldSpec,
         value,
       });
     }

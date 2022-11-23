@@ -1,3 +1,4 @@
+import { assertExhaustive } from './Asserts.js';
 import type { ErrorType, Result } from './ErrorResult.js';
 import { notOk, ok } from './ErrorResult.js';
 import type { EntityReference, Location, RichText, ValueItem } from './Types.js';
@@ -19,13 +20,13 @@ export interface AdminEntityTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
   authKeyPattern?: string | null;
-  fields: AdminFieldSpecification[];
+  fields: AdminFieldSpecificationUpdate[];
 }
 
 export interface AdminValueTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
-  fields: AdminFieldSpecification[];
+  fields: AdminFieldSpecificationUpdate[];
 }
 
 export interface PublishedEntityTypeSpecification {
@@ -66,8 +67,8 @@ export type RichTextNodeType = typeof RichTextNodeType[keyof typeof RichTextNode
 
 interface SharedFieldSpecification {
   name: string;
-  list?: boolean;
-  required?: boolean;
+  list: boolean;
+  required: boolean;
 }
 
 export interface BooleanFieldSpecification extends SharedFieldSpecification {
@@ -76,7 +77,7 @@ export interface BooleanFieldSpecification extends SharedFieldSpecification {
 
 export interface EntityFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.EntityType;
-  entityTypes?: string[];
+  entityTypes: string[];
 }
 
 export interface LocationFieldSpecification extends SharedFieldSpecification {
@@ -85,28 +86,28 @@ export interface LocationFieldSpecification extends SharedFieldSpecification {
 
 export interface RichTextFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.RichText;
-  entityTypes?: string[];
-  linkEntityTypes?: string[];
-  valueTypes?: string[];
+  entityTypes: string[];
+  linkEntityTypes: string[];
+  valueTypes: string[];
   /** All node types are enabled if none are specified.
    *
    * The type can either be a standard RichTextNodeType or any type that's supported by the
    * application.
    */
-  richTextNodes?: (RichTextNodeType | string)[];
+  richTextNodes: (RichTextNodeType | string)[];
 }
 
 export interface StringFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.String;
-  isName?: boolean;
-  multiline?: boolean;
-  matchPattern?: string | null;
-  index?: string | null;
+  isName: boolean;
+  multiline: boolean;
+  matchPattern: string | null;
+  index: string | null;
 }
 
 export interface ValueItemFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.ValueType;
-  valueTypes?: string[];
+  valueTypes: string[];
 }
 
 export type FieldSpecification =
@@ -119,8 +120,43 @@ export type FieldSpecification =
 
 export type AdminFieldSpecification<TFieldSpec extends FieldSpecification = FieldSpecification> =
   TFieldSpec & {
-    adminOnly?: boolean;
+    adminOnly: boolean;
   };
+
+type PartialExcept<T, K extends keyof T> = Pick<T, K> & Partial<Omit<T, K>>;
+
+type AdminBooleanFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<BooleanFieldSpecification>,
+  'name' | 'type'
+>;
+type AdminEntityFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<EntityFieldSpecification>,
+  'name' | 'type'
+>;
+type AdminLocationFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<LocationFieldSpecification>,
+  'name' | 'type'
+>;
+type AdminRichTextFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<RichTextFieldSpecification>,
+  'name' | 'type'
+>;
+type AdminStringFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<StringFieldSpecification>,
+  'name' | 'type'
+>;
+type AdminValueItemFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<ValueItemFieldSpecification>,
+  'name' | 'type'
+>;
+
+export type AdminFieldSpecificationUpdate =
+  | AdminBooleanFieldSpecificationUpdate
+  | AdminEntityFieldSpecificationUpdate
+  | AdminLocationFieldSpecificationUpdate
+  | AdminRichTextFieldSpecificationUpdate
+  | AdminStringFieldSpecificationUpdate
+  | AdminValueItemFieldSpecificationUpdate;
 
 export type PublishedFieldSpecification = FieldSpecification;
 
@@ -528,7 +564,7 @@ export class AdminSchema {
           name: entitySpecUpdate.name,
           adminOnly: entitySpecUpdate.adminOnly ?? false,
           authKeyPattern: entitySpecUpdate.authKeyPattern ?? null,
-          fields: entitySpecUpdate.fields,
+          fields: entitySpecUpdate.fields.map(normalizeFieldSpecUpdate),
         };
         const existingIndex = schemaSpec.entityTypes.findIndex(
           (it) => it.name === entitySpecUpdate.name
@@ -548,7 +584,7 @@ export class AdminSchema {
         const valueSpec = {
           name: valueSpecUpdate.name,
           adminOnly: valueSpecUpdate.adminOnly ?? false,
-          fields: valueSpecUpdate.fields,
+          fields: valueSpecUpdate.fields.map(normalizeFieldSpecUpdate),
         };
         const existingIndex = schemaSpec.valueTypes.findIndex((it) => it.name === valueSpec.name);
         if (existingIndex >= 0) {
@@ -672,6 +708,51 @@ export class AdminSchema {
     }
 
     return new PublishedSchema(spec);
+  }
+}
+
+function normalizeFieldSpecUpdate(
+  fieldSpec: AdminFieldSpecificationUpdate
+): AdminFieldSpecification {
+  const { name, type } = fieldSpec;
+  const list = fieldSpec.list ?? false;
+  const required = fieldSpec.required ?? false;
+  const adminOnly = fieldSpec.adminOnly ?? false;
+  switch (type) {
+    case FieldType.Boolean:
+      return { name, type, list, required, adminOnly };
+    case FieldType.EntityType:
+      return { name, type, list, required, adminOnly, entityTypes: fieldSpec.entityTypes ?? [] };
+    case FieldType.Location:
+      return { name, type, list, required, adminOnly };
+    case FieldType.RichText:
+      return {
+        name,
+        type,
+        list,
+        required,
+        adminOnly,
+        richTextNodes: fieldSpec.richTextNodes ?? [],
+        entityTypes: fieldSpec.entityTypes ?? [],
+        linkEntityTypes: fieldSpec.linkEntityTypes ?? [],
+        valueTypes: fieldSpec.valueTypes ?? [],
+      };
+    case FieldType.String:
+      return {
+        name,
+        type,
+        list,
+        required,
+        adminOnly,
+        isName: fieldSpec.isName ?? false,
+        multiline: fieldSpec.multiline ?? false,
+        matchPattern: fieldSpec.matchPattern ?? null,
+        index: fieldSpec.index ?? null,
+      };
+    case FieldType.ValueType:
+      return { name, type, list, required, adminOnly, valueTypes: fieldSpec.valueTypes ?? [] };
+    default:
+      assertExhaustive(type);
   }
 }
 

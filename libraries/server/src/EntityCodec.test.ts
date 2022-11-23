@@ -287,7 +287,7 @@ describe('collectDataFromEntity', () => {
             ],
           },
           {
-            "entityTypes": undefined,
+            "entityTypes": [],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
             "prefix": "entity.fields.reference",
@@ -351,7 +351,7 @@ describe('collectDataFromEntity', () => {
               "EntityCodecBar",
             ],
             "isRichTextLink": false,
-            "linkEntityTypes": undefined,
+            "linkEntityTypes": [],
             "prefix": "entity.fields.richText[0]",
             "uuids": [
               "barId1",
@@ -362,7 +362,7 @@ describe('collectDataFromEntity', () => {
               "EntityCodecBar",
             ],
             "isRichTextLink": true,
-            "linkEntityTypes": undefined,
+            "linkEntityTypes": [],
             "prefix": "entity.fields.richText[1]",
             "uuids": [
               "barId2",
