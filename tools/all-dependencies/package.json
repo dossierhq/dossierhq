@@ -92,6 +92,6 @@
     "vitest": "0.25.3"
   },
   "dependencies": {
-    "@microsoft/rush-lib": "~5.83.4"
+    "@microsoft/rush-lib": "~5.85.0"
   }
 }
