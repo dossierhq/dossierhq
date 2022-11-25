@@ -32,7 +32,7 @@ importers:
       sqlite3: ~5.1.1
       swr: ~1.3.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
       '@jonasb/datadata-core': link:../../libraries/core
@@ -60,7 +60,7 @@ importers:
       eslint-config-next: 13.0.1_e3uo4sehh4zr4i6m57mkkxxv7y
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../apps/playground:
     specifiers:
@@ -323,7 +323,7 @@ importers:
       sqlite3: ~5.1.1
       swr: ~1.3.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
       '@jonasb/datadata-core': link:../../libraries/core
@@ -350,7 +350,7 @@ importers:
       eslint-config-next: 13.0.1_e3uo4sehh4zr4i6m57mkkxxv7y
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/admin-react-components:
     specifiers:
@@ -396,7 +396,7 @@ importers:
       tslib: ~2.4.0
       typescript: ~4.9.3
       uuid: ~9.0.0
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
@@ -441,7 +441,7 @@ importers:
       prettier: 2.8.0
       typescript: 4.9.3
       uuid: 9.0.0
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/benchpress:
     specifiers:
@@ -473,7 +473,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       tslib: 2.4.0
     devDependencies:
@@ -483,7 +483,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/core-vitest:
     specifiers:
@@ -495,7 +495,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       tslib: 2.4.0
@@ -506,7 +506,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter:
     specifiers:
@@ -518,7 +518,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       tslib: 2.4.0
@@ -529,7 +529,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter-postgres-core:
     specifiers:
@@ -543,7 +543,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
@@ -556,7 +556,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter-postgres-deno:
     specifiers:
@@ -595,7 +595,7 @@ importers:
       tslib: ~2.4.0
       typescript: ~4.9.3
       uuid: ~9.0.0
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
@@ -617,7 +617,7 @@ importers:
       prettier: 2.8.0
       typescript: 4.9.3
       uuid: 9.0.0
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter-sqlite-bun:
     specifiers:
@@ -660,7 +660,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
@@ -673,7 +673,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter-sqlite-sqlite3:
     specifiers:
@@ -691,7 +691,7 @@ importers:
       sqlite3: ~5.1.1
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-database-adapter-sqlite-core': link:../database-adapter-sqlite-core
       tslib: 2.4.0
@@ -708,7 +708,7 @@ importers:
       prettier: 2.8.0
       sqlite3: 5.1.1
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter-sqlite-sqljs:
     specifiers:
@@ -728,7 +728,7 @@ importers:
       sql.js: ~1.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-database-adapter-sqlite-core': link:../database-adapter-sqlite-core
       tslib: 2.4.0
@@ -747,7 +747,7 @@ importers:
       prettier: 2.8.0
       sql.js: 1.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/database-adapter-test-integration:
     specifiers:
@@ -867,7 +867,7 @@ importers:
       tslib: ~2.4.0
       typescript: ~4.9.3
       uuid: ~9.0.0
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       graphql: 16.6.0
@@ -886,7 +886,7 @@ importers:
       sqlite3: 5.1.1
       typescript: 4.9.3
       uuid: 9.0.0
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/leaflet:
     specifiers:
@@ -945,7 +945,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter': link:../database-adapter
@@ -958,7 +958,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../libraries/typescript-generator:
     specifiers:
@@ -970,7 +970,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@jonasb/datadata-core': link:../core
       tslib: 2.4.0
@@ -981,7 +981,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../rigs/heft-node-rig:
     specifiers:
@@ -1025,7 +1025,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       tslib: 2.4.0
     devDependencies:
@@ -1035,7 +1035,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../templates/library-esm-only:
     specifiers:
@@ -1046,7 +1046,7 @@ importers:
       prettier: 2.8.0
       tslib: ~2.4.0
       typescript: ~4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       tslib: 2.4.0
     devDependencies:
@@ -1056,7 +1056,7 @@ importers:
       eslint: 8.27.0
       prettier: 2.8.0
       typescript: 4.9.3
-      vitest: 0.25.2
+      vitest: 0.25.3
 
   ../../templates/tool:
     specifiers:
@@ -1160,7 +1160,7 @@ importers:
       typescript: ~4.9.3
       uuid: ~9.0.0
       vite: ~3.2.2
-      vitest: 0.25.2
+      vitest: 0.25.3
     dependencies:
       '@microsoft/rush-lib': 5.83.4
     optionalDependencies:
@@ -1244,7 +1244,7 @@ importers:
       typescript: 4.9.3
       uuid: 9.0.0
       vite: 3.2.2_sass@1.56.0
-      vitest: 0.25.2_sass@1.56.0
+      vitest: 0.25.3_sass@1.56.0
 
   ../../tools/generic-tools:
     specifiers:
@@ -16443,8 +16443,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.25.2:
-    resolution: {integrity: sha512-qqkzfzglEFbQY7IGkgSJkdOhoqHjwAao/OrphnHboeYHC5JzsVFoLCaB2lnAy8krhj7sbrFTVRApzpkTOeuDWQ==}
+  /vitest/0.25.3:
+    resolution: {integrity: sha512-/UzHfXIKsELZhL7OaM2xFlRF8HRZgAHtPctacvNK8H4vOcbJJAMEgbWNGSAK7Y9b1NBe5SeM7VTuz2RsTHFJJA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -16488,8 +16488,8 @@ packages:
       - terser
     dev: true
 
-  /vitest/0.25.2_sass@1.56.0:
-    resolution: {integrity: sha512-qqkzfzglEFbQY7IGkgSJkdOhoqHjwAao/OrphnHboeYHC5JzsVFoLCaB2lnAy8krhj7sbrFTVRApzpkTOeuDWQ==}
+  /vitest/0.25.3_sass@1.56.0:
+    resolution: {integrity: sha512-/UzHfXIKsELZhL7OaM2xFlRF8HRZgAHtPctacvNK8H4vOcbJJAMEgbWNGSAK7Y9b1NBe5SeM7VTuz2RsTHFJJA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
