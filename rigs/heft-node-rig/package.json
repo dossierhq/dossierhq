@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "typescript": "~4.9.3",
-    "eslint": "~8.27.0"
+    "eslint": "~8.28.0"
   },
   "devDependencies": {
     "@rushstack/heft": "0.48.8"
