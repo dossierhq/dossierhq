@@ -37,6 +37,13 @@
         }
       },
       {
+        "type": "ArticleTocItem",
+        "article": {
+          "id": "e20ac669-98d9-4cef-9144-ca3b7bb7fec6"
+        },
+        "title": "Auth key"
+      },
+      {
         "type": "TocItem",
         "title": "Development",
         "items": [
