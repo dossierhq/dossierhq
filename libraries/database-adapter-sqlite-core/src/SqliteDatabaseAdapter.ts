@@ -53,7 +53,7 @@ import { publishedEntitySearchTotalCount } from './published-entity/getTotalCoun
 import { publishedEntitySampleEntities } from './published-entity/sampleEntities.js';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
 import type { Database } from './QueryFunctions.js';
-import { queryOne } from './QueryFunctions.js';
+import { queryOne, queryRun } from './QueryFunctions.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
@@ -66,6 +66,8 @@ export type ColumnValue = number | string | Uint8Array | null;
 // For https://www.sqlite.org/stricttables.html
 const minimumSupportedVersion = { major: 3, minor: 37, patch: 0 };
 
+const supportedJournalModes = ['wal', 'delete', 'memory'] as const;
+
 export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
   query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]>;
@@ -77,9 +79,10 @@ export interface SqliteDatabaseAdapter {
   randomUUID(): string;
 }
 
-export type SqliteDatabaseOptions =
+export type SqliteDatabaseOptions = (
   | { migrate: false }
-  | ({ migrate: true } & SqliteDatabaseMigrationOptions);
+  | ({ migrate: true } & SqliteDatabaseMigrationOptions)
+) & { journalMode?: typeof supportedJournalModes[number] };
 
 export interface SqliteDatabaseMigrationOptions {
   fts: {
@@ -88,7 +91,6 @@ export interface SqliteDatabaseMigrationOptions {
      * https://www.sqlite.org/fts3.html#tokenizer or https://www.sqlite.org/fts5.html#tokenizers*/
     tokenizer?: string;
   };
-  journalMode: 'wal' | 'delete' | 'memory';
 }
 
 export async function createSqliteDatabaseAdapterAdapter(
@@ -116,7 +118,28 @@ export async function createSqliteDatabaseAdapterAdapter(
     if (migrationResult.isError()) return migrationResult;
   }
 
+  if (options.journalMode) {
+    const journalModeResult = await setJournalMode(
+      database,
+      initializationContext,
+      options.journalMode
+    );
+    if (journalModeResult.isError()) return journalModeResult;
+  }
+
   return ok(outerAdapter);
+}
+
+async function setJournalMode(
+  database: Database,
+  context: TransactionContext,
+  journalMode: typeof supportedJournalModes[number]
+): PromiseResult<void, typeof ErrorType.Generic> {
+  if (!supportedJournalModes.includes(journalMode)) {
+    return notOk.Generic(`Unsupported journal mode (${journalMode})`);
+  }
+  // journalMode is safe to use here because we check it above
+  return await queryRun(database, context, `PRAGMA journal_mode = ${journalMode}`, undefined);
 }
 
 function createOuterAdapter(database: Database): DatabaseAdapter {

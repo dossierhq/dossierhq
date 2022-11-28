@@ -13,7 +13,6 @@ type SchemaVersionDefinition =
 
 const VERSION_1: SchemaVersionDefinition[] = [
   'PRAGMA foreign_keys=TRUE',
-  (options) => `PRAGMA journal_mode=${options.journalMode}`,
   `CREATE TABLE subjects (
     id INTEGER PRIMARY KEY,
     uuid TEXT NOT NULL,
