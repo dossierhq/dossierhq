@@ -1,6 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { AdminSchema, NoOpLogger, ok } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
@@ -8,6 +7,7 @@ import {
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { Database } from 'sqlite3';
+import type { Sqlite3DatabaseAdapter } from '../../Sqlite3Adapter.js';
 import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';
 import { createDatabase } from '../../SqliteUtils.js';
 
@@ -47,7 +47,7 @@ export async function initializeSqlite3Server(
 async function createSqlite3TestAdapter(
   filename: string | ':memory:',
   mode?: number
-): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<Sqlite3DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const context = { logger: NoOpLogger };
   const databaseResult = await createDatabase(context, Database, {
     filename,

@@ -534,7 +534,6 @@ importers:
   ../../libraries/database-adapter-better-sqlite3:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
@@ -553,7 +552,6 @@ importers:
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
@@ -657,7 +655,6 @@ importers:
   ../../libraries/database-adapter-sqlite-bun:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
@@ -672,7 +669,6 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-core': link:../database-adapter-sqlite-core
     devDependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
@@ -713,7 +709,6 @@ importers:
   ../../libraries/database-adapter-sqlite-sqlite3:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
@@ -732,7 +727,6 @@ importers:
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
@@ -748,7 +742,6 @@ importers:
   ../../libraries/database-adapter-sqlite-sqljs:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
@@ -769,7 +762,6 @@ importers:
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter': link:../database-adapter
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server

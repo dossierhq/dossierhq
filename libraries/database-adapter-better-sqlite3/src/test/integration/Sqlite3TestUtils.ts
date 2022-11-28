@@ -1,6 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { AdminSchema, NoOpLogger, ok } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
@@ -8,6 +7,7 @@ import {
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import Database from 'better-sqlite3';
+import type { BetterSqlite3DatabaseAdapter } from '../../BetterSqlite3Adapter.js';
 import { createBetterSqlite3Adapter } from '../../BetterSqlite3Adapter.js';
 
 export interface ServerInit {
@@ -46,7 +46,10 @@ export async function initializeSqlite3Server(
 async function createSqlite3TestAdapter(
   filename: string | ':memory:',
   options?: Database.Options
-): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<
+  BetterSqlite3DatabaseAdapter,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const context = { logger: NoOpLogger };
   const database = new Database(filename, options);
   database.pragma('journal_mode = WAL');

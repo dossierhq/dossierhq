@@ -1,7 +1,8 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type {
   ColumnValue,
+  Context,
+  DatabaseAdapter,
   SqliteDatabaseAdapter,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';

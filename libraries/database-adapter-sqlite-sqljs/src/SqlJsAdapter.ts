@@ -1,17 +1,20 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type {
   ColumnValue,
+  Context,
+  DatabaseAdapter,
   SqliteDatabaseAdapter,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
 import type { Database } from 'sql.js';
 
+export type SqlJsDatabaseAdapter = DatabaseAdapter;
+
 export async function createSqlJsAdapter(
   context: Context,
   database: Database
-): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<SqlJsDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
       database.close();

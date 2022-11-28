@@ -23,7 +23,6 @@
   "license": "ISC",
   "devDependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",

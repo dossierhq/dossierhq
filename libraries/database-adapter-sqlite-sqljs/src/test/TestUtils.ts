@@ -1,15 +1,15 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import * as base64 from 'base-64';
 import { randomUUID } from 'node:crypto';
 import * as SqlJs from 'sql.js';
 import { test } from 'vitest';
+import type { SqlJsDatabaseAdapter } from '../SqlJsAdapter.js';
 import { createSqlJsAdapter } from '../SqlJsAdapter.js';
 
 export async function createSqlJsTestAdapter(): PromiseResult<
-  DatabaseAdapter,
+  SqlJsDatabaseAdapter,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const SQL = await SqlJs.default();
