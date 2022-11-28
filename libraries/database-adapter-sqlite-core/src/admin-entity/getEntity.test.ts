@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest';
 import {
   createMockContext,
   createMockInnerAndOuterAdapter,
-  getQueryCalls,
+  getRunAndQueryCalls,
 } from '../test/TestUtils.js';
 
 describe('adminGetEntity', () => {
@@ -13,8 +13,8 @@ describe('adminGetEntity', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (query, _values) => {
       if (query.startsWith('SELECT e.uuid'))
         return [
           {
@@ -31,7 +31,7 @@ describe('adminGetEntity', () => {
           },
         ];
       return [];
-    });
+    };
 
     const result = await outerAdapter.adminEntityGetOne(context, { id: '123' });
 
@@ -47,7 +47,7 @@ describe('adminGetEntity', () => {
       updatedAt: now,
       fieldValues: { title: 'Title' },
     });
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields FROM entities e, entity_versions ev WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id",
@@ -62,8 +62,8 @@ describe('adminGetEntity', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (query, _values) => {
       if (query.startsWith('SELECT e.uuid'))
         return [
           {
@@ -80,7 +80,7 @@ describe('adminGetEntity', () => {
           },
         ];
       return [];
-    });
+    };
 
     const result = await outerAdapter.adminEntityGetOne(context, { id: '123', version: 5 });
 
@@ -96,7 +96,7 @@ describe('adminGetEntity', () => {
       updatedAt: now,
       fieldValues: { title: 'Title' },
     });
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields

@@ -8,7 +8,7 @@ import {
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone, queryOne } from '../QueryFunctions.js';
+import { queryOne, queryRun } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
@@ -35,7 +35,7 @@ export async function adminCreateEntity(
 
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 
-  const ftsResult = await queryNone(
+  const ftsResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(
@@ -63,7 +63,7 @@ export async function adminCreateEntity(
   }
   const { id: versionsId } = createEntityVersionResult.value;
 
-  const updateLatestDraftIdResult = await queryNone(database, context, {
+  const updateLatestDraftIdResult = await queryRun(database, context, {
     text: 'UPDATE entities SET latest_entity_versions_id = ?1 WHERE id = ?2',
     values: [versionsId, entityId],
   });

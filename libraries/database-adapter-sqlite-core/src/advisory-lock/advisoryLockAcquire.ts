@@ -4,7 +4,7 @@ import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { AdvisoryLocksUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone } from '../QueryFunctions.js';
+import { queryRun } from '../QueryFunctions.js';
 
 export async function advisoryLockAcquire(
   database: Database,
@@ -22,7 +22,7 @@ export async function advisoryLockAcquire(
         VALUES (${name}, ${handle}, ${nowValue}, ${nowValue}, ${expires_at}, ${leaseDuration})`;
   });
 
-  const result = await queryNone(database, context, query, (error) => {
+  const result = await queryRun(database, context, query, (error) => {
     if (database.adapter.isUniqueViolationOfConstraint(error, AdvisoryLocksUniqueNameConstraint)) {
       return notOk.Conflict(`Lock with name '${name}' already exists`);
     }

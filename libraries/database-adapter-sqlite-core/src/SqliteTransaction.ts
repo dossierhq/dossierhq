@@ -2,7 +2,7 @@ import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk } from '@jonasb/datadata-core';
 import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { Database } from './QueryFunctions.js';
-import { queryNone } from './QueryFunctions.js';
+import { queryRun } from './QueryFunctions.js';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
 export interface SqliteTransaction extends Transaction {
@@ -29,7 +29,7 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
   return await database.mutex.withLock<TOk, TError | typeof ErrorType.Generic>(
     childContext,
     async () => {
-      const beginResult = await queryNone(database, childContext, 'BEGIN');
+      const beginResult = await queryRun(database, childContext, 'BEGIN');
       if (beginResult.isError()) return beginResult;
 
       let result: Result<TOk, TError | typeof ErrorType.Generic>;
@@ -39,7 +39,7 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
         result = notOk.GenericUnexpectedException(childContext, error);
       }
 
-      const commitOrRollbackResult = await queryNone(
+      const commitOrRollbackResult = await queryRun(
         database,
         childContext,
         result.isOk() ? 'COMMIT' : 'ROLLBACK'
@@ -59,7 +59,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   const sqliteTransaction = transaction as SqliteTransaction;
   const savePointName = `nested${sqliteTransaction.savePointCount++}`;
-  const savePointResult = await queryNone(database, context, `SAVEPOINT ${savePointName}`);
+  const savePointResult = await queryRun(database, context, `SAVEPOINT ${savePointName}`);
   if (savePointResult.isError()) return savePointResult;
 
   let result: Result<TOk, TError | typeof ErrorType.Generic>;
@@ -69,7 +69,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
     result = notOk.GenericUnexpectedException(context, error);
   }
 
-  const releaseOrRollbackResult = await queryNone(
+  const releaseOrRollbackResult = await queryRun(
     database,
     context,
     result.isOk() ? `RELEASE ${savePointName}` : `ROLLBACK TO ${savePointName}`

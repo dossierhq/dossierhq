@@ -5,7 +5,7 @@ import {
   createMockContext,
   createMockInnerAndOuterAdapter,
   createTestAdminSchema,
-  getQueryCalls,
+  getRunAndQueryCalls,
   resolvePaging,
 } from '../test/TestUtils.js';
 
@@ -26,8 +26,7 @@ describe('publishedEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => []);
+    innerAdapter.clearAllQueries();
     const result = await outerAdapter.publishedEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -36,7 +35,7 @@ describe('publishedEntitySearchEntities', () => {
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expectResultValue(result, { entities: [], hasMore: false });
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2",
@@ -51,8 +50,8 @@ describe('publishedEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(1)]);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(1)];
     const result = await outerAdapter.publishedEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -80,7 +79,7 @@ describe('publishedEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2",
@@ -95,8 +94,8 @@ describe('publishedEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(2)];
     const result = await outerAdapter.publishedEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -124,7 +123,7 @@ describe('publishedEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3",
@@ -140,8 +139,8 @@ describe('publishedEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(2)];
     const result = await outerAdapter.publishedEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -169,7 +168,7 @@ describe('publishedEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3",

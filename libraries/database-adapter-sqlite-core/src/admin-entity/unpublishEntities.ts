@@ -14,7 +14,7 @@ import type {
 import { buildSqliteSqlQuery, createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryMany, queryNone } from '../QueryFunctions.js';
+import { queryMany, queryRun } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
@@ -83,7 +83,7 @@ export async function adminEntityUnpublishEntities(
   );
   if (result.isError()) return result;
 
-  const removeReferencesIndexResult = await queryNone(
+  const removeReferencesIndexResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
@@ -94,7 +94,7 @@ export async function adminEntityUnpublishEntities(
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
 
-  const removeLocationsIndexResult = await queryNone(
+  const removeLocationsIndexResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
@@ -105,7 +105,7 @@ export async function adminEntityUnpublishEntities(
   );
   if (removeLocationsIndexResult.isError()) return removeLocationsIndexResult;
 
-  const ftsResult = await queryNone(
+  const ftsResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
@@ -133,7 +133,7 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid
        FROM entity_published_references epr, entities e
-       WHERE epr.to_entities_id = $1
+       WHERE epr.to_entities_id = ?1
          AND epr.from_entities_id = e.id`,
     values: [reference.entityInternalId as number],
   });

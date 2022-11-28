@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 import {
   createMockContext,
   createMockInnerAndOuterAdapter,
-  getQueryCalls,
+  getRunAndQueryCalls,
 } from '../test/TestUtils.js';
 
 describe('authCreateSession', () => {
@@ -11,11 +11,11 @@ describe('authCreateSession', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (query, _values) => {
       if (query.startsWith('INSERT INTO subjects')) return [{ id: 123 }];
       return [];
-    });
+    };
 
     const result = await outerAdapter.authCreateSession(context, 'test', 'hello');
     if (expectOkResult(result)) {
@@ -27,7 +27,7 @@ describe('authCreateSession', () => {
         session: { subjectId },
       });
 
-      expect(getQueryCalls(innerAdapter)).toEqual([
+      expect(getRunAndQueryCalls(innerAdapter)).toEqual([
         [
           `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id`,
@@ -55,11 +55,11 @@ describe('authCreateSession', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (query, _values) => {
       if (query.startsWith('SELECT s.id, s.uuid FROM')) return [{ id: 123 }];
       return [];
-    });
+    };
 
     const result = await outerAdapter.authCreateSession(context, 'test', 'hello');
     if (expectOkResult(result)) {
@@ -71,7 +71,7 @@ describe('authCreateSession', () => {
         session: { subjectId },
       });
 
-      expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+      expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
         [
           [
             "SELECT s.id, s.uuid FROM subjects s, principals p

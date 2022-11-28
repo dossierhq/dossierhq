@@ -8,7 +8,7 @@ import type {
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { randomUUID } from 'node:crypto';
 import type { Database } from 'sqlite3';
-import { closeDatabase, queryAll } from './SqliteUtils.js';
+import { closeDatabase, queryAll, queryRun } from './SqliteUtils.js';
 
 export type Sqlite3DatabaseAdapter = DatabaseAdapter;
 
@@ -29,6 +29,9 @@ export async function createSqlite3Adapter(
     },
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
       return await queryAll<R>(database, query, values);
+    },
+    run: async (query: string, values: ColumnValue[] | undefined) => {
+      return await queryRun(database, query, values);
     },
 
     isFtsVirtualTableConstraintFailed,

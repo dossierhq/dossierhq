@@ -28,6 +28,11 @@ export async function createBunSqliteAdapter(
       if (typeof result === 'number' && result === 0) return [];
       return result as R[];
     },
+    run: async (query: string, values: ColumnValue[] | undefined) => {
+      const statement = database.prepare(query, values);
+      statement.run();
+      statement.finalize();
+    },
 
     isFtsVirtualTableConstraintFailed,
     isUniqueViolationOfConstraint,

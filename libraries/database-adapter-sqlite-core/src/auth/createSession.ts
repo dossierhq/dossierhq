@@ -7,7 +7,7 @@ import type {
 import type { SubjectsTable } from '../DatabaseSchema.js';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
 import { createSession } from '../utils/SessionUtils.js';
 
 export async function authCreateSession(
@@ -94,7 +94,7 @@ async function createSubject(
       return subjectsResult;
     }
     const { id } = subjectsResult.value;
-    const principalsResult = await queryNone(
+    const principalsResult = await queryRun(
       database,
       context,
       {

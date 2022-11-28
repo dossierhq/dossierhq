@@ -10,7 +10,7 @@ import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
 import { randomUUID } from 'node:crypto';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
-import type { SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
+import type { ColumnValue, SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
 import { createSqliteDatabaseAdapterAdapter } from '../SqliteDatabaseAdapter.js';
 import { Mutex } from '../utils/MutexUtils.js';
 
@@ -24,7 +24,15 @@ type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
 type QueryFn = SqliteDatabaseAdapter['query'];
 
 interface MockedSqliteDatabaseAdapter extends SqliteDatabaseAdapter {
+  allQueries: [string, ...ColumnValue[]][];
+  clearAllQueries(): void;
+  mockQuery?: (query: string, values: ColumnValue[] | undefined) => unknown[] | undefined;
+
   query: MockedFunction<QueryFn>;
+  run: MockedFunction<SqliteDatabaseAdapter['run']>;
+  encodeCursor: MockedFunction<SqliteDatabaseAdapter['encodeCursor']>;
+  decodeCursor: MockedFunction<SqliteDatabaseAdapter['decodeCursor']>;
+  randomUUID: MockedFunction<SqliteDatabaseAdapter['randomUUID']>;
 }
 
 interface MockedDatabase {
@@ -68,23 +76,40 @@ export function createMockDatabase(): MockedDatabase {
 }
 
 export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const query: MockedFunction<QueryFn> = vi.fn<any, any>();
-  query.mockImplementation(async (query, _values) => {
-    if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.37.0' }];
-    if (query === 'PRAGMA user_version') return [{ user_version: 999 }]; // high number to avoid migrations
-    return [];
-  });
+  const allQueries: [string, ...ColumnValue[]][] = [];
 
-  const mockAdapter = {
+  const mockAdapter: MockedSqliteDatabaseAdapter = {
+    allQueries,
+    clearAllQueries: () => {
+      allQueries.length = 0;
+    },
     disconnect: vi.fn(),
-    query,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    query: vi.fn<any, any>(),
+    run: vi.fn(),
     isFtsVirtualTableConstraintFailed: vi.fn().mockReturnValue(false),
     isUniqueViolationOfConstraint: vi.fn().mockReturnValue(false),
     encodeCursor: vi.fn(),
     decodeCursor: vi.fn(),
     randomUUID: vi.fn(),
   };
+
+  mockAdapter.query.mockImplementation(async (query, values) => {
+    allQueries.push([query, ...(values ?? [])]);
+
+    if (mockAdapter.mockQuery) {
+      const result = mockAdapter.mockQuery(query, values);
+      if (result) return result;
+    }
+
+    if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.37.0' }];
+    if (query === 'PRAGMA user_version') return [{ user_version: 999 }]; // high number to avoid migrations
+    return [];
+  });
+
+  mockAdapter.run.mockImplementation(async (query, values) => {
+    allQueries.push([query, ...(values ?? [])]);
+  });
 
   mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));
   mockAdapter.decodeCursor.mockImplementation((value) =>
@@ -95,11 +120,10 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
   return mockAdapter;
 }
 
-export function getQueryCalls(adapter: MockedSqliteDatabaseAdapter): [string, ...unknown[]][] {
-  return adapter.query.mock.calls.map((call) => {
-    const [query, values] = call;
-    return [query, ...(values ?? [])];
-  });
+export function getRunAndQueryCalls(
+  adapter: MockedSqliteDatabaseAdapter
+): [string, ...ColumnValue[]][] {
+  return adapter.allQueries;
 }
 
 export function createTestAdminSchema(): AdminSchema {

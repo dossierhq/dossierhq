@@ -6,7 +6,7 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone } from '../QueryFunctions.js';
+import { queryRun } from '../QueryFunctions.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityUpdateStatus(
@@ -19,7 +19,7 @@ export async function adminEntityUpdateStatus(
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedReqResult.isError()) return updatedReqResult;
 
-  const result = await queryNone(database, context, {
+  const result = await queryRun(database, context, {
     text: `UPDATE entities SET
         updated_at = ?1,
         updated_seq = ?2,

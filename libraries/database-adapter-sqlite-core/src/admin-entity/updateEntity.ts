@@ -10,7 +10,7 @@ import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
@@ -108,7 +108,7 @@ export async function adminEntityUpdateEntity(
       entity.name,
       randomNameGenerator,
       async (context, name, nameConflictErrorMessage) => {
-        const updateNameResult = await queryNone(
+        const updateNameResult = await queryRun(
           database,
           context,
           {
@@ -141,7 +141,7 @@ export async function adminEntityUpdateEntity(
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedReqResult.isError()) return updatedReqResult;
 
-  const updateEntityResult = await queryNone(database, context, {
+  const updateEntityResult = await queryRun(database, context, {
     text: `UPDATE entities SET
              latest_entity_versions_id = ?1,
              updated_at = ?2,
@@ -160,7 +160,7 @@ export async function adminEntityUpdateEntity(
     return updateEntityResult;
   }
 
-  const ftsResult = await queryNone(
+  const ftsResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(

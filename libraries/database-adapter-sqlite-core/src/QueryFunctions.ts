@@ -4,8 +4,8 @@ import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { ColumnValue, SqliteDatabaseAdapter } from './SqliteDatabaseAdapter.js';
 import type { Mutex } from './utils/MutexUtils.js';
 
-interface ErrorConverter<TRow, TError extends ErrorType> {
-  (error: unknown): Result<TRow[], TError | typeof ErrorType.Generic>;
+interface ErrorConverter<TOk, TError extends ErrorType> {
+  (error: unknown): Result<TOk, TError | typeof ErrorType.Generic>;
 }
 
 export interface Database {
@@ -19,7 +19,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
   database: Database,
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
-  errorConverter: ErrorConverter<TRow, TError> | undefined
+  errorConverter: ErrorConverter<TRow[], TError> | undefined
 ): PromiseResult<TRow[], TError | typeof ErrorType.Generic> {
   const { text, values } =
     typeof queryOrQueryAndValues === 'string'
@@ -46,28 +46,37 @@ async function queryCommon<TRow, TError extends ErrorType>(
     : database.mutex.withLock(context, queryAndConvert);
 }
 
-export async function queryNone<
+export async function queryRun<
   TError extends ErrorType | typeof ErrorType.Generic = typeof ErrorType.Generic
 >(
   database: Database,
   context: TransactionContext,
-  query: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<unknown, TError | typeof ErrorType.Generic>
+  queryOrQueryAndValues: QueryOrQueryAndValues,
+  errorConverter?: ErrorConverter<void, TError>
 ): PromiseResult<void, TError | typeof ErrorType.Generic> {
-  const result = await queryCommon<[], TError>(
-    database,
-    context,
-    query,
-    errorConverter as ErrorConverter<[], TError>
-  );
-  if (result.isError()) {
-    return result;
-  }
-  const rows = result.value;
-  if (rows.length !== 0) {
-    return notOk.Generic(`Expected 0 rows, got ${rows.length}`);
-  }
-  return ok(undefined);
+  const { text, values } =
+    typeof queryOrQueryAndValues === 'string'
+      ? { text: queryOrQueryAndValues, values: undefined }
+      : queryOrQueryAndValues;
+
+  const queryAndConvert: () => PromiseResult<
+    void,
+    TError | typeof ErrorType.Generic
+  > = async () => {
+    try {
+      await database.adapter.run(text, values);
+      return ok(undefined);
+    } catch (error) {
+      if (errorConverter) {
+        return errorConverter(error);
+      }
+      return notOk.GenericUnexpectedException(context, error);
+    }
+  };
+
+  return context.transaction
+    ? queryAndConvert()
+    : database.mutex.withLock(context, queryAndConvert);
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof ErrorType.Generic>(
@@ -80,7 +89,7 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof Err
     database,
     context,
     query,
-    errorConverter as ErrorConverter<TRow, TError>
+    errorConverter as ErrorConverter<TRow[], TError>
   );
   if (result.isError()) {
     return result;
@@ -105,7 +114,7 @@ export async function queryOne<TRow, TError extends ErrorType = typeof ErrorType
     database,
     context,
     query,
-    errorConverter as ErrorConverter<TRow, TError>
+    errorConverter as ErrorConverter<TRow[], TError>
   );
   if (result.isError()) {
     return result;
@@ -127,7 +136,7 @@ export async function queryMany<TRow, TError extends ErrorType = typeof ErrorTyp
     database,
     context,
     query,
-    errorConverter as ErrorConverter<TRow, TError>
+    errorConverter as ErrorConverter<TRow[], TError>
   );
   return result;
 }

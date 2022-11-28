@@ -5,7 +5,7 @@ import {
   createMockContext,
   createMockInnerAndOuterAdapter,
   createTestAdminSchema,
-  getQueryCalls,
+  getRunAndQueryCalls,
   resolvePaging,
 } from '../test/TestUtils.js';
 
@@ -30,8 +30,8 @@ describe('adminEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => []);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [];
     const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -40,7 +40,7 @@ describe('adminEntitySearchEntities', () => {
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expectResultValue(result, { entities: [], hasMore: false });
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
@@ -56,8 +56,8 @@ describe('adminEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(1)]);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(1)];
     const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -88,7 +88,7 @@ describe('adminEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
@@ -104,8 +104,8 @@ describe('adminEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(2)];
     const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -136,7 +136,7 @@ describe('adminEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
@@ -153,8 +153,9 @@ describe('adminEntitySearchEntities', () => {
     const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
     const context = createMockContext(outerAdapter);
 
-    innerAdapter.query.mockClear();
-    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
+    innerAdapter.clearAllQueries();
+    innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(2)];
+
     const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
@@ -185,7 +186,7 @@ describe('adminEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
+    expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields

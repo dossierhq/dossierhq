@@ -9,7 +9,7 @@ import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
 import { UniqueIndexValueConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone, queryOne } from '../QueryFunctions.js';
+import { queryOne, queryRun } from '../QueryFunctions.js';
 
 export async function adminEntityUniqueIndexUpdateValues(
   database: Database,
@@ -52,7 +52,7 @@ async function addValues(
     }
   });
 
-  return queryNone(database, context, query, (error) => {
+  return queryRun(database, context, query, (error) => {
     if (database.adapter.isUniqueViolationOfConstraint(error, UniqueIndexValueConstraint)) {
       return notOk.Conflict('Conflict with unique index value');
     }
@@ -91,7 +91,7 @@ async function removeValues(
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const { index, value } of values.remove) {
     //TODO include entity id?
-    const result = await queryNone(
+    const result = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(({ sql }) => {

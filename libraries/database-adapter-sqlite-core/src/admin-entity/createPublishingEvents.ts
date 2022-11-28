@@ -5,7 +5,7 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone } from '../QueryFunctions.js';
+import { queryRun } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 
 export async function adminEntityPublishingCreateEvents(
@@ -28,5 +28,5 @@ export async function adminEntityPublishingCreateEvents(
       'entityVersionInternalId' in reference ? (reference.entityVersionInternalId as number) : null;
     sql`(${entitiesId}, ${entityVersionId}, ${subjectValue}, ${publishedAtValue}, ${kindValue})`;
   }
-  return await queryNone(database, context, query);
+  return await queryRun(database, context, query);
 }

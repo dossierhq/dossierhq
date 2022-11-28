@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context } from '@jonasb/datadata-database-adapter';
-import type { Database, Statement } from 'sqlite3';
+import type { Database, RunResult, Statement } from 'sqlite3';
 
 type DatabaseConstructor = (new (
   filename: string,
@@ -94,6 +94,17 @@ export function queryAll<R>(db: Database, query: string, values: unknown[] = [])
         reject(error);
       }
       resolve(rows as R[]);
+    })
+  );
+}
+
+export function queryRun(db: Database, query: string, values: unknown[] = []) {
+  return new Promise<void>((resolve, reject) =>
+    db.run(query, values, function (this: RunResult, error: Error | null) {
+      if (error) {
+        reject(error);
+      }
+      resolve(undefined);
     })
   );
 }

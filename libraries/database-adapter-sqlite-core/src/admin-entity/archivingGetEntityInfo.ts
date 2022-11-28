@@ -23,7 +23,7 @@ export async function adminEntityArchivingGetEntityInfo(
       'id' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at' | 'never_published'
     >
   >(database, context, {
-    text: 'SELECT e.id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.never_published FROM entities e WHERE e.uuid = $1',
+    text: 'SELECT e.id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.never_published FROM entities e WHERE e.uuid = ?1',
     values: [reference.id],
   });
 

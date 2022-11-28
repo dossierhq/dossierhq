@@ -10,7 +10,7 @@ import type {
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone, queryNoneOrOne } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
@@ -85,7 +85,7 @@ export async function adminEntityPublishUpdateEntity(
 
   const now = new Date();
 
-  const updateResult = await queryNone(database, context, {
+  const updateResult = await queryRun(database, context, {
     text: `UPDATE entities
            SET
              never_published = TRUE,
@@ -106,7 +106,7 @@ export async function adminEntityPublishUpdateEntity(
 
   // FTS virtual tables don't support upsert
   // FTS upsert 1/2) Try to insert
-  const ftsInsertResult = await queryNone(
+  const ftsInsertResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(
@@ -126,7 +126,7 @@ export async function adminEntityPublishUpdateEntity(
   if (ftsInsertResult.isError()) {
     if (ftsInsertResult.isErrorType(ErrorType.Generic)) return ftsInsertResult;
 
-    const ftsUpdateResult = await queryNone(
+    const ftsUpdateResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(
@@ -140,7 +140,7 @@ export async function adminEntityPublishUpdateEntity(
   }
 
   // Update locations index: Clear existing
-  const clearLocationsResult = await queryNone(
+  const clearLocationsResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(({ sql }) => {
@@ -151,7 +151,7 @@ export async function adminEntityPublishUpdateEntity(
 
   // Update locations index: Insert new
   if (values.locations.length > 0) {
-    const insertResult = await queryNone(
+    const insertResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(({ sql, addValue }) => {
@@ -175,7 +175,7 @@ export async function adminEntityPublishUpdatePublishedReferencesIndex(
   toReferences: DatabaseResolvedEntityReference[]
 ): PromiseResult<void, typeof ErrorType.Generic> {
   // Step 1: Clear existing references
-  const clearResult = await queryNone(database, context, {
+  const clearResult = await queryRun(database, context, {
     text: 'DELETE FROM entity_published_references WHERE from_entities_id = ?1',
     values: [fromReference.entityInternalId as number],
   });
@@ -186,7 +186,7 @@ export async function adminEntityPublishUpdatePublishedReferencesIndex(
   }
 
   // Step 2: Insert new references
-  const insertResult = await queryNone(
+  const insertResult = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValue }) => {

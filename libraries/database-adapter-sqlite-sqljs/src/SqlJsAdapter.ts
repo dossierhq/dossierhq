@@ -26,6 +26,9 @@ export async function createSqlJsAdapter(
       statement.free();
       return result;
     },
+    run: async (query: string, values: ColumnValue[] | undefined) => {
+      database.run(query, values);
+    },
 
     isFtsVirtualTableConstraintFailed,
     isUniqueViolationOfConstraint,

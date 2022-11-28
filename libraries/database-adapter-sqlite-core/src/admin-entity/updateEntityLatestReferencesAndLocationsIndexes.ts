@@ -6,7 +6,7 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { Database } from '../QueryFunctions.js';
-import { queryNone } from '../QueryFunctions.js';
+import { queryRun } from '../QueryFunctions.js';
 
 export async function updateEntityLatestReferencesAndLocationsIndexes(
   database: Database,
@@ -17,7 +17,7 @@ export async function updateEntityLatestReferencesAndLocationsIndexes(
   { skipDelete }: { skipDelete: boolean }
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (!skipDelete) {
-    const removeExistingReferencesResult = await queryNone(
+    const removeExistingReferencesResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(
@@ -29,7 +29,7 @@ export async function updateEntityLatestReferencesAndLocationsIndexes(
     );
     if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
 
-    const removeExistingLocationsResult = await queryNone(
+    const removeExistingLocationsResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(
@@ -43,7 +43,7 @@ export async function updateEntityLatestReferencesAndLocationsIndexes(
   }
 
   if (referenceIds.length > 0) {
-    const insertReferencesResult = await queryNone(
+    const insertReferencesResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(({ sql, addValue }) => {
@@ -58,7 +58,7 @@ export async function updateEntityLatestReferencesAndLocationsIndexes(
   }
 
   if (locations.length > 0) {
-    const insertLocationsResult = await queryNone(
+    const insertLocationsResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(({ sql, addValue }) => {
