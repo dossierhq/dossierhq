@@ -4,6 +4,7 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
@@ -13,7 +14,8 @@ export type SqlJsDatabaseAdapter = DatabaseAdapter;
 
 export async function createSqlJsAdapter(
   context: Context,
-  database: Database
+  database: Database,
+  options: SqliteDatabaseOptions
 ): PromiseResult<SqlJsDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -46,7 +48,7 @@ export async function createSqlJsAdapter(
     randomUUID: () => crypto.randomUUID(),
   };
 
-  return createSqliteDatabaseAdapterAdapter(context, adapter);
+  return createSqliteDatabaseAdapterAdapter(context, adapter, options);
 }
 
 function isFtsVirtualTableConstraintFailed(error: unknown): boolean {

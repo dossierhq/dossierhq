@@ -14,7 +14,11 @@ export async function createSqlJsTestAdapter(): PromiseResult<
 > {
   const SQL = await SqlJs.default();
   const db = new SQL.Database();
-  return await createSqlJsAdapter({ logger: NoOpLogger }, db);
+  return await createSqlJsAdapter({ logger: NoOpLogger }, db, {
+    migrate: true,
+    fts: { version: 'fts4' },
+    journalMode: 'memory',
+  });
 }
 
 export function registerTestSuite(testSuite: TestSuite): void {

@@ -12,13 +12,14 @@ import { schemaSpecification } from './schema.js';
 const SQLITE3_DATABASE = 'data/foo.sqlite';
 
 export async function initializeServer(logger: Logger) {
-  const databaseResult = await createDatabase({ logger }, Database, {
-    filename: SQLITE3_DATABASE,
-    journalMode: 'wal',
-  });
+  const databaseResult = await createDatabase({ logger }, Database, { filename: SQLITE3_DATABASE });
   if (databaseResult.isError()) return databaseResult;
 
-  const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value);
+  const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value, {
+    migrate: true,
+    fts: { version: 'fts5' },
+    journalMode: 'wal',
+  });
   if (adapterResult.isError()) return adapterResult;
 
   const serverResult = await createServer({

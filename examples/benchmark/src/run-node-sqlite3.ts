@@ -19,12 +19,13 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
   }
 
   const context = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(context, SqliteDatabase, {
-    filename: databasePath,
+  const databaseResult = await createDatabase(context, SqliteDatabase, { filename: databasePath });
+  if (databaseResult.isError()) return databaseResult;
+  const adapterResult = await createSqlite3Adapter(context, databaseResult.value, {
+    migrate: true,
+    fts: { version: 'fts5' },
     journalMode: 'wal',
   });
-  if (databaseResult.isError()) return databaseResult;
-  const adapterResult = await createSqlite3Adapter(context, databaseResult.value);
   return adapterResult;
 }
 

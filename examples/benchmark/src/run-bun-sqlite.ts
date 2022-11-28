@@ -14,7 +14,11 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
 
   const context = { logger: NoOpLogger };
   const database = new Database(databasePath);
-  const adapterResult = await createBunSqliteAdapter(context, database, { journalMode: 'wal' });
+  const adapterResult = await createBunSqliteAdapter(context, database, {
+    migrate: true,
+    fts: { version: 'fts5' },
+    journalMode: 'wal',
+  });
   return adapterResult;
 }
 

@@ -56,7 +56,7 @@ import type { Database } from './QueryFunctions.js';
 import { queryOne } from './QueryFunctions.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
-import { migrateDatabaseIfNecessary } from './SchemaDefinition.js';
+import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction.js';
 import { Mutex } from './utils/MutexUtils.js';
@@ -77,9 +77,24 @@ export interface SqliteDatabaseAdapter {
   randomUUID(): string;
 }
 
+export type SqliteDatabaseOptions =
+  | { migrate: false }
+  | ({ migrate: true } & SqliteDatabaseMigrationOptions);
+
+export interface SqliteDatabaseMigrationOptions {
+  fts: {
+    version: 'fts4' | 'fts5';
+    /** The tokenizer used for FTS.
+     * https://www.sqlite.org/fts3.html#tokenizer or https://www.sqlite.org/fts5.html#tokenizers*/
+    tokenizer?: string;
+  };
+  journalMode: 'wal' | 'delete' | 'memory';
+}
+
 export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
-  sqliteAdapter: SqliteDatabaseAdapter
+  sqliteAdapter: SqliteDatabaseAdapter,
+  options: SqliteDatabaseOptions
 ): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const database: Database = { mutex: new Mutex(), adapter: sqliteAdapter };
 
@@ -89,8 +104,17 @@ export async function createSqliteDatabaseAdapterAdapter(
   const validityResult = await checkAdapterValidity(database, initializationContext);
   if (validityResult.isError()) return validityResult;
 
-  const migrationResult = await migrateDatabaseIfNecessary(database, initializationContext);
-  if (migrationResult.isError()) return migrationResult;
+  if (options.migrate) {
+    const migrationResult = await migrateDatabaseIfNecessary(
+      database,
+      initializationContext,
+      options
+    );
+    if (migrationResult.isError()) return migrationResult;
+  } else {
+    const migrationResult = await checkMigrationStatus(database, initializationContext);
+    if (migrationResult.isError()) return migrationResult;
+  }
 
   return ok(outerAdapter);
 }

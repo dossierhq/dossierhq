@@ -4,6 +4,7 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
@@ -22,7 +23,8 @@ const PARAMETERS_REGEX = /\?(\d+)/g;
 
 export async function createBetterSqlite3Adapter(
   context: Context,
-  database: Database
+  database: Database,
+  options: SqliteDatabaseOptions
 ): PromiseResult<
   BetterSqlite3DatabaseAdapter,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -61,7 +63,7 @@ export async function createBetterSqlite3Adapter(
     randomUUID,
   };
 
-  return createSqliteDatabaseAdapterAdapter(context, adapter);
+  return createSqliteDatabaseAdapterAdapter(context, adapter, options);
 }
 
 function isSqliteError(error: unknown): error is SqliteError {

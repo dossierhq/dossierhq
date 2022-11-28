@@ -4,6 +4,7 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
@@ -14,7 +15,7 @@ export type BunSqliteDatabaseAdapter = DatabaseAdapter;
 export async function createBunSqliteAdapter(
   context: Context,
   database: Database,
-  options: { journalMode?: 'wal' } = {}
+  options: SqliteDatabaseOptions
 ): PromiseResult<BunSqliteDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -55,15 +56,7 @@ export async function createBunSqliteAdapter(
     randomUUID: crypto.randomUUID,
   };
 
-  const adapterAdapterResult = await createSqliteDatabaseAdapterAdapter(context, adapter);
-
-  if (adapterAdapterResult.isOk()) {
-    if (options.journalMode === 'wal') {
-      await adapter.query('PRAGMA journal_mode=WAL', undefined);
-    }
-  }
-
-  return adapterAdapterResult;
+  return await createSqliteDatabaseAdapterAdapter(context, adapter, options);
 }
 
 function isSqlite3Error(error: unknown): error is Error {

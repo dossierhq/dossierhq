@@ -4,6 +4,7 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
@@ -22,7 +23,8 @@ interface Sqlite3Error {
 
 export async function createSqlite3Adapter(
   context: Context,
-  database: Database
+  database: Database,
+  options: SqliteDatabaseOptions
 ): PromiseResult<Sqlite3DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -49,7 +51,7 @@ export async function createSqlite3Adapter(
     randomUUID,
   };
 
-  return createSqliteDatabaseAdapterAdapter(context, adapter);
+  return createSqliteDatabaseAdapterAdapter(context, adapter, options);
 }
 
 function isSqlite3Error(error: unknown): error is Sqlite3Error {

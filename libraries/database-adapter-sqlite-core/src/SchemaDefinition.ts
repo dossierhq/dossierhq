@@ -1,13 +1,19 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
-import { migrate } from './SchemaMigrator.js';
+import { getCurrentSchemaVersion, migrate } from './SchemaMigrator.js';
+import type { SqliteDatabaseMigrationOptions } from './SqliteDatabaseAdapter.js';
 
 //TODO optimize fts indices
-//TODO fts language
 
-const VERSION_1: QueryOrQueryAndValues[] = [
+type SchemaVersionDefinition =
+  | QueryOrQueryAndValues
+  | ((options: SqliteDatabaseMigrationOptions) => QueryOrQueryAndValues);
+
+const VERSION_1: SchemaVersionDefinition[] = [
   'PRAGMA foreign_keys=TRUE',
+  (options) => `PRAGMA journal_mode=${options.journalMode}`,
   `CREATE TABLE subjects (
     id INTEGER PRIMARY KEY,
     uuid TEXT NOT NULL,
@@ -51,12 +57,11 @@ const VERSION_1: QueryOrQueryAndValues[] = [
     FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
     FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
   ) STRICT`,
-  // TODO node-sqlite3 supports fts5
-  `CREATE VIRTUAL TABLE entities_latest_fts USING fts4 (
-    content
+  (options) => `CREATE VIRTUAL TABLE entities_latest_fts USING ${options.fts.version} (
+    content${options.fts.tokenizer ? `, tokenize=${options.fts.tokenizer}` : ''}
   )`,
-  `CREATE VIRTUAL TABLE entities_published_fts USING fts4 (
-    content
+  (options) => `CREATE VIRTUAL TABLE entities_published_fts USING ${options.fts.version} (
+    content${options.fts.tokenizer ? `, tokenize=${options.fts.tokenizer}` : ''}
   )`,
   `CREATE TABLE entity_versions (
     id INTEGER PRIMARY KEY,
@@ -95,7 +100,7 @@ const VERSION_1: QueryOrQueryAndValues[] = [
   ) STRICT`,
 ];
 
-const VERSION_2: QueryOrQueryAndValues[] = [
+const VERSION_2: SchemaVersionDefinition[] = [
   `CREATE TABLE advisory_locks (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
@@ -108,7 +113,7 @@ const VERSION_2: QueryOrQueryAndValues[] = [
   ) STRICT`,
 ];
 
-const VERSION_3: QueryOrQueryAndValues[] = [
+const VERSION_3: SchemaVersionDefinition[] = [
   `CREATE TABLE entity_published_references (
     id INTEGER PRIMARY KEY,
     from_entities_id INTEGER NOT NULL,
@@ -122,7 +127,7 @@ const VERSION_3: QueryOrQueryAndValues[] = [
       WHERE e.published_entity_versions_id = evr.entity_versions_id`,
 ];
 
-const VERSION_4: QueryOrQueryAndValues[] = [
+const VERSION_4: SchemaVersionDefinition[] = [
   `CREATE TABLE entity_latest_references (
     id INTEGER PRIMARY KEY,
     from_entities_id INTEGER NOT NULL,
@@ -137,7 +142,7 @@ const VERSION_4: QueryOrQueryAndValues[] = [
   `DROP TABLE entity_version_references`,
 ];
 
-const VERSION_5: QueryOrQueryAndValues[] = [
+const VERSION_5: SchemaVersionDefinition[] = [
   `CREATE TABLE entity_published_locations (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -163,7 +168,7 @@ const VERSION_5: QueryOrQueryAndValues[] = [
   `DROP TABLE entity_version_locations`,
 ];
 
-const VERSION_6: QueryOrQueryAndValues[] = [
+const VERSION_6: SchemaVersionDefinition[] = [
   `CREATE TABLE unique_index_values (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -177,7 +182,7 @@ const VERSION_6: QueryOrQueryAndValues[] = [
   `CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id)`,
 ];
 
-const VERSIONS: QueryOrQueryAndValues[][] = [
+const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
   VERSION_2,
@@ -187,11 +192,42 @@ const VERSIONS: QueryOrQueryAndValues[][] = [
   VERSION_6,
 ];
 
+export const REQUIRED_SCHEMA_VERSION = VERSIONS.length;
+
 export async function migrateDatabaseIfNecessary(
+  database: Database,
+  context: TransactionContext,
+  options: SqliteDatabaseMigrationOptions
+): PromiseResult<void, typeof ErrorType.Generic> {
+  return await migrate(database, context, (version) => {
+    const versionDefinition = VERSIONS[version];
+    if (!versionDefinition) {
+      return null;
+    }
+    const statements: QueryOrQueryAndValues[] = [];
+    for (const statement of versionDefinition) {
+      if (typeof statement === 'function') {
+        statements.push(statement(options));
+      } else {
+        statements.push(statement);
+      }
+    }
+    return statements;
+  });
+}
+
+export async function checkMigrationStatus(
   database: Database,
   context: TransactionContext
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  return await migrate(database, context, (version) => {
-    return VERSIONS[version] ?? null;
-  });
+  const versionResult = await getCurrentSchemaVersion(database, context);
+  if (versionResult.isError()) return versionResult;
+  const currentVersion = versionResult.value;
+
+  if (currentVersion !== REQUIRED_SCHEMA_VERSION) {
+    return notOk.Generic(
+      `Database schema needs to be migrated, is at version ${currentVersion} (should be ${REQUIRED_SCHEMA_VERSION})`
+    );
+  }
+  return ok(undefined);
 }

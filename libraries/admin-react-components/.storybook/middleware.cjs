@@ -25,11 +25,14 @@ async function getServer() {
       const logger = createConsoleLogger(console);
       const databaseResult = await createDatabase({ logger }, Database, {
         filename: SQLITE_DATABASE_PATH,
-        journalMode: 'wal',
       });
       if (databaseResult.isError()) return databaseResult;
 
-      const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value);
+      const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value, {
+        migrate: true,
+        fts: { version: 'fts5' },
+        journalMode: 'wal',
+      });
       if (adapterResult.isError()) return adapterResult;
 
       const serverResult = await createServer({

@@ -15,23 +15,13 @@ export async function createDatabase(
   {
     filename,
     mode,
-    journalMode,
   }: {
     filename: string | ':memory:';
     mode?: number;
-    journalMode?: 'wal';
   }
 ): PromiseResult<Database, typeof ErrorType.Generic> {
   try {
     const database = await doCreateDatabase(DatabaseClass, filename, mode);
-    if (journalMode === 'wal') {
-      const walResult = await enableJournalModeWAL(context, database);
-      if (walResult.isError()) {
-        await closeDatabase(database);
-        return walResult;
-      }
-    }
-
     return ok(database);
   } catch (error) {
     return notOk.GenericUnexpectedException(context, error);
@@ -73,18 +63,6 @@ export function closeDatabase(db: Database) {
       resolve(undefined);
     })
   );
-}
-
-async function enableJournalModeWAL(
-  context: Context,
-  database: Database
-): PromiseResult<void, typeof ErrorType.Generic> {
-  try {
-    await queryAll(database, 'PRAGMA journal_mode=WAL');
-    return ok(undefined);
-  } catch (error) {
-    return notOk.GenericUnexpectedException(context, error);
-  }
 }
 
 export function queryAll<R>(db: Database, query: string, values: unknown[] = []) {

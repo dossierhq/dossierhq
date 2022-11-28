@@ -14,8 +14,11 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
 
   const context = { logger: NoOpLogger };
   const database = new Database(databasePath);
-  database.pragma('journal_mode = WAL');
-  return await createBetterSqlite3Adapter(context, database);
+  return await createBetterSqlite3Adapter(context, database, {
+    migrate: true,
+    fts: { version: 'fts5' },
+    journalMode: 'wal',
+  });
 }
 
 async function main(runName: string, ciOrLocal: { githubSha: string | undefined } | 'local') {

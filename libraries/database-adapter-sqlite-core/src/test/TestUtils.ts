@@ -10,6 +10,7 @@ import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
 import { randomUUID } from 'node:crypto';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
+import { REQUIRED_SCHEMA_VERSION } from '../SchemaDefinition.js';
 import type { ColumnValue, SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
 import { createSqliteDatabaseAdapterAdapter } from '../SqliteDatabaseAdapter.js';
 import { Mutex } from '../utils/MutexUtils.js';
@@ -58,7 +59,9 @@ export async function createMockInnerAndOuterAdapter(): PromiseResult<
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const innerAdapter = createMockInnerAdapter();
-  const result = await createSqliteDatabaseAdapterAdapter({ logger: NoOpLogger }, innerAdapter);
+  const result = await createSqliteDatabaseAdapterAdapter({ logger: NoOpLogger }, innerAdapter, {
+    migrate: false,
+  });
   if (result.isError()) return result;
   return ok({ innerAdapter, outerAdapter: result.value });
 }
@@ -103,7 +106,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     }
 
     if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.37.0' }];
-    if (query === 'PRAGMA user_version') return [{ user_version: 999 }]; // high number to avoid migrations
+    if (query === 'PRAGMA user_version') return [{ user_version: REQUIRED_SCHEMA_VERSION }]; // prevent migration
     return [];
   });
 

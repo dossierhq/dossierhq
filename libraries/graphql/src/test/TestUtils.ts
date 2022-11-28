@@ -36,12 +36,13 @@ async function setUpRealServerWithSession(
   databasePath: string
 ): Promise<TestServerWithSession> {
   const serverContext = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(serverContext, Database, {
-    filename: databasePath,
+  const databaseResult = await createDatabase(serverContext, Database, { filename: databasePath });
+  assertOkResult(databaseResult);
+  const adapterResult = await createSqlite3Adapter(serverContext, databaseResult.value, {
+    migrate: true,
+    fts: { version: 'fts5' },
     journalMode: 'wal',
   });
-  assertOkResult(databaseResult);
-  const adapterResult = await createSqlite3Adapter(serverContext, databaseResult.value);
 
   const serverResult = await createServer({
     databaseAdapter: adapterResult.valueOrThrow(),

@@ -52,8 +52,11 @@ async function createSqlite3TestAdapter(
   const databaseResult = await createDatabase(context, Database, {
     filename,
     mode,
-    journalMode: 'wal',
   });
   if (databaseResult.isError()) return databaseResult;
-  return await createSqlite3Adapter(context, databaseResult.value);
+  return await createSqlite3Adapter(context, databaseResult.value, {
+    migrate: true,
+    fts: { version: 'fts5' },
+    journalMode: 'wal',
+  });
 }

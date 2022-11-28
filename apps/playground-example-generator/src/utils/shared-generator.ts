@@ -28,7 +28,6 @@ export async function createNewDatabase(databasePath: string) {
   const context = { logger: NoOpLogger };
   const databaseResult = await createDatabase(context, SqliteDatabase, {
     filename: databasePath,
-    journalMode: 'wal',
   });
   return databaseResult.valueOrThrow();
 }
@@ -38,7 +37,13 @@ export async function createAdapterAndServer<TAdminClient>(
   schema: AdminSchemaSpecificationUpdate
 ): Promise<{ adminClient: TAdminClient; server: Server }> {
   const databaseAdapter = (
-    await createSqlite3Adapter({ logger: NoOpLogger }, database)
+    await createSqlite3Adapter({ logger: NoOpLogger }, database, {
+      migrate: true,
+      fts: {
+        version: 'fts4', // fts5 is not supported by sql.js used in the browser
+      },
+      journalMode: 'delete',
+    })
   ).valueOrThrow();
   const server = (
     await createServer({

@@ -11,7 +11,11 @@ import { createBlogServer } from '../utils/SharedServerUtils.js';
 
 async function initializeServer(logger: Logger, filename: string) {
   const database = Database.open(filename);
-  const databaseAdapterResult = await createBunSqliteAdapter({ logger }, database);
+  const databaseAdapterResult = await createBunSqliteAdapter({ logger }, database, {
+    migrate: true,
+    fts: { version: 'fts5' },
+    journalMode: 'wal',
+  });
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const serverResult = await createBlogServer(databaseAdapterResult.value);
