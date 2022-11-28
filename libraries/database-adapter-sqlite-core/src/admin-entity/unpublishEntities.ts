@@ -109,7 +109,7 @@ export async function adminEntityUnpublishEntities(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`DELETE FROM entities_published_fts WHERE docid IN ${addValueList(
+      sql`DELETE FROM entities_published_fts WHERE rowid IN ${addValueList(
         references.map(({ entityInternalId }) => entityInternalId as number)
       )} `;
     })

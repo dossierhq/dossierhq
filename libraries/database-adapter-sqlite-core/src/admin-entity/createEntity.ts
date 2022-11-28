@@ -40,7 +40,7 @@ export async function adminCreateEntity(
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
-        sql`INSERT INTO entities_latest_fts (docid, content) VALUES (${entityId}, ${entity.fullTextSearchText})`
+        sql`INSERT INTO entities_latest_fts (rowid, content) VALUES (${entityId}, ${entity.fullTextSearchText})`
     )
   );
   if (ftsResult.isError()) return ftsResult;

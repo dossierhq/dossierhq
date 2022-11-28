@@ -165,7 +165,7 @@ export async function adminEntityUpdateEntity(
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
-        sql`UPDATE entities_latest_fts SET content = ${entity.fullTextSearchText} WHERE docid = ${
+        sql`UPDATE entities_latest_fts SET content = ${entity.fullTextSearchText} WHERE rowid = ${
           entity.entityInternalId as number
         }`
     )

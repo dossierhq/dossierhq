@@ -111,7 +111,7 @@ export async function adminEntityPublishUpdateEntity(
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
-        sql`INSERT INTO entities_published_fts (docid, content)
+        sql`INSERT INTO entities_published_fts (rowid, content)
           VALUES (${entityInternalId as number}, ${values.fullTextSearchText})`
     ),
     (error) => {
@@ -133,7 +133,7 @@ export async function adminEntityPublishUpdateEntity(
         ({ sql }) =>
           sql`UPDATE entities_published_fts
             SET content = ${values.fullTextSearchText}
-            WHERE docid = ${entityInternalId as number}`
+            WHERE rowid = ${entityInternalId as number}`
       )
     );
     if (ftsUpdateResult.isError()) return ftsUpdateResult;

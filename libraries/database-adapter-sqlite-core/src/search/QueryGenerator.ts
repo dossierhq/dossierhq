@@ -489,7 +489,7 @@ function addQueryFilters(
   // Filter: text
   if (query?.text) {
     // fts points to different identical tables based on `published`
-    sql`AND fts.content match ${query.text} AND fts.docid = e.id`;
+    sql`AND fts.content match ${query.text} AND fts.rowid = e.id`;
   }
 
   return ok(undefined);
