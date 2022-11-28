@@ -175,6 +175,7 @@ importers:
       '@faker-js/faker': ~7.6.0
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
+      '@jonasb/datadata-database-adapter-better-sqlite3': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-deno': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
@@ -185,9 +186,11 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.48.8
+      '@types/better-sqlite3': ~7.6.2
       '@types/pg': ~8.6.5
       '@types/sqlite3': ~3.1.8
       benchpress: workspace:*
+      better-sqlite3: ~8.0.0
       dotenv: ~16.0.3
       eslint: ~8.28.0
       pg: ~8.8.0
@@ -199,6 +202,7 @@ importers:
       '@faker-js/faker': 7.6.0
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter': link:../../libraries/database-adapter
+      '@jonasb/datadata-database-adapter-better-sqlite3': link:../../libraries/database-adapter-better-sqlite3
       '@jonasb/datadata-database-adapter-postgres-core': link:../../libraries/database-adapter-postgres-core
       '@jonasb/datadata-database-adapter-postgres-deno': link:../../libraries/database-adapter-postgres-deno
       '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
@@ -206,6 +210,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-server': link:../../libraries/server
       benchpress: link:../../libraries/benchpress
+      better-sqlite3: 8.0.0
       dotenv: 16.0.3
       pg: 8.8.0
       sqlite3: 5.1.1
@@ -215,6 +220,7 @@ importers:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.48.8
+      '@types/better-sqlite3': 7.6.2
       '@types/pg': 8.6.5
       '@types/sqlite3': 3.1.8
       eslint: 8.28.0
