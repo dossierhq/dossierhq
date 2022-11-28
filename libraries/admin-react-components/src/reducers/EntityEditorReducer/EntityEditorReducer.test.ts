@@ -100,14 +100,7 @@ describe('AddDraftAction', () => {
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
-          entityTypes: [
-            {
-              name: 'Foo',
-              adminOnly: false,
-              authKeyPattern: null,
-              fields: [{ name: 'title', type: FieldType.String }],
-            },
-          ],
+          entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
         }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
@@ -169,6 +162,7 @@ describe('DeleteDraftAction', () => {
         }).valueOrThrow()
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.SetName(id, 'Changed name'),
       new EntityEditorActions.DeleteDraft(id)
     );
     expect(state).toMatchSnapshot();

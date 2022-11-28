@@ -297,11 +297,13 @@ class DeleteDraftAction implements EntityEditorStateAction {
       activeEntityId = null;
     }
 
-    return {
+    const newState = {
       ...state,
       activeEntityId,
       drafts: state.drafts.filter((it) => it.id !== this.id),
     };
+    newState.status = resolveEditorStatus(newState);
+    return newState;
   }
 }
 
