@@ -405,6 +405,10 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-database-adapter-better-sqlite3",
+      "projectFolder": "libraries/database-adapter-better-sqlite3"
+    },
+    {
       "packageName": "@jonasb/datadata-database-adapter-sqlite-bun",
       "projectFolder": "libraries/database-adapter-sqlite-bun"
     },
