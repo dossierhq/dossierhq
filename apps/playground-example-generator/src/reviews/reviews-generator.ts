@@ -3,6 +3,7 @@ import type { EntityReference, Location } from '@jonasb/datadata-core';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
+  createRichTextTextAndLineBreakNodes,
   createRichTextTextNode,
 } from '@jonasb/datadata-core';
 import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
@@ -109,7 +110,7 @@ async function createPersonalNote(
                 `This is a personal note about ${placeOfBusiness.fields.name} that only Alice can see.`
               ),
             ]),
-            createRichTextParagraphNode([createRichTextTextNode(faker.lorem.text())]),
+            createRichTextParagraphNode(createRichTextTextAndLineBreakNodes(faker.lorem.text())),
           ]),
         },
       },
