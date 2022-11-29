@@ -71,7 +71,7 @@ async function createDatabaseAdapter() {
   if (databaseResult.isError()) return databaseResult;
   const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
     migrate: true,
-    fts: { version: 'fts5' },
+    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with create-database-from-disk.ts
     journalMode: 'wal',
   });
   return databaseAdapterResult;

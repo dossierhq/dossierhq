@@ -13,7 +13,7 @@ async function initializeServer(logger: Logger, filename: string) {
   const database = Database.open(filename);
   const databaseAdapterResult = await createBunSqliteAdapter({ logger }, database, {
     migrate: true,
-    fts: { version: 'fts5' },
+    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with ServerUtils.ts
     journalMode: 'wal',
   });
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
