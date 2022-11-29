@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface IconProps {

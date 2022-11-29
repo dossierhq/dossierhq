@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Text } from '../components/index.js';
+import { Row } from '../components/Row/Row.js';
+import { Text } from '../components/Text/Text.js';
 import type { SpacingValue } from '../utils/LayoutPropsUtils.js';
 import { SpacingValues } from '../utils/LayoutPropsUtils.js';
 

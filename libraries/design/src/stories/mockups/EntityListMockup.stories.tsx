@@ -1,18 +1,16 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import type { MouseEvent } from 'react';
 import React, { useReducer, useState } from 'react';
-import {
-  ButtonDropdown,
-  Field,
-  FullscreenContainer,
-  IconButton,
-  Input,
-  Navbar,
-  reduceMultipleSelectorState,
-  Table,
-  Tag,
-  TagSelector,
-} from '../../index.js';
+import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
+import { reduceMultipleSelectorState } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
+import { Field } from '../../components/Field/Field.js';
+import { FullscreenContainer } from '../../components/FullscreenContainer/FullscreenContainer.js';
+import { IconButton } from '../../components/IconButton/IconButton.js';
+import { Input } from '../../components/Input/Input.js';
+import { Navbar } from '../../components/Navbar/Navbar.js';
+import { Table } from '../../components/Table/Table.js';
+import { Tag } from '../../components/Tag/Tag.js';
+import { TagSelector } from '../../components/TagSelector/TagSelector.js';
 import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from './EntityTypeSelector.js';
 import {
   EntityTypeSelector,

@@ -1,17 +1,17 @@
 import type { Dispatch } from 'react';
 import React from 'react';
+import type { DropdownSelectorProps } from '../../components/DropdownSelector/DropdownSelector.js';
+import { DropdownSelector } from '../../components/DropdownSelector/DropdownSelector.js';
 import type {
-  DropdownSelectorProps,
   MultipleSelectorItem,
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '../../index.js';
+} from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import {
-  DropdownSelector,
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
-} from '../../index.js';
+} from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;

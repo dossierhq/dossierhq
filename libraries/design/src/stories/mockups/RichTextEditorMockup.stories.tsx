@@ -1,13 +1,11 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import {
-  ButtonDropdown,
-  ClassName,
-  IconButton,
-  LexicalTheme,
-  Row,
-  toClassName,
-} from '../../index.js';
+import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
+import { IconButton } from '../../components/IconButton/IconButton.js';
+import { Row } from '../../components/Row/Row.js';
+import { LexicalTheme } from '../../config/LexicalTheme.js';
+import { ClassName } from '../../index.js';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ScreenProps {}

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Table } from '../components/index.js';
+import { Table } from '../components/Table/Table.js';
 import { Color, toBackgroundColorClassName } from '../config/Colors.js';
 
 interface ColorSwatchProps {
