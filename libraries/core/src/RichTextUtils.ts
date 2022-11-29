@@ -1,22 +1,21 @@
 import { RichTextNodeType } from './Schema.js';
-import type {
-  HeadingTagType,
-  SerializedHeadingNode,
-  SerializedParagraphNode,
-  SerializedTextNode,
-  TextFormatType,
-} from './third-party/Lexical.js';
+import type { HeadingTagType, TextFormatType } from './third-party/Lexical.js';
 import { TEXT_TYPE_TO_FORMAT } from './third-party/Lexical.js';
 import type {
   EntityReference,
   RichText,
   RichTextEntityLinkNode,
   RichTextEntityNode,
+  RichTextHeadingNode,
+  RichTextLineBreakNode,
   RichTextNode,
+  RichTextParagraphNode,
+  RichTextTextNode,
   RichTextValueItemNode,
   ValueItem,
 } from './Types.js';
 
+// TODO name is not correct, we create a document with a root node
 export function createRichTextRootNode(children: RichTextNode[]): RichText {
   return {
     root: {
@@ -33,7 +32,7 @@ export function createRichTextRootNode(children: RichTextNode[]): RichText {
 export function createRichTextHeadingNode(
   tag: HeadingTagType,
   children: RichTextNode[]
-): SerializedHeadingNode {
+): RichTextHeadingNode {
   return {
     direction: 'ltr',
     format: '',
@@ -45,7 +44,7 @@ export function createRichTextHeadingNode(
   };
 }
 
-export function createRichTextParagraphNode(children: RichTextNode[]): SerializedParagraphNode {
+export function createRichTextParagraphNode(children: RichTextNode[]): RichTextParagraphNode {
   return {
     direction: 'ltr',
     format: '',
@@ -59,7 +58,7 @@ export function createRichTextParagraphNode(children: RichTextNode[]): Serialize
 export function createRichTextTextNode(
   text: string,
   options?: { format?: TextFormatType[] }
-): SerializedTextNode {
+): RichTextTextNode {
   let formatValue = 0;
   if (options?.format) {
     for (const formatItem of options.format) {
@@ -78,6 +77,25 @@ export function createRichTextTextNode(
     type: 'text',
     version: 1,
   };
+}
+
+export function createRichTextLineBreakNode(): RichTextLineBreakNode {
+  return { type: RichTextNodeType.linebreak, version: 1 };
+}
+
+export function createRichTextTextAndLineBreakNodes(
+  text: string,
+  options?: { format?: TextFormatType[] }
+): (RichTextTextNode | RichTextLineBreakNode)[] {
+  const linesOrNewline = text.split(/(\r?\n)/);
+  return linesOrNewline
+    .filter((it) => it.length > 0)
+    .map((it) => {
+      if (it === '\r\n' || it === '\n') {
+        return createRichTextLineBreakNode();
+      }
+      return createRichTextTextNode(it, options);
+    });
 }
 
 export function createRichTextEntityNode(reference: EntityReference): RichTextEntityNode {
@@ -105,9 +123,6 @@ export function createRichTextValueItemNode<T extends ValueItem<string, object>>
   return { type: RichTextNodeType.valueItem, data, format: '', version: 1 };
 }
 
-export function richTextTextNodeHasFormat(
-  node: SerializedTextNode,
-  format: TextFormatType
-): boolean {
+export function richTextTextNodeHasFormat(node: RichTextTextNode, format: TextFormatType): boolean {
   return (node.format & TEXT_TYPE_TO_FORMAT[format]) !== 0;
 }
