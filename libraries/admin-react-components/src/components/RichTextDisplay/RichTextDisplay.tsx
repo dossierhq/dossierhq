@@ -1,5 +1,6 @@
 import type { EntityReference, RichText, RichTextFieldSpecification } from '@jonasb/datadata-core';
 import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
+import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
@@ -37,6 +38,8 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
     namespace: 'datadata',
     onError: handleError,
     nodes: [
+      CodeNode,
+      CodeHighlightNode,
       PublishedEntityNode,
       PublishedEntityLinkNode,
       PublishedValueItemNode,

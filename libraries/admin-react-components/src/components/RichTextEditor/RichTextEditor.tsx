@@ -5,6 +5,7 @@ import type {
   RichTextFieldSpecification,
 } from '@jonasb/datadata-core';
 import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
+import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin.js';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
@@ -23,6 +24,7 @@ import { AdminClickableLinkPlugin } from './AdminClickableLinkPlugin.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
 import { AdminValueItemNode } from './AdminValueItemNode.js';
+import { CodeHighlightPlugin } from './CodeHighlightPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { ToolbarPlugin } from './ToolbarPlugin.js';
@@ -64,6 +66,8 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
       AdminEntityLinkNode,
       AdminEntityNode,
       AdminValueItemNode,
+      CodeNode,
+      CodeHighlightNode,
       HeadingNode,
       ListItemNode,
       ListNode,
@@ -91,6 +95,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
       />
       <AdminClickableLinkPlugin onClick={handleEntityLinkClick} />
       <CheckListPlugin />
+      <CodeHighlightPlugin />
       <EntityLinkPlugin />
       <EntityPlugin />
       <ListPlugin />

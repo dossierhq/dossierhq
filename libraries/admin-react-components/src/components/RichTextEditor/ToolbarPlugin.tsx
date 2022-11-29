@@ -8,6 +8,7 @@ import {
   Row,
   toSpacingClassName,
 } from '@jonasb/datadata-design';
+import { $createCodeNode, $isCodeNode, CODE_LANGUAGE_MAP } from '@lexical/code';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -51,6 +52,7 @@ const blockTypeToBlockName = {
   h4: { title: 'Heading 4', node: RichTextNodeType.heading, icon: 'heading' },
   h5: { title: 'Heading 5', node: RichTextNodeType.heading, icon: 'heading' },
   h6: { title: 'Heading 6', node: RichTextNodeType.heading, icon: 'heading' },
+  code: { title: 'Code block', node: RichTextNodeType.code, icon: 'code' },
 } satisfies Record<string, { title: string; node: RichTextNodeType; icon: IconName }>;
 
 type BlockTypeName = keyof typeof blockTypeToBlockName;
@@ -73,6 +75,8 @@ export function ToolbarPlugin({
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isEntityLink, setIsEntityLink] = useState(false);
+
+  const [codeLanguage, setCodeLanguage] = useState<string>('');
 
   const [showAddEntityDialog, setShowAddEntityDialog] = useState(false);
   const [showAddValueItemDialog, setShowAddValueItemDialog] = useState(false);
@@ -120,6 +124,11 @@ export function ToolbarPlugin({
           const type = $isHeadingNode(element) ? element.getTag() : element.getType();
           if (type in blockTypeToBlockName) {
             setBlockType(type as keyof typeof blockTypeToBlockName);
+          }
+          if ($isCodeNode(element)) {
+            const language = element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
+            setCodeLanguage(language ? CODE_LANGUAGE_MAP[language] || language : '');
+            return; //TODO why return here?
           }
         }
       }
@@ -314,6 +323,24 @@ function BlockFormatDropDown({
             editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
           } else {
             editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          }
+          break;
+        case 'code':
+          if (blockType !== 'code') {
+            editor.update(() => {
+              const selection = $getSelection();
+
+              if ($isRangeSelection(selection)) {
+                if (selection.isCollapsed()) {
+                  $wrapNodes(selection, () => $createCodeNode());
+                } else {
+                  const textContent = selection.getTextContent();
+                  const codeNode = $createCodeNode();
+                  selection.insertNodes([codeNode]);
+                  selection.insertRawText(textContent);
+                }
+              }
+            });
           }
           break;
         default:
