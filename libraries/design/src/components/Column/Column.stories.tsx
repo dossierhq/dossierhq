@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
 import type { ColumnProps } from './Column.js';
-import { Column } from '../../index.js';
+import { Column } from './Column.js';
 
 const meta: Meta<ColumnProps> = {
   title: 'Components/Column',

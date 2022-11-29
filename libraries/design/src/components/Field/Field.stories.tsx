@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
 import { Button } from '../Button/Button.js';
-import { Input } from '../index.js';
+import { Input } from '../Input/Input.js';
 import type { FieldProps } from './Field.js';
 import { Field } from './Field.js';
 

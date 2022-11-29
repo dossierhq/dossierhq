@@ -1,9 +1,9 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { IconProps } from '../Icon/Icon.js';
-import type { IconName } from '../index.js';
-import { Button, Icon } from '../index.js';
+import { Button } from '../Button/Button.js';
+import type { IconName, IconProps } from '../Icon/Icon.js';
+import { Icon } from '../Icon/Icon.js';
 
 export interface IconButtonProps {
   className?: string;

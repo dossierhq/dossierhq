@@ -4,8 +4,8 @@ import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
 import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
-import type { IconName } from '../index.js';
-import { Icon } from '../index.js';
+import type { IconName } from '../Icon/Icon.js';
+import { Icon } from '../Icon/Icon.js';
 
 export interface InputProps {
   color?: Color;

@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { Badge } from '../index.js';
+import { Badge } from '../Badge/Badge.js';
 import type { ButtonProps } from './Button.js';
 import { Button } from './Button.js';
 

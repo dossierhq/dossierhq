@@ -1,6 +1,6 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import { Icon } from '../index.js';
+import { Icon } from '../Icon/Icon.js';
 
 export interface TableProps {
   className?: string;

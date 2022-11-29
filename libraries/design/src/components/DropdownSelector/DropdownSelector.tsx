@@ -2,13 +2,16 @@ import type { Dispatch, ReactNode } from 'react';
 import React, { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
+import { Badge } from '../Badge/Badge.js';
+import { Button } from '../Button/Button.js';
+import { DropdownDisplay } from '../DropdownDisplay/DropdownDisplay.js';
+import type { IconName } from '../Icon/Icon.js';
 import type {
-  IconName,
   MultipleSelectorItem,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '../index.js';
-import { Badge, Button, DropdownDisplay, MultipleSelectorStateActions } from '../index.js';
+} from './MultipleSelectorReducer.js';
+import { MultipleSelectorStateActions } from './MultipleSelectorReducer.js';
 
 export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;

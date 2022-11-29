@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
-import { Button } from '../index.js';
+import { Button } from '../Button/Button.js';
 import type { DropdownDisplayProps } from './DropdownDisplay.js';
 import { DropdownDisplay } from './DropdownDisplay.js';
 

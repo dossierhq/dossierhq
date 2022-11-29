@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toSizeClassName } from '../../utils/LayoutPropsUtils.js';
 

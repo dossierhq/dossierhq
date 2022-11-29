@@ -1,6 +1,6 @@
 import type { FunctionComponent, MouseEventHandler, ReactElement } from 'react';
+import type { StatusColor } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
-import type { StatusColor } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TagProps {

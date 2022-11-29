@@ -2,7 +2,7 @@ import type { ReactNode, Ref } from 'react';
 import React, { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
-import { DropdownDisplay } from '../index.js';
+import { DropdownDisplay } from '../DropdownDisplay/DropdownDisplay.js';
 
 export interface DropdownItem {
   id: string;
