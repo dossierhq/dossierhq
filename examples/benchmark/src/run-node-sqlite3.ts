@@ -30,7 +30,7 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
 }
 
 async function main(runName: string, ciOrLocal: { githubSha: string | undefined } | 'local') {
-  const adapter = await createSqliteDatabaseAdapter('output/db-sqlite3.sqlite');
+  const adapter = await createSqliteDatabaseAdapter('databases/db-sqlite3.sqlite');
   const result = await initializeAndRunTests({
     runName,
     variant: 'sqlite',
