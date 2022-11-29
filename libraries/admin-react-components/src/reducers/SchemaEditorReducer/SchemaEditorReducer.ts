@@ -112,6 +112,7 @@ export const RichTextNodePlaceholders: NodePlaceholderConfig[] = [
     RichTextNodeType.linebreak,
   ],
   [RichTextNodeType.list, RichTextNodeType.listitem],
+  [RichTextNodeType.code, RichTextNodeType['code-highlight']],
 ].map((nodes) => ({ name: nodes.join(', '), nodes }));
 
 const RichTextNodesInPlaceholders = new Set(
