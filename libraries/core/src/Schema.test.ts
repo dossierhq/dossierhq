@@ -536,7 +536,7 @@ describe('validate()', () => {
     );
   });
 
-  test('Error: richTextNodes without root, paragraph and text', () => {
+  test('Error: richTextNodes without root, paragraph, text and linebreak', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -564,7 +564,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include root, paragraph, text'
+      'Foo.bar: richTextNodes must include root, paragraph, text, linebreak'
     );
   });
 
@@ -583,7 +583,11 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [RichTextNodeType.root, RichTextNodeType.text],
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
+                ],
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -615,7 +619,11 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph],
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.linebreak,
+                ],
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -629,6 +637,42 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes must include text'
+    );
+  });
+
+  test('Error: richTextNodes without linebreak', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
+                ],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes must include linebreak'
     );
   });
 
@@ -651,6 +695,7 @@ describe('validate()', () => {
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
                   RichTextNodeType.list,
                 ],
                 entityTypes: [],
@@ -688,6 +733,7 @@ describe('validate()', () => {
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
                   RichTextNodeType.listitem,
                 ],
                 entityTypes: [],
@@ -703,6 +749,82 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes includes listitem but must also include related list'
+    );
+  });
+
+  test('Error: richTextNodes with code without code-highlight', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
+                  RichTextNodeType.code,
+                ],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes includes code but must also include related code-highlight'
+    );
+  });
+
+  test('Error: richTextNodes with code-highlight without code', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
+                  RichTextNodeType['code-highlight'],
+                ],
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes includes code-highlight but must also include related code'
     );
   });
 
@@ -726,6 +848,7 @@ describe('validate()', () => {
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
                 ],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -762,6 +885,7 @@ describe('validate()', () => {
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
                 ],
                 entityTypes: [],
                 valueTypes: [],
@@ -800,6 +924,7 @@ describe('validate()', () => {
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.text,
+                  RichTextNodeType.linebreak,
                 ],
               },
             ],

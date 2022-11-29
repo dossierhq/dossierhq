@@ -14,6 +14,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
             RichTextNodeType.root,
             RichTextNodeType.paragraph,
             RichTextNodeType.text,
+            RichTextNodeType.linebreak,
             RichTextNodeType.entity,
           ],
           entityTypes: ['PlaceOfBusiness'],

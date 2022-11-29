@@ -26,7 +26,12 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
           name: 'description',
           type: FieldType.RichText,
           required: true,
-          richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
+          richTextNodes: [
+            RichTextNodeType.root,
+            RichTextNodeType.paragraph,
+            RichTextNodeType.text,
+            RichTextNodeType.linebreak,
+          ],
         },
         {
           name: 'body',
@@ -36,6 +41,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
             RichTextNodeType.root,
             RichTextNodeType.paragraph,
             RichTextNodeType.text,
+            RichTextNodeType.linebreak,
             RichTextNodeType.entityLink,
             RichTextNodeType.valueItem,
           ],

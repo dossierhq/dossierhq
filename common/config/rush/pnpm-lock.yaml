@@ -367,6 +367,7 @@ importers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@lexical/code': ~0.6.0
       '@lexical/list': ~0.6.0
       '@lexical/react': ~0.6.0
       '@lexical/rich-text': ~0.6.0
@@ -407,6 +408,7 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
       '@jonasb/datadata-leaflet': link:../leaflet
+      '@lexical/code': 0.6.0_lexical@0.6.0
       '@lexical/list': 0.6.0_lexical@0.6.0
       '@lexical/react': 0.6.0_6fhz367lkjrjgqa2bb2vqca4nq
       '@lexical/rich-text': 0.6.0_pn3nccdp6tlx57bqblvtzyeubi
@@ -6297,7 +6299,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.19.6_@babel+core@7.20.2
       magic-string: 0.26.7
       react-refresh: 0.14.0
-      vite: 3.2.2_sass@1.56.0
+      vite: 3.2.2
     transitivePeerDependencies:
       - supports-color
 
@@ -16558,7 +16560,6 @@ packages:
       rollup: 2.79.1
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /vite/3.2.2_sass@1.56.0:
     resolution: {integrity: sha512-pLrhatFFOWO9kS19bQ658CnRYzv0WLbsPih6R+iFeEEhDOuYgYCX2rztUViMz/uy/V8cLCJvLFeiOK7RJEzHcw==}
@@ -16589,6 +16590,8 @@ packages:
       sass: 1.56.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: false
+    optional: true
 
   /vitest/0.25.3:
     resolution: {integrity: sha512-/UzHfXIKsELZhL7OaM2xFlRF8HRZgAHtPctacvNK8H4vOcbJJAMEgbWNGSAK7Y9b1NBe5SeM7VTuz2RsTHFJJA==}

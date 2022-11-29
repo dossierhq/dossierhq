@@ -70,6 +70,7 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
+    "@lexical/code": "~0.6.0",
     "@lexical/list": "~0.6.0",
     "@lexical/react": "~0.6.0",
     "@lexical/rich-text": "~0.6.0",

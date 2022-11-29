@@ -33,6 +33,7 @@
             "root",
             "paragraph",
             "text",
+            "linebreak",
             "list",
             "listitem",
             "entityLink",
@@ -98,6 +99,7 @@
             "root",
             "paragraph",
             "text",
+            "linebreak",
             "entityLink"
           ],
           "linkEntityTypes": [

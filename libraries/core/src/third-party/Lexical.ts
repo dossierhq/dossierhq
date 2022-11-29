@@ -46,6 +46,13 @@ export type SerializedTextNode = Spread<
   SerializedLexicalNode
 >;
 
+export type SerializedLineBreakNode = Spread<
+  {
+    type: 'linebreak';
+  },
+  SerializedLexicalNode
+>;
+
 export type SerializedParagraphNode = Spread<
   {
     type: 'paragraph';
@@ -73,6 +80,26 @@ export const TEXT_TYPE_TO_FORMAT = {
   superscript: IS_SUPERSCRIPT,
   underline: IS_UNDERLINE,
 } as const;
+
+// from @lexical/code
+
+export type SerializedCodeNode = Spread<
+  {
+    language: string | null | undefined;
+    type: 'code';
+    version: 1;
+  },
+  SerializedElementNode
+>;
+
+export type SerializedCodeHighlightNode = Spread<
+  {
+    highlightType: string | null | undefined;
+    type: 'code-highlight';
+    version: 1;
+  },
+  SerializedTextNode
+>;
 
 // from @lexical/list
 

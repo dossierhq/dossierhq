@@ -105,7 +105,12 @@ interface NodePlaceholderConfig {
 }
 
 export const RichTextNodePlaceholders: NodePlaceholderConfig[] = [
-  [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
+  [
+    RichTextNodeType.root,
+    RichTextNodeType.paragraph,
+    RichTextNodeType.text,
+    RichTextNodeType.linebreak,
+  ],
   [RichTextNodeType.list, RichTextNodeType.listitem],
 ].map((nodes) => ({ name: nodes.join(', '), nodes }));
 

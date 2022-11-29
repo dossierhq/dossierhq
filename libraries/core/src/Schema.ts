@@ -51,9 +51,12 @@ export const FieldType = {
 export type FieldType = typeof FieldType[keyof typeof FieldType];
 
 export const RichTextNodeType = {
+  code: 'code',
+  'code-highlight': 'code-highlight',
   entity: 'entity',
   entityLink: 'entityLink',
   heading: 'heading',
+  linebreak: 'linebreak',
   list: 'list',
   listitem: 'listitem',
   paragraph: 'paragraph',
@@ -205,8 +208,16 @@ export interface SchemaSpecificationUpdatePayload {
 
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
 
+const REQUIRED_RICH_TEXT_NODES = [
+  RichTextNodeType.root,
+  RichTextNodeType.paragraph,
+  RichTextNodeType.text,
+  RichTextNodeType.linebreak,
+];
+
 const GROUPED_RICH_TEXT_NODE_TYPES: RichTextNodeType[][] = [
   [RichTextNodeType.list, RichTextNodeType.listitem],
+  [RichTextNodeType.code, RichTextNodeType['code-highlight']],
 ];
 
 const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
@@ -387,11 +398,9 @@ export class AdminSchema {
             usedRichTextNodes.add(richTextNode);
           }
 
-          const missingNodeTypes = [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-          ].filter((it) => !usedRichTextNodes.has(it));
+          const missingNodeTypes = REQUIRED_RICH_TEXT_NODES.filter(
+            (it) => !usedRichTextNodes.has(it)
+          );
           if (missingNodeTypes.length > 0) {
             return notOk.BadRequest(
               `${typeSpec.name}.${

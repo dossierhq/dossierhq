@@ -2,11 +2,20 @@ import { describe, expect, test } from 'vitest';
 import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
 import type { ValidationError, ValidationOptions } from './ItemValidator.js';
 import { validateTraverseNode } from './ItemValidator.js';
+import {
+  createRichTextParagraphNode,
+  createRichTextRootNode,
+  createRichTextTextNode,
+} from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
 import type { EntityLike } from './Types.js';
 
 const schema = AdminSchema.createAndValidate({
   entityTypes: [
+    {
+      name: 'RichTextsEntity',
+      fields: [{ name: 'anyNodes', type: FieldType.RichText }],
+    },
     {
       name: 'StringsEntity',
       fields: [
@@ -114,6 +123,36 @@ describe('validateTraverseNode', () => {
             "fields",
             "patternList",
             1,
+          ],
+          "type": "save",
+        },
+      ]
+    `);
+  });
+
+  test('Fail: rich text text node with line break', () => {
+    expect(
+      validateEntity(
+        {
+          info: { type: 'RichTextsEntity' },
+          fields: {
+            anyNodes: createRichTextRootNode([
+              createRichTextParagraphNode([createRichTextTextNode('hello\nworld')]),
+            ]),
+          },
+        },
+        { validatePublish: false }
+      )
+    ).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Rich text text nodes cannot contain line breaks, use linebreak nodes instead",
+          "path": [
+            "entity",
+            "fields",
+            "anyNodes",
+            0,
+            0,
           ],
           "type": "save",
         },

@@ -35,7 +35,12 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         {
           name: 'richTextOnlyParagraphAndText',
           type: FieldType.RichText,
-          richTextNodes: [RichTextNodeType.root, RichTextNodeType.paragraph, RichTextNodeType.text],
+          richTextNodes: [
+            RichTextNodeType.root,
+            RichTextNodeType.paragraph,
+            RichTextNodeType.text,
+            RichTextNodeType.linebreak,
+          ],
         },
         {
           name: 'richTextLimitedTypes',

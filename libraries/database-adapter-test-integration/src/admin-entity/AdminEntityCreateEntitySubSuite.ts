@@ -823,7 +823,7 @@ async function createEntity_errorRichTextWithUnsupportedEntityNode({
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    `entity.fields.richTextOnlyParagraphAndText[0]: Rich text node type entity is not allowed in field (supported nodes: root, paragraph, text)`
+    `entity.fields.richTextOnlyParagraphAndText[0]: Rich text node type entity is not allowed in field (supported nodes: root, paragraph, text, linebreak)`
   );
 
   const getResult = await client.getEntity({ id });

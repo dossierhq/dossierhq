@@ -2,7 +2,7 @@ import { assertExhaustive, assertIsDefined } from './Asserts.js';
 import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeType } from './ItemTraverser.js';
 import type { ItemValuePath } from './ItemUtils.js';
-import { isStringItemField } from './ItemUtils.js';
+import { isRichTextTextNode, isStringItemField } from './ItemUtils.js';
 import type {
   AdminSchema,
   RichTextFieldSpecification,
@@ -18,6 +18,8 @@ export interface ValidationError {
 export interface ValidationOptions {
   validatePublish: boolean;
 }
+
+const LINE_BREAK_REGEX = /[\r\n]/;
 
 export function validateTraverseNode(
   schema: AdminSchema,
@@ -58,6 +60,16 @@ export function validateTraverseNode(
             } is not allowed in field (supported nodes: ${richTextFieldSpec.richTextNodes.join(
               ', '
             )})`,
+          };
+        }
+      }
+
+      if (isRichTextTextNode(node.node)) {
+        if (LINE_BREAK_REGEX.test(node.node.text)) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: 'Rich text text nodes cannot contain line breaks, use linebreak nodes instead',
           };
         }
       }

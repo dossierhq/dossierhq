@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["datadata", "graphiql", "listitem", "tsbuildinfo"],
+  "cSpell.words": ["datadata", "graphiql", "linebreak", "listitem", "tsbuildinfo"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],

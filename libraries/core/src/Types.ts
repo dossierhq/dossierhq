@@ -1,11 +1,14 @@
 import type { ErrorType, Result } from './ErrorResult.js';
 import type { RichTextNodeType } from './Schema.js';
 import type {
+  SerializedCodeHighlightNode,
+  SerializedCodeNode,
   SerializedDecoratorBlockNode,
   SerializedEditorState,
   SerializedElementNode,
   SerializedHeadingNode,
   SerializedLexicalNode,
+  SerializedLineBreakNode,
   SerializedListItemNode,
   SerializedListNode,
   SerializedParagraphNode,
@@ -58,6 +61,8 @@ export type RichTextElementNode = SerializedElementNode;
 
 export type RichTextTextNode = SerializedTextNode;
 
+export type RichTextLineBreakNode = SerializedLineBreakNode;
+
 export type RichTextRootNode = SerializedRootNode;
 
 export type RichTextParagraphNode = SerializedParagraphNode;
@@ -67,6 +72,10 @@ export type RichTextHeadingNode = SerializedHeadingNode;
 export type RichTextListNode = SerializedListNode;
 
 export type RichTextListItemNode = SerializedListItemNode;
+
+export type RichTextCodeNode = SerializedCodeNode;
+
+export type RichTextCodeHighlightNode = SerializedCodeHighlightNode;
 
 export type RichTextEntityNode = Spread<
   {
