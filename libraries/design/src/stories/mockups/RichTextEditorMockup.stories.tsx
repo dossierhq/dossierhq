@@ -100,6 +100,20 @@ function Screen(): JSX.Element {
         <h4 className={LexicalTheme.heading.h4}>Heading four</h4>
         <h5 className={LexicalTheme.heading.h5}>Heading five</h5>
         <h6 className={LexicalTheme.heading.h6}>Heading six</h6>
+        <code
+          className={LexicalTheme.code}
+          spellCheck="false"
+          data-highlight-language="javascript"
+          data-gutter="1"
+          dir="ltr"
+        >
+          <span className={LexicalTheme.codeHighlight.attr}>const</span>
+          <span> foo </span>
+          <span className={LexicalTheme.codeHighlight.operator}>=</span>
+          <span> </span>
+          <span className={LexicalTheme.codeHighlight.property}>123</span>
+          <span className={LexicalTheme.codeHighlight.punctuation}>;</span>
+        </code>
       </div>
     </>
   );
