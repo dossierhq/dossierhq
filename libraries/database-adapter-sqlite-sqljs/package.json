@@ -24,8 +24,7 @@
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "browser-test": "playwright test"
   },
   "author": "",
   "license": "ISC",
@@ -39,6 +38,7 @@
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
+    "@playwright/test": "~1.28.1",
     "@rushstack/heft": "0.48.8",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.2",
