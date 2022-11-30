@@ -1,7 +1,7 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import type { ReadOnlyEntityRepository } from '@jonasb/datadata-database-adapter-test-integration';
 import {
-  createAdminEntityTestSuite,
+  createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import test from '@playwright/test';
@@ -15,7 +15,7 @@ let readOnlyEntityRepository: ReadOnlyEntityRepository;
 test.beforeAll(async () => {
   serverInit = (await initializeSqlJsServer()).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server, 'AdminEntityTest')
+    await createReadOnlyEntityRepository(serverInit.server, 'PublishedEntityTest')
   ).valueOrThrow();
 });
 test.afterAll(async () => {
@@ -26,7 +26,7 @@ test.afterAll(async () => {
 });
 
 registerTestSuite(
-  createAdminEntityTestSuite({
+  createPublishedEntityTestSuite({
     before: async () => {
       assertIsDefined(serverInit);
       const { adminSchema, server } = serverInit;
