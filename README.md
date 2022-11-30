@@ -7,6 +7,7 @@
 - `brew install gnuplot` (for benchmarking)
 - `brew install graphviz` (for documentation)
 - `curl https://bun.sh/install | bash` (for [Bun](https://bun.sh/), needed by `examples/bun`)
+- `npx playwright install` (for installing browsers for Playwright testing)
 
 ## VS Code extensions
 
