@@ -37,6 +37,8 @@ jobs:
           deno-version: "1.28.0"
       - name: Use bun
         uses: antongolub/action-setup-bun@v1
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install --bypass-policy
