@@ -9,12 +9,6 @@
 - `curl https://bun.sh/install | bash` (for [Bun](https://bun.sh/), needed by `examples/bun`)
 - `npx playwright install` (for installing browsers for Playwright testing)
 
-## VS Code extensions
-
-- [Code Spell Checker](vscode:extension/streetsidesoftware.code-spell-checker)
-- [ESLint](vscode:extension/dbaeumer.vscode-eslint)
-- [Prettier](vscode:extension/esbenp.prettier-vscode)
-
 ## Getting started
 
 - `rush update` to install dependencies.
