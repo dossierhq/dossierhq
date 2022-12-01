@@ -2,7 +2,7 @@ name: Node CI
 on: [push]
 jobs:
   build:
-    runs-on: mcr.microsoft.com/playwright:v1.28.1-focal
+    runs-on: ubuntu-22.04
     timeout-minutes: 12
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
