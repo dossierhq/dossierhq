@@ -1,8 +1,13 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:0-18
+FROM mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye
 
-# [Optional] Uncomment this section to install additional OS packages.
+# Enable getting pg 15 client, instead of pg 13
+#RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+#RUN sh -c 'wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null'
+
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends gnuplot
+    && apt-get -y install --no-install-recommends gnuplot postgresql-client
+
+RUN sh -c 'curl https://bun.sh/install | bash'
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
