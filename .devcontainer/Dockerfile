@@ -5,9 +5,7 @@ FROM mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye
 #RUN sh -c 'wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null'
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends gnuplot postgresql-client
-
-RUN sh -c 'curl https://bun.sh/install | bash'
+    && apt-get -y install --no-install-recommends gnuplot pip postgresql-client
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
