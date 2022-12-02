@@ -1129,6 +1129,7 @@ importers:
       '@lexical/selection': ~0.6.0
       '@lexical/utils': ~0.6.0
       '@microsoft/rush-lib': ~5.85.0
+      '@playwright/test': ~1.28.1
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': 0.48.8
       '@storybook/addon-actions': ~6.5.12
@@ -1216,6 +1217,7 @@ importers:
       '@lexical/rich-text': 0.6.0_pn3nccdp6tlx57bqblvtzyeubi
       '@lexical/selection': 0.6.0_lexical@0.6.0
       '@lexical/utils': 0.6.0_lexical@0.6.0
+      '@playwright/test': 1.28.1
       '@rushstack/eslint-patch': 1.2.0
       '@rushstack/heft': 0.48.8
       '@storybook/addon-actions': 6.5.12_biqbaboplfbrettd7655fr4n2y
@@ -3877,7 +3879,6 @@ packages:
     dependencies:
       '@types/node': 18.11.7
       playwright-core: 1.28.1
-    dev: true
 
   /@pmmmwh/react-refresh-webpack-plugin/0.5.5_so6hj2sarpzw76zmfd25dwvqwu:
     resolution: {integrity: sha512-RbG7h6TuP6nFFYKJwbcToA1rjC1FyPg25NR2noAZ0vKI+la01KTSRPkuVPE+U88jXv7javx2JHglUcL1MHcshQ==}
@@ -13687,7 +13688,6 @@ packages:
     resolution: {integrity: sha512-3PixLnGPno0E8rSBJjtwqTwJe3Yw72QwBBBxNoukIj3lEeBNXwbNiKrNuB1oyQgTBw5QHUhNO3SteEtHaMK6ag==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /please-upgrade-node/3.2.0:
     resolution: {integrity: sha512-gQR3WpIgNIKwBMVLkpMUeR3e1/E1y42bqDQZfql+kDeXd8COYfM8PQA4X6y7a8u9Ua9FHmsrrmirW2vHs45hWg==}
