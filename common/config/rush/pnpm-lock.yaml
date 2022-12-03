@@ -80,7 +80,7 @@ importers:
       '@types/sql.js': ~1.4.2
       '@vitejs/plugin-react': ~2.2.0
       eslint: ~8.28.0
-      graphiql: ~2.1.0
+      graphiql: ~2.2.0
       graphql: ~16.6.0
       graphql-config: ~4.3.1
       graphql-ws: ~5.11.1
@@ -104,7 +104,7 @@ importers:
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       '@jonasb/datadata-server': link:../../libraries/server
-      graphiql: 2.1.0_5nrz73l7y5w4fknfhef4n62ioy
+      graphiql: 2.2.0_5nrz73l7y5w4fknfhef4n62ioy
       graphql: 16.6.0
       history: 5.3.0
       leaflet: 1.9.1
@@ -1171,7 +1171,7 @@ importers:
       eslint-plugin-storybook: ~0.6.4
       express: ~4.18.1
       express-graphql: ~0.12.0
-      graphiql: ~2.1.0
+      graphiql: ~2.2.0
       graphql: ~16.6.0
       graphql-config: ~4.3.1
       graphql-voyager: ~1.0.0-rc.31
@@ -1259,7 +1259,7 @@ importers:
       eslint-plugin-storybook: 0.6.4_hsf322ms6xhhd4b5ne6lb74y4a
       express: 4.18.1
       express-graphql: 0.12.0_graphql@16.6.0
-      graphiql: 2.1.0_7jnukyswn2gjmt5dndbm4v6hem
+      graphiql: 2.2.0_7jnukyswn2gjmt5dndbm4v6hem
       graphql: 16.6.0
       graphql-config: 4.3.1_bakchknbkltmcbmdwy2sj6pvjq
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
@@ -2930,8 +2930,8 @@ packages:
   /@gar/promisify/1.1.2:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
 
-  /@graphiql/react/0.14.0_5nrz73l7y5w4fknfhef4n62ioy:
-    resolution: {integrity: sha512-BBkbl35akar4/+4P6ggZ99jSmU0D1qV70A2OegkuJ4t/knAis/R713faOs9xKyjkUj8hv6+KcAqBOp48LnP6lA==}
+  /@graphiql/react/0.15.0_5nrz73l7y5w4fknfhef4n62ioy:
+    resolution: {integrity: sha512-kJqkdf6d4Cck05Wt5yCDZXWfs7HZgcpuoWq/v8nOa698qVaNMM3qdG4CpRsZEexku0DSSJzWWuanxd5x+sRcFg==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2961,8 +2961,8 @@ packages:
       - react-is
     dev: false
 
-  /@graphiql/react/0.14.0_7jnukyswn2gjmt5dndbm4v6hem:
-    resolution: {integrity: sha512-BBkbl35akar4/+4P6ggZ99jSmU0D1qV70A2OegkuJ4t/knAis/R713faOs9xKyjkUj8hv6+KcAqBOp48LnP6lA==}
+  /@graphiql/react/0.15.0_7jnukyswn2gjmt5dndbm4v6hem:
+    resolution: {integrity: sha512-kJqkdf6d4Cck05Wt5yCDZXWfs7HZgcpuoWq/v8nOa698qVaNMM3qdG4CpRsZEexku0DSSJzWWuanxd5x+sRcFg==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -10491,14 +10491,14 @@ packages:
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
 
-  /graphiql/2.1.0_5nrz73l7y5w4fknfhef4n62ioy:
-    resolution: {integrity: sha512-b58o/o7y5x/C4WzH7YTeSWbINE6tcfzZN4TxgvoSZxhE9X6MulXXbXLRiGEl5+FuajIN0LxaoleHTJUHb9H2wg==}
+  /graphiql/2.2.0_5nrz73l7y5w4fknfhef4n62ioy:
+    resolution: {integrity: sha512-w1ujpCKMlkwkoUjeg0HpRiBBTm1WHAjHNkFv1TbMu6trjzz63mQ48GLZlmyQY1yhwmc+diCcvmmAt+AyvKLWWA==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@graphiql/react': 0.14.0_5nrz73l7y5w4fknfhef4n62ioy
+      '@graphiql/react': 0.15.0_5nrz73l7y5w4fknfhef4n62ioy
       '@graphiql/toolkit': 0.8.0_m3bg67dsptqm6lubqsqm77dgiy
       entities: 2.2.0
       graphql: 16.6.0
@@ -10514,14 +10514,14 @@ packages:
       - react-is
     dev: false
 
-  /graphiql/2.1.0_7jnukyswn2gjmt5dndbm4v6hem:
-    resolution: {integrity: sha512-b58o/o7y5x/C4WzH7YTeSWbINE6tcfzZN4TxgvoSZxhE9X6MulXXbXLRiGEl5+FuajIN0LxaoleHTJUHb9H2wg==}
+  /graphiql/2.2.0_7jnukyswn2gjmt5dndbm4v6hem:
+    resolution: {integrity: sha512-w1ujpCKMlkwkoUjeg0HpRiBBTm1WHAjHNkFv1TbMu6trjzz63mQ48GLZlmyQY1yhwmc+diCcvmmAt+AyvKLWWA==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@graphiql/react': 0.14.0_7jnukyswn2gjmt5dndbm4v6hem
+      '@graphiql/react': 0.15.0_7jnukyswn2gjmt5dndbm4v6hem
       '@graphiql/toolkit': 0.8.0_dz5y4i4q3czbnfzgbkxl5d6nzm
       entities: 2.2.0
       graphql: 16.6.0
