@@ -939,7 +939,7 @@ importers:
       mini-svg-data-uri: ~1.4.4
       prettier: 2.8.0
       react: ~18.2.0
-      react-leaflet: ~4.1.0
+      react-leaflet: ~4.2.0
       svgo: ~3.0.0
       tslib: ~2.4.0
       typescript: ~4.9.3
@@ -947,7 +947,7 @@ importers:
       leaflet: 1.9.1
       leaflet.locatecontrol: 0.78.0
       react: 18.2.0
-      react-leaflet: 4.1.0_leaflet@1.9.1+react@18.2.0
+      react-leaflet: 4.2.0_leaflet@1.9.1+react@18.2.0
       tslib: 2.4.0
     devDependencies:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
@@ -1188,7 +1188,7 @@ importers:
       prettier: 2.8.0
       react: ~18.2.0
       react-dom: ~18.2.0
-      react-leaflet: ~4.1.0
+      react-leaflet: ~4.2.0
       react-router-dom: ~6.3.0
       rollup-plugin-visualizer: ~5.8.0
       sass: ~1.56.0
@@ -1276,7 +1276,7 @@ importers:
       prettier: 2.8.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-leaflet: 4.1.0_6yalbjtj7k4yykioxumfwzwadm
+      react-leaflet: 4.2.0_6yalbjtj7k4yykioxumfwzwadm
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
       rollup-plugin-visualizer: 5.8.0
       sass: 1.56.0
@@ -14336,8 +14336,8 @@ packages:
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
-  /react-leaflet/4.1.0_6yalbjtj7k4yykioxumfwzwadm:
-    resolution: {integrity: sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==}
+  /react-leaflet/4.2.0_6yalbjtj7k4yykioxumfwzwadm:
+    resolution: {integrity: sha512-9d8T7hzYrQA5GLe3vn0qtRLJzQKgjr080NKa45yArGwuSl1nH/6aK9gp7DeYdktpdO1vKGSUTGW5AsUS064X0A==}
     peerDependencies:
       leaflet: ^1.9.0
       react: ^18.0.0
@@ -14350,8 +14350,8 @@ packages:
     dev: false
     optional: true
 
-  /react-leaflet/4.1.0_leaflet@1.9.1+react@18.2.0:
-    resolution: {integrity: sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==}
+  /react-leaflet/4.2.0_leaflet@1.9.1+react@18.2.0:
+    resolution: {integrity: sha512-9d8T7hzYrQA5GLe3vn0qtRLJzQKgjr080NKa45yArGwuSl1nH/6aK9gp7DeYdktpdO1vKGSUTGW5AsUS064X0A==}
     peerDependencies:
       leaflet: ^1.9.0
       react: ^18.0.0
