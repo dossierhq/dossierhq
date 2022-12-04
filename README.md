@@ -21,6 +21,13 @@
   - `npm run db:make-users:no-superuser`
 - `rush build`
 
+## Dev container / Github Code Spaces
+
+- Start dev container
+- The script [post-create.sh](./.devcontainer/scripts/post-create.sh) runs automatically on first run
+- When done, restart your shell since it sets up environment variables
+- For root access to the Postgres database, run `psql "$HOST_ROOT_DATABASE_URL"` or `pgcli "$HOST_ROOT_DATABASE_URL"`
+
 ## Dependencies
 
 - Run `rush add --package foo` instead of `npm install foo` (`rush add --package foo --dev` instead of `npm install --save-dev foo`)
