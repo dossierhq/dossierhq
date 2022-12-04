@@ -16,7 +16,7 @@
   "devDependencies": {
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "bun-types": "~0.2.0",
-    "eslint": "~8.28.0",
+    "eslint": "~8.29.0",
     "prettier": "2.8.0",
     "typescript": "~4.9.3"
   },
