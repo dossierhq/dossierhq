@@ -8,6 +8,7 @@ THIS_DIR="$(pushd "$(dirname "$0")" > /dev/null; pwd; popd > /dev/null)"
 function create_user {
   USERNAME="$1"
   PASSWORD="$2"
+  echo "Creating user $USERNAME"
   "$THIS_DIR/db-psql-root.sh" <<EOF
 SELECT 'CREATE USER ${USERNAME} WITH PASSWORD ''${PASSWORD}''' WHERE NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${USERNAME}')
 \gexec
@@ -16,6 +17,7 @@ EOF
 
 function create_database {
   DATABASE_NAME="$1"
+  echo "Creating databse $DATABASE_NAME"
   "$THIS_DIR/db-psql-root.sh" <<EOF
 SELECT 'CREATE DATABASE "${DATABASE_NAME}"' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '${DATABASE_NAME}')
 \gexec
