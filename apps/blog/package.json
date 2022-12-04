@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "./scripts/generate-typescript.ts 2>&1 && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1",
+    "build": "./scripts/generate-typescript.ts 2>&1 && ./scripts/create-database-if-missing.sh && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
