@@ -46,3 +46,6 @@ WithBadge.args = {
 
 export const Light = Template.bind({});
 Light.args = { color: 'light' };
+
+export const Anchor = Template.bind({});
+Anchor.args = { as: 'a', href: 'javascript: alert("Clicked")' };

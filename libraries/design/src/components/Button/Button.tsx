@@ -6,19 +6,24 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { IconName } from '../Icon/Icon.js';
 import { Icon } from '../Icon/Icon.js';
 
-export interface ButtonProps {
-  ref?: Ref<HTMLButtonElement>;
+export type ButtonProps = {
+  ref?: Ref<HTMLAnchorElement | HTMLButtonElement>;
   className?: string;
   style?: CSSProperties;
-  disabled?: boolean;
   iconLeft?: IconName;
   iconRight?: IconName;
   color?: Color;
   title?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
-}
+} & (
+  | { as: 'a'; href?: string; target?: string }
+  | {
+      as?: 'button';
+      disabled?: boolean;
+      onClick?: MouseEventHandler<HTMLButtonElement>;
+      onMouseDown?: MouseEventHandler<HTMLButtonElement>;
+    }
+);
 
 export interface ButtonGroupProps {
   centered?: boolean;
@@ -33,33 +38,44 @@ interface ButtonComponent extends FunctionComponent<ButtonProps> {
 
 const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
   (
-    {
-      className,
-      disabled,
-      iconLeft,
-      iconRight,
-      color,
-      style,
-      title,
-      onClick,
-      onMouseDown,
-      children,
-    }: ButtonProps,
+    { className, iconLeft, iconRight, color, style, title, children, ...props }: ButtonProps,
     ref
   ) => {
-    return (
-      <button
-        ref={ref}
-        className={toClassName('button', toColorClassName(color), className)}
-        style={style}
-        title={title}
-        onClick={onClick}
-        onMouseDown={onMouseDown}
-        disabled={disabled}
-      >
+    const realClassName = toClassName('button', toColorClassName(color), className);
+    const content = (
+      <>
         {iconLeft ? <Icon icon={iconLeft} /> : null}
         {(iconLeft || iconRight) && children ? <span>{children}</span> : children}
         {iconRight ? <Icon icon={iconRight} /> : null}
+      </>
+    );
+
+    if (props.as === 'a') {
+      return (
+        <a
+          ref={ref as Ref<HTMLAnchorElement>}
+          className={realClassName}
+          href={props.href}
+          target={props.target}
+          style={style}
+          title={title}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    return (
+      <button
+        ref={ref as Ref<HTMLButtonElement>}
+        className={realClassName}
+        style={style}
+        title={title}
+        onClick={props.onClick}
+        onMouseDown={props.onMouseDown}
+        disabled={props.disabled}
+      >
+        {content}
       </button>
     );
   }
