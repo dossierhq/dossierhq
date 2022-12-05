@@ -5,13 +5,13 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
-import { urls } from '../../utils/PageUtils';
+import { BrowserUrls } from '../../utils/BrowserUrls';
 import { NavBar } from '../NavBar/NavBar';
 
 export default function PublishedEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => router.push(urls.publishedEntityDisplay([entity.id])),
+    (entity: PublishedEntity) => router.push(BrowserUrls.publishedEntityDisplay([entity.id])),
     [router]
   );
   const handleUrlQueryChanged = useCallback(

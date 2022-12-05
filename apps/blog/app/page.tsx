@@ -12,7 +12,7 @@ import Image from 'next/image.js';
 import { LinkButton } from '../components/LinkButton/LinkButton';
 import { NavBar } from '../components/NavBar/NavBar';
 import logo from '../public/logo.svg';
-import { urls } from '../utils/PageUtils';
+import { BrowserUrls } from '../utils/BrowserUrls';
 
 export default function Page() {
   return (
@@ -38,7 +38,7 @@ export default function Page() {
             toFlexItemClassName({ alignSelf: 'flex-start' }),
             toSpacingClassName({ marginBottom: 5 })
           )}
-          href={urls.docs}
+          href={BrowserUrls.docs}
           color="primary"
         >
           Get started
@@ -77,10 +77,14 @@ export default function Page() {
               Read the docs to learn more or jump straight in and try it in the Playground.
             </Text>
             <Button.Group>
-              <LinkButton href={urls.docs} color="primary">
+              <LinkButton href={BrowserUrls.docs} color="primary">
                 Read the docs
               </LinkButton>
-              <LinkButton href={urls.playground} target="_blank" iconRight="openInNewWindow">
+              <LinkButton
+                href={BrowserUrls.playground()}
+                target="_blank"
+                iconRight="openInNewWindow"
+              >
                 Explore the Playground
               </LinkButton>
             </Button.Group>

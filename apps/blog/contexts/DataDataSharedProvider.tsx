@@ -33,7 +33,8 @@ import {
 } from '@jonasb/datadata-core';
 import { useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
-import { fetchJsonResult, urls } from '../utils/BackendUtils';
+import { BackendUrls } from '../utils/BackendUrls';
+import { fetchJsonResult } from '../utils/BackendUtils';
 
 const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
   { authKey: 'none', displayName: 'None' },
@@ -116,13 +117,13 @@ async function terminatingAdminMiddleware(
 
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
-    result = await fetchJsonResult(context, urls.admin(operation.name), {
+    result = await fetchJsonResult(context, BackendUrls.admin(operation.name), {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
-    result = await fetchJsonResult(context, urls.admin(operation.name, jsonOperation), {
+    result = await fetchJsonResult(context, BackendUrls.admin(operation.name, jsonOperation), {
       method: 'GET',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
     });
@@ -138,13 +139,13 @@ async function terminatingPublishedMiddleware(
 
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
-    result = await fetchJsonResult(context, urls.published(operation.name), {
+    result = await fetchJsonResult(context, BackendUrls.published(operation.name), {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
-    result = await fetchJsonResult(context, urls.published(operation.name, jsonOperation), {
+    result = await fetchJsonResult(context, BackendUrls.published(operation.name, jsonOperation), {
       method: 'GET',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
     });

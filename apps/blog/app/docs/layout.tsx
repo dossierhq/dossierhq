@@ -2,7 +2,7 @@ import { assertIsDefined } from '@jonasb/datadata-core';
 import { FullscreenContainer, Menu } from '@jonasb/datadata-design';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { urls } from '../../utils/PageUtils';
+import { BrowserUrls } from '../../utils/BrowserUrls';
 import type {
   AppPublishedClient,
   PublishedArticleTocItem,
@@ -55,7 +55,7 @@ export default async function Layout({ children }: Props) {
                 }
               })}
               <Menu.Label>Reference</Menu.Label>
-              <MenuLinkItem href={urls.glossary} activeSegments={['glossary']}>
+              <MenuLinkItem href={BrowserUrls.glossary} activeSegments={['glossary']}>
                 Glossary
               </MenuLinkItem>
             </Menu.List>
@@ -108,7 +108,7 @@ async function ArticleItem({
   return (
     <MenuLinkItem
       key={entity.id}
-      href={urls.article(entity.fields.slug)}
+      href={BrowserUrls.article(entity.fields.slug)}
       activeSegments={isOverview ? [] : [entity.fields.slug]}
     >
       {item.title}
