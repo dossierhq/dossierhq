@@ -4,7 +4,7 @@ import type { PublishedEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { AppPublishedDataDataProvider } from '../../contexts/AppPublishedDataDataProvider';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import { NavBar } from '../NavBar/NavBar';
 
@@ -23,7 +23,7 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
   );
 
   return (
-    <PublishedDataDataSharedProvider>
+    <AppPublishedDataDataProvider>
       <Head>
         <title>Published entities</title>
       </Head>
@@ -33,6 +33,6 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
         onUrlQueryChanged={handleUrlQueryChanged}
         onOpenEntity={handleEntityOpen}
       />
-    </PublishedDataDataSharedProvider>
+    </AppPublishedDataDataProvider>
   );
 }

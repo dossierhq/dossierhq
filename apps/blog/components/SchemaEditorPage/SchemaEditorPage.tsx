@@ -1,7 +1,7 @@
 import { SchemaEditorScreen } from '@jonasb/datadata-admin-react-components';
 import Head from 'next/head';
 import { useState } from 'react';
-import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { AppAdminDataDataProvider } from '../../contexts/AppAdminDataDataProvider';
 import { useWarningOnExit } from '../../hooks/useWarningOnExit';
 import { NavBar } from '../NavBar/NavBar';
 
@@ -14,7 +14,7 @@ export default function SchemaEditorPage() {
   );
 
   return (
-    <DataDataSharedProvider>
+    <AppAdminDataDataProvider>
       <Head>
         <title>Schema</title>
       </Head>
@@ -22,6 +22,6 @@ export default function SchemaEditorPage() {
         header={<NavBar current="schema" />}
         onEditorHasChangesChange={setHasChanges}
       />
-    </DataDataSharedProvider>
+    </AppAdminDataDataProvider>
   );
 }
