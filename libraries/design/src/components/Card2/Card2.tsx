@@ -11,6 +11,7 @@ import { Tag } from '../Tag/Tag.js';
 import { Text } from '../Text/Text.js';
 
 export interface CardProps {
+  className?: string;
   children: ReactNode;
 }
 
@@ -73,12 +74,13 @@ interface CardComponent extends FunctionComponent<CardProps> {
   FooterItem: FunctionComponent<CardFooterItemProps>;
 }
 
-export const Card2: CardComponent = ({ children }: CardProps) => {
+export const Card2: CardComponent = ({ className, children }: CardProps) => {
   return (
     <div
       className={toClassName(
         'is-card-container',
-        toFlexContainerClassName({ flexDirection: 'column' })
+        toFlexContainerClassName({ flexDirection: 'column' }),
+        className
       )}
     >
       {children}
