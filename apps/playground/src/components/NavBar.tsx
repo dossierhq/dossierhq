@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext.js';
 import { ROUTE } from '../utils/RouteUtils.js';
+import logo from './logo.svg';
 
 interface Props {
   current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'graphiql';
@@ -16,7 +17,11 @@ export function NavBar({ current }: Props) {
     <DesignNavbar>
       <DesignNavbar.Brand>
         <DesignNavbar.Item active={current === 'home'}>
-          {NavItemRender('Playground', ROUTE.index.url)}
+          {({ className }) => (
+            <Link to={ROUTE.index.url}>
+              <img className={className} src={logo} alt="Data data logo" width={120} height={28} />
+            </Link>
+          )}
         </DesignNavbar.Item>
         <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
       </DesignNavbar.Brand>
