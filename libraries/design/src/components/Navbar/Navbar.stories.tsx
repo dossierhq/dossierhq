@@ -72,9 +72,11 @@ Dropdown.args = {
       <Navbar.Menu active={false}>
         <Navbar.Item>{NavItemRender('Active')}</Navbar.Item>
         <Navbar.Item>{NavItemRender('Normal')}</Navbar.Item>
-        <Navbar.Dropdown active renderLink={(className) => <a className={className}>Dropdown</a>}>
+        <Navbar.Dropdown renderLink={(className) => <a className={className}>Dropdown</a>}>
           <Navbar.Item active>{NavItemRender('Active dropdown Item')}</Navbar.Item>
           <Navbar.Item>{NavItemRender('Dropdown Item')}</Navbar.Item>
+          <Navbar.DropdownDivider />
+          <Navbar.DropdownContentItem>Hello world</Navbar.DropdownContentItem>
         </Navbar.Dropdown>
       </Navbar.Menu>
     </>
