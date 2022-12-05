@@ -9,4 +9,9 @@ export const SYSTEM_USERS = {
     identifier: 'serverRenderer',
     defaultAuthKeys: ['none'],
   },
+  editor: {
+    provider: 'sys',
+    identifier: 'editor',
+    defaultAuthKeys: ['none'],
+  },
 } as const;
