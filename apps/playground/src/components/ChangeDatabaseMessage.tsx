@@ -38,7 +38,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
       <Message.Header>
         <Message.HeaderTitle>Change database</Message.HeaderTitle>
       </Message.Header>
-      <Message.Body alignItems="flex-start">
+      <Message.FlexBody alignItems="flex-start">
         <Text textStyle="headline5">Reset</Text>
         <p>Reset the database to start from scratch.</p>
         <Button
@@ -110,7 +110,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
           accept=".sqlite, application/x-sqlite3"
           onChange={handleFileChange}
         />
-      </Message.Body>
+      </Message.FlexBody>
     </Message>
   );
 }
