@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f .env ] && grep -q "DATABASE_SQLITE_FILE" .env.local; then
+if [ -f .env.local ] && grep -q "DATABASE_SQLITE_FILE" .env.local; then
   echo "A database is already configured"
   exit 0
 fi
