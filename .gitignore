@@ -63,7 +63,6 @@ common/autoinstallers/*/.npmrc
 temp/
 
 ##
-.env
 .envrc
 *.code-workspace
 

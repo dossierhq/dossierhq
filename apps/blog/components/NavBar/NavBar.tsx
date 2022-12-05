@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import logo from '../../public/logo.svg';
 import { urls } from '../../utils/PageUtils';
+import { LinkButton } from '../LinkButton/LinkButton';
 
 export function NavBar({
   current,
@@ -42,21 +43,34 @@ export function NavBar({
         <DesignNavbar.Item active={current === 'docs'}>
           {NavItemRender('Docs', urls.docs)}
         </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'admin-entities'}>
-          {NavItemRender('Admin entities', urls.adminEntities)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'published-entities'}>
-          {NavItemRender('Published entities', urls.publishedEntities)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'schema'}>
-          {NavItemRender('Schema', urls.schemaEditor)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'graphiql'}>
-          {NavItemRender('GraphiQL', urls.graphiql)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'voyager'}>
-          {NavItemRender('Voyager', urls.voyager)}
-        </DesignNavbar.Item>
+        <DesignNavbar.Dropdown renderLink={(className) => <a className={className}>Admin</a>}>
+          <DesignNavbar.Item active={current === 'admin-entities'}>
+            {NavItemRender('Admin entities', urls.adminEntities)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'published-entities'}>
+            {NavItemRender('Published entities', urls.publishedEntities)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'schema'}>
+            {NavItemRender('Schema', urls.schemaEditor)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'graphiql'}>
+            {NavItemRender('GraphiQL', urls.graphiql)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'voyager'}>
+            {NavItemRender('Voyager', urls.voyager)}
+          </DesignNavbar.Item>
+        </DesignNavbar.Dropdown>
+        <DesignNavbar.End>
+          <DesignNavbar.Item>
+            {({ className }) => (
+              <div className={className}>
+                <LinkButton href={urls.playground} iconRight="openInNewWindow" target="_blank">
+                  Playground
+                </LinkButton>
+              </div>
+            )}
+          </DesignNavbar.Item>
+        </DesignNavbar.End>
       </DesignNavbar.Menu>
     </DesignNavbar>
   );
