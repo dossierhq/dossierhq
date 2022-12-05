@@ -61,7 +61,7 @@ export default async function Layout({ children }: Props) {
             </Menu.List>
           </Menu>
         </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn paddingBottom={5}>
+        <FullscreenContainer.ScrollableColumn paddingBottom={5} paddingHorizontal={3}>
           {children}
         </FullscreenContainer.ScrollableColumn>
         <FullscreenContainer.Column width="2/12" />
