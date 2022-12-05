@@ -38,6 +38,10 @@ export interface NavbarDropdownProps {
   children: ReactNode;
 }
 
+export interface NavbarDropdownContentItemProps {
+  children: ReactNode;
+}
+
 interface NavbarComponent extends FunctionComponent<NavbarProps> {
   Brand: FunctionComponent<NavbarBrandProps>;
   Burger: FunctionComponent<NavbarBurgerProps>;
@@ -46,6 +50,8 @@ interface NavbarComponent extends FunctionComponent<NavbarProps> {
   End: FunctionComponent<NavbarEndProps>;
   Item: FunctionComponent<NavbarItemProps>;
   Dropdown: FunctionComponent<NavbarDropdownProps>;
+  DropdownDivider: FunctionComponent;
+  DropdownContentItem: FunctionComponent<NavbarDropdownContentItemProps>;
 }
 
 export const Navbar: NavbarComponent = ({ children }: NavbarProps) => {
@@ -107,3 +113,13 @@ Navbar.Dropdown = ({ left, renderLink, children }: NavbarDropdownProps) => {
   );
 };
 Navbar.Dropdown.displayName = 'Navbar.Dropdown';
+
+Navbar.DropdownDivider = () => {
+  return <hr className="navbar-divider" />;
+};
+Navbar.DropdownDivider.displayName = 'Navbar.DropdownDivider';
+
+Navbar.DropdownContentItem = ({ children }: NavbarDropdownContentItemProps) => {
+  return <p className="navbar-item">{children}</p>;
+};
+Navbar.DropdownContentItem.displayName = 'Navbar.ContentItem';
