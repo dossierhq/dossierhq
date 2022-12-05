@@ -1,34 +1,5 @@
-import type {
-  AdminClientJsonOperation,
-  AdminClientOperationName,
-  ErrorType,
-  Logger,
-  PromiseResult,
-  PublishedClientJsonOperation,
-  PublishedClientOperationName,
-} from '@jonasb/datadata-core';
-import { buildUrlWithUrlQuery, notOk, ok, stringifyUrlQueryParams } from '@jonasb/datadata-core';
-
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-export const urls = {
-  admin: (
-    operationName: keyof typeof AdminClientOperationName,
-    operation?: AdminClientJsonOperation
-  ): string =>
-    buildUrlWithUrlQuery(
-      `${baseUrl}/admin/${operationName}`,
-      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
-    ),
-  published: (
-    operationName: keyof typeof PublishedClientOperationName,
-    operation?: PublishedClientJsonOperation
-  ): string =>
-    buildUrlWithUrlQuery(
-      `${baseUrl}/published/${operationName}`,
-      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
-    ),
-};
+import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },

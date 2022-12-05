@@ -5,7 +5,7 @@ import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';
 import logo from '../../public/logo.svg';
-import { urls } from '../../utils/PageUtils';
+import { BrowserUrls } from '../../utils/BrowserUrls';
 import { LinkButton } from '../LinkButton/LinkButton';
 
 export function NavBar({
@@ -26,7 +26,7 @@ export function NavBar({
       <DesignNavbar.Brand>
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
-            <Link href={urls.home}>
+            <Link href={BrowserUrls.home}>
               <Image
                 className={className}
                 src={logo}
@@ -41,30 +41,34 @@ export function NavBar({
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
         <DesignNavbar.Item active={current === 'docs'}>
-          {NavItemRender('Docs', urls.docs)}
+          {NavItemRender('Docs', BrowserUrls.docs)}
         </DesignNavbar.Item>
         <DesignNavbar.Dropdown renderLink={(className) => <a className={className}>Admin</a>}>
           <DesignNavbar.Item active={current === 'admin-entities'}>
-            {NavItemRender('Admin entities', urls.adminEntities)}
+            {NavItemRender('Admin entities', BrowserUrls.adminEntities)}
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'published-entities'}>
-            {NavItemRender('Published entities', urls.publishedEntities)}
+            {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'schema'}>
-            {NavItemRender('Schema', urls.schemaEditor)}
+            {NavItemRender('Schema', BrowserUrls.schemaEditor)}
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'graphiql'}>
-            {NavItemRender('GraphiQL', urls.graphiql)}
+            {NavItemRender('GraphiQL', BrowserUrls.graphiql)}
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'voyager'}>
-            {NavItemRender('Voyager', urls.voyager)}
+            {NavItemRender('Voyager', BrowserUrls.voyager)}
           </DesignNavbar.Item>
         </DesignNavbar.Dropdown>
         <DesignNavbar.End>
           <DesignNavbar.Item>
             {({ className }) => (
               <div className={className}>
-                <LinkButton href={urls.playground} iconRight="openInNewWindow" target="_blank">
+                <LinkButton
+                  href={BrowserUrls.playground()}
+                  iconRight="openInNewWindow"
+                  target="_blank"
+                >
                   Playground
                 </LinkButton>
               </div>

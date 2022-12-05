@@ -14,7 +14,7 @@ import { ClassName, LexicalTheme } from '@jonasb/datadata-design';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
-import { urls } from '../utils/PageUtils';
+import { BrowserUrls } from '../utils/BrowserUrls';
 import type { AppPublishedClient } from '../utils/SchemaTypes';
 import { isPublishedGlossaryTerm } from '../utils/SchemaTypes';
 
@@ -95,7 +95,7 @@ async function renderNode(
           );
         }
         return (
-          <Link key={key} href={urls.glossaryTerm(entity.fields.slug)}>
+          <Link key={key} href={BrowserUrls.glossaryTerm(entity.fields.slug)}>
             {await renderChildren(context, node)}
           </Link>
         );

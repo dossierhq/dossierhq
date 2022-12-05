@@ -1,4 +1,4 @@
-export const urls = {
+export const BrowserUrls = {
   home: '/',
   adminEntities: '/admin/admin-entities',
   article: (slug: string) => (slug === 'overview' ? '/docs' : `/docs/${slug}`),
@@ -10,7 +10,7 @@ export const urls = {
   glossary: '/docs/glossary',
   glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
   graphiql: '/admin/graphiql',
-  playground: ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),
+  playground: () => ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),
   publishedEntities: '/admin/published-entities',
   publishedEntityDisplay: (ids: string[]): string =>
     `/admin/published-entities/display?id=${ids.join('&id=')}`,
