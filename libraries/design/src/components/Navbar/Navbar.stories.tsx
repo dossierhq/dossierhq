@@ -56,6 +56,31 @@ Active.args = {
   ),
 };
 
+export const Dropdown = Template.bind({});
+Dropdown.args = {
+  children: (
+    <>
+      <Navbar.Brand>
+        <Navbar.Item>{NavItemRender('Brand')}</Navbar.Item>
+        <Navbar.Burger
+          active={false}
+          onClick={() => {
+            //empty
+          }}
+        />
+      </Navbar.Brand>
+      <Navbar.Menu active={false}>
+        <Navbar.Item>{NavItemRender('Active')}</Navbar.Item>
+        <Navbar.Item>{NavItemRender('Normal')}</Navbar.Item>
+        <Navbar.Dropdown active renderLink={(className) => <a className={className}>Dropdown</a>}>
+          <Navbar.Item active>{NavItemRender('Active dropdown Item')}</Navbar.Item>
+          <Navbar.Item>{NavItemRender('Dropdown Item')}</Navbar.Item>
+        </Navbar.Dropdown>
+      </Navbar.Menu>
+    </>
+  ),
+};
+
 function NavItemRender(text: string) {
   const renderer = ({ className }: { className: string }) => {
     return <a className={className}>{text}</a>;

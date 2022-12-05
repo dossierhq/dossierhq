@@ -12,3 +12,7 @@ $code-background: hsl(0, 0%, 96%);
   max-height: 50vh;
   overflow: auto;
 }
+
+.navbar-item.is-active {
+  font-weight: bold;
+}
