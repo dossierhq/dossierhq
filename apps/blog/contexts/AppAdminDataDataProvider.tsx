@@ -1,54 +1,37 @@
 import type {
   AdminDataDataContextAdapter,
-  DisplayAuthKey,
-  FieldDisplayProps,
   FieldEditorProps,
-  PublishedDataDataContextAdapter,
-  RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
   SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
 import {
   AdminDataDataProvider,
   createCachingAdminMiddleware,
-  PublishedDataDataProvider,
 } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
   ClientContext,
   ErrorType,
-  PublishedClient,
-  PublishedClientOperation,
   Result,
 } from '@jonasb/datadata-core';
 import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
-  convertJsonPublishedClientResult,
-  convertPublishedClientOperationToJson,
   createBaseAdminClient,
-  createBasePublishedClient,
   createConsoleLogger,
 } from '@jonasb/datadata-core';
 import { useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
+import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
-
-const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
-  { authKey: 'none', displayName: 'None' },
-  { authKey: 'subject', displayName: 'User private' },
-];
-const AUTH_KEYS_HEADER = {
-  'DataData-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
-};
 
 type BackendContext = ClientContext;
 
 const logger = createConsoleLogger(console);
 
-export class AdminContextAdapter implements AdminDataDataContextAdapter {
+class AdminContextAdapter implements AdminDataDataContextAdapter {
   renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
@@ -57,18 +40,7 @@ export class AdminContextAdapter implements AdminDataDataContextAdapter {
   }
 }
 
-export class PublishedContextAdapter implements PublishedDataDataContextAdapter {
-  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
-    return null;
-  }
-  renderPublishedRichTextValueItemDisplay(
-    _props: RichTextValueItemDisplayProps
-  ): JSX.Element | null {
-    return null;
-  }
-}
-
-export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
+export function AppAdminDataDataProvider({ children }: { children: React.ReactNode }) {
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
   swrConfigRef.current = { cache, mutate };
@@ -84,29 +56,12 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   return <AdminDataDataProvider {...args}>{children}</AdminDataDataProvider>;
 }
 
-export function PublishedDataDataSharedProvider({ children }: { children: React.ReactNode }) {
-  const args = useMemo(
-    () => ({
-      publishedClient: createBackendPublishedClient(),
-      adapter: new PublishedContextAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
-    }),
-    []
-  );
-  return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
-}
-
 function createBackendAdminClient(swrConfigRef: SwrConfigRef): AdminClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({
     context,
     pipeline: [createCachingAdminMiddleware(swrConfigRef), terminatingAdminMiddleware],
   });
-}
-
-function createBackendPublishedClient(): PublishedClient {
-  const context: BackendContext = { logger };
-  return createBasePublishedClient({ context, pipeline: [terminatingPublishedMiddleware] });
 }
 
 async function terminatingAdminMiddleware(
@@ -129,26 +84,4 @@ async function terminatingAdminMiddleware(
     });
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
-}
-
-async function terminatingPublishedMiddleware(
-  context: BackendContext,
-  operation: PublishedClientOperation
-): Promise<void> {
-  const jsonOperation = convertPublishedClientOperationToJson(operation);
-
-  let result: Result<unknown, ErrorType>;
-  if (operation.modifies) {
-    result = await fetchJsonResult(context, BackendUrls.published(operation.name), {
-      method: 'PUT',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(jsonOperation),
-    });
-  } else {
-    result = await fetchJsonResult(context, BackendUrls.published(operation.name, jsonOperation), {
-      method: 'GET',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-    });
-  }
-  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }

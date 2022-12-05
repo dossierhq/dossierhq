@@ -4,7 +4,7 @@ import type { AdminEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { AppAdminDataDataProvider } from '../../contexts/AppAdminDataDataProvider';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import { NavBar } from '../NavBar/NavBar';
 
@@ -27,7 +27,7 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
   );
 
   return (
-    <DataDataSharedProvider>
+    <AppAdminDataDataProvider>
       <Head>
         <title>Entities</title>
       </Head>
@@ -38,6 +38,6 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
         onCreateEntity={handleCreateEntity}
         onOpenEntity={handleEntityOpen}
       />
-    </DataDataSharedProvider>
+    </AppAdminDataDataProvider>
   );
 }
