@@ -12,7 +12,9 @@ const meta: Meta<MessageProps> = {
         <Message.Header>
           <Message.HeaderTitle>Header</Message.HeaderTitle>
         </Message.Header>
-        <Message.Body>Body</Message.Body>
+        <Message.Body>
+          Body with <strong>strong</strong> and <i>italic</i>
+        </Message.Body>
       </>
     ),
   },
@@ -42,8 +44,8 @@ Warning.args = { color: 'warning' };
 export const Danger = Template.bind({});
 Danger.args = { color: 'danger' };
 
-export const TwoChildren = Template.bind({});
-TwoChildren.args = {
+export const FlexBodyTwoChildren = Template.bind({});
+FlexBodyTwoChildren.args = {
   children: (
     <Message.Body>
       <div style={{ width: '100px', height: '100px', backgroundColor: 'palevioletred' }} />
@@ -52,12 +54,12 @@ TwoChildren.args = {
   ),
 };
 
-export const NoPadding = Template.bind({});
-NoPadding.args = {
+export const FlexBodyNoPadding = Template.bind({});
+FlexBodyNoPadding.args = {
   children: (
-    <Message.Body padding={0}>
+    <Message.FlexBody padding={0}>
       <div style={{ width: '100px', height: '100px', backgroundColor: 'palevioletred' }} />
       <div style={{ width: '100px', height: '100px', backgroundColor: 'olivedrab' }} />
-    </Message.Body>
+    </Message.FlexBody>
   ),
 };

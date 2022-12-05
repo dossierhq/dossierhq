@@ -22,14 +22,14 @@ export function DatabaseInfoMessage({ className }: Props) {
       <Message.Header>
         <Message.HeaderTitle>Database (sqlite3, in-memory)</Message.HeaderTitle>
       </Message.Header>
-      <Message.Body gap={3} alignItems="flex-start">
+      <Message.FlexBody gap={3} alignItems="flex-start">
         <p>
           <strong>Size:</strong> {data ? bytesToHumanSize(data.byteSize) : '–'}
         </p>
         <Button disabled={!database} iconLeft="download" onClick={handleDownloadOnClick}>
           Download
         </Button>
-      </Message.Body>
+      </Message.FlexBody>
     </Message>
   );
 }

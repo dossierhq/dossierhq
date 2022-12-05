@@ -1,5 +1,4 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import React from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
@@ -22,7 +21,11 @@ interface MessageHeaderTitleProps {
   children?: ReactNode;
 }
 
-interface MessageBodyProps extends FlexContainerProps, SpacingProps {
+interface MessageBodyProps {
+  children?: ReactNode;
+}
+
+interface MessageFlexBodyProps extends FlexContainerProps, SpacingProps {
   children?: ReactNode;
 }
 
@@ -30,6 +33,7 @@ interface MessageComponent extends FunctionComponent<MessageProps> {
   Header: FunctionComponent<MessageHeaderProps>;
   HeaderTitle: FunctionComponent<MessageHeaderTitleProps>;
   Body: FunctionComponent<MessageBodyProps>;
+  FlexBody: FunctionComponent<MessageFlexBodyProps>;
 }
 
 export const Message: MessageComponent = ({ className, color, children }: MessageProps) => {
@@ -51,7 +55,12 @@ Message.HeaderTitle = ({ children }: MessageHeaderTitleProps) => {
 };
 Message.HeaderTitle.displayName = 'Message.HeaderTitle';
 
-Message.Body = ({ children, ...props }: MessageBodyProps) => {
+Message.Body = ({ children }: MessageBodyProps) => {
+  return <div className="message-body">{children}</div>;
+};
+Message.Body.displayName = 'Message.Body';
+
+Message.FlexBody = ({ children, ...props }: MessageFlexBodyProps) => {
   const flexContainerProps = { flexDirection: 'column', ...props } as const;
   const overridePadding = Object.keys(props).some((it) => it.startsWith('padding'));
   const spacingProps = overridePadding ? ({ padding: 0, ...props } as const) : props;
@@ -68,4 +77,4 @@ Message.Body = ({ children, ...props }: MessageBodyProps) => {
     </div>
   );
 };
-Message.Body.displayName = 'Message.Body';
+Message.FlexBody.displayName = 'Message.FlexBody';
