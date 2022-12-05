@@ -21,11 +21,14 @@ import {
   createBaseAdminClient,
   createConsoleLogger,
 } from '@jonasb/datadata-core';
-import { useMemo, useRef } from 'react';
+import type { Server } from '@jonasb/datadata-server';
+import { useContext, useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
+import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;
 
@@ -44,16 +47,38 @@ export function AppAdminDataDataProvider({ children }: { children: React.ReactNo
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
   swrConfigRef.current = { cache, mutate };
+  const inBrowserValue = useContext(InBrowserServerContext);
 
   const args = useMemo(
     () => ({
-      adminClient: createBackendAdminClient(swrConfigRef),
+      adminClient: inBrowserValue
+        ? createInBrowserAdminClient(inBrowserValue.server, swrConfigRef)
+        : createBackendAdminClient(swrConfigRef),
       adapter: new AdminContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    []
+    [inBrowserValue]
   );
-  return <AdminDataDataProvider {...args}>{children}</AdminDataDataProvider>;
+
+  const { adminClient } = args;
+  if (!adminClient) {
+    return;
+  }
+  return (
+    <AdminDataDataProvider {...args} adminClient={adminClient}>
+      {children}
+    </AdminDataDataProvider>
+  );
+}
+
+function createInBrowserAdminClient(server: Server | null, swrConfigRef: SwrConfigRef) {
+  if (!server) return null;
+
+  const sessionResult = server.createSession(SYSTEM_USERS.editor);
+  return server.createAdminClient(
+    () => sessionResult,
+    [createCachingAdminMiddleware(swrConfigRef)]
+  );
 }
 
 function createBackendAdminClient(swrConfigRef: SwrConfigRef): AdminClient {

@@ -17,10 +17,13 @@ import {
   createBasePublishedClient,
   createConsoleLogger,
 } from '@jonasb/datadata-core';
-import { useMemo } from 'react';
+import type { Server } from '@jonasb/datadata-server';
+import { useContext, useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
+import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;
 
@@ -38,15 +41,34 @@ class PublishedContextAdapter implements PublishedDataDataContextAdapter {
 }
 
 export function AppPublishedDataDataProvider({ children }: { children: React.ReactNode }) {
+  const inBrowserValue = useContext(InBrowserServerContext);
+
   const args = useMemo(
     () => ({
-      publishedClient: createBackendPublishedClient(),
+      publishedClient: inBrowserValue
+        ? createInBrowserPublishedClient(inBrowserValue.server)
+        : createBackendPublishedClient(),
       adapter: new PublishedContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    []
+    [inBrowserValue]
   );
-  return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
+
+  const { publishedClient } = args;
+  if (!publishedClient) {
+    return;
+  }
+  return (
+    <PublishedDataDataProvider {...args} publishedClient={publishedClient}>
+      {children}
+    </PublishedDataDataProvider>
+  );
+}
+
+function createInBrowserPublishedClient(server: Server | null): PublishedClient | null {
+  if (!server) return null;
+  const sessionResult = server.createSession(SYSTEM_USERS.editor);
+  return server.createPublishedClient(() => sessionResult);
 }
 
 function createBackendPublishedClient(): PublishedClient {
