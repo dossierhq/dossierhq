@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 2617 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-3,-904)">
+        <g id="logo" transform="matrix(1,0,0,1.08401,4,-138.818)">
+            <rect x="-1" y="962" width="2617" height="738" style="fill:none;"/>
+            <g transform="matrix(0.834615,0,0,0.769933,229.373,1115.08)">
+                <path d="M89,217.889L89,666L412,146L89,217.889Z" style="stroke:black;stroke-width:40.74px;"/>
+            </g>
+            <g transform="matrix(1.20729,0,0,1.11373,-14.4491,886.111)">
+                <path d="M89,195.698L89,666L412,146L89,195.698Z" style="stroke:black;stroke-width:28.16px;"/>
+            </g>
+            <g transform="matrix(1,0,0,0.9225,42,954.429)">
+                <circle cx="627.5" cy="678.5" r="51.5" style="stroke:black;stroke-width:34px;"/>
+            </g>
+            <g transform="matrix(28.8433,0,0,26.608,-28189.8,-32381.1)">
+                <text x="1007.24px" y="1278.5px" style="font-family:'Menlo-Bold', 'Menlo', monospace;font-weight:700;font-size:12px;">data</text>
+            </g>
+            <g transform="matrix(1,0,0,0.9225,1709.98,1634.08)">
+                <text x="0px" y="0px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:300px;">data.</text>
+            </g>
+        </g>
+    </g>
+</svg>

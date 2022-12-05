@@ -1,8 +1,10 @@
 'use client';
 
 import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
+import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';
+import logo from '../../public/logo.svg';
 import { urls } from '../../utils/PageUtils';
 
 export function NavBar({
@@ -22,7 +24,17 @@ export function NavBar({
     <DesignNavbar>
       <DesignNavbar.Brand>
         <DesignNavbar.Item active={current === 'home'}>
-          {NavItemRender('blog', urls.home)}
+          {({ className }) => (
+            <Link href={urls.home}>
+              <Image
+                className={className}
+                src={logo}
+                alt="Data data logo"
+                width={112}
+                height={28}
+              />
+            </Link>
+          )}
         </DesignNavbar.Item>
         <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
       </DesignNavbar.Brand>
