@@ -12,7 +12,6 @@ import {
   reduceMultipleSelectorState,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React from 'react';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
 export type StatusItem = MultipleSelectorItem<AdminEntityStatus>;

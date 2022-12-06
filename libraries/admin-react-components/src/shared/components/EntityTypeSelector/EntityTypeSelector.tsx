@@ -13,7 +13,7 @@ import {
   reduceMultipleSelectorState,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;

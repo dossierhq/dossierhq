@@ -1,6 +1,5 @@
 import type { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Tag } from '@jonasb/datadata-design';
-import React from 'react';
 
 interface Props {
   className?: string;

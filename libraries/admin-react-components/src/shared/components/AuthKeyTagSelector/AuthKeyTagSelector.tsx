@@ -1,5 +1,4 @@
 import { Field, TagSelector } from '@jonasb/datadata-design';
-import React from 'react';
 import type {
   AuthKeySelectorDispatch,
   AuthKeySelectorState,
