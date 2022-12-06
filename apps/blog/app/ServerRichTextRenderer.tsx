@@ -1,8 +1,11 @@
 import type { RichText, RichTextElementNode, RichTextNode } from '@jonasb/datadata-core';
 import {
+  isRichTextCodeHighlightNode,
+  isRichTextCodeNode,
   isRichTextElementNode,
   isRichTextEntityLinkNode,
   isRichTextHeadingNode,
+  isRichTextLineBreakNode,
   isRichTextListItemNode,
   isRichTextListNode,
   isRichTextParagraphNode,
@@ -55,7 +58,38 @@ async function renderNode(
   const { theme } = context;
 
   if (isRichTextRootNode(node)) {
-    return <div className={ClassName['rich-text']}>{await renderChildren(context, node)}</div>;
+    return (
+      <div key={key} className={ClassName['rich-text']}>
+        {await renderChildren(context, node)}
+      </div>
+    );
+  }
+  if (isRichTextLineBreakNode(node)) {
+    return <br key={key} />;
+  }
+  if (isRichTextCodeNode(node)) {
+    let gutter = '1';
+    let lineNumber = 1;
+    for (const child of node.children) {
+      if (isRichTextLineBreakNode(child)) {
+        gutter += `\n${++lineNumber}`;
+      }
+    }
+    return (
+      <code key={key} className={theme.code} data-gutter={gutter}>
+        {await renderChildren(context, node)}
+      </code>
+    );
+  }
+  if (isRichTextCodeHighlightNode(node)) {
+    return (
+      <span
+        key={key}
+        className={node.highlightType ? theme.codeHighlight?.[node.highlightType] : undefined}
+      >
+        {node.text}
+      </span>
+    );
   }
   if (isRichTextParagraphNode(node)) {
     return (
