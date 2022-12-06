@@ -41,7 +41,9 @@ export function initializeMultipleSelectorState<TItem extends MultipleSelectorIt
   items,
   selectedIds,
 }: MultipleSelectorStateInitializerArgs<TItem>): MultipleSelectorState<TItem> {
-  selectedIds = selectedIds ?? [];
+  if (!selectedIds) {
+    selectedIds = [];
+  }
   return {
     items,
     selectedIds,
