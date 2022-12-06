@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/esm/index.js",
-    "@jonasb/datadata-typescript-generator": "../node_modules/@jonasb/datadata-typescript-generator/lib/esm/index.js"
-  }
-}
