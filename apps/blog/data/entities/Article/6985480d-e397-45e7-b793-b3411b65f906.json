@@ -29,11 +29,3256 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Placeholder",
+                "text": "Let's get started with a project where we will get familiar with Data data. There are many possible ways to use Data data, but here we will use these technologies:",
                 "type": "text",
                 "version": 1
               }
             ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "list",
+            "version": 1,
+            "listType": "bullet",
+            "start": 1,
+            "tag": "ul",
+            "children": [
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 1,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Node as the runtime",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 2,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Code written in Typescript",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 3,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Vite as the frontend tool, using React",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 4,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Express as the API server, using REST for the communication",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 5,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "SQLite as the database",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Setting up the project",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "You need to have Node installed on your computer. ",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "list",
+            "version": 1,
+            "listType": "bullet",
+            "start": 1,
+            "tag": "ul",
+            "children": [
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 1,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm create vite@latest getting-started -- --template react-ts",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 2,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "cd getting-started",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 3,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm install",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 4,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm run dev",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "You should now have a working React / Vite project. Let's also add an Express server to the mix:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "list",
+            "version": 1,
+            "listType": "bullet",
+            "start": 1,
+            "tag": "ul",
+            "children": [
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 1,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm install express cors",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 2,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm install -D ts-node @types/express @types/cors",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "We can now create a ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "server.ts",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " file:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "code",
+            "version": 1,
+            "language": "javascript",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " express ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'express'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " cors ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'cors'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " app ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "express",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " port ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "3000",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "number"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "app",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "use",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "cors",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "origin",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "literal-property"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'http://localhost:5173'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "app",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "get",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'/api/hello-world'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "req",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " res",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  res",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "send",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "literal-property"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'Hello World!'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "app",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "listen",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "port",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  console",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "log",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "`",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "template-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Getting started app listening on  http://localhost:",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "${",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "port",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "`",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "template-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "After adding ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "\"server\": \"ts-node-esm server.ts\"",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " to ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "package.json",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "\"scripts\"",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ", we can start the server with: ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "npm run server",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "To use the server from the frontend, we change ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "src/App.tsx",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " to:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "code",
+            "version": 1,
+            "language": "javascript",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " useEffect",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " useState ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'react'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'./App.css'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "export",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "default",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "function",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "App",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "[",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " setMessage",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "]",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " useState",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "|",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "null",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "null",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "useEffect",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "fetch",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'http://localhost:3000/api/hello-world'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "then",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "res",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "parameter"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " res",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "json",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "then",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "data",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "parameter"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "setMessage",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "data",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "[",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "]",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "return",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "div className",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "\"App\"",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "h1",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Data data",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "/",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "h1",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "&&",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "div className",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "\"card\"",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Message",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "/",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "div",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "/",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "div",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Setting up the database",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The quickest way to get started with a database is to use SQLite. Let's go with ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "better-sqlite3",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " as our library to talk to Sqlite.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "list",
+            "version": 1,
+            "listType": "bullet",
+            "start": 1,
+            "tag": "ul",
+            "children": [
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 1,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "mkdir getting-started",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 2,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "cd getting-started",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 3,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm init -y",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 4,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm install better-sqlite3",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
           }
         ]
       }

@@ -24,7 +24,7 @@
       },
       {
         "type": "ArticleTocItem",
-        "title": "Admin & published views",
+        "title": "Admin vs. published",
         "article": {
           "id": "3b674111-90ab-41e3-97b2-7d7860e71f31"
         }
@@ -38,10 +38,10 @@
       },
       {
         "type": "ArticleTocItem",
+        "title": "Auth key",
         "article": {
           "id": "e20ac669-98d9-4cef-9144-ca3b7bb7fec6"
-        },
-        "title": "Auth key"
+        }
       },
       {
         "type": "TocItem",

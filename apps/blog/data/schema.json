@@ -8,25 +8,29 @@
         {
           "name": "title",
           "type": "String",
+          "list": false,
           "required": true,
           "adminOnly": false,
           "isName": true,
           "multiline": false,
-          "index": null,
-          "matchPattern": null
+          "matchPattern": null,
+          "index": null
         },
         {
           "name": "slug",
           "type": "String",
+          "list": false,
           "required": true,
           "adminOnly": false,
+          "isName": false,
           "multiline": false,
-          "index": "articleSlug",
-          "matchPattern": "slug"
+          "matchPattern": "slug",
+          "index": "articleSlug"
         },
         {
           "name": "body",
           "type": "RichText",
+          "list": false,
           "required": true,
           "adminOnly": false,
           "richTextNodes": [
@@ -37,13 +41,15 @@
             "list",
             "listitem",
             "entityLink",
-            "heading"
+            "heading",
+            "code",
+            "code-highlight"
           ],
+          "entityTypes": [],
           "linkEntityTypes": [
             "GlossaryTerm",
             "Article"
           ],
-          "entityTypes": [],
           "valueTypes": []
         }
       ]
@@ -56,9 +62,9 @@
         {
           "name": "items",
           "type": "ValueItem",
+          "list": true,
           "required": true,
           "adminOnly": false,
-          "list": true,
           "valueTypes": [
             "ArticleTocItem",
             "TocItem"
@@ -74,38 +80,41 @@
         {
           "name": "title",
           "type": "String",
+          "list": false,
           "required": true,
           "adminOnly": false,
           "isName": true,
           "multiline": false,
-          "index": null,
-          "matchPattern": null
+          "matchPattern": null,
+          "index": null
         },
         {
           "name": "slug",
           "type": "String",
+          "list": false,
           "required": true,
           "adminOnly": false,
+          "isName": false,
           "multiline": false,
-          "index": "glossarySlug",
-          "matchPattern": "slug"
+          "matchPattern": "slug",
+          "index": "glossarySlug"
         },
         {
           "name": "description",
           "type": "RichText",
+          "list": false,
           "required": true,
           "adminOnly": false,
           "richTextNodes": [
             "root",
             "paragraph",
             "text",
-            "linebreak",
             "entityLink"
           ],
+          "entityTypes": [],
           "linkEntityTypes": [
             "GlossaryTerm"
           ],
-          "entityTypes": [],
           "valueTypes": []
         }
       ]
@@ -119,15 +128,18 @@
         {
           "name": "title",
           "type": "String",
+          "list": false,
           "required": true,
           "adminOnly": false,
+          "isName": false,
           "multiline": false,
-          "index": null,
-          "matchPattern": null
+          "matchPattern": null,
+          "index": null
         },
         {
           "name": "article",
           "type": "Entity",
+          "list": false,
           "required": true,
           "adminOnly": false,
           "entityTypes": [
@@ -143,18 +155,20 @@
         {
           "name": "title",
           "type": "String",
+          "list": false,
           "required": true,
           "adminOnly": false,
+          "isName": false,
           "multiline": false,
-          "index": null,
-          "matchPattern": null
+          "matchPattern": null,
+          "index": null
         },
         {
           "name": "items",
           "type": "ValueItem",
+          "list": true,
           "required": true,
           "adminOnly": false,
-          "list": true,
           "valueTypes": [
             "ArticleTocItem",
             "TocItem"
