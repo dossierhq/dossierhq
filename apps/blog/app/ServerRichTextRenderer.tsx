@@ -16,7 +16,7 @@ import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
 import { BrowserUrls } from '../utils/BrowserUrls';
 import type { AppPublishedClient } from '../utils/SchemaTypes';
-import { isPublishedGlossaryTerm } from '../utils/SchemaTypes';
+import { isPublishedArticle, isPublishedGlossaryTerm } from '../utils/SchemaTypes';
 
 interface Props {
   richText: RichText;
@@ -94,8 +94,15 @@ async function renderNode(
             </a>
           );
         }
+        const description = richTextToPlainText(entity.fields.description);
         return (
-          <Link key={key} href={BrowserUrls.glossaryTerm(entity.fields.slug)}>
+          <Link key={key} href={BrowserUrls.glossaryTerm(entity.fields.slug)} title={description}>
+            {await renderChildren(context, node)}
+          </Link>
+        );
+      } else if (isPublishedArticle(entity)) {
+        return (
+          <Link key={key} href={BrowserUrls.article(entity.fields.slug)}>
             {await renderChildren(context, node)}
           </Link>
         );
@@ -135,4 +142,17 @@ async function renderNode(
 
 function renderChildren(context: RenderContext, node: RichTextElementNode): Promise<ReactNode[]> {
   return Promise.all(node.children.map((child, index) => renderNode(context, child, index)));
+}
+
+function richTextToPlainText(richText: RichText): string {
+  function visitNode(node: RichTextNode): string {
+    if (isRichTextTextNode(node)) {
+      return node.text;
+    }
+    if (isRichTextElementNode(node)) {
+      return node.children.map(visitNode).join('');
+    }
+    return '';
+  }
+  return visitNode(richText.root);
 }
