@@ -4,6 +4,7 @@ import type { Server } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { createContext, useEffect, useState } from 'react';
 import initSqlJs from 'sql.js/dist/sql-wasm';
+import { IN_BROWSER_DATABASE_URL } from '../config/InBrowserServerConfig';
 
 export interface InBrowserDatabaseContextValue {
   server: Server | null;
@@ -13,31 +14,25 @@ export const InBrowserServerContext = createContext<InBrowserDatabaseContextValu
 
 const INITIALIZING_VALUE: InBrowserDatabaseContextValue = { server: null };
 
-export function InBrowserServerProvider({
-  enabled,
-  children,
-}: {
-  enabled: boolean;
-  children: React.ReactNode;
-}) {
+export function InBrowserServerProvider({ children }: { children: React.ReactNode }) {
   const [value, setValue] = useState<InBrowserDatabaseContextValue | null>(
-    enabled ? INITIALIZING_VALUE : null
+    IN_BROWSER_DATABASE_URL ? INITIALIZING_VALUE : null
   );
 
   useEffect(() => {
-    if (enabled) {
-      initializeServer().then(setValue);
+    if (IN_BROWSER_DATABASE_URL) {
+      initializeServer(IN_BROWSER_DATABASE_URL).then(setValue);
     }
-  }, [enabled]);
+  }, []);
 
   return (
     <InBrowserServerContext.Provider value={value}>{children}</InBrowserServerContext.Provider>
   );
 }
 
-async function initializeServer(): Promise<{ server: Server }> {
+async function initializeServer(databaseUrl: string): Promise<{ server: Server }> {
   const sqlPromise = initSqlJs({ locateFile: (_file) => '/sql-wasm.wasm' });
-  const dbFilePromise = fetch('/database.sqlite')
+  const dbFilePromise = fetch(databaseUrl)
     .then((it) => it.arrayBuffer())
     .then((it) => new Uint8Array(it));
   const [SQL, dbFile] = await Promise.all([sqlPromise, dbFilePromise]);

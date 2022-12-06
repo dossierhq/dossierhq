@@ -4,7 +4,7 @@ import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
 import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';
-import { USE_IN_BROWSER_SERVER } from '../../config/InBrowserServerConfig';
+import { IN_BROWSER_DATABASE_URL } from '../../config/InBrowserServerConfig';
 import logo from '../../public/logo.svg';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import { LinkButton } from '../LinkButton/LinkButton';
@@ -60,7 +60,7 @@ export function NavBar({
           <DesignNavbar.Item active={current === 'voyager'}>
             {NavItemRender('Voyager', BrowserUrls.voyager)}
           </DesignNavbar.Item>
-          {USE_IN_BROWSER_SERVER ? (
+          {IN_BROWSER_DATABASE_URL ? (
             <>
               <DesignNavbar.DropdownDivider />
               <DesignNavbar.DropdownContentItem>
