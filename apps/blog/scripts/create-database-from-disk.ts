@@ -1,4 +1,4 @@
-#!/usr/bin/env npx ts-node -T --esm
+#!/usr/bin/env -S npx ts-node -T --esm
 import type { AdminSchemaSpecificationUpdate, Logger } from '@jonasb/datadata-core';
 import { createConsoleLogger, ok } from '@jonasb/datadata-core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';

@@ -6,4 +6,4 @@ if [ -f .env.local ] && grep -q "DATABASE_SQLITE_FILE" .env.local; then
 fi
 
 echo "DATABASE_SQLITE_FILE=data/database.sqlite" >> .env.local
-./scripts/create-database-from-disk.ts data/database.sqlite 2>&1
+npx ts-node -T --esm ./scripts/create-database-from-disk.ts data/database.sqlite 2>&1
