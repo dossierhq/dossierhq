@@ -1,12 +1,6 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef } from 'react';
 
-//TODO handle bun-types, this is workarounds for now
-declare global {
-  const window: any | undefined;
-  const history: any;
-}
-
 interface BeforeUnloadEvent {
   returnValue: string;
 }

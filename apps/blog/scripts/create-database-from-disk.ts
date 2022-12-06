@@ -1,27 +1,29 @@
-#!/usr/bin/env -S bun
+#!/usr/bin/env npx ts-node -T --esm
 import type { AdminSchemaSpecificationUpdate, Logger } from '@jonasb/datadata-core';
 import { createConsoleLogger, ok } from '@jonasb/datadata-core';
-import { createBunSqliteAdapter } from '@jonasb/datadata-database-adapter-sqlite-bun';
+import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
 import type { Server } from '@jonasb/datadata-server';
-import { Database } from 'bun:sqlite';
-import fs from 'fs';
+import { randomUUID } from 'node:crypto';
+import fs from 'node:fs';
+import * as SqlJs from 'sql.js';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
 import { createBlogServer } from '../utils/SharedServerUtils.js';
 
-async function initializeServer(logger: Logger, filename: string) {
-  const database = Database.open(filename);
-  const databaseAdapterResult = await createBunSqliteAdapter({ logger }, database, {
+async function initializeServer(logger: Logger) {
+  const SQL = await SqlJs.default();
+  const db = new SQL.Database();
+  const databaseAdapterResult = await createSqlJsAdapter({ logger }, db, {
     migrate: true,
-    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with ServerUtils.ts
-    journalMode: 'wal',
+    fts: { version: 'fts4' },
+    journalMode: 'memory',
   });
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const serverResult = await createBlogServer(databaseAdapterResult.value);
   if (serverResult.isError()) return serverResult;
 
-  return ok(serverResult.value.server);
+  return ok({ server: serverResult.value.server, database: db });
 }
 
 async function updateSchemaSpecification(server: Server, filename: string) {
@@ -38,8 +40,9 @@ async function updateSchemaSpecification(server: Server, filename: string) {
 }
 
 async function main(filename: string) {
+  polyfillCrypto();
   const logger = createConsoleLogger(console);
-  const server = (await initializeServer(logger, filename)).valueOrThrow();
+  const { server, database } = (await initializeServer(logger)).valueOrThrow();
   try {
     (await updateSchemaSpecification(server, 'data/schema.json')).throwIfError();
 
@@ -48,11 +51,22 @@ async function main(filename: string) {
     const entities = await loadAllEntities(adminClient, logger);
     if (entities.isOk()) {
       console.log(`Loaded ${entities.value.length} entities`);
+      console.log(`Writing database to ${filename}`);
+      fs.writeFileSync(filename, Buffer.from(database.export()));
     } else {
       console.log('Failed loading entities', entities);
     }
   } finally {
     (await server.shutdown()).throwIfError();
+  }
+}
+
+function polyfillCrypto() {
+  // This package is meant to be run in a browser, polyfill crypto for Node
+  if (!globalThis.crypto) {
+    globalThis.crypto = {
+      randomUUID,
+    } as Crypto;
   }
 }
 
