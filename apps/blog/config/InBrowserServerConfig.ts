@@ -1,1 +1,7 @@
-export const USE_IN_BROWSER_SERVER = process.env.NEXT_PUBLIC_USE_BROWSER_DATABASE === 'true';
+function emptyMeansNull(value: string | undefined): string | null {
+  return value ? value : null;
+}
+
+export const IN_BROWSER_DATABASE_URL = emptyMeansNull(
+  process.env.NEXT_PUBLIC_IN_BROWSER_DATABASE_URL
+);

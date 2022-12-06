@@ -2,6 +2,7 @@
 const config = {
   reactStrictMode: true,
   swcMinify: true,
+  // productionBrowserSourceMaps: true,
   experimental: { appDir: true, serverComponentsExternalPackages: ['sqlite3'] },
   webpack: (config, { isServer }) => {
     if (!isServer) {

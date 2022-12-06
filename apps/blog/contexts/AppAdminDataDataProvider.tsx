@@ -62,7 +62,7 @@ export function AppAdminDataDataProvider({ children }: { children: React.ReactNo
 
   const { adminClient } = args;
   if (!adminClient) {
-    return;
+    return null;
   }
   return (
     <AdminDataDataProvider {...args} adminClient={adminClient}>

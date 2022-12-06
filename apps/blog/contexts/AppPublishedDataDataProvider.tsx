@@ -56,7 +56,7 @@ export function AppPublishedDataDataProvider({ children }: { children: React.Rea
 
   const { publishedClient } = args;
   if (!publishedClient) {
-    return;
+    return null;
   }
   return (
     <PublishedDataDataProvider {...args} publishedClient={publishedClient}>
@@ -65,7 +65,7 @@ export function AppPublishedDataDataProvider({ children }: { children: React.Rea
   );
 }
 
-function createInBrowserPublishedClient(server: Server | null): PublishedClient | null {
+function createInBrowserPublishedClient(server: Server | null) {
   if (!server) return null;
   const sessionResult = server.createSession(SYSTEM_USERS.editor);
   return server.createPublishedClient(() => sessionResult);
