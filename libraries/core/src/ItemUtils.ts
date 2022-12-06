@@ -13,10 +13,13 @@ import type {
   EntityLike,
   PublishedEntity,
   RichText,
+  RichTextCodeHighlightNode,
+  RichTextCodeNode,
   RichTextElementNode,
   RichTextEntityLinkNode,
   RichTextEntityNode,
   RichTextHeadingNode,
+  RichTextLineBreakNode,
   RichTextListItemNode,
   RichTextListNode,
   RichTextNode,
@@ -175,6 +178,10 @@ export function isRichTextTextNode(node: RichTextNode): node is RichTextTextNode
   return node.type === RichTextNodeType.text;
 }
 
+export function isRichTextLineBreakNode(node: RichTextNode): node is RichTextLineBreakNode {
+  return node.type === RichTextNodeType.linebreak;
+}
+
 export function isRichTextElementNode(node: RichTextNode): node is RichTextElementNode {
   return 'children' in node;
 }
@@ -197,6 +204,14 @@ export function isRichTextEntityLinkNode(node: RichTextNode): node is RichTextEn
 
 export function isRichTextValueItemNode(node: RichTextNode): node is RichTextValueItemNode {
   return node.type === RichTextNodeType.valueItem;
+}
+
+export function isRichTextCodeNode(node: RichTextNode): node is RichTextCodeNode {
+  return node.type === RichTextNodeType.code;
+}
+
+export function isRichTextCodeHighlightNode(node: RichTextNode): node is RichTextCodeHighlightNode {
+  return node.type === RichTextNodeType['code-highlight'];
 }
 
 export function isRichTextHeadingNode(node: RichTextNode): node is RichTextHeadingNode {
