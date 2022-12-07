@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { Table } from '../index.js';
+import { Table } from '../Table/Table.js';
 import type { ScrollableProps } from './Scrollable.js';
 import { Scrollable } from './Scrollable.js';
 
