@@ -166,6 +166,10 @@ tr.is-sticky-row :is(td, th),
 }
 
 .rich-text {
+  user-select: text;
+  white-space: pre-wrap;
+  word-break: break-word;
+
   .li {
   }
 
