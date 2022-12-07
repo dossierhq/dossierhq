@@ -40,6 +40,7 @@ interface CardHeaderIconButtonProps {
 }
 
 interface CardContentProps {
+  style?: React.CSSProperties;
   noPadding?: boolean;
   children?: ReactNode;
 }
@@ -165,10 +166,14 @@ Card2.HeaderIconButton = ({ icon, onClick }: CardHeaderIconButtonProps) => {
 };
 Card2.HeaderIconButton.displayName = 'Card2.HeaderIconButton';
 
-Card2.Content = ({ noPadding, children }: CardContentProps) => {
+Card2.Content = ({ style, noPadding, children }: CardContentProps) => {
   return (
     <div
-      className={noPadding ? '' : toSpacingClassName({ paddingHorizontal: 3, paddingVertical: 2 })}
+      className={toClassName(
+        noPadding ? '' : toSpacingClassName({ paddingHorizontal: 3, paddingVertical: 2 }),
+        toFlexContainerClassName({ flexDirection: 'column' })
+      )}
+      style={style}
     >
       {children}
     </div>
