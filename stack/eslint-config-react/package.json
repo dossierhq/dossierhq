@@ -11,7 +11,7 @@
   "dependencies": {
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/eslint-patch": "~1.2.0",
-    "eslint-plugin-react": "~7.31.1",
+    "eslint-plugin-react": "~7.31.11",
     "eslint-plugin-react-hooks": "~4.6.0"
   }
 }

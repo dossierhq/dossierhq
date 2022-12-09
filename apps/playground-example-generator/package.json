@@ -22,7 +22,7 @@
     "@jonasb/datadata-server": "workspace:*",
     "cloudinary": "~1.32.0",
     "dotenv": "~16.0.3",
-    "sqlite3": "~5.1.1",
+    "sqlite3": "~5.1.2",
     "tslib": "~2.4.1",
     "uuid": "~9.0.0"
   },
