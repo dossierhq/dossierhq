@@ -38,10 +38,10 @@
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "benchpress": "workspace:*",
-    "better-sqlite3": "~8.0.0",
+    "better-sqlite3": "~8.0.1",
     "dotenv": "~16.0.3",
     "pg": "~8.8.0",
-    "sqlite3": "~5.1.1",
+    "sqlite3": "~5.1.2",
     "tslib": "~2.4.1"
   },
   "devDependencies": {
@@ -49,7 +49,7 @@
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/heft": "0.48.9",
-    "@types/better-sqlite3": "~7.6.2",
+    "@types/better-sqlite3": "~7.6.3",
     "@types/pg": "~8.6.5",
     "@types/sqlite3": "~3.1.8",
     "eslint": "~8.29.0",
