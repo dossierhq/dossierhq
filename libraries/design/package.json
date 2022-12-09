@@ -61,7 +61,7 @@
     "sass": "~1.56.0",
     "sass-loader": "~13.2.0",
     "svgo": "~3.0.0",
-    "typescript": "~4.9.3"
+    "typescript": "~4.9.4"
   },
   "dependencies": {
     "@creativebulma/bulma-badge": "~1.0.1",
@@ -69,6 +69,6 @@
     "lodash": "~4.17.21",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "tslib": "~2.4.0"
+    "tslib": "~2.4.1"
   }
 }
