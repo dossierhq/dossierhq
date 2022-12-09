@@ -39,7 +39,7 @@
     "@jonasb/datadata-server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@playwright/test": "~1.28.1",
-    "@rushstack/heft": "0.48.8",
+    "@rushstack/heft": "0.48.9",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.2",
     "base-64": "~1.0.0",
