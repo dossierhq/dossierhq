@@ -30,7 +30,7 @@
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "0.48.8",
+    "@rushstack/heft": "0.48.9",
     "@types/express": "~4.17.13",
     "@types/sqlite3": "~3.1.8",
     "eslint": "~8.29.0",
