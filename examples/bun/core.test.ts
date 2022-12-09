@@ -18,6 +18,5 @@ test('copyEntity()', () => {
   };
 
   const copy = copyEntity(original, { fields: { title: 'hello' } });
-  //TODO no deep equals in bun just yet, so use JSON instead
-  expect(JSON.stringify(copy)).toBe(JSON.stringify({ ...original, fields: { title: 'hello' } }));
+  expect(copy).toEqual({ ...original, fields: { title: 'hello' } });
 });
