@@ -1,6 +1,7 @@
 // Corresponds to EditorThemeClasses type in lexical/LexicalEditor.js:
 
 export const LexicalTheme = {
+  blockCursor: 'PlaygroundEditorTheme__blockCursor',
   code: 'PlaygroundEditorTheme__code',
   codeHighlight: {
     atrule: 'PlaygroundEditorTheme__tokenAttr',

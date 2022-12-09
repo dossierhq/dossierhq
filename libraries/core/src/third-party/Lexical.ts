@@ -13,7 +13,7 @@ export type SerializedLexicalNode = {
   version: number;
 };
 
-type ElementFormatType = 'left' | 'center' | 'right' | 'justify' | '';
+type ElementFormatType = 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
 
 export type SerializedElementNode = Spread<
   {

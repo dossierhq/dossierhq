@@ -66,7 +66,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
               className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
             />
           }
-          placeholder=""
+          placeholder={null}
           ErrorBoundary={LexicalErrorBoundary}
         />
         <PublishedClickableLinkPlugin onClick={handleEntityLinkClick} />
