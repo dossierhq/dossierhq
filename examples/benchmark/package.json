@@ -48,7 +48,7 @@
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
-    "@rushstack/heft": "0.48.8",
+    "@rushstack/heft": "0.48.9",
     "@types/better-sqlite3": "~7.6.2",
     "@types/pg": "~8.6.5",
     "@types/sqlite3": "~3.1.8",
