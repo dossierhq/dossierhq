@@ -11,6 +11,14 @@ import { Navbar } from '../../components/Navbar/Navbar.js';
 import { Table } from '../../components/Table/Table.js';
 import { Tag } from '../../components/Tag/Tag.js';
 import { TagSelector } from '../../components/TagSelector/TagSelector.js';
+import type {
+  AuthKeySelectorDispatch,
+  AuthKeySelectorInitArgs,
+  AuthKeySelectorReducer,
+  AuthKeySelectorState,
+} from './AuthKeySelector.js';
+import { AuthKeySelector, initializeAuthKeySelectorState } from './AuthKeySelector.js';
+import { AuthKeyTagList } from './AuthKeyTagList.js';
 import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from './EntityTypeSelector.js';
 import {
   EntityTypeSelector,
@@ -24,6 +32,7 @@ import type {
   StatusSelectorState,
 } from './StatusSelector.js';
 import { initializeStatusSelectorState, StatusSelector } from './StatusSelector.js';
+import { StatusTagList } from './StatusTagList';
 
 interface ScreenProps {
   entityCount: number;
@@ -68,6 +77,10 @@ function Screen({
     StatusSelectorReducer,
     StatusSelectorInitArgs
   >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
+  const [authKeyFilterState, authKeyFilterDispatch] = useReducer<
+    AuthKeySelectorReducer,
+    AuthKeySelectorInitArgs
+  >(reduceMultipleSelectorState, { selectedIds: ['none'] }, initializeAuthKeySelectorState);
   const [burgerOpen, setBurgerOpen] = useState(false);
 
   return (
@@ -101,6 +114,8 @@ function Screen({
             dispatchEntityTypeFilter,
             statusFilterState,
             statusFilterDispatch,
+            authKeyFilterState,
+            authKeyFilterDispatch,
             onMapClick,
             onCreateClick,
           }}
@@ -110,6 +125,7 @@ function Screen({
         <FullscreenContainer.Row paddingVertical={2}>
           <EntityTypesList state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter} />
           <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
+          <AuthKeyTagList state={authKeyFilterState} dispatch={authKeyFilterDispatch} />
           <EntityTable {...{ entityCount, onTableRowClick }} />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
@@ -151,6 +167,8 @@ function SearchBar({
   dispatchEntityTypeFilter,
   statusFilterState,
   statusFilterDispatch,
+  authKeyFilterState,
+  authKeyFilterDispatch,
   onMapClick,
   onCreateClick,
 }: {
@@ -158,6 +176,8 @@ function SearchBar({
   dispatchEntityTypeFilter: EntityTypeSelectorDispatch;
   statusFilterState: StatusSelectorState;
   statusFilterDispatch: StatusSelectorDispatch;
+  authKeyFilterState: AuthKeySelectorState;
+  authKeyFilterDispatch: AuthKeySelectorDispatch;
   onMapClick: (event: MouseEvent) => void;
   onCreateClick: (item: { id: string; name: string }) => void;
 }) {
@@ -170,6 +190,9 @@ function SearchBar({
       <StatusSelector state={statusFilterState} dispatch={statusFilterDispatch}>
         Status
       </StatusSelector>
+      <AuthKeySelector state={authKeyFilterState} dispatch={authKeyFilterDispatch}>
+        Auth keys
+      </AuthKeySelector>
       <IconButton icon="map" onClick={onMapClick} />
       <ButtonDropdown
         iconLeft="add"
@@ -244,32 +267,6 @@ function EntityTypesList({
         <TagSelector
           clearLabel="Clear"
           itemTag={(item) => ({ tag: item.name })}
-          state={state}
-          dispatch={dispatch}
-        />
-      </Field.Control>
-    </Field>
-  );
-}
-
-function StatusTagList({
-  state,
-  dispatch,
-}: {
-  state: StatusSelectorState;
-  dispatch: StatusSelectorDispatch;
-}) {
-  if (state.selectedIds.length === 0) {
-    return null;
-  }
-
-  return (
-    <Field>
-      <Field.Label size="small">Show entities with status</Field.Label>
-      <Field.Control>
-        <TagSelector
-          clearLabel="Clear"
-          itemTag={(item) => ({ tag: item.name, color: item.color })}
           state={state}
           dispatch={dispatch}
         />
