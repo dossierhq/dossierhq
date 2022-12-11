@@ -1,6 +1,6 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import type { Dispatch, SyntheticEvent } from 'react';
 import { useCallback, useContext, useMemo } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import type {
@@ -32,7 +32,7 @@ export function SaveSchemaDialog({
   );
 
   const handleClose = useCallback(
-    async (event: Event, returnValue: string) => {
+    async (_event: SyntheticEvent<HTMLDialogElement>, returnValue: string) => {
       if (returnValue === 'save' && schemaSpecUpdate) {
         dispatchSchemaEditorState(
           new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true)

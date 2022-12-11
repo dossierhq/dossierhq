@@ -1,6 +1,12 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { Card, Dialog, Field, Input } from '@jonasb/datadata-design';
-import type { ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEvent } from 'react';
+import type {
+  ChangeEvent,
+  ChangeEventHandler,
+  Dispatch,
+  KeyboardEvent,
+  SyntheticEvent,
+} from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import type {
   SchemaEditorState,
@@ -50,7 +56,7 @@ export function AddOrRenameFieldDialog({
   }, []);
 
   const handleClose = useCallback(
-    async (_event: Event, returnValue: string) => {
+    async (_event: SyntheticEvent<HTMLDialogElement> | null, returnValue: string) => {
       if (!selector) {
         return;
       }
@@ -87,8 +93,7 @@ export function AddOrRenameFieldDialog({
             selector,
             schemaEditorState,
             onNameChange: handleNameChange,
-            onEnterKeyPress: () =>
-              status === DialogStatus.valid && handleClose(null as unknown as Event, 'ok'),
+            onEnterKeyPress: () => status === DialogStatus.valid && handleClose(null, 'ok'),
           }}
         />
       ) : null}
