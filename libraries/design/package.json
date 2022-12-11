@@ -61,14 +61,17 @@
     "sass": "~1.56.2",
     "sass-loader": "~13.2.0",
     "svgo": "~3.0.2",
-    "typescript": "~4.9.4"
+    "typescript": "~4.9.4",
+    "@react-types/shared": "~3.16.0"
   },
   "dependencies": {
     "@creativebulma/bulma-badge": "~1.0.1",
     "@fortawesome/free-solid-svg-icons": "~6.2.1",
     "lodash": "~4.17.21",
     "react": "~18.2.0",
+    "react-aria": "~3.21.0",
     "react-dom": "~18.2.0",
+    "react-stately": "~3.19.0",
     "tslib": "~2.4.1"
   }
 }
