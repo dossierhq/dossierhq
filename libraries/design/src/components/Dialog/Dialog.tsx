@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, SyntheticEvent } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toSizeClassName } from '../../utils/LayoutPropsUtils.js';
@@ -9,7 +9,7 @@ export interface DialogProps {
   modal?: boolean;
   width?: keyof typeof widthClassNameMap;
   height?: keyof typeof heightClassNameMap;
-  onClose: (event: Event, returnValue: string) => void;
+  onClose: (event: SyntheticEvent<HTMLDialogElement>, returnValue: string) => void;
   children: ReactNode;
 }
 
@@ -25,7 +25,7 @@ const heightClassNameMap = {
 export function Dialog({ show, form, width, height, modal, onClose, children }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const handleClose = useCallback(
-    (event: Event) => {
+    (event: SyntheticEvent<HTMLDialogElement>) => {
       const dialog = dialogRef.current;
       onClose(event, dialog?.returnValue ?? '');
       // reset returnValue since if next time we show the dialog we don't want the old value (esc key doesn't set returnValue)
@@ -66,8 +66,6 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
         widthClassNameMap[width ?? 'narrow'],
         height && heightClassNameMap[height]
       )}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       onClose={handleClose}
     >
       {form ? (
