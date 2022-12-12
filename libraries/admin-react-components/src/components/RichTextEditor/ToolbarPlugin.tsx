@@ -1,14 +1,14 @@
 import type { AdminFieldSpecification, RichTextFieldSpecification } from '@jonasb/datadata-core';
 import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
+import type { IconName } from '@jonasb/datadata-design';
+import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@jonasb/datadata-design';
 import {
-  ButtonDropdown,
-  Icon,
-  IconButton,
-  IconName,
-  Row,
-  toSpacingClassName,
-} from '@jonasb/datadata-design';
-import { $createCodeNode, $isCodeNode, CODE_LANGUAGE_MAP } from '@lexical/code';
+  $createCodeNode,
+  $isCodeNode,
+  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+  CODE_LANGUAGE_MAP,
+  getLanguageFriendlyName,
+} from '@lexical/code';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -22,9 +22,10 @@ import type { HeadingTagType } from '@lexical/rich-text';
 import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
-import type { LexicalEditor } from 'lexical';
+import type { LexicalEditor, NodeKey } from 'lexical';
 import {
   $createParagraphNode,
+  $getNodeByKey,
   $getSelection,
   $isRangeSelection,
   $isRootOrShadowRoot,
@@ -66,6 +67,7 @@ export function ToolbarPlugin({
   const [editor] = useLexicalComposerContext();
 
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
+  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(null);
 
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
@@ -115,7 +117,7 @@ export function ToolbarPlugin({
       setIsEntityLink($isAdminEntityLinkNode(parent) || $isAdminEntityLinkNode(node));
 
       if (elementDOM !== null) {
-        // setSelectedElementKey(elementKey);
+        setSelectedElementKey(elementKey);
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType<ListNode>(anchorNode, ListNode);
           const type = parentList ? parentList.getListType() : element.getListType();
@@ -179,60 +181,71 @@ export function ToolbarPlugin({
         editor={editor}
         fieldSpec={fieldSpec}
       />
-      <IconButton.Group condensed skipBottomMargin>
-        <IconButton
-          icon="bold"
-          toggled={isBold}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}
+      {blockType === 'code' ? (
+        <CodeLanguageDropdown
+          disabled={!editor.isEditable()}
+          editor={editor}
+          codeLanguage={codeLanguage}
+          selectedElementKey={selectedElementKey}
         />
-        <IconButton
-          icon="italic"
-          toggled={isItalic}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}
-        />
-        <IconButton
-          icon="subscript"
-          toggled={isSubscript}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}
-        />
-        <IconButton
-          icon="superscript"
-          toggled={isSuperscript}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}
-        />
-        <IconButton
-          icon="code"
-          toggled={isCode}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}
-        />
-        <IconButton
-          icon="underline"
-          toggled={isUnderline}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}
-        />
-        <IconButton
-          icon="strikethrough"
-          toggled={isStrikethrough}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}
-        />
-      </IconButton.Group>
-      {enableEntityLinkNode ? (
-        <EntityLinkButton fieldSpec={fieldSpec} isEntityLink={isEntityLink} />
-      ) : null}
-      {insertItems.length > 0 ? (
+      ) : (
         <>
-          <Row.Item flexGrow={1} />
-          <ButtonDropdown
-            iconLeft="add"
-            left
-            items={insertItems}
-            renderItem={(item) => item.name}
-            onItemClick={(item) => item.show(true)}
-          >
-            Insert
-          </ButtonDropdown>
+          <IconButton.Group condensed skipBottomMargin>
+            <IconButton
+              icon="bold"
+              toggled={isBold}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}
+            />
+            <IconButton
+              icon="italic"
+              toggled={isItalic}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}
+            />
+            <IconButton
+              icon="subscript"
+              toggled={isSubscript}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}
+            />
+            <IconButton
+              icon="superscript"
+              toggled={isSuperscript}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}
+            />
+            <IconButton
+              icon="code"
+              toggled={isCode}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}
+            />
+            <IconButton
+              icon="underline"
+              toggled={isUnderline}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}
+            />
+            <IconButton
+              icon="strikethrough"
+              toggled={isStrikethrough}
+              onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}
+            />
+          </IconButton.Group>
+          {enableEntityLinkNode ? (
+            <EntityLinkButton fieldSpec={fieldSpec} isEntityLink={isEntityLink} />
+          ) : null}
+          {insertItems.length > 0 ? (
+            <>
+              <Row.Item flexGrow={1} />
+              <ButtonDropdown
+                iconLeft="add"
+                left
+                items={insertItems}
+                renderItem={(item) => item.name}
+                onItemClick={(item) => item.show(true)}
+              >
+                Insert
+              </ButtonDropdown>
+            </>
+          ) : null}
         </>
-      ) : null}
+      )}
       {showAddEntityDialog ? (
         <AddEntityDialog fieldSpec={fieldSpec} onClose={() => setShowAddEntityDialog(false)} />
       ) : null}
@@ -368,6 +381,49 @@ function BlockFormatDropDown({
       onItemClick={handleItemClick}
     >
       {currentBlockConfig.title}
+    </ButtonDropdown>
+  );
+}
+
+function CodeLanguageDropdown({
+  disabled,
+  codeLanguage,
+  editor,
+  selectedElementKey,
+}: {
+  disabled: boolean;
+  codeLanguage: string;
+  editor: LexicalEditor;
+  selectedElementKey: string | null;
+}) {
+  const items = Object.entries(CODE_LANGUAGE_FRIENDLY_NAME_MAP).map(([value, name]) => ({
+    id: value,
+    name,
+  }));
+
+  const handleItemClick = useCallback(
+    (item: typeof items[number]) => {
+      editor.update(() => {
+        if (selectedElementKey !== null) {
+          const node = $getNodeByKey(selectedElementKey);
+          if ($isCodeNode(node)) {
+            node.setLanguage(item.id);
+          }
+        }
+      });
+    },
+    [editor, selectedElementKey]
+  );
+
+  return (
+    <ButtonDropdown
+      disabled={disabled}
+      items={items}
+      renderItem={(it) => it.name}
+      activeItemIds={[codeLanguage]}
+      onItemClick={handleItemClick}
+    >
+      {getLanguageFriendlyName(codeLanguage)}
     </ButtonDropdown>
   );
 }
