@@ -22,6 +22,7 @@
     "@lexical/selection": "~0.7.0",
     "@lexical/utils": "~0.7.0",
     "@playwright/test": "~1.28.1",
+    "@react-aria/overlays": "~3.12.0",
     "@rushstack/eslint-patch": "~1.2.0",
     "@rushstack/heft": "0.48.9",
     "@storybook/addon-actions": "~6.5.12",

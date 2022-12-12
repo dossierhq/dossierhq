@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-database-adapter-postgres-pg",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "description": "",
   "type": "module",
   "exports": {
