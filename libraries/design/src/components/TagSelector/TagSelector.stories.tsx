@@ -3,9 +3,12 @@ import React, { useReducer } from 'react';
 import type {
   MultipleSelectorReducer,
   MultipleSelectorStateInitializerArgs,
-  TagProps,
-} from '../index.js';
-import { initializeMultipleSelectorState, reduceMultipleSelectorState } from '../index.js';
+} from '../DropdownSelector/MultipleSelectorReducer.js';
+import {
+  initializeMultipleSelectorState,
+  reduceMultipleSelectorState,
+} from '../DropdownSelector/MultipleSelectorReducer.js';
+import type { TagProps } from '../Tag/Tag.js';
 import type { TagSelectorProps } from './TagSelector.js';
 import { TagSelector } from './TagSelector.js';
 

@@ -1,14 +1,17 @@
-import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
-import React from 'react';
+'use client';
+
+import { useOverlayPosition } from '@react-aria/overlays';
+import type { FunctionComponent, MouseEventHandler, ReactNode, RefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
+import { Portal } from '../Portal/Portal.js';
 
 export interface DropdownDisplayProps {
-  id?: string;
-  className?: string;
   active?: boolean;
   up?: boolean;
   left?: boolean;
   trigger: ReactNode;
+  triggerRef: RefObject<HTMLElement>;
   children: ReactNode;
 }
 
@@ -28,30 +31,50 @@ interface DropdownDisplayComponent extends FunctionComponent<DropdownDisplayProp
 }
 
 export const DropdownDisplay: DropdownDisplayComponent = ({
-  id,
-  className,
   active,
   up,
   left,
   trigger,
+  triggerRef,
   children,
 }: DropdownDisplayProps) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const placement = `${up ? 'top' : 'bottom'} ${left ? 'end' : 'start'}` as const;
+  const { overlayProps } = useOverlayPosition({
+    overlayRef: dialogRef,
+    targetRef: triggerRef,
+    isOpen: active,
+    placement,
+  });
+
+  useEffect(() => {
+    if (!dialogRef.current) return;
+    const dialog = dialogRef.current;
+
+    // don't do anything if already in right state (due to useEffect double run)
+    if (active === dialog.open) {
+      return;
+    }
+
+    if (active) {
+      dialog.show();
+    } else if (!active) {
+      dialog.close();
+    }
+  }, [active]);
+
   return (
-    <div
-      id={id}
-      className={toClassName(
-        'dropdown',
-        active && 'is-active',
-        up && 'is-up',
-        left && 'is-right',
-        className
-      )}
-    >
-      <div className="dropdown-trigger is-width-100">{trigger}</div>
-      <div className="dropdown-menu" role="menu">
-        <div className="dropdown-content">{children}</div>
-      </div>
-    </div>
+    <>
+      {trigger}
+      {active ? (
+        <Portal>
+          <dialog {...overlayProps} ref={dialogRef} className="dialog-reset">
+            <div className="dropdown-content">{children}</div>
+          </dialog>
+        </Portal>
+      ) : null}
+    </>
   );
 };
 DropdownDisplay.displayName = 'DropdownDisplay';

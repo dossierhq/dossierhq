@@ -55,6 +55,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
       active={active}
       up={up}
       left={left}
+      triggerRef={triggerRef}
       trigger={
         <Button
           ref={triggerRef}
