@@ -109,6 +109,18 @@ RowTypes.args = {
           />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
+      <FullscreenContainer.ScrollableRow direction="horizontal">
+        <FullscreenContainer.Row>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              width: '300vw',
+              height: '100px',
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
     </>
   ),
 };
