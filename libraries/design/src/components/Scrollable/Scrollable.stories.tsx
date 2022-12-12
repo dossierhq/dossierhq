@@ -40,6 +40,21 @@ Normal.args = {
   ),
 };
 
+export const Horizontal = Template.bind({});
+Horizontal.args = {
+  direction: 'horizontal',
+  children: (
+    <div
+      style={{
+        background:
+          'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+        width: '300vw',
+        height: '100%',
+      }}
+    />
+  ),
+};
+
 export const ShadowsNone = Template.bind({});
 ShadowsNone.args = {
   shadows: 'none',
