@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres"
+}
