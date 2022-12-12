@@ -107,22 +107,30 @@ function Screen({
           </Navbar.Menu>
         </Navbar>
       </FullscreenContainer.Row>
-      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
-        <SearchBar
-          {...{
-            entityTypeFilterState,
-            dispatchEntityTypeFilter,
-            statusFilterState,
-            statusFilterDispatch,
-            authKeyFilterState,
-            authKeyFilterDispatch,
-            onMapClick,
-            onCreateClick,
-          }}
-        />
-      </FullscreenContainer.Row>
+      <FullscreenContainer.ScrollableRow direction="horizontal">
+        <FullscreenContainer.Row
+          center
+          flexDirection="row"
+          gap={2}
+          paddingVertical={2}
+          paddingHorizontal={2}
+        >
+          <SearchBar
+            {...{
+              entityTypeFilterState,
+              dispatchEntityTypeFilter,
+              statusFilterState,
+              statusFilterDispatch,
+              authKeyFilterState,
+              authKeyFilterDispatch,
+              onMapClick,
+              onCreateClick,
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
       <FullscreenContainer.ScrollableRow>
-        <FullscreenContainer.Row paddingVertical={2}>
+        <FullscreenContainer.Row paddingVertical={2} paddingHorizontal={2}>
           <EntityTypesList state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter} />
           <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
           <AuthKeyTagList state={authKeyFilterState} dispatch={authKeyFilterDispatch} />
@@ -131,6 +139,7 @@ function Screen({
       </FullscreenContainer.ScrollableRow>
       <FullscreenContainer.Row
         paddingVertical={2}
+        paddingHorizontal={2}
         columnGap={2}
         flexDirection="row"
         alignItems="center"
