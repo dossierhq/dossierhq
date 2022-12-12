@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-database-adapter-postgres-core
 
-This log was last generated on Sat, 05 Nov 2022 21:33:57 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Dec 2022 12:51:59 GMT and should not be manually modified.
+
+## 0.1.36
+Mon, 12 Dec 2022 12:51:59 GMT
+
+### Updates
+
+- Remove PostgresQueryBuilder. Upgrade dependencies.
 
 ## 0.1.35
 Sat, 05 Nov 2022 21:33:57 GMT
