@@ -62,7 +62,11 @@ tr.is-sticky-row :is(td, th),
   scroll-behavior: smooth;
 }
 
-.scrollable {
+.is-overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.is-overflow-y-scroll {
   overflow-y: scroll;
 }
 

@@ -7,6 +7,8 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 export interface ScrollableProps {
   className?: string;
   style?: React.CSSProperties;
+  // defaults to 'vertical'
+  direction?: 'vertical' | 'horizontal';
   // defaults to 'both'
   shadows?: 'both' | 'bottom' | 'top' | 'none';
   scrollToId?: string;
@@ -17,6 +19,7 @@ export interface ScrollableProps {
 
 export function Scrollable({
   className,
+  direction,
   style,
   shadows,
   scrollToId,
@@ -25,9 +28,9 @@ export function Scrollable({
   children,
 }: ScrollableProps): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
-  const realClassName = toClassName('scrollable is-scroll-behavior-smooth', className);
-  const topShadow = !shadows || shadows === 'both' || shadows === 'top';
-  const bottomShadow = !shadows || shadows === 'both' || shadows === 'bottom';
+  const isVertical = direction !== 'horizontal';
+  const startShadow = !shadows || shadows === 'both' || shadows === 'top';
+  const endShadow = !shadows || shadows === 'both' || shadows === 'bottom';
 
   useEffect(() => {
     if (scrollToTopSignal && ref.current) {
@@ -53,11 +56,21 @@ export function Scrollable({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollToIdSignal]);
 
+  if (!isVertical) {
+    const realClassName = toClassName('is-overflow-x-scroll is-scroll-behavior-smooth', className);
+    return (
+      <div ref={ref} className={realClassName} style={style}>
+        {children}
+      </div>
+    );
+  }
+
+  const realClassName = toClassName('is-overflow-y-scroll is-scroll-behavior-smooth', className);
   return (
     <div ref={ref} className={realClassName} style={style}>
-      {topShadow ? <StickyShadow className="sticky-top-shadow is-sticky-top" /> : null}
+      {startShadow ? <StickyShadow className="sticky-top-shadow is-sticky-top" /> : null}
       {children}
-      {bottomShadow ? <StickyShadow className="sticky-bottom-shadow is-sticky-bottom" /> : null}
+      {endShadow ? <StickyShadow className="sticky-bottom-shadow is-sticky-bottom" /> : null}
     </div>
   );
 }
