@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-typescript-generator",
   "entries": [
     {
+      "version": "0.1.36",
+      "tag": "@jonasb/datadata-typescript-generator_v0.1.36",
+      "date": "Mon, 12 Dec 2022 12:51:59 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support schema aware clients. Upgrade dependencies."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.35",
       "tag": "@jonasb/datadata-typescript-generator_v0.1.35",
       "date": "Sat, 05 Nov 2022 21:33:57 GMT",
