@@ -25,6 +25,7 @@ export type {
   MultipleSelectorStateAction,
   MultipleSelectorStateInitializerArgs,
 } from './components/DropdownSelector/MultipleSelectorReducer.js';
+export { DropdownSelector2 } from './components/DropdownSelector2/DropdownSelector2.js';
 export { EmptyStateMessage } from './components/EmptyStateMessage/EmptyStateMessage.js';
 export { Field } from './components/Field/Field.js';
 export { File } from './components/File/File.js';
