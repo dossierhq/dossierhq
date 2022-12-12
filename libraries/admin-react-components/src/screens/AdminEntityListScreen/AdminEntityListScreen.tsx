@@ -88,23 +88,31 @@ export function AdminEntityListScreen({
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
-      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
-        <AdminEntitySearchToolbar
-          {...{
-            showMap,
-            searchEntityState,
-            dispatchSearchEntityState,
-            onToggleMapClick: handleToggleShowMap,
-            onCreateEntity,
-            entityTypeFilterState,
-            dispatchEntityTypeFilterState,
-            statusFilterState,
-            dispatchStatusFilterState,
-            authKeyFilterState,
-            dispatchAuthKeyFilterState,
-          }}
-        />
-      </FullscreenContainer.Row>
+      <FullscreenContainer.ScrollableRow direction="horizontal">
+        <FullscreenContainer.Row
+          center
+          flexDirection="row"
+          gap={2}
+          paddingVertical={2}
+          paddingHorizontal={2}
+        >
+          <AdminEntitySearchToolbar
+            {...{
+              showMap,
+              searchEntityState,
+              dispatchSearchEntityState,
+              onToggleMapClick: handleToggleShowMap,
+              onCreateEntity,
+              entityTypeFilterState,
+              dispatchEntityTypeFilterState,
+              statusFilterState,
+              dispatchStatusFilterState,
+              authKeyFilterState,
+              dispatchAuthKeyFilterState,
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
       {showMap ? (
         <FullscreenContainer.Row fillHeight fullWidth>
           <EntityMap<AdminEntity>
@@ -125,7 +133,7 @@ export function AdminEntityListScreen({
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
           shadows="bottom"
         >
-          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
+          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined} paddingHorizontal={2}>
             <FullscreenContainer.Item paddingHorizontal={3}>
               <EntityTypeTagSelector
                 state={entityTypeFilterState}
@@ -146,6 +154,7 @@ export function AdminEntityListScreen({
       )}
       <FullscreenContainer.Row
         paddingVertical={2}
+        paddingHorizontal={2}
         columnGap={2}
         flexDirection="row"
         alignItems="center"
