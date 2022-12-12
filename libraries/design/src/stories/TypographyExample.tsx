@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import type { TextStyle } from '../index.js';
-import { Text } from '../index.js';
+import { Text } from '../components/Text/Text.js';
+import type { TextStyle } from '../utils/TextStylePropsUtils.js';
 
 interface Props {
   textStyle: TextStyle;
