@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react';
 import React from 'react';
-import type { DropdownSelectorProps } from '../../components/DropdownSelector/DropdownSelector.js';
-import { DropdownSelector } from '../../components/DropdownSelector/DropdownSelector.js';
+import type { DropdownSelector2Props } from '../../components/DropdownSelector2/DropdownSelector2.js';
+import { DropdownSelector2 } from '../../components/DropdownSelector2/DropdownSelector2.js';
 import type {
   MultipleSelectorItem,
   MultipleSelectorReducer,
@@ -22,7 +22,7 @@ export type EntityTypeSelectorInitArgs = { selectedIds?: string[] };
 export type EntityTypeSelectorState = MultipleSelectorState<EntityTypeItem>;
 export type EntityTypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
 
-type Props = Omit<DropdownSelectorProps<EntityTypeItem>, 'renderItem'>;
+type Props = Omit<DropdownSelector2Props<EntityTypeItem>, 'renderItem'>;
 
 export function initializeEntityTypeSelectorState({
   selectedIds,
@@ -39,5 +39,5 @@ export function initializeEntityTypeSelectorState({
 export const reduceEntityTypeSelectorState: EntityTypeSelectorReducer = reduceMultipleSelectorState;
 
 export function EntityTypeSelector(props: Props): JSX.Element {
-  return <DropdownSelector<EntityTypeItem> {...props} renderItem={(item) => item.name} />;
+  return <DropdownSelector2<EntityTypeItem> {...props} renderItem={(item) => item.name} />;
 }

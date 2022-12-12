@@ -165,6 +165,13 @@ tr.is-sticky-row :is(td, th),
   border-radius: 20%;
 }
 
+.dialog-reset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
 .rich-text {
   user-select: text;
   white-space: pre-wrap;
