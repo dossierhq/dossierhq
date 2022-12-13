@@ -21,7 +21,12 @@ export default function Page() {
         <NavBar current="home" />
       </FullscreenContainer.Row>
       <FullscreenContainer.Columns fillHeight>
-        <FullscreenContainer.ScrollableColumn paddingTop={3} paddingHorizontal={4} gap={5}>
+        <FullscreenContainer.ScrollableColumn
+          paddingTop={3}
+          paddingBottom={5}
+          paddingHorizontal={4}
+          gap={5}
+        >
           <Image src={logo} alt="Data data logo" height={80} />
           <div>
             <Text
@@ -56,7 +61,7 @@ export default function Page() {
           />
           <Feature
             title="Secure all content 🤫"
-            description="You’re in charge of who should have access to the content, even when published. All access is authenticated."
+            description="You’re in charge of who should have access to the content. Content can be public or accessible to a group or person."
           />
           <Feature
             title="Developer friendly ⌨️"
