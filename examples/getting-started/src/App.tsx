@@ -7,7 +7,7 @@ export default function App() {
   useEffect(() => {
     fetch('/api/hello-world')
       .then((res) => res.json())
-      .then((data) => setMessage(data.message))
+      .then((data) => setMessage(data.message));
   }, []);
 
   return (
