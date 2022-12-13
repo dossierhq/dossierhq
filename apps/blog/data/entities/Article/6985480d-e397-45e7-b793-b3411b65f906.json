@@ -3790,7 +3790,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " Logger",
+                "text": " notOk",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3809,7 +3809,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " notOk ",
+                "text": " ok ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4199,34 +4199,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "logger",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ":",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " Logger",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": ")",
                 "type": "code-highlight",
                 "version": 1,
@@ -4247,96 +4219,6 @@
                 "mode": "normal",
                 "style": "",
                 "text": "{",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "const",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " context ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "=",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "{",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " logger ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "}",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
@@ -4711,9 +4593,29 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "context",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " logger ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
               },
               {
                 "detail": 0,
@@ -4857,9 +4759,29 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "context",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " logger ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
               },
               {
                 "detail": 0,
@@ -5302,111 +5224,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " logger ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "=",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "createConsoleLogger",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "function"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "console",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "builtin"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ")",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "const",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": " databaseResult ",
                 "type": "code-highlight",
                 "version": 1
@@ -5468,15 +5285,6 @@
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "logger",
-                "type": "code-highlight",
-                "version": 1
               },
               {
                 "detail": 0,
@@ -5740,6 +5548,98 @@
               {
                 "type": "linebreak",
                 "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " logger ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "createConsoleLogger",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "console",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
               },
               {
                 "type": "linebreak",
@@ -6145,6 +6045,3452 @@
                 "style": "",
                 "text": " as well) for write performance and FTS5 as the full-text search module.",
                 "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Setting up the server",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "In order to interact with the database we need a server. ",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "list",
+            "version": 1,
+            "listType": "bullet",
+            "start": 1,
+            "tag": "ul",
+            "children": [
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 1,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 16,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "npm install @jonasb/datadata-server",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The main thing we need to provide to the server is the database adapter. We also need to provide an authorization adapter, for now we'll go with a standard ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "NoneAndSubjectAuthorizationAdapter",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "code",
+            "version": 1,
+            "language": "typescript",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " createServer",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " NoneAndSubjectAuthorizationAdapter ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'@jonasb/datadata-server'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "async",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "function",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "initializeServer",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "databaseAdapter",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " BetterSqlite3DatabaseAdapter",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "return",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "await",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "createServer",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    databaseAdapter",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    logger",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    authorizationAdapter",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " NoneAndSubjectAuthorizationAdapter",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "async",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "function",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "initialize",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " databaseResult ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "await",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "initializeDatabase",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "if",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "databaseResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "isError",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "return",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " databaseResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " serverResult ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "await",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "initializeServer",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "databaseResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "value",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "if",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "serverResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "isError",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "return",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " serverResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " server ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " serverResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "value",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "return",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "ok",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "server",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " server ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "await",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "initialize",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "valueOrThrow",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The server takes ownership of the database adapter, and when we're done with the server we need to call ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "shutdown()",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " so it can disconnect from the database. We also want to disconnect all connections to the HTTP server.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "code",
+            "version": 1,
+            "language": "javascript",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "const",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " httpServer ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " app",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "listen",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "port",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  console",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "log",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "`",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "template-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Listening on http://localhost:",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "${",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "port",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "`",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "template-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "process",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "on",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'SIGINT'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " shutdown",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "process",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "on",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'SIGTERM'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " shutdown",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "async",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "function",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "shutdown",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "signal",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "literal-property"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " NodeJS",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Signals",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  logger",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'Received signal %s, shutting down'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " signal",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  httpServer",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "closeAllConnections",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "if",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "shutdownResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "isError",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    logger",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "error",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'Error while shutting down: %s (%s)'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      shutdownResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "error",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      shutdownResult",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  httpServer",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "close",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "error",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "parameter"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "=>",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "if",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "error",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      logger",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "error",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'Error while shutting down: %s'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " error",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    logger",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'Server shut down'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    process",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "exit",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "error ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "?",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "1",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "number"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "0",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "number"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Now when we start the server (",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "npm run server",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ") and shut it down, we get a log like this:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "code",
+            "version": 1,
+            "language": "plain",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info: Loading schema",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info: No schema set, defaulting to empty",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Listening on http://localhost:3000",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "^Cinfo: Received signal SIGINT, shutting down",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info: Shutting down database adapter",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info: Finished shutting server",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "info: Server shut down",
+                "type": "code-highlight",
                 "version": 1
               }
             ]
