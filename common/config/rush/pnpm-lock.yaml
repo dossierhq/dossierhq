@@ -147,7 +147,7 @@ importers:
       '@rushstack/heft': 0.48.9
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.0
-      cloudinary: ~1.32.0
+      cloudinary: ~1.33.0
       dotenv: ~16.0.3
       eslint: ~8.29.0
       prettier: 2.8.1
@@ -161,7 +161,7 @@ importers:
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-server': link:../../libraries/server
-      cloudinary: 1.32.0
+      cloudinary: 1.33.0
       dotenv: 16.0.3
       sqlite3: 5.1.2
       tslib: 2.4.1
@@ -1208,7 +1208,7 @@ importers:
       better-sqlite3: ~8.0.1
       bulma: ~0.9.4
       bun-types: ~0.3.0
-      cloudinary: ~1.32.0
+      cloudinary: ~1.33.0
       dotenv: ~16.0.3
       eslint: ~8.29.0
       eslint-config-next: ~13.0.1
@@ -1299,7 +1299,7 @@ importers:
       better-sqlite3: 8.0.1
       bulma: 0.9.4
       bun-types: 0.3.0
-      cloudinary: 1.32.0
+      cloudinary: 1.33.0
       dotenv: 16.0.3
       eslint: 8.29.0
       eslint-config-next: 13.0.1_ha6vam6werchizxrnqvarmz2zu
@@ -9779,8 +9779,8 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /cloudinary/1.32.0:
-    resolution: {integrity: sha512-hbc5/ilOkwD49+Lucqze3z+2Tejc3YdH4tkI+y1Ciabi9Qh9MYcy4M3rYeDAYiMS/jIz5FfHOzx+JjVnPJxNAQ==}
+  /cloudinary/1.33.0:
+    resolution: {integrity: sha512-pdqOgd2QAMCFWujdYw1yhZ+lHPTzc6YIfg4WIvbRyoojIbSd/YgnHT8OSnk/OM4Q1WPFD5FM9EEom+4ehG80IA==}
     engines: {node: '>=0.6'}
     dependencies:
       cloudinary-core: 2.13.0_lodash@4.17.21

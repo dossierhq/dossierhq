@@ -55,7 +55,7 @@
     "better-sqlite3": "~8.0.1",
     "bulma": "~0.9.4",
     "bun-types": "~0.3.0",
-    "cloudinary": "~1.32.0",
+    "cloudinary": "~1.33.0",
     "dotenv": "~16.0.3",
     "eslint": "~8.29.0",
     "eslint-config-next": "~13.0.1",
