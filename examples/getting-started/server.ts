@@ -1,11 +1,13 @@
-import { createConsoleLogger, notOk, ok } from '@jonasb/datadata-core';
+import { AdminSchema, createConsoleLogger, FieldType, notOk, ok } from '@jonasb/datadata-core';
 import {
   BetterSqlite3DatabaseAdapter,
   createBetterSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-better-sqlite3';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
+import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import express from 'express';
+import { writeFile } from 'node:fs/promises';
 
 const app = express();
 const port = 3000;
@@ -33,6 +35,33 @@ async function initializeServer(databaseAdapter: BetterSqlite3DatabaseAdapter) {
   });
 }
 
+async function updateSchema(server: Server) {
+  const sessionResult = server.createSession({
+    provider: 'sys',
+    identifier: 'schemaloader',
+    defaultAuthKeys: [],
+  });
+
+  const adminClient = server.createAdminClient(() => sessionResult);
+
+  const schemaResult = await adminClient.updateSchemaSpecification({
+    entityTypes: [
+      {
+        name: 'Message',
+        fields: [{ name: 'message', type: FieldType.String, required: true, isName: true }],
+      },
+    ],
+  });
+  if (schemaResult.isError()) return schemaResult;
+
+  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
+  const publishedSchema = adminSchema.toPublishedSchema();
+  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
+  await writeFile('src/SchemaTypes.ts', sourceCode);
+
+  return ok(undefined);
+}
+
 async function initialize() {
   const databaseResult = await initializeDatabase();
   if (databaseResult.isError()) return databaseResult;
@@ -40,6 +69,9 @@ async function initialize() {
   const serverResult = await initializeServer(databaseResult.value);
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
+
+  const schemaResult = await updateSchema(server);
+  if (schemaResult.isError()) return schemaResult;
 
   return ok(server);
 }
