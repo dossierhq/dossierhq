@@ -8,7 +8,7 @@ export interface AdminMessageFields {
   message: string | null;
 }
 
-export type AdminMessage = AdminEntity<'Message', AdminMessageFields>;
+export type AdminMessage = AdminEntity<'Message', AdminMessageFields, 'none' | 'subject'>;
 
 export function isAdminMessage(entity: AdminEntity<string, object>): entity is AdminMessage {
   return entity.info.type === 'Message';
@@ -30,7 +30,7 @@ export interface PublishedMessageFields {
   message: string;
 }
 
-export type PublishedMessage = PublishedEntity<'Message', PublishedMessageFields>;
+export type PublishedMessage = PublishedEntity<'Message', PublishedMessageFields, 'none' | 'subject'>;
 
 export function isPublishedMessage(entity: PublishedEntity<string, object>): entity is PublishedMessage {
   return entity.info.type === 'Message';

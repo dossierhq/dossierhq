@@ -57,7 +57,11 @@ async function updateSchema(server: Server) {
 
   const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
   const publishedSchema = adminSchema.toPublishedSchema();
-  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
+  const sourceCode = generateTypescriptForSchema({
+    adminSchema,
+    publishedSchema,
+    authKeyType: "'none' | 'subject'",
+  });
   await writeFile('src/SchemaTypes.ts', sourceCode);
 
   return ok(undefined);

@@ -19,18 +19,22 @@ import type {
 
 export interface PublishedEntity<
   TType extends string = string,
-  TFields extends object = Record<string, unknown>
+  TFields extends object = Record<string, unknown>,
+  TAuthKey extends string = string
 > {
   /** UUID */
   id: string;
-  info: PublishedEntityInfo<TType>;
+  info: PublishedEntityInfo<TType, TAuthKey>;
   fields: TFields;
 }
 
-export interface PublishedEntityInfo<TType extends string = string> {
+export interface PublishedEntityInfo<
+  TType extends string = string,
+  TAuthKey extends string = string
+> {
   type: TType;
   name: string;
-  authKey: string;
+  authKey: TAuthKey;
   createdAt: Date;
 }
 
@@ -147,19 +151,20 @@ export type AdminEntityStatus = typeof AdminEntityStatus[keyof typeof AdminEntit
 
 export interface AdminEntity<
   TType extends string = string,
-  TFields extends object = Record<string, unknown>
+  TFields extends object = Record<string, unknown>,
+  TAuthKey extends string = string
 > {
   /** UUID */
   id: string;
-  info: AdminEntityInfo<TType>;
+  info: AdminEntityInfo<TType, TAuthKey>;
   fields: TFields;
 }
 
-export interface AdminEntityInfo<TType extends string = string> {
+export interface AdminEntityInfo<TType extends string = string, TAuthKey extends string = string> {
   type: TType;
   name: string;
   version: number;
-  authKey: string;
+  authKey: TAuthKey;
   /** The current status of the entity.
    *
    * It is not connected to the requested version so if you get an old version of the entity, the
@@ -185,7 +190,7 @@ export interface AdminEntityCreate<T extends AdminEntity<string, object> = Admin
      * appended to the name. */
     name: string;
     version?: 0;
-    authKey: string;
+    authKey: T['info']['authKey'];
   };
   fields: Partial<T['fields']>;
 }
@@ -203,7 +208,7 @@ export interface AdminEntityUpdate<T extends AdminEntity<string, object> = Admin
     type?: T['info']['type'];
     version?: number;
     /** If provided, has to be the same as the existing authKey, i.e. there's no way to change the authKey of an entity */
-    authKey?: string;
+    authKey?: T['info']['authKey'];
   };
   fields: Partial<T['fields']>;
 }
@@ -218,7 +223,7 @@ export interface AdminEntityUpsert<T extends AdminEntity<string, object> = Admin
   info: {
     name: string;
     type: T['info']['type'];
-    authKey: string;
+    authKey: T['info']['authKey'];
   };
   fields: Partial<T['fields']>;
 }
@@ -285,8 +290,8 @@ export const AdminQueryOrder = {
 } as const;
 export type AdminQueryOrder = keyof typeof AdminQueryOrder;
 
-export interface AdminQuery<TEntityType extends string = string> {
-  authKeys?: string[];
+export interface AdminQuery<TEntityType extends string = string, TAuthKey extends string = string> {
+  authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
   status?: AdminEntityStatus[];
   linksTo?: EntityReference;
@@ -295,8 +300,10 @@ export interface AdminQuery<TEntityType extends string = string> {
   text?: string;
 }
 
-export interface AdminSearchQuery<TEntityType extends string = string>
-  extends AdminQuery<TEntityType> {
+export interface AdminSearchQuery<
+  TEntityType extends string = string,
+  TAuthKey extends string = string
+> extends AdminQuery<TEntityType, TAuthKey> {
   order?: AdminQueryOrder;
   reverse?: boolean;
 }
@@ -307,8 +314,11 @@ export const PublishedQueryOrder = {
 } as const;
 export type PublishedQueryOrder = typeof PublishedQueryOrder[keyof typeof PublishedQueryOrder];
 
-export interface PublishedQuery<TEntityType extends string = string> {
-  authKeys?: string[];
+export interface PublishedQuery<
+  TEntityType extends string = string,
+  TAuthKey extends string = string
+> {
+  authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;

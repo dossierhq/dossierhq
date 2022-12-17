@@ -16,7 +16,7 @@ export interface PublishedArticleFields {
   body: RichText;
 }
 
-export type PublishedArticle = PublishedEntity<'Article', PublishedArticleFields>;
+export type PublishedArticle = PublishedEntity<'Article', PublishedArticleFields, string>;
 
 export function isPublishedArticle(
   entity: PublishedEntity<string, object>
@@ -36,7 +36,7 @@ export interface PublishedChapterFields {
   items: Array<PublishedArticleTocItem | PublishedTocItem>;
 }
 
-export type PublishedChapter = PublishedEntity<'Chapter', PublishedChapterFields>;
+export type PublishedChapter = PublishedEntity<'Chapter', PublishedChapterFields, string>;
 
 export function isPublishedChapter(
   entity: PublishedEntity<string, object>
@@ -58,7 +58,11 @@ export interface PublishedGlossaryTermFields {
   description: RichText;
 }
 
-export type PublishedGlossaryTerm = PublishedEntity<'GlossaryTerm', PublishedGlossaryTermFields>;
+export type PublishedGlossaryTerm = PublishedEntity<
+  'GlossaryTerm',
+  PublishedGlossaryTermFields,
+  string
+>;
 
 export function isPublishedGlossaryTerm(
   entity: PublishedEntity<string, object>

@@ -17,9 +17,11 @@ interface GeneratorContext {
 export function generateTypescriptForSchema({
   adminSchema,
   publishedSchema,
+  authKeyType = 'string',
 }: {
   adminSchema: AdminSchema | null;
   publishedSchema: PublishedSchema | null;
+  authKeyType?: string;
 }) {
   const context: GeneratorContext = { coreImports: new Set<string>() };
   const paragraphs: string[] = [];
@@ -28,7 +30,7 @@ export function generateTypescriptForSchema({
     paragraphs.push(...generateAdminClientTypes(context));
     paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entities'));
     for (const entitySpec of adminSchema.spec.entityTypes) {
-      paragraphs.push(...generateAdminEntityType(context, entitySpec));
+      paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyType));
     }
     paragraphs.push(...generateAllTypesUnion(adminSchema.spec.valueTypes, 'Admin', 'ValueItems'));
     for (const valueSpec of adminSchema.spec.valueTypes) {
@@ -41,7 +43,7 @@ export function generateTypescriptForSchema({
       ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entities')
     );
     for (const entitySpec of publishedSchema.spec.entityTypes) {
-      paragraphs.push(...generatePublishedEntityType(context, entitySpec));
+      paragraphs.push(...generatePublishedEntityType(context, entitySpec, authKeyType));
     }
     paragraphs.push(
       ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItems')
@@ -88,22 +90,25 @@ function generateAllTypesUnion(
 
 function generateAdminEntityType(
   context: GeneratorContext,
-  entitySpec: AdminEntityTypeSpecification
+  entitySpec: AdminEntityTypeSpecification,
+  authKeyType: string
 ) {
-  return generateEntityType(context, entitySpec, 'Admin');
+  return generateEntityType(context, entitySpec, 'Admin', authKeyType);
 }
 
 function generatePublishedEntityType(
   context: GeneratorContext,
-  entitySpec: PublishedEntityTypeSpecification
+  entitySpec: PublishedEntityTypeSpecification,
+  authKeyType: string
 ) {
-  return generateEntityType(context, entitySpec, 'Published');
+  return generateEntityType(context, entitySpec, 'Published', authKeyType);
 }
 
 function generateEntityType(
   context: GeneratorContext,
   entitySpec: PublishedEntityTypeSpecification,
-  adminOrPublished: 'Admin' | 'Published'
+  adminOrPublished: 'Admin' | 'Published',
+  authKeyType: string
 ) {
   const paragraphs: string[] = [''];
 
@@ -126,7 +131,7 @@ function generateEntityType(
   const entityTypeName = `${adminOrPublished}${entitySpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
-    `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}>;`
+    `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}, ${authKeyType}>;`
   );
 
   // isAdminFoo() / isPublishedFoo()
