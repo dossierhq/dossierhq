@@ -8,6 +8,7 @@ import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generat
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import express from 'express';
 import { writeFile } from 'node:fs/promises';
+import type { AppAdminClient } from './src/SchemaTypes.js';
 
 const app = express();
 const port = 3000;
@@ -62,6 +63,40 @@ async function updateSchema(server: Server) {
   return ok(undefined);
 }
 
+async function createMessages(server: Server) {
+  const sessionResult = server.createSession({
+    provider: 'sys',
+    identifier: 'messageloader',
+    defaultAuthKeys: [],
+  });
+
+  const adminClient = server.createAdminClient<AppAdminClient>(() => sessionResult);
+
+  const totalMessageCountResult = await adminClient.getTotalCount({
+    entityTypes: ['Message'],
+    authKeys: ['none'],
+  });
+  if (totalMessageCountResult.isError()) return totalMessageCountResult;
+
+  const desiredMessageCount = 10;
+  for (let i = totalMessageCountResult.value; i < desiredMessageCount; i++) {
+    const message = `Message ${i}!`;
+    const createResult = await adminClient.createEntity(
+      {
+        info: { type: 'Message', authKey: 'none', name: message },
+        fields: { message },
+      },
+      { publish: true }
+    );
+    if (createResult.isError()) return createResult;
+    const entity = createResult.value.entity;
+
+    logger.info('Created message, id=%s', entity.id);
+  }
+
+  return ok(undefined);
+}
+
 async function initialize() {
   const databaseResult = await initializeDatabase();
   if (databaseResult.isError()) return databaseResult;
@@ -72,6 +107,9 @@ async function initialize() {
 
   const schemaResult = await updateSchema(server);
   if (schemaResult.isError()) return schemaResult;
+
+  const messageCreateResult = await createMessages(server);
+  if (messageCreateResult.isError()) return messageCreateResult;
 
   return ok(server);
 }
