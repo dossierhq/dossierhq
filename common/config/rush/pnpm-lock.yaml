@@ -798,7 +798,7 @@ importers:
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@playwright/test': ~1.28.1
+      '@playwright/test': ~1.29.0
       '@rushstack/heft': 0.48.9
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
@@ -818,7 +818,7 @@ importers:
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/datadata-server': link:../server
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
-      '@playwright/test': 1.28.1
+      '@playwright/test': 1.29.0
       '@rushstack/heft': 0.48.9
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
@@ -1174,7 +1174,7 @@ importers:
       '@lexical/selection': ~0.7.0
       '@lexical/utils': ~0.7.0
       '@microsoft/rush-lib': ~5.87.0
-      '@playwright/test': ~1.28.1
+      '@playwright/test': ~1.29.0
       '@react-aria/overlays': ~3.12.0
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': 0.48.9
@@ -1265,7 +1265,7 @@ importers:
       '@lexical/rich-text': 0.7.0_az5nnauwpsrdyx6vkpamwefs24
       '@lexical/selection': 0.7.0_lexical@0.7.0
       '@lexical/utils': 0.7.0_lexical@0.7.0
-      '@playwright/test': 1.28.1
+      '@playwright/test': 1.29.0
       '@react-aria/overlays': 3.12.0_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
       '@rushstack/heft': 0.48.9
@@ -5172,13 +5172,13 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: false
 
-  /@playwright/test/1.28.1:
-    resolution: {integrity: sha512-xN6spdqrNlwSn9KabIhqfZR7IWjPpFK1835tFNgjrlysaSezuX8PYUwaz38V/yI8TJLG9PkAMEXoHRXYXlpTPQ==}
+  /@playwright/test/1.29.0:
+    resolution: {integrity: sha512-gp5PVBenxTJsm2bATWDNc2CCnrL5OaA/MXQdJwwkGQtqTjmY+ZOqAdLqo49O9MLTDh2vYh+tHWDnmFsILnWaeA==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.11.12
-      playwright-core: 1.28.1
+      playwright-core: 1.29.0
 
   /@pmmmwh/react-refresh-webpack-plugin/0.5.5_so6hj2sarpzw76zmfd25dwvqwu:
     resolution: {integrity: sha512-RbG7h6TuP6nFFYKJwbcToA1rjC1FyPg25NR2noAZ0vKI+la01KTSRPkuVPE+U88jXv7javx2JHglUcL1MHcshQ==}
@@ -10510,7 +10510,7 @@ packages:
       readdirp: 3.6.0
       require-package-name: 2.0.1
       resolve: 1.22.1
-      sass: 1.56.2
+      sass: 1.57.0
       scss-parser: 1.0.6
       semver: 7.3.7
       yargs: 16.2.0
@@ -15473,8 +15473,8 @@ packages:
     dependencies:
       find-up: 5.0.0
 
-  /playwright-core/1.28.1:
-    resolution: {integrity: sha512-3PixLnGPno0E8rSBJjtwqTwJe3Yw72QwBBBxNoukIj3lEeBNXwbNiKrNuB1oyQgTBw5QHUhNO3SteEtHaMK6ag==}
+  /playwright-core/1.29.0:
+    resolution: {integrity: sha512-pboOm1m0RD6z1GtwAbEH60PYRfF87vKdzOSRw2RyO0Y0a7utrMyWN2Au1ojGvQr4umuBMODkKTv607YIRypDSQ==}
     engines: {node: '>=14'}
     hasBin: true
 
