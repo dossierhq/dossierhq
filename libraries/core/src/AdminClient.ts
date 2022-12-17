@@ -121,7 +121,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  createEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
     entity: AdminEntityCreate<T>,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
@@ -132,7 +132,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
     | typeof ErrorType.Generic
   >;
 
-  updateEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
     entity: AdminEntityUpdate<T>,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
@@ -143,7 +143,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
     | typeof ErrorType.Generic
   >;
 
-  upsertEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
     entity: AdminEntityUpsert<T>,
     options?: AdminEntityMutationOptions
   ): PromiseResult<
