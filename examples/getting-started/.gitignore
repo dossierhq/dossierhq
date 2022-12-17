@@ -25,6 +25,3 @@ dist-ssr
 
 # SQLite databases
 *.sqlite*
-
-# Generated files
-src/SchemaTypes.ts
