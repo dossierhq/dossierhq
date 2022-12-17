@@ -99,7 +99,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
   >;
 
   sampleEntities(
-    query?: AdminQuery<TAdminEntity['info']['type']>,
+    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<TAdminEntity>,
@@ -107,7 +107,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
   >;
 
   searchEntities(
-    query?: AdminSearchQuery<TAdminEntity['info']['type']>,
+    query?: AdminSearchQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<TAdminEntity, ErrorType>> | null,
@@ -115,7 +115,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
   >;
 
   getTotalCount(
-    query?: AdminQuery<TAdminEntity['info']['type']>
+    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

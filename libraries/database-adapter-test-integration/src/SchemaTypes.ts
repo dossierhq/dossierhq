@@ -27,7 +27,7 @@ export interface AdminLocationsFields {
   locationAdminOnly: Location | null;
 }
 
-export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
+export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields, string>;
 
 export function isAdminLocations(entity: AdminEntity<string, object>): entity is AdminLocations {
   return entity.info.type === 'Locations';
@@ -45,7 +45,7 @@ export interface AdminReadOnlyFields {
   message: string | null;
 }
 
-export type AdminReadOnly = AdminEntity<'ReadOnly', AdminReadOnlyFields>;
+export type AdminReadOnly = AdminEntity<'ReadOnly', AdminReadOnlyFields, string>;
 
 export function isAdminReadOnly(entity: AdminEntity<string, object>): entity is AdminReadOnly {
   return entity.info.type === 'ReadOnly';
@@ -66,7 +66,7 @@ export interface AdminReferencesFields {
   titleOnly: EntityReference | null;
 }
 
-export type AdminReferences = AdminEntity<'References', AdminReferencesFields>;
+export type AdminReferences = AdminEntity<'References', AdminReferencesFields, string>;
 
 export function isAdminReferences(entity: AdminEntity<string, object>): entity is AdminReferences {
   return entity.info.type === 'References';
@@ -87,7 +87,7 @@ export interface AdminRichTextsFields {
   richTextLimitedTypes: RichText | null;
 }
 
-export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
+export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields, string>;
 
 export function isAdminRichTexts(entity: AdminEntity<string, object>): entity is AdminRichTexts {
   return entity.info.type === 'RichTexts';
@@ -111,7 +111,7 @@ export interface AdminStringsFields {
   uniqueGenericIndex: string | null;
 }
 
-export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;
 
 export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
   return entity.info.type === 'Strings';
@@ -129,7 +129,7 @@ export interface AdminSubjectOnlyFields {
   message: string | null;
 }
 
-export type AdminSubjectOnly = AdminEntity<'SubjectOnly', AdminSubjectOnlyFields>;
+export type AdminSubjectOnly = AdminEntity<'SubjectOnly', AdminSubjectOnlyFields, string>;
 
 export function isAdminSubjectOnly(
   entity: AdminEntity<string, object>
@@ -149,7 +149,7 @@ export interface AdminTitleOnlyFields {
   title: string | null;
 }
 
-export type AdminTitleOnly = AdminEntity<'TitleOnly', AdminTitleOnlyFields>;
+export type AdminTitleOnly = AdminEntity<'TitleOnly', AdminTitleOnlyFields, string>;
 
 export function isAdminTitleOnly(entity: AdminEntity<string, object>): entity is AdminTitleOnly {
   return entity.info.type === 'TitleOnly';
@@ -168,7 +168,7 @@ export interface AdminValueItemsFields {
   anyAdminOnly: AllAdminValueItems | null;
 }
 
-export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields>;
+export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields, string>;
 
 export function isAdminValueItems(entity: AdminEntity<string, object>): entity is AdminValueItems {
   return entity.info.type === 'ValueItems';
@@ -260,7 +260,7 @@ export interface PublishedLocationsFields {
   locationList: Location[] | null;
 }
 
-export type PublishedLocations = PublishedEntity<'Locations', PublishedLocationsFields>;
+export type PublishedLocations = PublishedEntity<'Locations', PublishedLocationsFields, string>;
 
 export function isPublishedLocations(
   entity: PublishedEntity<string, object>
@@ -280,7 +280,7 @@ export interface PublishedReadOnlyFields {
   message: string;
 }
 
-export type PublishedReadOnly = PublishedEntity<'ReadOnly', PublishedReadOnlyFields>;
+export type PublishedReadOnly = PublishedEntity<'ReadOnly', PublishedReadOnlyFields, string>;
 
 export function isPublishedReadOnly(
   entity: PublishedEntity<string, object>
@@ -302,7 +302,7 @@ export interface PublishedReferencesFields {
   titleOnly: EntityReference | null;
 }
 
-export type PublishedReferences = PublishedEntity<'References', PublishedReferencesFields>;
+export type PublishedReferences = PublishedEntity<'References', PublishedReferencesFields, string>;
 
 export function isPublishedReferences(
   entity: PublishedEntity<string, object>
@@ -325,7 +325,7 @@ export interface PublishedRichTextsFields {
   richTextLimitedTypes: RichText | null;
 }
 
-export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields>;
+export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields, string>;
 
 export function isPublishedRichTexts(
   entity: PublishedEntity<string, object>
@@ -349,7 +349,7 @@ export interface PublishedStringsFields {
   uniqueGenericIndex: string | null;
 }
 
-export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields>;
+export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields, string>;
 
 export function isPublishedStrings(
   entity: PublishedEntity<string, object>
@@ -369,7 +369,11 @@ export interface PublishedSubjectOnlyFields {
   message: string;
 }
 
-export type PublishedSubjectOnly = PublishedEntity<'SubjectOnly', PublishedSubjectOnlyFields>;
+export type PublishedSubjectOnly = PublishedEntity<
+  'SubjectOnly',
+  PublishedSubjectOnlyFields,
+  string
+>;
 
 export function isPublishedSubjectOnly(
   entity: PublishedEntity<string, object>
@@ -389,7 +393,7 @@ export interface PublishedTitleOnlyFields {
   title: string;
 }
 
-export type PublishedTitleOnly = PublishedEntity<'TitleOnly', PublishedTitleOnlyFields>;
+export type PublishedTitleOnly = PublishedEntity<'TitleOnly', PublishedTitleOnlyFields, string>;
 
 export function isPublishedTitleOnly(
   entity: PublishedEntity<string, object>
@@ -409,7 +413,7 @@ export interface PublishedValueItemsFields {
   any: AllPublishedValueItems | null;
 }
 
-export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields>;
+export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields, string>;
 
 export function isPublishedValueItems(
   entity: PublishedEntity<string, object>

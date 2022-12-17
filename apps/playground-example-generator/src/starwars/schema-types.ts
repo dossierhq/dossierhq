@@ -25,7 +25,7 @@ export interface AdminFilmFields {
   species: EntityReference[] | null;
 }
 
-export type AdminFilm = AdminEntity<'Film', AdminFilmFields>;
+export type AdminFilm = AdminEntity<'Film', AdminFilmFields, string>;
 
 export function isAdminFilm(entity: AdminEntity<string, object>): entity is AdminFilm {
   return entity.info.type === 'Film';
@@ -51,7 +51,7 @@ export interface AdminPersonFields {
   birthYear: string | null;
 }
 
-export type AdminPerson = AdminEntity<'Person', AdminPersonFields>;
+export type AdminPerson = AdminEntity<'Person', AdminPersonFields, string>;
 
 export function isAdminPerson(entity: AdminEntity<string, object>): entity is AdminPerson {
   return entity.info.type === 'Person';
@@ -77,7 +77,7 @@ export interface AdminPlanetFields {
   population: string | null;
 }
 
-export type AdminPlanet = AdminEntity<'Planet', AdminPlanetFields>;
+export type AdminPlanet = AdminEntity<'Planet', AdminPlanetFields, string>;
 
 export function isAdminPlanet(entity: AdminEntity<string, object>): entity is AdminPlanet {
   return entity.info.type === 'Planet';
@@ -105,7 +105,7 @@ export interface AdminSpeciesFields {
   homeworld: EntityReference | null;
 }
 
-export type AdminSpecies = AdminEntity<'Species', AdminSpeciesFields>;
+export type AdminSpecies = AdminEntity<'Species', AdminSpeciesFields, string>;
 
 export function isAdminSpecies(entity: AdminEntity<string, object>): entity is AdminSpecies {
   return entity.info.type === 'Species';
@@ -126,7 +126,7 @@ export interface AdminStarshipFields {
   pilots: EntityReference[] | null;
 }
 
-export type AdminStarship = AdminEntity<'Starship', AdminStarshipFields>;
+export type AdminStarship = AdminEntity<'Starship', AdminStarshipFields, string>;
 
 export function isAdminStarship(entity: AdminEntity<string, object>): entity is AdminStarship {
   return entity.info.type === 'Starship';
@@ -153,7 +153,7 @@ export interface AdminTransportFields {
   costInCredits: string | null;
 }
 
-export type AdminTransport = AdminEntity<'Transport', AdminTransportFields>;
+export type AdminTransport = AdminEntity<'Transport', AdminTransportFields, string>;
 
 export function isAdminTransport(entity: AdminEntity<string, object>): entity is AdminTransport {
   return entity.info.type === 'Transport';
@@ -172,7 +172,7 @@ export interface AdminVehicleFields {
   pilots: EntityReference[] | null;
 }
 
-export type AdminVehicle = AdminEntity<'Vehicle', AdminVehicleFields>;
+export type AdminVehicle = AdminEntity<'Vehicle', AdminVehicleFields, string>;
 
 export function isAdminVehicle(entity: AdminEntity<string, object>): entity is AdminVehicle {
   return entity.info.type === 'Vehicle';

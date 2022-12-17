@@ -20,7 +20,7 @@ export interface AdminBlogPostFields {
   tags: string[] | null;
 }
 
-export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields>;
+export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields, string>;
 
 export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is AdminBlogPost {
   return entity.info.type === 'BlogPost';
@@ -38,7 +38,7 @@ export interface AdminPersonFields {
   title: string | null;
 }
 
-export type AdminPerson = AdminEntity<'Person', AdminPersonFields>;
+export type AdminPerson = AdminEntity<'Person', AdminPersonFields, string>;
 
 export function isAdminPerson(entity: AdminEntity<string, object>): entity is AdminPerson {
   return entity.info.type === 'Person';

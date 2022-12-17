@@ -12,7 +12,7 @@ export interface AdminBooleansFields {
   booleanList: boolean[] | null;
 }
 
-export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields>;
+export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields, string>;
 
 export function isAdminBooleans(entity: AdminEntity<string, object>): entity is AdminBooleans {
   return entity.info.type === 'Booleans';
@@ -40,7 +40,7 @@ export interface AdminEntityTypesFields {
   entityTypeList: EntityReference[] | null;
 }
 
-export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields>;
+export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields, string>;
 
 export function isAdminEntityTypes(entity: AdminEntity<string, object>): entity is AdminEntityTypes {
   return entity.info.type === 'EntityTypes';
@@ -65,7 +65,7 @@ export type AllAdminEntities = AdminFoo;
 
 export type AdminFooFields = Record<never, never>;
 
-export type AdminFoo = AdminEntity<'Foo', AdminFooFields>;
+export type AdminFoo = AdminEntity<'Foo', AdminFooFields, string>;
 
 export function isAdminFoo(entity: AdminEntity<string, object>): entity is AdminFoo {
   return entity.info.type === 'Foo';
@@ -93,7 +93,7 @@ export interface AdminLocationsFields {
   locationList: Location[] | null;
 }
 
-export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields>;
+export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields, string>;
 
 export function isAdminLocations(entity: AdminEntity<string, object>): entity is AdminLocations {
   return entity.info.type === 'Locations';
@@ -121,7 +121,7 @@ export interface AdminRichTextsFields {
   richTextList: RichText[] | null;
 }
 
-export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields>;
+export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields, string>;
 
 export function isAdminRichTexts(entity: AdminEntity<string, object>): entity is AdminRichTexts {
   return entity.info.type === 'RichTexts';
@@ -149,7 +149,7 @@ export interface AdminStringsFields {
   stringList: string[] | null;
 }
 
-export type AdminStrings = AdminEntity<'Strings', AdminStringsFields>;
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;
 
 export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
   return entity.info.type === 'Strings';
@@ -176,7 +176,7 @@ export interface AdminValueItemFields {
   valueItem: AllAdminValueItems | null;
 }
 
-export type AdminValueItem = AdminEntity<'ValueItem', AdminValueItemFields>;
+export type AdminValueItem = AdminEntity<'ValueItem', AdminValueItemFields, string>;
 
 export function isAdminValueItem(entity: AdminEntity<string, object>): entity is AdminValueItem {
   return entity.info.type === 'ValueItem';
@@ -222,7 +222,7 @@ export interface AdminValueTypesFields {
   valueTypeListFooBar: Array<AdminFoo | AdminBar> | null;
 }
 
-export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields>;
+export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields, string>;
 
 export function isAdminValueTypes(entity: AdminEntity<string, object>): entity is AdminValueTypes {
   return entity.info.type === 'ValueTypes';
@@ -301,7 +301,7 @@ export type AllPublishedEntities = PublishedFoo;
 
 export type PublishedFooFields = Record<never, never>;
 
-export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields>;
+export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields, string>;
 
 export function isPublishedFoo(entity: PublishedEntity<string, object>): entity is PublishedFoo {
   return entity.info.type === 'Foo';
@@ -340,7 +340,7 @@ export interface PublishedFooFields {
   stringList: string[];
 }
 
-export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields>;
+export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields, string>;
 
 export function isPublishedFoo(entity: PublishedEntity<string, object>): entity is PublishedFoo {
   return entity.info.type === 'Foo';
