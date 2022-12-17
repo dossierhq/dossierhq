@@ -19,6 +19,7 @@
     "react-dom": "~18.2.0"
   },
   "devDependencies": {
+    "@jonasb/datadata-typescript-generator": "workspace:*",
     "@types/express": "~4.17.13",
     "@types/better-sqlite3": "~7.6.3",
     "@types/react": "~18.0.26",

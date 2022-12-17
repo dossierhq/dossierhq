@@ -316,6 +316,7 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-better-sqlite3': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@jonasb/datadata-typescript-generator': workspace:*
       '@types/better-sqlite3': ~7.6.3
       '@types/express': ~4.17.13
       '@types/react': ~18.0.26
@@ -337,6 +338,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
+      '@jonasb/datadata-typescript-generator': link:../../libraries/typescript-generator
       '@types/better-sqlite3': 7.6.3
       '@types/express': 4.17.13
       '@types/react': 18.0.26
