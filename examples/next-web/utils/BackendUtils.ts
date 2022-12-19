@@ -1,5 +1,5 @@
 import type {
-  AdminClientJsonOperation,
+  AdminClientJsonOperationArgs,
   AdminClientOperationName,
   ErrorType,
   Logger,
@@ -14,7 +14,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const urls = {
   admin: (
     operationName: typeof AdminClientOperationName[keyof typeof AdminClientOperationName],
-    operation?: AdminClientJsonOperation
+    operation?: AdminClientJsonOperationArgs
   ): string =>
     buildUrlWithUrlQuery(
       `${baseUrl}/admin/${operationName}`,

@@ -2,7 +2,6 @@ import { describe, expect, test, vi } from 'vitest';
 import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from './AdminClient.js';
 import {
   AdminClientOperationName,
-  convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
@@ -34,13 +33,12 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient
 ): AdminClientMiddleware<TContext> {
   return async function (_context, operation) {
-    const operationJson = convertAdminClientOperationToJson(operation);
-    const convertedOperation = JSON.parse(JSON.stringify(operationJson));
+    const operationArgsJson = JSON.parse(JSON.stringify(operation.args));
     // normally sent over HTTP
     const resultJson = await executeAdminClientOperationFromJson(
       adminClient,
       operation.name,
-      convertedOperation
+      operationArgsJson
     );
     // normally returned over HTTP
     const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));

@@ -1,5 +1,5 @@
 import type {
-  AdminClientJsonOperation,
+  AdminClientJsonOperationArgs,
   AdminClientOperationName,
   ErrorType,
   Result,
@@ -27,26 +27,26 @@ export default async function adminOperationHandler(
   }
 }
 
-function getOperation(
+function getOperationArgs(
   req: NextApiRequest
-): Result<AdminClientJsonOperation, typeof ErrorType.BadRequest> {
-  let operation: AdminClientJsonOperation | undefined;
+): Result<AdminClientJsonOperationArgs, typeof ErrorType.BadRequest> {
+  let operationArgs: AdminClientJsonOperationArgs | undefined;
   if (req.method === 'GET') {
-    operation = decodeUrlQueryStringifiedParam('operation', req.query);
+    operationArgs = decodeUrlQueryStringifiedParam('operation', req.query);
   } else {
-    operation = req.body;
+    operationArgs = req.body;
   }
-  if (!operation) {
+  if (!operationArgs) {
     return notOk.BadRequest('Missing operation');
   }
-  return ok(operation);
+  return ok(operationArgs);
 }
 
 async function executeAdminOperation(req: NextApiRequest) {
   const { operationName } = req.query;
   if (typeof operationName !== 'string') return notOk.BadRequest('Operation name not provided');
 
-  const operationResult = getOperation(req);
+  const operationResult = getOperationArgs(req);
   if (operationResult.isError()) return operationResult;
 
   const { server } = await getServerConnection();
