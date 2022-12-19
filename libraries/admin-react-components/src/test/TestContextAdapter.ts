@@ -13,7 +13,6 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   buildUrlWithUrlQuery,
-  convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
   convertPublishedClientOperationToJson,
@@ -87,20 +86,18 @@ async function terminatingAdminMiddleware(
   _context: BackendContext,
   operation: AdminClientOperation
 ): Promise<void> {
-  const jsonOperation = convertAdminClientOperationToJson(operation);
-
   let response: Response;
   if (operation.modifies) {
     response = await fetch(`/admin?name=${operation.name}`, {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(jsonOperation),
+      body: JSON.stringify(operation.args),
     });
   } else {
     response = await fetch(
       buildUrlWithUrlQuery(
         `/admin?name=${operation.name}`,
-        stringifyUrlQueryParams({ operation: jsonOperation }, { keepEmptyObjects: true })
+        stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
       ),
       {
         method: 'GET',

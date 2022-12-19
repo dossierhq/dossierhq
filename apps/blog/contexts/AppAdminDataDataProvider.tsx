@@ -16,7 +16,6 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
-  convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   createBaseAdminClient,
   createConsoleLogger,
@@ -93,17 +92,15 @@ async function terminatingAdminMiddleware(
   context: BackendContext,
   operation: AdminClientOperation
 ): Promise<void> {
-  const jsonOperation = convertAdminClientOperationToJson(operation);
-
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
     result = await fetchJsonResult(context, BackendUrls.admin(operation.name), {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(jsonOperation),
+      body: JSON.stringify(operation.args),
     });
   } else {
-    result = await fetchJsonResult(context, BackendUrls.admin(operation.name, jsonOperation), {
+    result = await fetchJsonResult(context, BackendUrls.admin(operation.name, operation.args), {
       method: 'GET',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
     });
