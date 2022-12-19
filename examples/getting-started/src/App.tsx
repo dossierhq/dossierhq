@@ -5,15 +5,19 @@ export default function App() {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/hello-world')
-      .then((res) => res.json())
+    fetch('/api/message')
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : { message: `Failed to fetch message: ${res.status} ${res.statusText}` }
+      )
       .then((data) => setMessage(data.message));
   }, []);
 
   return (
     <div className="App">
       <h1>Data data</h1>
-      {message && <div className="card">Message: {message}</div>}
+      {message && <div className="card">Got: {message}</div>}
     </div>
   );
 }

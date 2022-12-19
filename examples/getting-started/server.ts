@@ -6,9 +6,9 @@ import {
 import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { writeFile } from 'node:fs/promises';
-import type { AppAdminClient } from './src/SchemaTypes.js';
+import type { AppAdminClient, AppPublishedClient } from './src/SchemaTypes.js';
 
 const app = express();
 const port = 3000;
@@ -36,15 +36,22 @@ async function initializeServer(databaseAdapter: BetterSqlite3DatabaseAdapter) {
   });
 }
 
-async function updateSchema(server: Server) {
-  const sessionResult = server.createSession({
+async function initializeClients(server: Server) {
+  const sessionResult = await server.createSession({
     provider: 'sys',
-    identifier: 'schemaloader',
-    defaultAuthKeys: [],
+    identifier: 'anonymous',
+    defaultAuthKeys: ['none', 'subject'],
   });
+  if (sessionResult.isError()) return sessionResult;
+  const { context } = sessionResult.value;
 
-  const adminClient = server.createAdminClient(() => sessionResult);
+  const adminClient = server.createAdminClient<AppAdminClient>(context);
+  const publishedClient = server.createPublishedClient<AppPublishedClient>(context);
 
+  return ok({ adminClient, publishedClient });
+}
+
+async function updateSchema(adminClient: AppAdminClient) {
   const schemaResult = await adminClient.updateSchemaSpecification({
     entityTypes: [
       {
@@ -67,19 +74,8 @@ async function updateSchema(server: Server) {
   return ok(undefined);
 }
 
-async function createMessages(server: Server) {
-  const sessionResult = server.createSession({
-    provider: 'sys',
-    identifier: 'messageloader',
-    defaultAuthKeys: [],
-  });
-
-  const adminClient = server.createAdminClient<AppAdminClient>(() => sessionResult);
-
-  const totalMessageCountResult = await adminClient.getTotalCount({
-    entityTypes: ['Message'],
-    authKeys: ['none'],
-  });
+async function createMessages(adminClient: AppAdminClient) {
+  const totalMessageCountResult = await adminClient.getTotalCount({ entityTypes: ['Message'] });
   if (totalMessageCountResult.isError()) return totalMessageCountResult;
 
   const desiredMessageCount = 10;
@@ -109,21 +105,38 @@ async function initialize() {
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
-  const schemaResult = await updateSchema(server);
+  const clientsResult = await initializeClients(server);
+  if (clientsResult.isError()) return clientsResult;
+  const { adminClient, publishedClient } = clientsResult.value;
+
+  const schemaResult = await updateSchema(adminClient);
   if (schemaResult.isError()) return schemaResult;
 
-  const messageCreateResult = await createMessages(server);
+  const messageCreateResult = await createMessages(adminClient);
   if (messageCreateResult.isError()) return messageCreateResult;
 
-  return ok(server);
+  return ok({ server, adminClient, publishedClient });
 }
 
 const logger = createConsoleLogger(console);
-const server = (await initialize()).valueOrThrow();
+const { server, adminClient, publishedClient } = (await initialize()).valueOrThrow();
 
-app.get('/api/hello-world', (req, res) => {
-  res.send({ message: 'Hello World!' });
-});
+function asyncHandler(handler: (...args: Parameters<RequestHandler>) => Promise<void>) {
+  return (...args: Parameters<RequestHandler>) => {
+    return handler(...args).catch(args[2]);
+  };
+}
+
+app.get(
+  '/api/message',
+  asyncHandler(async (req, res) => {
+    const samples = (
+      await publishedClient.sampleEntities({ entityTypes: ['Message'] }, { count: 1 })
+    ).valueOrThrow();
+    const message = samples.items[0];
+    res.send({ message: message.fields.message });
+  })
+);
 
 const httpServer = app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
