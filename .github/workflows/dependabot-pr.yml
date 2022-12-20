@@ -18,7 +18,7 @@ jobs:
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "1.28.0"
+          deno-version: "1.29.1"
       - name: Use bun
         uses: antongolub/action-setup-bun@v1
       - name: Make dependencies consistent
