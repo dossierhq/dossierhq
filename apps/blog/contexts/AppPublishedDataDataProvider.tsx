@@ -13,7 +13,6 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   convertJsonPublishedClientResult,
-  convertPublishedClientOperationToJson,
   createBasePublishedClient,
   createConsoleLogger,
 } from '@jonasb/datadata-core';
@@ -80,19 +79,17 @@ async function terminatingPublishedMiddleware(
   context: BackendContext,
   operation: PublishedClientOperation
 ): Promise<void> {
-  const jsonOperation = convertPublishedClientOperationToJson(operation);
-
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
     result = await fetchJsonResult(context, BackendUrls.published(operation.name), {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(jsonOperation),
+      body: JSON.stringify(operation.args),
     });
   } else {
-    result = await fetchJsonResult(context, BackendUrls.published(operation.name, jsonOperation), {
+    result = await fetchJsonResult(context, BackendUrls.published(operation.name, operation.args), {
       method: 'GET',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
+      headers: AUTH_KEYS_HEADER,
     });
   }
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));

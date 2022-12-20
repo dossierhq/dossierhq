@@ -154,7 +154,7 @@ export type PublishedClientMiddleware<TContext extends ClientContext> = Middlewa
   PublishedClientOperation
 >;
 
-export type PublishedClientJsonOperation<
+export type PublishedClientJsonOperationArgs<
   TName extends PublishedClientOperationName = PublishedClientOperationName
 > = PublishedClientOperationArguments[TName];
 
@@ -263,47 +263,31 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 }
 
-export function createBasePublishedClient<TContext extends ClientContext>(option: {
+export function createBasePublishedClient<
+  TContext extends ClientContext,
+  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+>(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: PublishedClientMiddleware<TContext>[];
-}): PublishedClient {
-  return new BasePublishedClient(option);
+}): TClient {
+  return new BasePublishedClient(option) as unknown as TClient;
 }
 
-export function convertPublishedClientOperationToJson(
-  operation: PublishedClientOperation
-): PublishedClientJsonOperation {
-  const { args } = operation;
-  switch (operation.name) {
-    case PublishedClientOperationName.getEntities:
-    case PublishedClientOperationName.getEntity:
-    case PublishedClientOperationName.getSchemaSpecification:
-    case PublishedClientOperationName.sampleEntities:
-    case PublishedClientOperationName.searchEntities:
-    case PublishedClientOperationName.getTotalCount:
-      //TODO cleanup args? e.g. reference, keep only id
-      return args;
-    default:
-      assertExhaustive(operation.name);
-  }
-}
-
-export async function executePublishedClientOperationFromJson<
-  TName extends PublishedClientOperationName
->(
-  publishedClient: PublishedClient,
-  operationName: TName,
-  operation: PublishedClientJsonOperation
+export async function executePublishedClientOperationFromJson(
+  publishedClient: PublishedClient<PublishedEntity<string, object>>,
+  operationName: PublishedClientOperationName | string,
+  operationArgs: PublishedClientJsonOperationArgs
 ): PromiseResult<unknown, ErrorType> {
-  switch (operationName) {
+  const name = operationName as PublishedClientOperationName;
+  switch (name) {
     case PublishedClientOperationName.getEntities: {
       const [references] =
-        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntities];
+        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntities];
       return await publishedClient.getEntities(references);
     }
     case PublishedClientOperationName.getEntity: {
       const [reference] =
-        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntity];
+        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntity];
       return await publishedClient.getEntity(reference);
     }
     case PublishedClientOperationName.getSchemaSpecification: {
@@ -311,21 +295,23 @@ export async function executePublishedClientOperationFromJson<
     }
     case PublishedClientOperationName.getTotalCount: {
       const [query] =
-        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.getTotalCount];
+        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getTotalCount];
       return await publishedClient.getTotalCount(query);
     }
     case PublishedClientOperationName.sampleEntities: {
       const [query, options] =
-        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.sampleEntities];
+        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.sampleEntities];
       return await publishedClient.sampleEntities(query, options);
     }
     case PublishedClientOperationName.searchEntities: {
       const [query, paging] =
-        operation as PublishedClientOperationArguments[typeof PublishedClientOperationName.searchEntities];
+        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.searchEntities];
       return await publishedClient.searchEntities(query, paging);
     }
-    default:
-      assertExhaustive(operationName);
+    default: {
+      const _never: never = name; // ensure exhaustiveness
+      return notOk.BadRequest(`Unknown operation ${operationName}`);
+    }
   }
 }
 

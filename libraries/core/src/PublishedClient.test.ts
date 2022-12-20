@@ -10,7 +10,6 @@ import type {
 } from './PublishedClient.js';
 import {
   convertJsonPublishedClientResult,
-  convertPublishedClientOperationToJson,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
   PublishedClientOperationName,
@@ -22,13 +21,12 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   publishedClient: PublishedClient
 ): PublishedClientMiddleware<TContext> {
   return async function (_context, operation) {
-    const operationJson = convertPublishedClientOperationToJson(operation);
-    const convertedOperation = JSON.parse(JSON.stringify(operationJson));
+    const convertedOperationArgs = JSON.parse(JSON.stringify(operation.args));
     // normally sent over HTTP
     const resultJson = await executePublishedClientOperationFromJson(
       publishedClient,
       operation.name,
-      convertedOperation
+      convertedOperationArgs
     );
     // normally returned over HTTP
     const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));

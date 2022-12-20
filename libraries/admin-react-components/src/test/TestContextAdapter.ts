@@ -15,7 +15,6 @@ import {
   buildUrlWithUrlQuery,
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
-  convertPublishedClientOperationToJson,
   createBaseAdminClient,
   createBasePublishedClient,
   createConsoleLogger,
@@ -129,20 +128,18 @@ async function terminatingPublishedMiddleware(
   _context: BackendContext,
   operation: PublishedClientOperation
 ): Promise<void> {
-  const jsonOperation = convertPublishedClientOperationToJson(operation);
-
   let response: Response;
   if (operation.modifies) {
     response = await fetch(`/published?name=${operation.name}`, {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(jsonOperation),
+      body: JSON.stringify(operation.args),
     });
   } else {
     response = await fetch(
       buildUrlWithUrlQuery(
         `/published?name=${operation.name}`,
-        stringifyUrlQueryParams({ operation: jsonOperation }, { keepEmptyObjects: true })
+        stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
       ),
       {
         method: 'GET',

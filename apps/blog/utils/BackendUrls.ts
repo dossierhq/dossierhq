@@ -1,7 +1,7 @@
 import type {
   AdminClientJsonOperationArgs,
   AdminClientOperationName,
-  PublishedClientJsonOperation,
+  PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import { buildUrlWithUrlQuery, stringifyUrlQueryParams } from '@jonasb/datadata-core';
@@ -19,7 +19,7 @@ export const BackendUrls = {
     ),
   published: (
     operationName: keyof typeof PublishedClientOperationName,
-    operation?: PublishedClientJsonOperation
+    operation?: PublishedClientJsonOperationArgs
   ): string =>
     buildUrlWithUrlQuery(
       `${baseUrl}/published/${operationName}`,
