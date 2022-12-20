@@ -107,14 +107,13 @@ export {
 export type { PagingInfo } from './PagingUtils.js';
 export {
   convertJsonPublishedClientResult,
-  convertPublishedClientOperationToJson,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
   PublishedClientOperationName,
 } from './PublishedClient.js';
 export type {
   PublishedClient,
-  PublishedClientJsonOperation,
+  PublishedClientJsonOperationArgs,
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient.js';

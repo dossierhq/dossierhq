@@ -4,7 +4,7 @@ import type {
   ErrorType,
   Logger,
   PromiseResult,
-  PublishedClientJsonOperation,
+  PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import { buildUrlWithUrlQuery, notOk, ok, stringifyUrlQueryParams } from '@jonasb/datadata-core';
@@ -22,11 +22,11 @@ export const urls = {
     ),
   published: (
     operationName: typeof PublishedClientOperationName[keyof typeof PublishedClientOperationName],
-    operation?: PublishedClientJsonOperation
+    operationArgs?: PublishedClientJsonOperationArgs
   ): string =>
     buildUrlWithUrlQuery(
       `${baseUrl}/published/${operationName}`,
-      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
+      stringifyUrlQueryParams({ operation: operationArgs }, { keepEmptyObjects: true })
     ),
 };
 
