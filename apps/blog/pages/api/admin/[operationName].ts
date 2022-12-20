@@ -5,6 +5,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
+  AdminClientModifyingOperations,
   decodeUrlQueryStringifiedParam,
   executeAdminClientOperationFromJson,
   notOk,
@@ -54,9 +55,16 @@ async function executeAdminOperation(req: NextApiRequest) {
   if (authResult.isError()) return authResult;
   const { adminClient } = authResult.value;
 
+  const operationModifies = AdminClientModifyingOperations.has(operationName);
+  if (req.method === 'GET' && operationModifies) {
+    return notOk.BadRequest('Operation modifies data, but GET was used');
+  } else if (req.method === 'PUT' && !operationModifies) {
+    return notOk.BadRequest('Operation does not modify data, but PUT was used');
+  }
+
   const result = await executeAdminClientOperationFromJson(
     adminClient,
-    operationName as keyof typeof AdminClientOperationName,
+    operationName,
     operationResult.value
   );
   return result;

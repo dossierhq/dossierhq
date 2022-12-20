@@ -5,6 +5,8 @@ const {
   executeAdminClientOperationFromJson,
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
+  AdminClientModifyingOperations,
+  notOk,
 } = require('@jonasb/datadata-core');
 const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@jonasb/datadata-server');
 const {
@@ -69,7 +71,12 @@ const expressMiddleWare = (router) => {
         defaultAuthKeys,
       });
       const adminClient = server.createAdminClient(() => sessionResult, [LoggingClientMiddleware]);
-      //TODO ensure only !modifies operations are executed for GET
+      const modifies = AdminClientModifyingOperations.has(name);
+      if (req.method === 'GET' && modifies) {
+        return notOk.BadRequest('GET not allowed for modifying operations');
+      } else if (req.method === 'PUT' && !modifies) {
+        return notOk.BadRequest('PUT only allowed for modifying operations');
+      }
       return await executeAdminClientOperationFromJson(adminClient, name, operation);
     });
   });

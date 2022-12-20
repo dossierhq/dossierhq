@@ -1,5 +1,6 @@
 import {
   AdminClientJsonOperationArgs,
+  AdminClientModifyingOperations,
   AdminSchema,
   createConsoleLogger,
   decodeUrlQueryStringifiedParam,
@@ -170,7 +171,10 @@ app.get(
       'args',
       req.query
     );
-    if (!operationArgs) {
+    const operationModifies = AdminClientModifyingOperations.has(operationName);
+    if (operationModifies) {
+      sendResult(res, notOk.BadRequest('Operation modifies data, but GET was used'));
+    } else if (!operationArgs) {
       sendResult(res, notOk.BadRequest('Missing operation'));
     } else {
       sendResult(
@@ -185,11 +189,16 @@ app.put(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
     const { operationName } = req.params;
-    const operationArgs = req.body;
-    sendResult(
-      res,
-      await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
-    );
+    const operationArgs = req.body as AdminClientJsonOperationArgs;
+    const operationModifies = AdminClientModifyingOperations.has(operationName);
+    if (!operationModifies) {
+      sendResult(res, notOk.BadRequest('Operation does not modify data, but PUT was used'));
+    } else {
+      sendResult(
+        res,
+        await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
+      );
+    }
   })
 );
 

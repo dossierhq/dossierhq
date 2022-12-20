@@ -1,11 +1,12 @@
 export {
+  AdminClientModifyingOperations,
   AdminClientOperationName,
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-  type AdminClient,
 } from './AdminClient.js';
 export type {
+  AdminClient,
   AdminClientJsonOperationArgs,
   AdminClientMiddleware,
   AdminClientOperation,

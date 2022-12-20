@@ -353,6 +353,20 @@ export type AdminClientJsonOperationArgs<
   TName extends AdminClientOperationName = AdminClientOperationName
 > = AdminClientOperationArguments[TName];
 
+export const AdminClientModifyingOperations: Readonly<Set<string>> = new Set([
+  AdminClientOperationName.acquireAdvisoryLock,
+  AdminClientOperationName.archiveEntity,
+  AdminClientOperationName.createEntity,
+  AdminClientOperationName.publishEntities,
+  AdminClientOperationName.releaseAdvisoryLock,
+  AdminClientOperationName.renewAdvisoryLock,
+  AdminClientOperationName.unarchiveEntity,
+  AdminClientOperationName.unpublishEntities,
+  AdminClientOperationName.updateEntity,
+  AdminClientOperationName.updateSchemaSpecification,
+  AdminClientOperationName.upsertEntity,
+] satisfies AdminClientOperationName[]);
+
 class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   private readonly context: TContext | ContextProvider<TContext>;
   private readonly pipeline: AdminClientMiddleware<TContext>[];
