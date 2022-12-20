@@ -12,10 +12,16 @@ export type ContextProvider<TContext extends ClientContext> = () => PromiseResul
   ErrorType
 >;
 
-export interface Operation<TName, TArgs, TOk, TError extends ErrorType | typeof ErrorType.Generic> {
+export interface Operation<
+  TName,
+  TArgs,
+  TOk,
+  TError extends ErrorType | typeof ErrorType.Generic,
+  TModifies extends boolean = boolean
+> {
   readonly name: TName;
   readonly args: TArgs;
-  readonly modifies: boolean;
+  readonly modifies: TModifies;
   readonly resolve: (result: Result<TOk, TError>) => void;
   readonly next: () => Promise<Result<TOk, TError>>;
 }

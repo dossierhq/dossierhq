@@ -146,7 +146,8 @@ export type PublishedClientOperation<
   TName,
   PublishedClientOperationArguments[TName],
   PublishedClientOperationReturnOk[TName],
-  PublishedClientOperationReturnError[TName]
+  PublishedClientOperationReturnError[TName],
+  false
 >;
 
 export type PublishedClientMiddleware<TContext extends ClientContext> = Middleware<
