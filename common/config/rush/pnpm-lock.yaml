@@ -318,11 +318,13 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@types/better-sqlite3': ~7.6.3
+      '@types/body-parser': ~1.19.2
       '@types/express': ~4.17.13
       '@types/react': ~18.0.26
       '@types/react-dom': ~18.0.9
       '@vitejs/plugin-react': ~3.0.0
       better-sqlite3: ~8.0.1
+      body-parser: ~1.20.1
       express: ~4.18.1
       react: ~18.2.0
       react-dom: ~18.2.0
@@ -334,12 +336,14 @@ importers:
       '@jonasb/datadata-database-adapter-better-sqlite3': link:../../libraries/database-adapter-better-sqlite3
       '@jonasb/datadata-server': link:../../libraries/server
       better-sqlite3: 8.0.1
+      body-parser: 1.20.1
       express: 4.18.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
       '@jonasb/datadata-typescript-generator': link:../../libraries/typescript-generator
       '@types/better-sqlite3': 7.6.3
+      '@types/body-parser': 1.19.2
       '@types/express': 4.17.13
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.9
@@ -1189,6 +1193,7 @@ importers:
       '@storybook/react': ~6.5.12
       '@types/base-64': ~1.0.0
       '@types/better-sqlite3': ~7.6.3
+      '@types/body-parser': ~1.19.2
       '@types/codemirror': ~5.60.5
       '@types/express': ~4.17.13
       '@types/leaflet': ~1.9.0
@@ -1208,6 +1213,7 @@ importers:
       babel-loader: ~9.1.0
       base-64: ~1.0.0
       better-sqlite3: ~8.0.1
+      body-parser: ~1.20.1
       bulma: ~0.9.4
       bun-types: ~0.3.0
       cloudinary: ~1.33.0
@@ -1280,6 +1286,7 @@ importers:
       '@storybook/react': 6.5.12_5xriacqqckxwfce3uty4t7k5ta
       '@types/base-64': 1.0.0
       '@types/better-sqlite3': 7.6.3
+      '@types/body-parser': 1.19.2
       '@types/codemirror': 5.60.5
       '@types/express': 4.17.13
       '@types/leaflet': 1.9.0
@@ -1299,6 +1306,7 @@ importers:
       babel-loader: 9.1.0_@babel+core@7.20.5
       base-64: 1.0.0
       better-sqlite3: 8.0.1
+      body-parser: 1.20.1
       bulma: 0.9.4
       bun-types: 0.3.0
       cloudinary: 1.33.0
@@ -6486,7 +6494,7 @@ packages:
       '@storybook/core-events': 6.5.12
       core-js: 3.19.1
       global: 4.4.0
-      qs: 6.10.3
+      qs: 6.11.0
       telejson: 6.0.8
 
   /@storybook/channel-websocket/6.5.12:
@@ -6525,7 +6533,7 @@ packages:
       global: 4.4.0
       lodash: 4.17.21
       memoizerific: 1.11.3
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -6551,7 +6559,7 @@ packages:
       '@storybook/theming': 6.5.12_biqbaboplfbrettd7655fr4n2y
       core-js: 3.19.1
       memoizerific: 1.11.3
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -6583,7 +6591,7 @@ packages:
       core-js: 3.19.1
       global: 4.4.0
       lodash: 4.17.21
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -6619,7 +6627,7 @@ packages:
       core-js: 3.19.1
       global: 4.4.0
       lodash: 4.17.21
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -7055,7 +7063,7 @@ packages:
       core-js: 3.19.1
       global: 4.4.0
       lodash: 4.17.21
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -7271,7 +7279,7 @@ packages:
       '@storybook/client-logger': 6.5.12
       core-js: 3.19.1
       memoizerific: 1.11.3
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -7383,7 +7391,7 @@ packages:
       '@storybook/theming': 6.5.12_biqbaboplfbrettd7655fr4n2y
       core-js: 3.19.1
       memoizerific: 1.11.3
-      qs: 6.10.3
+      qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
@@ -7542,8 +7550,8 @@ packages:
     dependencies:
       '@types/node': 18.11.17
 
-  /@types/body-parser/1.19.1:
-    resolution: {integrity: sha512-a6bTJ21vFOGIkwM0kzh9Yr89ziVxq4vYH2fQ6N8AeipEzai/cFK6aGMArIkUeIdRIgpwQa+2bXiLuUJCpSf2Cg==}
+  /@types/body-parser/1.19.2:
+    resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
       '@types/node': 18.11.17
@@ -7604,7 +7612,7 @@ packages:
   /@types/express/4.17.13:
     resolution: {integrity: sha512-6bSZTPaTIACxn48l50SR+axgrqm6qXFIxrdAKaG6PaJk3+zuUr35hBlgT7vOmJcum+OEaIBLtHV/qloEAFITeA==}
     dependencies:
-      '@types/body-parser': 1.19.1
+      '@types/body-parser': 1.19.2
       '@types/express-serve-static-core': 4.17.25
       '@types/qs': 6.9.7
       '@types/serve-static': 1.13.10
@@ -9222,6 +9230,24 @@ packages:
       raw-body: 2.5.1
       type-is: 1.6.18
       unpipe: 1.0.0
+
+  /body-parser/1.20.1:
+    resolution: {integrity: sha512-jWi7abTbYwajOytWCQc37VulmWiRae5RyTpaCyDcS5/lMdtwSz5lOpDE67srw/HYe35f1z3fDQw+3txg7gNtWw==}
+    engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
+    dependencies:
+      bytes: 3.1.2
+      content-type: 1.0.4
+      debug: 2.6.9
+      depd: 2.0.0
+      destroy: 1.2.0
+      http-errors: 2.0.0
+      iconv-lite: 0.4.24
+      on-finished: 2.4.1
+      qs: 6.11.0
+      raw-body: 2.5.1
+      type-is: 1.6.18
+      unpipe: 1.0.0
+    dev: false
 
   /boolbase/1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -15860,6 +15886,12 @@ packages:
 
   /qs/6.10.3:
     resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.4
+
+  /qs/6.11.0:
+    resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.4

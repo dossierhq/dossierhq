@@ -17,6 +17,7 @@ import {
 import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
+import bodyParser from 'body-parser';
 import express, { RequestHandler, Response } from 'express';
 import { writeFile } from 'node:fs/promises';
 import type { AppAdminClient, AppPublishedClient } from './src/SchemaTypes.js';
@@ -146,6 +147,8 @@ function sendResult(res: Response, result: Result<unknown, ErrorType>) {
   }
 }
 
+app.use(bodyParser.json());
+
 app.get(
   '/api/message',
   asyncHandler(async (req, res) => {
@@ -180,10 +183,10 @@ app.put(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
     const { operationName } = req.params;
-    const operation = req.body;
+    const operationArgs = req.body;
     sendResult(
       res,
-      await executeAdminClientOperationFromJson(adminClient, operationName, operation)
+      await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
     );
   })
 );
@@ -212,7 +215,7 @@ async function shutdown(signal: NodeJS.Signals) {
     if (error) {
       logger.error('Error while shutting down: %s', error.message);
     }
-    logger.info('Server shut down');
+    logger.info('Backend shut down');
     process.exit(error ? 1 : 0);
   });
 }
