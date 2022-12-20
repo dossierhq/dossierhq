@@ -1,11 +1,6 @@
+import type { AdminClientJsonOperationArgs, ErrorType, Result } from '@jonasb/datadata-core';
 import {
-  AdminClientJsonOperationArgs,
   AdminClientModifyingOperations,
-  AdminClientOperationName,
-  ErrorType,
-  Result,
-} from '@jonasb/datadata-core';
-import {
   decodeUrlQueryStringifiedParam,
   executeAdminClientOperationFromJson,
   notOk,

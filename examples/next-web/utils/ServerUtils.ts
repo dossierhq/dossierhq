@@ -1,5 +1,5 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
-import { AdminSchema, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
+import { NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import {
   createDatabase,
@@ -11,7 +11,7 @@ import type { NextApiRequest } from 'next';
 import { Database } from 'sqlite3';
 import { schemaSpecification } from './schema';
 
-let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
+let serverConnectionPromise: Promise<{ server: Server }> | null = null;
 
 export async function getSessionContextForRequest(
   server: Server,
@@ -49,29 +49,26 @@ function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
   return defaultAuthKeys;
 }
 
-export async function getServerConnection(): Promise<{ server: Server; schema: AdminSchema }> {
+export async function getServerConnection(): Promise<{ server: Server }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = (await createDatabaseAdapter()).valueOrThrow();
-      const serverResult = await createServer({
-        databaseAdapter,
-        authorizationAdapter: createAuthenticationAdapter(),
-      });
-      if (serverResult.isError()) throw serverResult.toError();
-      const server = serverResult.value;
-
-      const schemaLoaderSession = await server.createSession({
-        provider: 'sys',
-        identifier: 'schemaloader',
-        defaultAuthKeys: [],
-      });
-      if (schemaLoaderSession.isError()) throw schemaLoaderSession.toError();
-      const client = server.createAdminClient(schemaLoaderSession.value.context);
-      const updateSchemaResult = await client.updateSchemaSpecification(schemaSpecification);
-      if (updateSchemaResult.isError()) {
-        throw updateSchemaResult.toError();
-      }
-      return { server, schema: new AdminSchema(updateSchemaResult.value.schemaSpecification) };
+      const server = (
+        await createServer({
+          databaseAdapter,
+          authorizationAdapter: createAuthenticationAdapter(),
+        })
+      ).valueOrThrow();
+      const { context } = (
+        await server.createSession({
+          provider: 'sys',
+          identifier: 'schemaloader',
+          defaultAuthKeys: [],
+        })
+      ).valueOrThrow();
+      const client = server.createAdminClient(context);
+      (await client.updateSchemaSpecification(schemaSpecification)).throwIfError();
+      return { server };
     })();
   }
 

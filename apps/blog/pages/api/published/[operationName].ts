@@ -1,9 +1,4 @@
-import type {
-  ErrorType,
-  PublishedClientJsonOperationArgs,
-  PublishedClientOperationName,
-  Result,
-} from '@jonasb/datadata-core';
+import type { ErrorType, PublishedClientJsonOperationArgs, Result } from '@jonasb/datadata-core';
 import {
   decodeUrlQueryStringifiedParam,
   executePublishedClientOperationFromJson,
@@ -18,12 +13,12 @@ export default async function publishedOperationHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  if (req.method === 'GET' || req.method === 'PUT') {
+  if (req.method === 'GET') {
     await handleRequest(res, async () => {
       return executePublishedOperation(req);
     });
   } else {
-    sendMethodNotAllowedError(res, ['GET', 'PUT']);
+    sendMethodNotAllowedError(res, ['GET']);
   }
 }
 
@@ -56,7 +51,7 @@ async function executePublishedOperation(req: NextApiRequest) {
 
   const result = await executePublishedClientOperationFromJson(
     publishedClient,
-    operationName as keyof typeof PublishedClientOperationName,
+    operationName,
     operationResult.value
   );
   return result;
