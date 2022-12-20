@@ -33,7 +33,11 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   EntitySamplingPayload<TEntity>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const seed = options?.seed ?? Math.floor(Math.random() * MAX_SEED);
+  let seed = options?.seed ?? Math.floor(Math.random() * MAX_SEED);
+  if (seed < 1 && seed !== 0) {
+    // We expect a seed as an integer, but the user might have used Math.random() which returns a float [0, 1).
+    seed = Math.floor(seed * MAX_SEED);
+  }
 
   // Check authorization
   const authKeysResult = await authResolveAuthorizationKeys(
