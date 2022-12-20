@@ -32,38 +32,9 @@ describe('Admin adminSampleEntities', () => {
     );
 
     expectResultValue(result, { seed: 9876, totalCount: 0, items: [] });
-    expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
-      .toMatchInlineSnapshot(`
-        [
-          [
-            "adminEntitySearchTotalCount",
-            SessionContextImpl {
-              "defaultAuthKeys": [
-                "none",
-              ],
-              "logger": {
-                "debug": [Function],
-                "error": [Function],
-                "info": [Function],
-                "warn": [Function],
-              },
-              "session": {
-                "subjectId": "subject-id",
-                "subjectInternalId": 123,
-              },
-              "transaction": null,
-              Symbol(SessionContext): undefined,
-            },
-            undefined,
-            [
-              {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
-              },
-            ],
-          ],
-        ]
-      `);
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchSnapshot();
   });
 
   test('One result', async () => {
@@ -120,66 +91,34 @@ describe('Admin adminSampleEntities', () => {
         },
       ],
     });
-    expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
-      .toMatchInlineSnapshot(`
-        [
-          [
-            "adminEntitySampleEntities",
-            SessionContextImpl {
-              "defaultAuthKeys": [
-                "none",
-              ],
-              "logger": {
-                "debug": [Function],
-                "error": [Function],
-                "info": [Function],
-                "warn": [Function],
-              },
-              "session": {
-                "subjectId": "subject-id",
-                "subjectInternalId": 123,
-              },
-              "transaction": null,
-              Symbol(SessionContext): undefined,
-            },
-            undefined,
-            0,
-            25,
-            [
-              {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
-              },
-            ],
-          ],
-          [
-            "adminEntitySearchTotalCount",
-            SessionContextImpl {
-              "defaultAuthKeys": [
-                "none",
-              ],
-              "logger": {
-                "debug": [Function],
-                "error": [Function],
-                "info": [Function],
-                "warn": [Function],
-              },
-              "session": {
-                "subjectId": "subject-id",
-                "subjectInternalId": 123,
-              },
-              "transaction": null,
-              Symbol(SessionContext): undefined,
-            },
-            undefined,
-            [
-              {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
-              },
-            ],
-          ],
-        ]
-      `);
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchSnapshot();
+  });
+
+  test('No result - float seed', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const authorizationAdapter = createMockAuthorizationAdapter();
+    const context = createMockSessionContext({ databaseAdapter });
+
+    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+    );
+    databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
+    databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(ok([]));
+
+    const result = await adminSampleEntities(
+      adminTestSchema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      undefined,
+      { seed: 0.123456789 }
+    );
+
+    expectResultValue(result, { seed: 0.123456789, totalCount: 0, items: [] });
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchSnapshot();
   });
 });
