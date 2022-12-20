@@ -6,10 +6,13 @@ import {
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
-import { Database } from 'sqlite3';
+import * as Sqlite from 'sqlite3';
 import type { Sqlite3DatabaseAdapter } from '../../Sqlite3Adapter.js';
 import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';
 import { createDatabase } from '../../SqliteUtils.js';
+
+// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
+const { Database } = (Sqlite as unknown as { default: typeof Sqlite }).default;
 
 export interface ServerInit {
   server: Server;

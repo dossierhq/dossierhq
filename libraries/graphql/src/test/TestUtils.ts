@@ -12,8 +12,11 @@ import {
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import type { AuthorizationAdapter } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
-import { Database } from 'sqlite3';
+import * as Sqlite from 'sqlite3';
 import { v4 as uuidv4 } from 'uuid';
+
+// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
+const { Database } = (Sqlite as unknown as { default: typeof Sqlite }).default;
 
 export interface TestServerWithSession {
   schema: AdminSchema;
