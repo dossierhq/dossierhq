@@ -9,7 +9,6 @@ import type {
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
-  Result,
 } from '@jonasb/datadata-core';
 import {
   buildUrlWithUrlQuery,
@@ -98,29 +97,11 @@ async function terminatingAdminMiddleware(
         `/admin?name=${operation.name}`,
         stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
       ),
-      {
-        method: 'GET',
-        headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      }
+      { method: 'GET', headers: AUTH_KEYS_HEADER }
     );
   }
 
-  let result: Result<unknown, ErrorType>;
-  if (response.ok) {
-    try {
-      result = ok(JSON.parse(await response.text()));
-    } catch (error) {
-      result = notOk.Generic('Failed parsing response');
-    }
-  } else {
-    let text = 'Failed fetching response';
-    try {
-      text = await response.text();
-    } catch (error) {
-      // ignore
-    }
-    result = notOk.fromHttpStatus(response.status, text);
-  }
+  const result = await getBodyAsJsonResult(response);
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
 }
 
@@ -128,32 +109,24 @@ async function terminatingPublishedMiddleware(
   _context: BackendContext,
   operation: PublishedClientOperation
 ): Promise<void> {
-  let response: Response;
-  if (operation.modifies) {
-    response = await fetch(`/published?name=${operation.name}`, {
-      method: 'PUT',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(operation.args),
-    });
-  } else {
-    response = await fetch(
-      buildUrlWithUrlQuery(
-        `/published?name=${operation.name}`,
-        stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
-      ),
-      {
-        method: 'GET',
-        headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      }
-    );
-  }
+  const response = await fetch(
+    buildUrlWithUrlQuery(
+      `/published?name=${operation.name}`,
+      stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
+    ),
+    { method: 'GET', headers: AUTH_KEYS_HEADER }
+  );
 
-  let result: Result<unknown, ErrorType>;
+  const result = await getBodyAsJsonResult(response);
+  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+}
+
+async function getBodyAsJsonResult(response: Response) {
   if (response.ok) {
     try {
-      result = ok(JSON.parse(await response.text()));
+      return ok(await response.json());
     } catch (error) {
-      result = notOk.Generic('Failed parsing response');
+      return notOk.Generic('Failed parsing response');
     }
   } else {
     let text = 'Failed fetching response';
@@ -162,9 +135,8 @@ async function terminatingPublishedMiddleware(
     } catch (error) {
       // ignore
     }
-    result = notOk.fromHttpStatus(response.status, text);
+    return notOk.fromHttpStatus(response.status, text);
   }
-  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }
 
 export function createSlowAdminMiddleware(): AdminClientMiddleware<ClientContext> {

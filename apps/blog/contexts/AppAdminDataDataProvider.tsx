@@ -102,7 +102,7 @@ async function terminatingAdminMiddleware(
   } else {
     result = await fetchJsonResult(context, BackendUrls.admin(operation.name, operation.args), {
       method: 'GET',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
+      headers: AUTH_KEYS_HEADER,
     });
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));

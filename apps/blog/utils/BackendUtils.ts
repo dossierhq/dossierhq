@@ -3,7 +3,7 @@ import { notOk, ok } from '@jonasb/datadata-core';
 
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },
-  input: string, // TODO bun-types requires string, should be RequestInfo
+  input: RequestInfo,
   init?: RequestInit
 ): PromiseResult<TOk, ErrorType> {
   try {

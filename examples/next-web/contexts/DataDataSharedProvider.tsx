@@ -133,7 +133,7 @@ async function terminatingAdminMiddleware(
   } else {
     result = await fetchJsonResult(context, urls.admin(operation.name, operation.args), {
       method: 'GET',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
+      headers: AUTH_KEYS_HEADER,
     });
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
@@ -143,18 +143,10 @@ async function terminatingPublishedMiddleware(
   context: BackendContext,
   operation: PublishedClientOperation
 ): Promise<void> {
-  let result: Result<unknown, ErrorType>;
-  if (operation.modifies) {
-    result = await fetchJsonResult(context, urls.published(operation.name), {
-      method: 'PUT',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
-      body: JSON.stringify(operation.args),
-    });
-  } else {
-    result = await fetchJsonResult(context, urls.published(operation.name, operation.args), {
-      method: 'GET',
-      headers: AUTH_KEYS_HEADER,
-    });
-  }
+  const result = await fetchJsonResult(context, urls.published(operation.name, operation.args), {
+    method: 'GET',
+    headers: AUTH_KEYS_HEADER,
+  });
+
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }
