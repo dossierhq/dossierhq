@@ -5,9 +5,11 @@ import {
   decodeUrlQueryStringifiedParam,
   ErrorType,
   executeAdminClientOperationFromJson,
+  executePublishedClientOperationFromJson,
   FieldType,
   notOk,
   ok,
+  PublishedClientJsonOperationArgs,
   Result,
 } from '@jonasb/datadata-core';
 import {
@@ -188,6 +190,23 @@ app.put(
       res,
       await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
     );
+  })
+);
+
+app.get(
+  '/api/published/:operationName',
+  asyncHandler(async (req, res) => {
+    const { operationName } = req.params;
+    const operationArgs: PublishedClientJsonOperationArgs | undefined =
+      decodeUrlQueryStringifiedParam('args', req.query);
+    if (!operationArgs) {
+      sendResult(res, notOk.BadRequest('Missing operation'));
+    } else {
+      sendResult(
+        res,
+        await executePublishedClientOperationFromJson(publishedClient, operationName, operationArgs)
+      );
+    }
   })
 );
 
