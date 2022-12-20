@@ -843,9 +843,11 @@ importers:
       '@jonasb/datadata-typescript-generator': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.49.0
+      '@types/node': ~18.11.12
       '@types/uuid': ~9.0.0
       eslint: ~8.30.0
       prettier: 2.8.1
+      ts-node: ~10.9.1
       tslib: ~2.4.1
       typescript: ~4.9.4
       uuid: ~9.0.0
@@ -859,9 +861,11 @@ importers:
       '@jonasb/datadata-typescript-generator': link:../typescript-generator
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.49.0
+      '@types/node': 18.11.17
       '@types/uuid': 9.0.0
       eslint: 8.30.0
       prettier: 2.8.1
+      ts-node: 10.9.1_moeqx3xmzxqxagf2sz6mqkbb7m
       typescript: 4.9.4
 
   ../../libraries/design:
@@ -17897,8 +17901,6 @@ packages:
       typescript: 4.9.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: false
-    optional: true
 
   /ts-node/10.9.1_typescript@4.9.4:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
