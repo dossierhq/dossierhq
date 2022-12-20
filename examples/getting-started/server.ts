@@ -1,4 +1,15 @@
-import { AdminSchema, createConsoleLogger, FieldType, notOk, ok } from '@jonasb/datadata-core';
+import {
+  AdminClientJsonOperationArgs,
+  AdminSchema,
+  createConsoleLogger,
+  decodeUrlQueryStringifiedParam,
+  ErrorType,
+  executeAdminClientOperationFromJson,
+  FieldType,
+  notOk,
+  ok,
+  Result,
+} from '@jonasb/datadata-core';
 import {
   BetterSqlite3DatabaseAdapter,
   createBetterSqlite3Adapter,
@@ -6,7 +17,7 @@ import {
 import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
-import express, { RequestHandler } from 'express';
+import express, { RequestHandler, Response } from 'express';
 import { writeFile } from 'node:fs/promises';
 import type { AppAdminClient, AppPublishedClient } from './src/SchemaTypes.js';
 
@@ -127,6 +138,14 @@ function asyncHandler(handler: (...args: Parameters<RequestHandler>) => Promise<
   };
 }
 
+function sendResult(res: Response, result: Result<unknown, ErrorType>) {
+  if (result.isError()) {
+    res.status(result.httpStatus).send(result.message);
+  } else {
+    res.json(result.value);
+  }
+}
+
 app.get(
   '/api/message',
   asyncHandler(async (req, res) => {
@@ -135,6 +154,37 @@ app.get(
     ).valueOrThrow();
     const message = samples.items[0];
     res.send({ message: message.fields.message });
+  })
+);
+
+app.get(
+  '/api/admin/:operationName',
+  asyncHandler(async (req, res) => {
+    const { operationName } = req.params;
+    const operationArgs: AdminClientJsonOperationArgs | undefined = decodeUrlQueryStringifiedParam(
+      'args',
+      req.query
+    );
+    if (!operationArgs) {
+      sendResult(res, notOk.BadRequest('Missing operation'));
+    } else {
+      sendResult(
+        res,
+        await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
+      );
+    }
+  })
+);
+
+app.put(
+  '/api/admin/:operationName',
+  asyncHandler(async (req, res) => {
+    const { operationName } = req.params;
+    const operation = req.body;
+    sendResult(
+      res,
+      await executeAdminClientOperationFromJson(adminClient, operationName, operation)
+    );
   })
 );
 
