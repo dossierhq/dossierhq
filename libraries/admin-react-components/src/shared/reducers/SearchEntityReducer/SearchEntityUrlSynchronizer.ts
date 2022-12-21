@@ -9,7 +9,9 @@ import {
   SearchEntityStateActions,
 } from './SearchEntityReducer.js';
 
-export interface EntitySearchStateUrlQuery {
+export type EntitySearchStateUrlQuery = Partial<Record<'query' | 'paging' | 'sampling', string>>;
+
+export interface EntitySearchStateUrlQueryInput {
   query?: string;
   paging?: string;
   sampling?: string;
@@ -17,13 +19,13 @@ export interface EntitySearchStateUrlQuery {
 }
 
 export function initializeSearchEntityStateFromUrlQuery(
-  urlQuery: EntitySearchStateUrlQuery | undefined
+  urlQuery: EntitySearchStateUrlQueryInput | undefined
 ): SearchEntityState {
   const actions = urlQueryToSearchEntityStateActions(urlQuery);
   return initializeSearchEntityState({ actions });
 }
 
-function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery | undefined) {
+function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQueryInput | undefined) {
   const actions = [];
   if (urlQuery) {
     const decodedQuery: AdminSearchQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
@@ -51,7 +53,7 @@ function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery 
 }
 
 export function useSynchronizeUrlQueryAndSearchEntityState(
-  urlQuery: EntitySearchStateUrlQuery | undefined,
+  urlQuery: EntitySearchStateUrlQueryInput | undefined,
   onUrlQueryChanged: ((urlQuery: EntitySearchStateUrlQuery) => void) | undefined,
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>

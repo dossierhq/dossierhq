@@ -6,9 +6,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 
-//TODO fix type of EntitySearchStateUrlQuery in arc to work better with react-router
-type EntitySearchStateUrlQueryRecord = Record<'query' | 'paging' | 'sampling', string>;
-
 export function PublishedEntitiesRoute() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,8 +19,7 @@ export function PublishedEntitiesRoute() {
   }, [searchParams]);
 
   const handleUrlQueryChanged = useCallback(
-    (urlQuery: EntitySearchStateUrlQuery) =>
-      setSearchParams(urlQuery as EntitySearchStateUrlQueryRecord),
+    (urlQuery: EntitySearchStateUrlQuery) => setSearchParams(urlQuery),
     [setSearchParams]
   );
 
