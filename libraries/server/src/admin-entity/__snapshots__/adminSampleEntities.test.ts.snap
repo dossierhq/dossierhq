@@ -4,7 +4,7 @@ exports[`Admin adminSampleEntities > No result - float seed 1`] = `
 [
   [
     "adminEntitySearchTotalCount",
-    SessionContextImpl {
+    _SessionContextImpl {
       "defaultAuthKeys": [
         "none",
       ],
@@ -19,7 +19,6 @@ exports[`Admin adminSampleEntities > No result - float seed 1`] = `
         "subjectInternalId": 123,
       },
       "transaction": null,
-      Symbol(SessionContext): undefined,
     },
     undefined,
     [
@@ -36,7 +35,7 @@ exports[`Admin adminSampleEntities > No result 1`] = `
 [
   [
     "adminEntitySearchTotalCount",
-    SessionContextImpl {
+    _SessionContextImpl {
       "defaultAuthKeys": [
         "none",
       ],
@@ -51,7 +50,6 @@ exports[`Admin adminSampleEntities > No result 1`] = `
         "subjectInternalId": 123,
       },
       "transaction": null,
-      Symbol(SessionContext): undefined,
     },
     undefined,
     [
@@ -68,7 +66,7 @@ exports[`Admin adminSampleEntities > One result 1`] = `
 [
   [
     "adminEntitySampleEntities",
-    SessionContextImpl {
+    _SessionContextImpl {
       "defaultAuthKeys": [
         "none",
       ],
@@ -83,7 +81,6 @@ exports[`Admin adminSampleEntities > One result 1`] = `
         "subjectInternalId": 123,
       },
       "transaction": null,
-      Symbol(SessionContext): undefined,
     },
     undefined,
     0,
@@ -97,7 +94,7 @@ exports[`Admin adminSampleEntities > One result 1`] = `
   ],
   [
     "adminEntitySearchTotalCount",
-    SessionContextImpl {
+    _SessionContextImpl {
       "defaultAuthKeys": [
         "none",
       ],
@@ -112,7 +109,6 @@ exports[`Admin adminSampleEntities > One result 1`] = `
         "subjectInternalId": 123,
       },
       "transaction": null,
-      Symbol(SessionContext): undefined,
     },
     undefined,
     [

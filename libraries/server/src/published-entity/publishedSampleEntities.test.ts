@@ -37,7 +37,7 @@ describe('Published publishedSampleEntities', () => {
         [
           [
             "publishedEntitySearchTotalCount",
-            SessionContextImpl {
+            _SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -52,7 +52,6 @@ describe('Published publishedSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             [
@@ -119,7 +118,7 @@ describe('Published publishedSampleEntities', () => {
         [
           [
             "publishedEntitySampleEntities",
-            SessionContextImpl {
+            _SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -134,7 +133,6 @@ describe('Published publishedSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             0,
@@ -148,7 +146,7 @@ describe('Published publishedSampleEntities', () => {
           ],
           [
             "publishedEntitySearchTotalCount",
-            SessionContextImpl {
+            _SessionContextImpl {
               "defaultAuthKeys": [
                 "none",
               ],
@@ -163,7 +161,6 @@ describe('Published publishedSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             [
