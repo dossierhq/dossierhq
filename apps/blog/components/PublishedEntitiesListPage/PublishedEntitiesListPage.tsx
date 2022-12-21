@@ -16,7 +16,6 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
   );
   const handleUrlQueryChanged = useCallback(
     (urlQuery: EntitySearchStateUrlQuery) => {
-      //@ts-ignore TODO fix type of url query
       router.replace({ pathname: router.pathname, query: urlQuery });
     },
     [router]

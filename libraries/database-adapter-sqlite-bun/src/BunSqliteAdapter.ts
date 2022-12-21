@@ -41,15 +41,11 @@ export async function createBunSqliteAdapter(
 
     encodeCursor(value) {
       // TODO this is a slow conversion. Using 'base64' is faster, but not correct atm.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       return Buffer.from(value).toString('base64url');
     },
 
     decodeCursor(value) {
       // TODO this is a slow conversion. Using 'base64' is faster, but not correct atm.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       return Buffer.from(value, 'base64url').toString('utf8');
     },
 

@@ -13,6 +13,7 @@ export interface EntitySearchStateUrlQuery {
   query?: string;
   paging?: string;
   sampling?: string;
+  [key: string]: string | string[] | undefined;
 }
 
 export function initializeSearchEntityStateFromUrlQuery(
