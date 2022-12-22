@@ -2,19 +2,14 @@
   "name": "@jonasb/datadata-design",
   "version": "0.1.36",
   "description": "",
+  "type": "module",
   "exports": {
-    ".": {
-      "import": "./lib/esm/index.js",
-      "require": {
-        "types": "./lib/esm/index.d.ts",
-        "default": "./lib/cjs/index.js"
-      }
-    },
+    ".": "./lib/index.js",
     "./main.css": "./lib/main.css"
   },
-  "types": "./lib/esm/index.d.ts",
+  "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && ./scripts/generate-icons.cjs && heft build --clean && (npm run css:build 2>&1) && post-process-build esm-package-json",
+    "build": "npm run prettier:check && ./scripts/generate-icons.cjs && heft build --clean && (npm run css:build 2>&1)",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "css:build": "sass src/styles/main.scss lib/main.css",
@@ -24,9 +19,7 @@
     "prettier:fix": "prettier --write .",
     "start": "start-storybook -p 6007 --no-open",
     "storybook:build": "build-storybook --quiet",
-    "test": "",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "test": ""
   },
   "author": "",
   "license": "ISC",

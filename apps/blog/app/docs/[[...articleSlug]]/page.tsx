@@ -1,4 +1,4 @@
-import { Text } from '@jonasb/datadata-design';
+import { Text } from '@jonasb/datadata-design-server';
 import { ArticleLexicalTheme } from '../../../style/ArticleLexicalTheme';
 import { assertIsPublishedArticle } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';

@@ -12,6 +12,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sql.js': workspace:*
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
+      '@jonasb/datadata-design-server': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
@@ -42,6 +43,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
       '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-design': link:../../libraries/design
+      '@jonasb/datadata-design-server': link:../../libraries/design-server
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       '@jonasb/datadata-server': link:../../libraries/server
@@ -939,6 +941,41 @@ importers:
       sass: 1.57.1
       sass-loader: 13.2.0_sass@1.57.1
       svgo: 3.0.2
+      typescript: 4.9.4
+
+  ../../libraries/design-server:
+    specifiers:
+      '@babel/core': ~7.20.2
+      '@jonasb/datadata-heft-node-rig': workspace:*
+      '@rushstack/heft': 0.49.0
+      '@types/react': ~18.0.26
+      '@types/react-dom': ~18.0.9
+      '@typescript-eslint/eslint-plugin': ~5.47.0
+      '@typescript-eslint/parser': ~5.47.0
+      eslint: ~8.30.0
+      eslint-plugin-react: ~7.31.11
+      eslint-plugin-react-hooks: ~4.6.0
+      prettier: 2.8.1
+      react: ~18.2.0
+      react-dom: ~18.2.0
+      tslib: ~2.4.1
+      typescript: ~4.9.4
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.4.1
+    devDependencies:
+      '@babel/core': 7.20.5
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
+      '@rushstack/heft': 0.49.0
+      '@types/react': 18.0.26
+      '@types/react-dom': 18.0.9
+      '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
+      '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
+      eslint: 8.30.0
+      eslint-plugin-react: 7.31.11_eslint@8.30.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.30.0
+      prettier: 2.8.1
       typescript: 4.9.4
 
   ../../libraries/graphql:
@@ -13647,7 +13684,7 @@ packages:
     engines: {node: '>=4.0'}
     dependencies:
       array-includes: 3.1.6
-      object.assign: 4.1.2
+      object.assign: 4.1.4
 
   /jszip/3.7.1:
     resolution: {integrity: sha512-ghL0tz1XG9ZEmRMcEN2vt7xabrDdqHHeykgARpmZ0BiIctWxM47Vt63ZO2dnp4QYt/xJVLLy5Zv1l/xRdh2byg==}
@@ -14912,15 +14949,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       isobject: 3.0.1
-
-  /object.assign/4.1.2:
-    resolution: {integrity: sha512-ixT2L5THXsApyiUPYKmW+2EHpXXe5Ii3M+f4e+aJFAHao5amFRW6J0OO6c/LU8Be47utCx2GL89hxGB6XSmKuQ==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.1.4
-      has-symbols: 1.0.3
-      object-keys: 1.1.1
 
   /object.assign/4.1.4:
     resolution: {integrity: sha512-1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==}

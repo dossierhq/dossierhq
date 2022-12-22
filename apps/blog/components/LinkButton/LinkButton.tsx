@@ -1,4 +1,4 @@
-import { Button } from '@jonasb/datadata-design';
+import { Button } from '@jonasb/datadata-design-server';
 import Link from 'next/link.js';
 
 type Props = Omit<React.ComponentPropsWithRef<typeof Button>, 'as'> & {

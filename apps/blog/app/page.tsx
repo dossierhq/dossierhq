@@ -7,7 +7,7 @@ import {
   toClassName,
   toFlexItemClassName,
   toSpacingClassName,
-} from '@jonasb/datadata-design';
+} from '@jonasb/datadata-design-server';
 import Image from 'next/image.js';
 import { LinkButton } from '../components/LinkButton/LinkButton';
 import { NavBar } from '../components/NavBar/NavBar';

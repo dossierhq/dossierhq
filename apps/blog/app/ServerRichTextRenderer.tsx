@@ -13,7 +13,7 @@ import {
   isRichTextTextNode,
   richTextTextNodeHasFormat,
 } from '@jonasb/datadata-core';
-import { ClassName, LexicalTheme } from '@jonasb/datadata-design';
+import { ClassName, LexicalTheme } from '@jonasb/datadata-design-server';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';

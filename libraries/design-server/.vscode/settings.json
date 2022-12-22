@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "bulma",
+    "creativebulma",
+    "datadata",
+    "Flexbox",
+    "fontawesome",
+    "fortawesome",
+    "fullwidth",
+    "hoverable",
+    "rushstack",
+    "Xmark"
+  ],
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

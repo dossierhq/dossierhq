@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { FullscreenContainer, Menu } from '@jonasb/datadata-design';
+import { FullscreenContainer, Menu } from '@jonasb/datadata-design-server';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { BrowserUrls } from '../../utils/BrowserUrls';

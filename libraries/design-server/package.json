@@ -1,0 +1,45 @@
+{
+  "name": "@jonasb/datadata-design-server",
+  "version": "0.1.36",
+  "description": "",
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "npm run prettier:check && heft build --clean",
+    "build:watch": "heft build --watch",
+    "clean": "heft clean",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "test": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.20.2",
+    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@rushstack/heft": "0.49.0",
+    "@types/react-dom": "~18.0.9",
+    "@types/react": "~18.0.26",
+    "@typescript-eslint/eslint-plugin": "~5.47.0",
+    "@typescript-eslint/parser": "~5.47.0",
+    "eslint-plugin-react-hooks": "~4.6.0",
+    "eslint-plugin-react": "~7.31.11",
+    "eslint": "~8.30.0",
+    "prettier": "2.8.1",
+    "typescript": "~4.9.4"
+  },
+  "dependencies": {
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0",
+    "tslib": "~2.4.1"
+  }
+}
