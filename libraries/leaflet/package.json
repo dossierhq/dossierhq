@@ -4,23 +4,11 @@
   "description": "",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./lib/esm/index.js",
-      "require": {
-        "types": "./lib/esm/index.d.ts",
-        "default": "./lib/cjs/index.js"
-      }
-    },
-    "./icons.css": {
-      "import": "./lib/esm/icons.css",
-      "require": "./lib/cjs/icons.css"
-    },
-    "./main.css": {
-      "import": "./lib/esm/main.css",
-      "require": "./lib/cjs/main.css"
-    }
+    ".": "./lib/index.js",
+    "./icons.css": "./lib/icons.css",
+    "./main.css": "./lib/main.css"
   },
-  "types": "./lib/esm/index.d.ts",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
