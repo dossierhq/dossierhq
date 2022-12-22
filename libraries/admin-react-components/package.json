@@ -2,22 +2,14 @@
   "name": "@jonasb/datadata-admin-react-components",
   "version": "0.1.36",
   "description": "",
+  "type": "module",
   "exports": {
-    ".": {
-      "import": "./lib/esm/index.js",
-      "require": {
-        "types": "./lib/esm/index.d.ts",
-        "default": "./lib/cjs/index.js"
-      }
-    },
-    "./main.css": {
-      "import": "./lib/esm/main.css",
-      "require": "./lib/cjs/main.css"
-    }
+    ".": "./lib/index.js",
+    "./main.css": "./lib/main.css"
   },
-  "types": "./lib/esm/index.d.ts",
+  "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build esm-package-json",
+    "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
