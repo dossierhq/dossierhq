@@ -9,5 +9,6 @@
     "locatecontrol",
     "postgrator",
     "rushstack"
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

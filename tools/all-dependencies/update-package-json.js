@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-import { RushConfiguration } from "@microsoft/rush-lib";
+import * as RushLib from "@microsoft/rush-lib";
 import fs from "fs/promises";
+
+const { RushConfiguration } = RushLib.default;
 
 function addDependencies({
   dependencies,
