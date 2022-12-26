@@ -9,6 +9,11 @@ import type {
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, PublishedQuery | undefined, EntitySamplingOptions | undefined]>;
+type FetcherData = EntitySamplingPayload<PublishedEntity>;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
  * @param publishedClient
@@ -20,23 +25,15 @@ export function usePublishedSampleEntities(
   query: PublishedQuery | undefined,
   options?: EntitySamplingOptions
 ): {
-  entitySamples: EntitySamplingPayload<PublishedEntity> | undefined;
-  entitySamplesError:
-    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
-    | undefined;
+  entitySamples: FetcherData | undefined;
+  entitySamplesError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => {
-      const { query, options } = JSON.parse(paramsJson) as {
-        query: PublishedQuery;
-        options: EntitySamplingOptions | undefined;
-      };
-      return fetchSampleEntities(publishedClient, query, options);
-    },
+    ([_action, query, options]: FetcherKey) => fetchSampleEntities(publishedClient, query, options),
     [publishedClient]
   );
-  const { data, error } = useSWR(
-    query ? ['datadata/usePublishedSampleEntities', JSON.stringify({ query, options })] : null,
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    query ? CACHE_KEYS.publishedSampleEntities(query, options) : null,
     fetcher
   );
 
@@ -46,9 +43,9 @@ export function usePublishedSampleEntities(
 
 async function fetchSampleEntities(
   publishedClient: PublishedClient,
-  query: PublishedQuery,
-  options: EntitySamplingOptions | undefined
-): Promise<EntitySamplingPayload<PublishedEntity>> {
+  query: FetcherKey[1],
+  options: FetcherKey[2]
+): Promise<FetcherData> {
   const result = await publishedClient.sampleEntities(query, options);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

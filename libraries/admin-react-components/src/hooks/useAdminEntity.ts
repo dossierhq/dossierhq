@@ -10,18 +10,25 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
+type FetcherKey = Readonly<[string, EntityReference | EntityVersionReference]>;
+type FetcherData = AdminEntity;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
+
 export function useAdminEntity(
   adminClient: AdminClient,
   reference: EntityReference | EntityVersionReference | undefined
 ): {
-  entity: AdminEntity | undefined;
-  entityError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
+  entity: FetcherData | undefined;
+  entityError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => fetchEntity(adminClient, JSON.parse(paramsJson)),
+    ([_action, reference]: FetcherKey) => fetchEntity(adminClient, reference),
     [adminClient]
   );
-  const { data, error } = useSWR(reference ? CACHE_KEYS.adminEntity(reference) : null, fetcher);
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    reference ? CACHE_KEYS.adminEntity(reference) : null,
+    fetcher
+  );
 
   // useDebugLogChangedValues('useAdminEntity changed values', { data, error });
 
@@ -30,8 +37,8 @@ export function useAdminEntity(
 
 async function fetchEntity(
   adminClient: AdminClient,
-  reference: EntityReference | EntityVersionReference
-): Promise<AdminEntity> {
+  reference: FetcherKey[1]
+): Promise<FetcherData> {
   const result = await adminClient.getEntity(reference);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

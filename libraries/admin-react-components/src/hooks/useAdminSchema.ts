@@ -4,19 +4,26 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
+type FetcherKey = string;
+type FetcherData = AdminSchema;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
+
 export function useAdminSchema(adminClient: AdminClient): {
-  schema: AdminSchema | undefined;
-  schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
+  schema: FetcherData | undefined;
+  schemaError: FetcherError | undefined;
 } {
-  const fetcher = useCallback((_action: string) => fetchSchema(adminClient), [adminClient]);
-  const { data, error } = useSWR(CACHE_KEYS.adminSchema, fetcher);
+  const fetcher = useCallback((_action: FetcherKey) => fetchSchema(adminClient), [adminClient]);
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(
+    CACHE_KEYS.adminSchema,
+    fetcher
+  );
 
   // useDebugLogChangedValues('useAdminSchema changed values', { data, error });
 
   return { schema: data, schemaError: error };
 }
 
-async function fetchSchema(adminClient: AdminClient): Promise<AdminSchema> {
+async function fetchSchema(adminClient: AdminClient): Promise<FetcherData> {
   const result = await adminClient.getSchemaSpecification();
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

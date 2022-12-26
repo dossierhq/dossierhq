@@ -7,22 +7,25 @@ import type {
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, EntityReference]>;
+type FetcherData = PublishedEntity;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
 
 export function usePublishedEntity(
   publishedClient: PublishedClient,
   reference: EntityReference | undefined
 ): {
-  entity: PublishedEntity | undefined;
-  entityError:
-    | ErrorResult<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic>
-    | undefined;
+  entity: FetcherData | undefined;
+  entityError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, id: string) => fetchEntity(publishedClient, { id }),
+    ([_action, reference]: FetcherKey) => fetchEntity(publishedClient, reference),
     [publishedClient]
   );
-  const { data, error } = useSWR(
-    reference ? ['datadata/usePublishedEntity', reference.id] : null,
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    reference ? CACHE_KEYS.publishedEntity(reference) : null,
     fetcher
   );
 
@@ -31,8 +34,8 @@ export function usePublishedEntity(
 
 async function fetchEntity(
   publishedClient: PublishedClient,
-  reference: EntityReference
-): Promise<PublishedEntity> {
+  reference: FetcherKey[1]
+): Promise<FetcherData> {
   const result = await publishedClient.getEntity(reference);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

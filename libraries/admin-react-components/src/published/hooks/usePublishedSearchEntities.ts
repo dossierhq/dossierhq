@@ -10,6 +10,11 @@ import type {
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, PublishedSearchQuery | undefined, Paging | undefined]>;
+type FetcherData = Connection<Edge<PublishedEntity, ErrorType>> | null;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
  * @param publishedClient
@@ -22,23 +27,15 @@ export function usePublishedSearchEntities(
   query: PublishedSearchQuery | undefined,
   paging?: Paging
 ): {
-  connection: Connection<Edge<PublishedEntity, ErrorType>> | null | undefined;
-  connectionError:
-    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
-    | undefined;
+  connection: FetcherData | undefined;
+  connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => {
-      const { query, paging } = JSON.parse(paramsJson) as {
-        query: PublishedSearchQuery;
-        paging: Paging | undefined;
-      };
-      return fetchSearchEntities(publishedClient, query, paging);
-    },
+    ([_action, query, paging]: FetcherKey) => fetchSearchEntities(publishedClient, query, paging),
     [publishedClient]
   );
-  const { data, error } = useSWR(
-    query ? ['datadata/usePublishedSearchEntities', JSON.stringify({ query, paging })] : null,
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    query ? CACHE_KEYS.publishedSearchEntities(query, paging) : null,
     fetcher
   );
 
@@ -48,7 +45,7 @@ export function usePublishedSearchEntities(
 
 async function fetchSearchEntities(
   publishedClient: PublishedClient,
-  query: PublishedSearchQuery,
+  query: PublishedSearchQuery | undefined,
   paging: Paging | undefined
 ): Promise<Connection<Edge<PublishedEntity, ErrorType>> | null> {
   const result = await publishedClient.searchEntities(query, paging);

@@ -7,6 +7,10 @@ import type {
 import { useCallback } from 'react';
 import useSWR from 'swr';
 
+type FetcherKey = Readonly<[string, PublishedQuery | undefined]>;
+type FetcherData = number;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
 /**
  * @param publishedClient
  * @param query If `undefined`, no data is fetched
@@ -16,22 +20,18 @@ export function usePublishedTotalCount(
   publishedClient: PublishedClient,
   query: PublishedQuery | undefined
 ): {
-  totalCount: number | undefined;
-  totalCountError:
-    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
-    | undefined;
+  totalCount: FetcherData | undefined;
+  totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => {
-      const query = JSON.parse(paramsJson) as PublishedQuery;
-      return fetchTotalCount(publishedClient, query);
-    },
+    ([_action, query]: FetcherKey) => fetchTotalCount(publishedClient, query),
     [publishedClient]
   );
-  const { data: totalCount, error: totalCountError } = useSWR(
-    query ? ['datadata/usePublishedTotalCount', JSON.stringify(query)] : null,
-    fetcher
-  );
+  const { data: totalCount, error: totalCountError } = useSWR<
+    FetcherData,
+    FetcherError,
+    FetcherKey | null
+  >(query ? ['datadata/usePublishedTotalCount', query] : null, fetcher);
 
   // useDebugLogChangedValues('usePublishedTotalCount updated values', { publishedClient, query, totalCount, totalCountError, });
 
@@ -40,8 +40,8 @@ export function usePublishedTotalCount(
 
 async function fetchTotalCount(
   publishedClient: PublishedClient,
-  query: PublishedQuery
-): Promise<number> {
+  query: FetcherKey[1]
+): Promise<FetcherData> {
   const result = await publishedClient.getTotalCount(query);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

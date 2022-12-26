@@ -1,9 +1,15 @@
 import type {
   AdminEntity,
   AdminEntityPublishingPayload,
+  AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   EntityReference,
+  EntitySamplingOptions,
   EntityVersionReference,
+  Paging,
+  PublishedQuery,
+  PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { copyEntity } from '@jonasb/datadata-core';
 import type { Cache, useSWRConfig } from 'swr';
@@ -12,15 +18,39 @@ export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 
 export const CACHE_KEYS = {
   adminEntity(reference: EntityReference | EntityVersionReference) {
-    return ['datadata/useAdminEntity', JSON.stringify(reference)];
+    return ['datadata/useAdminEntity', reference] as const;
   },
   adminEntityHistory(reference: EntityReference) {
-    return ['datadata/useAdminEntityHistory', reference];
+    return ['datadata/useAdminEntityHistory', reference] as const;
   },
   adminPublishingHistory(reference: EntityReference) {
-    return ['datadata/useAdminPublishingHistory', reference];
+    return ['datadata/useAdminPublishingHistory', reference] as const;
+  },
+  adminSampleEntities(query: AdminQuery | undefined, options: EntitySamplingOptions | undefined) {
+    return ['datadata/useAdminSampleEntities', query, options] as const;
+  },
+  adminSearchEntities(query: AdminSearchQuery | undefined, paging: Paging | undefined) {
+    return ['datadata/useAdminSearchEntities', query, paging] as const;
+  },
+  adminTotalCount(query: AdminQuery | undefined) {
+    return ['datadata/useAdminTotalCount', query] as const;
   },
   adminSchema: 'datadata/useAdminSchema',
+  publishedEntity(reference: EntityReference) {
+    return ['datadata/usePublishedEntity', reference] as const;
+  },
+  publishedSampleEntities(
+    query: PublishedQuery | undefined,
+    options: EntitySamplingOptions | undefined
+  ) {
+    return ['datadata/usePublishedSampleEntities', query, options] as const;
+  },
+  publishedSearchEntities(query: PublishedSearchQuery | undefined, paging: Paging | undefined) {
+    return ['datadata/usePublishedSearchEntities', query, paging] as const;
+  },
+  publishedTotalCount(query: PublishedQuery | undefined) {
+    return ['datadata/usePublishedTotalCount', query] as const;
+  },
   publishedSchema: 'datadata/usePublishedSchema',
 };
 
@@ -51,7 +81,7 @@ export function updateCacheEntityInfo<TEffect>(
   payload: AdminEntityPublishingPayload<TEffect>
 ) {
   const key = CACHE_KEYS.adminEntity({ id: payload.id });
-  mutate(key, (entity: AdminEntity) => {
+  mutate(key, (entity: AdminEntity | undefined) => {
     if (!entity) return entity;
     return copyEntity(entity, { info: { status: payload.status, updatedAt: payload.updatedAt } });
   });

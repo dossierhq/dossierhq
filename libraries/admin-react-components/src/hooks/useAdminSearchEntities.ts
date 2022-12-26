@@ -10,6 +10,11 @@ import type {
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, AdminSearchQuery | undefined, Paging | undefined]>;
+type FetcherData = Connection<Edge<AdminEntity, ErrorType>> | null;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
  * @param adminClient
@@ -22,23 +27,15 @@ export function useAdminSearchEntities(
   query: AdminSearchQuery | undefined,
   paging?: Paging
 ): {
-  connection: Connection<Edge<AdminEntity, ErrorType>> | null | undefined;
-  connectionError:
-    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
-    | undefined;
+  connection: FetcherData | undefined;
+  connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => {
-      const { query, paging } = JSON.parse(paramsJson) as {
-        query: AdminSearchQuery;
-        paging: Paging | undefined;
-      };
-      return fetchSearchEntities(adminClient, query, paging);
-    },
+    ([_action, query, paging]: FetcherKey) => fetchSearchEntities(adminClient, query, paging),
     [adminClient]
   );
-  const { data, error } = useSWR(
-    query ? ['datadata/useAdminSearchEntities', JSON.stringify({ query, paging })] : null,
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    query ? CACHE_KEYS.adminSearchEntities(query, paging) : null,
     fetcher
   );
 
@@ -54,9 +51,9 @@ export function useAdminSearchEntities(
 
 async function fetchSearchEntities(
   adminClient: AdminClient,
-  query: AdminSearchQuery,
-  paging: Paging | undefined
-): Promise<Connection<Edge<AdminEntity, ErrorType>> | null> {
+  query: FetcherKey[1],
+  paging: FetcherKey[2]
+): Promise<FetcherData> {
   const result = await adminClient.searchEntities(query, paging);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

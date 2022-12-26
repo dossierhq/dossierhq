@@ -1,6 +1,11 @@
 import type { AdminClient, AdminQuery, ErrorResult, ErrorType } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, AdminQuery | undefined]>;
+type FetcherData = number;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
  * @param adminClient
@@ -11,29 +16,28 @@ export function useAdminTotalCount(
   adminClient: AdminClient,
   query: AdminQuery | undefined
 ): {
-  totalCount: number | undefined;
-  totalCountError:
-    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
-    | undefined;
+  totalCount: FetcherData | undefined;
+  totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => {
-      const query = JSON.parse(paramsJson) as AdminQuery;
-      return fetchTotalCount(adminClient, query);
-    },
+    ([_action, query]: FetcherKey) => fetchTotalCount(adminClient, query),
     [adminClient]
   );
-  const { data: totalCount, error: totalCountError } = useSWR(
-    query ? ['datadata/useAdminTotalCount', JSON.stringify(query)] : null,
-    fetcher
-  );
+  const { data: totalCount, error: totalCountError } = useSWR<
+    FetcherData,
+    FetcherError,
+    FetcherKey | null
+  >(query ? CACHE_KEYS.adminTotalCount(query) : null, fetcher);
 
   // useDebugLogChangedValues('useAdminTotalCount updated values', { adminClient, query, totalCount, totalCountError, });
 
   return { totalCount, totalCountError };
 }
 
-async function fetchTotalCount(adminClient: AdminClient, query: AdminQuery): Promise<number> {
+async function fetchTotalCount(
+  adminClient: AdminClient,
+  query: FetcherKey[1]
+): Promise<FetcherData> {
   const result = await adminClient.getTotalCount(query);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

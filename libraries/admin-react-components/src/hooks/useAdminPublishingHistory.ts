@@ -9,26 +9,28 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
+type FetcherKey = Readonly<[string, EntityReference]>;
+type FetcherData = PublishingHistory;
+type FetcherError = ErrorResult<
+  unknown,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+>;
+
 export function useAdminPublishingHistory(
   adminClient: AdminClient,
   reference: EntityReference | undefined
 ): {
-  publishingHistory: PublishingHistory | undefined;
-  publishingHistoryError:
-    | ErrorResult<
-        unknown,
-        | typeof ErrorType.BadRequest
-        | typeof ErrorType.NotFound
-        | typeof ErrorType.NotAuthorized
-        | typeof ErrorType.Generic
-      >
-    | undefined;
+  publishingHistory: FetcherData | undefined;
+  publishingHistoryError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, reference: EntityReference) => fetchPublishingHistory(adminClient, reference),
+    ([_action, reference]: FetcherKey) => fetchPublishingHistory(adminClient, reference),
     [adminClient]
   );
-  const { data, error } = useSWR(
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
     reference ? CACHE_KEYS.adminPublishingHistory(reference) : null,
     fetcher
   );
@@ -40,8 +42,8 @@ export function useAdminPublishingHistory(
 
 async function fetchPublishingHistory(
   adminClient: AdminClient,
-  reference: EntityReference
-): Promise<PublishingHistory> {
+  reference: FetcherKey[1]
+): Promise<FetcherData> {
   const result = await adminClient.getPublishingHistory(reference);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

@@ -9,6 +9,11 @@ import type {
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, AdminQuery | undefined, EntitySamplingOptions | undefined]>;
+type FetcherData = EntitySamplingPayload<AdminEntity>;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
  * @param adminClient
@@ -20,23 +25,15 @@ export function useAdminSampleEntities(
   query: AdminQuery | undefined,
   options: EntitySamplingOptions | undefined
 ): {
-  entitySamples: EntitySamplingPayload<AdminEntity> | undefined;
-  entitySamplesError:
-    | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
-    | undefined;
+  entitySamples: FetcherData | undefined;
+  entitySamplesError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, paramsJson: string) => {
-      const { query, options } = JSON.parse(paramsJson) as {
-        query: AdminQuery;
-        options: EntitySamplingOptions | undefined;
-      };
-      return fetchSampleEntities(adminClient, query, options);
-    },
+    ([_action, query, options]: FetcherKey) => fetchSampleEntities(adminClient, query, options),
     [adminClient]
   );
-  const { data, error } = useSWR(
-    query ? ['datadata/useAdminSampleEntities', JSON.stringify({ query, options })] : null,
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    query ? CACHE_KEYS.adminSampleEntities(query, options) : null,
     fetcher
   );
 
@@ -52,9 +49,9 @@ export function useAdminSampleEntities(
 
 async function fetchSampleEntities(
   adminClient: AdminClient,
-  query: AdminQuery,
-  options: EntitySamplingOptions | undefined
-): Promise<EntitySamplingPayload<AdminEntity>> {
+  query: FetcherKey[1],
+  options: FetcherKey[2]
+): Promise<FetcherData> {
   const result = await adminClient.sampleEntities(query, options);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

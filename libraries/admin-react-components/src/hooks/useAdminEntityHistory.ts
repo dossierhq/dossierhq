@@ -9,26 +9,28 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
+type FetcherKey = Readonly<[string, EntityReference]>;
+type FetcherData = EntityHistory;
+type FetcherError = ErrorResult<
+  unknown,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+>;
+
 export function useAdminEntityHistory(
   adminClient: AdminClient,
   reference: EntityReference | undefined
 ): {
-  entityHistory: EntityHistory | undefined;
-  entityHistoryError:
-    | ErrorResult<
-        unknown,
-        | typeof ErrorType.BadRequest
-        | typeof ErrorType.NotFound
-        | typeof ErrorType.NotAuthorized
-        | typeof ErrorType.Generic
-      >
-    | undefined;
+  entityHistory: FetcherData | undefined;
+  entityHistoryError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    (_action: string, reference: EntityReference) => fetchEntityHistory(adminClient, reference),
+    ([_action, reference]: FetcherKey) => fetchEntityHistory(adminClient, reference),
     [adminClient]
   );
-  const { data, error } = useSWR(
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
     reference ? CACHE_KEYS.adminEntityHistory(reference) : null,
     fetcher
   );
@@ -40,8 +42,8 @@ export function useAdminEntityHistory(
 
 async function fetchEntityHistory(
   adminClient: AdminClient,
-  reference: EntityReference
-): Promise<EntityHistory> {
+  reference: FetcherKey[1]
+): Promise<FetcherData> {
   const result = await adminClient.getEntityHistory(reference);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
