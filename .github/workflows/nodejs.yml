@@ -35,6 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+      - run: nix profile install .
       - run: devenv ci
       - name: rush install
         run: |
