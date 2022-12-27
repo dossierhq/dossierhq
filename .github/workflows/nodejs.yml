@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - run: nix profile install .
+      - run: nix-env -if https://github.com/cachix/devenv/tarball/v0.5
       - run: devenv ci
       - name: rush install
         run: |
