@@ -35,9 +35,9 @@ function grant_access_for_user {
   source "$THIS_DIR/../.env"
   set +a
 
-  create_user "servertestuser" "servertestpass"
-  create_database "datadata-server"
-  grant_access_for_user "datadata-server" "servertestuser"
+  create_user "librariespguser" "librariespgpass"
+  create_database "datadata-libraries-pg"
+  grant_access_for_user "datadata-libraries-pg" "librariespguser"
 
   create_user "examplesbenchmarkuser" "examplesbenchmarkpass"
   create_database "datadata-examples-benchmark"

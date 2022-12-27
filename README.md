@@ -54,5 +54,6 @@ This project uses [https://devenv.sh/](devenv.sh) to manage development dependen
 - 3001: examples/next-web
 - 3002: apps/playground
 - 3003: apps/blog
+- 5432: devenv postgres db
 - 6006: libraries/admin-react-components
 - 6007: libraries/design
