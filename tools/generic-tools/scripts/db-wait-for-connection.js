@@ -21,6 +21,7 @@ async function canConnect() {
     }
     return true;
   } catch (error) {
+    console.warn(error);
     return false;
   }
 }
@@ -34,11 +35,7 @@ async function main() {
     if (await canConnect()) {
       return;
     }
-    console.log(
-      "Waiting for database connection...",
-      process.env.HOST_ROOT_DATABASE_URL ?? process.env.DOCKER_ROOT_DATABASE_URL
-    );
-    await delay(200);
+    await delay(1000);
   }
 }
 
