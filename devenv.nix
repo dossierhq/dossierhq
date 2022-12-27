@@ -8,14 +8,14 @@
   packages = [
     pkgs.bun
     pkgs.deno
-    pkgs.git
     pkgs.gnuplot
     pkgs.graphviz
+    pkgs.nodejs
     pkgs.playwright
   ];
 
-  enterShell = ''
-  '';
+  # enterShell = ''
+  # '';
 
   # https://devenv.sh/languages/
   # languages.nix.enable = true;
@@ -24,7 +24,7 @@
   # scripts.hello.exec = "echo hello from $GREET";
 
   # https://devenv.sh/pre-commit-hooks/
-  # pre-commit.hooks.shellcheck.enable = true;
+  pre-commit.hooks.prettier.enable = true;
 
   # https://devenv.sh/processes/
   # processes.ping.exec = "ping example.com";

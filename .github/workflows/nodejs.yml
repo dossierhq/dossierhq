@@ -11,6 +11,9 @@ jobs:
       - uses: cachix/cachix-action@v12
         with:
           name: devenv
+      - run: nix-env -if https://github.com/cachix/devenv/tarball/v0.5
+      - run: devenv ci
+      - run: devenv info
       - name: Cache Rush
         uses: actions/cache@v3
         with:
@@ -31,12 +34,6 @@ jobs:
             app/blog/.next/cache/
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - run: nix-env -if https://github.com/cachix/devenv/tarball/v0.5
-      - run: devenv ci
       - name: rush install
         run: |
           devenv shell node common/scripts/install-run-rush.js install --bypass-policy
