@@ -4,7 +4,10 @@ require("dotenv").config({
 });
 const { Pool } = require("pg");
 
-const pool = new Pool({ connectionString: process.env.HOST_ROOT_DATABASE_URL ?? process.env.DOCKER_ROOT_DATABASE_URL });
+const pool = new Pool({
+  connectionString:
+    process.env.HOST_ROOT_DATABASE_URL ?? process.env.DOCKER_ROOT_DATABASE_URL,
+});
 
 function shutDown() {
   return pool.end();
@@ -31,6 +34,10 @@ async function main() {
     if (await canConnect()) {
       return;
     }
+    console.log(
+      "Waiting for database connection...",
+      process.env.HOST_ROOT_DATABASE_URL ?? process.env.DOCKER_ROOT_DATABASE_URL
+    );
     await delay(200);
   }
 }
