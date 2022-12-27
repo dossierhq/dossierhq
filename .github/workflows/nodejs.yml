@@ -7,6 +7,10 @@ jobs:
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
       - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
+      - uses: cachix/cachix-action@v12
+        with:
+          name: devenv
       - name: Cache Rush
         uses: actions/cache@v3
         with:
@@ -31,12 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Use deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: "1.29.1"
-      - name: Use bun
-        uses: antongolub/action-setup-bun@v1
+      - run: devenv ci
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install --bypass-policy

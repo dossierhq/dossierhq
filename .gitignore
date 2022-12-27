@@ -68,3 +68,8 @@ temp/
 
 # Local Netlify folder
 .netlify
+
+# Devenv
+.devenv*
+devenv.local.nix
+
