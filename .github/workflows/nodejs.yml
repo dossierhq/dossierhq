@@ -36,7 +36,7 @@ jobs:
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: rush install
         run: |
-          devenv shell node common/scripts/install-run-rush.js install --bypass-policy
+          devenv shell rush install --bypass-policy
       - name: start db
         run: |
           cd tools/generic-tools/
@@ -51,7 +51,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          devenv shell node common/scripts/install-run-rush.js build --verbose
+          devenv shell rush build --verbose
       - name: stop db
         run: |
           cd tools/generic-tools/

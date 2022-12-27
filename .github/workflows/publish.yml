@@ -38,9 +38,9 @@ jobs:
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: rush install
-        run: devenv shell node common/scripts/install-run-rush.js install --bypass-policy
+        run: devenv shell rush install --bypass-policy
       - name: rush change -v
-        run: devenv shell node common/scripts/install-run-rush.js change -v
+        run: devenv shell rush change -v
       - name: start db
         run: |
           cd tools/generic-tools/
@@ -55,7 +55,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          devenv shell node common/scripts/install-run-rush.js build --verbose
+          devenv shell rush build --verbose
       - name: stop db
         run: |
           cd tools/generic-tools/
@@ -65,10 +65,10 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
       - name: rush version
-        run: devenv shell node common/scripts/install-run-rush.js version --bump --target-branch main
+        run: devenv shell rush version --bump --target-branch main
       - name: rush publish
         env:
           NPM_GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: devenv shell node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all
+        run: devenv shell rush publish --apply --publish -b main --include-all
       - name: git push to publish
         run: git push origin HEAD:publish

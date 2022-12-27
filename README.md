@@ -1,16 +1,13 @@
-## Development dependencies
+## devenv.sh (development dependencies)
 
-- Use nvm to manage node version
-- `npm install -g @microsoft/rush`
-- `brew install deno` (for `examples/deno`)
-- `brew install pgcli` (optional, for Postgres access)
-- `brew install gnuplot` (for benchmarking)
-- `brew install graphviz` (for documentation)
-- `curl https://bun.sh/install | bash` (for [Bun](https://bun.sh/), needed by `examples/bun`)
-- `npx playwright install` (for installing browsers for Playwright testing)
+This project uses [https://devenv.sh/](devenv.sh) to manage development dependencies consistently and [direnv](https://direnv.net/) to automatically enable devenv. If you don't want to use devenv you can install the dependencies (rush, node, deno, bun etc) manually, but you're off the beaten path. You can see which dependencies are in used by checking [devenv.nix](./devenv.nix).
+
+- Install [devenv](https://devenv.sh/getting-started/)
+- Install [direnv](https://direnv.net/)
 
 ## Getting started
 
+- `devenv shell` (or use direnv to automatically open the devenv shell)
 - `rush update` to install dependencies.
 - In `tools/generic-tools/`:
   - By default the databases (test and example databases on PostgreSQL) are configured in Docker. To use another db set the env variable `HOST_ROOT_DATABASE_URL`

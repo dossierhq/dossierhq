@@ -26,8 +26,8 @@ jobs:
           git status
       - name: rush check && rush update
         run: |
-          devenv shell node common/scripts/install-run-rush.js check
-          devenv shell node common/scripts/install-run-rush.js update --bypass-policy
+          devenv shell rush check
+          devenv shell rush update --bypass-policy
       - name: Git status
         run: |
           git status
@@ -54,7 +54,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          devenv shell node common/scripts/install-run-rush.js build --verbose
+          devenv shell rush build --verbose
       - name: stop db
         run: |
           cd tools/generic-tools/
