@@ -63,7 +63,7 @@ common/autoinstallers/*/.npmrc
 temp/
 
 ##
-.envrc
+.envrc.local
 *.code-workspace
 
 # Local Netlify folder

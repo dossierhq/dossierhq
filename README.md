@@ -33,9 +33,8 @@ This project uses [https://devenv.sh/](devenv.sh) to manage development dependen
 
 ## Upgrade dependencies
 
-- Upgrade node version in `.nvmrc`
-- Upgrade deno version in Github Actions workflows (`deno-version`)
-- Bun is automatically using the latest version on GitHub Actions
+- Update devenv version files in workflows: `https://github.com/cachix/devenv/tarball/v*`
+- `devenv update` to update lock file
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
 - Upgrade individual dependencies in `tools/all-dependencies/`:
   - `rush add --package typescript@latest --dev --make-consistent`
