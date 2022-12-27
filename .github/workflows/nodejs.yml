@@ -39,16 +39,11 @@ jobs:
           devenv shell rush install --bypass-policy
       - name: start db
         run: |
-          cd tools/generic-tools/
           devenv up &
-          devenv shell npm run db:wait
+          devenv shell bash -c "cd tools/generic-tools/ && npm run db:wait"
       - name: setup db
         run: |
-          cd tools/generic-tools/
-          devenv shell npm run db:ensure-dbs
-          devenv shell npm run db:make-users:superuser
-          devenv shell npm run db:migrate:all
-          devenv shell npm run db:make-users:no-superuser
+          devenv shell bash -c "cd tools/generic-tools/ && npm run db:ensure-dbs db:make-users:superuser db:migrate:all db:make-users:no-superuser"
       - name: rush build
         run: |
           devenv shell rush build --verbose
