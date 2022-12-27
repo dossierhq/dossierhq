@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 12
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
+    env:
+      HOST_ROOT_DATABASE_URL: postgres://runner@localhost:5432/runner
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v18
