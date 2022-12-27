@@ -11,27 +11,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - uses: cachix/install-nix-action@v18
+      - uses: cachix/cachix-action@v12
         with:
-          node-version-file: ".nvmrc"
-      - name: Use deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: "1.29.1"
-      - name: Use bun
-        uses: antongolub/action-setup-bun@v1
+          name: devenv
+      - run: nix-env -if https://github.com/cachix/devenv/tarball/v0.5
+      - run: devenv ci
+      - run: devenv info
       - name: Make dependencies consistent
         run: |
-          which node
-          ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
+          devenv shell ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
       - name: Git status
         run: |
           git status
       - name: rush check && rush update
         run: |
-          node common/scripts/install-run-rush.js check
-          node common/scripts/install-run-rush.js update --bypass-policy
+          devenv shell node common/scripts/install-run-rush.js check
+          devenv shell node common/scripts/install-run-rush.js update --bypass-policy
       - name: Git status
         run: |
           git status
@@ -58,7 +54,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose
+          devenv shell node common/scripts/install-run-rush.js build --verbose
       - name: stop db
         run: |
           cd tools/generic-tools/

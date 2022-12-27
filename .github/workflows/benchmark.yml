@@ -9,6 +9,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
+      - uses: cachix/cachix-action@v12
+        with:
+          name: devenv
+      - run: nix-env -if https://github.com/cachix/devenv/tarball/v0.5
+      - run: devenv ci
+      - run: devenv info
       - name: Cache Rush
         uses: actions/cache@v3
         with:
@@ -22,23 +29,9 @@ jobs:
           path: |
             common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - name: Use bun
-        uses: antongolub/action-setup-bun@v1
-      - name: Install gnuplot
-        run: |
-          sudo apt-get update # to avoid error: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
-          sudo apt-get install -y gnuplot
-      - name: Use deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: "1.29.1"
       - name: rush install
         run: |
-          node common/scripts/install-run-rush.js install --bypass-policy
+          devenv shell node common/scripts/install-run-rush.js install --bypass-policy
       - name: start db
         run: |
           cd tools/generic-tools/
@@ -53,11 +46,11 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose --to datadata-examples-benchmark
+          devenv shell node common/scripts/install-run-rush.js build --verbose --to datadata-examples-benchmark
       - name: npm start (benchmark)
         run: |
           cd examples/benchmark
-          npm run start:ci
+          devenv shell npm run start:ci
       - name: stop db
         run: |
           cd tools/generic-tools/

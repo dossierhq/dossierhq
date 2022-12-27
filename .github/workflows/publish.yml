@@ -11,6 +11,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: cachix/install-nix-action@v18
+      - uses: cachix/cachix-action@v12
+        with:
+          name: devenv
+      - run: nix-env -if https://github.com/cachix/devenv/tarball/v0.5
+      - run: devenv ci
+      - run: devenv info
       - name: Cache Rush
         uses: actions/cache@v3
         with:
@@ -30,20 +37,10 @@ jobs:
           path: |
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - name: Use deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: "1.29.1"
-      - name: Use bun
-        uses: antongolub/action-setup-bun@v1
       - name: rush install
-        run: node common/scripts/install-run-rush.js install --bypass-policy
+        run: devenv shell node common/scripts/install-run-rush.js install --bypass-policy
       - name: rush change -v
-        run: node common/scripts/install-run-rush.js change -v
+        run: devenv shell node common/scripts/install-run-rush.js change -v
       - name: start db
         run: |
           cd tools/generic-tools/
@@ -58,7 +55,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose
+          devenv shell node common/scripts/install-run-rush.js build --verbose
       - name: stop db
         run: |
           cd tools/generic-tools/
@@ -68,10 +65,10 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
       - name: rush version
-        run: node common/scripts/install-run-rush.js version --bump --target-branch main
+        run: devenv shell node common/scripts/install-run-rush.js version --bump --target-branch main
       - name: rush publish
         env:
           NPM_GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all
+        run: devenv shell node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all
       - name: git push to publish
         run: git push origin HEAD:publish

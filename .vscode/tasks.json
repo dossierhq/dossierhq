@@ -6,7 +6,7 @@
     {
       "label": "rush build",
       "type": "shell",
-      "command": "$SHELL -i -c \"rush build\"",
+      "command": "$SHELL -i -c \"devenv shell rush build\"",
       "problemMatcher": [],
       "group": {
         "kind": "build",
@@ -16,21 +16,21 @@
     {
       "label": "rush build --verbose",
       "type": "shell",
-      "command": "$SHELL -i -c \"rush build --verbose\"",
+      "command": "$SHELL -i -c \"devenv shell rush build --verbose\"",
       "problemMatcher": [],
       "group": "build"
     },
     {
       "label": "rush rebuild",
       "type": "shell",
-      "command": "$SHELL -i -c \"rush rebuild\"",
+      "command": "$SHELL -i -c \"devenv shell rush rebuild\"",
       "problemMatcher": [],
       "group": "build"
     },
     {
       "label": "rush check && rush update",
       "type": "shell",
-      "command": "$SHELL -i -c \"rush check && rush update\"",
+      "command": "$SHELL -i -c \"devenv shell rush check && rush update\"",
       "problemMatcher": []
     }
   ]
