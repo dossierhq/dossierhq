@@ -9,9 +9,9 @@ This project uses [https://devenv.sh/](devenv.sh) to manage development dependen
 
 - `devenv shell` (or use direnv to automatically open the devenv shell)
 - `rush update` to install dependencies.
+- `devenv up` to start Postgres
 - In `tools/generic-tools/`:
-  - By default the databases (test and example databases on PostgreSQL) are configured in Docker. To use another db set the env variable `HOST_ROOT_DATABASE_URL`
-  - `npm run db:start` (only if running db in Docker)
+  - By default the PostgreSQL databases are run in devenv. To use another db set the env variable `HOST_ROOT_DATABASE_URL`
   - `npm run db:ensure-and-migrate-dbs`
 - `rush build`
 
@@ -37,7 +37,6 @@ This project uses [https://devenv.sh/](devenv.sh) to manage development dependen
   - `rush add --package typescript@latest --dev --make-consistent`
   - or `rush upgrade-interactive`
 - Upgrade dependencies in `examples/deno/config/import-map.json`
-- Upgrade the postgres version in `./docker-compose.yml`
 
 ## Publish packages
 

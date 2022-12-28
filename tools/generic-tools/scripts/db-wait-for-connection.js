@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-require("dotenv").config({
-  path: require("path").resolve(process.cwd(), ".env"),
-});
 const { Pool } = require("pg");
 
 const pool = new Pool({

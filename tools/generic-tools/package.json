@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "example": "examples"
-  },
   "scripts": {
     "build": "",
     "db:ensure-and-migrate-dbs": "npm run db:ensure-dbs && npm run db:make-users:superuser && npm run db:migrate:all && npm run db:make-users:no-superuser",
@@ -14,16 +10,11 @@
     "db:make-users:superuser": "./scripts/db-make-superuser.sh superuser",
     "db:make-users:no-superuser": "./scripts/db-make-superuser.sh no-superuser",
     "db:migrate:all": "./scripts/npm-all-projects.sh run db:migrate --if-present",
-    "db:start": "./scripts/db-start.sh",
-    "db:stop": "./scripts/db-stop.sh",
     "db:wait": "./scripts/db-wait-for-connection.js",
     "docs:generate-graphviz": "dot -Tsvg -O ../../docs/*.dot",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",
-    "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:all": "./scripts/npm-all-projects.sh run upgrade-dependencies --if-present",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present"
   },
   "repository": {
     "type": "git",
@@ -36,7 +27,6 @@
   },
   "homepage": "https://github.com/jonasb/datadata#readme",
   "dependencies": {
-    "dotenv": "~16.0.3",
     "pg": "~8.8.0",
     "tslib": "~2.4.1"
   }

@@ -31,10 +31,6 @@ function grant_access_for_user {
 }
 
 (
-  set -a
-  source "$THIS_DIR/../.env"
-  set +a
-
   create_user "librariespguser" "librariespgpass"
   create_database "datadata-libraries-pg"
   grant_access_for_user "datadata-libraries-pg" "librariespguser"

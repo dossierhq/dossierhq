@@ -18,10 +18,6 @@ function set_user_superuser {
 }
 
 (
-  set -a
-  source "$THIS_DIR/../.env"
-  set +a
-
   SUPER_OR_NO_SUPERUSER="$1"
 
   set_user_superuser "librariespguser" "$SUPER_OR_NO_SUPERUSER"
