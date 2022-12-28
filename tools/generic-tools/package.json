@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "",
+    "db:ensure-and-migrate-dbs": "npm run db:ensure-dbs && npm run db:make-users:superuser && npm run db:migrate:all && npm run db:make-users:no-superuser",
     "db:ensure-dbs": "./scripts/db-ensure-databases.sh",
     "db:make-users:superuser": "./scripts/db-make-superuser.sh superuser",
     "db:make-users:no-superuser": "./scripts/db-make-superuser.sh no-superuser",

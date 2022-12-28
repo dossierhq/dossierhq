@@ -12,10 +12,7 @@ This project uses [https://devenv.sh/](devenv.sh) to manage development dependen
 - In `tools/generic-tools/`:
   - By default the databases (test and example databases on PostgreSQL) are configured in Docker. To use another db set the env variable `HOST_ROOT_DATABASE_URL`
   - `npm run db:start` (only if running db in Docker)
-  - `npm run db:ensure-dbs`
-  - `npm run db:make-users:superuser`
-  - `npm run db:migrate:all`
-  - `npm run db:make-users:no-superuser`
+  - `npm run db:ensure-and-migrate-dbs`
 - `rush build`
 
 ## Dev container / Github Code Spaces
