@@ -21,7 +21,6 @@ async function canConnect() {
     }
     return true;
   } catch (error) {
-    console.warn(error);
     return false;
   }
 }
@@ -35,7 +34,7 @@ async function main() {
     if (await canConnect()) {
       return;
     }
-    await delay(1000);
+    await delay(200);
   }
 }
 
