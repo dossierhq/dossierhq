@@ -45,7 +45,7 @@ jobs:
           devenv shell bash -c "cd tools/generic-tools/ && npm run db:wait"
       - name: setup db
         run: |
-          devenv shell bash -c "cd tools/generic-tools/ && db:ensure-and-migrate-dbs"
+          devenv shell bash -c "cd tools/generic-tools/ && npm run db:ensure-and-migrate-dbs"
       - name: rush build
         run: |
           devenv shell rush build --verbose
