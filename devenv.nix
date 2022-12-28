@@ -37,6 +37,4 @@
   services.postgres.port = 5432;
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/sql/postgresql/packages.nix
   services.postgres.package = pkgs.postgresql_15.withPackages (p: [ p.postgis ]);
-
-  devcontainer.enable = true;
 }
