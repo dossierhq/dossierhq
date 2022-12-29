@@ -1,5 +1,6 @@
 import type {
   AdminClient,
+  AdminEntity,
   AdminSchema,
   ErrorResult,
   ErrorType,
@@ -22,7 +23,7 @@ export interface AdminDataDataContextAdapter {
 
 export interface AdminDataDataContextValue {
   adapter: AdminDataDataContextAdapter;
-  adminClient: AdminClient;
+  adminClient: AdminClient<AdminEntity<string, object>>;
   logger: Logger;
   schema: AdminSchema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

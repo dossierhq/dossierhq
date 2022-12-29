@@ -1,4 +1,10 @@
-import type { AdminClient, AdminQuery, ErrorResult, ErrorType } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminEntity,
+  AdminQuery,
+  ErrorResult,
+  ErrorType,
+} from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
@@ -13,7 +19,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function useAdminTotalCount(
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   query: AdminQuery | undefined
 ): {
   totalCount: FetcherData | undefined;
@@ -35,7 +41,7 @@ export function useAdminTotalCount(
 }
 
 async function fetchTotalCount(
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   query: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await adminClient.getTotalCount(query);

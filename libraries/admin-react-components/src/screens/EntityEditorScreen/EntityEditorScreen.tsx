@@ -192,7 +192,7 @@ function EntityRows({
 
   useEffect(() => {
     if (entity) {
-      dispatchEntityEditorState(new EntityEditorActions.UpdateEntity(entity));
+      dispatchEntityEditorState(new EntityEditorActions.UpdateEntity(entity as AdminEntity));
     }
   }, [dispatchEntityEditorState, entity]);
 

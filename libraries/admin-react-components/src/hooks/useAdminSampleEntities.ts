@@ -12,7 +12,7 @@ import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<[string, AdminQuery | undefined, EntitySamplingOptions | undefined]>;
-type FetcherData = EntitySamplingPayload<AdminEntity>;
+type FetcherData<T> = EntitySamplingPayload<T>;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
@@ -20,19 +20,19 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param query If `undefined`, no data is fetched
  * @param options
  */
-export function useAdminSampleEntities(
-  adminClient: AdminClient,
+export function useAdminSampleEntities<TAdminEntity extends AdminEntity<string, object>>(
+  adminClient: AdminClient<TAdminEntity>,
   query: AdminQuery | undefined,
   options: EntitySamplingOptions | undefined
 ): {
-  entitySamples: FetcherData | undefined;
+  entitySamples: FetcherData<TAdminEntity> | undefined;
   entitySamplesError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query, options]: FetcherKey) => fetchSampleEntities(adminClient, query, options),
     [adminClient]
   );
-  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+  const { data, error } = useSWR<FetcherData<TAdminEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.adminSampleEntities(query, options) : null,
     fetcher
   );
@@ -47,11 +47,11 @@ export function useAdminSampleEntities(
   return { entitySamples: data, entitySamplesError: error };
 }
 
-async function fetchSampleEntities(
-  adminClient: AdminClient,
+async function fetchSampleEntities<TAdminEntity extends AdminEntity<string, object>>(
+  adminClient: AdminClient<TAdminEntity>,
   query: FetcherKey[1],
   options: FetcherKey[2]
-): Promise<FetcherData> {
+): Promise<FetcherData<TAdminEntity>> {
   const result = await adminClient.sampleEntities(query, options);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

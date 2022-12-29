@@ -1,4 +1,9 @@
-import type { ErrorResult, ErrorType, PublishedClient } from '@jonasb/datadata-core';
+import type {
+  ErrorResult,
+  ErrorType,
+  PublishedClient,
+  PublishedEntity,
+} from '@jonasb/datadata-core';
 import { PublishedSchema } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -8,7 +13,9 @@ type FetcherKey = string;
 type FetcherData = PublishedSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
-export function usePublishedSchema(publishedClient: PublishedClient): {
+export function usePublishedSchema(
+  publishedClient: PublishedClient<PublishedEntity<string, object>>
+): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
 } {
@@ -26,7 +33,9 @@ export function usePublishedSchema(publishedClient: PublishedClient): {
   return { schema: data, schemaError: error };
 }
 
-async function fetchSchema(publishedClient: PublishedClient): Promise<FetcherData> {
+async function fetchSchema(
+  publishedClient: PublishedClient<PublishedEntity<string, object>>
+): Promise<FetcherData> {
   const result = await publishedClient.getSchemaSpecification();
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

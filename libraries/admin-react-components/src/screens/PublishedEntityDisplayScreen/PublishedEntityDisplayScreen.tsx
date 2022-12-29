@@ -187,7 +187,7 @@ function EntityRows({
           entityReference={{ id: entityId }}
           onItemClick={handleLinkedItemClick}
         />
-        <EntityDisplay schema={schema} entity={entity} />
+        <EntityDisplay schema={schema} entity={entity as PublishedEntity} />
       </FullscreenContainer.Row>
     </>
   );

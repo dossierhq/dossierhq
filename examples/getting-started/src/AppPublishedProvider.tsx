@@ -8,7 +8,6 @@ import {
   PublishedDataDataProvider,
   useCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
-import { PublishedClient } from '@jonasb/datadata-core';
 import { useMemo } from 'react';
 import { createPublishedClient } from './ClientUtils.js';
 
@@ -27,7 +26,7 @@ export function AppPublishedProvider({ children }: Props) {
   const args = useMemo(
     () => ({
       adapter: new PublishedAdapter(),
-      publishedClient: createPublishedClient() as unknown as PublishedClient,
+      publishedClient: createPublishedClient(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
     [cachingAdminMiddleware]

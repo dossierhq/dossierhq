@@ -101,8 +101,8 @@ function Content({ reference }: { reference: EntityReference }) {
             {entitySpec && leftEntity && rightEntity ? (
               <DiffEntities
                 entitySpec={entitySpec}
-                leftEntity={leftEntity}
-                rightEntity={rightEntity}
+                leftEntity={leftEntity as AdminEntity}
+                rightEntity={rightEntity as AdminEntity}
               />
             ) : null}
           </FullscreenContainer.Item>

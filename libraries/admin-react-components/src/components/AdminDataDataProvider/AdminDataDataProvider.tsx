@@ -1,4 +1,4 @@
-import type { AdminClient, Logger } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, Logger } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
 import type {
@@ -11,7 +11,7 @@ import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 
 interface Props {
   adapter: AdminDataDataContextAdapter;
-  adminClient: AdminClient;
+  adminClient: AdminClient<AdminEntity<string, object>>;
   logger?: Logger;
   authKeys: DisplayAuthKey[];
   children: React.ReactNode;

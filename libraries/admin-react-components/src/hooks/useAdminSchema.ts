@@ -1,4 +1,4 @@
-import type { AdminClient, ErrorResult, ErrorType } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, ErrorResult, ErrorType } from '@jonasb/datadata-core';
 import { AdminSchema } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -8,7 +8,7 @@ type FetcherKey = string;
 type FetcherData = AdminSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
-export function useAdminSchema(adminClient: AdminClient): {
+export function useAdminSchema(adminClient: AdminClient<AdminEntity<string, object>>): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
 } {
@@ -23,7 +23,9 @@ export function useAdminSchema(adminClient: AdminClient): {
   return { schema: data, schemaError: error };
 }
 
-async function fetchSchema(adminClient: AdminClient): Promise<FetcherData> {
+async function fetchSchema(
+  adminClient: AdminClient<AdminEntity<string, object>>
+): Promise<FetcherData> {
   const result = await adminClient.getSchemaSpecification();
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

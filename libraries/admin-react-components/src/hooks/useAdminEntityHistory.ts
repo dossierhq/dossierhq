@@ -1,5 +1,6 @@
 import type {
   AdminClient,
+  AdminEntity,
   EntityHistory,
   EntityReference,
   ErrorResult,
@@ -20,7 +21,7 @@ type FetcherError = ErrorResult<
 >;
 
 export function useAdminEntityHistory(
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   reference: EntityReference | undefined
 ): {
   entityHistory: FetcherData | undefined;
@@ -41,7 +42,7 @@ export function useAdminEntityHistory(
 }
 
 async function fetchEntityHistory(
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   reference: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await adminClient.getEntityHistory(reference);

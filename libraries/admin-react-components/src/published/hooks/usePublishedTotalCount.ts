@@ -2,6 +2,7 @@ import type {
   ErrorResult,
   ErrorType,
   PublishedClient,
+  PublishedEntity,
   PublishedQuery,
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
@@ -17,7 +18,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function usePublishedTotalCount(
-  publishedClient: PublishedClient,
+  publishedClient: PublishedClient<PublishedEntity<string, object>>,
   query: PublishedQuery | undefined
 ): {
   totalCount: FetcherData | undefined;
@@ -39,7 +40,7 @@ export function usePublishedTotalCount(
 }
 
 async function fetchTotalCount(
-  publishedClient: PublishedClient,
+  publishedClient: PublishedClient<PublishedEntity<string, object>>,
   query: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await publishedClient.getTotalCount(query);

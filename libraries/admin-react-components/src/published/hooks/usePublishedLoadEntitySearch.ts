@@ -1,4 +1,12 @@
-import type { PublishedQuery, PublishedSearchQuery } from '@jonasb/datadata-core';
+import type {
+  Connection,
+  Edge,
+  EntitySamplingPayload,
+  ErrorType,
+  PublishedEntity,
+  PublishedQuery,
+  PublishedSearchQuery,
+} from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type {
@@ -38,7 +46,10 @@ export function usePublishedLoadEntitySearch(
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateSearchResult(connection, connectionError)
+      new SearchEntityStateActions.UpdateSearchResult(
+        connection as Connection<Edge<PublishedEntity, ErrorType>> | null,
+        connectionError
+      )
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 
@@ -48,7 +59,10 @@ export function usePublishedLoadEntitySearch(
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateSampleResult(entitySamples, entitySamplesError)
+      new SearchEntityStateActions.UpdateSampleResult(
+        entitySamples as EntitySamplingPayload<PublishedEntity>,
+        entitySamplesError
+      )
     );
   }, [entitySamples, entitySamplesError, dispatchSearchEntityState]);
 }

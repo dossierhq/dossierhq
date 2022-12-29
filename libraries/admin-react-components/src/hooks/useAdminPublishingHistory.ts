@@ -1,5 +1,6 @@
 import type {
   AdminClient,
+  AdminEntity,
   EntityReference,
   ErrorResult,
   ErrorType,
@@ -20,7 +21,7 @@ type FetcherError = ErrorResult<
 >;
 
 export function useAdminPublishingHistory(
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   reference: EntityReference | undefined
 ): {
   publishingHistory: FetcherData | undefined;
@@ -41,7 +42,7 @@ export function useAdminPublishingHistory(
 }
 
 async function fetchPublishingHistory(
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   reference: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await adminClient.getPublishingHistory(reference);

@@ -1,4 +1,12 @@
-import type { AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  AdminQuery,
+  AdminSearchQuery,
+  Connection,
+  Edge,
+  EntitySamplingPayload,
+  ErrorType,
+} from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import { AdminDataDataContext } from '../contexts/AdminDataDataContext.js';
@@ -38,7 +46,10 @@ export function useAdminLoadEntitySearch(
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateSearchResult(connection, connectionError)
+      new SearchEntityStateActions.UpdateSearchResult(
+        connection as Connection<Edge<AdminEntity, ErrorType>> | null,
+        connectionError
+      )
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 
@@ -48,7 +59,10 @@ export function useAdminLoadEntitySearch(
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateSampleResult(entitySamples, entitySamplesError)
+      new SearchEntityStateActions.UpdateSampleResult(
+        entitySamples as EntitySamplingPayload<AdminEntity>,
+        entitySamplesError
+      )
     );
   }, [entitySamples, entitySamplesError, dispatchSearchEntityState]);
 }

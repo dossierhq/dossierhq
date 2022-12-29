@@ -1,4 +1,4 @@
-import type { Logger, PublishedClient } from '@jonasb/datadata-core';
+import type { Logger, PublishedClient, PublishedEntity } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
@@ -11,7 +11,7 @@ import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 
 interface Props {
   adapter: PublishedDataDataContextAdapter;
-  publishedClient: PublishedClient;
+  publishedClient: PublishedClient<PublishedEntity<string, object>>;
   authKeys: DisplayAuthKey[];
   logger?: Logger;
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import type { AdminClient } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
 import type { NotificationInfo } from '@jonasb/datadata-design';
 import { Button, Field, Input, NotificationContext, Row } from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
@@ -123,7 +123,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
 async function submitEntity(
   draftState: EntityEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
   showNotification: (notification: NotificationInfo) => void,
   publish: boolean

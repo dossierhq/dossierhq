@@ -129,7 +129,7 @@ function createPublishActions(
 async function executeAction(
   action: PublishingActionId,
   entity: AdminEntity,
-  adminClient: AdminClient,
+  adminClient: AdminClient<AdminEntity<string, object>>,
   showNotification: (notification: NotificationInfo) => void
 ) {
   const reference = { id: entity.id };

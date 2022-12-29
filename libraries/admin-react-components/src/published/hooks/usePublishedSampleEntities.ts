@@ -12,7 +12,7 @@ import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<[string, PublishedQuery | undefined, EntitySamplingOptions | undefined]>;
-type FetcherData = EntitySamplingPayload<PublishedEntity>;
+type FetcherData<T> = EntitySamplingPayload<T>;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
@@ -20,19 +20,21 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param query If `undefined`, no data is fetched
  * @param options
  */
-export function usePublishedSampleEntities(
-  publishedClient: PublishedClient,
+export function usePublishedSampleEntities<
+  TPublishedEntity extends PublishedEntity<string, object>
+>(
+  publishedClient: PublishedClient<TPublishedEntity>,
   query: PublishedQuery | undefined,
   options?: EntitySamplingOptions
 ): {
-  entitySamples: FetcherData | undefined;
+  entitySamples: FetcherData<TPublishedEntity> | undefined;
   entitySamplesError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query, options]: FetcherKey) => fetchSampleEntities(publishedClient, query, options),
     [publishedClient]
   );
-  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+  const { data, error } = useSWR<FetcherData<TPublishedEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.publishedSampleEntities(query, options) : null,
     fetcher
   );
@@ -41,11 +43,11 @@ export function usePublishedSampleEntities(
   return { entitySamples: data, entitySamplesError: error };
 }
 
-async function fetchSampleEntities(
-  publishedClient: PublishedClient,
+async function fetchSampleEntities<TPublishedEntity extends PublishedEntity<string, object>>(
+  publishedClient: PublishedClient<TPublishedEntity>,
   query: FetcherKey[1],
   options: FetcherKey[2]
-): Promise<FetcherData> {
+): Promise<FetcherData<TPublishedEntity>> {
   const result = await publishedClient.sampleEntities(query, options);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

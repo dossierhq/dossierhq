@@ -81,8 +81,14 @@ import { TypeRepository } from './TypeRepository.js';
 import { GraphQLJSON } from './vendor/GraphQLScalar.js';
 
 export interface SessionGraphQLContext {
-  adminClient: Result<AdminClient, typeof ErrorType.NotAuthenticated>;
-  publishedClient: Result<PublishedClient, typeof ErrorType.NotAuthenticated>;
+  adminClient: Result<
+    AdminClient<AdminEntity> | AdminClient<AdminEntity<string, object>>,
+    typeof ErrorType.NotAuthenticated
+  >;
+  publishedClient: Result<
+    PublishedClient<PublishedEntity> | PublishedClient<PublishedEntity<string, object>>,
+    typeof ErrorType.NotAuthenticated
+  >;
 }
 
 function fieldConfigWithArgs<TSource, TContext, TArgs>(

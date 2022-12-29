@@ -3,6 +3,7 @@ import type {
   ErrorType,
   Logger,
   PublishedClient,
+  PublishedEntity,
   PublishedSchema,
   ValueItem,
 } from '@jonasb/datadata-core';
@@ -21,7 +22,7 @@ export interface PublishedDataDataContextAdapter {
 
 export interface PublishedDataDataContextValue {
   adapter: PublishedDataDataContextAdapter;
-  publishedClient: PublishedClient;
+  publishedClient: PublishedClient<PublishedEntity<string, object>>;
   logger: Logger;
   schema: PublishedSchema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

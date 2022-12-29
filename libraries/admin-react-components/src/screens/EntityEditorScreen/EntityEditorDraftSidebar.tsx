@@ -1,4 +1,9 @@
-import type { AdminClient, EntityReference, PublishingEvent } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminEntity,
+  EntityReference,
+  PublishingEvent,
+} from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { Button, DateDisplay, Row, TabContainer, Tag, Text } from '@jonasb/datadata-design';
 import { useContext, useState } from 'react';
@@ -83,7 +88,7 @@ function ActivityList({
   activityFilter,
   reference,
 }: {
-  adminClient: AdminClient;
+  adminClient: AdminClient<AdminEntity<string, object>>;
   activityFilter: ActivityFilter;
   reference: EntityReference;
 }) {

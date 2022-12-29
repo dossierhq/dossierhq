@@ -8,7 +8,6 @@ import {
   DisplayAuthKey,
   useCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
-import { AdminClient } from '@jonasb/datadata-core';
 import { useMemo } from 'react';
 import { createAdminClient } from './ClientUtils.js';
 
@@ -26,7 +25,7 @@ export function AppAdminProvider({ children }: Props) {
 
   const args = useMemo(
     () => ({
-      adminClient: createAdminClient([cachingAdminMiddleware]) as unknown as AdminClient,
+      adminClient: createAdminClient([cachingAdminMiddleware]),
       adapter: new AdminAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
