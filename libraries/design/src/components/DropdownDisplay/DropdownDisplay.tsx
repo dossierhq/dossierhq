@@ -1,5 +1,3 @@
-'use client';
-
 import { useOverlayPosition } from '@react-aria/overlays';
 import type { FunctionComponent, MouseEventHandler, ReactNode, RefObject } from 'react';
 import { useEffect, useRef } from 'react';
