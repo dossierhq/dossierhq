@@ -1,7 +1,6 @@
 import { EntitySamplingPayload } from '@jonasb/datadata-core';
 import { useCallback, useEffect, useState } from 'react';
 import { createAdminClient } from './ClientUtils.js';
-import './IndexRoute.css';
 import { AllAdminEntities } from './SchemaTypes.js';
 
 const adminClient = createAdminClient();

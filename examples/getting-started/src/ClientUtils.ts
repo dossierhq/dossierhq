@@ -1,4 +1,5 @@
 import {
+  AdminClientMiddleware,
   AdminClientOperation,
   buildUrlWithUrlQuery,
   ClientContext,
@@ -16,10 +17,10 @@ import { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
 
 const logger = createConsoleLogger(console);
 
-export function createAdminClient() {
+export function createAdminClient(pipeline: AdminClientMiddleware<ClientContext>[] = []) {
   return createBaseAdminClient<ClientContext, AppAdminClient>({
     context: { logger },
-    pipeline: [adminBackendMiddleware],
+    pipeline: [...pipeline, adminBackendMiddleware],
   });
 }
 

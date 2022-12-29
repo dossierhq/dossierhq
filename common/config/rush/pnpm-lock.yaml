@@ -313,8 +313,11 @@ importers:
 
   ../../examples/getting-started:
     specifiers:
+      '@jonasb/datadata-admin-react-components': workspace:*
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-better-sqlite3': workspace:*
+      '@jonasb/datadata-design': workspace:*
+      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@types/better-sqlite3': ~7.6.3
@@ -326,6 +329,7 @@ importers:
       better-sqlite3: ~8.0.1
       body-parser: ~1.20.1
       express: ~4.18.1
+      leaflet: ~1.9.1
       react: ~18.2.0
       react-dom: ~18.2.0
       react-router-dom: ~6.3.0
@@ -333,12 +337,16 @@ importers:
       typescript: ~4.9.4
       vite: ~4.0.0
     dependencies:
+      '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-better-sqlite3': link:../../libraries/database-adapter-better-sqlite3
+      '@jonasb/datadata-design': link:../../libraries/design
+      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       '@jonasb/datadata-server': link:../../libraries/server
       better-sqlite3: 8.0.1
       body-parser: 1.20.1
       express: 4.18.1
+      leaflet: 1.9.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
