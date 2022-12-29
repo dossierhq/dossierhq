@@ -33,8 +33,6 @@ import type {
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
 } from '../published/contexts/PublishedDataDataContext.js';
-import type { SwrConfigRef } from '../utils/CachingAdminMiddleware.js';
-import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 
 interface BackendContext {
   logger: Logger;
@@ -51,15 +49,13 @@ const AUTH_KEYS_HEADER = {
 };
 
 export function createBackendAdminClient(
-  swrConfig: SwrConfigRef,
-  middleware: AdminClientMiddleware<BackendContext>[] = []
+  pipeline: AdminClientMiddleware<BackendContext>[] = []
 ): AdminClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
   return createBaseAdminClient<BackendContext>({
     context,
     pipeline: [
-      ...middleware,
-      createCachingAdminMiddleware(swrConfig),
+      ...pipeline,
       LoggingClientMiddleware as AdminClientMiddleware<BackendContext>,
       terminatingAdminMiddleware,
     ],
@@ -67,13 +63,13 @@ export function createBackendAdminClient(
 }
 
 export function createBackendPublishedClient(
-  middleware: PublishedClientMiddleware<BackendContext>[] = []
+  pipeline: PublishedClientMiddleware<BackendContext>[] = []
 ): PublishedClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
   return createBasePublishedClient<BackendContext>({
     context,
     pipeline: [
-      ...middleware,
+      ...pipeline,
       LoggingClientMiddleware as PublishedClientMiddleware<BackendContext>,
       terminatingPublishedMiddleware,
     ],

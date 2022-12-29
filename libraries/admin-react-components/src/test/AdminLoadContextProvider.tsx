@@ -1,13 +1,13 @@
 import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
-import React, { useMemo, useRef } from 'react';
-import { useSWRConfig } from 'swr';
-import type { AdminDataDataContextAdapter } from '..';
-import { AdminDataDataProvider } from '../components/AdminDataDataProvider/AdminDataDataProvider';
+import React, { useMemo } from 'react';
+import { AdminDataDataProvider } from '../components/AdminDataDataProvider/AdminDataDataProvider.js';
+import type { AdminDataDataContextAdapter } from '../contexts/AdminDataDataContext.js';
+import { useCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 import {
   createBackendAdminClient,
   DISPLAY_AUTH_KEYS,
   TestContextAdapter,
-} from './TestContextAdapter';
+} from './TestContextAdapter.js';
 
 interface Props {
   adapter?: AdminDataDataContextAdapter;
@@ -20,13 +20,11 @@ export function AdminLoadContextProvider({
   adminClientMiddleware,
   children,
 }: Props): JSX.Element | null {
-  const { cache, mutate } = useSWRConfig();
-  const swrConfigRef = useRef({ cache, mutate });
-  swrConfigRef.current = { cache, mutate };
+  const cachingMiddleware = useCachingAdminMiddleware();
 
   const adminClient = useMemo(
-    () => createBackendAdminClient(swrConfigRef, adminClientMiddleware),
-    [adminClientMiddleware]
+    () => createBackendAdminClient([...(adminClientMiddleware ?? []), cachingMiddleware]),
+    [adminClientMiddleware, cachingMiddleware]
   );
 
   return (

@@ -6,7 +6,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminClientOperationName, AdminSchema, assertIsDefined } from '@jonasb/datadata-core';
 import type { RefObject } from 'react';
+import { useMemo, useRef } from 'react';
 import type { Cache } from 'swr';
+import { useSWRConfig } from 'swr';
 import type { ScopedMutator } from './CacheUtils.js';
 import {
   invalidateEntityHistory,
@@ -16,11 +18,18 @@ import {
   updateCacheSchemas,
 } from './CacheUtils.js';
 
-export type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
+type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
 
-export function createCachingAdminMiddleware<TContext extends ClientContext>(
-  swrConfig: SwrConfigRef
-) {
+export function useCachingAdminMiddleware() {
+  const { cache, mutate } = useSWRConfig();
+  const swrConfigRef = useRef({ cache, mutate });
+  swrConfigRef.current = { cache, mutate };
+  const middleware = useMemo(() => createCachingAdminMiddleware(swrConfigRef), []);
+
+  return middleware;
+}
+
+function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig: SwrConfigRef) {
   const middleware: AdminClientMiddleware<TContext> = async (context, operation) => {
     const result = await operation.next();
     if (result.isOk()) {

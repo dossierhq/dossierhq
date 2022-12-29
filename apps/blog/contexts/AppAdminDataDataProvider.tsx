@@ -2,14 +2,14 @@ import type {
   AdminDataDataContextAdapter,
   FieldEditorProps,
   RichTextValueItemEditorProps,
-  SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
 import {
   AdminDataDataProvider,
-  createCachingAdminMiddleware,
+  useCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
+  AdminClientMiddleware,
   AdminClientOperation,
   ClientContext,
   ErrorType,
@@ -21,8 +21,7 @@ import {
   createConsoleLogger,
 } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
-import { useContext, useMemo, useRef } from 'react';
-import { useSWRConfig } from 'swr';
+import { useContext, useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
@@ -43,20 +42,18 @@ class AdminContextAdapter implements AdminDataDataContextAdapter {
 }
 
 export function AppAdminDataDataProvider({ children }: { children: React.ReactNode }) {
-  const { cache, mutate } = useSWRConfig();
-  const swrConfigRef = useRef({ cache, mutate });
-  swrConfigRef.current = { cache, mutate };
   const inBrowserValue = useContext(InBrowserServerContext);
+  const cachingMiddleware = useCachingAdminMiddleware();
 
   const args = useMemo(
     () => ({
       adminClient: inBrowserValue
-        ? createInBrowserAdminClient(inBrowserValue.server, swrConfigRef)
-        : createBackendAdminClient(swrConfigRef),
+        ? createInBrowserAdminClient(inBrowserValue.server, cachingMiddleware)
+        : createBackendAdminClient(cachingMiddleware),
       adapter: new AdminContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    [inBrowserValue]
+    [inBrowserValue, cachingMiddleware]
   );
 
   const { adminClient } = args;
@@ -70,21 +67,23 @@ export function AppAdminDataDataProvider({ children }: { children: React.ReactNo
   );
 }
 
-function createInBrowserAdminClient(server: Server | null, swrConfigRef: SwrConfigRef) {
+function createInBrowserAdminClient(
+  server: Server | null,
+  cachingMiddleware: AdminClientMiddleware<BackendContext>
+) {
   if (!server) return null;
 
   const sessionResult = server.createSession(SYSTEM_USERS.editor);
-  return server.createAdminClient(
-    () => sessionResult,
-    [createCachingAdminMiddleware(swrConfigRef)]
-  );
+  return server.createAdminClient(() => sessionResult, [cachingMiddleware]);
 }
 
-function createBackendAdminClient(swrConfigRef: SwrConfigRef): AdminClient {
+function createBackendAdminClient(
+  cachingMiddleware: AdminClientMiddleware<BackendContext>
+): AdminClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({
     context,
-    pipeline: [createCachingAdminMiddleware(swrConfigRef), terminatingAdminMiddleware],
+    pipeline: [cachingMiddleware, terminatingAdminMiddleware],
   });
 }
 

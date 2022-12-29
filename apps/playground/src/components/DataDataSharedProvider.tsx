@@ -1,7 +1,7 @@
 import {
   AdminDataDataProvider,
-  createCachingAdminMiddleware,
   PublishedDataDataProvider,
+  useCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClientMiddleware,
@@ -41,6 +41,8 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   const [sessionResult, setSessionResult] = useState<SessionResult>(uninitializedSession);
   const sessionResultRef = useRef<SessionResult>(sessionResult);
   sessionResultRef.current = sessionResult;
+
+  const cachingAdminMiddleware = useCachingAdminMiddleware();
 
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
@@ -83,10 +85,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     const adminArgs = {
       adminClient: server.createAdminClient(
         () => Promise.resolve(sessionResultRef.current),
-        [
-          LoggingClientMiddleware as AdminClientMiddleware<ClientContext>,
-          createCachingAdminMiddleware(swrConfigRef),
-        ]
+        [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>, cachingAdminMiddleware]
       ),
       adapter,
       authKeys: DISPLAY_AUTH_KEYS,
@@ -101,7 +100,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
       authKeys: DISPLAY_AUTH_KEYS,
     };
     return { adminArgs, publishedArgs };
-  }, [server]);
+  }, [server, cachingAdminMiddleware]);
 
   if (!args || sessionResult === uninitializedSession) {
     return null;
@@ -126,6 +125,7 @@ async function loginUser(server: Server, userId: string, cache: Cache<any>, muta
 
   if (result.isError()) return result;
 
+  //TODO add support to ARC for clearing cache?
   if (cache instanceof Map) {
     const mutators = [...cache.keys()].map((key) => mutate(key));
     await Promise.all(mutators);

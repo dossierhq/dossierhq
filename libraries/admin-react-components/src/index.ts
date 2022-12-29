@@ -22,4 +22,4 @@ export type {
   EntitySearchStateUrlQueryInput,
 } from './shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 export type { DisplayAuthKey } from './shared/types/DisplayAuthKey.js';
-export { createCachingAdminMiddleware, type SwrConfigRef } from './utils/CachingAdminMiddleware.js';
+export { useCachingAdminMiddleware } from './utils/CachingAdminMiddleware.js';

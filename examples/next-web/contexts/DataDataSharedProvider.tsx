@@ -6,15 +6,15 @@ import type {
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
-  SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
 import {
   AdminDataDataProvider,
-  createCachingAdminMiddleware,
   PublishedDataDataProvider,
+  useCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
+  AdminClientMiddleware,
   AdminClientOperation,
   ClientContext,
   ErrorType,
@@ -29,8 +29,7 @@ import {
   createBaseAdminClient,
   createBasePublishedClient,
 } from '@jonasb/datadata-core';
-import { useMemo, useRef } from 'react';
-import { useSWRConfig } from 'swr';
+import { useMemo } from 'react';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
 
 const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
@@ -79,17 +78,15 @@ export class PublishedContextAdapter implements PublishedDataDataContextAdapter 
 }
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
-  const { cache, mutate } = useSWRConfig();
-  const swrConfigRef = useRef({ cache, mutate });
-  swrConfigRef.current = { cache, mutate };
+  const cachingMiddleware = useCachingAdminMiddleware();
 
   const args = useMemo(
     () => ({
-      adminClient: createBackendAdminClient(swrConfigRef),
+      adminClient: createBackendAdminClient(cachingMiddleware),
       adapter: new AdminContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    []
+    [cachingMiddleware]
   );
   return <AdminDataDataProvider {...args}>{children}</AdminDataDataProvider>;
 }
@@ -106,11 +103,13 @@ export function PublishedDataDataSharedProvider({ children }: { children: React.
   return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
 }
 
-function createBackendAdminClient(swrConfigRef: SwrConfigRef): AdminClient {
+function createBackendAdminClient(
+  cachingMiddleware: AdminClientMiddleware<BackendContext>
+): AdminClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({
     context,
-    pipeline: [createCachingAdminMiddleware(swrConfigRef), terminatingAdminMiddleware],
+    pipeline: [cachingMiddleware, terminatingAdminMiddleware],
   });
 }
 
