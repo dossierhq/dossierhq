@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
 
-export function EditEntitiesRoute() {
+export function AdminEntityEditorRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [hasChanges, setHasChanges] = useState(false);
 

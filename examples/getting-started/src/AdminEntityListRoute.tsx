@@ -1,11 +1,11 @@
 import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
-import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-components';
-import type { PublishedEntity } from '@jonasb/datadata-core';
+import { AdminEntityListScreen } from '@jonasb/datadata-admin-react-components';
+import type { AdminEntity } from '@jonasb/datadata-core';
 import { useCallback, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
 
-export function PublishedEntitiesRoute() {
+export function AdminEntityListRoute() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -18,20 +18,27 @@ export function PublishedEntitiesRoute() {
   }, [searchParams]);
 
   const handleUrlQueryChanged = useCallback(
-    (urlQuery: EntitySearchStateUrlQuery) => setSearchParams(urlQuery),
+    (urlQuery: EntitySearchStateUrlQuery) => {
+      setSearchParams(urlQuery);
+    },
     [setSearchParams]
   );
 
+  const handleCreateEntity = useCallback(
+    (type: string) => navigate(`/edit-entities?newType=${type}&id=${crypto.randomUUID()}`),
+    [navigate]
+  );
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => navigate(`/published-entities/display?id=${entity.id}`),
+    (entity: AdminEntity) => navigate(`/edit-entities?id=${entity.id}`),
     [navigate]
   );
 
   return (
-    <PublishedEntityListScreen
-      header={<Navbar current="published-entities" />}
+    <AdminEntityListScreen
+      header={<Navbar current="admin-entities" />}
       urlQuery={urlQuery}
       onUrlQueryChanged={handleUrlQueryChanged}
+      onCreateEntity={handleCreateEntity}
       onOpenEntity={handleEntityOpen}
     />
   );
