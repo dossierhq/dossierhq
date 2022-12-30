@@ -5,16 +5,11 @@ import type {
 import {
   AdminDataDataContextAdapter,
   AdminDataDataProvider,
-  DisplayAuthKey,
   useCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
 import { useMemo } from 'react';
+import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { createAdminClient } from './ClientUtils.js';
-
-const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
-  { authKey: 'none', displayName: 'None' },
-  { authKey: 'subject', displayName: 'User private' },
-];
 
 interface Props {
   children: React.ReactNode;
