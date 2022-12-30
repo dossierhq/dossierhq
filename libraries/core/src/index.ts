@@ -222,6 +222,8 @@ export type {
 } from './Types.js';
 export {
   buildUrlWithUrlQuery,
+  decodeObjectFromURLSearchParams,
   decodeUrlQueryStringifiedParam,
+  encodeObjectToURLSearchParams,
   stringifyUrlQueryParams,
 } from './UrlQueryUtils.js';

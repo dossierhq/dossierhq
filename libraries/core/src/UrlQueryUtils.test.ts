@@ -1,7 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import {
   buildUrlWithUrlQuery,
+  decodeObjectFromURLSearchParams,
   decodeUrlQueryStringifiedParam,
+  encodeObjectToURLSearchParams,
   stringifyUrlQueryParams,
 } from './UrlQueryUtils.js';
 
@@ -10,6 +12,68 @@ interface TestQueryParams {
   bar?: string;
   baz?: string;
 }
+
+describe('encodeObjectToURLSearchParams', () => {
+  test('undefined', () => {
+    expect(encodeObjectToURLSearchParams(undefined).toString()).toEqual('');
+  });
+
+  test('empty', () => {
+    expect(encodeObjectToURLSearchParams({}).toString()).toEqual('');
+  });
+
+  test('null value', () => {
+    expect(encodeObjectToURLSearchParams({ foo: null }).toString()).toEqual('');
+  });
+
+  test('undefined value', () => {
+    expect(encodeObjectToURLSearchParams({ foo: undefined }).toString()).toEqual('');
+  });
+
+  test('empty object value', () => {
+    expect(encodeObjectToURLSearchParams({ foo: {} }).toString()).toEqual('');
+  });
+
+  test('empty object value with keepEmptyObjects', () => {
+    expect(
+      encodeObjectToURLSearchParams({ foo: {} }, { keepEmptyObjects: true }).toString()
+    ).toEqual('foo=%7B%7D');
+  });
+
+  test('deep value', () => {
+    const actual = encodeObjectToURLSearchParams({ foo: { bar: { baz: 'hello' } } });
+    expect(actual.toString()).toEqual('foo=' + encodeURIComponent('{"bar":{"baz":"hello"}}'));
+  });
+});
+
+describe('decodeObjectFromURLSearchParams', () => {
+  test('undefined', () => {
+    expect(decodeObjectFromURLSearchParams(undefined)).toEqual({});
+  });
+
+  test('empty', () => {
+    expect(decodeObjectFromURLSearchParams(new URLSearchParams())).toEqual({});
+  });
+});
+
+describe('encodeObjectToURLSearchParams -> decodeObjectFromURLSearchParams', () => {
+  const roundtrip = (params: Record<string, unknown> | undefined) =>
+    decodeObjectFromURLSearchParams(encodeObjectToURLSearchParams(params));
+
+  test('string', () => {
+    expect(roundtrip({ foo: 'hello' })).toEqual({ foo: 'hello' });
+  });
+
+  test('number', () => {
+    expect(roundtrip({ foo: 123 })).toEqual({ foo: 123 });
+  });
+
+  test('deep value', () => {
+    expect(roundtrip({ foo: { bar: { baz: 'hello' } } })).toEqual({
+      foo: { bar: { baz: 'hello' } },
+    });
+  });
+});
 
 describe('stringifyUrlQueryParams', () => {
   test('empty', () => {

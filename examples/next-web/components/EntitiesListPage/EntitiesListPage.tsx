@@ -1,27 +1,23 @@
-import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
 import { AdminEntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
 
 export default function EntitiesListPage(): JSX.Element | null {
   const router = useRouter();
+  const { onUrlSearchParamsChange, urlSearchParams } = useUrlSearchParams();
+
   const handleCreateEntity = useCallback(
     (type: string) => router.push(urls.editPageNew(type, crypto.randomUUID())),
     [router]
   );
   const handleEntityOpen = useCallback(
     (entity: AdminEntity) => router.push(urls.editPage([entity.id])),
-    [router]
-  );
-  const handleUrlQueryChanged = useCallback(
-    (urlQuery: EntitySearchStateUrlQuery) => {
-      router.replace({ pathname: router.pathname, query: urlQuery });
-    },
     [router]
   );
 
@@ -32,8 +28,8 @@ export default function EntitiesListPage(): JSX.Element | null {
       </Head>
       <AdminEntityListScreen
         header={<NavBar current="entities" />}
-        urlQuery={router.query}
-        onUrlQueryChanged={handleUrlQueryChanged}
+        urlSearchParams={urlSearchParams}
+        onUrlSearchParamsChange={onUrlSearchParamsChange}
         onCreateEntity={handleCreateEntity}
         onOpenEntity={handleEntityOpen}
       />

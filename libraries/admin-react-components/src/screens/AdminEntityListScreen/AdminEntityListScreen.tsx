@@ -16,10 +16,6 @@ import {
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import type {
-  EntitySearchStateUrlQuery,
-  EntitySearchStateUrlQueryInput,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 import {
   initializeSearchEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndSearchEntityState,
@@ -28,8 +24,8 @@ import {
 export interface AdminEntityListScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  urlQuery?: EntitySearchStateUrlQueryInput;
-  onUrlQueryChanged?: (urlQuery: EntitySearchStateUrlQuery) => void;
+  urlSearchParams?: Readonly<URLSearchParams>;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onCreateEntity: (entityType: string) => void;
   onOpenEntity: (entity: AdminEntity) => void;
 }
@@ -37,15 +33,15 @@ export interface AdminEntityListScreenProps {
 export function AdminEntityListScreen({
   header,
   footer,
-  urlQuery,
-  onUrlQueryChanged,
+  urlSearchParams,
+  onUrlSearchParamsChange,
   onCreateEntity,
   onOpenEntity,
 }: AdminEntityListScreenProps): JSX.Element | null {
   const { schema } = useContext(AdminDataDataContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    urlQuery,
+    urlSearchParams,
     initializeSearchEntityStateFromUrlQuery
   );
 
@@ -75,8 +71,8 @@ export function AdminEntityListScreen({
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
-    urlQuery,
-    onUrlQueryChanged,
+    urlSearchParams,
+    onUrlSearchParamsChange,
     searchEntityState,
     dispatchSearchEntityState
   );

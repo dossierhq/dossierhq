@@ -15,10 +15,6 @@ import {
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import type {
-  EntitySearchStateUrlQuery,
-  EntitySearchStateUrlQueryInput,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 import {
   initializeSearchEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndSearchEntityState,
@@ -27,22 +23,22 @@ import {
 export interface PublishedEntityListScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  urlQuery?: EntitySearchStateUrlQueryInput;
-  onUrlQueryChanged?: (urlQuery: EntitySearchStateUrlQuery) => void;
+  urlSearchParams?: Readonly<URLSearchParams>;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onOpenEntity: (entity: PublishedEntity) => void;
 }
 
 export function PublishedEntityListScreen({
   header,
   footer,
-  urlQuery,
-  onUrlQueryChanged,
+  urlSearchParams,
+  onUrlSearchParamsChange,
   onOpenEntity,
 }: PublishedEntityListScreenProps): JSX.Element | null {
   const { schema } = useContext(PublishedDataDataContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    urlQuery,
+    urlSearchParams,
     initializeSearchEntityStateFromUrlQuery
   );
 
@@ -71,8 +67,8 @@ export function PublishedEntityListScreen({
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
-    urlQuery,
-    onUrlQueryChanged,
+    urlSearchParams,
+    onUrlSearchParamsChange,
     searchEntityState,
     dispatchSearchEntityState
   );

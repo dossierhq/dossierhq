@@ -1,3 +1,40 @@
+export function encodeObjectToURLSearchParams(
+  params: object | undefined,
+  options?: { keepEmptyObjects: boolean }
+): URLSearchParams {
+  const result = new URLSearchParams();
+  const removeEmptyObjects = !options?.keepEmptyObjects;
+  if (params) {
+    for (const [key, value] of Object.entries(params)) {
+      if (
+        value === null ||
+        value === undefined ||
+        (removeEmptyObjects &&
+          typeof value === 'object' &&
+          value &&
+          Object.keys(value).length === 0)
+      ) {
+        continue;
+      }
+      const encoded = JSON.stringify(value);
+      result.set(key, encoded);
+    }
+  }
+  return result;
+}
+
+export function decodeObjectFromURLSearchParams<T extends object>(
+  urlSearchParams: Readonly<URLSearchParams> | undefined
+): Partial<T> {
+  const result = {} as Partial<T>;
+  if (urlSearchParams) {
+    for (const [key, value] of urlSearchParams.entries()) {
+      result[key as keyof T] = JSON.parse(value);
+    }
+  }
+  return result;
+}
+
 export function stringifyUrlQueryParams<TKey extends string>(
   params: Record<TKey, unknown> | undefined,
   options?: { keepEmptyObjects: boolean }

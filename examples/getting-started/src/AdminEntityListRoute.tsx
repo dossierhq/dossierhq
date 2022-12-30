@@ -1,28 +1,12 @@
-import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
 import { AdminEntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
 
 export function AdminEntityListRoute() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const urlQuery = useMemo(() => {
-    const result: EntitySearchStateUrlQuery = {};
-    for (const [key, value] of searchParams.entries()) {
-      result[key as keyof EntitySearchStateUrlQuery] = value;
-    }
-    return result;
-  }, [searchParams]);
-
-  const handleUrlQueryChanged = useCallback(
-    (urlQuery: EntitySearchStateUrlQuery) => {
-      setSearchParams(urlQuery);
-    },
-    [setSearchParams]
-  );
 
   const handleCreateEntity = useCallback(
     (type: string) => navigate(`/edit-entities?newType=${type}&id=${crypto.randomUUID()}`),
@@ -36,8 +20,8 @@ export function AdminEntityListRoute() {
   return (
     <AdminEntityListScreen
       header={<Navbar current="admin-entities" />}
-      urlQuery={urlQuery}
-      onUrlQueryChanged={handleUrlQueryChanged}
+      urlSearchParams={searchParams}
+      onUrlSearchParamsChange={setSearchParams}
       onCreateEntity={handleCreateEntity}
       onOpenEntity={handleEntityOpen}
     />
