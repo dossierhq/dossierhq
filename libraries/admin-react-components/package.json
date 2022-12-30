@@ -68,7 +68,7 @@
     "@lexical/rich-text": "~0.7.0",
     "@lexical/selection": "~0.7.0",
     "@lexical/utils": "~0.7.0",
-    "leaflet": "~1.9.1",
+    "leaflet": "~1.9.3",
     "lexical": "~0.7.0",
     "lodash": "~4.17.21",
     "react": "~18.2.0",
