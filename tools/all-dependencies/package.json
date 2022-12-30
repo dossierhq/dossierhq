@@ -86,7 +86,7 @@
     "react-dom": "~18.2.0",
     "react-leaflet": "~4.2.0",
     "react-router-dom": "~6.3.0",
-    "rollup-plugin-visualizer": "~5.8.3",
+    "rollup-plugin-visualizer": "~5.9.0",
     "sass": "~1.57.0",
     "sass-loader": "~13.2.0",
     "sql.js": "~1.8.0",
