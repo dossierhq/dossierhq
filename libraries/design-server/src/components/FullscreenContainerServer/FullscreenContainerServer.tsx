@@ -105,13 +105,14 @@ FullscreenContainer.Row = ({
   fullWidth,
   fillHeight,
   sticky,
+  flexDirection = 'column',
   children,
   ...props
 }: FullscreenContainerRowProps) => {
   const width = !fullWidth && !center ? '100%' : undefined; // .container centers by default
   const height = fillHeight ? 0 : props.height;
   const addStickyFullWidthWrapper = sticky && !fullWidth;
-  const { layoutProps, otherProps } = extractLayoutProps(props);
+  const { layoutProps, otherProps } = extractLayoutProps({ ...props, flexDirection });
 
   const className = toClassName(
     !fullWidth && 'is-flex-grow-0 container',
@@ -136,7 +137,6 @@ FullscreenContainer.Row = ({
   );
 };
 FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';
-FullscreenContainer.Row.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.ScrollableRow = ({
   direction,
@@ -166,33 +166,37 @@ FullscreenContainer.Columns = ({ fillHeight, children }: FullscreenContainerColu
 };
 FullscreenContainer.Columns.displayName = 'FullscreenContainer.Column';
 
-FullscreenContainer.Column = ({ width, children, ...props }: FullscreenContainerColumnProps) => {
+FullscreenContainer.Column = ({
+  width,
+  flexDirection = 'column',
+  children,
+  ...props
+}: FullscreenContainerColumnProps) => {
   const className = toClassName(
     'column',
     width && COLUMN_WIDTHS[width],
-    toFlexContainerClassName(props),
+    toFlexContainerClassName({ ...props, flexDirection }),
     toSpacingClassName(props)
   );
   return <div className={className}>{children}</div>;
 };
 FullscreenContainer.Column.displayName = 'FullscreenContainer.Columns';
-FullscreenContainer.Column.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.ScrollableColumn = ({
   width,
+  flexDirection = 'column',
   children,
   ...props
 }: FullscreenContainerScrollableColumnProps) => {
   const className = toClassName(
     'column p-0',
     width && COLUMN_WIDTHS[width],
-    toFlexContainerClassName(props),
+    toFlexContainerClassName({ ...props, flexDirection }),
     toSpacingClassName(props)
   );
   return <Scrollable className={className}>{children}</Scrollable>;
 };
 FullscreenContainer.ScrollableColumn.displayName = 'FullscreenContainer.ScrollableColumn';
-FullscreenContainer.ScrollableColumn.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.Item = ({ children, ...props }: FullscreenContainerItemProps) => (
   <div className={toClassName(toFlexItemClassName(props), toSpacingClassName(props))}>
