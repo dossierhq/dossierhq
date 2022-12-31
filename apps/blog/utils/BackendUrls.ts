@@ -4,25 +4,25 @@ import type {
   PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
-import { buildUrlWithUrlQuery, stringifyUrlQueryParams } from '@jonasb/datadata-core';
+import { encodeObjectToURLSearchParams } from '@jonasb/datadata-core';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const BackendUrls = {
   admin: (
     operationName: keyof typeof AdminClientOperationName,
-    operation?: AdminClientJsonOperationArgs
+    args?: AdminClientJsonOperationArgs
   ): string =>
-    buildUrlWithUrlQuery(
-      `${baseUrl}/admin/${operationName}`,
-      stringifyUrlQueryParams({ operation: operation }, { keepEmptyObjects: true })
-    ),
+    `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
+      { args },
+      { keepEmptyObjects: true }
+    )}`,
   published: (
     operationName: keyof typeof PublishedClientOperationName,
-    operation?: PublishedClientJsonOperationArgs
+    args?: PublishedClientJsonOperationArgs
   ): string =>
-    buildUrlWithUrlQuery(
-      `${baseUrl}/published/${operationName}`,
-      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
-    ),
+    `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
+      { args },
+      { keepEmptyObjects: true }
+    )}`,
 };

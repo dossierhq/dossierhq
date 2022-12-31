@@ -1,12 +1,7 @@
-import type {
-  AdminClientJsonOperationArgs,
-  AdminClientOperationName,
-  ErrorType,
-  Result,
-} from '@jonasb/datadata-core';
+import type { AdminClientJsonOperationArgs, ErrorType, Result } from '@jonasb/datadata-core';
 import {
   AdminClientModifyingOperations,
-  decodeUrlQueryStringifiedParam,
+  decodeURLSearchParamsParam,
   executeAdminClientOperationFromJson,
   notOk,
   ok,
@@ -33,12 +28,12 @@ function getOperationArgs(
 ): Result<AdminClientJsonOperationArgs, typeof ErrorType.BadRequest> {
   let operationArgs: AdminClientJsonOperationArgs | undefined;
   if (req.method === 'GET') {
-    operationArgs = decodeUrlQueryStringifiedParam('operation', req.query);
+    operationArgs = decodeURLSearchParamsParam(req.query, 'args');
   } else {
     operationArgs = req.body;
   }
   if (!operationArgs) {
-    return notOk.BadRequest('Missing operation');
+    return notOk.BadRequest('Missing args');
   }
   return ok(operationArgs);
 }

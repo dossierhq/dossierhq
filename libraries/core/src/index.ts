@@ -220,10 +220,4 @@ export type {
   UniqueIndexReference,
   ValueItem,
 } from './Types.js';
-export {
-  buildUrlWithUrlQuery,
-  decodeObjectFromURLSearchParams,
-  decodeUrlQueryStringifiedParam,
-  encodeObjectToURLSearchParams,
-  stringifyUrlQueryParams,
-} from './UrlQueryUtils.js';
+export { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from './UrlQueryUtils.js';

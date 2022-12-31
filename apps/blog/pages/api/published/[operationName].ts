@@ -1,6 +1,6 @@
 import type { ErrorType, PublishedClientJsonOperationArgs, Result } from '@jonasb/datadata-core';
 import {
-  decodeUrlQueryStringifiedParam,
+  decodeURLSearchParamsParam,
   executePublishedClientOperationFromJson,
   notOk,
   ok,
@@ -27,12 +27,12 @@ function getOperationArgs(
 ): Result<PublishedClientJsonOperationArgs, typeof ErrorType.BadRequest> {
   let operationArgs: PublishedClientJsonOperationArgs | undefined;
   if (req.method === 'GET') {
-    operationArgs = decodeUrlQueryStringifiedParam('operation', req.query);
+    operationArgs = decodeURLSearchParamsParam(req.query, 'args');
   } else {
     operationArgs = req.body;
   }
   if (!operationArgs) {
-    return notOk.BadRequest('Missing operation');
+    return notOk.BadRequest('Missing args');
   }
   return ok(operationArgs);
 }

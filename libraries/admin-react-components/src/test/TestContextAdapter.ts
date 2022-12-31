@@ -11,16 +11,15 @@ import type {
   PublishedClientOperation,
 } from '@jonasb/datadata-core';
 import {
-  buildUrlWithUrlQuery,
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
   createBaseAdminClient,
   createBasePublishedClient,
   createConsoleLogger,
+  encodeObjectToURLSearchParams,
   LoggingClientMiddleware,
   notOk,
   ok,
-  stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
@@ -89,10 +88,10 @@ async function terminatingAdminMiddleware(
     });
   } else {
     response = await fetch(
-      buildUrlWithUrlQuery(
-        `/admin?name=${operation.name}`,
-        stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
-      ),
+      `/api/admin/${operation.name}?${encodeObjectToURLSearchParams(
+        { args: operation.args },
+        { keepEmptyObjects: true }
+      )}`,
       { method: 'GET', headers: AUTH_KEYS_HEADER }
     );
   }
@@ -106,10 +105,10 @@ async function terminatingPublishedMiddleware(
   operation: PublishedClientOperation
 ): Promise<void> {
   const response = await fetch(
-    buildUrlWithUrlQuery(
-      `/published?name=${operation.name}`,
-      stringifyUrlQueryParams({ operation: operation.args }, { keepEmptyObjects: true })
-    ),
+    `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
+      { args: operation.args },
+      { keepEmptyObjects: true }
+    )}`,
     { method: 'GET', headers: AUTH_KEYS_HEADER }
   );
 

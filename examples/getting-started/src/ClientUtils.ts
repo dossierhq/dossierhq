@@ -1,17 +1,16 @@
 import {
   AdminClientMiddleware,
   AdminClientOperation,
-  buildUrlWithUrlQuery,
   ClientContext,
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
   createBaseAdminClient,
   createBasePublishedClient,
   createConsoleLogger,
+  encodeObjectToURLSearchParams,
   notOk,
   ok,
   PublishedClientOperation,
-  stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
 
@@ -37,10 +36,10 @@ async function adminBackendMiddleware(
     });
   } else {
     response = await fetch(
-      buildUrlWithUrlQuery(
-        `/api/admin/${operation.name}`,
-        stringifyUrlQueryParams({ args: operation.args }, { keepEmptyObjects: true })
-      )
+      `/api/admin/${operation.name}?${encodeObjectToURLSearchParams(
+        { args: operation.args },
+        { keepEmptyObjects: true }
+      )}`
     );
   }
 
@@ -60,10 +59,10 @@ async function publishedBackendMiddleware(
   operation: PublishedClientOperation
 ): Promise<void> {
   const response = await fetch(
-    buildUrlWithUrlQuery(
-      `/api/published/${operation.name}`,
-      stringifyUrlQueryParams({ args: operation.args }, { keepEmptyObjects: true })
-    )
+    `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
+      { args: operation.args },
+      { keepEmptyObjects: true }
+    )}`
   );
   const result = await getBodyAsJsonResult(response);
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));

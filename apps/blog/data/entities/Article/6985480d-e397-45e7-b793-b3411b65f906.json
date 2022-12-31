@@ -23370,7 +23370,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "decodeUrlQueryStringifiedParam()",
+                "text": "decodeURLSearchParamsParam()",
                 "type": "text",
                 "version": 1
               },
@@ -23495,7 +23495,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  decodeUrlQueryStringifiedParam",
+                "text": "  decodeURLSearchParamsParam",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -24763,64 +24763,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " operationArgs",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ":",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " AdminClientJsonOperationArgs ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "|",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "undefined",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
+                "text": " operationArgs ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -24848,7 +24791,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "decodeUrlQueryStringifiedParam",
+                "text": "decodeURLSearchParamsParam",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -24858,40 +24801,36 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "AdminClientJsonOperationArgs",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
                 "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "      ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "'args'",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "string"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ",",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
@@ -24924,9 +24863,120 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "query",
+                "text": "query ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "as",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " Record",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'args'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
               },
               {
                 "type": "linebreak",
@@ -25506,7 +25556,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'Missing operation'",
+                "text": "'Missing args'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -27169,29 +27219,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  buildUrlWithUrlQuery",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ",",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": "  ClientContext",
                 "type": "code-highlight",
                 "version": 1
@@ -27284,6 +27311,29 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
+                "text": "  encodeObjectToURLSearchParams",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
                 "text": "  notOk",
                 "type": "code-highlight",
                 "version": 1
@@ -27308,29 +27358,6 @@
                 "mode": "normal",
                 "style": "",
                 "text": "  ok",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ",",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  stringifyUrlQueryParams",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -29214,39 +29241,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "buildUrlWithUrlQuery",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "function"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "        ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": "`",
                 "type": "code-highlight",
                 "version": 1,
@@ -29315,17 +29309,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "`",
+                "text": "?",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "template-punctuation"
+                "highlightType": "string"
               },
               {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ",",
+                "text": "${",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "encodeObjectToURLSearchParams",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
@@ -29342,26 +29356,6 @@
                 "text": "        ",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "stringifyUrlQueryParams",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "function"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
               },
               {
                 "detail": 0,
@@ -29441,11 +29435,15 @@
                 "highlightType": "punctuation"
               },
               {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " ",
+                "text": "        ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -29517,16 +29515,6 @@
                 "highlightType": "punctuation"
               },
               {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ")",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
                 "type": "linebreak",
                 "version": 1
               },
@@ -29548,6 +29536,26 @@
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "`",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "template-punctuation"
               },
               {
                 "type": "linebreak",
@@ -38297,64 +38305,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " operationArgs",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ":",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " PublishedClientJsonOperationArgs ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "|",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "undefined",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
+                "text": " operationArgs ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -38367,6 +38318,184 @@
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "decodeURLSearchParamsParam",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "PublishedClientJsonOperationArgs",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "      req",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "query ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "as",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " Record",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "<",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ">",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
               },
               {
                 "type": "linebreak",
@@ -38386,48 +38515,13 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "decodeUrlQueryStringifiedParam",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "function"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": "'args'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
               },
               {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ",",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " req",
-                "type": "code-highlight",
+                "type": "linebreak",
                 "version": 1
               },
               {
@@ -38435,17 +38529,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ".",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "query",
+                "text": "    ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -38655,7 +38739,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'Missing operation'",
+                "text": "'Missing args'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -40079,39 +40163,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "buildUrlWithUrlQuery",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "function"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "      ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": "`",
                 "type": "code-highlight",
                 "version": 1,
@@ -40180,17 +40231,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "`",
+                "text": "?",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "template-punctuation"
+                "highlightType": "string"
               },
               {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ",",
+                "text": "${",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "encodeObjectToURLSearchParams",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
@@ -40207,26 +40278,6 @@
                 "text": "      ",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "stringifyUrlQueryParams",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "function"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "(",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
               },
               {
                 "detail": 0,
@@ -40306,11 +40357,15 @@
                 "highlightType": "punctuation"
               },
               {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " ",
+                "text": "      ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -40382,16 +40437,6 @@
                 "highlightType": "punctuation"
               },
               {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ")",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
                 "type": "linebreak",
                 "version": 1
               },
@@ -40413,6 +40458,26 @@
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "interpolation-punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "`",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "template-punctuation"
               },
               {
                 "type": "linebreak",

@@ -7,27 +7,27 @@ import type {
   PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
-import { buildUrlWithUrlQuery, notOk, ok, stringifyUrlQueryParams } from '@jonasb/datadata-core';
+import { encodeObjectToURLSearchParams, notOk, ok } from '@jonasb/datadata-core';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   admin: (
     operationName: typeof AdminClientOperationName[keyof typeof AdminClientOperationName],
-    operation?: AdminClientJsonOperationArgs
+    args?: AdminClientJsonOperationArgs
   ): string =>
-    buildUrlWithUrlQuery(
-      `${baseUrl}/admin/${operationName}`,
-      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
-    ),
+    `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
+      { args },
+      { keepEmptyObjects: true }
+    )}`,
   published: (
     operationName: typeof PublishedClientOperationName[keyof typeof PublishedClientOperationName],
-    operationArgs?: PublishedClientJsonOperationArgs
+    args?: PublishedClientJsonOperationArgs
   ): string =>
-    buildUrlWithUrlQuery(
-      `${baseUrl}/published/${operationName}`,
-      stringifyUrlQueryParams({ operation: operationArgs }, { keepEmptyObjects: true })
-    ),
+    `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
+      { args },
+      { keepEmptyObjects: true }
+    )}`,
 };
 
 export async function fetchJsonResult<TOk>(

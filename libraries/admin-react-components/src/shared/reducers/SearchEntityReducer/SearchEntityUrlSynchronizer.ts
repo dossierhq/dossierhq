@@ -1,8 +1,5 @@
 import type { AdminSearchQuery, EntitySamplingOptions, Paging } from '@jonasb/datadata-core';
-import {
-  decodeObjectFromURLSearchParams,
-  encodeObjectToURLSearchParams,
-} from '@jonasb/datadata-core';
+import { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
 import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';
@@ -30,20 +27,23 @@ function urlQueryToSearchEntityStateActions(
 ) {
   const actions = [];
   if (urlSearchParams) {
-    const decoded = decodeObjectFromURLSearchParams<Params>(urlSearchParams);
+    const query = decodeURLSearchParamsParam<Params['query']>(urlSearchParams, 'query');
+    const sampling = decodeURLSearchParamsParam<Params['sampling']>(urlSearchParams, 'sampling');
+    const paging = decodeURLSearchParamsParam<Params['paging']>(urlSearchParams, 'paging');
+
     actions.push(
-      new SearchEntityStateActions.SetQuery(decoded.query ?? {}, {
+      new SearchEntityStateActions.SetQuery(query ?? {}, {
         partial: false,
         resetPagingIfModifying: false,
       })
     );
 
-    if (decoded.sampling) {
-      actions.push(new SearchEntityStateActions.SetSampling(decoded.sampling, false));
+    if (sampling) {
+      actions.push(new SearchEntityStateActions.SetSampling(sampling, false));
     }
 
-    if (decoded.paging || !decoded.sampling) {
-      actions.push(new SearchEntityStateActions.SetPaging(decoded.paging ?? {}));
+    if (paging || !sampling) {
+      actions.push(new SearchEntityStateActions.SetPaging(paging ?? {}));
     }
   }
   return actions;

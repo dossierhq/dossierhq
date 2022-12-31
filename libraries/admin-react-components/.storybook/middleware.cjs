@@ -1,11 +1,11 @@
 // @ts-check
 const {
+  AdminClientModifyingOperations,
   createConsoleLogger,
-  decodeUrlQueryStringifiedParam,
+  decodeURLSearchParamsParam,
   executeAdminClientOperationFromJson,
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
-  AdminClientModifyingOperations,
   notOk,
 } = require('@jonasb/datadata-core');
 const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@jonasb/datadata-server');
@@ -109,7 +109,7 @@ function handleClientOperation(req, res, executeOperation) {
   const { name } = req.query;
   let operation = null;
   if (req.method === 'GET') {
-    operation = decodeUrlQueryStringifiedParam('operation', req.query);
+    operation = decodeURLSearchParamsParam(req.query, 'args');
   } else if (req.method === 'PUT') {
     operation = req.body;
   } else {

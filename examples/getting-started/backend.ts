@@ -3,7 +3,7 @@ import {
   AdminClientModifyingOperations,
   AdminSchema,
   createConsoleLogger,
-  decodeUrlQueryStringifiedParam,
+  decodeURLSearchParamsParam,
   ErrorType,
   executeAdminClientOperationFromJson,
   executePublishedClientOperationFromJson,
@@ -167,15 +167,15 @@ app.get(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
     const { operationName } = req.params;
-    const operationArgs: AdminClientJsonOperationArgs | undefined = decodeUrlQueryStringifiedParam(
-      'args',
-      req.query
+    const operationArgs = decodeURLSearchParamsParam<AdminClientJsonOperationArgs>(
+      req.query as Record<string, string>,
+      'args'
     );
     const operationModifies = AdminClientModifyingOperations.has(operationName);
     if (operationModifies) {
       sendResult(res, notOk.BadRequest('Operation modifies data, but GET was used'));
     } else if (!operationArgs) {
-      sendResult(res, notOk.BadRequest('Missing operation'));
+      sendResult(res, notOk.BadRequest('Missing args'));
     } else {
       sendResult(
         res,
@@ -206,10 +206,12 @@ app.get(
   '/api/published/:operationName',
   asyncHandler(async (req, res) => {
     const { operationName } = req.params;
-    const operationArgs: PublishedClientJsonOperationArgs | undefined =
-      decodeUrlQueryStringifiedParam('args', req.query);
+    const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
+      req.query as Record<string, string>,
+      'args'
+    );
     if (!operationArgs) {
-      sendResult(res, notOk.BadRequest('Missing operation'));
+      sendResult(res, notOk.BadRequest('Missing args'));
     } else {
       sendResult(
         res,
