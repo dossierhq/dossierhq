@@ -96,7 +96,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       react-router-dom: ~6.3.0
-      rollup-plugin-visualizer: ~5.8.3
+      rollup-plugin-visualizer: ~5.9.0
       sql.js: ~1.8.0
       swr: ~2.0.0
       typescript: ~4.9.4
@@ -131,7 +131,7 @@ importers:
       eslint: 8.30.0
       graphql-config: 4.4.0_graphql@16.6.0
       graphql-ws: 5.11.2_graphql@16.6.0
-      rollup-plugin-visualizer: 5.8.3
+      rollup-plugin-visualizer: 5.9.0
       typescript: 4.9.4
       vite: 4.0.3
 
@@ -1292,7 +1292,7 @@ importers:
       react-dom: ~18.2.0
       react-leaflet: ~4.2.0
       react-router-dom: ~6.3.0
-      rollup-plugin-visualizer: ~5.8.3
+      rollup-plugin-visualizer: ~5.9.0
       sass: ~1.57.0
       sass-loader: ~13.2.0
       sql.js: ~1.8.0
@@ -1385,7 +1385,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
-      rollup-plugin-visualizer: 5.8.3
+      rollup-plugin-visualizer: 5.9.0
       sass: 1.57.1
       sass-loader: 13.2.0_sass@1.57.1
       sql.js: 1.8.0
@@ -8744,7 +8744,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.3.0
+      picomatch: 2.3.1
 
   /app-root-dir/1.0.2:
     resolution: {integrity: sha512-jlpIfsOoNoafl92Sz//64uQHGSyMrD2vYG5d8o2a4qGvyNCvXur7bzIsWtAC/6flI2RYAp3kv8rsfBtaLm7w0g==}
@@ -14289,7 +14289,7 @@ packages:
     engines: {node: '>=8.6'}
     dependencies:
       braces: 3.0.2
-      picomatch: 2.3.0
+      picomatch: 2.3.1
 
   /miller-rabin/4.0.1:
     resolution: {integrity: sha512-115fLhvZVqWwHPbClyntxEVfVDfl9DLLTuJvq3g2O/Oxi8AiNouAHvDSzHS0viUJc+V5vm3eq91Xwqn9dp4jRA==}
@@ -15482,6 +15482,10 @@ packages:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}
     engines: {node: '>=8.6'}
 
+  /picomatch/2.3.1:
+    resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
+    engines: {node: '>=8.6'}
+
   /pify/2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
@@ -16409,13 +16413,13 @@ packages:
     resolution: {integrity: sha512-cMhu7c/8rdhkHXWsY+osBhfSy0JikwpHK/5+imo+LpeasTF8ouErHrlYkwT0++njiyuDvc7OFY5T3ukvZ8qmFQ==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      picomatch: 2.3.0
+      picomatch: 2.3.1
 
   /readdirp/3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      picomatch: 2.3.0
+      picomatch: 2.3.1
 
   /recompose/0.30.0_react@18.2.0:
     resolution: {integrity: sha512-ZTrzzUDa9AqUIhRk4KmVFihH0rapdCSMFXjhHbNrjAWxBuUD/guYlyysMnuHjlZC/KRiOKRtB4jf96yYSkKE8w==}
@@ -16715,8 +16719,8 @@ packages:
       hash-base: 3.1.0
       inherits: 2.0.4
 
-  /rollup-plugin-visualizer/5.8.3:
-    resolution: {integrity: sha512-QGJk4Bqe4AOat5AjipOh8esZH1nck5X2KFpf4VytUdSUuuuSwvIQZjMGgjcxe/zXexltqaXp5Vx1V3LmnQH15Q==}
+  /rollup-plugin-visualizer/5.9.0:
+    resolution: {integrity: sha512-bbDOv47+Bw4C/cgs0czZqfm8L82xOZssk4ayZjG40y9zbXclNk7YikrZTDao6p7+HDiGxrN0b65SgZiVm9k1Cg==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
@@ -16726,6 +16730,7 @@ packages:
         optional: true
     dependencies:
       open: 8.4.0
+      picomatch: 2.3.1
       source-map: 0.7.4
       yargs: 17.5.1
 
