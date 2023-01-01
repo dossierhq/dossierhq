@@ -125,7 +125,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "If you're a developer and want to jump straight into developing with Data data, head over to ",
+                "text": "If you're a developer and want to jump straight into developing with Data data, head over to the ",
                 "type": "text",
                 "version": 1
               },
@@ -144,7 +144,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Getting started",
+                    "text": "tutorial",
                     "type": "text",
                     "version": 1
                   }

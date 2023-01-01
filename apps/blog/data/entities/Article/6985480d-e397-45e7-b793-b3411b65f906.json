@@ -1,14 +1,14 @@
 {
   "id": "6985480d-e397-45e7-b793-b3411b65f906",
   "info": {
-    "name": "Getting started",
+    "name": "Tutorial",
     "type": "Article",
     "authKey": "none",
     "status": "published"
   },
   "fields": {
-    "title": "Getting started",
-    "slug": "getting-started",
+    "title": "Tutorial",
+    "slug": "tutorial",
     "body": {
       "root": {
         "direction": "ltr",
@@ -202,7 +202,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm create vite@latest getting-started -- --template react-ts",
+                    "text": "npm create vite@latest tutorial -- --template react-ts",
                     "type": "text",
                     "version": 1
                   }
@@ -221,7 +221,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "cd getting-started",
+                    "text": "cd tutorial",
                     "type": "text",
                     "version": 1
                   }
