@@ -455,12 +455,12 @@
       "projectFolder": "examples/foo"
     },
     {
-      "packageName": "datadata-getting-started",
-      "projectFolder": "examples/getting-started"
-    },
-    {
       "packageName": "datadata-examples-next-web",
       "projectFolder": "examples/next-web"
+    },
+    {
+      "packageName": "datadata-tutorial",
+      "projectFolder": "examples/tutorial"
     },
     {
       "packageName": "@jonasb/datadata-graphql",

@@ -311,57 +311,6 @@ importers:
       prettier: 2.8.1
       typescript: 4.9.4
 
-  ../../examples/getting-started:
-    specifiers:
-      '@jonasb/datadata-admin-react-components': workspace:*
-      '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-better-sqlite3': workspace:*
-      '@jonasb/datadata-design': workspace:*
-      '@jonasb/datadata-leaflet': workspace:*
-      '@jonasb/datadata-server': workspace:*
-      '@jonasb/datadata-typescript-generator': workspace:*
-      '@types/better-sqlite3': ~7.6.3
-      '@types/body-parser': ~1.19.2
-      '@types/express': ~4.17.13
-      '@types/react': ~18.0.26
-      '@types/react-dom': ~18.0.9
-      '@vitejs/plugin-react': ~3.0.0
-      better-sqlite3: ~8.0.1
-      body-parser: ~1.20.1
-      express: ~4.18.1
-      leaflet: ~1.9.3
-      react: ~18.2.0
-      react-dom: ~18.2.0
-      react-router-dom: ~6.3.0
-      ts-node: ~10.9.1
-      typescript: ~4.9.4
-      vite: ~4.0.0
-    dependencies:
-      '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
-      '@jonasb/datadata-core': link:../../libraries/core
-      '@jonasb/datadata-database-adapter-better-sqlite3': link:../../libraries/database-adapter-better-sqlite3
-      '@jonasb/datadata-design': link:../../libraries/design
-      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
-      '@jonasb/datadata-server': link:../../libraries/server
-      better-sqlite3: 8.0.1
-      body-parser: 1.20.1
-      express: 4.18.1
-      leaflet: 1.9.3
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
-    devDependencies:
-      '@jonasb/datadata-typescript-generator': link:../../libraries/typescript-generator
-      '@types/better-sqlite3': 7.6.3
-      '@types/body-parser': 1.19.2
-      '@types/express': 4.17.13
-      '@types/react': 18.0.26
-      '@types/react-dom': 18.0.9
-      '@vitejs/plugin-react': 3.0.0_vite@4.0.3
-      ts-node: 10.9.1_typescript@4.9.4
-      typescript: 4.9.4
-      vite: 4.0.3
-
   ../../examples/next-web:
     specifiers:
       '@jonasb/datadata-admin-react-components': workspace:*
@@ -414,6 +363,57 @@ importers:
       prettier: 2.8.1
       typescript: 4.9.4
       vitest: 0.26.2
+
+  ../../examples/tutorial:
+    specifiers:
+      '@jonasb/datadata-admin-react-components': workspace:*
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-better-sqlite3': workspace:*
+      '@jonasb/datadata-design': workspace:*
+      '@jonasb/datadata-leaflet': workspace:*
+      '@jonasb/datadata-server': workspace:*
+      '@jonasb/datadata-typescript-generator': workspace:*
+      '@types/better-sqlite3': ~7.6.3
+      '@types/body-parser': ~1.19.2
+      '@types/express': ~4.17.13
+      '@types/react': ~18.0.26
+      '@types/react-dom': ~18.0.9
+      '@vitejs/plugin-react': ~3.0.0
+      better-sqlite3: ~8.0.1
+      body-parser: ~1.20.1
+      express: ~4.18.1
+      leaflet: ~1.9.3
+      react: ~18.2.0
+      react-dom: ~18.2.0
+      react-router-dom: ~6.3.0
+      ts-node: ~10.9.1
+      typescript: ~4.9.4
+      vite: ~4.0.0
+    dependencies:
+      '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
+      '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-better-sqlite3': link:../../libraries/database-adapter-better-sqlite3
+      '@jonasb/datadata-design': link:../../libraries/design
+      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
+      '@jonasb/datadata-server': link:../../libraries/server
+      better-sqlite3: 8.0.1
+      body-parser: 1.20.1
+      express: 4.18.1
+      leaflet: 1.9.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
+    devDependencies:
+      '@jonasb/datadata-typescript-generator': link:../../libraries/typescript-generator
+      '@types/better-sqlite3': 7.6.3
+      '@types/body-parser': 1.19.2
+      '@types/express': 4.17.13
+      '@types/react': 18.0.26
+      '@types/react-dom': 18.0.9
+      '@vitejs/plugin-react': 3.0.0_vite@4.0.3
+      ts-node: 10.9.1_typescript@4.9.4
+      typescript: 4.9.4
+      vite: 4.0.3
 
   ../../libraries/admin-react-components:
     specifiers:
