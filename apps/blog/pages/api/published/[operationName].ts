@@ -25,12 +25,10 @@ export default async function publishedOperationHandler(
 function getOperationArgs(
   req: NextApiRequest
 ): Result<PublishedClientJsonOperationArgs, typeof ErrorType.BadRequest> {
-  let operationArgs: PublishedClientJsonOperationArgs | undefined;
-  if (req.method === 'GET') {
-    operationArgs = decodeURLSearchParamsParam(req.query, 'args');
-  } else {
-    operationArgs = req.body;
-  }
+  const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
+    req.query,
+    'args'
+  );
   if (!operationArgs) {
     return notOk.BadRequest('Missing args');
   }

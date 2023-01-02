@@ -19,7 +19,7 @@ export const BackendUrls = {
     )}`,
   published: (
     operationName: keyof typeof PublishedClientOperationName,
-    args?: PublishedClientJsonOperationArgs
+    args: PublishedClientJsonOperationArgs
   ): string =>
     `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
       { args },
