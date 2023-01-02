@@ -4,6 +4,8 @@ export interface FlexContainerProps {
   flexDirection?: keyof typeof flexDirectionClassNames;
   alignItems?: keyof typeof alignItemsClassNames;
   justifyContent?: keyof typeof justifyContentClassNames;
+  overflowX?: keyof typeof overflowXClassNames;
+  overflowY?: keyof typeof overflowYClassNames;
 }
 
 const flexDirectionClassNames = {
@@ -20,16 +22,28 @@ const justifyContentClassNames = {
   center: 'is-justify-content-center',
 };
 
+const overflowXClassNames = {
+  auto: 'is-overflow-x-auto',
+};
+
+const overflowYClassNames = {
+  auto: 'is-overflow-y-auto',
+};
+
 export function toFlexContainerClassName({
   flexDirection,
   alignItems,
   justifyContent,
+  overflowX,
+  overflowY,
 }: FlexContainerProps): string {
   return toClassName(
     'is-flex',
     flexDirection && flexDirectionClassNames[flexDirection],
     alignItems && alignItemsClassNames[alignItems],
-    justifyContent && justifyContentClassNames[justifyContent]
+    justifyContent && justifyContentClassNames[justifyContent],
+    overflowX && overflowXClassNames[overflowX],
+    overflowY && overflowYClassNames[overflowY]
   );
 }
 
