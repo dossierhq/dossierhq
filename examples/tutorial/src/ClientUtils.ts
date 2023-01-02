@@ -1,5 +1,6 @@
+import { Auth0ContextInterface, useAuth0 } from '@auth0/auth0-react';
+import { useCachingAdminMiddleware } from '@jonasb/datadata-admin-react-components';
 import {
-  AdminClientMiddleware,
   AdminClientOperation,
   ClientContext,
   convertJsonAdminClientResult,
@@ -12,60 +13,99 @@ import {
   ok,
   PublishedClientOperation,
 } from '@jonasb/datadata-core';
+import { useMemo } from 'react';
 import { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
 
 const logger = createConsoleLogger(console);
 
-export function createAdminClient(pipeline: AdminClientMiddleware<ClientContext>[] = []) {
-  return createBaseAdminClient<ClientContext, AppAdminClient>({
-    context: { logger },
-    pipeline: [...pipeline, adminBackendMiddleware],
-  });
+export function useAdminClient(): AppAdminClient | null {
+  const cachingAdminMiddleware = useCachingAdminMiddleware();
+  const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+  return useMemo(
+    () =>
+      isLoading
+        ? null
+        : createBaseAdminClient<ClientContext, AppAdminClient>({
+            context: { logger },
+            pipeline: [
+              cachingAdminMiddleware,
+              createAdminBackendMiddleware(isAuthenticated, getAccessTokenSilently),
+            ],
+          }),
+    [isLoading, isAuthenticated, getAccessTokenSilently, cachingAdminMiddleware]
+  );
 }
 
-async function adminBackendMiddleware(
-  context: ClientContext,
-  operation: AdminClientOperation
-): Promise<void> {
-  let response: Response;
-  if (operation.modifies) {
-    response = await fetch(`/api/admin/${operation.name}`, {
-      method: 'PUT',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(operation.args),
-    });
-  } else {
-    response = await fetch(
-      `/api/admin/${operation.name}?${encodeObjectToURLSearchParams(
+function createAdminBackendMiddleware(
+  isAuthenticated: boolean,
+  getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently']
+) {
+  return async (context: ClientContext, operation: AdminClientOperation): Promise<void> => {
+    const authHeader: { Authorization?: string } = {};
+    if (isAuthenticated) {
+      const accessToken = await getAccessTokenSilently();
+      authHeader['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    let response: Response;
+    if (operation.modifies) {
+      response = await fetch(`/api/admin/${operation.name}`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json', ...authHeader },
+        body: JSON.stringify(operation.args),
+      });
+    } else {
+      response = await fetch(
+        `/api/admin/${operation.name}?${encodeObjectToURLSearchParams(
+          { args: operation.args },
+          { keepEmptyObjects: true }
+        )}`,
+        { headers: authHeader }
+      );
+    }
+
+    const result = await getBodyAsJsonResult(response);
+    operation.resolve(convertJsonAdminClientResult(operation.name, result));
+  };
+}
+
+export function usePublishedClient(): AppPublishedClient | null {
+  const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+  return useMemo(
+    () =>
+      isLoading
+        ? null
+        : createBasePublishedClient<ClientContext, AppPublishedClient>({
+            context: { logger },
+            pipeline: [createPublishedBackendMiddleware(isAuthenticated, getAccessTokenSilently)],
+          }),
+    [isLoading, isAuthenticated, getAccessTokenSilently]
+  );
+}
+
+function createPublishedBackendMiddleware(
+  isAuthenticated: boolean,
+  getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently']
+) {
+  return async (context: ClientContext, operation: PublishedClientOperation): Promise<void> => {
+    const authHeader: { Authorization?: string } = {};
+    if (isAuthenticated) {
+      const accessToken = await getAccessTokenSilently();
+      authHeader['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    const response = await fetch(
+      `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
         { args: operation.args },
         { keepEmptyObjects: true }
-      )}`
+      )}`,
+      { headers: authHeader }
     );
-  }
-
-  const result = await getBodyAsJsonResult(response);
-  operation.resolve(convertJsonAdminClientResult(operation.name, result));
-}
-
-export function createPublishedClient() {
-  return createBasePublishedClient<ClientContext, AppPublishedClient>({
-    context: { logger },
-    pipeline: [publishedBackendMiddleware],
-  });
-}
-
-async function publishedBackendMiddleware(
-  context: ClientContext,
-  operation: PublishedClientOperation
-): Promise<void> {
-  const response = await fetch(
-    `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
-      { args: operation.args },
-      { keepEmptyObjects: true }
-    )}`
-  );
-  const result = await getBodyAsJsonResult(response);
-  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+    const result = await getBodyAsJsonResult(response);
+    operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+  };
 }
 
 async function getBodyAsJsonResult(response: Response) {

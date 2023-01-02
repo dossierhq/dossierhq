@@ -9,7 +9,7 @@ export function AdminEntityListRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleCreateEntity = useCallback(
-    (type: string) => navigate(`/edit-entities?newType=${type}&id=${crypto.randomUUID()}`),
+    (type: string) => navigate(`/edit-entities?new=${type}:${crypto.randomUUID()}`),
     [navigate]
   );
   const handleEntityOpen = useCallback(

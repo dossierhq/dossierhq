@@ -17,13 +17,20 @@ import {
   BetterSqlite3DatabaseAdapter,
   createBetterSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-better-sqlite3';
-import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import bodyParser from 'body-parser';
+import { config } from 'dotenv';
 import express, { RequestHandler, Response } from 'express';
+import { expressjwt, GetVerificationKey, Request } from 'express-jwt';
+import { expressJwtSecret } from 'jwks-rsa';
 import { writeFile } from 'node:fs/promises';
 import type { AppAdminClient, AppPublishedClient } from './src/SchemaTypes.js';
+
+// prefer .env.local file if exists, over .env file
+config({ path: '.env.local' });
+config({ path: '.env' });
 
 const app = express();
 const port = 3000;
@@ -51,19 +58,24 @@ async function initializeServer(databaseAdapter: BetterSqlite3DatabaseAdapter) {
   });
 }
 
-async function initializeClients(server: Server) {
-  const sessionResult = await server.createSession({
-    provider: 'sys',
-    identifier: 'anonymous',
-    defaultAuthKeys: ['none', 'subject'],
-  });
-  if (sessionResult.isError()) return sessionResult;
-  const { context } = sessionResult.value;
+async function createSessionForRequest(req: Request) {
+  let provider = 'sys';
+  let identifier = 'anonymous';
+  if (req.auth && req.auth.sub) {
+    provider = 'auth0';
+    identifier = req.auth.sub;
+  }
+  return await server.createSession({ provider, identifier, defaultAuthKeys: ['none', 'subject'] });
+}
 
-  const adminClient = server.createAdminClient<AppAdminClient>(context);
-  const publishedClient = server.createPublishedClient<AppPublishedClient>(context);
+function getAdminClientForRequest(req: Request) {
+  const session = createSessionForRequest(req);
+  return server.createAdminClient<AppAdminClient>(() => session);
+}
 
-  return ok({ adminClient, publishedClient });
+function getPublishedClientForRequest(req: Request) {
+  const session = createSessionForRequest(req);
+  return server.createPublishedClient<AppPublishedClient>(() => session);
 }
 
 async function updateSchema(adminClient: AppAdminClient) {
@@ -90,7 +102,10 @@ async function updateSchema(adminClient: AppAdminClient) {
 }
 
 async function createMessages(adminClient: AppAdminClient) {
-  const totalMessageCountResult = await adminClient.getTotalCount({ entityTypes: ['Message'] });
+  const totalMessageCountResult = await adminClient.getTotalCount({
+    entityTypes: ['Message'],
+    authKeys: ['none'],
+  });
   if (totalMessageCountResult.isError()) return totalMessageCountResult;
 
   const desiredMessageCount = 10;
@@ -120,9 +135,12 @@ async function initialize() {
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
-  const clientsResult = await initializeClients(server);
-  if (clientsResult.isError()) return clientsResult;
-  const { adminClient, publishedClient } = clientsResult.value;
+  const initSession = server.createSession({
+    provider: 'sys',
+    identifier: 'init',
+    defaultAuthKeys: [],
+  });
+  const adminClient = server.createAdminClient<AppAdminClient>(() => initSession);
 
   const schemaResult = await updateSchema(adminClient);
   if (schemaResult.isError()) return schemaResult;
@@ -130,11 +148,11 @@ async function initialize() {
   const messageCreateResult = await createMessages(adminClient);
   if (messageCreateResult.isError()) return messageCreateResult;
 
-  return ok({ server, adminClient, publishedClient });
+  return ok({ server });
 }
 
 const logger = createConsoleLogger(console);
-const { server, adminClient, publishedClient } = (await initialize()).valueOrThrow();
+const { server } = (await initialize()).valueOrThrow();
 
 function asyncHandler(handler: (...args: Parameters<RequestHandler>) => Promise<void>) {
   return (...args: Parameters<RequestHandler>) => {
@@ -151,10 +169,25 @@ function sendResult(res: Response, result: Result<unknown, ErrorType>) {
 }
 
 app.use(bodyParser.json());
+app.use(
+  expressjwt({
+    secret: expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    }) as GetVerificationKey,
+    audience: process.env.AUTH0_AUDIENCE,
+    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+    algorithms: ['RS256'],
+    credentialsRequired: false,
+  })
+);
 
 app.get(
   '/api/message',
   asyncHandler(async (req, res) => {
+    const publishedClient = getPublishedClientForRequest(req);
     const samples = (
       await publishedClient.sampleEntities({ entityTypes: ['Message'] }, { count: 1 })
     ).valueOrThrow();
@@ -166,6 +199,7 @@ app.get(
 app.get(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
+    const adminClient = getAdminClientForRequest(req);
     const { operationName } = req.params;
     const operationArgs = decodeURLSearchParamsParam<AdminClientJsonOperationArgs>(
       req.query as Record<string, string>,
@@ -188,6 +222,7 @@ app.get(
 app.put(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
+    const adminClient = getAdminClientForRequest(req);
     const { operationName } = req.params;
     const operationArgs = req.body as AdminClientJsonOperationArgs;
     const operationModifies = AdminClientModifyingOperations.has(operationName);
@@ -205,6 +240,7 @@ app.put(
 app.get(
   '/api/published/:operationName',
   asyncHandler(async (req, res) => {
+    const publishedClient = getPublishedClientForRequest(req);
     const { operationName } = req.params;
     const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
       req.query as Record<string, string>,

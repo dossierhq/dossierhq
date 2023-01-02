@@ -6,23 +6,29 @@ import type {
 import { PublishedDataDataProvider } from '@jonasb/datadata-admin-react-components';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
-import { createPublishedClient } from './ClientUtils.js';
+import { usePublishedClient } from './ClientUtils.js';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export function AppPublishedProvider({ children }: Props) {
+  const publishedClient = usePublishedClient();
   const args = useMemo(
     () => ({
       adapter: new PublishedAdapter(),
-      publishedClient: createPublishedClient(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
     []
   );
 
-  return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
+  if (!publishedClient) return null;
+
+  return (
+    <PublishedDataDataProvider {...args} publishedClient={publishedClient}>
+      {children}
+    </PublishedDataDataProvider>
+  );
 }
 
 class PublishedAdapter implements PublishedDataDataContextAdapter {

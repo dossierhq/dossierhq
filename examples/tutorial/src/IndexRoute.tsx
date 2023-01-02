@@ -1,12 +1,11 @@
 import { EntitySamplingPayload } from '@jonasb/datadata-core';
 import { useCallback, useEffect, useState } from 'react';
-import { createAdminClient } from './ClientUtils.js';
+import { useAdminClient } from './ClientUtils.js';
 import { Navbar } from './Navbar.js';
 import { AllAdminEntities } from './SchemaTypes.js';
 
-const adminClient = createAdminClient();
-
 export function IndexRoute() {
+  const adminClient = useAdminClient();
   const [message, setMessage] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [adminSampleSeed, setAdminSampleSeed] = useState(Math.random);
@@ -25,6 +24,7 @@ export function IndexRoute() {
   }, []);
 
   const handleSendMessageClick = useCallback(async () => {
+    if (!adminClient) return;
     const result = await adminClient.createEntity(
       {
         info: { type: 'Message', authKey: 'none', name: newMessage },
@@ -37,13 +37,15 @@ export function IndexRoute() {
     } else {
       alert(`Failed to create message: ${result.error}: ${result.message}`);
     }
-  }, [newMessage]);
+  }, [adminClient, newMessage]);
 
   useEffect(() => {
-    adminClient.sampleEntities({}, { seed: adminSampleSeed, count: 5 }).then((result) => {
-      if (result.isOk()) setAdminSample(result.value);
-    });
-  }, [adminSampleSeed]);
+    if (adminClient) {
+      adminClient.sampleEntities({}, { seed: adminSampleSeed, count: 5 }).then((result) => {
+        if (result.isOk()) setAdminSample(result.value);
+      });
+    }
+  }, [adminClient, adminSampleSeed]);
 
   return (
     <>
