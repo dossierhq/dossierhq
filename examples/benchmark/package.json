@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
@@ -20,12 +21,8 @@
     "start:node-better-sqlite3": "node lib/run-node-better-sqlite3.js",
     "start:node-pg": "node lib/run-node-pg.js",
     "start:node-sqlite3": "node lib/run-node-sqlite3.js",
-    "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "~7.6.0",
     "@jonasb/datadata-core": "workspace:*",

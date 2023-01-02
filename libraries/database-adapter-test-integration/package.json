@@ -13,6 +13,7 @@
     }
   },
   "types": "./lib/esm/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "ts-node-esm ./scripts/generate-typescript.ts && npm run prettier:check && heft build --clean && post-process-build deno cjs-package-json",
     "build:watch": "heft build --watch",
@@ -20,15 +21,17 @@
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "prettier:fix": "prettier --write ."
   },
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "dependencies": {
+    "@jonasb/datadata-core": "workspace:*",
+    "@jonasb/datadata-server": "workspace:*",
+    "tslib": "~2.4.1",
+    "uuid": "~9.0.0"
   },
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
@@ -41,11 +44,5 @@
     "prettier": "2.8.1",
     "ts-node": "~10.9.1",
     "typescript": "~4.9.4"
-  },
-  "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
-    "tslib": "~2.4.1",
-    "uuid": "~9.0.0"
   }
 }

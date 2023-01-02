@@ -6,6 +6,7 @@
     "datadata",
     "fortawesome",
     "graphiql",
+    "jwks",
     "locatecontrol",
     "postgrator",
     "rushstack"

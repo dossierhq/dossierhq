@@ -9,6 +9,7 @@
     "./main.css": "./lib/main.css"
   },
   "types": "./lib/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
@@ -19,12 +20,17 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write ."
   },
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git",
     "directory": "libraries/leaflet"
+  },
+  "dependencies": {
+    "leaflet": "~1.9.3",
+    "leaflet.locatecontrol": "~0.79.0",
+    "react": "~18.2.0",
+    "react-leaflet": "~4.2.0",
+    "tslib": "~2.4.1"
   },
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
@@ -38,12 +44,5 @@
     "prettier": "2.8.1",
     "svgo": "~3.0.2",
     "typescript": "~4.9.4"
-  },
-  "dependencies": {
-    "leaflet": "~1.9.3",
-    "leaflet.locatecontrol": "~0.79.0",
-    "react": "~18.2.0",
-    "react-leaflet": "~4.2.0",
-    "tslib": "~2.4.1"
   }
 }

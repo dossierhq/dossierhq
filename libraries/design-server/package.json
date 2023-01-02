@@ -7,6 +7,7 @@
     ".": "./lib/index.js"
   },
   "types": "./lib/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
@@ -17,11 +18,14 @@
     "prettier:fix": "prettier --write .",
     "test": ""
   },
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "dependencies": {
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0",
+    "tslib": "~2.4.1"
   },
   "devDependencies": {
     "@babel/core": "~7.20.2",
@@ -36,10 +40,5 @@
     "eslint": "~8.31.0",
     "prettier": "2.8.1",
     "typescript": "~4.9.4"
-  },
-  "dependencies": {
-    "react": "~18.2.0",
-    "react-dom": "~18.2.0",
-    "tslib": "~2.4.1"
   }
 }

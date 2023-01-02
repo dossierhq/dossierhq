@@ -9,6 +9,7 @@
     }
   },
   "types": "./lib/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build --watch",
@@ -19,8 +20,9 @@
     "prettier:fix": "prettier --write .",
     "test": "bun wiptest 2>&1"
   },
-  "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*"
+  },
   "devDependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
@@ -32,8 +34,5 @@
     "eslint": "~8.31.0",
     "prettier": "2.8.1",
     "typescript": "~4.9.4"
-  },
-  "dependencies": {
-    "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*"
   }
 }

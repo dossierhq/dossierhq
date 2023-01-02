@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "example": "examples"
-  },
+  "license": "MIT",
   "scripts": {
     "build": "",
     "db:ensure-dbs": "./scripts/db-ensure-databases.sh",
@@ -19,17 +16,12 @@
     "docs:generate-graphviz": "dot -Tsvg -O ../../docs/*.dot",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",
-    "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:all": "./scripts/npm-all-projects.sh run upgrade-dependencies --if-present",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/jonasb/datadata/issues"
   },

@@ -23,12 +23,9 @@
     "prettier:fix": "prettier --write .",
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
-    "test:watch": "vitest --watch",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "test:watch": "vitest --watch"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"

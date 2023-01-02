@@ -9,6 +9,7 @@
     }
   },
   "types": "./lib/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno-esm-only",
     "build:watch": "heft build --watch",
@@ -21,11 +22,12 @@
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
   },
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "dependencies": {
+    "tslib": "~2.4.1"
   },
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
@@ -35,8 +37,5 @@
     "prettier": "2.8.1",
     "typescript": "~4.9.4",
     "vitest": "0.26.3"
-  },
-  "dependencies": {
-    "tslib": "~2.4.1"
   }
 }

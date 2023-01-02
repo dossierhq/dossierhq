@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "build": ""
   },
-  "author": "",
-  "license": "ISC",
   "bin": {
     "post-process-build": "./scripts/post-process-build.js"
   },

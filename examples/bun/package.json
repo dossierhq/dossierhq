@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && tsc --noEmit && npm run eslint:check && npm run test",
     "eslint:check": "eslint .",
@@ -11,8 +12,6 @@
     "prettier:fix": "prettier --write .",
     "test": "bun wiptest 2>&1"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "bun-types": "~0.4.0",

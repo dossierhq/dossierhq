@@ -4,17 +4,14 @@
   "description": "",
   "main": "src/index.js",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "build": "",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
   "bin": {
     "datadata-pg-migrate": "./datadata-pg-migrate.js"
   },
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"

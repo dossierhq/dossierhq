@@ -13,6 +13,7 @@
     }
   },
   "types": "./lib/esm/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && post-process-build deno cjs-package-json && npm run test",
     "build:watch": "heft build --watch",
@@ -27,8 +28,6 @@
     "prettier:fix": "prettier --write .",
     "test": "npm run examples:timer-benchmark:bun && npm run examples:timer-benchmark:deno && npm run examples:timer-benchmark:node"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",

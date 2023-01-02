@@ -2,6 +2,7 @@
   "name": "@jonasb/datadata-database-adapter-postgres-deno",
   "version": "1.0.0",
   "description": "",
+  "license": "MIT",
   "scripts": {
     "build": "deno lint -q && (deno fmt --check 2>&1) && deno check -q src/mod.ts && (npm run test 2>&1)",
     "db:cli": "./scripts/db-cli.sh",
@@ -9,8 +10,6 @@
     "postinstall": "deno cache external-dependencies.ts",
     "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",

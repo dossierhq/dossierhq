@@ -13,6 +13,7 @@
     }
   },
   "types": "./lib/esm/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno cjs-package-json",
     "build:watch": "heft build --watch",
@@ -23,15 +24,16 @@
     "prettier:fix": "prettier --write .",
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
-    "test:watch": "vitest --watch",
-    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
-    "upgrade-dependencies:check": "npx npm-check-updates"
+    "test:watch": "vitest --watch"
   },
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "dependencies": {
+    "@jonasb/datadata-core": "workspace:*",
+    "@jonasb/datadata-database-adapter": "workspace:*",
+    "tslib": "~2.4.1"
   },
   "devDependencies": {
     "@jonasb/datadata-core-vitest": "workspace:*",
@@ -42,10 +44,5 @@
     "prettier": "2.8.1",
     "typescript": "~4.9.4",
     "vitest": "0.26.3"
-  },
-  "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
-    "tslib": "~2.4.1"
   }
 }

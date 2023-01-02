@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
     "build": ""
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@jonasb/eslint-config-datadata-generic": "workspace:*",
     "@rushstack/eslint-patch": "~1.2.0",

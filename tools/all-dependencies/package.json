@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "build": "./update-package-json.js"
   },
-  "author": "",
-  "license": "ISC",
   "optionalDependencies": {
     "@auth0/auth0-react": "~1.12.0",
     "@babel/core": "~7.20.2",
