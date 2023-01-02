@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-design
 
-This log was last generated on Mon, 02 Jan 2023 17:39:42 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Jan 2023 22:59:38 GMT and should not be manually modified.
+
+## 0.1.38
+Mon, 02 Jan 2023 22:59:38 GMT
+
+### Updates
+
+- Use import * for @react-aria/overlays for Next.js compatibility
 
 ## 0.1.37
 Mon, 02 Jan 2023 17:39:42 GMT
