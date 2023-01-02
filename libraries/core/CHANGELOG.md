@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-core
 
-This log was last generated on Mon, 12 Dec 2022 12:51:59 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Jan 2023 17:39:42 GMT and should not be manually modified.
+
+## 0.1.37
+Mon, 02 Jan 2023 17:39:42 GMT
+
+### Updates
+
+- (break) Replace buildUrlWithUrlQuery, decodeUrlQueryStringifiedParam, stringifyUrlQueryParams with encodeObjectToURLSearchParams, decodeURLSearchParamsParam. Support typing of authKey. Improve typing of JSON. Enable checking if admin operation is modifying. Upgrade dependencies.
 
 ## 0.1.36
 Mon, 12 Dec 2022 12:51:59 GMT

@@ -1,6 +1,11 @@
 # Change Log - @jonasb/datadata-postgres
 
-This log was last generated on Mon, 12 Dec 2022 12:51:59 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Jan 2023 17:39:42 GMT and should not be manually modified.
+
+## 0.1.37
+Mon, 02 Jan 2023 17:39:42 GMT
+
+_Version update only_
 
 ## 0.1.36
 Mon, 12 Dec 2022 12:51:59 GMT

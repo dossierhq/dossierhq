@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-admin-react-components
 
-This log was last generated on Mon, 12 Dec 2022 12:51:59 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Jan 2023 17:39:42 GMT and should not be manually modified.
+
+## 0.1.37
+Mon, 02 Jan 2023 17:39:42 GMT
+
+### Updates
+
+- (break) Expose useCachingAdminMiddleware instead of createCachingAdminMiddleware. (break) Use URLSearchParams for list screens. Add code dropdown for code blocks. Upgrade dependencies.
 
 ## 0.1.36
 Mon, 12 Dec 2022 12:51:59 GMT
