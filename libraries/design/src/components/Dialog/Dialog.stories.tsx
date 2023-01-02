@@ -104,6 +104,26 @@ WideFillHeight.args = {
   ),
 };
 
+export const WithDropdown = Template.bind({});
+WithDropdown.args = {
+  form: false,
+  children: (
+    <Card>
+      <Card.Header>
+        <Card.HeaderTitle>Card title</Card.HeaderTitle>
+      </Card.Header>
+      <Card.Content>
+        <ButtonDropdown
+          items={[{ id: '1' }, { id: '2' }, { id: '3' }]}
+          renderItem={(item) => `Item ${item.id}`}
+        >
+          Open dropdown
+        </ButtonDropdown>
+      </Card.Content>
+    </Card>
+  ),
+};
+
 export const NonModal = Template.bind({});
 NonModal.args = {
   modal: false,

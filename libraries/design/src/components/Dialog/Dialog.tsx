@@ -2,6 +2,7 @@ import type { ReactNode, SyntheticEvent } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toSizeClassName } from '../../utils/LayoutPropsUtils.js';
+import { Portal } from '../Portal/Portal.js';
 
 export interface DialogProps {
   show: boolean;
@@ -59,22 +60,24 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
   );
 
   return (
-    <dialog
-      ref={dialogRef}
-      className={toClassName(
-        'dialog',
-        widthClassNameMap[width ?? 'narrow'],
-        height && heightClassNameMap[height]
-      )}
-      onClose={handleClose}
-    >
-      {form ? (
-        <form method="dialog" className={containerClassName}>
-          {children}
-        </form>
-      ) : (
-        <div className={containerClassName}>{children}</div>
-      )}
-    </dialog>
+    <Portal>
+      <dialog
+        ref={dialogRef}
+        className={toClassName(
+          'dialog',
+          widthClassNameMap[width ?? 'narrow'],
+          height && heightClassNameMap[height]
+        )}
+        onClose={handleClose}
+      >
+        {form ? (
+          <form method="dialog" className={containerClassName}>
+            {children}
+          </form>
+        ) : (
+          <div className={containerClassName}>{children}</div>
+        )}
+      </dialog>
+    </Portal>
   );
 }
