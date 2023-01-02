@@ -55,7 +55,7 @@ export function Scrollable({
   }, [scrollToIdSignal]);
 
   if (!isVertical) {
-    const realClassName = toClassName('is-overflow-x-scroll is-scroll-behavior-smooth', className);
+    const realClassName = toClassName('is-overflow-x-auto is-scroll-behavior-smooth', className);
     return (
       <div ref={ref} className={realClassName} style={style}>
         {children}
@@ -63,7 +63,7 @@ export function Scrollable({
     );
   }
 
-  const realClassName = toClassName('is-overflow-y-scroll is-scroll-behavior-smooth', className);
+  const realClassName = toClassName('is-overflow-y-auto is-scroll-behavior-smooth', className);
   return (
     <div ref={ref} className={realClassName} style={style}>
       {startShadow ? <StickyShadow className="sticky-top-shadow is-sticky-top" /> : null}

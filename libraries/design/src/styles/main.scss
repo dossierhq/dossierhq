@@ -62,12 +62,12 @@ tr.is-sticky-row :is(td, th),
   scroll-behavior: smooth;
 }
 
-.is-overflow-x-scroll {
-  overflow-x: scroll;
+.is-overflow-x-auto {
+  overflow-x: auto;
 }
 
-.is-overflow-y-scroll {
-  overflow-y: scroll;
+.is-overflow-y-auto {
+  overflow-y: auto;
 }
 
 .sticky-top-shadow {
