@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Use import * for @react-aria/overlays for Next.js compatibility",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
