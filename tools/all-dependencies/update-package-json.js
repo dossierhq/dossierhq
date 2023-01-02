@@ -4,6 +4,8 @@ import fs from "fs/promises";
 
 const { RushConfiguration } = RushLib.default;
 
+const THIS_PACKAGE_NAME = "@jonasb/datadata-all-dependencies";
+
 function addDependencies({
   dependencies,
   packageDependencies,
@@ -38,7 +40,7 @@ function extractAllExternalDependencies() {
     startingFolder: process.cwd(),
   });
   rushConfiguration.projects
-    .filter((it) => it.packageName !== "@jonasb/datadata-all-dependencies")
+    .filter((it) => it.packageName !== THIS_PACKAGE_NAME)
     .forEach((project) =>
       processPackage({
         dependencies,
