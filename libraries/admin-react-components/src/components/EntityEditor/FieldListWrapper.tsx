@@ -41,7 +41,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   const itemsAndNew = value ? [...value, null] : [null];
 
   return (
-    <Column gap={3}>
+    <Column gap={3} overflowY="auto">
       {itemsAndNew.map((it, index) => {
         return (
           <div key={index} className="nested-value-item-indentation">
