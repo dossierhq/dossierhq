@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "(break) Expose useCachingAdminMiddleware instead of createCachingAdminMiddleware. (break) Use URLSearchParams for list screens. Add code dropdown for code blocks. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}

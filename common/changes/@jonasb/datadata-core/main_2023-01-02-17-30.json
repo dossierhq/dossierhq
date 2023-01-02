@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "(break) Replace buildUrlWithUrlQuery, decodeUrlQueryStringifiedParam, stringifyUrlQueryParams with encodeObjectToURLSearchParams, decodeURLSearchParamsParam. Support typing of authKey. Improve typing of JSON. Enable checking if admin operation is modifying. Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
