@@ -1,8 +1,10 @@
-import { useOverlayPosition } from '@react-aria/overlays';
+import * as ReactAriaOverlays from '@react-aria/overlays';
 import type { FunctionComponent, MouseEventHandler, ReactNode, RefObject } from 'react';
 import { useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { Portal } from '../Portal/Portal.js';
+
+const { useOverlayPosition } = ReactAriaOverlays;
 
 export interface DropdownDisplayProps {
   active?: boolean;
