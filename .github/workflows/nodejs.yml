@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-22.04
-    timeout-minutes: 12
+    timeout-minutes: 14
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
       - uses: actions/checkout@v3
