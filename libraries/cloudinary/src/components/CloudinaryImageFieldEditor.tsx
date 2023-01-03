@@ -3,8 +3,7 @@ import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
 import type { ValueItem, ValueItemFieldSpecification } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealStack, IconButton, Row } from '@jonasb/datadata-design';
-import { useCallback, useLayoutEffect, useState } from 'react';
-import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig.js';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { useRuntimeDependency } from '../hooks/useRuntimeDependency.js';
 import type {
   CloudinaryUploadResult,
@@ -36,9 +35,13 @@ export function isPublishedCloudinaryImage(
 }
 
 export function CloudinaryImageFieldEditor({
+  cloudName,
+  uploadPreset,
   value,
   onChange,
 }: FieldEditorProps<ValueItemFieldSpecification, AdminCloudinaryImage> & {
+  cloudName: string;
+  uploadPreset: string;
   value: AdminCloudinaryImage;
 }) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -47,15 +50,24 @@ export function CloudinaryImageFieldEditor({
       <HoverRevealStack.Item top right>
         <Delete onClick={handleDeleteClick} />
       </HoverRevealStack.Item>
-      <CloudinaryImageFieldEditorWithoutClear value={value} onChange={onChange} />
+      <CloudinaryImageFieldEditorWithoutClear
+        cloudName={cloudName}
+        uploadPreset={uploadPreset}
+        value={value}
+        onChange={onChange}
+      />
     </HoverRevealStack>
   );
 }
 
 export function CloudinaryImageFieldEditorWithoutClear({
+  cloudName,
+  uploadPreset,
   value,
   onChange,
 }: {
+  cloudName: string;
+  uploadPreset: string;
   value: AdminCloudinaryImage;
   onChange: (value: AdminCloudinaryImage) => void;
 }) {
@@ -64,7 +76,7 @@ export function CloudinaryImageFieldEditorWithoutClear({
       handleUploadWidgetCallback(error, result, onChange),
     [onChange]
   );
-  const uploadWidget = useInitializeUploadWidget(uploadWidgetCallback);
+  const uploadWidget = useInitializeUploadWidget(cloudName, uploadPreset, uploadWidgetCallback);
 
   if (!uploadWidget) {
     return null;
@@ -75,11 +87,7 @@ export function CloudinaryImageFieldEditorWithoutClear({
     return <Button onClick={() => uploadWidget.open()}>Upload image</Button>;
   }
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: CLOUDINARY_CLOUD_NAME,
-    },
-  });
+  const cld = new Cloudinary({ cloud: { cloudName } });
 
   const thumbnailImageUrl = cld
     .image(publicId)
@@ -95,15 +103,16 @@ export function CloudinaryImageFieldEditorWithoutClear({
   );
 }
 
-export function CloudinaryImageFieldDisplay({ value }: { value: PublishedCloudinaryImage }) {
+export function CloudinaryImageFieldDisplay({
+  cloudName,
+  value,
+}: {
+  cloudName: string;
+  value: PublishedCloudinaryImage;
+}) {
   const { publicId } = value;
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: CLOUDINARY_CLOUD_NAME,
-    },
-  });
-
+  const cld = new Cloudinary({ cloud: { cloudName } });
   const thumbnailImageUrl = cld
     .image(publicId)
     .namedTransformation(name('media_lib_thumb'))
@@ -118,7 +127,11 @@ export function CloudinaryImageFieldDisplay({ value }: { value: PublishedCloudin
   );
 }
 
-function useInitializeUploadWidget(callback: CloudinaryUploadWidgetCallback): UploadWidget | null {
+function useInitializeUploadWidget(
+  cloudName: string,
+  uploadPreset: string,
+  callback: CloudinaryUploadWidgetCallback
+): UploadWidget | null {
   const { status } = useRuntimeDependency('cloudinary-upload-widget');
   const [uploadWidget, setUploadWidget] = useState<UploadWidget | null>(null);
 
@@ -130,8 +143,8 @@ function useInitializeUploadWidget(callback: CloudinaryUploadWidgetCallback): Up
     setUploadWidget(
       cloudinary.createUploadWidget(
         {
-          cloudName: CLOUDINARY_CLOUD_NAME,
-          uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+          cloudName,
+          uploadPreset,
           sources: ['local', 'url', 'camera'],
           multiple: false,
           resourceType: 'image',

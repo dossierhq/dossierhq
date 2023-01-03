@@ -6,14 +6,15 @@ import type {
   RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
 } from '@jonasb/datadata-admin-react-components';
-import { FieldType, isValueItemField } from '@jonasb/datadata-core';
 import {
   CloudinaryImageFieldDisplay,
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
   isAdminCloudinaryImage,
   isPublishedCloudinaryImage,
-} from '../components/CloudinaryImageFieldEditor.js';
+} from '@jonasb/datadata-cloudinary';
+import { FieldType, isValueItemField } from '@jonasb/datadata-core';
+import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
 export class ContextAdapter
   implements AdminDataDataContextAdapter, PublishedDataDataContextAdapter
@@ -28,6 +29,8 @@ export class ContextAdapter
     ) {
       return CloudinaryImageFieldEditor({
         ...props,
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
         fieldSpec,
         value,
       });
@@ -39,6 +42,8 @@ export class ContextAdapter
     const { value, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
         value,
         onChange,
       });
@@ -49,7 +54,10 @@ export class ContextAdapter
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
-      return CloudinaryImageFieldDisplay({ value });
+      return CloudinaryImageFieldDisplay({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        value,
+      });
     }
     return null;
   }
@@ -58,7 +66,10 @@ export class ContextAdapter
     value,
   }: RichTextValueItemDisplayProps): JSX.Element | null {
     if (value && isPublishedCloudinaryImage(value)) {
-      return CloudinaryImageFieldDisplay({ value });
+      return CloudinaryImageFieldDisplay({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        value,
+      });
     }
     return null;
   }

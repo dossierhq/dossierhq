@@ -1,0 +1,6 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rig-package/rig.schema.json",
+
+  "rigPackageName": "@jonasb/datadata-heft-node-rig",
+  "rigProfile": "library-react-esm"
+}

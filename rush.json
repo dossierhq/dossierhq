@@ -463,6 +463,11 @@
       "projectFolder": "examples/tutorial"
     },
     {
+      "packageName": "@jonasb/datadata-cloudinary",
+      "projectFolder": "libraries/cloudinary",
+      "versionPolicyName": "DataDataFramework"
+    },
+    {
       "packageName": "@jonasb/datadata-graphql",
       "projectFolder": "libraries/graphql",
       "versionPolicyName": "DataDataFramework"
