@@ -1,5 +1,7 @@
 import type {
+  AdminClient,
   AdminClientMiddleware,
+  AdminEntity,
   AdminSchemaSpecificationUpdate,
   ClientContext,
 } from '@jonasb/datadata-core';
@@ -32,10 +34,12 @@ export async function createNewDatabase(databasePath: string) {
   return databaseResult.valueOrThrow();
 }
 
-export async function createAdapterAndServer<TAdminClient>(
+export async function createAdapterAndServer<
+  TAdminClient extends AdminClient<AdminEntity<string, object>>
+>(
   database: Database,
   schema: AdminSchemaSpecificationUpdate
-): Promise<{ adminClient: TAdminClient; server: Server }> {
+): Promise<{ adminClient: TAdminClient; bobAdminClient: TAdminClient; server: Server }> {
   const databaseAdapter = (
     await createSqlite3Adapter({ logger: NoOpLogger }, database, {
       migrate: true,
@@ -52,7 +56,7 @@ export async function createAdapterAndServer<TAdminClient>(
     })
   ).valueOrThrow();
 
-  const session = (
+  const aliceSession = (
     await server.createSession({
       provider: 'sys',
       identifier: 'alice',
@@ -61,10 +65,21 @@ export async function createAdapterAndServer<TAdminClient>(
     })
   ).valueOrThrow();
 
-  const adminClient = server.createAdminClient(session.context, [
+  const adminClient = server.createAdminClient<TAdminClient>(aliceSession.context, [
     LoggingClientMiddleware as AdminClientMiddleware<ClientContext>,
   ]);
   (await adminClient.updateSchemaSpecification(schema)).valueOrThrow();
 
-  return { adminClient: adminClient as TAdminClient, server };
+  const bobSession = server.createSession({
+    provider: 'sys',
+    identifier: 'bob',
+    defaultAuthKeys: ['none', 'subject'],
+    logger: createConsoleLogger(console),
+  });
+  const bobAdminClient = server.createAdminClient<TAdminClient>(
+    () => bobSession,
+    [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>]
+  );
+
+  return { adminClient, bobAdminClient, server };
 }

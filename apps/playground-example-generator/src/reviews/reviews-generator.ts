@@ -96,18 +96,19 @@ async function createReview(
 
 async function createPersonalNote(
   adminClient: AppAdminClient,
-  placeOfBusiness: AdminPlaceOfBusiness
+  placeOfBusiness: AdminPlaceOfBusiness,
+  userName: string
 ) {
   return (
     await adminClient.createEntity<AdminPersonalNote>(
       {
-        info: { type: 'PersonalNote', authKey: 'subject', name: 'Note: Alice' },
+        info: { type: 'PersonalNote', authKey: 'subject', name: `Note: ${userName}` },
         fields: {
           placeOfBusiness: { id: placeOfBusiness.id },
           note: createRichTextRootNode([
             createRichTextParagraphNode([
               createRichTextTextNode(
-                `This is a personal note about ${placeOfBusiness.fields.name} that only Alice can see.`
+                `This is a personal note about ${placeOfBusiness.fields.name} that only ${userName} can see.`
               ),
             ]),
             createRichTextParagraphNode(createRichTextTextAndLineBreakNodes(faker.lorem.text())),
@@ -121,7 +122,10 @@ async function createPersonalNote(
 
 async function main() {
   const database = await createNewDatabase('dist/reviews.sqlite');
-  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
+  const { adminClient, bobAdminClient, server } = await createAdapterAndServer<AppAdminClient>(
+    database,
+    SCHEMA
+  );
 
   const placesOfBusiness: AdminPlaceOfBusiness[] = [];
   for (const _ of Array(100).keys()) {
@@ -144,7 +148,10 @@ async function main() {
   }
 
   for (const _ of Array(5).keys()) {
-    await createPersonalNote(adminClient, faker.helpers.arrayElement(placesOfBusiness));
+    await createPersonalNote(adminClient, faker.helpers.arrayElement(placesOfBusiness), 'Alice');
+  }
+  for (const _ of Array(2).keys()) {
+    await createPersonalNote(bobAdminClient, faker.helpers.arrayElement(placesOfBusiness), 'Bob');
   }
 
   await server.shutdown();
