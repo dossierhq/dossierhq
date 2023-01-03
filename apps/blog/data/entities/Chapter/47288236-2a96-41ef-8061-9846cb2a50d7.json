@@ -53,6 +53,69 @@
             "article": {
               "id": "6985480d-e397-45e7-b793-b3411b65f906"
             }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ project",
+            "article": {
+              "id": "23c2afc4-7fbb-4747-a621-9366bf7f20c0"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ database",
+            "article": {
+              "id": "a6f4bda5-58ce-4aff-b12d-c218222c7d3e"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ server",
+            "article": {
+              "id": "43d269d4-fd4b-481d-9b37-9513e2486a74"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ schema",
+            "article": {
+              "id": "4e33c422-5bf8-44ed-a1c3-f1aa167564cf"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ managing entities",
+            "article": {
+              "id": "0ab79be1-7c06-4f04-a810-43ece0f16030"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ admin REST API",
+            "article": {
+              "id": "517a506b-9ccc-4459-b66e-155762d1e3be"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ published REST API",
+            "article": {
+              "id": "749fb82c-6ddb-451b-8d14-540cfa185964"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ web interface",
+            "article": {
+              "id": "bfea1a83-d2be-4a49-8cd5-8258016de0d3"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ auth",
+            "article": {
+              "id": "a189c724-0ba9-4db5-aebe-98ebe14d3d1f"
+            }
           }
         ]
       }
