@@ -32,6 +32,7 @@ export interface FullscreenContainerRowProps
   fullWidth?: boolean;
   fillHeight?: boolean;
   sticky?: boolean;
+  style?: React.CSSProperties;
   onClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 }
@@ -105,6 +106,7 @@ FullscreenContainer.Row = ({
   fullWidth,
   fillHeight,
   sticky,
+  style,
   flexDirection = 'column',
   children,
   ...props
@@ -126,12 +128,14 @@ FullscreenContainer.Row = ({
   if (addStickyFullWidthWrapper) {
     return (
       <div id={id} className="is-sticky-row" {...otherProps}>
-        <div className={className}>{children}</div>
+        <div className={className} style={style}>
+          {children}
+        </div>
       </div>
     );
   }
   return (
-    <div id={id} className={className} {...otherProps}>
+    <div id={id} className={className} style={style} {...otherProps}>
       {children}
     </div>
   );
