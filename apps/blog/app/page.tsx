@@ -60,7 +60,16 @@ export default function Page() {
           />
           <Feature
             title="Developer friendly ⌨️"
-            description="Generated TypeScript types and GraphQL schema out of the box. Create local test environments in under a second. Everything is open source so you can see how everything is built and contribute improvements."
+            description={
+              <>
+                Generated TypeScript types and GraphQL schema out of the box.
+                <br />
+                Create local test environments in under a second.
+                <br />
+                Everything is open source so you can see how everything is built and contribute
+                improvements.
+              </>
+            }
           />
           <Card2 className={toClassName(toFlexItemClassName({ alignSelf: 'flex-start' }))}>
             <Card2.Header>
@@ -103,7 +112,7 @@ export default function Page() {
   );
 }
 
-function Feature({ title, description }: { title: string; description: string }) {
+function Feature({ title, description }: { title: string; description: React.ReactNode }) {
   return (
     <div>
       <Text as="h2" textStyle="headline4">
