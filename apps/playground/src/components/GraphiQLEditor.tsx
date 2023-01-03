@@ -12,6 +12,42 @@ import 'graphiql/graphiql.min.css';
 import { graphql } from 'graphql';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
+const DEFAULT_QUERY = `# Welcome to GraphiQL
+#
+# GraphiQL is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# Type queries into this side of the screen, and you will see intelligent
+# typeaheads aware of the current GraphQL type schema and live syntax and
+# validation errors highlighted within the text.
+#
+# GraphQL queries typically start with a "{" character. Lines that start
+# with a # are ignored.
+#
+# Keyboard shortcuts:
+#
+#   Prettify query:  Shift-Ctrl-P (or press the prettify button)
+#
+#  Merge fragments:  Shift-Ctrl-M (or press the merge button)
+#
+#        Run Query:  Ctrl-Enter (or press the play button)
+#
+#    Auto Complete:  Ctrl-Space (or just start typing)
+#
+
+{
+  adminSampleEntities(count: 10) {
+    totalCount
+    items {
+      __typename
+      id
+      info {
+        name
+      }
+    }
+  }
+}`;
+
 export default function GraphiQLEditor({
   adminSchema,
   publishedSchema,
@@ -62,5 +98,5 @@ export default function GraphiQLEditor({
 
   if (!themeIsSet) return null;
 
-  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} />;
+  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} defaultQuery={DEFAULT_QUERY} />;
 }
