@@ -22,8 +22,9 @@ export default function GraphiQLPage(): JSX.Element {
           url: '${process.env.NEXT_PUBLIC_API_BASE_URL}/graphql',
         });
 
+        localStorage.setItem('graphiql:theme', 'light');
         ReactDOM.render(
-          React.createElement(GraphiQL, { fetcher, editorTheme: 'graphiql-light' }),
+          React.createElement(GraphiQL, { fetcher }),
           document.getElementById('graphiql')
         );
       </script>

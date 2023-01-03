@@ -10,7 +10,7 @@ import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 import { graphql } from 'graphql';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 export default function GraphiQLEditor({
   adminSchema,
@@ -21,6 +21,8 @@ export default function GraphiQLEditor({
 }) {
   const { adminClient } = useContext(AdminDataDataContext);
   const { publishedClient } = useContext(PublishedDataDataContext);
+
+  const [themeIsSet, setThemeIsSet] = useState(false);
 
   const graphQlSchema = useMemo(() => {
     const generator = new GraphQLSchemaGenerator({
@@ -53,5 +55,12 @@ export default function GraphiQLEditor({
     [graphQlSchema, graphQlSession]
   );
 
-  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} editorTheme="graphiql-light" />;
+  useEffect(() => {
+    localStorage.setItem('graphiql:theme', 'light');
+    setThemeIsSet(true);
+  }, []);
+
+  if (!themeIsSet) return null;
+
+  return <GraphiQL fetcher={fetcher} isHeadersEditorEnabled={false} />;
 }
