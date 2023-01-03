@@ -20,13 +20,8 @@ export default function Page() {
       <FullscreenContainer.Row fullWidth>
         <NavBar current="home" />
       </FullscreenContainer.Row>
-      <FullscreenContainer.Columns fillHeight>
-        <FullscreenContainer.ScrollableColumn
-          paddingTop={3}
-          paddingBottom={5}
-          paddingHorizontal={4}
-          gap={5}
-        >
+      <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row paddingTop={3} paddingBottom={5} paddingHorizontal={4} gap={5}>
           <Image src={logo} alt="Data data logo" height={80} />
           <div>
             <Text
@@ -102,8 +97,8 @@ export default function Page() {
               <a href="mailto:jonas.b@gmail.com">✉️ email</a> if you have any questions!
             </Text>
           </div>
-        </FullscreenContainer.ScrollableColumn>
-      </FullscreenContainer.Columns>
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
     </FullscreenContainer>
   );
 }
