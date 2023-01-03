@@ -21,7 +21,13 @@ export default function Page() {
         <NavBar current="home" />
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
-        <FullscreenContainer.Row paddingTop={3} paddingBottom={5} paddingHorizontal={4} gap={5}>
+        <FullscreenContainer.Row
+          paddingTop={3}
+          paddingBottom={5}
+          paddingHorizontal={4}
+          gap={5}
+          style={{ maxWidth: '50rem' }}
+        >
           <Image src={logo} alt="Data data logo" height={80} />
           <div>
             <Text
@@ -71,7 +77,14 @@ export default function Page() {
               </>
             }
           />
-          <Card2 className={toClassName(toFlexItemClassName({ alignSelf: 'flex-start' }))}>
+          <hr />
+          <Text textStyle="body1">
+            Data data enables you to build solutions where you’re in full control of the data. By
+            bringing your own auth (authentication and authorization), database and server, you can
+            build a traditional headless Content Management System (CMS). You can also skip the
+            browser interface and use Data data to manage the data in a backend or app.
+          </Text>
+          <Card2>
             <Card2.Header>
               <Card2.HeaderTitle>Now what? 🗺️</Card2.HeaderTitle>
             </Card2.Header>
@@ -96,7 +109,9 @@ export default function Page() {
           <Message color="warning">
             <Message.Body>
               Data data is in <strong>active development</strong> so everything is not yet
-              supported. Get in touch if you’re missing something.
+              supported.
+              <br />
+              Get in touch if you’re missing something.
             </Message.Body>
           </Message>
           <div>
