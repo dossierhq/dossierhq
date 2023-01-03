@@ -77,11 +77,22 @@ function Screen(): JSX.Element {
         </p>
         <ul className={LexicalTheme.list.ul}>
           <li className={LexicalTheme.list.listitem}>Item one</li>
+          <li className={LexicalTheme.list.listitem}>
+            Item two, with line-
+            <br />
+            break
+          </li>
         </ul>
+        <p className={LexicalTheme.paragraph}>Ordered list</p>
         <ol className={LexicalTheme.list.ol}>
           <li className={LexicalTheme.list.listitem}>Item one</li>
-          <li className={LexicalTheme.list.listitem}>Item two</li>
+          <li className={LexicalTheme.list.listitem}>
+            Item two, with line-
+            <br />
+            break
+          </li>
         </ol>
+        <p className={LexicalTheme.paragraph}>Checked list</p>
         <ul className={LexicalTheme.list.ul}>
           <li
             className={toClassName(LexicalTheme.list.listitem, LexicalTheme.list.listitemUnchecked)}
@@ -92,6 +103,13 @@ function Screen(): JSX.Element {
             className={toClassName(LexicalTheme.list.listitem, LexicalTheme.list.listitemChecked)}
           >
             Checked item
+          </li>
+          <li
+            className={toClassName(LexicalTheme.list.listitem, LexicalTheme.list.listitemChecked)}
+          >
+            Checked item with line-
+            <br />
+            break
           </li>
         </ul>
         <h1 className={LexicalTheme.heading.h1}>Heading one</h1>

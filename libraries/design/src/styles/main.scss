@@ -187,7 +187,7 @@ tr.is-sticky-row :is(td, th),
   }
 
   .ol {
-    list-style-position: inside;
+    margin-left: 1.2em;
     margin-bottom: 0.5rem;
   }
 
@@ -197,7 +197,7 @@ tr.is-sticky-row :is(td, th),
 
   .ul {
     list-style-type: disc;
-    list-style-position: inside;
+    margin-left: 1em;
     margin-bottom: 0.5rem;
   }
 
