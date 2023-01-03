@@ -694,7 +694,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " for structured data. Value items have fields just an entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of an entity, which enables combining value items to create more complex data.",
+                "text": " for structured data. Value items have fields just as entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of an entity, which enables combining value items to create more complex data.",
                 "type": "text",
                 "version": 1
               }
