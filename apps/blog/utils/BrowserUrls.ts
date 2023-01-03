@@ -10,6 +10,7 @@ export const BrowserUrls = {
   glossary: '/docs/glossary',
   glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
   graphiql: '/admin/graphiql',
+  limitations: '/docs/limitations',
   playground: () => ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),
   publishedEntities: '/admin/published-entities',
   publishedEntityDisplay: (ids: string[]): string =>

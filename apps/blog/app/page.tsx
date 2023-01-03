@@ -9,6 +9,7 @@ import {
   toSpacingClassName,
 } from '@jonasb/datadata-design-server';
 import Image from 'next/image.js';
+import Link from 'next/link.js';
 import { LinkButton } from '../components/LinkButton/LinkButton';
 import { NavBar } from '../components/NavBar/NavBar';
 import logo from '../public/logo.svg';
@@ -109,9 +110,8 @@ export default function Page() {
           <Message color="warning">
             <Message.Body>
               Data data is in <strong>active development</strong> so everything is not yet
-              supported.
-              <br />
-              Get in touch if you’re missing something.
+              supported. Check out <Link href={BrowserUrls.limitations}>limitations</Link> for more
+              details.
             </Message.Body>
           </Message>
           <div>
