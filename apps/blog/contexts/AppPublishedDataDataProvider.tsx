@@ -23,7 +23,7 @@ import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
-import { isPublishedCloudinaryImage } from '../utils/SchemaTypes.js';
+import { isPublishedCloudinaryImage } from '../utils/SchemaTypes';
 import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;

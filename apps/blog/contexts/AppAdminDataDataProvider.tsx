@@ -33,7 +33,7 @@ import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/Cloud
 import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
-import { isAdminCloudinaryImage } from '../utils/SchemaTypes.js';
+import { isAdminCloudinaryImage } from '../utils/SchemaTypes';
 import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;
