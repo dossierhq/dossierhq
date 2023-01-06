@@ -16,8 +16,8 @@ export interface InputProps {
   type?: 'text' | 'number';
   min?: number;
   max?: number;
-  step?: number;
-  value?: string;
+  step?: number | 'any';
+  value?: string | number;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 }

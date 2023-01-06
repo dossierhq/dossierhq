@@ -1,4 +1,4 @@
-import type { StringFieldSpecification } from '@jonasb/datadata-core';
+import type { NumberFieldSpecification, StringFieldSpecification } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
 import { describe, expect, test } from 'vitest';
 import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer.js';
@@ -411,6 +411,37 @@ describe('ChangeFieldIndexAction', () => {
   });
 });
 
+describe('ChangeFieldIntegerAction', () => {
+  test('make new integer field in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        FieldType.Number,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldInteger(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        true
+      )
+    );
+    expect(state).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].integer).toBe(true);
+    expect((schemaUpdate?.entityTypes?.[0].fields[0] as NumberFieldSpecification).integer).toBe(
+      true
+    );
+  });
+});
+
 describe('ChangeFieldIsNameAction', () => {
   test('make new string field is-name in new type', () => {
     const state = reduceSchemaEditorStateActions(
@@ -592,6 +623,24 @@ describe('ChangeFieldTypeAction', () => {
         { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
         true
+      )
+    );
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('from string to number (new field of existing value type)', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
+        FieldType.Number,
+        false
       )
     );
     expect(state).toMatchSnapshot();
@@ -918,6 +967,34 @@ describe('UpdateSchemaSpecificationAction', () => {
         }).valueOrThrow()
       )
     );
+
+    expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
+  });
+
+  test('one entity type with number fields', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Numbers',
+              fields: [
+                { name: 'float', type: FieldType.Number, integer: false },
+                { name: 'integer', type: FieldType.Number, integer: true },
+                { name: 'floats', type: FieldType.Number, integer: false, list: true },
+                { name: 'integers', type: FieldType.Number, integer: true, list: true },
+              ],
+            },
+          ],
+        }).valueOrThrow()
+      )
+    );
+
+    expect(state.entityTypes[0].fields[0].integer).toBe(false);
+    expect(state.entityTypes[0].fields[1].integer).toBe(true);
 
     expect(state).toMatchSnapshot();
 

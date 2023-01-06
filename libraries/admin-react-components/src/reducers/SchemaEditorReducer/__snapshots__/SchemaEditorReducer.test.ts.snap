@@ -1448,6 +1448,78 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
 }
 `;
 
+exports[`ChangeFieldIntegerAction > make new integer field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "integer": true,
+          "isName": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Number",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldIntegerAction > make new integer field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": true,
+          "name": "bar",
+          "required": false,
+          "type": "Number",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldIsNameAction > make new string field is-name in new type 1`] = `
 {
   "activeSelector": {
@@ -2150,6 +2222,75 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
           "name": "bar",
           "required": false,
           "type": "Location",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to number (new field of existing value type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [
+        {
+          "adminOnly": false,
+          "fields": [],
+          "name": "Foo",
+        },
+      ],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": null,
+          "integer": false,
+          "isName": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Number",
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to number (new field of existing value type) 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "name": "bar",
+          "required": false,
+          "type": "Number",
         },
       ],
       "name": "Foo",
@@ -3354,6 +3495,147 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
             },
           ],
           "name": "TitleOnly",
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "valueTypes": [],
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": false,
+            "list": false,
+            "name": "float",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": false,
+          "list": false,
+          "name": "float",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": true,
+            "list": false,
+            "name": "integer",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": true,
+          "list": false,
+          "name": "integer",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": false,
+            "list": true,
+            "name": "floats",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": false,
+          "list": true,
+          "name": "floats",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": true,
+            "list": true,
+            "name": "integers",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": true,
+          "list": true,
+          "name": "integers",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+      ],
+      "kind": "entity",
+      "name": "Numbers",
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "integer": false,
+              "list": false,
+              "name": "float",
+              "required": false,
+              "type": "Number",
+            },
+            {
+              "adminOnly": false,
+              "integer": true,
+              "list": false,
+              "name": "integer",
+              "required": false,
+              "type": "Number",
+            },
+            {
+              "adminOnly": false,
+              "integer": false,
+              "list": true,
+              "name": "floats",
+              "required": false,
+              "type": "Number",
+            },
+            {
+              "adminOnly": false,
+              "integer": true,
+              "list": true,
+              "name": "integers",
+              "required": false,
+              "type": "Number",
+            },
+          ],
+          "name": "Numbers",
         },
       ],
       "indexes": [],

@@ -2,6 +2,7 @@ import type {
   BooleanFieldSpecification,
   EntityFieldSpecification,
   LocationFieldSpecification,
+  NumberFieldSpecification,
   PublishedFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
@@ -14,6 +15,8 @@ import {
   isEntityListField,
   isLocationField,
   isLocationListField,
+  isNumberField,
+  isNumberListField,
   isRichTextField,
   isRichTextListField,
   isStringField,
@@ -28,6 +31,7 @@ import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
 import { FieldDisplayListWrapper } from './FieldDisplayListWrapper.js';
 import { LocationFieldDisplay } from './LocationFieldDisplay.js';
+import { NumberFieldDisplay } from './NumberFieldDisplay.js';
 import { RichTextFieldDisplay } from './RichTextFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 import { ValueTypeFieldDisplay } from './ValueTypeFieldDisplay.js';
@@ -92,6 +96,18 @@ export function FieldDisplay(props: FieldDisplayProps) {
         fieldSpec={fieldSpec as LocationFieldSpecification}
         value={value}
         Display={LocationFieldDisplay}
+      />
+    );
+  } else if (isNumberField(fieldSpec, value)) {
+    display = (
+      <NumberFieldDisplay fieldSpec={fieldSpec as NumberFieldSpecification} value={value} />
+    );
+  } else if (isNumberListField(fieldSpec, value)) {
+    display = (
+      <FieldDisplayListWrapper
+        fieldSpec={fieldSpec as NumberFieldSpecification}
+        value={value}
+        Display={NumberFieldDisplay}
       />
     );
   } else if (isRichTextField(fieldSpec, value)) {

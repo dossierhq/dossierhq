@@ -69,6 +69,7 @@ export interface SchemaFieldDraft {
   entityTypes?: string[];
   linkEntityTypes?: string[];
   valueTypes?: string[];
+  integer?: boolean;
   existingFieldSpec: AdminFieldSpecification | null;
 }
 
@@ -173,6 +174,11 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   if (state.existingFieldSpec === null) {
     return 'new';
   }
+  if (
+    state.existingFieldSpec.type === FieldType.Number &&
+    state.existingFieldSpec.integer !== !!state.integer
+  )
+    return 'changed';
   if (
     state.existingFieldSpec.type === FieldType.String &&
     !!state.existingFieldSpec.isName !== state.isName
@@ -584,6 +590,23 @@ class ChangeFieldIndexAction extends FieldAction {
   }
 }
 
+class ChangeFieldIntegerAction extends FieldAction {
+  integer: boolean;
+
+  constructor(fieldSelector: SchemaFieldSelector, integer: boolean) {
+    super(fieldSelector);
+    this.integer = integer;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.integer === this.integer) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, integer: this.integer };
+  }
+}
+
 class ChangeFieldIsNameAction extends FieldAction {
   isName: boolean;
 
@@ -697,6 +720,12 @@ class ChangeFieldTypeAction extends FieldAction {
 
     const newFieldDraft = { ...fieldDraft, type: this.fieldType, list: this.list };
     //TODO reset isName
+
+    if (this.fieldType === FieldType.Number) {
+      newFieldDraft.integer = false;
+    } else {
+      delete newFieldDraft.integer;
+    }
 
     if (this.fieldType === FieldType.String) {
       newFieldDraft.multiline = !!newFieldDraft.multiline;
@@ -1022,6 +1051,9 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         if (fieldSpec.type === FieldType.Entity || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes;
         }
+        if (fieldSpec.type === FieldType.Number) {
+          fieldDraft.integer = fieldSpec.integer;
+        }
         if (fieldSpec.type === FieldType.RichText) {
           fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes;
         }
@@ -1068,6 +1100,7 @@ export const SchemaEditorActions = {
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldIndex: ChangeFieldIndexAction,
+  ChangeFieldInteger: ChangeFieldIntegerAction,
   ChangeFieldIsName: ChangeFieldIsNameAction,
   ChangeFieldMatchPattern: ChangeFieldMatchPatternAction,
   ChangeFieldMultiline: ChangeFieldMultilineAction,
@@ -1155,6 +1188,7 @@ function getTypeUpdateFromEditorState(
       ...(draftField.type === FieldType.RichText
         ? { richTextNodes, linkEntityTypes: draftField.linkEntityTypes ?? [] }
         : undefined),
+      ...(draftField.type === FieldType.Number ? { integer: !!draftField.integer } : undefined),
       ...(draftField.type === FieldType.Entity || draftField.type === FieldType.RichText
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),

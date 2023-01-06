@@ -4,6 +4,7 @@ import type {
   EntityFieldSpecification,
   FieldSpecification,
   LocationFieldSpecification,
+  NumberFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
   ValidationError,
@@ -16,6 +17,8 @@ import {
   isEntityListField,
   isLocationField,
   isLocationListField,
+  isNumberField,
+  isNumberListField,
   isRichTextField,
   isRichTextListField,
   isStringField,
@@ -29,6 +32,7 @@ import { BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
 import { FieldListWrapper } from './FieldListWrapper.js';
 import { LocationFieldEditor } from './LocationFieldEditor.js';
+import { NumberFieldEditor } from './NumberFieldEditor.js';
 import { RichTextFieldEditor } from './RichTextFieldEditor.js';
 import { StringFieldEditor } from './StringFieldEditor.js';
 import { ValueTypeFieldEditor } from './ValueTypeFieldEditor.js';
@@ -102,6 +106,23 @@ export function FieldEditor(props: FieldEditorProps) {
         fieldSpec={fieldSpec as AdminFieldSpecification<LocationFieldSpecification>}
         value={value}
         Editor={LocationFieldEditor}
+      />
+    );
+  } else if (isNumberField(fieldSpec, value)) {
+    editor = (
+      <NumberFieldEditor
+        {...props}
+        fieldSpec={fieldSpec as AdminFieldSpecification<NumberFieldSpecification>}
+        value={value}
+      />
+    );
+  } else if (isNumberListField(fieldSpec, value)) {
+    editor = (
+      <FieldListWrapper
+        {...props}
+        fieldSpec={fieldSpec as AdminFieldSpecification<NumberFieldSpecification>}
+        value={value}
+        Editor={NumberFieldEditor}
       />
     );
   } else if (isRichTextField(fieldSpec, value)) {

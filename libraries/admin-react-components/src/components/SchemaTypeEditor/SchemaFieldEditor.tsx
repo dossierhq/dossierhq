@@ -23,6 +23,7 @@ import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEd
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
 import { FieldValueTypeSelector } from './FieldValueTypeSelector.js';
 import { IndexSelector } from './IndexSelector.js';
+import { NumberVariantSelector } from './NumberVariantSelector.js';
 import { PatternSelector } from './PatternSelector.js';
 import { RichTextNodeSelector } from './RichTextNodeSelector.js';
 
@@ -46,6 +47,7 @@ const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
   FieldType.Boolean,
   FieldType.Entity,
   FieldType.Location,
+  FieldType.Number,
   FieldType.RichText,
   FieldType.String,
   FieldType.ValueItem,
@@ -84,6 +86,10 @@ export function SchemaFieldEditor({
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeLinkEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeNumberVariant =
+    fieldDraft.status === 'new' ||
+    (fieldDraft.existingFieldSpec?.type === FieldType.Number &&
+      fieldDraft.existingFieldSpec.integer); // allow integer -> float, but not float -> integer
   const canChangeAdminOnly = fieldDraft.status === 'new'; //TODO too restrictive
 
   const fieldCanBeName =
@@ -367,6 +373,25 @@ export function SchemaFieldEditor({
                   ) : (
                     <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
                   )}
+                </Field.Control>
+              </Field>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
+        {fieldDraft.type === FieldType.Number ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Number variant</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field>
+                <Field.Control>
+                  <NumberVariantSelector
+                    fieldSelector={fieldSelector}
+                    integer={!!fieldDraft.integer}
+                    disabled={!canChangeNumberVariant}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
