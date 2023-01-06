@@ -102,6 +102,30 @@ export function isLocationItemField(
   return fieldSpec.type === FieldType.Location;
 }
 
+/** Check if `value` with `fieldSpec` is a single number field */
+export function isNumberField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[typeof FieldType.Number] | null {
+  return fieldSpec.type === FieldType.Number && !fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is a list number field */
+export function isNumberListField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is Array<FieldValueTypeMap[typeof FieldType.Number]> | null {
+  return fieldSpec.type === FieldType.Number && fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is either a single number field or an item in a list field */
+export function isNumberItemField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[typeof FieldType.Number] | null {
+  return fieldSpec.type === FieldType.Number;
+}
+
 /** Check if `value` with `fieldSpec` is a single String field */
 export function isStringField(
   fieldSpec: FieldSpecification,
@@ -390,6 +414,7 @@ function normalizeFieldValueItem(
     case FieldType.Boolean:
     case FieldType.Entity:
     case FieldType.Location:
+    case FieldType.Number:
       return value;
     case FieldType.RichText: {
       // TODO normalize ValueItem nodes?

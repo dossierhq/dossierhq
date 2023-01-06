@@ -1947,7 +1947,7 @@ scalar DateTime
 type Query"
 `;
 
-exports[`List of strings, booleans, locations and references schema spec > Generated QL schema (admin only) 1`] = `
+exports[`List of strings, booleans, locations, numbers and references schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -2233,6 +2233,8 @@ type AdminFooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
+  floats: [Float!]
+  integers: [Int!]
   bars: [AdminBar!]
 }
 
@@ -2246,6 +2248,8 @@ input AdminFooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
   locations: [LocationInput!]
+  floats: [Float!]
+  integers: [Int!]
   bars: [EntityReferenceInput!]
 }
 
@@ -2308,7 +2312,7 @@ type Mutation {
 }"
 `;
 
-exports[`List of strings, booleans, locations and references schema spec > Generated QL schema (published only) 1`] = `
+exports[`List of strings, booleans, locations, numbers and references schema spec > Generated QL schema (published only) 1`] = `
 "interface Node {
   id: ID!
 }
@@ -2420,6 +2424,8 @@ type PublishedFooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
+  floats: [Float!]
+  integers: [Int!]
   bars: [PublishedBar!]
 }
 
@@ -2438,7 +2444,7 @@ type Query {
 }"
 `;
 
-exports[`List of strings, booleans, locations and references schema spec > Generated QL schema 1`] = `
+exports[`List of strings, booleans, locations, numbers and references schema spec > Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -2550,6 +2556,8 @@ type PublishedFooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
+  floats: [Float!]
+  integers: [Int!]
   bars: [PublishedBar!]
 }
 
@@ -2805,6 +2813,8 @@ type AdminFooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
+  floats: [Float!]
+  integers: [Int!]
   bars: [AdminBar!]
 }
 
@@ -2818,6 +2828,8 @@ input AdminFooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
   locations: [LocationInput!]
+  floats: [Float!]
+  integers: [Int!]
   bars: [EntityReferenceInput!]
 }
 

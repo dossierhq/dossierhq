@@ -109,6 +109,36 @@ export type AllAdminValueItems = never;
 "
 `;
 
+exports[`generateTypescriptForSchema > Numbers 1`] = `
+"import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+
+export type AppAdminClient = AdminClient<AllAdminEntities>;
+
+export type AllAdminEntities = AdminNumbers;
+
+export interface AdminNumbersFields {
+  number: number | null;
+  numberInteger: number | null;
+  numberList: number[] | null;
+  numberIntegerList: number[] | null;
+}
+
+export type AdminNumbers = AdminEntity<'Numbers', AdminNumbersFields, string>;
+
+export function isAdminNumbers(entity: AdminEntity<string, object>): entity is AdminNumbers {
+  return entity.info.type === 'Numbers';
+}
+
+export function assertIsAdminNumbers(entity: AdminEntity<string, object>): asserts entity is AdminNumbers {
+  if (entity.info.type !== 'Numbers') {
+    throw new Error('Expected info.type = Numbers (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AllAdminValueItems = never;
+"
+`;
+
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
 "import type { AdminClient, AdminEntity, RichText } from '@jonasb/datadata-core';
 

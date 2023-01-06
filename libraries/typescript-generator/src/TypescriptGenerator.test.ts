@@ -80,6 +80,27 @@ describe('generateTypescriptForSchema', () => {
     ).toMatchSnapshot();
   });
 
+  test('Numbers', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Numbers',
+              fields: [
+                { name: 'number', type: FieldType.Number },
+                { name: 'numberInteger', type: FieldType.Number, integer: true },
+                { name: 'numberList', type: FieldType.Number, list: true },
+                { name: 'numberIntegerList', type: FieldType.Number, list: true, integer: true },
+              ],
+            },
+          ],
+        }).valueOrThrow(),
+        publishedSchema: null,
+      })
+    ).toMatchSnapshot();
+  });
+
   test('RichTexts', () => {
     expect(
       generateTypescriptForSchema({

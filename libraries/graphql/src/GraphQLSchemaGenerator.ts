@@ -1124,6 +1124,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.Location:
           fieldType = this.getOutputType('Location');
           break;
+        case FieldType.Number:
+          fieldType = fieldSpec.integer ? GraphQLInt : GraphQLFloat;
+          break;
         case FieldType.RichText:
           fieldType = this.getOutputType(toAdminTypeName('RichText', isAdmin));
           break;
@@ -1163,6 +1166,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           break;
         case FieldType.Location:
           fieldType = this.getInputType('LocationInput');
+          break;
+        case FieldType.Number:
+          fieldType = fieldSpec.integer ? GraphQLInt : GraphQLFloat;
           break;
         case FieldType.RichText:
           fieldType = this.getInputType('AdminRichTextInput');

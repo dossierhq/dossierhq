@@ -238,6 +238,9 @@ function fieldType(
       coreImports.add('Location');
       type = 'Location';
       break;
+    case FieldType.Number:
+      type = 'number';
+      break;
     case FieldType.RichText:
       coreImports.add('RichText');
       type = 'RichText';

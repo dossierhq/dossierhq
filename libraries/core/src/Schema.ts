@@ -44,6 +44,7 @@ export const FieldType = {
   Boolean: 'Boolean',
   Entity: 'Entity',
   Location: 'Location',
+  Number: 'Number',
   RichText: 'RichText',
   String: 'String',
   ValueItem: 'ValueItem',
@@ -85,6 +86,11 @@ export interface LocationFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.Location;
 }
 
+export interface NumberFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.Number;
+  integer: boolean;
+}
+
 export interface RichTextFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.RichText;
   entityTypes: string[];
@@ -115,6 +121,7 @@ export type FieldSpecification =
   | BooleanFieldSpecification
   | EntityFieldSpecification
   | LocationFieldSpecification
+  | NumberFieldSpecification
   | RichTextFieldSpecification
   | StringFieldSpecification
   | ValueItemFieldSpecification;
@@ -138,6 +145,10 @@ type AdminLocationFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<LocationFieldSpecification>,
   'name' | 'type'
 >;
+type AdminNumberFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<NumberFieldSpecification>,
+  'name' | 'type'
+>;
 type AdminRichTextFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<RichTextFieldSpecification>,
   'name' | 'type'
@@ -155,6 +166,7 @@ export type AdminFieldSpecificationUpdate =
   | AdminBooleanFieldSpecificationUpdate
   | AdminEntityFieldSpecificationUpdate
   | AdminLocationFieldSpecificationUpdate
+  | AdminNumberFieldSpecificationUpdate
   | AdminRichTextFieldSpecificationUpdate
   | AdminStringFieldSpecificationUpdate
   | AdminValueItemFieldSpecificationUpdate;
@@ -165,6 +177,7 @@ export interface FieldValueTypeMap {
   [FieldType.Boolean]: boolean;
   [FieldType.Entity]: EntityReference;
   [FieldType.Location]: Location;
+  [FieldType.Number]: number;
   [FieldType.RichText]: RichText;
   [FieldType.String]: string;
   [FieldType.ValueItem]: ValueItem;
@@ -231,6 +244,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
   Entity: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
   Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
+  Number: readonly (keyof AdminFieldSpecification<NumberFieldSpecification>)[];
   RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
   String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
   ValueItem: readonly (keyof AdminFieldSpecification<ValueItemFieldSpecification>)[];
@@ -238,6 +252,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.Entity]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
   [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.Number]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'integer'],
   [FieldType.RichText]: [
     ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
     'entityTypes',
@@ -732,6 +747,8 @@ function normalizeFieldSpecUpdate(
       return { name, type, list, required, adminOnly, entityTypes: fieldSpec.entityTypes ?? [] };
     case FieldType.Location:
       return { name, type, list, required, adminOnly };
+    case FieldType.Number:
+      return { name, type, list, required, adminOnly, integer: fieldSpec.integer ?? false };
     case FieldType.RichText:
       return {
         name,

@@ -444,7 +444,7 @@ describe('Multiple references with entityTypes schema spec', () => {
   });
 });
 
-describe('List of strings, booleans, locations and references schema spec', () => {
+describe('List of strings, booleans, locations, numbers and references schema spec', () => {
   const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {
@@ -454,6 +454,8 @@ describe('List of strings, booleans, locations and references schema spec', () =
           { name: 'strings', type: FieldType.String, list: true },
           { name: 'booleans', type: FieldType.Boolean, list: true },
           { name: 'locations', type: FieldType.Location, list: true },
+          { name: 'floats', type: FieldType.Number, list: true },
+          { name: 'integers', type: FieldType.Number, integer: true, list: true },
           { name: 'bars', type: FieldType.Entity, list: true, entityTypes: ['Bar'] },
         ],
       },

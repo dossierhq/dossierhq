@@ -74,6 +74,17 @@ const locationCodec: FieldTypeAdapter<
   decodeJson: (json) => json as Location,
 };
 
+const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], number> = {
+  encodeData: (_fieldSpec: AdminFieldSpecification, prefix: string, data) =>
+    typeof data === 'number'
+      ? ok(data)
+      : notOk.BadRequest(
+          `${prefix}: expected number, got ${Array.isArray(data) ? 'list' : typeof data}`
+        ),
+  decodeData: (it) => it,
+  decodeJson: (json) => json as number,
+};
+
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
   encodeData: (fieldSpec: AdminFieldSpecification, prefix: string, data) => {
     if (typeof data !== 'string') {
@@ -106,6 +117,7 @@ const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.Boolean]: booleanCodec,
   [FieldType.Entity]: entityTypeCodec,
   [FieldType.Location]: locationCodec,
+  [FieldType.Number]: numberCodec,
   [FieldType.RichText]: invalidCodec,
   [FieldType.String]: stringCodec,
   [FieldType.ValueItem]: invalidCodec,
