@@ -11,15 +11,21 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
+  isRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from '@jonasb/datadata-core';
 import { ClassName, LexicalTheme } from '@jonasb/datadata-design-server';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
+import { CloudinaryImage } from '../components/CloudinaryImage/CloudinaryImage';
 import { BrowserUrls } from '../utils/BrowserUrls';
 import type { AppPublishedClient } from '../utils/SchemaTypes';
-import { isPublishedArticle, isPublishedGlossaryTerm } from '../utils/SchemaTypes';
+import {
+  isPublishedArticle,
+  isPublishedCloudinaryImage,
+  isPublishedGlossaryTerm,
+} from '../utils/SchemaTypes';
 
 interface Props {
   richText: RichText;
@@ -165,6 +171,11 @@ async function renderNode(
         {await renderChildren(context, node)}
       </li>
     );
+  }
+  if (isRichTextValueItemNode(node)) {
+    if (isPublishedCloudinaryImage(node.data)) {
+      return <CloudinaryImage key={key} image={node.data} />;
+    }
   }
 
   // fallback for unknown element nodes

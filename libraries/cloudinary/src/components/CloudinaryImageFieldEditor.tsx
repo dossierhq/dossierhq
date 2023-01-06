@@ -3,7 +3,7 @@ import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
 import type { ValueItem, ValueItemFieldSpecification } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealStack, IconButton, Row } from '@jonasb/datadata-design';
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { useRuntimeDependency } from '../hooks/useRuntimeDependency.js';
 import type {
   CloudinaryUploadResult,

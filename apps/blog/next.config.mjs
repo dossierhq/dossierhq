@@ -4,6 +4,9 @@ const config = {
   swcMinify: true,
   // productionBrowserSourceMaps: true,
   experimental: { appDir: true },
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Handle fs require in sql.js
