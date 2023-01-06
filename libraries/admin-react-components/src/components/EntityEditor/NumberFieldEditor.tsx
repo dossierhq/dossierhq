@@ -10,7 +10,12 @@ export function NumberFieldEditor({ fieldSpec, value, onChange }: Props) {
   const isInteger = fieldSpec.integer;
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      onChange(isInteger ? parseInt(event.target.value) : parseFloat(event.target.value));
+      const stringValue = event.target.value.trim();
+      if (!stringValue) {
+        onChange(null);
+      } else {
+        onChange(isInteger ? parseInt(stringValue) : parseFloat(stringValue));
+      }
     },
     [onChange, isInteger]
   );
