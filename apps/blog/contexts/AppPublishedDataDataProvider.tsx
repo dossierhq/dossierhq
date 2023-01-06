@@ -4,24 +4,26 @@ import type {
   RichTextValueItemDisplayProps,
 } from '@jonasb/datadata-admin-react-components';
 import { PublishedDataDataProvider } from '@jonasb/datadata-admin-react-components';
+import { CloudinaryImageFieldDisplay } from '@jonasb/datadata-cloudinary';
 import type {
   ClientContext,
-  ErrorType,
   PublishedClient,
   PublishedClientOperation,
-  Result,
 } from '@jonasb/datadata-core';
 import {
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   createConsoleLogger,
+  isValueItemField,
 } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
 import { useContext, useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
+import { isPublishedCloudinaryImage } from '../utils/SchemaTypes.js';
 import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;
@@ -29,12 +31,20 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class PublishedContextAdapter implements PublishedDataDataContextAdapter {
-  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
+  renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
+    const { fieldSpec, value } = props;
+    if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
+      return CloudinaryImageFieldDisplay({ cloudName: CLOUDINARY_CLOUD_NAME, value });
+    }
     return null;
   }
-  renderPublishedRichTextValueItemDisplay(
-    _props: RichTextValueItemDisplayProps
-  ): JSX.Element | null {
+
+  renderPublishedRichTextValueItemDisplay({
+    value,
+  }: RichTextValueItemDisplayProps): JSX.Element | null {
+    if (value && isPublishedCloudinaryImage(value)) {
+      return CloudinaryImageFieldDisplay({ cloudName: CLOUDINARY_CLOUD_NAME, value });
+    }
     return null;
   }
 }

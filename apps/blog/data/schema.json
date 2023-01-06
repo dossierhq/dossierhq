@@ -40,10 +40,11 @@
             "linebreak",
             "list",
             "listitem",
+            "code",
+            "code-highlight",
             "entityLink",
             "heading",
-            "code",
-            "code-highlight"
+            "valueItem"
           ],
           "entityTypes": [],
           "linkEntityTypes": [
@@ -146,6 +147,23 @@
           "entityTypes": [
             "Article"
           ]
+        }
+      ]
+    },
+    {
+      "name": "CloudinaryImage",
+      "adminOnly": false,
+      "fields": [
+        {
+          "name": "publicId",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "isName": false,
+          "multiline": false,
+          "matchPattern": null,
+          "index": null
         }
       ]
     },

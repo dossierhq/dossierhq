@@ -1,10 +1,140 @@
 import type {
+  AdminClient,
+  AdminEntity,
   EntityReference,
   PublishedClient,
   PublishedEntity,
   RichText,
   ValueItem,
 } from '@jonasb/datadata-core';
+
+export type AppAdminClient = AdminClient<AllAdminEntities>;
+
+export type AllAdminEntities = AdminArticle | AdminChapter | AdminGlossaryTerm;
+
+export interface AdminArticleFields {
+  title: string | null;
+  slug: string | null;
+  body: RichText | null;
+}
+
+export type AdminArticle = AdminEntity<'Article', AdminArticleFields, string>;
+
+export function isAdminArticle(entity: AdminEntity<string, object>): entity is AdminArticle {
+  return entity.info.type === 'Article';
+}
+
+export function assertIsAdminArticle(
+  entity: AdminEntity<string, object>
+): asserts entity is AdminArticle {
+  if (entity.info.type !== 'Article') {
+    throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface AdminChapterFields {
+  items: Array<AdminArticleTocItem | AdminTocItem> | null;
+}
+
+export type AdminChapter = AdminEntity<'Chapter', AdminChapterFields, string>;
+
+export function isAdminChapter(entity: AdminEntity<string, object>): entity is AdminChapter {
+  return entity.info.type === 'Chapter';
+}
+
+export function assertIsAdminChapter(
+  entity: AdminEntity<string, object>
+): asserts entity is AdminChapter {
+  if (entity.info.type !== 'Chapter') {
+    throw new Error('Expected info.type = Chapter (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface AdminGlossaryTermFields {
+  title: string | null;
+  slug: string | null;
+  description: RichText | null;
+}
+
+export type AdminGlossaryTerm = AdminEntity<'GlossaryTerm', AdminGlossaryTermFields, string>;
+
+export function isAdminGlossaryTerm(
+  entity: AdminEntity<string, object>
+): entity is AdminGlossaryTerm {
+  return entity.info.type === 'GlossaryTerm';
+}
+
+export function assertIsAdminGlossaryTerm(
+  entity: AdminEntity<string, object>
+): asserts entity is AdminGlossaryTerm {
+  if (entity.info.type !== 'GlossaryTerm') {
+    throw new Error('Expected info.type = GlossaryTerm (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AllAdminValueItems = AdminArticleTocItem | AdminCloudinaryImage | AdminTocItem;
+
+export interface AdminArticleTocItemFields {
+  title: string | null;
+  article: EntityReference | null;
+}
+
+export type AdminArticleTocItem = ValueItem<'ArticleTocItem', AdminArticleTocItemFields>;
+
+export function isAdminArticleTocItem(
+  valueItem: ValueItem<string, object> | AdminArticleTocItem
+): valueItem is AdminArticleTocItem {
+  return valueItem.type === 'ArticleTocItem';
+}
+
+export function assertIsAdminArticleTocItem(
+  valueItem: ValueItem<string, object> | AdminArticleTocItem
+): asserts valueItem is AdminArticleTocItem {
+  if (valueItem.type !== 'ArticleTocItem') {
+    throw new Error('Expected type = ArticleTocItem (but was ' + valueItem.type + ')');
+  }
+}
+
+export interface AdminCloudinaryImageFields {
+  publicId: string | null;
+}
+
+export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+
+export function isAdminCloudinaryImage(
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+): valueItem is AdminCloudinaryImage {
+  return valueItem.type === 'CloudinaryImage';
+}
+
+export function assertIsAdminCloudinaryImage(
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+): asserts valueItem is AdminCloudinaryImage {
+  if (valueItem.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+  }
+}
+
+export interface AdminTocItemFields {
+  title: string | null;
+  items: Array<AdminArticleTocItem | AdminTocItem> | null;
+}
+
+export type AdminTocItem = ValueItem<'TocItem', AdminTocItemFields>;
+
+export function isAdminTocItem(
+  valueItem: ValueItem<string, object> | AdminTocItem
+): valueItem is AdminTocItem {
+  return valueItem.type === 'TocItem';
+}
+
+export function assertIsAdminTocItem(
+  valueItem: ValueItem<string, object> | AdminTocItem
+): asserts valueItem is AdminTocItem {
+  if (valueItem.type !== 'TocItem') {
+    throw new Error('Expected type = TocItem (but was ' + valueItem.type + ')');
+  }
+}
 
 export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
 
@@ -78,7 +208,10 @@ export function assertIsPublishedGlossaryTerm(
   }
 }
 
-export type AllPublishedValueItems = PublishedArticleTocItem | PublishedTocItem;
+export type AllPublishedValueItems =
+  | PublishedArticleTocItem
+  | PublishedCloudinaryImage
+  | PublishedTocItem;
 
 export interface PublishedArticleTocItemFields {
   title: string;
@@ -98,6 +231,26 @@ export function assertIsPublishedArticleTocItem(
 ): asserts valueItem is PublishedArticleTocItem {
   if (valueItem.type !== 'ArticleTocItem') {
     throw new Error('Expected type = ArticleTocItem (but was ' + valueItem.type + ')');
+  }
+}
+
+export interface PublishedCloudinaryImageFields {
+  publicId: string;
+}
+
+export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;
+
+export function isPublishedCloudinaryImage(
+  valueItem: ValueItem<string, object> | PublishedCloudinaryImage
+): valueItem is PublishedCloudinaryImage {
+  return valueItem.type === 'CloudinaryImage';
+}
+
+export function assertIsPublishedCloudinaryImage(
+  valueItem: ValueItem<string, object> | PublishedCloudinaryImage
+): asserts valueItem is PublishedCloudinaryImage {
+  if (valueItem.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
   }
 }
 

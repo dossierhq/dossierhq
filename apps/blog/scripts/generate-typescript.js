@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 async function generateTypes(schemaSpec, filename) {
   const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
   const publishedSchema = adminSchema.toPublishedSchema();
-  const sourceCode = generateTypescriptForSchema({ adminSchema: null, publishedSchema });
+  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
   await writeFile(filename, sourceCode);
 
   execFileSync('npx', ['prettier', '-w', filename]);
