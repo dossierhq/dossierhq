@@ -1,5 +1,6 @@
 import { Radio } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
+import { useId } from 'react';
 import type {
   SchemaEditorStateAction,
   SchemaFieldSelector,
@@ -19,11 +20,12 @@ export function NumberVariantSelector({
   integer,
   dispatchSchemaEditorState,
 }: Props) {
+  const name = useId();
   return (
     <>
       <Radio
-        name="variant"
-        value="entity"
+        name={name}
+        value="float"
         checked={!integer}
         disabled={disabled}
         onChange={() => {
@@ -35,8 +37,8 @@ export function NumberVariantSelector({
         Float
       </Radio>
       <Radio
-        name="kind"
-        value="value"
+        name={name}
+        value="integer"
         checked={integer}
         disabled={disabled}
         onChange={() => {
