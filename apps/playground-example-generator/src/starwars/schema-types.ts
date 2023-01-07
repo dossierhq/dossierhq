@@ -13,7 +13,7 @@ export type AllAdminEntities =
 
 export interface AdminFilmFields {
   title: string | null;
-  episodeId: string | null;
+  episodeId: number | null;
   director: string | null;
   producers: string[] | null;
   releaseDate: string | null;

@@ -47,7 +47,7 @@ async function createFilms(adminClient: AppAdminClient) {
           info: { type: 'Film', authKey: 'none', name: film.fields.title },
           fields: {
             title: film.fields.title,
-            episodeId: String(film.fields.episode_id),
+            episodeId: film.fields.episode_id,
             director: film.fields.director,
             producers: splitCsv(film.fields.producer),
             releaseDate: film.fields.release_date,

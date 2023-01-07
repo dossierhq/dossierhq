@@ -8,7 +8,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       authKeyPattern: 'none',
       fields: [
         { name: 'title', type: FieldType.String, required: true, isName: true },
-        { name: 'episodeId', type: FieldType.String, required: true },
+        { name: 'episodeId', type: FieldType.Number, integer: true, required: true },
         { name: 'director', type: FieldType.String, required: true },
         { name: 'producers', type: FieldType.String, list: true, required: true },
         { name: 'releaseDate', type: FieldType.String, required: true },
