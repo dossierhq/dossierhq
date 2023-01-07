@@ -73,6 +73,9 @@ async function main() {
   const images = cloudinaryImages.map<AdminCloudinaryImage>((image) => ({
     type: 'CloudinaryImage',
     publicId: image.public_id,
+    width: image.width,
+    height: image.height,
+    alt: null,
   }));
 
   const persons: AdminPerson[] = [];

@@ -5064,10 +5064,21 @@
             ]
           },
           {
+            "direction": null,
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
+          },
+          {
             "type": "valueItem",
             "data": {
               "type": "CloudinaryImage",
-              "publicId": "Blog/ebffj5oq0dbqpkqsx2zf"
+              "publicId": "Blog/qx6gipd7luppfn7q7pll",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of the frontend"
             },
             "format": "",
             "version": 1

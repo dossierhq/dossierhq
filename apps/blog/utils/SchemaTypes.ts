@@ -97,6 +97,9 @@ export function assertIsAdminArticleTocItem(
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
+  width: number | null;
+  height: number | null;
+  alt: string | null;
 }
 
 export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
@@ -236,6 +239,9 @@ export function assertIsPublishedArticleTocItem(
 
 export interface PublishedCloudinaryImageFields {
   publicId: string;
+  width: number;
+  height: number;
+  alt: string | null;
 }
 
 export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;

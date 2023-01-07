@@ -2,7 +2,17 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
 import type { ValueItem, ValueItemFieldSpecification } from '@jonasb/datadata-core';
-import { Button, Delete, HoverRevealStack, IconButton, Row } from '@jonasb/datadata-design';
+import {
+  Button,
+  Column,
+  Delete,
+  Field,
+  HoverRevealStack,
+  IconButton,
+  Input,
+  Row,
+  Text,
+} from '@jonasb/datadata-design';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { useRuntimeDependency } from '../hooks/useRuntimeDependency.js';
 import type {
@@ -13,10 +23,16 @@ import type {
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
+  width: number | null;
+  height: number | null;
+  alt: string | null;
 }
 
 export interface PublishedCloudinaryImageFields {
   publicId: string;
+  width: number;
+  height: number;
+  alt: string | null;
 }
 
 export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
@@ -96,10 +112,53 @@ export function CloudinaryImageFieldEditorWithoutClear({
   const fullImageUrl = cld.image(publicId).toURL();
 
   return (
-    <Row gap={2}>
-      <img src={thumbnailImageUrl} />
-      <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
-    </Row>
+    <Column>
+      <Field horizontal>
+        <Field.LabelColumn />
+        <Field.BodyColumn>
+          <Field>
+            <Field.Control>
+              <Row gap={2}>
+                <img src={thumbnailImageUrl} />
+                <IconButton
+                  icon="openInNewWindow"
+                  onClick={() => window.open(fullImageUrl, '_blank')}
+                />
+              </Row>
+            </Field.Control>
+          </Field>
+        </Field.BodyColumn>
+      </Field>
+      <Field horizontal>
+        <Field.LabelColumn>
+          <Field.Label>Size</Field.Label>
+        </Field.LabelColumn>
+        <Field.BodyColumn>
+          <Field>
+            <Field.Control>
+              <Input readOnly value={`${value.width} × ${value.height} px`} />
+            </Field.Control>
+          </Field>
+        </Field.BodyColumn>
+      </Field>
+      <Field horizontal>
+        <Field.LabelColumn>
+          <Field.Label>Alt</Field.Label>
+        </Field.LabelColumn>
+        <Field.BodyColumn>
+          <Field>
+            <Field.Control>
+              <Input
+                value={value.alt ?? ''}
+                onChange={(event) => {
+                  onChange({ ...value, alt: event.target.value });
+                }}
+              />
+            </Field.Control>
+          </Field>
+        </Field.BodyColumn>
+      </Field>
+    </Column>
   );
 }
 
@@ -120,10 +179,13 @@ export function CloudinaryImageFieldDisplay({
   const fullImageUrl = cld.image(publicId).toURL();
 
   return (
-    <Row gap={2}>
-      <img src={thumbnailImageUrl} />
-      <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
-    </Row>
+    <Column>
+      <Row gap={2}>
+        <img src={thumbnailImageUrl} alt={value.alt ?? ''} />
+        <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
+      </Row>
+      <Text textStyle="subtitle2">{`${value.width} × ${value.height} px`}</Text>
+    </Column>
   );
 }
 
@@ -163,6 +225,13 @@ function handleUploadWidgetCallback(
   onChange: (value: AdminCloudinaryImage) => void
 ) {
   if (result && result.event === 'success') {
-    onChange({ type: 'CloudinaryImage', publicId: result.info.public_id });
+    const asset = result.info;
+    onChange({
+      type: 'CloudinaryImage',
+      publicId: asset.public_id,
+      width: asset.width,
+      height: asset.height,
+      alt: null,
+    });
   }
 }

@@ -9,6 +9,8 @@ cloudinary.config({
 
 export interface CloudinaryAsset {
   public_id: string;
+  width: number;
+  height: number;
 }
 
 export async function listCloudinaryImages(folder: string): Promise<CloudinaryAsset[]> {

@@ -11,15 +11,16 @@ export function CloudinaryImage({ image }: Props) {
   const cld = new Cloudinary({ cloud: { cloudName: CLOUDINARY_CLOUD_NAME } });
   const fullImageUrl = cld.image(image.publicId).toURL();
   //TODO resize image on Cloudinary
-  //TODO get alt from editor
-  //TODO get width/height from Cloudinary/editor
+  const height = 400;
+  const width = Math.round((height * image.width) / image.height);
   return (
     <div style={{ textAlign: 'center' }}>
       <img
-        alt=""
+        alt={image.alt ?? ''}
+        width={width}
+        height={height}
         src={fullImageUrl}
         style={{
-          maxHeight: '400px',
           border: '1px solid #ccc',
         }}
       />

@@ -67,7 +67,12 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   valueTypes: [
     {
       name: 'CloudinaryImage',
-      fields: [{ name: 'publicId', type: FieldType.String, required: true }],
+      fields: [
+        { name: 'publicId', type: FieldType.String, required: true },
+        { name: 'width', type: FieldType.Number, integer: true, required: true },
+        { name: 'height', type: FieldType.Number, integer: true, required: true },
+        { name: 'alt', type: FieldType.String },
+      ],
     },
   ],
   patterns: [

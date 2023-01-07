@@ -164,6 +164,33 @@
           "multiline": false,
           "matchPattern": null,
           "index": null
+        },
+        {
+          "name": "width",
+          "type": "Number",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "integer": true
+        },
+        {
+          "name": "height",
+          "type": "Number",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "integer": true
+        },
+        {
+          "name": "alt",
+          "type": "String",
+          "list": false,
+          "required": false,
+          "adminOnly": false,
+          "isName": false,
+          "multiline": false,
+          "matchPattern": null,
+          "index": null
         }
       ]
     },
