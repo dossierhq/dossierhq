@@ -1,7 +1,9 @@
+export { CloudinaryImageFieldDisplay } from './components/CloudinaryImageFieldDisplay.js';
 export {
-  CloudinaryImageFieldDisplay,
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
+} from './components/CloudinaryImageFieldEditor.js';
+export {
   isAdminCloudinaryImage,
   isPublishedCloudinaryImage,
-} from './components/CloudinaryImageFieldEditor.js';
+} from './types/CloudinaryImageValueItem.js';
