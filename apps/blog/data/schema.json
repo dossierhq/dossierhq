@@ -51,7 +51,9 @@
             "GlossaryTerm",
             "Article"
           ],
-          "valueTypes": []
+          "valueTypes": [
+            "CloudinaryImage"
+          ]
         }
       ]
     },
