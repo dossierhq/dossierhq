@@ -7,6 +7,7 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { ENABLE_WEB_INTERFACE } from '../../../config/WebInterfaceConfig';
 import { handleRequest, sendMethodNotAllowedError } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
@@ -16,6 +17,9 @@ export default async function adminOperationHandler(
 ): Promise<void> {
   if (req.method === 'GET' || req.method === 'PUT') {
     await handleRequest(res, async () => {
+      if (!ENABLE_WEB_INTERFACE) {
+        return notOk.BadRequest('Web interface is disabled');
+      }
       return executeAdminOperation(req);
     });
   } else {
