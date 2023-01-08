@@ -28,7 +28,7 @@ export function NavBar({ current }: Props) {
       <DesignNavbar.Menu active={active}>
         <DesignNavbar.Start>
           <DesignNavbar.Item active={current === 'admin-entities'}>
-            {NavItemRender('Admin entities', ROUTE.adminEntities.url)}
+            {NavItemRender('Entities', ROUTE.adminEntities.url)}
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'published-entities'}>
             {NavItemRender('Published entities', ROUTE.publishedEntities.url)}

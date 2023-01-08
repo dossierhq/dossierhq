@@ -18,7 +18,7 @@ export function NavBar({
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
         <DesignNavbar.Item active={current === 'entities'}>
-          {NavItemRender('Admin entities', '/entities')}
+          {NavItemRender('Entities', '/entities')}
         </DesignNavbar.Item>
         <DesignNavbar.Item active={current === 'published-entities'}>
           {NavItemRender('Published entities', '/published-entities')}
