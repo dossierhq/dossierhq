@@ -5064,7 +5064,7 @@
             ]
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",

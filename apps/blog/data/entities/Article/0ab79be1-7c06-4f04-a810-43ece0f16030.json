@@ -26,6 +26,33 @@
             "children": [
               {
                 "detail": 0,
+                "format": 1,
+                "mode": "normal",
+                "style": "",
+                "text": "Goal for this step 🏁:",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " Use the admin client to create and publish Message entities during startup of the backend and use the published client to deliver a random Message entity to the frontend.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
@@ -47,7 +74,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " to check how many messages exist already.",
+                "text": " to check how many messages exist already so we don't create too many messages.",
                 "type": "text",
                 "version": 1
               }
@@ -65,7 +92,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "When creating the entity we provide the entity type, auth key, name and ",
+                "text": "When creating an entity we provide the entity type, auth key, name and ",
                 "type": "text",
                 "version": 1
               },
@@ -83,7 +110,25 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " field. We also specify that we want to publish the entity as an atomic operation when creating the entity.",
+                "text": " field. We also specify that we want to publish the entity as an atomic operation when creating the entity (if the publishing would fail, e.g. if we forget to provide the required ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "message",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " field, no entity would be created).",
                 "type": "text",
                 "version": 1
               }
@@ -4084,7 +4129,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " to return a random published message, using a published client:",
+                "text": " to return a random published message, using a published client. Later on we will add proper authentication, but for now we create a session for an anonymous user for each HTTP request.",
                 "type": "text",
                 "version": 1
               }
@@ -6895,6 +6940,36 @@
                 "highlightType": "punctuation"
               }
             ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "We'll now see a random message in the frontend.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/qu6zxzuawb0ofstklnol",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of the frontend showing a random message"
+            },
+            "format": "",
+            "version": 1
           }
         ]
       }

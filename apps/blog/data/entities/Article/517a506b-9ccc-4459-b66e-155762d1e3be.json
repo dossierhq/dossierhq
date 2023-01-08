@@ -26,6 +26,33 @@
             "children": [
               {
                 "detail": 0,
+                "format": 1,
+                "mode": "normal",
+                "style": "",
+                "text": "Goal for this step 🏁:",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " Add a REST API to the backend for admin client and use it in the frontend to fetch and create new Message entities.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
@@ -227,7 +254,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " requests we provide them in the body of the request as JSON. You're free to design the API as you wish for your application, since you control both sides.",
+                "text": " requests we provide them in the body of the request as JSON. You're free to design the API as you wish for your application, since you control both the frontend and the backend.",
                 "type": "text",
                 "version": 1
               }
@@ -263,7 +290,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ".  The main utility we use is ",
+                "text": ".  The main utility is ",
                 "type": "text",
                 "version": 1
               },
@@ -4546,7 +4573,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "In the frontend we want to the admin client to talk to the backend. But since we don't have direct access to the ",
+                "text": "In the frontend we want to use an admin client to talk to the backend. But since we don't have direct access to the ",
                 "type": "text",
                 "version": 1
               },
@@ -4600,7 +4627,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "). We use a middleware to intercept the operations, send them to the backend, and convert the JSON from the response back to JavaScript objects that we expect when calling the admin client. In ",
+                "text": "). By using a middleware we intercept the operations, send them to the backend, and convert the JSON from the response back to JavaScript objects. In ",
                 "type": "text",
                 "version": 1
               },
@@ -16082,6 +16109,18 @@
                 "highlightType": "punctuation"
               }
             ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/j52nq3xrxdz6qclcvmgg",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of the frontend with the form to create an entity and random messages."
+            },
+            "format": "",
+            "version": 1
           }
         ]
       }

@@ -7,7 +7,7 @@
     "status": "published"
   },
   "fields": {
-    "title": "Tutorial – setting up the server",
+    "title": "Tutorial – Setting up the server",
     "slug": "tutorial-server",
     "body": {
       "root": {
@@ -17,6 +17,33 @@
         "type": "root",
         "version": 1,
         "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 1,
+                "mode": "normal",
+                "style": "",
+                "text": "Goal for this step 🏁:",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " Have a working Data data server in the backend.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
           {
             "direction": "ltr",
             "format": "",
