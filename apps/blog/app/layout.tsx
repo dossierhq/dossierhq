@@ -9,7 +9,7 @@ export default function Layout({ children }: Props) {
     <html lang="en-US">
       <head>
         <meta name="viewport" content="width=device-width" />
-        <title>Data data</title>
+        <title>Data data – an open source, embeddable content platform</title>
       </head>
       <body>{children}</body>
     </html>
