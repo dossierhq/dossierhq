@@ -1,5 +1,5 @@
-import type { Database } from 'sql.js';
 import type { NotificationInfo } from '@jonasb/datadata-design';
+import type { Database } from 'sql.js';
 
 export function queryDatabaseSize(database: Database) {
   const result = database.exec('PRAGMA page_size; PRAGMA page_count');

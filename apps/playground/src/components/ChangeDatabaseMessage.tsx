@@ -48,6 +48,26 @@ export function ChangeDatabaseMessage({ className }: Props) {
         >
           Reset
         </Button>
+        <Text textStyle="headline5">Example: Data data documentation</Text>
+        <p>
+          The database used for the{' '}
+          <a href="https://datadata-blog.vercel.app/docs" target="_blank" rel="noopener noreferrer">
+            Data data documentation
+          </a>
+          .
+        </p>
+        <Button
+          className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
+          onClick={() =>
+            loadDatabaseFromUrl(
+              `${import.meta.env.BASE_URL}datadata-docs.sqlite`,
+              createDatabase,
+              showNotification
+            )
+          }
+        >
+          Load Data data docs
+        </Button>
         <Text textStyle="headline5">Example: Blog</Text>
         <p>An example database with fake blog posts and people.</p>
         <p>

@@ -114,11 +114,12 @@ function createCleanedUpEntity(adminSchema: AdminSchema, entity: AdminEntity<str
 
 export async function loadAllEntities(
   adminClient: AdminClient,
-  logger: Logger
+  logger: Logger,
+  dataDir: string
 ): PromiseResult<EntityReference[], ErrorType> {
   const loadedEntries: EntityReference[] = [];
 
-  const directoriesToLoad = [path.join('data', 'entities')];
+  const directoriesToLoad = [path.join(dataDir, 'entities')];
   const entitiesToRetry: { entryPath: string }[] = [];
 
   // Step 1: Traverse directories and attempt to load all entities (can fail on references)

@@ -10,6 +10,8 @@ import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
 import { createBlogServer } from '../utils/SharedServerUtils.js';
 
+const DATA_DIR = new URL('../data', import.meta.url).pathname;
+
 async function initializeServer(logger: Logger) {
   const SQL = await SqlJs.default();
   const db = new SQL.Database();
@@ -44,11 +46,11 @@ async function main(filename: string) {
   const logger = createConsoleLogger(console);
   const { server, database } = (await initializeServer(logger)).valueOrThrow();
   try {
-    (await updateSchemaSpecification(server, 'data/schema.json')).throwIfError();
+    (await updateSchemaSpecification(server, `${DATA_DIR}/schema.json`)).throwIfError();
 
     const session = (await server.createSession(SYSTEM_USERS.serverRenderer)).valueOrThrow();
     const adminClient = server.createAdminClient(session.context);
-    const entities = await loadAllEntities(adminClient, logger);
+    const entities = await loadAllEntities(adminClient, logger, DATA_DIR);
     if (entities.isOk()) {
       console.log(`Loaded ${entities.value.length} entities`);
       console.log(`Writing database to ${filename}`);

@@ -102,6 +102,7 @@ importers:
       rollup-plugin-visualizer: ~5.9.0
       sql.js: ~1.8.0
       swr: ~2.0.0
+      ts-node: ~10.9.1
       typescript: ~4.9.4
       vite: ~4.0.0
     dependencies:
@@ -134,6 +135,7 @@ importers:
       graphql-config: 4.4.0_graphql@16.6.0
       graphql-ws: 5.11.2_graphql@16.6.0
       rollup-plugin-visualizer: 5.9.0
+      ts-node: 10.9.1_typescript@4.9.4
       typescript: 4.9.4
       vite: 4.0.3
 
