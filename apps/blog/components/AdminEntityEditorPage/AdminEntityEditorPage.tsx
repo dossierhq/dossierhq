@@ -23,7 +23,7 @@ export default function AdminEntityEditorPage(): JSX.Element {
   return (
     <AppAdminDataDataProvider>
       <Head>
-        <title>Edit entities</title>
+        <title>Edit entities | Blog</title>
       </Head>
       <EntityEditorScreen
         header={<NavBar current="admin-entities" />}

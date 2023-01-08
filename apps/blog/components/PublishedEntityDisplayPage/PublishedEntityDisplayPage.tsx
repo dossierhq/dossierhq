@@ -10,7 +10,7 @@ export default function PublishedEntityDetailPage(): JSX.Element | null {
   return (
     <AppPublishedDataDataProvider>
       <Head>
-        <title>Published entities</title>
+        <title>Published entities | Blog</title>
       </Head>
       <PublishedEntityDisplayScreen
         header={<NavBar current="published-entities" />}

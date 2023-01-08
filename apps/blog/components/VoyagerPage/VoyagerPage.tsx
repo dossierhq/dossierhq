@@ -7,7 +7,7 @@ export default function VoyagerPage(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Voyager</title>
+        <title>Voyager | Blog</title>
       </Head>
       <FullscreenContainer>
         <FullscreenContainer.Row fullWidth>

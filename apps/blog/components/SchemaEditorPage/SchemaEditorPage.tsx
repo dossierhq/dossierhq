@@ -16,7 +16,7 @@ export default function SchemaEditorPage() {
   return (
     <AppAdminDataDataProvider>
       <Head>
-        <title>Schema</title>
+        <title>Schema | Blog</title>
       </Head>
       <SchemaEditorScreen
         header={<NavBar current="schema" />}

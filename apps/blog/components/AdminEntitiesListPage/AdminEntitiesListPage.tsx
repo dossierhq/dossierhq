@@ -24,7 +24,7 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
   return (
     <AppAdminDataDataProvider>
       <Head>
-        <title>Entities</title>
+        <title>Entities | Blog</title>
       </Head>
       <AdminEntityListScreen
         header={<NavBar current="admin-entities" />}

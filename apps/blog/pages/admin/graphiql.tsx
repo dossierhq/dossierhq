@@ -30,12 +30,12 @@ export default function GraphiQLPage(): JSX.Element {
       </script>
     </body>
   </html>`;
-  const iframe = <iframe srcDoc={src} frameBorder="0" style={{ width: '100%', height: '100%' }} />;
+  const iframe = <iframe srcDoc={src} style={{ width: '100%', height: '100%' }} />;
 
   return (
     <>
       <Head>
-        <title>GraphiQL</title>
+        <title>GraphiQL | Blog</title>
       </Head>
       <FullscreenContainer>
         <FullscreenContainer.Row fullWidth>
