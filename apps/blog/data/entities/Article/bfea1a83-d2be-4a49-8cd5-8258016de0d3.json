@@ -21248,6 +21248,156 @@
                 "highlightType": "punctuation"
               }
             ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Now we can access all the screens. The entities list screen looks like this:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/k3sj8tqqcsalahvticm2",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of the entities list screen"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Opening the edit screen for an entity looks like this:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/qrq0ugb7bnk1bgxceyrh",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of the entity edit screen"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The published entities list screen looks like this:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/mjnwdgw0iufvxnsph9ah",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of published entities list screen"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Opening the display entity screen for an entity looks like this:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/yiwndiocr04vwcmuokq3",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of display published entity screen"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "And finally, the schema editor screen looks like this:",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/c0eozm8u2qt8ehfgo76z",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of schema editor screen"
+            },
+            "format": "",
+            "version": 1
           }
         ]
       }

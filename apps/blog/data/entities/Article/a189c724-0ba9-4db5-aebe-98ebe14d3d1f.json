@@ -56,7 +56,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "In order to integrate with Auth0 for authentication and authorization we need to configure an application and an API in Auth0. For this tutorial we create a new tenant.",
+                "text": "In order to integrate with Auth0 for authentication and authorization we need to configure an application and an API in Auth0.",
                 "type": "text",
                 "version": 1
               }
@@ -74,7 +74,25 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "For the new application we set \"Application Type\" to \"Single Page Application\", and set \"Allowed Callback URLs\", \"Allowed Logout URLs\" and \"Allowed Web Origins\" to ",
+                "text": "Create a new tenant at Auth0.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Create a new application for the tenant, and set \"Application Type\" to \"Single Page Application\", and set \"Allowed Callback URLs\", \"Allowed Logout URLs\" and \"Allowed Web Origins\" to ",
                 "type": "text",
                 "version": 1
               },
@@ -92,7 +110,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ".\"",
+                "text": ".",
                 "type": "text",
                 "version": 1
               }
@@ -110,7 +128,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "For the API we set the identifier to ",
+                "text": "Create a new API for the tenant, and set the identifier to ",
                 "type": "text",
                 "version": 1
               },
@@ -5569,7 +5587,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'Admin entities'",
+                "text": "'Entities'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -7145,7 +7163,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "It's now possible to log in and log out. To expose the JSON Web Token (JWT) to the backend as the ",
+                "text": "It's now possible to log in on Auth0's login screen. You will need to sign up the first time.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/rszi3dasgpi4zllhm8s7",
+              "width": 2118,
+              "height": 1628,
+              "alt": "Screenshot of Auth0's login screen"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "To expose the JSON Web Token (JWT) to the backend as the ",
                 "type": "text",
                 "version": 1
               },
@@ -16280,6 +16328,46 @@
                 "version": 1
               }
             ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/enilirwp4vhz5rkzrfs2",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of a Message entity, created by an anonymous user with User private auth key"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": null,
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/hxutj1d8gjnuoooqkjom",
+              "width": 2118,
+              "height": 1040,
+              "alt": "Screenshot of empty entities list when logged in filtering on User private auth key"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": null,
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
           }
         ]
       }
