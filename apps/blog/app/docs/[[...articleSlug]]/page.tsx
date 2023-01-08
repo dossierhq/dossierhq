@@ -3,22 +3,18 @@ import { ArticleLexicalTheme } from '../../../style/ArticleLexicalTheme';
 import { assertIsPublishedArticle } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
+import { getArticle } from './getArticle';
 
 export default async function Page({ params }: { params: { articleSlug: string } }) {
-  const articleSlug = params.articleSlug ?? 'overview';
   const publishedClient = await getPublishedClientForServerComponent();
-  const entity = (
-    await publishedClient.getEntity({ index: 'articleSlug', value: articleSlug })
-  ).valueOrThrow();
-  assertIsPublishedArticle(entity);
-
+  const article = await getArticle(publishedClient, params.articleSlug);
   return (
     <>
       <Text as="h1" textStyle="headline3">
-        {entity.fields.title}
+        {article.fields.title}
       </Text>
       <ServerRichTextRenderer
-        richText={entity.fields.body}
+        richText={article.fields.body}
         publishedClient={publishedClient}
         theme={ArticleLexicalTheme}
       />
