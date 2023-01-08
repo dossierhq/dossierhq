@@ -5,7 +5,6 @@ import '@jonasb/datadata-leaflet/icons.css';
 import '@jonasb/datadata-leaflet/main.css';
 import 'graphql-voyager/dist/voyager.css';
 import 'leaflet/dist/leaflet.css';
-import { InBrowserServerProvider } from '../contexts/InBrowserServerContext';
 
 //TODO bundle CSS in ARC and remove need to add all css files here and to have direct dependencies to design/dd-leaflet/leaflet
 
@@ -18,11 +17,9 @@ function MyApp({
   pageProps: any;
 }): JSX.Element {
   return (
-    <InBrowserServerProvider>
-      <NotificationContainer>
-        <Component {...pageProps} />
-      </NotificationContainer>
-    </InBrowserServerProvider>
+    <NotificationContainer>
+      <Component {...pageProps} />
+    </NotificationContainer>
   );
 }
 

@@ -16,15 +16,12 @@ import {
   createConsoleLogger,
   isValueItemField,
 } from '@jonasb/datadata-core';
-import type { Server } from '@jonasb/datadata-server';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
-import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
 import { isPublishedCloudinaryImage } from '../utils/SchemaTypes';
-import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;
 
@@ -50,17 +47,13 @@ class PublishedContextAdapter implements PublishedDataDataContextAdapter {
 }
 
 export function AppPublishedDataDataProvider({ children }: { children: React.ReactNode }) {
-  const inBrowserValue = useContext(InBrowserServerContext);
-
   const args = useMemo(
     () => ({
-      publishedClient: inBrowserValue
-        ? createInBrowserPublishedClient(inBrowserValue.server)
-        : createBackendPublishedClient(),
+      publishedClient: createBackendPublishedClient(),
       adapter: new PublishedContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    [inBrowserValue]
+    []
   );
 
   const { publishedClient } = args;
@@ -72,12 +65,6 @@ export function AppPublishedDataDataProvider({ children }: { children: React.Rea
       {children}
     </PublishedDataDataProvider>
   );
-}
-
-function createInBrowserPublishedClient(server: Server | null) {
-  if (!server) return null;
-  const sessionResult = server.createSession(SYSTEM_USERS.editor);
-  return server.createPublishedClient(() => sessionResult);
 }
 
 function createBackendPublishedClient(): PublishedClient {

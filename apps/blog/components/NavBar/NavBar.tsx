@@ -4,7 +4,7 @@ import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
 import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';
-import { IN_BROWSER_DATABASE_URL } from '../../config/InBrowserServerConfig';
+import { ENABLE_WEB_INTERFACE } from '../../config/WebInterfaceConfig';
 import logo from '../../public/logo.svg';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import { LinkButton } from '../LinkButton/LinkButton';
@@ -44,35 +44,25 @@ export function NavBar({
         <DesignNavbar.Item active={current === 'docs'}>
           {NavItemRender('Docs', BrowserUrls.docs)}
         </DesignNavbar.Item>
-        <DesignNavbar.Dropdown renderLink={(className) => <a className={className}>Admin</a>}>
-          <DesignNavbar.Item active={current === 'admin-entities'}>
-            {NavItemRender('Entities', BrowserUrls.adminEntities)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'published-entities'}>
-            {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'schema'}>
-            {NavItemRender('Schema', BrowserUrls.schemaEditor)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'graphiql'}>
-            {NavItemRender('GraphiQL', BrowserUrls.graphiql)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'voyager'}>
-            {NavItemRender('Voyager', BrowserUrls.voyager)}
-          </DesignNavbar.Item>
-          {IN_BROWSER_DATABASE_URL ? (
-            <>
-              <DesignNavbar.DropdownDivider />
-              <DesignNavbar.DropdownContentItem>
-                ⚠️ Changes to the database will only
-                <br />
-                be stored in your browser and will
-                <br />
-                be reset when refreshing the page.
-              </DesignNavbar.DropdownContentItem>
-            </>
-          ) : null}
-        </DesignNavbar.Dropdown>
+        {ENABLE_WEB_INTERFACE ? (
+          <>
+            <DesignNavbar.Item active={current === 'admin-entities'}>
+              {NavItemRender('Entities', BrowserUrls.adminEntities)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'published-entities'}>
+              {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'schema'}>
+              {NavItemRender('Schema', BrowserUrls.schemaEditor)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'graphiql'}>
+              {NavItemRender('GraphiQL', BrowserUrls.graphiql)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'voyager'}>
+              {NavItemRender('Voyager', BrowserUrls.voyager)}
+            </DesignNavbar.Item>
+          </>
+        ) : null}
         <DesignNavbar.End>
           <DesignNavbar.Item>
             {({ className }) => (

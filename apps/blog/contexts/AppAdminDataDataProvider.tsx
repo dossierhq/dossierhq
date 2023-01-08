@@ -26,15 +26,12 @@ import {
   FieldType,
   isValueItemField,
 } from '@jonasb/datadata-core';
-import type { Server } from '@jonasb/datadata-server';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';
-import { SYSTEM_USERS } from '../config/SystemUsers';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
 import { isAdminCloudinaryImage } from '../utils/SchemaTypes';
-import { InBrowserServerContext } from './InBrowserServerContext';
 
 type BackendContext = ClientContext;
 
@@ -75,18 +72,15 @@ class AdminContextAdapter implements AdminDataDataContextAdapter {
 }
 
 export function AppAdminDataDataProvider({ children }: { children: React.ReactNode }) {
-  const inBrowserValue = useContext(InBrowserServerContext);
   const cachingMiddleware = useCachingAdminMiddleware();
 
   const args = useMemo(
     () => ({
-      adminClient: inBrowserValue
-        ? createInBrowserAdminClient(inBrowserValue.server, cachingMiddleware)
-        : createBackendAdminClient(cachingMiddleware),
+      adminClient: createBackendAdminClient(cachingMiddleware),
       adapter: new AdminContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    [inBrowserValue, cachingMiddleware]
+    [cachingMiddleware]
   );
 
   const { adminClient } = args;
@@ -98,16 +92,6 @@ export function AppAdminDataDataProvider({ children }: { children: React.ReactNo
       {children}
     </AdminDataDataProvider>
   );
-}
-
-function createInBrowserAdminClient(
-  server: Server | null,
-  cachingMiddleware: AdminClientMiddleware<BackendContext>
-) {
-  if (!server) return null;
-
-  const sessionResult = server.createSession(SYSTEM_USERS.editor);
-  return server.createAdminClient(() => sessionResult, [cachingMiddleware]);
 }
 
 function createBackendAdminClient(
