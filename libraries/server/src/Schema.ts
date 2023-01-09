@@ -5,21 +5,22 @@ import type {
   PromiseResult,
   SchemaSpecificationUpdatePayload,
 } from '@jonasb/datadata-core';
-import { AdminSchema, ok } from '@jonasb/datadata-core';
+import { AdminSchema, isFieldValueEqual, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-database-adapter';
 
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
-  context: TransactionContext
+  context: TransactionContext,
+  initialLoad: boolean
 ): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
   const { logger } = context;
-  logger.info('Loading schema');
+  if (initialLoad) logger.info('Loading schema');
   const result = await databaseAdapter.schemaGetSpecification(context);
   if (result.isError()) return result;
 
   const specification = result.value;
   if (!specification) {
-    logger.info('No schema set, defaulting to empty');
+    if (initialLoad) logger.info('No schema set, defaulting to empty');
     return ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
   }
 
@@ -35,13 +36,15 @@ export async function getSchemaSpecification(
     }
   }
 
-  logger.info(
-    'Loaded schema with %d entity types, %d value types, %d patterns, %d indexes',
-    specification.entityTypes.length,
-    specification.valueTypes.length,
-    specification.patterns.length,
-    specification.indexes.length
-  );
+  if (initialLoad) {
+    logger.info(
+      'Loaded schema with %d entity types, %d value types, %d patterns, %d indexes',
+      specification.entityTypes.length,
+      specification.valueTypes.length,
+      specification.patterns.length,
+      specification.indexes.length
+    );
+  }
   return ok(specification);
 }
 
@@ -53,8 +56,16 @@ export async function updateSchemaSpecification(
   SchemaSpecificationUpdatePayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  return await context.withTransaction(async (context) => {
-    const previousSpecificationResult = await getSchemaSpecification(databaseAdapter, context);
+  return await context.withTransaction<
+    SchemaSpecificationUpdatePayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >(async (context) => {
+    const { logger } = context;
+    const previousSpecificationResult = await getSchemaSpecification(
+      databaseAdapter,
+      context,
+      false
+    );
     if (previousSpecificationResult.isError()) return previousSpecificationResult;
 
     const oldSchema = new AdminSchema(previousSpecificationResult.value);
@@ -62,9 +73,20 @@ export async function updateSchemaSpecification(
     if (mergeResult.isError()) return mergeResult;
     const newSchema = mergeResult.value;
 
-    // TODO return with 'none' if same as previous schema
+    if (isFieldValueEqual(oldSchema.spec, newSchema.spec)) {
+      return ok({ effect: 'none', schemaSpecification: newSchema.spec });
+    }
+
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) return updateResult;
+
+    logger.info(
+      'Updated schema, new schema has %d entity types, %d value types, %d patterns, %d indexes',
+      newSchema.spec.entityTypes.length,
+      newSchema.spec.valueTypes.length,
+      newSchema.spec.patterns.length,
+      newSchema.spec.indexes.length
+    );
 
     return ok({ effect: 'updated', schemaSpecification: newSchema.spec });
   });

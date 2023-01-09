@@ -15,7 +15,7 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(null)));
-    const result = await getSchemaSpecification(databaseAdapter, context);
+    const result = await getSchemaSpecification(databaseAdapter, context, false);
 
     // defaults to empty spec
     expectResultValue(result, { entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
@@ -40,7 +40,7 @@ describe('AdminSchema getSchema', () => {
       indexes: [],
     };
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
-    const result = await getSchemaSpecification(databaseAdapter, context);
+    const result = await getSchemaSpecification(databaseAdapter, context, false);
 
     expectResultValue(result, schemaSpec);
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))

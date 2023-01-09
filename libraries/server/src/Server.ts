@@ -72,7 +72,7 @@ export class ServerImpl {
 
   async reloadSchema(context: InternalContext): PromiseResult<void, typeof ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
-    const result = await getSchemaSpecification(this.#databaseAdapter, context);
+    const result = await getSchemaSpecification(this.#databaseAdapter, context, true);
     if (result.isError()) {
       return result;
     }
