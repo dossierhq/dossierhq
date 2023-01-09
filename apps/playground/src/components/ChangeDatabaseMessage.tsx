@@ -130,8 +130,8 @@ export function ChangeDatabaseMessage({ className }: Props) {
         >
           Load Star Wars
         </Button>
-        <Text textStyle="headline5">Upload new database</Text>
-        <p>You can upload a database that you’ve downloaded from the Playground before.</p>
+        <Text textStyle="headline5">Upload database</Text>
+        <p>You can upload a database that you’ve previously downloaded from the Playground.</p>
         <File
           className={toSpacingClassName({ marginTop: 2 })}
           accept=".sqlite, application/x-sqlite3"

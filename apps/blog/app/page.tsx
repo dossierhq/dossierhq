@@ -82,8 +82,8 @@ export default function Page() {
           <Text textStyle="body1">
             Data data enables you to build solutions where you’re in full control of the data. By
             bringing your own auth (authentication and authorization), database and server, you can
-            build a traditional headless Content Management System (CMS). You can also skip the
-            browser interface and use Data data to manage the data in a backend or app.
+            build a traditional headless Content Management System (CMS). You can also skip the web
+            interface and use Data data to manage the data in a backend or app.
           </Text>
           <Card2>
             <Card2.Header>
