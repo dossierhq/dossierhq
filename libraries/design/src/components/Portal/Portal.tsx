@@ -8,7 +8,9 @@ interface Props {
 
 export function Portal({ children }: Props) {
   const [container] = useState(() => {
-    return document.createElement('div');
+    const div = document.createElement('div');
+    div.setAttribute('class', 'portal-container');
+    return div;
   });
 
   useEffect(() => {
