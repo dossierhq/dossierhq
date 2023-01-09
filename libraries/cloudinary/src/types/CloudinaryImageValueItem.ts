@@ -1,4 +1,5 @@
-import type { ValueItem } from '@jonasb/datadata-core';
+import type { AdminValueTypeSpecificationUpdate, ValueItem } from '@jonasb/datadata-core';
+import { FieldType } from '@jonasb/datadata-core';
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
@@ -28,3 +29,13 @@ export function isPublishedCloudinaryImage(
 ): valueItem is PublishedCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
+
+export const CLOUDINARY_IMAGE_VALUE_TYPE: AdminValueTypeSpecificationUpdate = {
+  name: 'CloudinaryImage',
+  fields: [
+    { name: 'publicId', type: FieldType.String, required: true },
+    { name: 'width', type: FieldType.Number, integer: true, required: true },
+    { name: 'height', type: FieldType.Number, integer: true, required: true },
+    { name: 'alt', type: FieldType.String },
+  ],
+};
