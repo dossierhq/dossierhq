@@ -158,6 +158,25 @@
                     "version": 1
                   }
                 ]
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "listitem",
+                "version": 1,
+                "value": 7,
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Cloudinary for images",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
               }
             ]
           }

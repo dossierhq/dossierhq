@@ -1,3 +1,4 @@
+import { CLOUDINARY_IMAGE_VALUE_TYPE } from '@jonasb/datadata-cloudinary';
 import {
   AdminClientJsonOperationArgs,
   AdminClientModifyingOperations,
@@ -83,9 +84,13 @@ async function updateSchema(adminClient: AppAdminClient) {
     entityTypes: [
       {
         name: 'Message',
-        fields: [{ name: 'message', type: FieldType.String, required: true, isName: true }],
+        fields: [
+          { name: 'message', type: FieldType.String, required: true, isName: true },
+          { name: 'image', type: FieldType.ValueItem, valueTypes: ['CloudinaryImage'] },
+        ],
       },
     ],
+    valueTypes: [CLOUDINARY_IMAGE_VALUE_TYPE],
   });
   if (schemaResult.isError()) return schemaResult;
 

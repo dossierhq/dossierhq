@@ -54,7 +54,7 @@
               "id": "e20ac669-98d9-4cef-9144-ca3b7bb7fec6"
             }
           }
-       ]
+        ]
       },
       {
         "type": "TocItem",
@@ -128,6 +128,13 @@
             "title": "⤷ auth",
             "article": {
               "id": "a189c724-0ba9-4db5-aebe-98ebe14d3d1f"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "⤷ images",
+            "article": {
+              "id": "a537a671-b77f-4095-a203-ddfe6b7bdbbb"
             }
           }
         ]
