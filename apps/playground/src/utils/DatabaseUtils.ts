@@ -1,5 +1,7 @@
 import type { NotificationInfo } from '@jonasb/datadata-design';
+import type { NavigateFunction } from 'react-router-dom';
 import type { Database } from 'sql.js';
+import { ROUTE } from './RouteUtils.js';
 
 export function queryDatabaseSize(database: Database) {
   const result = database.exec('PRAGMA page_size; PRAGMA page_count');
@@ -24,7 +26,8 @@ export function resetDatabase(
 export async function loadDatabaseFromUrl(
   url: string,
   createDatabase: (data: Uint8Array | null) => void,
-  showNotification: (notification: NotificationInfo) => void
+  showNotification: (notification: NotificationInfo) => void,
+  navigate: NavigateFunction
 ) {
   if (!window.confirm('Are you sure you want to delete the current database?')) {
     return;
@@ -41,6 +44,7 @@ export async function loadDatabaseFromUrl(
     const data = new Uint8Array(buffer);
     createDatabase(data);
     showNotification({ color: 'success', message: 'New database loaded' });
+    navigate(ROUTE.adminEntities.url);
   } else {
     showNotification({ color: 'error', message: 'Failed downloading database' });
   }

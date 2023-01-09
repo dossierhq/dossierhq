@@ -11,6 +11,7 @@ import reviewsUrl from 'playground-example-generator/dist/reviews.sqlite?url';
 import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
 import type { ChangeEvent } from 'react';
 import { useCallback, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';
 import { loadDatabaseFromUrl, resetDatabase, uploadDatabase } from '../utils/DatabaseUtils.js';
 
@@ -21,6 +22,7 @@ interface Props {
 export function ChangeDatabaseMessage({ className }: Props) {
   const { database, createDatabase } = useContext(DatabaseContext);
   const { showNotification } = useContext(NotificationContext);
+  const navigate = useNavigate();
 
   const handleFileChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +64,8 @@ export function ChangeDatabaseMessage({ className }: Props) {
             loadDatabaseFromUrl(
               `${import.meta.env.BASE_URL}datadata-docs.sqlite`,
               createDatabase,
-              showNotification
+              showNotification,
+              navigate
             )
           }
         >
@@ -83,7 +86,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
         </p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() => loadDatabaseFromUrl(blogUrl, createDatabase, showNotification)}
+          onClick={() => loadDatabaseFromUrl(blogUrl, createDatabase, showNotification, navigate)}
         >
           Load Blog
         </Button>
@@ -101,7 +104,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
         </p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() => loadDatabaseFromUrl(reviewsUrl, createDatabase, showNotification)}
+          onClick={() =>
+            loadDatabaseFromUrl(reviewsUrl, createDatabase, showNotification, navigate)
+          }
         >
           Load Reviews
         </Button>
@@ -119,7 +124,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
         </p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() => loadDatabaseFromUrl(starwarsUrl, createDatabase, showNotification)}
+          onClick={() =>
+            loadDatabaseFromUrl(starwarsUrl, createDatabase, showNotification, navigate)
+          }
         >
           Load Star Wars
         </Button>
