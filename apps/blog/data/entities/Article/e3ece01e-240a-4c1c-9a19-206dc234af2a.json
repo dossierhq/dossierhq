@@ -57,6 +57,25 @@
             "direction": "ltr",
             "format": "",
             "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Create schema with entity type",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
             "type": "paragraph",
             "version": 1,
             "children": [
@@ -285,6 +304,25 @@
             "direction": "ltr",
             "format": "",
             "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Create entity",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
             "type": "paragraph",
             "version": 1,
             "children": [
@@ -370,6 +408,25 @@
             },
             "format": "",
             "version": 1
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Publish entity",
+                "type": "text",
+                "version": 1
+              }
+            ]
           },
           {
             "direction": "ltr",
@@ -466,6 +523,18 @@
                 "version": 1
               }
             ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/jjvesnkdqmu3rhpwc6ps",
+              "width": 2644,
+              "height": 1506,
+              "alt": "Published entities screen with one entity"
+            },
+            "format": "",
+            "version": 1
           },
           {
             "direction": "ltr",
