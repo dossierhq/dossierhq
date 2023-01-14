@@ -28,7 +28,7 @@ const DialogStatus = {
   noChange: 'noChange',
   valid: 'valid',
 } as const;
-type DialogStatus = typeof DialogStatus[keyof typeof DialogStatus];
+type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 
 //TODO use from core?
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;

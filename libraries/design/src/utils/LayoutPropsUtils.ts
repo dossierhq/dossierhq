@@ -1,7 +1,7 @@
 import { toClassName } from './ClassNameUtils.js';
 import type { FlexContainerProps } from './FlexboxUtils.js';
 
-export type SpacingValue = typeof SpacingValues[number];
+export type SpacingValue = (typeof SpacingValues)[number];
 export const SpacingValues = [0, 1, 2, 3, 4, 5, 6] as const;
 
 export interface SpacingProps extends MarginProps, PaddingProps, GapProps {}

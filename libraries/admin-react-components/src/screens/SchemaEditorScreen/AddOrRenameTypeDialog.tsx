@@ -29,7 +29,7 @@ const DialogStatus = {
   valid: 'valid',
 } as const;
 
-type DialogStatus = typeof DialogStatus[keyof typeof DialogStatus];
+type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 
 //TODO move to core? add check to core
 const NAME_REGEXP = /^[A-Z][a-zA-Z0-9_]*$/;

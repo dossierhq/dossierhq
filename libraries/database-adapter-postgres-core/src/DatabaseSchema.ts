@@ -7,7 +7,7 @@ export const UniqueConstraints = {
   principals_provider_identifier_key: 'principals_provider_identifier_key',
   unique_index_values_index_name_value_key: 'unique_index_values_index_name_value_key',
 } as const;
-export type UniqueConstraints = typeof UniqueConstraints[keyof typeof UniqueConstraints];
+export type UniqueConstraints = (typeof UniqueConstraints)[keyof typeof UniqueConstraints];
 
 export interface AdvisoryLocksTable {
   id: number;

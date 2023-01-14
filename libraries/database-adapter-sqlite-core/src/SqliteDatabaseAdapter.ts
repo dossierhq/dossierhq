@@ -82,7 +82,7 @@ export interface SqliteDatabaseAdapter {
 export type SqliteDatabaseOptions = (
   | { migrate: false }
   | ({ migrate: true } & SqliteDatabaseMigrationOptions)
-) & { journalMode?: typeof supportedJournalModes[number] };
+) & { journalMode?: (typeof supportedJournalModes)[number] };
 
 export interface SqliteDatabaseMigrationOptions {
   fts: {
@@ -133,7 +133,7 @@ export async function createSqliteDatabaseAdapterAdapter(
 async function setJournalMode(
   database: Database,
   context: TransactionContext,
-  journalMode: typeof supportedJournalModes[number]
+  journalMode: (typeof supportedJournalModes)[number]
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (!supportedJournalModes.includes(journalMode)) {
     return notOk.Generic(`Unsupported journal mode (${journalMode})`);

@@ -47,7 +47,7 @@ export const ICON_NAMES = [
   'upload',
 ] as const;
 
-export type IconName = typeof ICON_NAMES[number];
+export type IconName = (typeof ICON_NAMES)[number];
 
 const containerSize = {
   small: 'is-small',

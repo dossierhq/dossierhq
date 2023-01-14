@@ -51,7 +51,7 @@
     "@types/uuid": "~9.0.0",
     "dotenv": "~16.0.3",
     "eslint": "~8.31.0",
-    "prettier": "2.8.1",
+    "prettier": "2.8.2",
     "typescript": "~4.9.4",
     "uuid": "~9.0.0",
     "vitest": "0.27.1"

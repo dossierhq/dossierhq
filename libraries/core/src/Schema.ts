@@ -49,7 +49,7 @@ export const FieldType = {
   String: 'String',
   ValueItem: 'ValueItem',
 } as const;
-export type FieldType = typeof FieldType[keyof typeof FieldType];
+export type FieldType = (typeof FieldType)[keyof typeof FieldType];
 
 export const RichTextNodeType = {
   code: 'code',
@@ -65,7 +65,7 @@ export const RichTextNodeType = {
   text: 'text',
   valueItem: 'valueItem',
 } as const;
-export type RichTextNodeType = typeof RichTextNodeType[keyof typeof RichTextNodeType];
+export type RichTextNodeType = (typeof RichTextNodeType)[keyof typeof RichTextNodeType];
 
 interface SharedFieldSpecification {
   name: string;
