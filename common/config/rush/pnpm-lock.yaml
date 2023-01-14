@@ -461,7 +461,7 @@ importers:
       babel-loader: ~9.1.0
       eslint: ~8.31.0
       eslint-plugin-import: ~2.27.4
-      eslint-plugin-react: ~7.31.11
+      eslint-plugin-react: ~7.32.0
       eslint-plugin-react-hooks: ~4.6.0
       eslint-plugin-storybook: ~0.6.4
       leaflet: ~1.9.3
@@ -514,7 +514,7 @@ importers:
       babel-loader: 9.1.0_@babel+core@7.20.2
       eslint: 8.31.0
       eslint-plugin-import: 2.27.4_eslint@8.31.0
-      eslint-plugin-react: 7.31.11_eslint@8.31.0
+      eslint-plugin-react: 7.32.0_eslint@8.31.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.31.0
       eslint-plugin-storybook: 0.6.4_iukboom6ndih5an6iafl45j2fe
       prettier: 2.8.1
@@ -944,7 +944,7 @@ importers:
       babel-loader: ~9.1.0
       bulma: ~0.9.4
       eslint: ~8.31.0
-      eslint-plugin-react: ~7.31.11
+      eslint-plugin-react: ~7.32.0
       eslint-plugin-react-hooks: ~4.6.0
       eslint-plugin-storybook: ~0.6.4
       lodash: ~4.17.21
@@ -984,7 +984,7 @@ importers:
       babel-loader: 9.1.0_@babel+core@7.20.2
       bulma: 0.9.4
       eslint: 8.31.0
-      eslint-plugin-react: 7.31.11_eslint@8.31.0
+      eslint-plugin-react: 7.32.0_eslint@8.31.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.31.0
       eslint-plugin-storybook: 0.6.4_iukboom6ndih5an6iafl45j2fe
       mini-svg-data-uri: 1.4.4
@@ -1004,7 +1004,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ~5.48.0
       '@typescript-eslint/parser': ~5.48.0
       eslint: ~8.31.0
-      eslint-plugin-react: ~7.31.11
+      eslint-plugin-react: ~7.32.0
       eslint-plugin-react-hooks: ~4.6.0
       prettier: 2.8.1
       react: ~18.2.0
@@ -1024,7 +1024,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.48.0_k73wpmdolxikpyqun3p36akaaq
       '@typescript-eslint/parser': 5.48.0_iukboom6ndih5an6iafl45j2fe
       eslint: 8.31.0
-      eslint-plugin-react: 7.31.11_eslint@8.31.0
+      eslint-plugin-react: 7.32.0_eslint@8.31.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.31.0
       prettier: 2.8.1
       typescript: 4.9.4
@@ -1188,12 +1188,12 @@ importers:
     specifiers:
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/eslint-patch': ~1.2.0
-      eslint-plugin-react: ~7.31.11
+      eslint-plugin-react: ~7.32.0
       eslint-plugin-react-hooks: ~4.6.0
     dependencies:
       '@jonasb/eslint-config-datadata-generic': link:../eslint-config-generic
       '@rushstack/eslint-patch': 1.2.0
-      eslint-plugin-react: 7.31.11
+      eslint-plugin-react: 7.32.0
       eslint-plugin-react-hooks: 4.6.0
 
   ../../templates/library:
@@ -1313,7 +1313,7 @@ importers:
       eslint: ~8.31.0
       eslint-config-next: ~13.1.0
       eslint-plugin-import: ~2.27.4
-      eslint-plugin-react: ~7.31.11
+      eslint-plugin-react: ~7.32.0
       eslint-plugin-react-hooks: ~4.6.0
       eslint-plugin-storybook: ~0.6.4
       express: ~4.18.1
@@ -1408,7 +1408,7 @@ importers:
       eslint: 8.31.0
       eslint-config-next: 13.1.0_iukboom6ndih5an6iafl45j2fe
       eslint-plugin-import: 2.27.4_eslint@8.31.0
-      eslint-plugin-react: 7.31.11_eslint@8.31.0
+      eslint-plugin-react: 7.32.0_eslint@8.31.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.31.0
       eslint-plugin-storybook: 0.6.4_iukboom6ndih5an6iafl45j2fe
       express: 4.18.1
@@ -11165,7 +11165,7 @@ packages:
       eslint-import-resolver-typescript: 3.5.2_hnftvkj7qg3s6bbigj4pr6djxy
       eslint-plugin-import: 2.27.4_eslint@8.31.0
       eslint-plugin-jsx-a11y: 6.5.1_eslint@8.31.0
-      eslint-plugin-react: 7.31.11_eslint@8.31.0
+      eslint-plugin-react: 7.32.0_eslint@8.31.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.31.0
       typescript: 4.9.4
     transitivePeerDependencies:
@@ -11273,8 +11273,8 @@ packages:
     dependencies:
       eslint: 8.31.0
 
-  /eslint-plugin-react/7.31.11:
-    resolution: {integrity: sha512-TTvq5JsT5v56wPa9OYHzsrOlHzKZKjV+aLgS+55NJP/cuzdiQPC7PfYoUjMoxlffKtvijpk7vA/jmuqRb9nohw==}
+  /eslint-plugin-react/7.32.0:
+    resolution: {integrity: sha512-vSBi1+SrPiLZCGvxpiZIa28fMEUaMjXtCplrvxcIxGzmFiYdsXQDwInEjuv5/i/2CTTxbkS87tE8lsQ0Qxinbw==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
@@ -11291,13 +11291,13 @@ packages:
       object.hasown: 1.1.2
       object.values: 1.1.6
       prop-types: 15.8.1
-      resolve: 2.0.0-next.3
+      resolve: 2.0.0-next.4
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
     dev: false
 
-  /eslint-plugin-react/7.31.11_eslint@8.31.0:
-    resolution: {integrity: sha512-TTvq5JsT5v56wPa9OYHzsrOlHzKZKjV+aLgS+55NJP/cuzdiQPC7PfYoUjMoxlffKtvijpk7vA/jmuqRb9nohw==}
+  /eslint-plugin-react/7.32.0_eslint@8.31.0:
+    resolution: {integrity: sha512-vSBi1+SrPiLZCGvxpiZIa28fMEUaMjXtCplrvxcIxGzmFiYdsXQDwInEjuv5/i/2CTTxbkS87tE8lsQ0Qxinbw==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
@@ -11315,7 +11315,7 @@ packages:
       object.hasown: 1.1.2
       object.values: 1.1.6
       prop-types: 15.8.1
-      resolve: 2.0.0-next.3
+      resolve: 2.0.0-next.4
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
 
@@ -16819,11 +16819,13 @@ packages:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  /resolve/2.0.0-next.3:
-    resolution: {integrity: sha512-W8LucSynKUIDu9ylraa7ueVZ7hc0uAgJBxVsQSKOXOyle8a93qXhcz+XAXZ8bIq2d6i4Ehddn6Evt+0/UwKk6Q==}
+  /resolve/2.0.0-next.4:
+    resolution: {integrity: sha512-iMDbmAWtfU+MHpxt/I5iWI7cY6YVEZUQ3MBgPQ++XD1PELuJHIl82xBmObyP2KyQmkNB2dsqF7seoQQiAn5yDQ==}
+    hasBin: true
     dependencies:
       is-core-module: 2.11.0
       path-parse: 1.0.7
+      supports-preserve-symlinks-flag: 1.0.0
 
   /responselike/1.0.2:
     resolution: {integrity: sha512-/Fpe5guzJk1gPqdJLJR5u7eG/gNY4nImjbRDaVWVMRhne55TCmj2i9Q+54PBRfatRC8v/rIiv9BN0pMd9OV5EQ==}
