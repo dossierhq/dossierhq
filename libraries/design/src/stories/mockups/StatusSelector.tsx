@@ -14,7 +14,7 @@ import type { StatusColor } from '../../config/Colors.js';
 
 export interface StatusItem extends MultipleSelectorItem {
   name: string;
-  color: typeof StatusColor[keyof typeof StatusColor];
+  color: (typeof StatusColor)[keyof typeof StatusColor];
 }
 
 export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;

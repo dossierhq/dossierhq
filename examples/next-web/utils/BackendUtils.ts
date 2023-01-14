@@ -13,7 +13,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   admin: (
-    operationName: typeof AdminClientOperationName[keyof typeof AdminClientOperationName],
+    operationName: (typeof AdminClientOperationName)[keyof typeof AdminClientOperationName],
     args?: AdminClientJsonOperationArgs
   ): string =>
     `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
@@ -21,7 +21,7 @@ export const urls = {
       { keepEmptyObjects: true }
     )}`,
   published: (
-    operationName: typeof PublishedClientOperationName[keyof typeof PublishedClientOperationName],
+    operationName: (typeof PublishedClientOperationName)[keyof typeof PublishedClientOperationName],
     args?: PublishedClientJsonOperationArgs
   ): string =>
     `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(

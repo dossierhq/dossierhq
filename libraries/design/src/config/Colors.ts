@@ -6,7 +6,7 @@ export const StatusColor = {
   archived: 'archived',
 } as const;
 
-export type StatusColor = typeof StatusColor[keyof typeof StatusColor];
+export type StatusColor = (typeof StatusColor)[keyof typeof StatusColor];
 
 const BulmaColor = {
   black: 'black',
@@ -26,7 +26,7 @@ export const Color = {
   ...BulmaColor,
 };
 
-export type Color = typeof Color[keyof typeof Color];
+export type Color = (typeof Color)[keyof typeof Color];
 
 const statusColorMap: Record<StatusColor, string> = {
   draft: 'light',

@@ -286,7 +286,7 @@ function BlockFormatDropDown({
   const currentBlockConfig = blockTypeToBlockName[blockType];
 
   const handleItemClick = useCallback(
-    (item: typeof items[number]) => {
+    (item: (typeof items)[number]) => {
       switch (item.id) {
         case 'paragraph':
           if (blockType !== 'paragraph') {
@@ -402,7 +402,7 @@ function CodeLanguageDropdown({
   }));
 
   const handleItemClick = useCallback(
-    (item: typeof items[number]) => {
+    (item: (typeof items)[number]) => {
       editor.update(() => {
         if (selectedElementKey !== null) {
           const node = $getNodeByKey(selectedElementKey);

@@ -128,7 +128,7 @@ export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
 }
 
 export function getAdapterForType(
-  fieldType: typeof FieldType[keyof typeof FieldType]
+  fieldType: (typeof FieldType)[keyof typeof FieldType]
 ): FieldTypeAdapter {
   const result = adapters[fieldType];
   if (!result) {

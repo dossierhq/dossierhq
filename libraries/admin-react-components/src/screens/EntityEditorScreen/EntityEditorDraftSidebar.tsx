@@ -31,7 +31,7 @@ const ActivityFilter = {
   Versions: 'Versions',
   Publishing: 'Publishing',
 } as const;
-type ActivityFilter = typeof ActivityFilter[keyof typeof ActivityFilter];
+type ActivityFilter = (typeof ActivityFilter)[keyof typeof ActivityFilter];
 
 export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistory }: Props) {
   const { adminClient, authKeys } = useContext(AdminDataDataContext);
