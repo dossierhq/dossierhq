@@ -9,13 +9,13 @@
 # this avoids problems that would otherwise result due to a missing variable being replaced by
 # an empty string.
 #
-# \* \* _ SECURITY WARNING _ \* \*
+# * * _ SECURITY WARNING _ * *
 #
 # It is NOT recommended to store authentication tokens in a text file on a lab machine, because
 # other unrelated processes may be able to read the file. Also, the file may persist indefinitely,
 # for example if the machine loses power. A safer practice is to pass the token via an
 # environment variable, which can be referenced from .npmrc using ${} expansion. For example:
 #
-# //registry.npmjs.org/:\_authToken=${NPM_AUTH_TOKEN}
+# //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
 #
-//registry.npmjs.org/:\_authToken=${NPM_AUTH_TOKEN}
+//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
