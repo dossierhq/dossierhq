@@ -373,27 +373,27 @@
     {
       "packageName": "@dossierhq/react-components",
       "projectFolder": "libraries/react-components",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/core",
       "projectFolder": "libraries/core",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/core-vitest",
       "projectFolder": "libraries/core-vitest",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/database-adapter",
       "projectFolder": "libraries/database-adapter",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/postgres-core",
       "projectFolder": "libraries/postgres-core",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/deno-postgres",
@@ -402,7 +402,7 @@
     {
       "packageName": "@dossierhq/pg",
       "projectFolder": "libraries/pg",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/better-sqlite3",
@@ -427,12 +427,12 @@
     {
       "packageName": "@dossierhq/integration-test",
       "projectFolder": "libraries/integration-test",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/design",
       "projectFolder": "libraries/design",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/design-ssr",
@@ -465,32 +465,32 @@
     {
       "packageName": "@dossierhq/cloudinary",
       "projectFolder": "libraries/cloudinary",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/graphql",
       "projectFolder": "libraries/graphql",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/leaflet",
       "projectFolder": "libraries/leaflet",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/postgres-tools",
       "projectFolder": "libraries/postgres-tools",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/server",
       "projectFolder": "libraries/server",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/typescript-generator",
       "projectFolder": "libraries/typescript-generator",
-      "versionPolicyName": "DataDataFramework"
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/heft-node-rig",

@@ -11,7 +11,7 @@
 [
   {
     "definitionName": "lockStepVersion",
-    "policyName": "DataDataFramework",
+    "policyName": "DossierFramework",
     "version": "0.1.38",
     "nextBump": "patch"
   },
