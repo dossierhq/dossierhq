@@ -439,23 +439,23 @@
       "projectFolder": "libraries/design-ssr"
     },
     {
-      "packageName": "dossierhq-examples-benchmark",
+      "packageName": "@dossierhq/example-benchmark",
       "projectFolder": "examples/benchmark"
     },
     {
-      "packageName": "datadata-examples-bun",
+      "packageName": "@dossierhq/example-bun",
       "projectFolder": "examples/bun"
     },
     {
-      "packageName": "datadata-examples-deno",
+      "packageName": "@dossierhq/example-deno",
       "projectFolder": "examples/deno"
     },
     {
-      "packageName": "datadata-examples-foo",
+      "packageName": "@dossierhq/example-foo",
       "projectFolder": "examples/foo"
     },
     {
-      "packageName": "datadata-examples-next-web",
+      "packageName": "@dossierhq/example-next-web",
       "projectFolder": "examples/next-web"
     },
     {

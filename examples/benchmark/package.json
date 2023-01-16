@@ -1,5 +1,5 @@
 {
-  "name": "dossierhq-examples-benchmark",
+  "name": "@dossierhq/example-benchmark",
   "version": "0.1.0",
   "description": "",
   "type": "module",

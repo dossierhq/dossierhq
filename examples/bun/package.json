@@ -1,5 +1,5 @@
 {
-  "name": "datadata-examples-bun",
+  "name": "@dossierhq/example-bun",
   "version": "1.0.0",
   "description": "",
   "type": "module",

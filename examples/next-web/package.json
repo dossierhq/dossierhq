@@ -1,12 +1,12 @@
 {
-  "name": "datadata-examples-next-web",
+  "name": "@dossierhq/example-next-web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && npm run eslint:check && npm run test && npm run build-app",
-    "clean": "rm -rf .next/ && rm -f datadata-examples-next-web.build.log tsconfig.tsbuildinfo",
+    "clean": "rm -rf .next/ && rm -f @dossierhq/example-next-web.build.log tsconfig.tsbuildinfo",
     "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
