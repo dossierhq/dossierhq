@@ -18,6 +18,6 @@
     "@dossierhq/deno-postgres": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@jonasb/datadata-template-library": "workspace:*"
+    "@dossierhq/template-library": "workspace:*"
   }
 }

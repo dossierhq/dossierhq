@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-template-tool",
+  "name": "@dossierhq/template-tool",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -268,7 +268,7 @@ importers:
       '@dossierhq/postgres-core': workspace:*
       '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/server': workspace:*
-      '@jonasb/datadata-template-library': workspace:*
+      '@dossierhq/template-library': workspace:*
     devDependencies:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/database-adapter': link:../../libraries/database-adapter
@@ -276,7 +276,7 @@ importers:
       '@dossierhq/postgres-core': link:../../libraries/postgres-core
       '@dossierhq/postgres-tools': link:../../libraries/postgres-tools
       '@dossierhq/server': link:../../libraries/server
-      '@jonasb/datadata-template-library': link:../../templates/library
+      '@dossierhq/template-library': link:../../templates/library
 
   ../../examples/foo:
     specifiers:

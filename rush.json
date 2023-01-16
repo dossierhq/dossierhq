@@ -505,15 +505,15 @@
       "projectFolder": "stack/eslint-config-react"
     },
     {
-      "packageName": "@jonasb/datadata-template-library",
+      "packageName": "@dossierhq/template-library",
       "projectFolder": "templates/library"
     },
     {
-      "packageName": "@jonasb/datadata-template-library-esm-only",
+      "packageName": "@dossierhq/template-library-esm-only",
       "projectFolder": "templates/library-esm-only"
     },
     {
-      "packageName": "@jonasb/datadata-template-tool",
+      "packageName": "@dossierhq/template-tool",
       "projectFolder": "templates/tool"
     },
     {

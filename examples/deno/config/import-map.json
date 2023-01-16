@@ -6,7 +6,7 @@
     "@dossierhq/deno-postgres": "../node_modules/@dossierhq/deno-postgres/src/mod.ts",
     "@dossierhq/integration-test": "../node_modules/@dossierhq/integration-test/lib/esm/index.js",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
-    "@jonasb/datadata-template-library": "../node_modules/@jonasb/datadata-template-library/lib/esm/index.js",
+    "@dossierhq/template-library": "../node_modules/@dossierhq/template-library/lib/esm/index.js",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
     "lexical": "npm:lexical@~0.6.0",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",

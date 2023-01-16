@@ -1,4 +1,4 @@
-import { TEMPLATE_VALUE } from "@jonasb/datadata-template-library";
+import { TEMPLATE_VALUE } from "@dossierhq/template-library";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("copyEntity()", () => {
