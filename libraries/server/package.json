@@ -28,7 +28,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonasb/datadata.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",

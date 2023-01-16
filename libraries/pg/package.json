@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonasb/datadata.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
