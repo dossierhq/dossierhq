@@ -187,10 +187,10 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/database-adapter-better-sqlite3': workspace:*
-      '@dossierhq/database-adapter-postgres-deno': workspace:*
       '@dossierhq/database-adapter-postgres-pg': workspace:*
       '@dossierhq/database-adapter-sqlite-bun': workspace:*
       '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
+      '@dossierhq/deno-postgres': workspace:*
       '@dossierhq/postgres-core': workspace:*
       '@dossierhq/server': workspace:*
       '@faker-js/faker': ~7.6.0
@@ -214,10 +214,10 @@ importers:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/database-adapter': link:../../libraries/database-adapter
       '@dossierhq/database-adapter-better-sqlite3': link:../../libraries/database-adapter-better-sqlite3
-      '@dossierhq/database-adapter-postgres-deno': link:../../libraries/database-adapter-postgres-deno
       '@dossierhq/database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
       '@dossierhq/database-adapter-sqlite-bun': link:../../libraries/database-adapter-sqlite-bun
       '@dossierhq/database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
+      '@dossierhq/deno-postgres': link:../../libraries/deno-postgres
       '@dossierhq/postgres-core': link:../../libraries/postgres-core
       '@dossierhq/server': link:../../libraries/server
       '@faker-js/faker': 7.6.0
@@ -264,7 +264,7 @@ importers:
     specifiers:
       '@dossierhq/core': workspace:*
       '@dossierhq/database-adapter': workspace:*
-      '@dossierhq/database-adapter-postgres-deno': workspace:*
+      '@dossierhq/deno-postgres': workspace:*
       '@dossierhq/postgres-core': workspace:*
       '@dossierhq/server': workspace:*
       '@jonasb/datadata-postgres': workspace:*
@@ -272,7 +272,7 @@ importers:
     devDependencies:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/database-adapter': link:../../libraries/database-adapter
-      '@dossierhq/database-adapter-postgres-deno': link:../../libraries/database-adapter-postgres-deno
+      '@dossierhq/deno-postgres': link:../../libraries/deno-postgres
       '@dossierhq/postgres-core': link:../../libraries/postgres-core
       '@dossierhq/server': link:../../libraries/server
       '@jonasb/datadata-postgres': link:../../libraries/postgres
@@ -581,22 +581,6 @@ importers:
       typescript: 4.9.4
       vitest: 0.27.1
 
-  ../../libraries/database-adapter-postgres-deno:
-    specifiers:
-      '@dossierhq/core': workspace:*
-      '@dossierhq/database-adapter': workspace:*
-      '@dossierhq/integration-test': workspace:*
-      '@dossierhq/postgres-core': workspace:*
-      '@dossierhq/server': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
-    devDependencies:
-      '@dossierhq/core': link:../core
-      '@dossierhq/database-adapter': link:../database-adapter
-      '@dossierhq/integration-test': link:../integration-test
-      '@dossierhq/postgres-core': link:../postgres-core
-      '@dossierhq/server': link:../server
-      '@jonasb/datadata-postgres': link:../postgres
-
   ../../libraries/database-adapter-postgres-pg:
     specifiers:
       '@dossierhq/core': workspace:*
@@ -740,6 +724,22 @@ importers:
       sql.js: 1.8.0
       typescript: 4.9.4
       vitest: 0.27.1
+
+  ../../libraries/deno-postgres:
+    specifiers:
+      '@dossierhq/core': workspace:*
+      '@dossierhq/database-adapter': workspace:*
+      '@dossierhq/integration-test': workspace:*
+      '@dossierhq/postgres-core': workspace:*
+      '@dossierhq/server': workspace:*
+      '@jonasb/datadata-postgres': workspace:*
+    devDependencies:
+      '@dossierhq/core': link:../core
+      '@dossierhq/database-adapter': link:../database-adapter
+      '@dossierhq/integration-test': link:../integration-test
+      '@dossierhq/postgres-core': link:../postgres-core
+      '@dossierhq/server': link:../server
+      '@jonasb/datadata-postgres': link:../postgres
 
   ../../libraries/design:
     specifiers:

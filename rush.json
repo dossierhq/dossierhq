@@ -396,8 +396,8 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@dossierhq/database-adapter-postgres-deno",
-      "projectFolder": "libraries/database-adapter-postgres-deno"
+      "packageName": "@dossierhq/deno-postgres",
+      "projectFolder": "libraries/deno-postgres"
     },
     {
       "packageName": "@dossierhq/database-adapter-postgres-pg",

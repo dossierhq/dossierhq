@@ -15,7 +15,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
-    "@dossierhq/database-adapter-postgres-deno": "workspace:*",
+    "@dossierhq/deno-postgres": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@jonasb/datadata-template-library": "workspace:*"

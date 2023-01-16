@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-postgres-deno",
+  "name": "@dossierhq/deno-postgres",
   "version": "1.0.0",
   "description": "",
   "license": "MIT",

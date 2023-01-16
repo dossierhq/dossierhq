@@ -1,4 +1,4 @@
-import { createPostgresAdapter } from "@dossierhq/database-adapter-postgres-deno";
+import { createPostgresAdapter } from "@dossierhq/deno-postgres";
 import { config } from "dotenv";
 
 export function createDotenvAdapter() {
