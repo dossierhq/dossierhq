@@ -42,7 +42,7 @@ jobs:
           node common/scripts/install-run-rush.js install --bypass-policy
       - name: Install Playwright Browsers
         run: |
-          cd libraries/database-adapter-sqlite-sqljs
+          cd libraries/sql.js
           npx playwright install --with-deps
       - name: start db
         run: |
