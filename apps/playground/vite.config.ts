@@ -29,7 +29,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
-      '@jonasb/datadata-admin-react-components',
+      '@dossierhq/react-components',
       '@dossierhq/core',
       '@jonasb/datadata-database-adapter-sqlite-sql.js',
       '@jonasb/datadata-design',

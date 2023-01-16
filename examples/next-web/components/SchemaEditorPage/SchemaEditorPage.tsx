@@ -1,4 +1,4 @@
-import { SchemaEditorScreen } from '@jonasb/datadata-admin-react-components';
+import { SchemaEditorScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useState } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';

@@ -1,4 +1,4 @@
-import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntityListScreen } from '@dossierhq/react-components';
 import type { PublishedEntity } from '@dossierhq/core';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';

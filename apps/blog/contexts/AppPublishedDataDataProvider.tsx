@@ -2,8 +2,8 @@ import type {
   FieldDisplayProps,
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
-} from '@jonasb/datadata-admin-react-components';
-import { PublishedDataDataProvider } from '@jonasb/datadata-admin-react-components';
+} from '@dossierhq/react-components';
+import { PublishedDataDataProvider } from '@dossierhq/react-components';
 import { CloudinaryImageFieldDisplay } from '@jonasb/datadata-cloudinary';
 import type { ClientContext, PublishedClient, PublishedClientOperation } from '@dossierhq/core';
 import {

@@ -21,7 +21,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@jonasb/datadata-admin-react-components": "workspace:*",
+    "@dossierhq/react-components": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",

@@ -1,4 +1,4 @@
-import { SchemaEditorScreen } from '@jonasb/datadata-admin-react-components';
+import { SchemaEditorScreen } from '@dossierhq/react-components';
 import { useState } from 'react';
 import { Navbar } from './Navbar.js';
 

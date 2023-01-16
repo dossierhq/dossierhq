@@ -85,7 +85,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install @jonasb/datadata-admin-react-components @jonasb/datadata-design @jonasb/datadata-leaflet leaflet",
+                    "text": "npm install @dossierhq/react-components @jonasb/datadata-design @jonasb/datadata-leaflet leaflet",
                     "type": "text",
                     "version": 1
                   }
@@ -161,7 +161,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components/main.css'",
+                "text": "'@dossierhq/react-components/main.css'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -475,7 +475,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -1110,7 +1110,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -1251,7 +1251,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -3608,7 +3608,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -3708,7 +3708,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -5999,7 +5999,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -6911,7 +6911,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -9083,7 +9083,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -10771,7 +10771,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -11714,7 +11714,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -13410,7 +13410,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-admin-react-components'",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

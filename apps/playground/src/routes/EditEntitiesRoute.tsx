@@ -1,4 +1,4 @@
-import { EntityEditorScreen } from '@jonasb/datadata-admin-react-components';
+import { EntityEditorScreen } from '@dossierhq/react-components';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';

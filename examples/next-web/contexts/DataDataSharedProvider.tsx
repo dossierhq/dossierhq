@@ -6,12 +6,12 @@ import type {
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
-} from '@jonasb/datadata-admin-react-components';
+} from '@dossierhq/react-components';
 import {
   AdminDataDataProvider,
   PublishedDataDataProvider,
   useCachingAdminMiddleware,
-} from '@jonasb/datadata-admin-react-components';
+} from '@dossierhq/react-components';
 import type {
   AdminClient,
   AdminClientMiddleware,

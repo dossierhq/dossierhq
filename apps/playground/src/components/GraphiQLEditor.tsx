@@ -1,8 +1,5 @@
 import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
-import {
-  AdminDataDataContext,
-  PublishedDataDataContext,
-} from '@jonasb/datadata-admin-react-components';
+import { AdminDataDataContext, PublishedDataDataContext } from '@dossierhq/react-components';
 import type { AdminSchema, PublishedSchema } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';

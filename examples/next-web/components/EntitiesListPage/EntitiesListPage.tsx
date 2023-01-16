@@ -1,4 +1,4 @@
-import { AdminEntityListScreen } from '@jonasb/datadata-admin-react-components';
+import { AdminEntityListScreen } from '@dossierhq/react-components';
 import type { AdminEntity } from '@dossierhq/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

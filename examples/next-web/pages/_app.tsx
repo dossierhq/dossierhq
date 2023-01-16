@@ -1,4 +1,4 @@
-import '@jonasb/datadata-admin-react-components/main.css';
+import '@dossierhq/react-components/main.css';
 import { NotificationContainer } from '@jonasb/datadata-design';
 import '@jonasb/datadata-design/main.css';
 import '@jonasb/datadata-leaflet/icons.css';

@@ -371,7 +371,7 @@
       "projectFolder": "libraries/benchpress"
     },
     {
-      "packageName": "@jonasb/datadata-admin-react-components",
+      "packageName": "@dossierhq/react-components",
       "projectFolder": "libraries/admin-react-components",
       "versionPolicyName": "DataDataFramework"
     },

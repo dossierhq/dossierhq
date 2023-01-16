@@ -1,11 +1,5 @@
-import type {
-  FieldEditorProps,
-  RichTextValueItemEditorProps,
-} from '@jonasb/datadata-admin-react-components';
-import {
-  AdminDataDataContextAdapter,
-  AdminDataDataProvider,
-} from '@jonasb/datadata-admin-react-components';
+import type { FieldEditorProps, RichTextValueItemEditorProps } from '@dossierhq/react-components';
+import { AdminDataDataContextAdapter, AdminDataDataProvider } from '@dossierhq/react-components';
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,

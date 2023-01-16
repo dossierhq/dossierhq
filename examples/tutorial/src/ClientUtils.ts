@@ -1,5 +1,5 @@
 import { Auth0ContextInterface, useAuth0 } from '@auth0/auth0-react';
-import { useCachingAdminMiddleware } from '@jonasb/datadata-admin-react-components';
+import { useCachingAdminMiddleware } from '@dossierhq/react-components';
 import {
   AdminClientOperation,
   ClientContext,

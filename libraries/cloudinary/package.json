@@ -29,7 +29,7 @@
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@jonasb/datadata-admin-react-components": "workspace:*",
+    "@dossierhq/react-components": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",

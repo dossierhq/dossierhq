@@ -1,4 +1,4 @@
-import { PublishedEntityDisplayScreen } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntityDisplayScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';

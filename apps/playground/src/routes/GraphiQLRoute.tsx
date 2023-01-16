@@ -1,7 +1,4 @@
-import {
-  AdminDataDataContext,
-  PublishedDataDataContext,
-} from '@jonasb/datadata-admin-react-components';
+import { AdminDataDataContext, PublishedDataDataContext } from '@dossierhq/react-components';
 import { EmptyStateMessage, FullscreenContainer } from '@jonasb/datadata-design';
 import { useContext, lazy, Suspense } from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary.js';

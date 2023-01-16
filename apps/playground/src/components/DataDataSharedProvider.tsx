@@ -2,7 +2,7 @@ import {
   AdminDataDataProvider,
   PublishedDataDataProvider,
   useCachingAdminMiddleware,
-} from '@jonasb/datadata-admin-react-components';
+} from '@dossierhq/react-components';
 import type {
   AdminClientMiddleware,
   ClientContext,

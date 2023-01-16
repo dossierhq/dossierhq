@@ -2,8 +2,8 @@ import type {
   FieldDisplayProps,
   PublishedDataDataContextAdapter,
   RichTextValueItemDisplayProps,
-} from '@jonasb/datadata-admin-react-components';
-import { PublishedDataDataProvider } from '@jonasb/datadata-admin-react-components';
+} from '@dossierhq/react-components';
+import { PublishedDataDataProvider } from '@dossierhq/react-components';
 import { CloudinaryImageFieldDisplay } from '@jonasb/datadata-cloudinary';
 import { isValueItemField } from '@dossierhq/core';
 import { useMemo } from 'react';

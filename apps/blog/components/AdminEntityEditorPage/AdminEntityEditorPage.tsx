@@ -1,4 +1,4 @@
-import { EntityEditorScreen } from '@jonasb/datadata-admin-react-components';
+import { EntityEditorScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useMemo, useState } from 'react';
 import { AppAdminDataDataProvider } from '../../contexts/AppAdminDataDataProvider';

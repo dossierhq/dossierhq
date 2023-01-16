@@ -1,4 +1,4 @@
-import { PublishedEntityDisplayScreen } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntityDisplayScreen } from '@dossierhq/react-components';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';

@@ -1,4 +1,4 @@
-import type { DisplayAuthKey } from '@jonasb/datadata-admin-react-components';
+import type { DisplayAuthKey } from '@dossierhq/react-components';
 
 export const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
   { authKey: 'none', displayName: 'None' },
