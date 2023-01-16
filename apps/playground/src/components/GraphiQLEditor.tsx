@@ -3,8 +3,8 @@ import {
   AdminDataDataContext,
   PublishedDataDataContext,
 } from '@jonasb/datadata-admin-react-components';
-import type { AdminSchema, PublishedSchema } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminSchema, PublishedSchema } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import GraphiQL from 'graphiql';

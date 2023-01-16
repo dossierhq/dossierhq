@@ -7,8 +7,8 @@ import type {
   PublishedFieldSpecification,
   PublishedSchema,
   PublishedValueTypeSpecification,
-} from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { FieldType } from '@dossierhq/core';
 
 interface GeneratorContext {
   coreImports: Set<string>;
@@ -56,7 +56,7 @@ export function generateTypescriptForSchema({
   if (context.coreImports.size > 0) {
     const importStatement = `import type { ${[...context.coreImports]
       .sort()
-      .join(', ')} } from '@jonasb/datadata-core';`;
+      .join(', ')} } from '@dossierhq/core';`;
     // insert
     paragraphs.splice(0, 0, importStatement);
   }

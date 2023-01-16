@@ -1,5 +1,5 @@
-import { ErrorType } from '@jonasb/datadata-core';
-import { expectErrorResult } from '@jonasb/datadata-core-vitest';
+import { ErrorType } from '@dossierhq/core';
+import { expectErrorResult } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { afterAll, beforeAll, describe, test } from 'vitest';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils.js';

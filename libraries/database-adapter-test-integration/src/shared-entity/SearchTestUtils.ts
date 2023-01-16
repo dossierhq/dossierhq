@@ -11,7 +11,7 @@ import type {
   PublishedEntity,
   PublishedSearchQuery,
   Result,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminQueryOrder,
@@ -19,7 +19,7 @@ import {
   getAllPagesForConnection,
   ok,
   PublishedQueryOrder,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   assertEquals,
   assertOkResult,

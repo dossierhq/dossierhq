@@ -1,4 +1,4 @@
-import type { EntityReference, PublishedEntity } from '@jonasb/datadata-core';
+import type { EntityReference, PublishedEntity } from '@dossierhq/core';
 import {
   Dialog,
   FullscreenContainer,

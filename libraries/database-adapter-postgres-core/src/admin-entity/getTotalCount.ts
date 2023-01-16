@@ -1,5 +1,5 @@
-import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';

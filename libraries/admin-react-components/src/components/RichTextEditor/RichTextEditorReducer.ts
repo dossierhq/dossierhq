@@ -1,4 +1,4 @@
-import type { RichText } from '@jonasb/datadata-core';
+import type { RichText } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 interface RichTextState {

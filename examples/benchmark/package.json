@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "~7.6.0",
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-database-adapter-better-sqlite3": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",

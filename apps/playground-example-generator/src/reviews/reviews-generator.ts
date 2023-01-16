@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
-import type { EntityReference, Location } from '@jonasb/datadata-core';
+import type { EntityReference, Location } from '@dossierhq/core';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextAndLineBreakNodes,
   createRichTextTextNode,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
 import type {
   AdminPersonalNote,

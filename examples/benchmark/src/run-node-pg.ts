@@ -1,7 +1,7 @@
 import 'dotenv/config';
 //
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { assertIsDefined, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { assertIsDefined, ok } from '@dossierhq/core';
 import type { PgDatabaseAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import * as PG from 'pg';

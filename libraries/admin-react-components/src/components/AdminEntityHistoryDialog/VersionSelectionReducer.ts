@@ -1,4 +1,4 @@
-import type { EntityHistory } from '@jonasb/datadata-core';
+import type { EntityHistory } from '@dossierhq/core';
 
 export interface VersionSelectionState {
   leftVersion: number | null;

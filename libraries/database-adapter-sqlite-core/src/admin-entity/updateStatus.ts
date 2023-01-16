@@ -1,5 +1,5 @@
-import type { AdminEntityStatus, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminEntityStatus, ErrorType, PromiseResult } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,

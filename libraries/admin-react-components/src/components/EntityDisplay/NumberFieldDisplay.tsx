@@ -1,4 +1,4 @@
-import type { NumberFieldSpecification } from '@jonasb/datadata-core';
+import type { NumberFieldSpecification } from '@dossierhq/core';
 import { Input } from '@jonasb/datadata-design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 

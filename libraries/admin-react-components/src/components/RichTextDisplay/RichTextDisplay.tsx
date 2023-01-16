@@ -1,4 +1,4 @@
-import type { EntityReference, RichText, RichTextFieldSpecification } from '@jonasb/datadata-core';
+import type { EntityReference, RichText, RichTextFieldSpecification } from '@dossierhq/core';
 import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { ListItemNode, ListNode } from '@lexical/list';

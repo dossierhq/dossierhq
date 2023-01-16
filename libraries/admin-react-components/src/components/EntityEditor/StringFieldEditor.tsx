@@ -1,4 +1,4 @@
-import type { StringFieldSpecification } from '@jonasb/datadata-core';
+import type { StringFieldSpecification } from '@dossierhq/core';
 import { Input, Text, TextArea } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';

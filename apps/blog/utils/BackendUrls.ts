@@ -3,8 +3,8 @@ import type {
   AdminClientOperationName,
   PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
-} from '@jonasb/datadata-core';
-import { encodeObjectToURLSearchParams } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { encodeObjectToURLSearchParams } from '@dossierhq/core';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

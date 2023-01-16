@@ -5,8 +5,8 @@ import type {
   ErrorType,
   PromiseResult,
   Result,
-} from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityGetOnePayload,

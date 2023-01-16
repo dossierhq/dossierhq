@@ -5,17 +5,13 @@ import type {
 } from '@jonasb/datadata-admin-react-components';
 import { PublishedDataDataProvider } from '@jonasb/datadata-admin-react-components';
 import { CloudinaryImageFieldDisplay } from '@jonasb/datadata-cloudinary';
-import type {
-  ClientContext,
-  PublishedClient,
-  PublishedClientOperation,
-} from '@jonasb/datadata-core';
+import type { ClientContext, PublishedClient, PublishedClientOperation } from '@dossierhq/core';
 import {
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   createConsoleLogger,
   isValueItemField,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';

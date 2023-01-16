@@ -1,5 +1,5 @@
-import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { FieldType } from '@dossierhq/core';
 
 export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [

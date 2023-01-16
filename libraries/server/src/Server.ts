@@ -12,8 +12,8 @@ import type {
   PublishedEntity,
   PublishedSchema,
   Result,
-} from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, Session } from '@jonasb/datadata-database-adapter';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';

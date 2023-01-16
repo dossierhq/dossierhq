@@ -3,13 +3,13 @@ import type {
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   assertExhaustive,
   createBasePublishedClient,
   ok,
   PublishedClientOperationName,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';

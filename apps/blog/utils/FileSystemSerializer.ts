@@ -11,7 +11,7 @@ import type {
   OkFromResult,
   PromiseResult,
   RichTextElementNode,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminClientOperationName,
   AdminSchema,
@@ -19,7 +19,7 @@ import {
   notOk,
   ok,
   traverseEntity,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { SessionContext } from '@jonasb/datadata-server';
 import fs from 'node:fs/promises';
 import path from 'node:path';

@@ -1,5 +1,5 @@
-import { assertIsDefined } from '@jonasb/datadata-core';
-import { createMockLogger } from '@jonasb/datadata-core-vitest';
+import { assertIsDefined } from '@dossierhq/core';
+import { createMockLogger } from '@dossierhq/core-vitest';
 import {
   createAuthTestSuite,
   createTestAuthorizationAdapter,

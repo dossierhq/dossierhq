@@ -1,5 +1,5 @@
-import type { EntityVersionReference, PromiseResult } from '@jonasb/datadata-core';
-import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import type { EntityVersionReference, PromiseResult } from '@dossierhq/core';
+import { ErrorType, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,

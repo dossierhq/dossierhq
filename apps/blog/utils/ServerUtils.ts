@@ -1,5 +1,5 @@
-import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
-import { NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
+import { NoOpLogger, notOk, ok } from '@dossierhq/core';
 import {
   createDatabase,
   createSqlite3Adapter,

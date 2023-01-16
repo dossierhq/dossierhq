@@ -1,4 +1,4 @@
-import type { ErrorType, OkResult, Result } from '@jonasb/datadata-core';
+import type { ErrorType, OkResult, Result } from '@dossierhq/core';
 import { expect } from 'vitest';
 
 export function expectOkResult<TOk, TError extends ErrorType>(

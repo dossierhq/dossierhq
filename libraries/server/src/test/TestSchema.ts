@@ -1,4 +1,4 @@
-import { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType } from '@dossierhq/core';
 
 export const adminTestSchema = AdminSchema.createAndValidate({
   entityTypes: [{ name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] }],

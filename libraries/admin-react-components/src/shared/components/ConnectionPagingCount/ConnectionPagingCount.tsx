@@ -1,5 +1,5 @@
-import type { Connection, Edge, ErrorType, Paging } from '@jonasb/datadata-core';
-import { getPagingInfo } from '@jonasb/datadata-core';
+import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
+import { getPagingInfo } from '@dossierhq/core';
 import { ButtonDropdown } from '@jonasb/datadata-design';
 import React from 'react';
 

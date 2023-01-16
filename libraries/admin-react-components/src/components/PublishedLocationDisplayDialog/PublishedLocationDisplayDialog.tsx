@@ -1,4 +1,4 @@
-import type { Location, PublishedEntity } from '@jonasb/datadata-core';
+import type { Location, PublishedEntity } from '@dossierhq/core';
 import {
   Dialog,
   FullscreenContainer,

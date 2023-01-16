@@ -5,14 +5,14 @@ import type {
   ErrorType,
   PromiseResult,
   PublishedEntity,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   assertExhaustive,
   copyEntity,
   ok,
   withAdvisoryLock,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { Server } from '@jonasb/datadata-server';
 import { v5 as uuidv5 } from 'uuid';
 import { assertOkResult, assertSame } from '../Asserts.js';

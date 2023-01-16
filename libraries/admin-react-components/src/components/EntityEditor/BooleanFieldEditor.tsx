@@ -1,4 +1,4 @@
-import type { BooleanFieldSpecification } from '@jonasb/datadata-core';
+import type { BooleanFieldSpecification } from '@dossierhq/core';
 import { Checkbox, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';

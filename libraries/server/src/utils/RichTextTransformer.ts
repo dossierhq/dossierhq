@@ -1,5 +1,5 @@
-import type { RichText, RichTextElementNode, RichTextNode } from '@jonasb/datadata-core';
-import { isRichTextElementNode } from '@jonasb/datadata-core';
+import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
+import { isRichTextElementNode } from '@dossierhq/core';
 
 type RichTextNodeTransformer = (node: Readonly<RichTextNode>) => Readonly<RichTextNode>;
 

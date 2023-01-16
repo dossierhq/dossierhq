@@ -1,4 +1,4 @@
-import { assertIsDefined } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@dossierhq/core';
 import type { Session } from '@jonasb/datadata-database-adapter';
 
 const sessionWeakMap = new WeakMap<Session, number>();

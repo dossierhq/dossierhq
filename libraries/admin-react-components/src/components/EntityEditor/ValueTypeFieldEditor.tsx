@@ -3,8 +3,8 @@ import type {
   ValidationError,
   ValueItem,
   ValueItemFieldSpecification,
-} from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { FieldType } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';

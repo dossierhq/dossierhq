@@ -6,7 +6,7 @@ import {
   createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
 import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
 import type {

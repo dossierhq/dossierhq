@@ -1,10 +1,10 @@
-import type { ErrorType, PublishedClientJsonOperationArgs, Result } from '@jonasb/datadata-core';
+import type { ErrorType, PublishedClientJsonOperationArgs, Result } from '@dossierhq/core';
 import {
   decodeURLSearchParamsParam,
   executePublishedClientOperationFromJson,
   notOk,
   ok,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleRequest, sendMethodNotAllowedError } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';

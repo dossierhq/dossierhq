@@ -4,8 +4,8 @@ import type {
   AdminEntity,
   AdminSchemaSpecificationUpdate,
   ClientContext,
-} from '@jonasb/datadata-core';
-import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
 import {
   createDatabase,
   createSqlite3Adapter,

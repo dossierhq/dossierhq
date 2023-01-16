@@ -1,7 +1,7 @@
 // Vitest Snapshot v1
 
 exports[`generateTypescriptForSchema > Booleans 1`] = `
-"import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -29,7 +29,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
-"import type { AdminClient, AdminEntity, EntityReference } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity, EntityReference } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -57,7 +57,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
-"import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -82,7 +82,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > Locations 1`] = `
-"import type { AdminClient, AdminEntity, Location } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity, Location } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -110,7 +110,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > Numbers 1`] = `
-"import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -140,7 +140,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
-"import type { AdminClient, AdminEntity, RichText } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity, RichText } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -168,7 +168,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > Strings 1`] = `
-"import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -196,7 +196,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema > ValueItem (no fields) 1`] = `
-"import type { AdminClient, AdminEntity, ValueItem } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity, ValueItem } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -237,7 +237,7 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 `;
 
 exports[`generateTypescriptForSchema > ValueTypes 1`] = `
-"import type { AdminClient, AdminEntity, ValueItem } from '@jonasb/datadata-core';
+"import type { AdminClient, AdminEntity, ValueItem } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -301,7 +301,7 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 `;
 
 exports[`generateTypescriptForSchema > empty 1`] = `
-"import type { AdminClient } from '@jonasb/datadata-core';
+"import type { AdminClient } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 
@@ -312,7 +312,7 @@ export type AllAdminValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `
-"import type { PublishedClient } from '@jonasb/datadata-core';
+"import type { PublishedClient } from '@dossierhq/core';
 
 export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
 
@@ -323,7 +323,7 @@ export type AllPublishedValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
-"import type { PublishedClient, PublishedEntity } from '@jonasb/datadata-core';
+"import type { PublishedClient, PublishedEntity } from '@dossierhq/core';
 
 export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
 
@@ -348,7 +348,7 @@ export type AllPublishedValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema published > empty 1`] = `
-"import type { PublishedClient } from '@jonasb/datadata-core';
+"import type { PublishedClient } from '@dossierhq/core';
 
 export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
 
@@ -359,7 +359,7 @@ export type AllPublishedValueItems = never;
 `;
 
 exports[`generateTypescriptForSchema published > required fields 1`] = `
-"import type { PublishedClient, PublishedEntity } from '@jonasb/datadata-core';
+"import type { PublishedClient, PublishedEntity } from '@dossierhq/core';
 
 export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
 

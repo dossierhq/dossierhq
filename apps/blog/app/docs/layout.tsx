@@ -1,4 +1,4 @@
-import { assertIsDefined } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@dossierhq/core';
 import { FullscreenContainer, Menu } from '@jonasb/datadata-design-server';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';

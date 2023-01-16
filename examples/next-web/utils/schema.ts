@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 
 export const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [

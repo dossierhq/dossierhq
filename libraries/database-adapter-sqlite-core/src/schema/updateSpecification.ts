@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecification, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification, ErrorType, PromiseResult } from '@dossierhq/core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';

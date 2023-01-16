@@ -3,7 +3,7 @@ import {
   type AdminSchemaSpecification,
   type ErrorType,
   type PromiseResult,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';

@@ -6,8 +6,8 @@ import type {
   EntitySamplingPayload,
   ErrorType,
   PromiseResult,
-} from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';

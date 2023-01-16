@@ -1,10 +1,5 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedQuery,
-  PublishedSchema,
-} from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, PublishedQuery, PublishedSchema } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type {
   DatabasePublishedEntityPayload,
   ResolvedAuthKey,

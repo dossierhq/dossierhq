@@ -1,6 +1,6 @@
 //@ts-check
 
-/** @type {import("@jonasb/datadata-core").AdminSchemaSpecificationUpdate} */
+/** @type {import("@dossierhq/core").AdminSchemaSpecificationUpdate} */
 const schemaSpecification = {
   entityTypes: [
     {

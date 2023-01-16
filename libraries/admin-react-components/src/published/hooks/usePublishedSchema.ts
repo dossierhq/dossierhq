@@ -1,10 +1,5 @@
-import type {
-  ErrorResult,
-  ErrorType,
-  PublishedClient,
-  PublishedEntity,
-} from '@jonasb/datadata-core';
-import { PublishedSchema } from '@jonasb/datadata-core';
+import type { ErrorResult, ErrorType, PublishedClient, PublishedEntity } from '@dossierhq/core';
+import { PublishedSchema } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';

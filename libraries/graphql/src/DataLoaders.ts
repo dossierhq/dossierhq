@@ -27,7 +27,7 @@ import type {
   RichText,
   UniqueIndexReference,
   ValueItem,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   isEntityField,
   isEntityItemField,
@@ -40,7 +40,7 @@ import {
   isValueItemListField,
   ItemTraverseNodeType,
   traverseItemField,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 

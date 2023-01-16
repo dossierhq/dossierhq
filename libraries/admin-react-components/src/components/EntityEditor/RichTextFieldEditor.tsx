@@ -1,4 +1,4 @@
-import type { RichText, RichTextFieldSpecification } from '@jonasb/datadata-core';
+import type { RichText, RichTextFieldSpecification } from '@dossierhq/core';
 import { RichTextEditor } from '../RichTextEditor/RichTextEditor.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 

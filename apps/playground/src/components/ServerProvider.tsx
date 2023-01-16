@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { notOk } from '@dossierhq/core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';

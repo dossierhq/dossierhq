@@ -33,7 +33,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
     "pg": "~8.8.0",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
-    "@jonasb/datadata-core-vitest": "workspace:*",
+    "@dossierhq/core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",

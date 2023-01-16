@@ -6,7 +6,7 @@ import type {
   ErrorType,
   Logger,
   ValueItem,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { createContext } from 'react';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';

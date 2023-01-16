@@ -6,15 +6,15 @@ import type {
   AdminFieldSpecification,
   AdminSchema,
   ValidationError,
-} from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { FieldType } from '@dossierhq/core';
 import {
   assertIsDefined,
   isEntityNameAsRequested,
   normalizeFieldValue,
   traverseItemField,
   validateTraverseNode,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 type EntityEditorSelector = { id: string } | { id: string; newType: string };

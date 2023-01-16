@@ -1,5 +1,5 @@
-import { ErrorType, ok } from '@jonasb/datadata-core';
-import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+import { ErrorType, ok } from '@dossierhq/core';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import {

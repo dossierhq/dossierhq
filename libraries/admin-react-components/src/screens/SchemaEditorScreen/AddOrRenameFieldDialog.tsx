@@ -1,4 +1,4 @@
-import { assertIsDefined } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@dossierhq/core';
 import { Card, Dialog, Field, Input } from '@jonasb/datadata-design';
 import type {
   ChangeEvent,

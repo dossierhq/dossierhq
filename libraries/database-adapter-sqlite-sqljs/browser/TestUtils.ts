@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { NoOpLogger } from '@dossierhq/core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import { test } from '@playwright/test';
 import { randomUUID } from 'node:crypto';

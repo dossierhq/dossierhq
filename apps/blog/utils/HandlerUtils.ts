@@ -1,5 +1,5 @@
-import type { ErrorResult, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { createConsoleLogger, notOk } from '@jonasb/datadata-core';
+import type { ErrorResult, ErrorType, PromiseResult } from '@dossierhq/core';
+import { createConsoleLogger, notOk } from '@dossierhq/core';
 import type { NextApiResponse } from 'next';
 
 const logger = createConsoleLogger(console);

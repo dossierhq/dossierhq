@@ -1,5 +1,5 @@
-import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
-import { buildUrlWithUrlQuery } from '@jonasb/datadata-core';
+import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
+import { buildUrlWithUrlQuery } from '@dossierhq/core';
 import { Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';

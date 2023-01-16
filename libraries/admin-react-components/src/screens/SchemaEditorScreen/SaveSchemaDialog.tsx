@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@jonasb/datadata-design';
 import type { Dispatch, SyntheticEvent } from 'react';
 import { useCallback, useContext, useMemo } from 'react';

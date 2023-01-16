@@ -1,6 +1,6 @@
-import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import type { AdminSchemaSpecification } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
+import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { getSchemaSpecification } from './Schema.js';
 import {

@@ -6,7 +6,7 @@ import type {
   PublishedEntity,
   PublishedQuery,
   PublishedSearchQuery,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type {

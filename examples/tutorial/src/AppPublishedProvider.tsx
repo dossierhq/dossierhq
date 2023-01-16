@@ -5,7 +5,7 @@ import type {
 } from '@jonasb/datadata-admin-react-components';
 import { PublishedDataDataProvider } from '@jonasb/datadata-admin-react-components';
 import { CloudinaryImageFieldDisplay } from '@jonasb/datadata-cloudinary';
-import { isValueItemField } from '@jonasb/datadata-core';
+import { isValueItemField } from '@dossierhq/core';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { usePublishedClient } from './ClientUtils.js';

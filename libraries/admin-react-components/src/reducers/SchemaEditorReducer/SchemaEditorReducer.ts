@@ -8,8 +8,8 @@ import type {
   AdminValueTypeSpecificationUpdate,
   SchemaIndexSpecification,
   SchemaPatternSpecification,
-} from '@jonasb/datadata-core';
-import { assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { assertIsDefined, FieldType, RichTextNodeType } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 export type SchemaSelector =

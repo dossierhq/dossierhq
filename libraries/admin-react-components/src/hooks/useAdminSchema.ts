@@ -1,5 +1,5 @@
-import type { AdminClient, AdminEntity, ErrorResult, ErrorType } from '@jonasb/datadata-core';
-import { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, ErrorResult, ErrorType } from '@dossierhq/core';
+import { AdminSchema } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';

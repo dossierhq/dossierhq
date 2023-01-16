@@ -1,4 +1,4 @@
-import type { RichText, RichTextElementNode, RichTextNode } from '@jonasb/datadata-core';
+import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
 import {
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
@@ -13,7 +13,7 @@ import {
   isRichTextTextNode,
   isRichTextValueItemNode,
   richTextTextNodeHasFormat,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { ClassName, LexicalTheme } from '@jonasb/datadata-design-server';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';

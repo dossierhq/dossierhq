@@ -1,4 +1,4 @@
-import type { ClientContext, PublishedClientMiddleware } from '@jonasb/datadata-core';
+import type { ClientContext, PublishedClientMiddleware } from '@dossierhq/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';

@@ -1,4 +1,4 @@
-import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
+import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
 import React, { useMemo } from 'react';
 import { AdminDataDataProvider } from '../components/AdminDataDataProvider/AdminDataDataProvider.js';
 import type { AdminDataDataContextAdapter } from '../contexts/AdminDataDataContext.js';

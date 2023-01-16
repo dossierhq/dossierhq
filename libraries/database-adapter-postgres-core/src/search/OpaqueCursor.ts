@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from '@jonasb/datadata-core';
-import { assertExhaustive, notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Result } from '@dossierhq/core';
+import { assertExhaustive, notOk, ok } from '@dossierhq/core';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 
 export type CursorNativeType = 'int' | 'string';

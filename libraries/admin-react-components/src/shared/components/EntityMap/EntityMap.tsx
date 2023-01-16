@@ -5,8 +5,8 @@ import type {
   Location,
   PublishedEntity,
   PublishedSchema,
-} from '@jonasb/datadata-core';
-import { isLocationItemField, ItemTraverseNodeType, traverseEntity } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { isLocationItemField, ItemTraverseNodeType, traverseEntity } from '@dossierhq/core';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import type { Dispatch, ReactNode } from 'react';
 import { useCallback } from 'react';

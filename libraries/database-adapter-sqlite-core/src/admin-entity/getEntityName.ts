@@ -1,5 +1,5 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';

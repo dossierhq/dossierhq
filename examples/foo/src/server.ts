@@ -1,5 +1,5 @@
-import type { Logger } from '@jonasb/datadata-core';
-import { AdminSchema } from '@jonasb/datadata-core';
+import type { Logger } from '@dossierhq/core';
+import { AdminSchema } from '@dossierhq/core';
 import {
   createDatabase,
   createSqlite3Adapter,

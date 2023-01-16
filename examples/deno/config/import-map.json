@@ -1,6 +1,6 @@
 {
   "imports": {
-    "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/esm/index.js",
+    "@dossierhq/core": "../node_modules/@dossierhq/core/lib/esm/index.js",
     "@jonasb/datadata-database-adapter": "../node_modules/@jonasb/datadata-database-adapter/lib/esm/index.js",
     "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/esm/index.js",
     "@jonasb/datadata-database-adapter-postgres-deno": "../node_modules/@jonasb/datadata-database-adapter-postgres-deno/src/mod.ts",

@@ -58,7 +58,7 @@
     "vitest": "0.27.1"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
     "@lexical/code": "~0.7.0",

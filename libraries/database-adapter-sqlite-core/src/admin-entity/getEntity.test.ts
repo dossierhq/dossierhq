@@ -1,5 +1,5 @@
-import { AdminEntityStatus } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import { AdminEntityStatus } from '@dossierhq/core';
+import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
   createMockContext,

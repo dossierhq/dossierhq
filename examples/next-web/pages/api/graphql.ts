@@ -1,4 +1,4 @@
-import { AdminSchema, ok } from '@jonasb/datadata-core';
+import { AdminSchema, ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';

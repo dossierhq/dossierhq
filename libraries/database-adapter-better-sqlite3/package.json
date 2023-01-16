@@ -36,7 +36,7 @@
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",

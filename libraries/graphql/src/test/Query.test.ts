@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import {
   assertOkResult,
   createRichTextEntityLinkNode,
@@ -9,8 +9,8 @@ import {
   FieldType,
   notOk,
   ok,
-} from '@jonasb/datadata-core';
-import { expectOkResult } from '@jonasb/datadata-core-vitest';
+} from '@dossierhq/core';
+import { expectOkResult } from '@dossierhq/core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';

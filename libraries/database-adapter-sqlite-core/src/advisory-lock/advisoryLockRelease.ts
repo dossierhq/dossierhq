@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';

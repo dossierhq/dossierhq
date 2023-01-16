@@ -1,5 +1,5 @@
-import type { AdminValueTypeSpecificationUpdate, ValueItem } from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+import type { AdminValueTypeSpecificationUpdate, ValueItem } from '@dossierhq/core';
+import { FieldType } from '@dossierhq/core';
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;

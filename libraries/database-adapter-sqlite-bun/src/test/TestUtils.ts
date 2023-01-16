@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { AdminSchema, NoOpLogger, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import {
   createTestAuthorizationAdapter,

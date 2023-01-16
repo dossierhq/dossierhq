@@ -15,7 +15,7 @@ import type {
   PublishedSearchQuery,
   PublishingEvent,
   UniqueIndexReference,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { ResolvedAuthKey, Session } from './Session.js';
 import type { Transaction, TransactionContext } from './TransactionContext.js';
 

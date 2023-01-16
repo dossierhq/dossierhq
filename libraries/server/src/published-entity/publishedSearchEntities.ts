@@ -7,7 +7,7 @@ import type {
   PublishedEntity,
   PublishedSchema,
   PublishedSearchQuery,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

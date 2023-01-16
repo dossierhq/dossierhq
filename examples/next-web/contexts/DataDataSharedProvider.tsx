@@ -22,13 +22,13 @@ import type {
   PublishedClient,
   PublishedClientOperation,
   Result,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
   createBaseAdminClient,
   createBasePublishedClient,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { useMemo } from 'react';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
 

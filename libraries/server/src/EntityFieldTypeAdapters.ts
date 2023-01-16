@@ -6,8 +6,8 @@ import type {
   FieldValueTypeMap,
   Location,
   Result,
-} from '@jonasb/datadata-core';
-import { FieldType, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { FieldType, notOk, ok } from '@dossierhq/core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(

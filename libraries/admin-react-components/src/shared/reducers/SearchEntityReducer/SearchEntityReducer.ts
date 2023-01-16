@@ -13,8 +13,8 @@ import type {
   PublishedQueryOrder,
   PublishedSearchQuery,
   Result,
-} from '@jonasb/datadata-core';
-import { AdminQueryOrder, getPagingInfo, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminQueryOrder, getPagingInfo, ok } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name;

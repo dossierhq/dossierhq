@@ -1,10 +1,5 @@
-import type {
-  AdminSchema,
-  AdminSearchQuery,
-  ErrorType,
-  PromiseResult,
-} from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminSchema, AdminSearchQuery, ErrorType, PromiseResult } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
   DatabasePagingInfo,

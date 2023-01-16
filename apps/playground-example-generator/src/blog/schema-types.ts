@@ -4,7 +4,7 @@ import type {
   EntityReference,
   RichText,
   ValueItem,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 

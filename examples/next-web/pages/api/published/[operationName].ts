@@ -3,13 +3,13 @@ import type {
   PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
   Result,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   decodeURLSearchParamsParam,
   executePublishedClientOperationFromJson,
   notOk,
   ok,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleRequest, sendMethodNotAllowedError } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';

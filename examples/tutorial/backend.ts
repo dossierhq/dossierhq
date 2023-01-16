@@ -13,7 +13,7 @@ import {
   ok,
   PublishedClientJsonOperationArgs,
   Result,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   BetterSqlite3DatabaseAdapter,
   createBetterSqlite3Adapter,

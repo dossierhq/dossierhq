@@ -1,5 +1,5 @@
-import type { ErrorType, Location, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { ErrorType, Location, PromiseResult } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type {
   DatabaseResolvedEntityReference,
   TransactionContext,

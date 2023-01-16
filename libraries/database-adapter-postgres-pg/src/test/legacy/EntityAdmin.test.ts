@@ -1,9 +1,4 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  AdminEntityCreate,
-  PublishedClient,
-} from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, AdminEntityCreate, PublishedClient } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   copyEntity,
@@ -14,8 +9,8 @@ import {
   ErrorType,
   FieldType,
   PublishingEventKind,
-} from '@jonasb/datadata-core';
-import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+} from '@dossierhq/core';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';

@@ -1,4 +1,4 @@
-import type { NumberFieldSpecification } from '@jonasb/datadata-core';
+import type { NumberFieldSpecification } from '@dossierhq/core';
 import { Input } from '@jonasb/datadata-design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';

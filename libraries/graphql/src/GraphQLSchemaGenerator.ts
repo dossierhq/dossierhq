@@ -22,14 +22,14 @@ import type {
   PublishedValueTypeSpecification,
   Result,
   ValueItem,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   assertExhaustive,
   FieldType,
   isItemValueItem,
   isValueItemField,
   notOk,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,

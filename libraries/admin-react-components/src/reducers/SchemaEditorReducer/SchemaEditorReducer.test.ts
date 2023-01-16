@@ -1,5 +1,5 @@
-import type { NumberFieldSpecification, StringFieldSpecification } from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@jonasb/datadata-core';
+import type { NumberFieldSpecification, StringFieldSpecification } from '@dossierhq/core';
+import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer.js';
 import {

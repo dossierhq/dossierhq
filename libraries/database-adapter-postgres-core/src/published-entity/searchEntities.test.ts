@@ -1,4 +1,4 @@
-import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import {

@@ -1,4 +1,4 @@
-import { assertIsDefined } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@dossierhq/core';
 import { createAdvisoryLockTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import { afterAll, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';

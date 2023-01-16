@@ -9,7 +9,7 @@ import type {
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
@@ -20,7 +20,7 @@ import {
   LoggingClientMiddleware,
   notOk,
   ok,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { v5 as uuidv5 } from 'uuid';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';

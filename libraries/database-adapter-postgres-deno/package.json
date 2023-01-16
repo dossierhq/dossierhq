@@ -11,7 +11,7 @@
     "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS"
   },
   "devDependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",

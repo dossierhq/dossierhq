@@ -17,7 +17,7 @@
     "start:graphql": "node ./lib/graphql.js"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",

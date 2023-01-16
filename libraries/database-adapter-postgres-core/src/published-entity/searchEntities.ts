@@ -3,8 +3,8 @@ import type {
   PromiseResult,
   PublishedSchema,
   PublishedSearchQuery,
-} from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type {
   DatabasePublishedEntitySearchPayload,
   ResolvedAuthKey,

@@ -1,5 +1,5 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
-import { createConsoleLogger, notOk, ok } from '@jonasb/datadata-core';
+import type { AdminSchema } from '@dossierhq/core';
+import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { Server } from '@jonasb/datadata-server';

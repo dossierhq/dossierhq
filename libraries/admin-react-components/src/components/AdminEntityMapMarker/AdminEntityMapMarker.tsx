@@ -1,4 +1,4 @@
-import type { AdminEntity, Location } from '@jonasb/datadata-core';
+import type { AdminEntity, Location } from '@dossierhq/core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import React from 'react';

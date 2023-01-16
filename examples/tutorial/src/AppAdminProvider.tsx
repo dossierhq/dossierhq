@@ -10,7 +10,7 @@ import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
 } from '@jonasb/datadata-cloudinary';
-import { FieldType, isValueItemField } from '@jonasb/datadata-core';
+import { FieldType, isValueItemField } from '@dossierhq/core';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { useAdminClient } from './ClientUtils.js';

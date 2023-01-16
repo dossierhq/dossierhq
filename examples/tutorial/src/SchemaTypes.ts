@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, PublishedClient, PublishedEntity, ValueItem } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, PublishedClient, PublishedEntity, ValueItem } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AllAdminEntities>;
 

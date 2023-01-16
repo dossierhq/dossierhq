@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { ErrorType, Result } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { DatabasePagingInfo } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { CursorNativeType } from './OpaqueCursor.js';

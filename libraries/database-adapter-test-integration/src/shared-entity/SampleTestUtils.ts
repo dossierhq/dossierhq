@@ -5,8 +5,8 @@ import type {
   ErrorType,
   PublishedEntity,
   Result,
-} from '@jonasb/datadata-core';
-import { AdminEntityStatus } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminEntityStatus } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
 
 export function countEntityStatuses(entities: AdminEntity[]): Record<AdminEntityStatus, number> {

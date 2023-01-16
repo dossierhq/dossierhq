@@ -1,4 +1,4 @@
-import { copyEntity, ErrorType } from '@jonasb/datadata-core';
+import { copyEntity, ErrorType } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminTitleOnly } from '../SchemaTypes.js';

@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity } from '@dossierhq/core';
 import type { NotificationInfo } from '@jonasb/datadata-design';
 import { Button, Field, Input, NotificationContext, Row } from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';

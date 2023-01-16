@@ -22,7 +22,7 @@
     "@cloudinary/url-gen": "~1.8.7",
     "@jonasb/datadata-admin-react-components": "workspace:*",
     "@jonasb/datadata-cloudinary": "workspace:*",
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sql.js": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",

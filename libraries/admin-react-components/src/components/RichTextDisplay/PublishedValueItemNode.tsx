@@ -1,5 +1,5 @@
-import type { RichTextValueItemNode, ValueItem } from '@jonasb/datadata-core';
-import { createRichTextValueItemNode, RichTextNodeType } from '@jonasb/datadata-core';
+import type { RichTextValueItemNode, ValueItem } from '@dossierhq/core';
+import { createRichTextValueItemNode, RichTextNodeType } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';

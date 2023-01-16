@@ -3,7 +3,7 @@ import type {
   AdminEntity,
   AdminSchemaSpecificationUpdate,
   BoundingBox,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   assertOkResult,
@@ -16,8 +16,8 @@ import {
   getAllPagesForConnection,
   notOk,
   ok,
-} from '@jonasb/datadata-core';
-import { expectOkResult } from '@jonasb/datadata-core-vitest';
+} from '@dossierhq/core';
+import { expectOkResult } from '@dossierhq/core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';

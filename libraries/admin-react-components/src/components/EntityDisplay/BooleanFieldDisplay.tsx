@@ -1,4 +1,4 @@
-import type { BooleanFieldSpecification } from '@jonasb/datadata-core';
+import type { BooleanFieldSpecification } from '@dossierhq/core';
 import { Checkbox } from '@jonasb/datadata-design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 

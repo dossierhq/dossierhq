@@ -1,4 +1,4 @@
-import type { AdminSchema, PublishedSchema } from '@jonasb/datadata-core';
+import type { AdminSchema, PublishedSchema } from '@dossierhq/core';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,

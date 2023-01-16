@@ -6,8 +6,8 @@ import type {
   PagingInfo,
   PromiseResult,
   Result,
-} from '@jonasb/datadata-core';
-import { getPagingInfo, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { getPagingInfo, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
   DatabasePagingInfo,

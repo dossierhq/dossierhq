@@ -1,4 +1,4 @@
-import { NoOpLogger, ok } from '@jonasb/datadata-core';
+import { NoOpLogger, ok } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { Mutex } from './MutexUtils.js';
 

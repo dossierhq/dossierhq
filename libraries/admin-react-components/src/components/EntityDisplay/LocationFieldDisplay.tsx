@@ -1,4 +1,4 @@
-import type { Location, LocationFieldSpecification, PublishedEntity } from '@jonasb/datadata-core';
+import type { Location, LocationFieldSpecification, PublishedEntity } from '@dossierhq/core';
 import { Button } from '@jonasb/datadata-design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';

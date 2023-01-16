@@ -4,7 +4,7 @@ import {
   createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 
 interface FixtureEntity {
   id: string;

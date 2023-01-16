@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { notOk } from '@dossierhq/core';
 import type { Context } from '@jonasb/datadata-database-adapter';
 
 export class Mutex {

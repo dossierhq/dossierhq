@@ -1,4 +1,4 @@
-import type { Location, PublishedEntity } from '@jonasb/datadata-core';
+import type { Location, PublishedEntity } from '@dossierhq/core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import type { MarkerColor } from '@jonasb/datadata-leaflet';

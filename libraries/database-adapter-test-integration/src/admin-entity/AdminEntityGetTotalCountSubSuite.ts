@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {

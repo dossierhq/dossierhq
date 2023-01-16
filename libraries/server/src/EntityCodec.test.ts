@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate, EntityLike } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecificationUpdate, EntityLike } from '@dossierhq/core';
 import {
   AdminSchema,
   createRichTextEntityLinkNode,
@@ -10,7 +10,7 @@ import {
   createRichTextValueItemNode,
   FieldType,
   traverseEntity,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import {
   createFullTextSearchCollector,

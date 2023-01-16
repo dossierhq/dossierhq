@@ -24,7 +24,7 @@
     "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*"
   },
   "devDependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",

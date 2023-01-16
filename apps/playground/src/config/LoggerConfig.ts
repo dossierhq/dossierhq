@@ -1,4 +1,4 @@
-import { createConsoleLogger } from '@jonasb/datadata-core';
+import { createConsoleLogger } from '@dossierhq/core';
 
 const logger = createConsoleLogger(console);
 

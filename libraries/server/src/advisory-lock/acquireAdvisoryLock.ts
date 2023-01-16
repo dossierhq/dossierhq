@@ -3,8 +3,8 @@ import type {
   AdvisoryLockPayload,
   ErrorType,
   PromiseResult,
-} from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { SessionContext } from '../Context.js';
 

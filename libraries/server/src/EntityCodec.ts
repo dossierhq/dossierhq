@@ -22,7 +22,7 @@ import type {
   RichTextValueItemNode,
   ValueItem,
   ValueItemFieldSpecification,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   assertIsDefined,
@@ -46,7 +46,7 @@ import {
   traverseEntity,
   validateTraverseNode,
   visitorPathToString,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,

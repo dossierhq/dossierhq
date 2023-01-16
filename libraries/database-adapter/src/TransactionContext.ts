@@ -1,4 +1,4 @@
-import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult } from '@dossierhq/core';
 import type { DatabaseAdapter } from './DatabaseAdapter.js';
 
 export interface Context {

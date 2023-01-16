@@ -7,14 +7,8 @@ import type {
   PublishedSchema,
   PublishedSearchQuery,
   Result,
-} from '@jonasb/datadata-core';
-import {
-  AdminQueryOrder,
-  assertExhaustive,
-  notOk,
-  ok,
-  PublishedQueryOrder,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminQueryOrder, assertExhaustive, notOk, ok, PublishedQueryOrder } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   PostgresQueryBuilder,

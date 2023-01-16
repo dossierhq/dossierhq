@@ -1,5 +1,5 @@
-import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-vitest';
+import { AdminEntityStatus, ok } from '@dossierhq/core';
+import { expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdminEntitySearchPayloadEntity } from '@jonasb/datadata-database-adapter';
 import { describe, expect, test } from 'vitest';
 import {

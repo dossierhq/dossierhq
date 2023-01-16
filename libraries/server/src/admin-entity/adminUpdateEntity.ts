@@ -6,8 +6,8 @@ import type {
   ErrorType,
   PromiseResult,
   PublishedSchema,
-} from '@jonasb/datadata-core';
-import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminEntityStatus, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

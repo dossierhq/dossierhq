@@ -1,7 +1,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type { FieldEditorProps } from '@jonasb/datadata-admin-react-components';
-import type { ValueItemFieldSpecification } from '@jonasb/datadata-core';
+import type { ValueItemFieldSpecification } from '@dossierhq/core';
 import {
   Button,
   Column,

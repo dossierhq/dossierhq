@@ -1,4 +1,4 @@
-import { copyEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
+import { copyEntity, PublishedQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {

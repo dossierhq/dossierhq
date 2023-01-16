@@ -9,7 +9,7 @@ import type {
   StringFieldSpecification,
   ValidationError,
   ValueItemFieldSpecification,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -25,7 +25,7 @@ import {
   isStringListField,
   isValueItemField,
   isValueItemListField,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { BooleanFieldEditor } from './BooleanFieldEditor.js';

@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';

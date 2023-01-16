@@ -1,5 +1,5 @@
-import type { BoundingBox } from '@jonasb/datadata-core';
-import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
+import type { BoundingBox } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {

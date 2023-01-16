@@ -2,7 +2,7 @@ import type {
   AdminEntityTypeSpecification,
   AdminSchema,
   AdminValueTypeSpecification,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 
 export interface TypeSelectionFilter {
   showEntityTypes?: boolean;

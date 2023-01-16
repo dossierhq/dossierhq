@@ -4,8 +4,8 @@ import {
   AdminSchema,
   ErrorType,
   PublishedQueryOrder,
-} from '@jonasb/datadata-core';
-import { expectErrorResult } from '@jonasb/datadata-core-vitest';
+} from '@dossierhq/core';
+import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { createMockAdapter, resolvePaging } from '../test/TestUtils.js';
 import { toOpaqueCursor } from './OpaqueCursor.js';

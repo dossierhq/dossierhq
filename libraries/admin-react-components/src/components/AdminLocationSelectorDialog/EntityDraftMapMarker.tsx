@@ -1,4 +1,4 @@
-import type { Location } from '@jonasb/datadata-core';
+import type { Location } from '@dossierhq/core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';

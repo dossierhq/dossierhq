@@ -1,4 +1,4 @@
-import type { RichTextValueItemNode } from '@jonasb/datadata-core';
+import type { RichTextValueItemNode } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   assertIsDefined,
@@ -6,7 +6,7 @@ import {
   createRichTextRootNode,
   createRichTextValueItemNode,
   ErrorType,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminLocationsValue, AdminTitleOnly } from '../SchemaTypes.js';

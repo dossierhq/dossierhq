@@ -10,8 +10,8 @@ import type {
   PromiseResult,
   PublishedClientMiddleware,
   Result,
-} from '@jonasb/datadata-core';
-import { assertIsDefined, LoggingClientMiddleware, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { assertIsDefined, LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
 import { NotificationContext } from '@jonasb/datadata-design';
 import type { CreateSessionPayload, Server } from '@jonasb/datadata-server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';

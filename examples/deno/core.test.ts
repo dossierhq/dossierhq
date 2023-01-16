@@ -1,8 +1,4 @@
-import {
-  AdminEntity,
-  AdminEntityStatus,
-  copyEntity,
-} from "@jonasb/datadata-core";
+import { AdminEntity, AdminEntityStatus, copyEntity } from "@dossierhq/core";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("copyEntity()", () => {

@@ -4,14 +4,14 @@ import type {
   AdminSchemaSpecificationUpdate,
   PublishedClient,
   PublishedEntity,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   createRichTextRootNode,
   createRichTextValueItemNode,
   FieldType,
-} from '@jonasb/datadata-core';
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+} from '@dossierhq/core';
+import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils.js';

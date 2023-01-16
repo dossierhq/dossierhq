@@ -1,4 +1,4 @@
-import type { BoundingBox, Location } from '@jonasb/datadata-core';
+import type { BoundingBox, Location } from '@dossierhq/core';
 
 /** Random bounding box (which doesn't wrap 180/-180 longitude to make calculations easier) */
 export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {

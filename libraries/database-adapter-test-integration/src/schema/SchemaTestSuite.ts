@@ -1,5 +1,5 @@
-import type { AdminClient } from '@jonasb/datadata-core';
-import { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminClient } from '@dossierhq/core';
+import { AdminSchema } from '@dossierhq/core';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import { assertOkResult } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';

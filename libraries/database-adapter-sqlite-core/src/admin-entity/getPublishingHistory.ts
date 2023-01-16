@@ -4,8 +4,8 @@ import type {
   PromiseResult,
   PublishingEvent,
   PublishingEventKind,
-} from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
   DatabaseResolvedEntityReference,

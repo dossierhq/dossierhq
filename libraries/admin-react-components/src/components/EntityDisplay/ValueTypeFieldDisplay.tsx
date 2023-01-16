@@ -2,8 +2,8 @@ import type {
   RichTextFieldSpecification,
   ValueItem,
   ValueItemFieldSpecification,
-} from '@jonasb/datadata-core';
-import { FieldType } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { FieldType } from '@dossierhq/core';
 import { Column, Text } from '@jonasb/datadata-design';
 import { Fragment, useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';

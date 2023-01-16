@@ -2,7 +2,7 @@ import type {
   PublishedEntity,
   PublishedFieldSpecification,
   PublishedSchema,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { Field } from '@jonasb/datadata-design';
 import { FieldDisplay } from './FieldDisplay.js';
 

@@ -1,4 +1,4 @@
-import { ErrorType } from '@jonasb/datadata-core';
+import { ErrorType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';

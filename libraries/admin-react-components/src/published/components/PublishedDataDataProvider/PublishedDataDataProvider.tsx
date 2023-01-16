@@ -1,5 +1,5 @@
-import type { Logger, PublishedClient, PublishedEntity } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
+import type { Logger, PublishedClient, PublishedEntity } from '@dossierhq/core';
+import { NoOpLogger } from '@dossierhq/core';
 import React, { useMemo } from 'react';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import type {

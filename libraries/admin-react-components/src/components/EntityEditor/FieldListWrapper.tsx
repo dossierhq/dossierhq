@@ -1,4 +1,4 @@
-import type { FieldSpecification, ValidationError } from '@jonasb/datadata-core';
+import type { FieldSpecification, ValidationError } from '@dossierhq/core';
 import { Column } from '@jonasb/datadata-design';
 import React, { useCallback, useMemo } from 'react';
 import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';

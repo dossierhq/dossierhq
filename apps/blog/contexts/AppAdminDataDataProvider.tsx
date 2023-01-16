@@ -18,14 +18,14 @@ import type {
   ClientContext,
   ErrorType,
   Result,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   createConsoleLogger,
   FieldType,
   isValueItemField,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { useMemo } from 'react';
 import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';

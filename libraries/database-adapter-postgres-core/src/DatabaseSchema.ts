@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@dossierhq/core';
 
 export const UniqueConstraints = {
   advisory_locks_name_key: 'advisory_locks_name_key',

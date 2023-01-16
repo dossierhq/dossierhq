@@ -1,4 +1,4 @@
-import { RichTextNodeType } from '@jonasb/datadata-core';
+import { RichTextNodeType } from '@dossierhq/core';
 import {
   initializeMultipleSelectorState,
   MultipleSelectorStateActions,

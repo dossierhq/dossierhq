@@ -1,5 +1,5 @@
-import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },

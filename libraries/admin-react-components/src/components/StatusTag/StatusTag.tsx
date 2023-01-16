@@ -1,4 +1,4 @@
-import type { AdminEntityStatus } from '@jonasb/datadata-core';
+import type { AdminEntityStatus } from '@dossierhq/core';
 import { Tag } from '@jonasb/datadata-design';
 
 interface Props {

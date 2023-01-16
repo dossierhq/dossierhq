@@ -1,4 +1,4 @@
-import { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { generateTypescriptForSchema } from './TypescriptGenerator.js';
 

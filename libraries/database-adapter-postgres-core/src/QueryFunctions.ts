@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
 import type { PostgresTransaction } from './PostgresTransaction.js';

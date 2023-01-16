@@ -1,5 +1,5 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
-import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity } from '@dossierhq/core';
 import { expect, test } from 'bun:test';
 
 test('copyEntity()', () => {

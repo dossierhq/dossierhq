@@ -6,8 +6,8 @@ import type {
   AdminSchema,
   EntityLike,
   PublishedEntity,
-} from '@jonasb/datadata-core';
-import { AdminEntityStatus, assertIsDefined } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminEntityStatus, assertIsDefined } from '@dossierhq/core';
 import { assertEquals } from '../Asserts.js';
 import type {
   AdminLocations,

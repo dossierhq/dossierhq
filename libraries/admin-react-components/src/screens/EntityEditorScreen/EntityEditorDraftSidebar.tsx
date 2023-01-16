@@ -1,10 +1,5 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  EntityReference,
-  PublishingEvent,
-} from '@jonasb/datadata-core';
-import { assertIsDefined } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, EntityReference, PublishingEvent } from '@dossierhq/core';
+import { assertIsDefined } from '@dossierhq/core';
 import { Button, DateDisplay, Row, TabContainer, Tag, Text } from '@jonasb/datadata-design';
 import { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';

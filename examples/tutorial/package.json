@@ -14,7 +14,7 @@
     "@auth0/auth0-react": "~1.12.0",
     "@jonasb/datadata-admin-react-components": "workspace:*",
     "@jonasb/datadata-cloudinary": "workspace:*",
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-better-sqlite3": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",

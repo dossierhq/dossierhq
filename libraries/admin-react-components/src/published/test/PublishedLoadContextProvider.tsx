@@ -1,4 +1,4 @@
-import type { ClientContext, PublishedClientMiddleware } from '@jonasb/datadata-core';
+import type { ClientContext, PublishedClientMiddleware } from '@dossierhq/core';
 import React, { useMemo } from 'react';
 import {
   createBackendPublishedClient,

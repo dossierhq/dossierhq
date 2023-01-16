@@ -7030,7 +7030,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-core'",
+                "text": "'@dossierhq/core'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -11833,7 +11833,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-core'",
+                "text": "'@dossierhq/core'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

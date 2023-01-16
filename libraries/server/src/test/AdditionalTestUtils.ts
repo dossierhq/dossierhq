@@ -1,5 +1,5 @@
-import type { Logger } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
+import type { Logger } from '@dossierhq/core';
+import { NoOpLogger } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   Session,

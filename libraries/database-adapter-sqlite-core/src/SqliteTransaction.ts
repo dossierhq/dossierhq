@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
-import { notOk } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
+import { notOk } from '@dossierhq/core';
 import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { Database } from './QueryFunctions.js';
 import { queryRun } from './QueryFunctions.js';

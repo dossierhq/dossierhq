@@ -1,4 +1,4 @@
-import type { StringFieldSpecification } from '@jonasb/datadata-core';
+import type { StringFieldSpecification } from '@dossierhq/core';
 import { Input, TextArea } from '@jonasb/datadata-design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 

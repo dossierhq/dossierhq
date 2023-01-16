@@ -9,8 +9,8 @@ import type {
   ErrorType,
   PromiseResult,
   Result,
-} from '@jonasb/datadata-core';
-import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';

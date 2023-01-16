@@ -1,4 +1,4 @@
-import type { RichTextFieldSpecification } from '@jonasb/datadata-core';
+import type { RichTextFieldSpecification } from '@dossierhq/core';
 import { createContext } from 'react';
 
 interface RichTextDisplayContextValue {

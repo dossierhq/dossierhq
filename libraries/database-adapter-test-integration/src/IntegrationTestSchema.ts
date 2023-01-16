@@ -1,8 +1,4 @@
-import {
-  FieldType,
-  RichTextNodeType,
-  type AdminSchemaSpecificationUpdate,
-} from '@jonasb/datadata-core';
+import { FieldType, RichTextNodeType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 
 export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   entityTypes: [

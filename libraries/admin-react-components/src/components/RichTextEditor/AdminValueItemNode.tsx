@@ -1,10 +1,10 @@
-import type { RichTextValueItemNode, ValidationError, ValueItem } from '@jonasb/datadata-core';
+import type { RichTextValueItemNode, ValidationError, ValueItem } from '@dossierhq/core';
 import {
   createRichTextValueItemNode,
   RichTextNodeType,
   traverseValueItem,
   validateTraverseNode,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';

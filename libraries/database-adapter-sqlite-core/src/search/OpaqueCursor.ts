@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Result } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { Database } from '../QueryFunctions.js';
 
 export type CursorNativeType = 'int' | 'string';

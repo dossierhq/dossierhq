@@ -1,5 +1,5 @@
-import type { AdminFieldSpecification, RichTextFieldSpecification } from '@jonasb/datadata-core';
-import { assertExhaustive, RichTextNodeType } from '@jonasb/datadata-core';
+import type { AdminFieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
+import { assertExhaustive, RichTextNodeType } from '@dossierhq/core';
 import type { IconName } from '@jonasb/datadata-design';
 import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@jonasb/datadata-design';
 import {

@@ -1,5 +1,5 @@
-import type { ErrorResult, ErrorType, OkResult, Result } from '@jonasb/datadata-core';
-import { createErrorResult, isFieldValueEqual } from '@jonasb/datadata-core';
+import type { ErrorResult, ErrorType, OkResult, Result } from '@dossierhq/core';
+import { createErrorResult, isFieldValueEqual } from '@dossierhq/core';
 
 class AssertionError extends Error {
   actual: unknown;

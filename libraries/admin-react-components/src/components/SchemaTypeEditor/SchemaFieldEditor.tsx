@@ -1,4 +1,4 @@
-import { FieldType, RichTextNodeType } from '@jonasb/datadata-core';
+import { FieldType, RichTextNodeType } from '@dossierhq/core';
 import {
   Card,
   Checkbox,

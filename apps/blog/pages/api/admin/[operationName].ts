@@ -1,11 +1,11 @@
-import type { AdminClientJsonOperationArgs, ErrorType, Result } from '@jonasb/datadata-core';
+import type { AdminClientJsonOperationArgs, ErrorType, Result } from '@dossierhq/core';
 import {
   AdminClientModifyingOperations,
   decodeURLSearchParamsParam,
   executeAdminClientOperationFromJson,
   notOk,
   ok,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ENABLE_WEB_INTERFACE } from '../../../config/WebInterfaceConfig';
 import { handleRequest, sendMethodNotAllowedError } from '../../../utils/HandlerUtils';

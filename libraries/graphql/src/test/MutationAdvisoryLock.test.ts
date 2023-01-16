@@ -1,5 +1,5 @@
-import { ok } from '@jonasb/datadata-core';
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+import { ok } from '@dossierhq/core';
+import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';

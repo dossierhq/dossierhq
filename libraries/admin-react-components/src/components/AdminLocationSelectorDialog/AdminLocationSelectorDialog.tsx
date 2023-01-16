@@ -1,5 +1,5 @@
-import type { AdminEntity, AdminSchema, Location } from '@jonasb/datadata-core';
-import { isLocationItemField, ItemTraverseNodeType } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminSchema, Location } from '@dossierhq/core';
+import { isLocationItemField, ItemTraverseNodeType } from '@dossierhq/core';
 import {
   Dialog,
   FullscreenContainer,

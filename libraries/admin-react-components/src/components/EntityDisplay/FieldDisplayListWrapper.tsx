@@ -1,4 +1,4 @@
-import type { PublishedFieldSpecification } from '@jonasb/datadata-core';
+import type { PublishedFieldSpecification } from '@dossierhq/core';
 import { Column } from '@jonasb/datadata-design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 

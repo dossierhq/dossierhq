@@ -1,4 +1,4 @@
-import type { RichText, RichTextFieldSpecification } from '@jonasb/datadata-core';
+import type { RichText, RichTextFieldSpecification } from '@dossierhq/core';
 import { RichTextDisplay } from '../RichTextDisplay/RichTextDisplay.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 

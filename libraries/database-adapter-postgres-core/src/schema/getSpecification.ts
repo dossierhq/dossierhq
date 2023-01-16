@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';

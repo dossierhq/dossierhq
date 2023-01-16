@@ -1,4 +1,4 @@
-import type { Paging } from '@jonasb/datadata-core';
+import type { Paging } from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type {

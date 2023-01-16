@@ -1,5 +1,5 @@
-import type { ErrorType, Logger, Paging, PromiseResult } from '@jonasb/datadata-core';
-import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, Paging, PromiseResult } from '@dossierhq/core';
+import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,

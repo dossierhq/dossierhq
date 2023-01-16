@@ -7,7 +7,7 @@ import type {
   RichTextFieldSpecification,
   StringFieldSpecification,
   ValueItemFieldSpecification,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -23,7 +23,7 @@ import {
   isStringListField,
   isValueItemField,
   isValueItemListField,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { Text } from '@jonasb/datadata-design';
 import { useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';

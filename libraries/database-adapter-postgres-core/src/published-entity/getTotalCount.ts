@@ -1,10 +1,5 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedQuery,
-  PublishedSchema,
-} from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, PublishedQuery, PublishedSchema } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';

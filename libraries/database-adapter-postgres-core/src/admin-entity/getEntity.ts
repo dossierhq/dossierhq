@@ -4,8 +4,8 @@ import type {
   ErrorType,
   PromiseResult,
   UniqueIndexReference,
-} from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityGetOnePayload,
   TransactionContext,

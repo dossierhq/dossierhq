@@ -1,5 +1,5 @@
-import type { AdminEntity, PublishedEntity } from '@jonasb/datadata-core';
-import { assertIsDefined } from '@jonasb/datadata-core';
+import type { AdminEntity, PublishedEntity } from '@dossierhq/core';
+import { assertIsDefined } from '@dossierhq/core';
 import { expect } from 'vitest';
 
 export function expectSampledEntitiesArePartOfExpected(

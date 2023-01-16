@@ -6,7 +6,7 @@ import type {
   Edge,
   EntitySamplingPayload,
   ErrorType,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import { AdminDataDataContext } from '../contexts/AdminDataDataContext.js';

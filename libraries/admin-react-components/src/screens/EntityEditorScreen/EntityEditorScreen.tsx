@@ -1,4 +1,4 @@
-import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityReference } from '@dossierhq/core';
 import {
   Button,
   EmptyStateMessage,

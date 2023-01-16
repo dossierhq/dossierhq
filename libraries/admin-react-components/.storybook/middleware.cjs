@@ -7,7 +7,7 @@ const {
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
   notOk,
-} = require('@jonasb/datadata-core');
+} = require('@dossierhq/core');
 const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@jonasb/datadata-server');
 const {
   createDatabase,

@@ -6,8 +6,8 @@ import type {
   PromiseResult,
   PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
-} from '@jonasb/datadata-core';
-import { encodeObjectToURLSearchParams, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { encodeObjectToURLSearchParams, notOk, ok } from '@dossierhq/core';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

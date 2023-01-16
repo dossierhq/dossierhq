@@ -1,4 +1,4 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminSchema } from '@dossierhq/core';
 import type { Server } from '@jonasb/datadata-server';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';

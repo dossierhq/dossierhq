@@ -1,5 +1,5 @@
-import type { AdminEntity, ErrorType } from '@jonasb/datadata-core';
-import { copyEntity, notOk, ok } from '@jonasb/datadata-core';
+import type { AdminEntity, ErrorType } from '@dossierhq/core';
+import { copyEntity, notOk, ok } from '@dossierhq/core';
 import { assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';

@@ -3,8 +3,8 @@ import type {
   EntityReference,
   ErrorType,
   PromiseResult,
-} from '@jonasb/datadata-core';
-import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminEntityStatus, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

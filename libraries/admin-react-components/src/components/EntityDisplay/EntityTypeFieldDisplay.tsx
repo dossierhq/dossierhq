@@ -2,7 +2,7 @@ import type {
   EntityFieldSpecification,
   EntityReference,
   RichTextFieldSpecification,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { Column, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext } from 'react';

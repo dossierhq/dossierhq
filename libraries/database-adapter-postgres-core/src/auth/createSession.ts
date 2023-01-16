@@ -1,5 +1,5 @@
-import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
-import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import type { OkResult, PromiseResult } from '@dossierhq/core';
+import { ErrorType, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAuthCreateSessionPayload,
   TransactionContext,

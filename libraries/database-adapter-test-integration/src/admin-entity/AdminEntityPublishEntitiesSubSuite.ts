@@ -6,7 +6,7 @@ import {
   createRichTextRootNode,
   createRichTextTextNode,
   ErrorType,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminAdminOnlyValue } from '../SchemaTypes.js';

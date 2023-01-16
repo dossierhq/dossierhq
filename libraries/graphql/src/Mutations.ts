@@ -16,7 +16,7 @@ import type {
   AdvisoryLockReleasePayload,
   EntityReference,
   EntityVersionReference,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { buildResolversForAdminEntity } from './DataLoaders.js';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 

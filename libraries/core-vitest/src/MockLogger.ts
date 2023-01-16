@@ -1,4 +1,4 @@
-import type { Logger } from '@jonasb/datadata-core';
+import type { Logger } from '@dossierhq/core';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 

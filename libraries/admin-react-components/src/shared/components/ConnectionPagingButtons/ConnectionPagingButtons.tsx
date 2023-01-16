@@ -1,4 +1,4 @@
-import type { Connection, Edge, ErrorType, Paging } from '@jonasb/datadata-core';
+import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
 import { IconButton } from '@jonasb/datadata-design';
 import React, { useMemo } from 'react';
 

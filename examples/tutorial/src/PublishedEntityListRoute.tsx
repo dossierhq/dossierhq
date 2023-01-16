@@ -1,5 +1,5 @@
 import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-components';
-import type { PublishedEntity } from '@jonasb/datadata-core';
+import type { PublishedEntity } from '@dossierhq/core';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';

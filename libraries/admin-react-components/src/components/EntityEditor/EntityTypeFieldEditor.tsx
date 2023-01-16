@@ -1,4 +1,4 @@
-import type { AdminEntity, EntityFieldSpecification, EntityReference } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityFieldSpecification, EntityReference } from '@dossierhq/core';
 import { Button, Column, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext, useState } from 'react';

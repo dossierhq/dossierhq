@@ -1,5 +1,5 @@
-import type { PromiseResult } from '@jonasb/datadata-core';
-import { ErrorType, notOk, ok, visitorPathToString } from '@jonasb/datadata-core';
+import type { PromiseResult } from '@dossierhq/core';
+import { ErrorType, notOk, ok, visitorPathToString } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityUniqueIndexReference,

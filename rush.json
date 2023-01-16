@@ -376,12 +376,12 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-core",
+      "packageName": "@dossierhq/core",
       "projectFolder": "libraries/core",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-core-vitest",
+      "packageName": "@dossierhq/core-vitest",
       "projectFolder": "libraries/core-vitest",
       "versionPolicyName": "DataDataFramework"
     },

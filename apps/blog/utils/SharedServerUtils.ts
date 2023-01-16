@@ -1,4 +1,4 @@
-import { ok } from '@jonasb/datadata-core';
+import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 

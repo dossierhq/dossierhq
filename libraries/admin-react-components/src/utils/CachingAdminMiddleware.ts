@@ -3,8 +3,8 @@ import type {
   AdminClientMiddleware,
   ClientContext,
   OkFromResult,
-} from '@jonasb/datadata-core';
-import { AdminClientOperationName, AdminSchema, assertIsDefined } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminClientOperationName, AdminSchema, assertIsDefined } from '@dossierhq/core';
 import type { RefObject } from 'react';
 import { useMemo, useRef } from 'react';
 import type { Cache } from 'swr';

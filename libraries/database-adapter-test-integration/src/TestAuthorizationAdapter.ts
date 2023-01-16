@@ -1,4 +1,4 @@
-import { notOk, ok } from '@jonasb/datadata-core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   AuthorizationAdapter,
   ResolvedAuthKey,

@@ -1,4 +1,4 @@
-import type { Location } from '@jonasb/datadata-core';
+import type { Location } from '@dossierhq/core';
 import type { RefObject } from 'react';
 
 interface State {

@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { Context } from '@jonasb/datadata-database-adapter-sqlite-core';
 import type { Database, RunResult, Statement } from 'sqlite3';
 

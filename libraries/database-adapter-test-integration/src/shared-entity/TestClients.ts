@@ -1,4 +1,4 @@
-import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 
 const mainPrincipal = {

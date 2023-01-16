@@ -7,9 +7,9 @@ import type {
   PromiseResult,
   PublishedEntity,
   Result,
-} from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, ok } from '@jonasb/datadata-core';
-import { createMockLogger, expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+} from '@dossierhq/core';
+import { AdminSchema, assertIsDefined, ok } from '@dossierhq/core';
+import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,

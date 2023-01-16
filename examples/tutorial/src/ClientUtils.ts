@@ -12,7 +12,7 @@ import {
   notOk,
   ok,
   PublishedClientOperation,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { useMemo } from 'react';
 import { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
 

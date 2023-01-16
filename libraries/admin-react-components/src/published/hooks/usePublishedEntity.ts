@@ -4,7 +4,7 @@ import type {
   ErrorType,
   PublishedClient,
   PublishedEntity,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';

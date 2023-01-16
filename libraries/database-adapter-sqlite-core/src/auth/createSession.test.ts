@@ -1,4 +1,4 @@
-import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
   createMockContext,

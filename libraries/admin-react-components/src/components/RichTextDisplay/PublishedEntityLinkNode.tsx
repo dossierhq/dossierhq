@@ -1,5 +1,5 @@
-import type { EntityReference, RichTextEntityLinkNode } from '@jonasb/datadata-core';
-import { RichTextNodeType } from '@jonasb/datadata-core';
+import type { EntityReference, RichTextEntityLinkNode } from '@dossierhq/core';
+import { RichTextNodeType } from '@dossierhq/core';
 import { addClassNamesToElement } from '@lexical/utils';
 import type { EditorConfig, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { $getSelection, $isElementNode, $isRangeSelection, ElementNode } from 'lexical';

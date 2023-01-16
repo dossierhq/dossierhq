@@ -1,5 +1,5 @@
-import type { AdminEntityUpsert } from '@jonasb/datadata-core';
-import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
+import type { AdminEntityUpsert } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';

@@ -32,7 +32,7 @@
     "directory": "libraries/typescript-generator"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "tslib": "~2.4.1"
   },
   "devDependencies": {

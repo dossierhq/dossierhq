@@ -1,5 +1,5 @@
 #!/usr/bin/env -S npx ts-node-esm
-import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';

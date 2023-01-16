@@ -4,8 +4,8 @@ import type {
   ErrorType,
   PromiseResult,
   PublishedClient,
-} from '@jonasb/datadata-core';
-import { AdminSchema, assertOkResult, NoOpLogger } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminSchema, assertOkResult, NoOpLogger } from '@dossierhq/core';
 import {
   createDatabase,
   createSqlite3Adapter,

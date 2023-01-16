@@ -1,4 +1,4 @@
-import type { AdminEntity, Location, LocationFieldSpecification } from '@jonasb/datadata-core';
+import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
 import { Button, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';

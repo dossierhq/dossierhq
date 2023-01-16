@@ -1,5 +1,5 @@
 #!/usr/bin/env -S bun
-import { createConsoleLogger, FieldType } from '@jonasb/datadata-core';
+import { createConsoleLogger, FieldType } from '@dossierhq/core';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { createAdapter } from './ServerUtils.js';
 

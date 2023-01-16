@@ -1,5 +1,5 @@
-import type { AdminEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
-import { AdminQueryOrder } from '@jonasb/datadata-core';
+import type { AdminEntity, PublishedQueryOrder } from '@dossierhq/core';
+import { AdminQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';

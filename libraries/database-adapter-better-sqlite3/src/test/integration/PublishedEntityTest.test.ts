@@ -1,5 +1,5 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
-import { assertIsDefined } from '@jonasb/datadata-core';
+import type { AdminSchema } from '@dossierhq/core';
+import { assertIsDefined } from '@dossierhq/core';
 import type { ReadOnlyEntityRepository } from '@jonasb/datadata-database-adapter-test-integration';
 import {
   createPublishedEntityTestSuite,

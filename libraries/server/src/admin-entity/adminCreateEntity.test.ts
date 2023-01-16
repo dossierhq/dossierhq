@@ -1,5 +1,5 @@
-import { AdminEntityStatus, ErrorType, ok } from '@jonasb/datadata-core';
-import { expectErrorResult, expectResultValue } from '@jonasb/datadata-core-vitest';
+import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
+import { expectErrorResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,

@@ -1,15 +1,15 @@
 {
-  "name": "@jonasb/datadata-core-vitest",
+  "name": "@dossierhq/core-vitest",
   "entries": [
     {
       "version": "0.1.38",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.38",
+      "tag": "@dossierhq/core-vitest_v0.1.38",
       "date": "Mon, 02 Jan 2023 22:59:38 GMT",
       "comments": {}
     },
     {
       "version": "0.1.37",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.37",
+      "tag": "@dossierhq/core-vitest_v0.1.37",
       "date": "Mon, 02 Jan 2023 17:39:42 GMT",
       "comments": {
         "none": [
@@ -21,7 +21,7 @@
     },
     {
       "version": "0.1.36",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.36",
+      "tag": "@dossierhq/core-vitest_v0.1.36",
       "date": "Mon, 12 Dec 2022 12:51:59 GMT",
       "comments": {
         "none": [
@@ -33,7 +33,7 @@
     },
     {
       "version": "0.1.35",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.35",
+      "tag": "@dossierhq/core-vitest_v0.1.35",
       "date": "Sat, 05 Nov 2022 21:33:57 GMT",
       "comments": {
         "none": [
@@ -45,13 +45,13 @@
     },
     {
       "version": "0.1.34",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.34",
+      "tag": "@dossierhq/core-vitest_v0.1.34",
       "date": "Tue, 25 Oct 2022 15:23:52 GMT",
       "comments": {}
     },
     {
       "version": "0.1.33",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.33",
+      "tag": "@dossierhq/core-vitest_v0.1.33",
       "date": "Mon, 17 Oct 2022 15:41:41 GMT",
       "comments": {
         "none": [
@@ -63,25 +63,25 @@
     },
     {
       "version": "0.1.32",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.32",
+      "tag": "@dossierhq/core-vitest_v0.1.32",
       "date": "Fri, 30 Sep 2022 18:08:39 GMT",
       "comments": {}
     },
     {
       "version": "0.1.31",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.31",
+      "tag": "@dossierhq/core-vitest_v0.1.31",
       "date": "Mon, 19 Sep 2022 21:05:31 GMT",
       "comments": {}
     },
     {
       "version": "0.1.30",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.30",
+      "tag": "@dossierhq/core-vitest_v0.1.30",
       "date": "Mon, 19 Sep 2022 13:10:56 GMT",
       "comments": {}
     },
     {
       "version": "0.1.29",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.29",
+      "tag": "@dossierhq/core-vitest_v0.1.29",
       "date": "Tue, 06 Sep 2022 09:47:25 GMT",
       "comments": {
         "none": [
@@ -93,13 +93,13 @@
     },
     {
       "version": "0.1.28",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.28",
+      "tag": "@dossierhq/core-vitest_v0.1.28",
       "date": "Tue, 30 Aug 2022 21:10:46 GMT",
       "comments": {}
     },
     {
       "version": "0.1.27",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.27",
+      "tag": "@dossierhq/core-vitest_v0.1.27",
       "date": "Tue, 30 Aug 2022 14:05:13 GMT",
       "comments": {
         "none": [
@@ -111,13 +111,13 @@
     },
     {
       "version": "0.1.26",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.26",
+      "tag": "@dossierhq/core-vitest_v0.1.26",
       "date": "Sun, 21 Aug 2022 22:26:51 GMT",
       "comments": {}
     },
     {
       "version": "0.1.25",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.25",
+      "tag": "@dossierhq/core-vitest_v0.1.25",
       "date": "Sun, 21 Aug 2022 12:14:33 GMT",
       "comments": {
         "none": [
@@ -129,61 +129,61 @@
     },
     {
       "version": "0.1.24",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.24",
+      "tag": "@dossierhq/core-vitest_v0.1.24",
       "date": "Mon, 13 Jun 2022 22:58:05 GMT",
       "comments": {}
     },
     {
       "version": "0.1.23",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.23",
+      "tag": "@dossierhq/core-vitest_v0.1.23",
       "date": "Mon, 13 Jun 2022 21:34:43 GMT",
       "comments": {}
     },
     {
       "version": "0.1.22",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.22",
+      "tag": "@dossierhq/core-vitest_v0.1.22",
       "date": "Mon, 13 Jun 2022 12:17:58 GMT",
       "comments": {}
     },
     {
       "version": "0.1.21",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.21",
+      "tag": "@dossierhq/core-vitest_v0.1.21",
       "date": "Tue, 07 Jun 2022 21:00:46 GMT",
       "comments": {}
     },
     {
       "version": "0.1.20",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.20",
+      "tag": "@dossierhq/core-vitest_v0.1.20",
       "date": "Mon, 06 Jun 2022 22:23:03 GMT",
       "comments": {}
     },
     {
       "version": "0.1.19",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.19",
+      "tag": "@dossierhq/core-vitest_v0.1.19",
       "date": "Mon, 06 Jun 2022 15:26:55 GMT",
       "comments": {}
     },
     {
       "version": "0.1.18",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.18",
+      "tag": "@dossierhq/core-vitest_v0.1.18",
       "date": "Mon, 06 Jun 2022 14:27:59 GMT",
       "comments": {}
     },
     {
       "version": "0.1.17",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.17",
+      "tag": "@dossierhq/core-vitest_v0.1.17",
       "date": "Fri, 03 Jun 2022 19:47:15 GMT",
       "comments": {}
     },
     {
       "version": "0.1.16",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.16",
+      "tag": "@dossierhq/core-vitest_v0.1.16",
       "date": "Thu, 02 Jun 2022 22:03:43 GMT",
       "comments": {}
     },
     {
       "version": "0.1.15",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.15",
+      "tag": "@dossierhq/core-vitest_v0.1.15",
       "date": "Thu, 02 Jun 2022 21:27:42 GMT",
       "comments": {
         "none": [
@@ -195,19 +195,19 @@
     },
     {
       "version": "0.1.14",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.14",
+      "tag": "@dossierhq/core-vitest_v0.1.14",
       "date": "Mon, 30 May 2022 18:59:49 GMT",
       "comments": {}
     },
     {
       "version": "0.1.13",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.13",
+      "tag": "@dossierhq/core-vitest_v0.1.13",
       "date": "Mon, 30 May 2022 15:28:33 GMT",
       "comments": {}
     },
     {
       "version": "0.1.12",
-      "tag": "@jonasb/datadata-core-vitest_v0.1.12",
+      "tag": "@dossierhq/core-vitest_v0.1.12",
       "date": "Mon, 30 May 2022 11:14:25 GMT",
       "comments": {
         "none": [

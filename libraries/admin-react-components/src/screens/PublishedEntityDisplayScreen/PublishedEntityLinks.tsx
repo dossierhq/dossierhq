@@ -1,4 +1,4 @@
-import type { EntityReference, PublishedEntity } from '@jonasb/datadata-core';
+import type { EntityReference, PublishedEntity } from '@dossierhq/core';
 import { Button, Field } from '@jonasb/datadata-design';
 import { useCallback, useContext, useState } from 'react';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';

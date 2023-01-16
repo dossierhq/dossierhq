@@ -6,13 +6,13 @@ import type {
   AdminEntityUpdate,
   AdminEntityUpsert,
   ContextProvider,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
   ok,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';

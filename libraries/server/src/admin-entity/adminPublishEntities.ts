@@ -8,7 +8,7 @@ import type {
   PromiseResult,
   PublishedSchema,
   Result,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   createErrorResult,
@@ -19,7 +19,7 @@ import {
   ok,
   traverseEntity,
   visitorPathToString,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

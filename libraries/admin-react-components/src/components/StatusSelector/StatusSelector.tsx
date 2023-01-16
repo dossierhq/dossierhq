@@ -1,4 +1,4 @@
-import { AdminEntityStatus } from '@jonasb/datadata-core';
+import { AdminEntityStatus } from '@dossierhq/core';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,

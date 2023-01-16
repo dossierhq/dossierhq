@@ -1,5 +1,5 @@
-import type { AdminClient, ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
-import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult, Result } from '@dossierhq/core';
+import { AdminEntityStatus, notOk, ok } from '@dossierhq/core';
 import React, { useContext, useEffect, useState } from 'react';
 import { AdminDataDataContext } from '..';
 import { entitiesFixture } from './EntityFixtures';

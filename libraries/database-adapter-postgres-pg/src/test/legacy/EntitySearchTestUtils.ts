@@ -10,8 +10,8 @@ import type {
   PublishedClient,
   PublishedEntity,
   PublishedSearchQuery,
-} from '@jonasb/datadata-core';
-import { AdminEntityStatus, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminEntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
 import { expect } from 'vitest';
 
 export async function ensureEntityCount(

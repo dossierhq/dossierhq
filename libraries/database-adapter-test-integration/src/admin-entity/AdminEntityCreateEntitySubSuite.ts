@@ -8,7 +8,7 @@ import {
   createRichTextTextNode,
   createRichTextValueItemNode,
   ErrorType,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
   assertEquals,

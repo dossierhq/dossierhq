@@ -13,7 +13,7 @@ import {
   isAdminCloudinaryImage,
   isPublishedCloudinaryImage,
 } from '@jonasb/datadata-cloudinary';
-import { FieldType, isValueItemField } from '@jonasb/datadata-core';
+import { FieldType, isValueItemField } from '@dossierhq/core';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
 export class ContextAdapter

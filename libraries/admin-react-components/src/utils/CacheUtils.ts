@@ -10,8 +10,8 @@ import type {
   Paging,
   PublishedQuery,
   PublishedSearchQuery,
-} from '@jonasb/datadata-core';
-import { copyEntity } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { copyEntity } from '@dossierhq/core';
 import type { Cache, useSWRConfig } from 'swr';
 
 export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];

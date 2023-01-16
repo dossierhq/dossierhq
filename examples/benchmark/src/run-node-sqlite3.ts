@@ -1,4 +1,4 @@
-import { NoOpLogger } from '@jonasb/datadata-core';
+import { NoOpLogger } from '@dossierhq/core';
 import {
   createDatabase,
   createSqlite3Adapter,

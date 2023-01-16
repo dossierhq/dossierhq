@@ -1,5 +1,5 @@
-import type { AdminClient, AdminEntity, Logger } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, Logger } from '@dossierhq/core';
+import { NoOpLogger } from '@dossierhq/core';
 import React, { useMemo } from 'react';
 import type {
   AdminDataDataContextAdapter,

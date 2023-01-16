@@ -1,4 +1,4 @@
-import { Logger } from "@jonasb/datadata-core";
+import { Logger } from "@dossierhq/core";
 import * as log from "std/log/mod.ts";
 import { sprintf } from "std/fmt/printf.ts";
 

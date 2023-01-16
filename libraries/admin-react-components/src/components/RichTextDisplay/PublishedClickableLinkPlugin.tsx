@@ -1,4 +1,4 @@
-import type { EntityReference } from '@jonasb/datadata-core';
+import type { EntityReference } from '@dossierhq/core';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { LexicalEditor } from 'lexical';
 import { $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection } from 'lexical';

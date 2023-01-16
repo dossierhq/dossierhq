@@ -1,10 +1,5 @@
-import type {
-  AdminEntityStatus,
-  EntityReference,
-  ErrorType,
-  PromiseResult,
-} from '@jonasb/datadata-core';
-import { assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
+import type { AdminEntityStatus, EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
+import { assertIsDefined, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUnpublishGetEntityInfoPayload,
   DatabaseAdminEntityUnpublishUpdateEntityPayload,

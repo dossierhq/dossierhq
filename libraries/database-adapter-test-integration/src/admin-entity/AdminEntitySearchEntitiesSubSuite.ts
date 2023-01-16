@@ -1,4 +1,4 @@
-import type { BoundingBox } from '@jonasb/datadata-core';
+import type { BoundingBox } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminQueryOrder,
@@ -10,7 +10,7 @@ import {
   createRichTextTextNode,
   createRichTextValueItemNode,
   getAllNodesForConnection,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminLocationsValue, AdminReferencesValue } from '../SchemaTypes.js';

@@ -28,7 +28,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "tslib": "~2.4.1",
     "uuid": "~9.0.0"

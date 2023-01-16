@@ -4,8 +4,8 @@ import type {
   ErrorType,
   PromiseResult,
   SchemaSpecificationUpdatePayload,
-} from '@jonasb/datadata-core';
-import { AdminSchema, isFieldValueEqual, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { AdminSchema, isFieldValueEqual, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-database-adapter';
 
 export async function getSchemaSpecification(

@@ -1,9 +1,5 @@
-import type {
-  AdminEntity,
-  AdminEntityTypeSpecification,
-  EntityReference,
-} from '@jonasb/datadata-core';
-import { isFieldValueEqual } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminEntityTypeSpecification, EntityReference } from '@dossierhq/core';
+import { isFieldValueEqual } from '@dossierhq/core';
 import {
   Card2,
   Dialog,

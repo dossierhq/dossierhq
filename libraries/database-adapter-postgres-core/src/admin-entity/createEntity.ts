@@ -1,4 +1,4 @@
-import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   createPostgresSqlQuery,
   DEFAULT,

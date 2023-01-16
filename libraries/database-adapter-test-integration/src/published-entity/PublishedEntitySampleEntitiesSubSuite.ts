@@ -1,4 +1,4 @@
-import { copyEntity } from '@jonasb/datadata-core';
+import { copyEntity } from '@dossierhq/core';
 import { assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {

@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';

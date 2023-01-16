@@ -1,5 +1,5 @@
-import type { AdminSearchQuery, EntitySamplingOptions, Paging } from '@jonasb/datadata-core';
-import { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from '@jonasb/datadata-core';
+import type { AdminSearchQuery, EntitySamplingOptions, Paging } from '@dossierhq/core';
+import { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
 import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';

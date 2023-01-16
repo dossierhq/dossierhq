@@ -1,11 +1,11 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminSchema,
   assertIsDefined,
   copyEntity,
   FieldType,
-} from '@jonasb/datadata-core';
+} from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
 import {

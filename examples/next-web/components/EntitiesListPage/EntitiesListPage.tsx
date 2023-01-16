@@ -1,5 +1,5 @@
 import { AdminEntityListScreen } from '@jonasb/datadata-admin-react-components';
-import type { AdminEntity } from '@jonasb/datadata-core';
+import type { AdminEntity } from '@dossierhq/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';

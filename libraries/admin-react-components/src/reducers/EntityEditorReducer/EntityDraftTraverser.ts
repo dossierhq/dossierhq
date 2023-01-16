@@ -1,5 +1,5 @@
-import type { AdminSchema, ItemTraverseNode } from '@jonasb/datadata-core';
-import { traverseItemField } from '@jonasb/datadata-core';
+import type { AdminSchema, ItemTraverseNode } from '@dossierhq/core';
+import { traverseItemField } from '@dossierhq/core';
 import type { EntityEditorDraftState } from './EntityEditorReducer.js';
 
 export function* traverseEntityEditorDraft(

@@ -5,8 +5,8 @@ import type {
   PublishedEntity,
   PublishedSchema,
   UniqueIndexReference,
-} from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

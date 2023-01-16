@@ -1,4 +1,4 @@
-import { ok } from '@jonasb/datadata-core';
+import { ok } from '@dossierhq/core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-deno';
 import { config } from 'dotenv';
 import { Pool } from 'postgres';

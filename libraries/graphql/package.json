@@ -31,12 +31,12 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "graphql": "~16.6.0",
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@jonasb/datadata-core-vitest": "workspace:*",
+    "@dossierhq/core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",

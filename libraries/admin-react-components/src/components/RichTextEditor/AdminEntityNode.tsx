@@ -1,5 +1,5 @@
-import type { EntityReference, RichTextEntityNode } from '@jonasb/datadata-core';
-import { createRichTextEntityNode, RichTextNodeType } from '@jonasb/datadata-core';
+import type { EntityReference, RichTextEntityNode } from '@dossierhq/core';
+import { createRichTextEntityNode, RichTextNodeType } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type {

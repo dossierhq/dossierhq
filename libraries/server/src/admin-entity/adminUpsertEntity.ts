@@ -7,8 +7,8 @@ import type {
   ErrorResult,
   PromiseResult,
   PublishedSchema,
-} from '@jonasb/datadata-core';
-import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@jonasb/datadata-core';
+} from '@dossierhq/core';
+import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';

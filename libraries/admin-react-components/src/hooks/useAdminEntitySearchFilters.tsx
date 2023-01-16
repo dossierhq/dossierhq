@@ -1,4 +1,4 @@
-import type { AdminSearchQuery } from '@jonasb/datadata-core';
+import type { AdminSearchQuery } from '@dossierhq/core';
 import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb/datadata-design';
 import { initializeMultipleSelectorState } from '@jonasb/datadata-design';
 import isEqual from 'lodash/isEqual.js';

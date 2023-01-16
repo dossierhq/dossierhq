@@ -1,9 +1,4 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedQuery,
-  PublishedSchema,
-} from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, PublishedQuery, PublishedSchema } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

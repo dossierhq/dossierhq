@@ -1,4 +1,4 @@
-import type { ValidationError } from '@jonasb/datadata-core';
+import type { ValidationError } from '@dossierhq/core';
 
 export function groupValidationErrorsByTopLevelPath(
   errors: ValidationError[]

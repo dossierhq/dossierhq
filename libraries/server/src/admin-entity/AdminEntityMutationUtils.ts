@@ -1,5 +1,5 @@
-import type { EntityReference, ErrorType, Result } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { EntityReference, ErrorType, Result } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 
 export function randomNameGenerator(name: string) {
   return `${name}#${Math.random().toFixed(8).slice(2)}`;
