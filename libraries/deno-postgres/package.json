@@ -15,7 +15,7 @@
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
-    "@jonasb/datadata-postgres": "workspace:*",
+    "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*"
   }
 }

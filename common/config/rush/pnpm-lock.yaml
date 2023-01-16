@@ -191,11 +191,11 @@ importers:
       '@dossierhq/deno-postgres': workspace:*
       '@dossierhq/pg': workspace:*
       '@dossierhq/postgres-core': workspace:*
+      '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@faker-js/faker': ~7.6.0
       '@jonasb/datadata-heft-node-rig': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.49.0
       '@types/better-sqlite3': ~7.6.3
@@ -228,8 +228,8 @@ importers:
       sqlite3: 5.1.4
       tslib: 2.4.1
     devDependencies:
+      '@dossierhq/postgres-tools': link:../../libraries/postgres-tools
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
-      '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.49.0
       '@types/better-sqlite3': 7.6.3
@@ -266,16 +266,16 @@ importers:
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/deno-postgres': workspace:*
       '@dossierhq/postgres-core': workspace:*
+      '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/server': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-template-library': workspace:*
     devDependencies:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/database-adapter': link:../../libraries/database-adapter
       '@dossierhq/deno-postgres': link:../../libraries/deno-postgres
       '@dossierhq/postgres-core': link:../../libraries/postgres-core
+      '@dossierhq/postgres-tools': link:../../libraries/postgres-tools
       '@dossierhq/server': link:../../libraries/server
-      '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/datadata-template-library': link:../../templates/library
 
   ../../examples/foo:
@@ -322,10 +322,10 @@ importers:
       '@dossierhq/graphql': workspace:*
       '@dossierhq/leaflet': workspace:*
       '@dossierhq/pg': workspace:*
+      '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
       '@types/react': ~18.0.26
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ~5.48.0
@@ -358,7 +358,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       sqlite3: 5.1.4
     devDependencies:
-      '@jonasb/datadata-postgres': link:../../libraries/postgres
+      '@dossierhq/postgres-tools': link:../../libraries/postgres-tools
       '@types/react': 18.0.26
       '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 5.48.0_7uibuqfxkfaozanbtbziikiqje
@@ -614,15 +614,15 @@ importers:
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/postgres-core': workspace:*
+      '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/server': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
     devDependencies:
       '@dossierhq/core': link:../core
       '@dossierhq/database-adapter': link:../database-adapter
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/postgres-core': link:../postgres-core
+      '@dossierhq/postgres-tools': link:../postgres-tools
       '@dossierhq/server': link:../server
-      '@jonasb/datadata-postgres': link:../postgres
 
   ../../libraries/design:
     specifiers:
@@ -848,9 +848,9 @@ importers:
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/postgres-core': workspace:*
+      '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/server': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.49.0
       '@types/pg': ~8.6.5
@@ -872,9 +872,9 @@ importers:
     devDependencies:
       '@dossierhq/core-vitest': link:../core-vitest
       '@dossierhq/integration-test': link:../integration-test
+      '@dossierhq/postgres-tools': link:../postgres-tools
       '@dossierhq/server': link:../server
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
-      '@jonasb/datadata-postgres': link:../postgres
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.49.0
       '@types/pg': 8.6.5
@@ -885,14 +885,6 @@ importers:
       typescript: 4.9.4
       uuid: 9.0.0
       vitest: 0.27.1
-
-  ../../libraries/postgres:
-    specifiers:
-      pg: ~8.8.0
-      postgrator: ~7.1.1
-    dependencies:
-      pg: 8.8.0
-      postgrator: 7.1.1
 
   ../../libraries/postgres-core:
     specifiers:
@@ -920,6 +912,14 @@ importers:
       prettier: 2.8.3
       typescript: 4.9.4
       vitest: 0.27.1
+
+  ../../libraries/postgres-tools:
+    specifiers:
+      pg: ~8.8.0
+      postgrator: ~7.1.1
+    dependencies:
+      pg: 8.8.0
+      postgrator: 7.1.1
 
   ../../libraries/react-components:
     specifiers:
