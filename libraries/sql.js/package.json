@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-sqlite-sql.js",
+  "name": "@dossierhq/sql.js",
   "version": "0.1.1-25",
   "description": "",
   "type": "module",

@@ -421,8 +421,8 @@
       "projectFolder": "libraries/sqlite3"
     },
     {
-      "packageName": "@dossierhq/database-adapter-sqlite-sql.js",
-      "projectFolder": "libraries/database-adapter-sqlite-sqljs"
+      "packageName": "@dossierhq/sql.js",
+      "projectFolder": "libraries/sql.js"
     },
     {
       "packageName": "@dossierhq/integration-test",

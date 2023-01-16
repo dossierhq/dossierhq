@@ -14,7 +14,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@jonasb/datadata-cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/database-adapter-sqlite-sql.js": "workspace:*",
+    "@dossierhq/sql.js": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
