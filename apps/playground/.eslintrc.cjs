@@ -1,5 +1,5 @@
-require('@jonasb/eslint-config-datadata-react/patch/modern-module-resolution.js');
+require('@dossierhq/eslint-config-react/patch/modern-module-resolution.js');
 
 module.exports = {
-  extends: ['@jonasb/eslint-config-datadata-react/profile/app.js'],
+  extends: ['@dossierhq/eslint-config-react/profile/app.js'],
 };

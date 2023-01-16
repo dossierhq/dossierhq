@@ -501,7 +501,7 @@
       "projectFolder": "stack/eslint-config-generic"
     },
     {
-      "packageName": "@jonasb/eslint-config-datadata-react",
+      "packageName": "@dossierhq/eslint-config-react",
       "projectFolder": "stack/eslint-config-react"
     },
     {
