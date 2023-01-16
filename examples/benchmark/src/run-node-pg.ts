@@ -2,8 +2,8 @@ import 'dotenv/config';
 //
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { assertIsDefined, ok } from '@dossierhq/core';
-import type { PgDatabaseAdapter } from '@dossierhq/database-adapter-postgres-pg';
-import { createPostgresAdapter } from '@dossierhq/database-adapter-postgres-pg';
+import type { PgDatabaseAdapter } from '@dossierhq/pg';
+import { createPostgresAdapter } from '@dossierhq/pg';
 import * as PG from 'pg';
 import { initializeAndRunTests } from './benchmark.js';
 

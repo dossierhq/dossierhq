@@ -23,7 +23,7 @@
   "dependencies": {
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/database-adapter-postgres-pg": "workspace:*",
+    "@dossierhq/pg": "workspace:*",
     "@dossierhq/database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",

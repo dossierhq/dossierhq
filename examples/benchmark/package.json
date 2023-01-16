@@ -30,7 +30,7 @@
     "@dossierhq/database-adapter-better-sqlite3": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/deno-postgres": "workspace:*",
-    "@dossierhq/database-adapter-postgres-pg": "workspace:*",
+    "@dossierhq/pg": "workspace:*",
     "@dossierhq/database-adapter-sqlite-bun": "workspace:*",
     "@dossierhq/database-adapter-sqlite-sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",

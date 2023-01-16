@@ -400,8 +400,8 @@
       "projectFolder": "libraries/deno-postgres"
     },
     {
-      "packageName": "@dossierhq/database-adapter-postgres-pg",
-      "projectFolder": "libraries/database-adapter-postgres-pg",
+      "packageName": "@dossierhq/pg",
+      "projectFolder": "libraries/pg",
       "versionPolicyName": "DataDataFramework"
     },
     {

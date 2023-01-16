@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-postgres-pg",
+  "name": "@dossierhq/pg",
   "version": "0.1.38",
   "description": "",
   "type": "module",
