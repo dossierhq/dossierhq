@@ -1,4 +1,4 @@
-import { BeforeUnload } from '@jonasb/datadata-design';
+import { BeforeUnload } from '@dossierhq/design';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Database, SqlJsStatic } from 'sql.js';

@@ -1,5 +1,5 @@
 import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
-import { Button, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
+import { Button, Delete, HoverRevealContainer } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';

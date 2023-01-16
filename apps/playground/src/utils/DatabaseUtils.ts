@@ -1,4 +1,4 @@
-import type { NotificationInfo } from '@jonasb/datadata-design';
+import type { NotificationInfo } from '@dossierhq/design';
 import type { NavigateFunction } from 'react-router-dom';
 import type { Database } from 'sql.js';
 import { ROUTE } from './RouteUtils.js';

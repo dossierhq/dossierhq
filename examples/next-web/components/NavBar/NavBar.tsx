@@ -1,4 +1,4 @@
-import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
+import { Navbar as DesignNavbar } from '@dossierhq/design';
 import Link from 'next/link';
 import { useState } from 'react';
 

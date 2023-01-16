@@ -1,6 +1,6 @@
 import type { AdminClient, AdminEntity } from '@dossierhq/core';
-import type { NotificationInfo } from '@jonasb/datadata-design';
-import { Button, Field, Input, NotificationContext, Row } from '@jonasb/datadata-design';
+import type { NotificationInfo } from '@dossierhq/design';
+import { Button, Field, Input, NotificationContext, Row } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';

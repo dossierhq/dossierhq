@@ -1,5 +1,5 @@
 import type { NumberFieldSpecification } from '@dossierhq/core';
-import { Input } from '@jonasb/datadata-design';
+import { Input } from '@dossierhq/design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
 type Props = FieldDisplayProps<NumberFieldSpecification, number>;

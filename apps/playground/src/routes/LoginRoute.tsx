@@ -1,4 +1,4 @@
-import { FullscreenContainer } from '@jonasb/datadata-design';
+import { FullscreenContainer } from '@dossierhq/design';
 import { useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';

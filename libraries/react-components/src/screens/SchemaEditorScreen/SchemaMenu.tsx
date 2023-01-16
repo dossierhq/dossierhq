@@ -1,4 +1,4 @@
-import { ClassName, Menu } from '@jonasb/datadata-design';
+import { ClassName, Menu } from '@dossierhq/design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback } from 'react';
 import type {

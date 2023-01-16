@@ -5,7 +5,7 @@ import {
   NotificationContext,
   Text,
   toSpacingClassName,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import blogUrl from 'playground-example-generator/dist/blog.sqlite?url';
 import reviewsUrl from 'playground-example-generator/dist/reviews.sqlite?url';
 import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';

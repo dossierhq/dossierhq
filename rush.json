@@ -430,7 +430,7 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-design",
+      "packageName": "@dossierhq/design",
       "projectFolder": "libraries/design",
       "versionPolicyName": "DataDataFramework"
     },

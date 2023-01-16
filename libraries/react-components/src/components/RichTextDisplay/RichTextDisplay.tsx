@@ -1,5 +1,5 @@
 import type { EntityReference, RichText, RichTextFieldSpecification } from '@dossierhq/core';
-import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
+import { ClassName, LexicalTheme, toClassName } from '@dossierhq/design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';

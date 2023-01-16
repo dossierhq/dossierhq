@@ -9,13 +9,13 @@ importers:
     specifiers:
       '@cloudinary/url-gen': ~1.8.7
       '@dossierhq/core': workspace:*
+      '@dossierhq/design': workspace:*
       '@dossierhq/design-ssr': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-cloudinary': workspace:*
-      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
@@ -41,13 +41,13 @@ importers:
     dependencies:
       '@cloudinary/url-gen': 1.8.7
       '@dossierhq/core': link:../../libraries/core
+      '@dossierhq/design': link:../../libraries/design
       '@dossierhq/design-ssr': link:../../libraries/design-ssr
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@jonasb/datadata-cloudinary': link:../../libraries/cloudinary
-      '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
@@ -75,12 +75,12 @@ importers:
   ../../apps/playground:
     specifiers:
       '@dossierhq/core': workspace:*
+      '@dossierhq/design': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@graphiql/toolkit': ~0.8.0
       '@jonasb/datadata-cloudinary': workspace:*
-      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/eslint-config-datadata-react': workspace:*
@@ -107,11 +107,11 @@ importers:
       vite: ~4.0.0
     dependencies:
       '@dossierhq/core': link:../../libraries/core
+      '@dossierhq/design': link:../../libraries/design
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
       '@jonasb/datadata-cloudinary': link:../../libraries/cloudinary
-      '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphiql: 2.2.0_jkjryovyucsrsafqg26vhfmvi4
@@ -318,11 +318,11 @@ importers:
   ../../examples/next-web:
     specifiers:
       '@dossierhq/core': workspace:*
+      '@dossierhq/design': workspace:*
       '@dossierhq/pg': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-postgres': workspace:*
@@ -343,11 +343,11 @@ importers:
       vitest: 0.27.1
     dependencies:
       '@dossierhq/core': link:../../libraries/core
+      '@dossierhq/design': link:../../libraries/design
       '@dossierhq/pg': link:../../libraries/pg
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
@@ -373,10 +373,10 @@ importers:
       '@auth0/auth0-react': ~1.12.0
       '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/core': workspace:*
+      '@dossierhq/design': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@jonasb/datadata-cloudinary': workspace:*
-      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@types/better-sqlite3': ~7.6.3
@@ -402,10 +402,10 @@ importers:
       '@auth0/auth0-react': 1.12.0_biqbaboplfbrettd7655fr4n2y
       '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/core': link:../../libraries/core
+      '@dossierhq/design': link:../../libraries/design
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@jonasb/datadata-cloudinary': link:../../libraries/cloudinary
-      '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       better-sqlite3: 8.0.1
       body-parser: 1.20.1
@@ -514,8 +514,8 @@ importers:
     specifiers:
       '@cloudinary/url-gen': ~1.8.7
       '@dossierhq/core': workspace:*
+      '@dossierhq/design': workspace:*
       '@dossierhq/react-components': workspace:*
-      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.49.0
@@ -527,7 +527,7 @@ importers:
       typescript: ~4.9.4
     dependencies:
       '@cloudinary/url-gen': 1.8.7
-      '@jonasb/datadata-design': link:../design
+      '@dossierhq/design': link:../design
       react: 18.2.0
       tslib: 2.4.1
     devDependencies:
@@ -925,9 +925,9 @@ importers:
     specifiers:
       '@babel/core': ~7.20.2
       '@dossierhq/core': workspace:*
+      '@dossierhq/design': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@lexical/code': ~0.7.0
@@ -969,7 +969,7 @@ importers:
       vitest: 0.27.1
     dependencies:
       '@dossierhq/core': link:../core
-      '@jonasb/datadata-design': link:../design
+      '@dossierhq/design': link:../design
       '@jonasb/datadata-leaflet': link:../leaflet
       '@lexical/code': 0.7.4_lexical@0.7.4
       '@lexical/list': 0.7.4_lexical@0.7.4

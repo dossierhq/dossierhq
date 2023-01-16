@@ -1,5 +1,5 @@
 import type { BooleanFieldSpecification } from '@dossierhq/core';
-import { Checkbox, Delete, HoverRevealContainer } from '@jonasb/datadata-design';
+import { Checkbox, Delete, HoverRevealContainer } from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';

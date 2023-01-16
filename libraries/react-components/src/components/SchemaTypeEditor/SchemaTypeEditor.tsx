@@ -1,4 +1,4 @@
-import { Button, Checkbox, Field } from '@jonasb/datadata-design';
+import { Button, Checkbox, Field } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import type {
   SchemaEditorState,

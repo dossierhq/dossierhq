@@ -1,5 +1,5 @@
 import type { Location, LocationFieldSpecification, PublishedEntity } from '@dossierhq/core';
-import { Button } from '@jonasb/datadata-design';
+import { Button } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';

@@ -1,6 +1,6 @@
 import '@dossierhq/react-components/main.css';
-import { NotificationContainer } from '@jonasb/datadata-design';
-import '@jonasb/datadata-design/main.css';
+import { NotificationContainer } from '@dossierhq/design';
+import '@dossierhq/design/main.css';
 import '@jonasb/datadata-leaflet/icons.css';
 import '@jonasb/datadata-leaflet/main.css';
 import 'graphql-voyager/dist/voyager.css';

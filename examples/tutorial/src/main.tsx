@@ -1,5 +1,5 @@
 import '@dossierhq/react-components/main.css';
-import '@jonasb/datadata-design/main.css';
+import '@dossierhq/design/main.css';
 import '@jonasb/datadata-leaflet/icons.css';
 import '@jonasb/datadata-leaflet/main.css';
 import 'leaflet/dist/leaflet.css';

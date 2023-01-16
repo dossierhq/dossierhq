@@ -1,4 +1,4 @@
-import { Card, Dialog, Field, Input, Radio } from '@jonasb/datadata-design';
+import { Card, Dialog, Field, Input, Radio } from '@dossierhq/design';
 import type {
   ChangeEvent,
   ChangeEventHandler,

@@ -1,4 +1,4 @@
-import { Input } from '@jonasb/datadata-design';
+import { Input } from '@dossierhq/design';
 import debounce from 'lodash/debounce.js';
 import type { Dispatch } from 'react';
 import { useMemo, useState } from 'react';

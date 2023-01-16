@@ -7,7 +7,7 @@ import {
   Input,
   Text,
   toSizeClassName,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import React, {
   useCallback,

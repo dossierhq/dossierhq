@@ -1,4 +1,4 @@
-import { Tag } from '@jonasb/datadata-design';
+import { Tag } from '@dossierhq/design';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
 interface Props {

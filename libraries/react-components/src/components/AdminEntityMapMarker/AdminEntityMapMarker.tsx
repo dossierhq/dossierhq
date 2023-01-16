@@ -1,5 +1,5 @@
 import type { AdminEntity, Location } from '@dossierhq/core';
-import { Column, Text } from '@jonasb/datadata-design';
+import { Column, Text } from '@dossierhq/design';
 import { MapContainer } from '@jonasb/datadata-leaflet';
 import React from 'react';
 import { StatusTag } from '../StatusTag/StatusTag.js';

@@ -1,4 +1,4 @@
-import { ClassName, Delete, HoverRevealContainer, Menu, Text } from '@jonasb/datadata-design';
+import { ClassName, Delete, HoverRevealContainer, Menu, Text } from '@dossierhq/design';
 import type { Dispatch, MouseEvent } from 'react';
 import { useCallback } from 'react';
 import type {

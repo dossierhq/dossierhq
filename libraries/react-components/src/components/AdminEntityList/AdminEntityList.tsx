@@ -1,6 +1,6 @@
 import type { AdminEntity, PublishedQueryOrder } from '@dossierhq/core';
 import { AdminQueryOrder } from '@dossierhq/core';
-import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
+import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';

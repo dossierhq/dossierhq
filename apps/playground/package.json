@@ -15,7 +15,7 @@
     "@jonasb/datadata-cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
-    "@jonasb/datadata-design": "workspace:*",
+    "@dossierhq/design": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
     "@dossierhq/server": "workspace:*",

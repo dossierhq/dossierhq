@@ -11,7 +11,7 @@ import {
   IconButton,
   Input,
   Row,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import { useCallback } from 'react';
 import { useInitializeUploadWidget } from '../hooks/useInitializeUploadWidget.js';
 import type { AdminCloudinaryImage } from '../types/CloudinaryImageValueItem.js';

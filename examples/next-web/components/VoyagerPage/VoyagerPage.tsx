@@ -1,4 +1,4 @@
-import { FullscreenContainer } from '@jonasb/datadata-design';
+import { FullscreenContainer } from '@dossierhq/design';
 import { Voyager } from 'graphql-voyager';
 import Head from 'next/head';
 import { NavBar } from '../NavBar/NavBar';

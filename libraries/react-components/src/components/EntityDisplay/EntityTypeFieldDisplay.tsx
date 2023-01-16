@@ -3,7 +3,7 @@ import type {
   EntityReference,
   RichTextFieldSpecification,
 } from '@dossierhq/core';
-import { Column, Text } from '@jonasb/datadata-design';
+import { Column, Text } from '@dossierhq/design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';

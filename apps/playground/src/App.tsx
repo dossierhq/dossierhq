@@ -1,4 +1,4 @@
-import { NotificationContainer } from '@jonasb/datadata-design';
+import { NotificationContainer } from '@dossierhq/design';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DatabaseProvider } from './components/DatabaseProvider.js';

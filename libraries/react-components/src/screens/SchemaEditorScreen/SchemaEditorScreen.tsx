@@ -7,7 +7,7 @@ import {
   Level,
   Text,
   useWindowEventListener,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaIndexEditor.js';

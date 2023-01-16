@@ -1,4 +1,4 @@
-import { useWindowEventListener } from '@jonasb/datadata-design';
+import { useWindowEventListener } from '@dossierhq/design';
 import { useCallback } from 'react';
 import { usePrompt } from './ReactRouterCompatHooks.js';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { ClassName, Menu } from '@jonasb/datadata-design';
+import { ClassName, Menu } from '@dossierhq/design';
 import Link from 'next/link.js';
 import { useSelectedLayoutSegments } from 'next/navigation';
 

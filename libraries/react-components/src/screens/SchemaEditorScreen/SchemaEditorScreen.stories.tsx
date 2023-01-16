@@ -1,5 +1,5 @@
 import type { AdminEntityTypeSpecification, AdminValueTypeSpecification } from '@dossierhq/core';
-import { NotificationContainer } from '@jonasb/datadata-design';
+import { NotificationContainer } from '@dossierhq/design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';

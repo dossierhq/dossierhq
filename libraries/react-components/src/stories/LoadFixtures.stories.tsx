@@ -1,4 +1,4 @@
-import { Message } from '@jonasb/datadata-design';
+import { Message } from '@dossierhq/design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { AdminLoadContextProvider } from '../test/AdminLoadContextProvider.js';

@@ -1,4 +1,4 @@
-import { ButtonDropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type {

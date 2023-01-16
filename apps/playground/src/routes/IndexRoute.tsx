@@ -1,4 +1,4 @@
-import { FullscreenContainer, Message, Text, toSpacingClassName } from '@jonasb/datadata-design';
+import { FullscreenContainer, Message, Text, toSpacingClassName } from '@dossierhq/design';
 import { Link } from 'react-router-dom';
 import { ChangeDatabaseMessage } from '../components/ChangeDatabaseMessage.js';
 import { DatabaseInfoMessage } from '../components/DatabaseInfoMessage.js';

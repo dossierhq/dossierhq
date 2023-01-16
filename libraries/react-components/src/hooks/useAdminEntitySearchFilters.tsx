@@ -1,6 +1,6 @@
 import type { AdminSearchQuery } from '@dossierhq/core';
-import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb/datadata-design';
-import { initializeMultipleSelectorState } from '@jonasb/datadata-design';
+import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
+import { initializeMultipleSelectorState } from '@dossierhq/design';
 import isEqual from 'lodash/isEqual.js';
 import type { Dispatch } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';

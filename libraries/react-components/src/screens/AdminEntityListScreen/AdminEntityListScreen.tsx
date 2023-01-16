@@ -1,5 +1,5 @@
 import type { AdminEntity } from '@dossierhq/core';
-import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
+import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../../components/AdminEntityMapMarker/AdminEntityMapMarker.js';

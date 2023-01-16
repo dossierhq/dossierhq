@@ -1,5 +1,5 @@
 import type { FieldSpecification, ValidationError } from '@dossierhq/core';
-import { Column } from '@jonasb/datadata-design';
+import { Column } from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
 import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import type { FieldEditorProps } from './FieldEditor.js';

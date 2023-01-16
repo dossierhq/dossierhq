@@ -1,5 +1,5 @@
-import type { MultipleSelectorState, MultipleSelectorStateAction } from '@jonasb/datadata-design';
-import { IconButton } from '@jonasb/datadata-design';
+import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
+import { IconButton } from '@dossierhq/design';
 import type { Dispatch, MouseEventHandler } from 'react';
 import { useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';

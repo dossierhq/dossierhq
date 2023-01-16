@@ -1,6 +1,6 @@
 import type { AdminQueryOrder, PublishedEntity } from '@dossierhq/core';
 import { PublishedQueryOrder } from '@dossierhq/core';
-import { EmptyStateMessage, Table, toSizeClassName } from '@jonasb/datadata-design';
+import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
 import { AuthKeyTag } from '../../../shared/components/AuthKeyTag/AuthKeyTag.js';

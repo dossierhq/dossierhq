@@ -1,4 +1,4 @@
-import { ButtonDropdown, Input } from '@jonasb/datadata-design';
+import { ButtonDropdown, Input } from '@dossierhq/design';
 import type { ReactNode } from 'react';
 import { useCallback } from 'react';
 import type { SchemaEditorState } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';

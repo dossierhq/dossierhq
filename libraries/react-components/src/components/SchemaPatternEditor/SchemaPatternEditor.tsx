@@ -1,4 +1,4 @@
-import { Field, Input } from '@jonasb/datadata-design';
+import { Field, Input } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch } from 'react';
 import { useCallback } from 'react';
 import type {

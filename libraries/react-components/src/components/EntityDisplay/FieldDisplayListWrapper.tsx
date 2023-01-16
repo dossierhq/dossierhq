@@ -1,5 +1,5 @@
 import type { PublishedFieldSpecification } from '@dossierhq/core';
-import { Column } from '@jonasb/datadata-design';
+import { Column } from '@dossierhq/design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props<TFieldSpec extends PublishedFieldSpecification, TItem>

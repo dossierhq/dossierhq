@@ -1,5 +1,5 @@
 import type { StringFieldSpecification } from '@dossierhq/core';
-import { Input, Text, TextArea } from '@jonasb/datadata-design';
+import { Input, Text, TextArea } from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';

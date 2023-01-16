@@ -4,7 +4,7 @@ import {
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   TagInputSelector,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useEffect, useMemo, useReducer } from 'react';
 import type {

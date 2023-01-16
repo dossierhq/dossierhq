@@ -5,7 +5,7 @@ import type {
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import { FieldType } from '@dossierhq/core';
-import { Column, Delete, HoverRevealStack, Text } from '@jonasb/datadata-design';
+import { Column, Delete, HoverRevealStack, Text } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';

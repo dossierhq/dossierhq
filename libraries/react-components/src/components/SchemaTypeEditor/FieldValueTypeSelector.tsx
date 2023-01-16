@@ -1,10 +1,10 @@
-import type { MultipleSelectorItem } from '@jonasb/datadata-design';
+import type { MultipleSelectorItem } from '@dossierhq/design';
 import {
   initializeMultipleSelectorState,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   TagInputSelector,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useEffect, useReducer } from 'react';
 import type {

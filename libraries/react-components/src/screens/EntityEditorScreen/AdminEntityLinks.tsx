@@ -1,5 +1,5 @@
 import type { EntityReference } from '@dossierhq/core';
-import { Button, Field } from '@jonasb/datadata-design';
+import { Button, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';

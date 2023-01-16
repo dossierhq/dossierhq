@@ -1,4 +1,4 @@
-import { Button, Message } from '@jonasb/datadata-design';
+import { Button, Message } from '@dossierhq/design';
 import { useCallback, useContext } from 'react';
 import useSWR from 'swr';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';

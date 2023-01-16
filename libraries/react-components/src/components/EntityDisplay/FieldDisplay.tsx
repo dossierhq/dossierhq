@@ -24,7 +24,7 @@ import {
   isValueItemField,
   isValueItemListField,
 } from '@dossierhq/core';
-import { Text } from '@jonasb/datadata-design';
+import { Text } from '@dossierhq/design';
 import { useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';

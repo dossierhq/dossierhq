@@ -32,7 +32,7 @@ export default defineConfig({
       '@dossierhq/react-components',
       '@dossierhq/core',
       '@dossierhq/sql.js',
-      '@jonasb/datadata-design',
+      '@dossierhq/design',
       '@dossierhq/server',
     ],
   },

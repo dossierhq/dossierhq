@@ -1,5 +1,5 @@
 import { AdminDataDataContext, PublishedDataDataContext } from '@dossierhq/react-components';
-import { EmptyStateMessage, FullscreenContainer } from '@jonasb/datadata-design';
+import { EmptyStateMessage, FullscreenContainer } from '@dossierhq/design';
 import { useContext, lazy, Suspense } from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary.js';
 import { NavBar } from '../components/NavBar.js';

@@ -3,7 +3,7 @@ import type {
   PublishedFieldSpecification,
   PublishedSchema,
 } from '@dossierhq/core';
-import { Field } from '@jonasb/datadata-design';
+import { Field } from '@dossierhq/design';
 import { FieldDisplay } from './FieldDisplay.js';
 
 interface Props {

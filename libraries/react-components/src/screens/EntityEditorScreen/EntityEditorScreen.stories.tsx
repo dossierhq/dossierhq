@@ -1,4 +1,4 @@
-import { NotificationContainer, Text } from '@jonasb/datadata-design';
+import { NotificationContainer, Text } from '@dossierhq/design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
 import { foo1Id } from '../../test/EntityFixtures';

@@ -1,5 +1,5 @@
 import type { StringFieldSpecification } from '@dossierhq/core';
-import { Input, TextArea } from '@jonasb/datadata-design';
+import { Input, TextArea } from '@dossierhq/design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
 type Props = FieldDisplayProps<StringFieldSpecification, string>;

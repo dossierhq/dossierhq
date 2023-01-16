@@ -1,4 +1,4 @@
-import { Tag } from '@jonasb/datadata-design';
+import { Tag } from '@dossierhq/design';
 import React from 'react';
 
 export function TypeDraftStatusTag({ status }: { status: 'new' | 'changed' }) {

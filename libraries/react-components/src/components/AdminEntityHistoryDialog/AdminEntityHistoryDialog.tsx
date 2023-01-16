@@ -7,7 +7,7 @@ import {
   IconButton,
   SelectDisplay,
   Text,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';

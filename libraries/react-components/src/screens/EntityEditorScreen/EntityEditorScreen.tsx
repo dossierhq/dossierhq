@@ -9,7 +9,7 @@ import {
   Tag,
   Text,
   useWindowEventListener,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';

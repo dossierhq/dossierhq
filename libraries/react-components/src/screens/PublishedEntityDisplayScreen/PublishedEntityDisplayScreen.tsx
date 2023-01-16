@@ -8,7 +8,7 @@ import {
   Text,
   toFlexItemClassName,
   useWindowEventListener,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';

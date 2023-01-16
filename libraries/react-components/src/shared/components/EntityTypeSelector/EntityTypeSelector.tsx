@@ -5,13 +5,13 @@ import type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import {
   DropdownSelector,
   initializeMultipleSelectorState,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
 

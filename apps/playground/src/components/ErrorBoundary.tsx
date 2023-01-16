@@ -1,4 +1,4 @@
-import { Message } from '@jonasb/datadata-design';
+import { Message } from '@dossierhq/design';
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
 

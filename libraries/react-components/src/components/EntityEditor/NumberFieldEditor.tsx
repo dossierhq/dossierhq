@@ -1,5 +1,5 @@
 import type { NumberFieldSpecification } from '@dossierhq/core';
-import { Input } from '@jonasb/datadata-design';
+import { Input } from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';

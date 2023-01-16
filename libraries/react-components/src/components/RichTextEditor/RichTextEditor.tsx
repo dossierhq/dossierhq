@@ -4,7 +4,7 @@ import type {
   RichText,
   RichTextFieldSpecification,
 } from '@dossierhq/core';
-import { ClassName, LexicalTheme, toClassName } from '@jonasb/datadata-design';
+import { ClassName, LexicalTheme, toClassName } from '@dossierhq/design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin.js';

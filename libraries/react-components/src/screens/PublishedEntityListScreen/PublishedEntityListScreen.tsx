@@ -1,5 +1,5 @@
 import type { PublishedEntity } from '@dossierhq/core';
-import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
+import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntitySearchToolbar } from '../../components/PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';

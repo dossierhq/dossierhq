@@ -1,5 +1,5 @@
 import { Auth0Provider } from '@auth0/auth0-react';
-import { NotificationContainer } from '@jonasb/datadata-design';
+import { NotificationContainer } from '@dossierhq/design';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AdminEntityEditorRoute } from './AdminEntityEditorRoute.js';
 import { AdminEntityListRoute } from './AdminEntityListRoute.js';

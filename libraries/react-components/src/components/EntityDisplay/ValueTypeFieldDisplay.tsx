@@ -4,7 +4,7 @@ import type {
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import { FieldType } from '@dossierhq/core';
-import { Column, Text } from '@jonasb/datadata-design';
+import { Column, Text } from '@dossierhq/design';
 import { Fragment, useContext } from 'react';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';

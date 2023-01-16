@@ -12,7 +12,7 @@ import type {
   Result,
 } from '@dossierhq/core';
 import { assertIsDefined, LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
-import { NotificationContext } from '@jonasb/datadata-design';
+import { NotificationContext } from '@dossierhq/design';
 import type { CreateSessionPayload, Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Cache } from 'swr';

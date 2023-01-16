@@ -25,7 +25,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
-    "@jonasb/datadata-design": "workspace:*",
+    "@dossierhq/design": "workspace:*",
     "@dossierhq/design-ssr": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",

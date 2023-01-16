@@ -1,6 +1,6 @@
 import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
 import { getPagingInfo } from '@dossierhq/core';
-import { ButtonDropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@dossierhq/design';
 import React from 'react';
 
 interface Props {

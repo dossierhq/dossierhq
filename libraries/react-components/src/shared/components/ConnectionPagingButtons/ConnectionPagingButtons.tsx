@@ -1,5 +1,5 @@
 import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
-import { IconButton } from '@jonasb/datadata-design';
+import { IconButton } from '@dossierhq/design';
 import React, { useMemo } from 'react';
 
 interface Props {

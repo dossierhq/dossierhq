@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
-import { Card, Dialog, NotificationContext, Text, TextArea } from '@jonasb/datadata-design';
+import { Card, Dialog, NotificationContext, Text, TextArea } from '@dossierhq/design';
 import type { Dispatch, SyntheticEvent } from 'react';
 import { useCallback, useContext, useMemo } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';

@@ -1,7 +1,7 @@
 import type { AdminClient, AdminEntity, AdminEntityTypeSpecification } from '@dossierhq/core';
 import { AdminEntityStatus } from '@dossierhq/core';
-import type { NotificationInfo } from '@jonasb/datadata-design';
-import { Button, ButtonDropdown, NotificationContext, Row } from '@jonasb/datadata-design';
+import type { NotificationInfo } from '@dossierhq/design';
+import { Button, ButtonDropdown, NotificationContext, Row } from '@dossierhq/design';
 import { useContext, useMemo } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 

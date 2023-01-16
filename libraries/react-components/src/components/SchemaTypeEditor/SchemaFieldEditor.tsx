@@ -1,13 +1,5 @@
 import { FieldType, RichTextNodeType } from '@dossierhq/core';
-import {
-  Card,
-  Checkbox,
-  Field,
-  Input,
-  SelectDisplay,
-  Tag,
-  TagInput,
-} from '@jonasb/datadata-design';
+import { Card, Checkbox, Field, Input, SelectDisplay, Tag, TagInput } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch } from 'react';
 import { useCallback } from 'react';
 import type {

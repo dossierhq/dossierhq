@@ -1,4 +1,4 @@
-import '@jonasb/datadata-design/main.css';
+import '@dossierhq/design/main.css';
 
 interface Props {
   children: React.ReactNode;

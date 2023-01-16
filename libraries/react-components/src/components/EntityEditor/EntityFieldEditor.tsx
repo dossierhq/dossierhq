@@ -1,4 +1,4 @@
-import { Card2 } from '@jonasb/datadata-design';
+import { Card2 } from '@dossierhq/design';
 import type { FieldEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { FieldEditor } from './FieldEditor.js';
 

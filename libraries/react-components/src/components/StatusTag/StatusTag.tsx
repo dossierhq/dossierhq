@@ -1,5 +1,5 @@
 import type { AdminEntityStatus } from '@dossierhq/core';
-import { Tag } from '@jonasb/datadata-design';
+import { Tag } from '@dossierhq/design';
 
 interface Props {
   className?: string;

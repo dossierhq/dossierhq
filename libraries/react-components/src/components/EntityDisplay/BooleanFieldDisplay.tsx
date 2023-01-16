@@ -1,5 +1,5 @@
 import type { BooleanFieldSpecification } from '@dossierhq/core';
-import { Checkbox } from '@jonasb/datadata-design';
+import { Checkbox } from '@dossierhq/design';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
 type Props = FieldDisplayProps<BooleanFieldSpecification, boolean>;

@@ -1,4 +1,4 @@
-import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
+import { Navbar as DesignNavbar } from '@dossierhq/design';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LogInOutButton } from './LogInOutButton.js';

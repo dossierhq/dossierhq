@@ -4,12 +4,12 @@ import type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import {
   DropdownSelector,
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag.js';

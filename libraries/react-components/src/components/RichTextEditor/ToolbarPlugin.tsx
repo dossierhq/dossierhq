@@ -1,7 +1,7 @@
 import type { AdminFieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
 import { assertExhaustive, RichTextNodeType } from '@dossierhq/core';
-import type { IconName } from '@jonasb/datadata-design';
-import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@jonasb/datadata-design';
+import type { IconName } from '@dossierhq/design';
+import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@dossierhq/design';
 import {
   $createCodeNode,
   $isCodeNode,

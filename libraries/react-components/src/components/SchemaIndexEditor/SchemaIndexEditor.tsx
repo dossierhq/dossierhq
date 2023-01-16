@@ -1,4 +1,4 @@
-import { Field, Radio } from '@jonasb/datadata-design';
+import { Field, Radio } from '@dossierhq/design';
 import type { SchemaIndexDraft } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {

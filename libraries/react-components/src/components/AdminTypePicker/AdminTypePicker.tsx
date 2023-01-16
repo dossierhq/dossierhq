@@ -1,5 +1,5 @@
-import type { IconName } from '@jonasb/datadata-design';
-import { ButtonDropdown } from '@jonasb/datadata-design';
+import type { IconName } from '@dossierhq/design';
+import { ButtonDropdown } from '@dossierhq/design';
 import React, { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
 import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';

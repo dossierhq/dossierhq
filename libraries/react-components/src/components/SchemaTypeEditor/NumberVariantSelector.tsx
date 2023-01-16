@@ -1,4 +1,4 @@
-import { Radio } from '@jonasb/datadata-design';
+import { Radio } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useId } from 'react';
 import type {

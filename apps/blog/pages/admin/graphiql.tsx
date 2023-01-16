@@ -1,4 +1,4 @@
-import { FullscreenContainer } from '@jonasb/datadata-design';
+import { FullscreenContainer } from '@dossierhq/design';
 import Head from 'next/head';
 import { NavBar } from '../../components/NavBar/NavBar';
 

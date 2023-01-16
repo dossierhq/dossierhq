@@ -6,7 +6,7 @@ import {
   Input,
   Text,
   toSizeClassName,
-} from '@jonasb/datadata-design';
+} from '@dossierhq/design';
 import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';

@@ -1,11 +1,5 @@
 import type { EntityReference, PublishedEntity } from '@dossierhq/core';
-import {
-  Dialog,
-  FullscreenContainer,
-  IconButton,
-  Text,
-  toSizeClassName,
-} from '@jonasb/datadata-design';
+import { Dialog, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';

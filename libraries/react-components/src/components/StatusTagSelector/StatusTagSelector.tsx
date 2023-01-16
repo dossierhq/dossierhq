@@ -1,4 +1,4 @@
-import { Field, TagSelector } from '@jonasb/datadata-design';
+import { Field, TagSelector } from '@dossierhq/design';
 import type {
   StatusSelectorDispatch,
   StatusSelectorState,
