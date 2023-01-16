@@ -22,10 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
-  "bugs": {
-    "url": "https://github.com/jonasb/datadata/issues"
-  },
-  "homepage": "https://github.com/jonasb/datadata#readme",
   "dependencies": {
     "dotenv": "~16.0.3",
     "pg": "~8.8.0",

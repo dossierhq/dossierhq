@@ -1,7 +1,7 @@
 {
+  "cSpell.words": ["graphiql", "postgres", "rushstack"],
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "cSpell.words": ["datadata", "graphiql", "jonasb", "postgres", "rushstack"],
   "files.insertFinalNewline": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }

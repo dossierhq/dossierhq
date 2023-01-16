@@ -1,4 +1,5 @@
 {
+  "cSpell.words": ["Deno", "Postgres", "sprintf"],
   "deno.enable": true,
   "deno.lint": true,
   "deno.importMap": "./config/import-map.json",
@@ -6,13 +7,6 @@
     "https://cdn.skypack.dev": false
   },
   "editor.defaultFormatter": "denoland.vscode-deno",
-  "cSpell.words": [
-    "datadata",
-    "Deno",
-    "jonasb",
-    "Postgres",
-    "sprintf"
-  ],
   "editor.formatOnSave": true,
   "editor.tabSize": 2
 }

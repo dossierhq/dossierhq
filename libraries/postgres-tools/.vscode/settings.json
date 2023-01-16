@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["datadata", "jonasb", "postgrator", "postgres"],
+  "cSpell.words": ["postgrator", "postgres"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true
 }

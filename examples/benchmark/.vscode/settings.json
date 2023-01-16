@@ -1,7 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "cSpell.words": ["benchpress", "datadata", "jonasb", "postgres", "rushstack"],
+  "cSpell.words": ["benchpress", "postgres", "rushstack"],
   "files.insertFinalNewline": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }

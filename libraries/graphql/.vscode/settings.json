@@ -1,9 +1,7 @@
 {
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "cSpell.words": [
-    "datadata",
     "graphqlid",
-    "jonasb",
     "postgres",
     "QLJSON",
     "rushstack",

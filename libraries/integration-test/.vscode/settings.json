@@ -1,14 +1,5 @@
 {
-  "cSpell.words": [
-    "datadata",
-    "Endash",
-    "jonasb",
-    "linebreak",
-    "rushstack",
-    "unarchived",
-    "Upsert",
-    "uuidv"
-  ],
+  "cSpell.words": ["Endash", "linebreak", "rushstack", "unarchived", "Upsert", "uuidv"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],
