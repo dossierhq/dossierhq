@@ -32,7 +32,7 @@
     "@dossierhq/deno-postgres": "workspace:*",
     "@dossierhq/pg": "workspace:*",
     "@dossierhq/bun-sqlite": "workspace:*",
-    "@dossierhq/database-adapter-sqlite-sqlite3": "workspace:*",
+    "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
     "better-sqlite3": "~8.0.1",

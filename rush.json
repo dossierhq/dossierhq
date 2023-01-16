@@ -417,8 +417,8 @@
       "projectFolder": "libraries/sqlite-core"
     },
     {
-      "packageName": "@dossierhq/database-adapter-sqlite-sqlite3",
-      "projectFolder": "libraries/database-adapter-sqlite-sqlite3"
+      "packageName": "@dossierhq/sqlite3",
+      "projectFolder": "libraries/sqlite3"
     },
     {
       "packageName": "@dossierhq/database-adapter-sqlite-sql.js",

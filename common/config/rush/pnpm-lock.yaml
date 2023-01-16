@@ -10,9 +10,9 @@ importers:
       '@cloudinary/url-gen': ~1.8.7
       '@dossierhq/core': workspace:*
       '@dossierhq/database-adapter-sqlite-sql.js': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-cloudinary': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-design-server': workspace:*
@@ -42,9 +42,9 @@ importers:
       '@cloudinary/url-gen': 1.8.7
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
+      '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@jonasb/datadata-cloudinary': link:../../libraries/cloudinary
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-design-server': link:../../libraries/design-server
@@ -142,8 +142,8 @@ importers:
   ../../apps/playground-example-generator:
     specifiers:
       '@dossierhq/core': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@faker-js/faker': ~7.6.0
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
@@ -162,8 +162,8 @@ importers:
       uuid: ~9.0.0
     dependencies:
       '@dossierhq/core': link:../../libraries/core
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@dossierhq/server': link:../../libraries/server
+      '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 7.6.0
       cloudinary: 1.33.0
       dotenv: 16.0.3
@@ -188,11 +188,11 @@ importers:
       '@dossierhq/bun-sqlite': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/database-adapter': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/deno-postgres': workspace:*
       '@dossierhq/pg': workspace:*
       '@dossierhq/postgres-core': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@faker-js/faker': ~7.6.0
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-postgres': workspace:*
@@ -215,11 +215,11 @@ importers:
       '@dossierhq/bun-sqlite': link:../../libraries/bun-sqlite
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/database-adapter': link:../../libraries/database-adapter
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@dossierhq/deno-postgres': link:../../libraries/deno-postgres
       '@dossierhq/pg': link:../../libraries/pg
       '@dossierhq/postgres-core': link:../../libraries/postgres-core
       '@dossierhq/server': link:../../libraries/server
+      '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 7.6.0
       benchpress: link:../../libraries/benchpress
       better-sqlite3: 8.0.1
@@ -281,8 +281,8 @@ importers:
   ../../examples/foo:
     specifiers:
       '@dossierhq/core': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
@@ -298,8 +298,8 @@ importers:
       typescript: ~4.9.4
     dependencies:
       '@dossierhq/core': link:../../libraries/core
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@dossierhq/server': link:../../libraries/server
+      '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       express: 4.18.1
       express-graphql: 0.12.0
@@ -318,10 +318,10 @@ importers:
   ../../examples/next-web:
     specifiers:
       '@dossierhq/core': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/pg': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
@@ -343,10 +343,10 @@ importers:
       vitest: 0.27.1
     dependencies:
       '@dossierhq/core': link:../../libraries/core
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@dossierhq/pg': link:../../libraries/pg
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
+      '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
@@ -608,39 +608,6 @@ importers:
       typescript: 4.9.4
       vitest: 0.27.1
 
-  ../../libraries/database-adapter-sqlite-sqlite3:
-    specifiers:
-      '@dossierhq/core': workspace:*
-      '@dossierhq/integration-test': workspace:*
-      '@dossierhq/server': workspace:*
-      '@dossierhq/sqlite-core': workspace:*
-      '@jonasb/datadata-heft-node-rig': workspace:*
-      '@jonasb/eslint-config-datadata-generic': workspace:*
-      '@rushstack/heft': 0.49.0
-      '@types/sqlite3': ~3.1.8
-      eslint: ~8.32.0
-      prettier: 2.8.3
-      sqlite3: ~5.1.2
-      tslib: ~2.4.1
-      typescript: ~4.9.4
-      vitest: 0.27.1
-    dependencies:
-      '@dossierhq/sqlite-core': link:../sqlite-core
-      tslib: 2.4.1
-    devDependencies:
-      '@dossierhq/core': link:../core
-      '@dossierhq/integration-test': link:../integration-test
-      '@dossierhq/server': link:../server
-      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
-      '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
-      '@rushstack/heft': 0.49.0
-      '@types/sqlite3': 3.1.8
-      eslint: 8.32.0
-      prettier: 2.8.3
-      sqlite3: 5.1.4
-      typescript: 4.9.4
-      vitest: 0.27.1
-
   ../../libraries/database-adapter-sqlite-sqljs:
     specifiers:
       '@dossierhq/core': workspace:*
@@ -808,8 +775,8 @@ importers:
     specifiers:
       '@dossierhq/core': workspace:*
       '@dossierhq/core-vitest': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.49.0
@@ -829,8 +796,8 @@ importers:
       tslib: 2.4.1
     devDependencies:
       '@dossierhq/core-vitest': link:../core-vitest
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../database-adapter-sqlite-sqlite3
       '@dossierhq/server': link:../server
+      '@dossierhq/sqlite3': link:../sqlite3
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
       '@rushstack/heft': 0.49.0
@@ -997,8 +964,8 @@ importers:
     specifiers:
       '@babel/core': ~7.20.2
       '@dossierhq/core': workspace:*
-      '@dossierhq/database-adapter-sqlite-sqlite3': workspace:*
       '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
@@ -1058,8 +1025,8 @@ importers:
       tslib: 2.4.1
     devDependencies:
       '@babel/core': 7.20.5
-      '@dossierhq/database-adapter-sqlite-sqlite3': link:../database-adapter-sqlite-sqlite3
       '@dossierhq/server': link:../server
+      '@dossierhq/sqlite3': link:../sqlite3
       '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.0
       '@storybook/addon-actions': 6.5.12_biqbaboplfbrettd7655fr4n2y
@@ -1137,6 +1104,39 @@ importers:
       '@rushstack/heft': 0.49.0
       eslint: 8.32.0
       prettier: 2.8.3
+      typescript: 4.9.4
+      vitest: 0.27.1
+
+  ../../libraries/sqlite3:
+    specifiers:
+      '@dossierhq/core': workspace:*
+      '@dossierhq/integration-test': workspace:*
+      '@dossierhq/server': workspace:*
+      '@dossierhq/sqlite-core': workspace:*
+      '@jonasb/datadata-heft-node-rig': workspace:*
+      '@jonasb/eslint-config-datadata-generic': workspace:*
+      '@rushstack/heft': 0.49.0
+      '@types/sqlite3': ~3.1.8
+      eslint: ~8.32.0
+      prettier: 2.8.3
+      sqlite3: ~5.1.2
+      tslib: ~2.4.1
+      typescript: ~4.9.4
+      vitest: 0.27.1
+    dependencies:
+      '@dossierhq/sqlite-core': link:../sqlite-core
+      tslib: 2.4.1
+    devDependencies:
+      '@dossierhq/core': link:../core
+      '@dossierhq/integration-test': link:../integration-test
+      '@dossierhq/server': link:../server
+      '@jonasb/datadata-heft-node-rig': link:../../rigs/heft-node-rig
+      '@jonasb/eslint-config-datadata-generic': link:../../stack/eslint-config-generic
+      '@rushstack/heft': 0.49.0
+      '@types/sqlite3': 3.1.8
+      eslint: 8.32.0
+      prettier: 2.8.3
+      sqlite3: 5.1.4
       typescript: 4.9.4
       vitest: 0.27.1
 

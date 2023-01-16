@@ -1,6 +1,6 @@
 import type { Logger } from '@dossierhq/core';
 import { AdminSchema } from '@dossierhq/core';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/database-adapter-sqlite-sqlite3';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { Database } from 'sqlite3';

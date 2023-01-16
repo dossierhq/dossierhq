@@ -24,7 +24,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/pg": "workspace:*",
-    "@dossierhq/database-adapter-sqlite-sqlite3": "workspace:*",
+    "@dossierhq/sqlite3": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",

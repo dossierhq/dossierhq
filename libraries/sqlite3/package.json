@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-sqlite-sqlite3",
+  "name": "@dossierhq/sqlite3",
   "version": "0.1.1-25",
   "description": "",
   "type": "module",

@@ -9,10 +9,7 @@ const {
   notOk,
 } = require('@dossierhq/core');
 const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@dossierhq/server');
-const {
-  createDatabase,
-  createSqlite3Adapter,
-} = require('@dossierhq/database-adapter-sqlite-sqlite3');
+const { createDatabase, createSqlite3Adapter } = require('@dossierhq/sqlite3');
 const { Database } = require('sqlite3');
 const bodyParser = require('body-parser');
 const schemaSpecification = require('../src/test/schema.cjs');
