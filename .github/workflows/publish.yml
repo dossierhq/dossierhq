@@ -71,7 +71,7 @@ jobs:
         run: node common/scripts/install-run-rush.js version --bump --target-branch main
       - name: rush publish
         env:
-          NPM_GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         run: node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all
       - name: git push to publish
         run: git push origin HEAD:publish
