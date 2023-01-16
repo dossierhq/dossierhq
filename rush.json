@@ -372,7 +372,7 @@
     },
     {
       "packageName": "@dossierhq/react-components",
-      "projectFolder": "libraries/admin-react-components",
+      "projectFolder": "libraries/react-components",
       "versionPolicyName": "DataDataFramework"
     },
     {

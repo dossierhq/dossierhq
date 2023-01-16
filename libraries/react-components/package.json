@@ -25,7 +25,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonasb/datadata.git"
+    "url": "git+https://github.com/jonasb/datadata.git",
+    "directory": "libraries/react-components"
   },
   "devDependencies": {
     "@babel/core": "~7.20.2",
