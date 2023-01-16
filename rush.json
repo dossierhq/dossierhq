@@ -435,8 +435,8 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-design-server",
-      "projectFolder": "libraries/design-server"
+      "packageName": "@dossierhq/design-ssr",
+      "projectFolder": "libraries/design-ssr"
     },
     {
       "packageName": "datadata-examples-benchmark",

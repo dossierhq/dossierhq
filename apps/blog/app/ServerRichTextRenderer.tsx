@@ -14,7 +14,7 @@ import {
   isRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
-import { ClassName, LexicalTheme } from '@jonasb/datadata-design-server';
+import { ClassName, LexicalTheme } from '@dossierhq/design-ssr';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';

@@ -1,4 +1,4 @@
-import { Text } from '@jonasb/datadata-design-server';
+import { Text } from '@dossierhq/design-ssr';
 import { Fragment } from 'react';
 import { assertIsPublishedGlossaryTerm } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';

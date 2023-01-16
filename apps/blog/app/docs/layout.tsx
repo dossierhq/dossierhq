@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@dossierhq/core';
-import { FullscreenContainer, Menu } from '@jonasb/datadata-design-server';
+import { FullscreenContainer, Menu } from '@dossierhq/design-ssr';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { BrowserUrls } from '../../utils/BrowserUrls';

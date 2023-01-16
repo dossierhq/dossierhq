@@ -9,13 +9,13 @@ importers:
     specifiers:
       '@cloudinary/url-gen': ~1.8.7
       '@dossierhq/core': workspace:*
+      '@dossierhq/design-ssr': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-cloudinary': workspace:*
       '@jonasb/datadata-design': workspace:*
-      '@jonasb/datadata-design-server': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
@@ -41,13 +41,13 @@ importers:
     dependencies:
       '@cloudinary/url-gen': 1.8.7
       '@dossierhq/core': link:../../libraries/core
+      '@dossierhq/design-ssr': link:../../libraries/design-ssr
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@jonasb/datadata-cloudinary': link:../../libraries/cloudinary
       '@jonasb/datadata-design': link:../../libraries/design
-      '@jonasb/datadata-design-server': link:../../libraries/design-server
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
@@ -697,7 +697,7 @@ importers:
       svgo: 3.0.2
       typescript: 4.9.4
 
-  ../../libraries/design-server:
+  ../../libraries/design-ssr:
     specifiers:
       '@babel/core': ~7.20.2
       '@jonasb/datadata-heft-node-rig': workspace:*

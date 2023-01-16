@@ -7,7 +7,7 @@ import {
   toClassName,
   toFlexItemClassName,
   toSpacingClassName,
-} from '@jonasb/datadata-design-server';
+} from '@dossierhq/design-ssr';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
 import { LinkButton } from '../components/LinkButton/LinkButton';

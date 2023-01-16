@@ -1,5 +1,5 @@
-import { LexicalTheme } from '@jonasb/datadata-design-server';
-import { toTextStyleClassName } from '@jonasb/datadata-design-server';
+import { LexicalTheme } from '@dossierhq/design-ssr';
+import { toTextStyleClassName } from '@dossierhq/design-ssr';
 import type { EditorThemeClasses } from 'lexical';
 
 export const ArticleLexicalTheme: EditorThemeClasses = {
