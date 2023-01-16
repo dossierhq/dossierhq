@@ -53,7 +53,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose --to datadata-examples-benchmark
+          node common/scripts/install-run-rush.js build --verbose --to dossierhq-examples-benchmark
       - name: npm start (benchmark)
         run: |
           cd examples/benchmark

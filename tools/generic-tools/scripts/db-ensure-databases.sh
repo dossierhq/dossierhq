@@ -40,8 +40,8 @@ function grant_access_for_user {
   grant_access_for_user "datadata-server" "servertestuser"
 
   create_user "examplesbenchmarkuser" "examplesbenchmarkpass"
-  create_database "datadata-examples-benchmark"
-  grant_access_for_user "datadata-examples-benchmark" "examplesbenchmarkuser"
+  create_database "dossierhq-examples-benchmark"
+  grant_access_for_user "dossierhq-examples-benchmark" "examplesbenchmarkuser"
 
   create_user "examplesdenouser" "examplesdenopass"
   create_database "datadata-examples-deno"
