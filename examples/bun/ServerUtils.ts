@@ -1,5 +1,5 @@
-import type { Context } from '@jonasb/datadata-database-adapter-sqlite-bun';
-import { createBunSqliteAdapter } from '@jonasb/datadata-database-adapter-sqlite-bun';
+import type { Context } from '@dossierhq/database-adapter-sqlite-bun';
+import { createBunSqliteAdapter } from '@dossierhq/database-adapter-sqlite-bun';
 import { Database } from 'bun:sqlite';
 
 export function createAdapter(context: Context, filename: string) {

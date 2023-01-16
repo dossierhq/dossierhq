@@ -10,12 +10,12 @@ import type {
 } from '@dossierhq/core';
 import { AdminSchema, assertIsDefined, ok } from '@dossierhq/core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
   type TestSuite,
-} from '@jonasb/datadata-database-adapter-test-integration';
+} from '@dossierhq/database-adapter-test-integration';
 import type { Server, SessionContext } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { v4 as uuidv4 } from 'uuid';

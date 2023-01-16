@@ -386,46 +386,46 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter",
+      "packageName": "@dossierhq/database-adapter",
       "projectFolder": "libraries/database-adapter",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-postgres-core",
+      "packageName": "@dossierhq/database-adapter-postgres-core",
       "projectFolder": "libraries/database-adapter-postgres-core",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-postgres-deno",
+      "packageName": "@dossierhq/database-adapter-postgres-deno",
       "projectFolder": "libraries/database-adapter-postgres-deno"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+      "packageName": "@dossierhq/database-adapter-postgres-pg",
       "projectFolder": "libraries/database-adapter-postgres-pg",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-better-sqlite3",
+      "packageName": "@dossierhq/database-adapter-better-sqlite3",
       "projectFolder": "libraries/database-adapter-better-sqlite3"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-sqlite-bun",
+      "packageName": "@dossierhq/database-adapter-sqlite-bun",
       "projectFolder": "libraries/database-adapter-sqlite-bun"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-sqlite-core",
+      "packageName": "@dossierhq/database-adapter-sqlite-core",
       "projectFolder": "libraries/database-adapter-sqlite-core"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-sqlite-sqlite3",
+      "packageName": "@dossierhq/database-adapter-sqlite-sqlite3",
       "projectFolder": "libraries/database-adapter-sqlite-sqlite3"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-sqlite-sql.js",
+      "packageName": "@dossierhq/database-adapter-sqlite-sql.js",
       "projectFolder": "libraries/database-adapter-sqlite-sqljs"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-test-integration",
+      "packageName": "@dossierhq/database-adapter-test-integration",
       "projectFolder": "libraries/database-adapter-test-integration",
       "versionPolicyName": "DataDataFramework"
     },

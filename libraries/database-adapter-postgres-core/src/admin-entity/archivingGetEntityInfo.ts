@@ -3,7 +3,7 @@ import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityArchivingEntityInfoPayload,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';

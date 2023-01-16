@@ -1,5 +1,5 @@
 import { NoOpLogger } from '@dossierhq/core';
-import { createBetterSqlite3Adapter } from '@jonasb/datadata-database-adapter-better-sqlite3';
+import { createBetterSqlite3Adapter } from '@dossierhq/database-adapter-better-sqlite3';
 import * as fs from 'node:fs/promises';
 import Database from 'better-sqlite3';
 import { initializeAndRunTests } from './benchmark.js';

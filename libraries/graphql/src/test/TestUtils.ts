@@ -6,10 +6,7 @@ import type {
   PublishedClient,
 } from '@dossierhq/core';
 import { AdminSchema, assertOkResult, NoOpLogger } from '@dossierhq/core';
-import {
-  createDatabase,
-  createSqlite3Adapter,
-} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/database-adapter-sqlite-sqlite3';
 import type { AuthorizationAdapter } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import * as Sqlite from 'sqlite3';

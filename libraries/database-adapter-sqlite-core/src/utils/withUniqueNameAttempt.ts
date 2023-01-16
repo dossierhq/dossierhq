@@ -1,5 +1,5 @@
 import { ErrorType, notOk, type ErrorResult, type PromiseResult } from '@dossierhq/core';
-import type { TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@dossierhq/database-adapter';
 
 const nameConflictErrorMessage = 'Name is not unique';
 const maxAttempts = 10;

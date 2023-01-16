@@ -1,6 +1,6 @@
 import type { ErrorType, Result } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { DatabasePagingInfo } from '@jonasb/datadata-database-adapter';
+import type { DatabasePagingInfo } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import type { CursorNativeType } from './OpaqueCursor.js';
 import { fromOpaqueCursor } from './OpaqueCursor.js';

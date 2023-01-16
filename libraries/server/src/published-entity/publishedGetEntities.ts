@@ -10,7 +10,7 @@ import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePublishedEntityGetOnePayload,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';

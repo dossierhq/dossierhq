@@ -1,7 +1,7 @@
 #!/usr/bin/env -S npx ts-node -T --esm
 import type { AdminSchemaSpecificationUpdate, Logger } from '@dossierhq/core';
 import { createConsoleLogger, ok } from '@dossierhq/core';
-import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
+import { createSqlJsAdapter } from '@dossierhq/database-adapter-sqlite-sql.js';
 import type { Server } from '@dossierhq/server';
 import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';

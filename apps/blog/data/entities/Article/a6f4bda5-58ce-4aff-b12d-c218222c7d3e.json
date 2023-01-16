@@ -83,7 +83,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "@jonasb/datadata-database-adapter-better-sqlite3",
+                "text": "@dossierhq/database-adapter-better-sqlite3",
                 "type": "text",
                 "version": 1
               },
@@ -139,7 +139,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install better-sqlite3 @jonasb/datadata-database-adapter-better-sqlite3 @dossierhq/core",
+                    "text": "npm install better-sqlite3 @dossierhq/database-adapter-better-sqlite3 @dossierhq/core",
                     "type": "text",
                     "version": 1
                   }
@@ -429,7 +429,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-database-adapter-better-sqlite3'",
+                "text": "'@dossierhq/database-adapter-better-sqlite3'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

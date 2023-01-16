@@ -4,7 +4,7 @@ import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';

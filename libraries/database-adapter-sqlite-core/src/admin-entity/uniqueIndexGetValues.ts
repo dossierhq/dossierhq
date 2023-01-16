@@ -3,8 +3,8 @@ import type {
   DatabaseAdminEntityUniqueIndexValue,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';

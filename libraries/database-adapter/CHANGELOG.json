@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter",
+  "name": "@dossierhq/database-adapter",
   "entries": [
     {
       "version": "0.1.38",

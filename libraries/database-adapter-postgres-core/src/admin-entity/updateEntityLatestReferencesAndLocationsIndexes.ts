@@ -3,8 +3,8 @@ import { ok } from '@dossierhq/core';
 import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 

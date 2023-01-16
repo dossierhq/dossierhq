@@ -1,9 +1,9 @@
 import { assertIsDefined } from '@dossierhq/core';
-import type { ReadOnlyEntityRepository } from '@jonasb/datadata-database-adapter-test-integration';
+import type { ReadOnlyEntityRepository } from '@dossierhq/database-adapter-test-integration';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
-} from '@jonasb/datadata-database-adapter-test-integration';
+} from '@dossierhq/database-adapter-test-integration';
 import { afterAll, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';

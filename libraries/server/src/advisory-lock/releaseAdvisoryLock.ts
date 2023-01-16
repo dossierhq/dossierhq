@@ -1,6 +1,6 @@
 import type { AdvisoryLockReleasePayload, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
 
 export async function releaseAdvisoryLock(

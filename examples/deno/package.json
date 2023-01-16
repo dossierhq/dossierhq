@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
-    "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
-    "@jonasb/datadata-database-adapter-postgres-deno": "workspace:*",
+    "@dossierhq/database-adapter": "workspace:*",
+    "@dossierhq/database-adapter-postgres-core": "workspace:*",
+    "@dossierhq/database-adapter-postgres-deno": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@jonasb/datadata-template-library": "workspace:*"

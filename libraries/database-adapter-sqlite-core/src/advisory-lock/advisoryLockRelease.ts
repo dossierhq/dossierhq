@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@dossierhq/database-adapter';
+import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';

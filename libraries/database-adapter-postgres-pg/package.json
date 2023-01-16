@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter-postgres-pg",
+  "name": "@dossierhq/database-adapter-postgres-pg",
   "version": "0.1.38",
   "description": "",
   "type": "module",
@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
-    "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
+    "@dossierhq/database-adapter": "workspace:*",
+    "@dossierhq/database-adapter-postgres-core": "workspace:*",
     "pg": "~8.8.0",
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
+    "@dossierhq/database-adapter-test-integration": "workspace:*",
     "@dossierhq/core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",

@@ -31,7 +31,7 @@ export default defineConfig({
     include: [
       '@dossierhq/react-components',
       '@dossierhq/core',
-      '@jonasb/datadata-database-adapter-sqlite-sql.js',
+      '@dossierhq/database-adapter-sqlite-sql.js',
       '@jonasb/datadata-design',
       '@dossierhq/server',
     ],

@@ -13,8 +13,8 @@ import type {
   DatabasePagingInfo,
   ResolvedAuthKey,
   SqliteQueryBuilder,
-} from '@jonasb/datadata-database-adapter';
-import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';

@@ -3,7 +3,7 @@ import { createMockLogger } from '@dossierhq/core-vitest';
 import {
   createSchemaTestSuite,
   createTestAuthorizationAdapter,
-} from '@jonasb/datadata-database-adapter-test-integration';
+} from '@dossierhq/database-adapter-test-integration';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { afterAll, beforeAll } from 'vitest';

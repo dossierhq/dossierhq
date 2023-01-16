@@ -6,8 +6,8 @@ import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';

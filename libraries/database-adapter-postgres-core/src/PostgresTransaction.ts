@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
 import { notOk } from '@dossierhq/core';
-import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { Transaction, TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
 
 export interface PostgresTransaction extends Transaction {

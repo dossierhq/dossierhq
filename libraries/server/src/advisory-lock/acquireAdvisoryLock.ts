@@ -5,7 +5,7 @@ import type {
   PromiseResult,
 } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
 
 const MAX_HANDLE = 2147483647;

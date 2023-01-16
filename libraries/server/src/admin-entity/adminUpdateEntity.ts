@@ -8,7 +8,7 @@ import type {
   PublishedSchema,
 } from '@dossierhq/core';
 import { AdminEntityStatus, ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';

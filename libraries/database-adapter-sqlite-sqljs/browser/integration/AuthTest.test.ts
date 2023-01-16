@@ -1,4 +1,4 @@
-import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import { createAuthTestSuite } from '@dossierhq/database-adapter-test-integration';
 import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 

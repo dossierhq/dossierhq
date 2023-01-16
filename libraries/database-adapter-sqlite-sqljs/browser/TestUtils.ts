@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
-import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import type { TestSuite } from '@dossierhq/database-adapter-test-integration';
 import { test } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import * as SqlJs from 'sql.js';

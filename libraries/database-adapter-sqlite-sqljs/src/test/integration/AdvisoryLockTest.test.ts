@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@dossierhq/core';
-import { createAdvisoryLockTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import { createAdvisoryLockTestSuite } from '@dossierhq/database-adapter-test-integration';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './SqlJsTestUtils.js';

@@ -1,7 +1,7 @@
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
-} from "@jonasb/datadata-database-adapter-test-integration";
+} from "@dossierhq/database-adapter-test-integration";
 import type { Server } from "@dossierhq/server";
 import {
   initializeIntegrationTestServer,

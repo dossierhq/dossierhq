@@ -2,8 +2,8 @@ import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishingCreateEventArg,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';

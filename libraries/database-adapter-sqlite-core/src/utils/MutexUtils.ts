@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk } from '@dossierhq/core';
-import type { Context } from '@jonasb/datadata-database-adapter';
+import type { Context } from '@dossierhq/database-adapter';
 
 export class Mutex {
   #locking: Promise<void>;

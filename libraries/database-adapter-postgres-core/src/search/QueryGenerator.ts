@@ -13,8 +13,8 @@ import type {
   DatabasePagingInfo,
   PostgresQueryBuilder,
   ResolvedAuthKey,
-} from '@jonasb/datadata-database-adapter';
-import { createPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { createPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { CursorNativeType } from './OpaqueCursor.js';

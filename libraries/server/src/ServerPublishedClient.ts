@@ -10,7 +10,7 @@ import {
   ok,
   PublishedClientOperationName,
 } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';
 import { publishedGetEntities } from './published-entity/publishedGetEntities.js';

@@ -4,8 +4,8 @@ import type {
   DatabaseAdminEntityUniqueIndexArg,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { buildPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
 import { UniqueConstraints } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';

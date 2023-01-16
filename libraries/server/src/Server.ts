@@ -14,7 +14,7 @@ import type {
   Result,
 } from '@dossierhq/core';
 import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok } from '@dossierhq/core';
-import type { DatabaseAdapter, Session } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter, Session } from '@dossierhq/database-adapter';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { InternalContext, SessionContext } from './Context.js';

@@ -5,7 +5,7 @@ import type {
   DatabaseAuthCreateSessionPayload,
   ResolvedAuthKey,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import { ensureRequired } from './Assertions.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';

@@ -5,8 +5,8 @@ import type {
   DatabaseAdminEntityUnpublishUpdateEntityPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { buildSqliteSqlQuery, createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { buildSqliteSqlQuery, createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryRun } from '../QueryFunctions.js';

@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@dossierhq/core';
-import type { TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 

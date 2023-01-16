@@ -1,10 +1,7 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
 import { NoOpLogger, notOk, ok } from '@dossierhq/core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import {
-  createDatabase,
-  createSqlite3Adapter,
-} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
+import { createPostgresAdapter } from '@dossierhq/database-adapter-postgres-pg';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/database-adapter-sqlite-sqlite3';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import type { NextApiRequest } from 'next';

@@ -1,10 +1,10 @@
 {
   "imports": {
     "@dossierhq/core": "../node_modules/@dossierhq/core/lib/esm/index.js",
-    "@jonasb/datadata-database-adapter": "../node_modules/@jonasb/datadata-database-adapter/lib/esm/index.js",
-    "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/esm/index.js",
-    "@jonasb/datadata-database-adapter-postgres-deno": "../node_modules/@jonasb/datadata-database-adapter-postgres-deno/src/mod.ts",
-    "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/esm/index.js",
+    "@dossierhq/database-adapter": "../node_modules/@dossierhq/database-adapter/lib/esm/index.js",
+    "@dossierhq/database-adapter-postgres-core": "../node_modules/@dossierhq/database-adapter-postgres-core/lib/esm/index.js",
+    "@dossierhq/database-adapter-postgres-deno": "../node_modules/@dossierhq/database-adapter-postgres-deno/src/mod.ts",
+    "@dossierhq/database-adapter-test-integration": "../node_modules/@dossierhq/database-adapter-test-integration/lib/esm/index.js",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
     "@jonasb/datadata-template-library": "../node_modules/@jonasb/datadata-template-library/lib/esm/index.js",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",

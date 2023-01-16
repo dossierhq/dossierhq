@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@dossierhq/database-adapter';
+import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { SequencesTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryOne } from '../QueryFunctions.js';

@@ -3,7 +3,7 @@ import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityGetReferenceEntityInfoPayload,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import { queryMany } from '../QueryFunctions.js';

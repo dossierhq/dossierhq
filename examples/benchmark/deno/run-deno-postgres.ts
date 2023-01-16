@@ -1,5 +1,5 @@
 import { ok } from '@dossierhq/core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-deno';
+import { createPostgresAdapter } from '@dossierhq/database-adapter-postgres-deno';
 import { config } from 'dotenv';
 import { Pool } from 'postgres';
 import { initializeAndRunTests } from '../lib/benchmark.js';

@@ -4,8 +4,8 @@ import type {
   Session,
   Transaction,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { TransactionContextImpl } from '@dossierhq/database-adapter';
 
 const internalContextSymbol = Symbol('InternalContext');
 const sessionContextSymbol = Symbol('SessionContext');

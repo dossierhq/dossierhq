@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter-sqlite-bun",
+  "name": "@dossierhq/database-adapter-sqlite-bun",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -21,11 +21,11 @@
     "test": "bun wiptest 2>&1"
   },
   "dependencies": {
-    "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*"
+    "@dossierhq/database-adapter-sqlite-core": "workspace:*"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
+    "@dossierhq/database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",

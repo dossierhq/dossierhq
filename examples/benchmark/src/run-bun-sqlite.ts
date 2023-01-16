@@ -1,5 +1,5 @@
 import { NoOpLogger } from '@dossierhq/core';
-import { createBunSqliteAdapter } from '@jonasb/datadata-database-adapter-sqlite-bun';
+import { createBunSqliteAdapter } from '@dossierhq/database-adapter-sqlite-bun';
 import { Database } from 'bun:sqlite';
 import * as fs from 'node:fs/promises';
 import { initializeAndRunTests } from './benchmark.js';

@@ -5,7 +5,7 @@ import {
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import {
   UniqueConstraints,
   type EntitiesTable,

@@ -10,7 +10,7 @@ import type {
   DatabasePublishedEntitySearchPayload,
   ResolvedAuthKey,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';

@@ -6,10 +6,7 @@ import type {
   ClientContext,
 } from '@dossierhq/core';
 import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
-import {
-  createDatabase,
-  createSqlite3Adapter,
-} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/database-adapter-sqlite-sqlite3';
 import type { Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { unlink } from 'fs/promises';

@@ -6,8 +6,8 @@ import type {
   SqliteDatabaseAdapter,
   SqliteDatabaseOptions,
   UniqueConstraint,
-} from '@jonasb/datadata-database-adapter-sqlite-core';
-import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
+} from '@dossierhq/database-adapter-sqlite-core';
+import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/database-adapter-sqlite-core';
 import { randomUUID } from 'node:crypto';
 import type { Database } from 'sqlite3';
 import { closeDatabase, queryAll, queryRun } from './SqliteUtils.js';

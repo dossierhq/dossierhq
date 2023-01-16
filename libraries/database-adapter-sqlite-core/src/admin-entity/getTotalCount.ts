@@ -1,6 +1,6 @@
 import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { ResolvedAuthKey, TransactionContext } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryOne } from '../QueryFunctions.js';
 import { totalAdminEntitiesQuery } from '../search/QueryGenerator.js';

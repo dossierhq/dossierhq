@@ -1,6 +1,6 @@
 import { ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
-import type { DatabasePublishedEntitySearchPayloadEntity } from '@jonasb/datadata-database-adapter';
+import type { DatabasePublishedEntitySearchPayloadEntity } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,

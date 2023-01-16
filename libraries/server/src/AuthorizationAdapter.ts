@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import type { ResolvedAuthKey } from '@dossierhq/database-adapter';
 import type { SessionContext } from './Context.js';
 
 export interface AuthorizationAdapter {

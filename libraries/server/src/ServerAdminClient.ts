@@ -13,7 +13,7 @@ import {
   createBaseAdminClient,
   ok,
 } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
 import { adminGetEntities } from './admin-entity/adminGetEntities.js';

@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
+    "@dossierhq/database-adapter": "workspace:*",
     "tslib": "~2.4.1"
   }
 }

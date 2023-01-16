@@ -7,7 +7,7 @@ import type {
   PublishedQuery,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import type { ResolvedAuthKey } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';

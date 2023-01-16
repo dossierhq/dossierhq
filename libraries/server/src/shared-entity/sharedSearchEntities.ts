@@ -12,7 +12,7 @@ import type {
   DatabaseAdminEntitySearchPayload,
   DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 
 //TODO move to constants or make configurable?
 const defaultPagingCount = 25;

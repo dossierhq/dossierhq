@@ -1,4 +1,4 @@
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';

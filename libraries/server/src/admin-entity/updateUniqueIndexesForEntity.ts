@@ -5,7 +5,7 @@ import type {
   DatabaseAdminEntityUniqueIndexReference,
   DatabaseAdminEntityUniqueIndexValue,
   DatabaseResolvedEntityReference,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
 import type { UniqueIndexValue } from '../EntityCodec.js';
 

@@ -10,7 +10,7 @@ import type {
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type {
   EntitiesTable,

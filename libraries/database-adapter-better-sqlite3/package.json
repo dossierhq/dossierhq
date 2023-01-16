@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter-better-sqlite3",
+  "name": "@dossierhq/database-adapter-better-sqlite3",
   "version": "0.1.1-25",
   "description": "",
   "type": "module",
@@ -32,12 +32,12 @@
     "directory": "libraries/database-adapter-better-sqlite3"
   },
   "dependencies": {
-    "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*",
+    "@dossierhq/database-adapter-sqlite-core": "workspace:*",
     "tslib": "~2.4.1"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
+    "@dossierhq/database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",

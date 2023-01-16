@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter-postgres-deno",
+  "name": "@dossierhq/database-adapter-postgres-deno",
   "version": "1.0.0",
   "description": "",
   "license": "MIT",
@@ -12,9 +12,9 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
-    "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
-    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
+    "@dossierhq/database-adapter": "workspace:*",
+    "@dossierhq/database-adapter-postgres-core": "workspace:*",
+    "@dossierhq/database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@dossierhq/server": "workspace:*"
   }

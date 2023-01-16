@@ -5,7 +5,7 @@ import type {
   DatabaseAdminEntityHistoryGetVersionInfoPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';

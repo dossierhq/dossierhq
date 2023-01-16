@@ -1,10 +1,10 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
-import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import type { TestSuite } from '@dossierhq/database-adapter-test-integration';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
-} from '@jonasb/datadata-database-adapter-test-integration';
+} from '@dossierhq/database-adapter-test-integration';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { Database } from 'bun:sqlite';

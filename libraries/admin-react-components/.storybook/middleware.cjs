@@ -12,7 +12,7 @@ const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@dossierhq
 const {
   createDatabase,
   createSqlite3Adapter,
-} = require('@jonasb/datadata-database-adapter-sqlite-sqlite3');
+} = require('@dossierhq/database-adapter-sqlite-sqlite3');
 const { Database } = require('sqlite3');
 const bodyParser = require('body-parser');
 const schemaSpecification = require('../src/test/schema.cjs');

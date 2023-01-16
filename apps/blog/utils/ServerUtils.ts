@@ -1,9 +1,6 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
 import { NoOpLogger, notOk, ok } from '@dossierhq/core';
-import {
-  createDatabase,
-  createSqlite3Adapter,
-} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/database-adapter-sqlite-sqlite3';
 import type { Server } from '@dossierhq/server';
 import type { NextApiRequest } from 'next';
 import assert from 'node:assert';

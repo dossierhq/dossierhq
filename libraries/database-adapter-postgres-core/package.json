@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter-postgres-core",
+  "name": "@dossierhq/database-adapter-postgres-core",
   "version": "0.1.38",
   "description": "",
   "type": "module",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
+    "@dossierhq/database-adapter": "workspace:*",
     "tslib": "~2.4.1"
   },
   "devDependencies": {

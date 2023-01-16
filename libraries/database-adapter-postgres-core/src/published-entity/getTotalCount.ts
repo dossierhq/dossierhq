@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult, PublishedQuery, PublishedSchema } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { ResolvedAuthKey, TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';
 import { totalPublishedEntitiesQuery } from '../search/QueryGenerator.js';

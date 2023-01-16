@@ -6,7 +6,7 @@ import type {
   SchemaSpecificationUpdatePayload,
 } from '@dossierhq/core';
 import { AdminSchema, isFieldValueEqual, ok } from '@dossierhq/core';
-import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
 
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,

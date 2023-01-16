@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-database-adapter-test-integration",
+  "name": "@dossierhq/database-adapter-test-integration",
   "version": "0.1.38",
   "description": "",
   "type": "module",

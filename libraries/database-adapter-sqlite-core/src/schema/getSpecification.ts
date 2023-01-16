@@ -4,7 +4,7 @@ import {
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
-import type { TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';

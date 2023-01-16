@@ -3,7 +3,7 @@ import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
-} from '@jonasb/datadata-database-adapter-test-integration';
+} from '@dossierhq/database-adapter-test-integration';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';

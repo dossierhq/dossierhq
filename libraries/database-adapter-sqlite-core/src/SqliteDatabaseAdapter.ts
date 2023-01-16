@@ -1,10 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type {
-  Context,
-  DatabaseAdapter,
-  TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+import type { Context, DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';

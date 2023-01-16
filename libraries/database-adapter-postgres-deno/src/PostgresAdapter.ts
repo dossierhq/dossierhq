@@ -1,9 +1,9 @@
-import type { DatabaseAdapter } from "@jonasb/datadata-database-adapter";
+import type { DatabaseAdapter } from "@dossierhq/database-adapter";
 import type {
   PostgresDatabaseAdapter,
   PostgresTransaction,
-} from "@jonasb/datadata-database-adapter-postgres-core";
-import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
+} from "@dossierhq/database-adapter-postgres-core";
+import { createPostgresDatabaseAdapterAdapter } from "@dossierhq/database-adapter-postgres-core";
 import type { PoolClient } from "postgres";
 import { Pool, PostgresError } from "postgres";
 import { decode, encode } from "std/encoding/base64.ts";

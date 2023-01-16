@@ -5,8 +5,8 @@ import type {
   DatabasePagingInfo,
   Transaction,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
+import { TransactionContextImpl } from '@dossierhq/database-adapter';
 import { randomUUID } from 'node:crypto';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';

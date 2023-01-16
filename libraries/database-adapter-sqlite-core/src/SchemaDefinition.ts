@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type { TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
 import { getCurrentSchemaVersion, migrate } from './SchemaMigrator.js';
 import type { SqliteDatabaseMigrationOptions } from './SqliteDatabaseAdapter.js';

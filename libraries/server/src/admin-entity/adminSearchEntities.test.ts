@@ -1,6 +1,6 @@
 import { AdminEntityStatus, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
-import type { DatabaseAdminEntitySearchPayloadEntity } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdminEntitySearchPayloadEntity } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,

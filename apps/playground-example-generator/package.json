@@ -19,7 +19,7 @@
   "dependencies": {
     "@faker-js/faker": "~7.6.0",
     "@dossierhq/core": "workspace:*",
-    "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
+    "@dossierhq/database-adapter-sqlite-sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "cloudinary": "~1.33.0",
     "dotenv": "~16.0.3",

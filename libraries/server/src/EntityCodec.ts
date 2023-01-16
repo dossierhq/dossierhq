@@ -53,7 +53,7 @@ import type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import { ensureRequired } from './Assertions.js';
 import type { SessionContext } from './Context.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';

@@ -3,7 +3,7 @@ import { ErrorType, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAuthCreateSessionPayload,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { SubjectsTable } from '../DatabaseSchema.js';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';

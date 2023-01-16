@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@dossierhq/core';
-import { createSchemaTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import { createSchemaTestSuite } from '@dossierhq/database-adapter-test-integration';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './Sqlite3TestUtils.js';

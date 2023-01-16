@@ -1,4 +1,4 @@
-import { createSchemaTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import { createSchemaTestSuite } from '@dossierhq/database-adapter-test-integration';
 import type { Server } from '@dossierhq/server';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 

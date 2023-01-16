@@ -4,7 +4,7 @@ import type {
   DatabaseAdminEntityPayload,
   ResolvedAuthKey,
   TransactionContext,
-} from '@jonasb/datadata-database-adapter';
+} from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';

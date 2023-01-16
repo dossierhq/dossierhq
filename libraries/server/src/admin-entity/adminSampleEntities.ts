@@ -8,7 +8,7 @@ import type {
   PromiseResult,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
-import type { DatabaseAdapter, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import type { DatabaseAdapter, ResolvedAuthKey } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
