@@ -12,7 +12,7 @@ import Image from 'next/image.js';
 import Link from 'next/link.js';
 import { LinkButton } from '../components/LinkButton/LinkButton';
 import { NavBar } from '../components/NavBar/NavBar';
-import logo from '../public/logo.svg';
+import logoLarge from '../public/logo-large.svg';
 import { BrowserUrls } from '../utils/BrowserUrls';
 
 export default function Page() {
@@ -29,17 +29,17 @@ export default function Page() {
           gap={5}
           style={{ maxWidth: '50rem' }}
         >
-          <Image src={logo} alt="Data data logo" height={80} />
+          <Image src={logoLarge} alt="Dossier logo" height={140} />
           <div>
             <Text
               as="h1"
               className={toSpacingClassName({ paddingBottom: 2 })}
               textStyle="headline2"
             >
-              Stay in control of your content
+              Keep control of your content
             </Text>
             <Text textStyle="headline4">
-              Data data is an embeddable content platform. Open source.
+              Dossier is an open source, embeddable content platform.
             </Text>
           </div>
           <LinkButton
@@ -50,8 +50,8 @@ export default function Page() {
             Get started
           </LinkButton>
           <Feature
-            title="Your data ⚡️"
-            description="You own the data, store it where you want. PostgreSQL and SQLite supported."
+            title="Your content ⚡️"
+            description="You own the content, store it where you want. PostgreSQL and SQLite supported."
           />
           <Feature
             title="Scalable ⚖️"
@@ -59,7 +59,7 @@ export default function Page() {
           />
           <Feature
             title="Bring your own auth 🔑"
-            description="Data data doesn’t come with its own auth, instead it allows you to integrate with any existing solution you already have."
+            description="Dossier doesn’t come with its own auth, instead it allows you to integrate with any existing solution you already have."
           />
           <Feature
             title="Secure all content 🤫"
@@ -80,10 +80,10 @@ export default function Page() {
           />
           <hr />
           <Text textStyle="body1">
-            Data data enables you to build solutions where you’re in full control of the data. By
-            bringing your own auth (authentication and authorization), database and server, you can
+            Dossier enables you to build solutions where you’re in full control of the content. By
+            bringing your own auth (authentication and authorization), database and backend, you can
             build a traditional headless Content Management System (CMS). You can also skip the web
-            interface and use Data data to manage the data in a backend or app.
+            interface and use Dossier to manage the content in a backend or app.
           </Text>
           <Card2>
             <Card2.Header>
@@ -109,9 +109,8 @@ export default function Page() {
           </Card2>
           <Message color="warning">
             <Message.Body>
-              Data data is in <strong>active development</strong> so everything is not yet
-              supported. Check out <Link href={BrowserUrls.limitations}>limitations</Link> for more
-              details.
+              Dossier is in <strong>active development</strong> so everything is not yet supported.
+              Check out <Link href={BrowserUrls.limitations}>limitations</Link> for more details.
             </Message.Body>
           </Message>
           <div>

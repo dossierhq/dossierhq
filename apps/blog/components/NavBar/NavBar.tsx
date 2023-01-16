@@ -28,13 +28,7 @@ export function NavBar({
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
             <Link href={BrowserUrls.home}>
-              <Image
-                className={className}
-                src={logo}
-                alt="Data data logo"
-                width={112}
-                height={28}
-              />
+              <Image className={className} src={logo} alt="Data data logo" height={36} />
             </Link>
           )}
         </DesignNavbar.Item>
