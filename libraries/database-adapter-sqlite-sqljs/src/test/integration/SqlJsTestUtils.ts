@@ -4,8 +4,8 @@ import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
+import { createServer } from '@dossierhq/server';
 import { createSqlJsTestAdapter } from '../TestUtils.js';
 
 export interface ServerInit {

@@ -8,7 +8,7 @@ const {
   LoggingClientMiddleware,
   notOk,
 } = require('@dossierhq/core');
-const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@jonasb/datadata-server');
+const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@dossierhq/server');
 const {
   createDatabase,
   createSqlite3Adapter,

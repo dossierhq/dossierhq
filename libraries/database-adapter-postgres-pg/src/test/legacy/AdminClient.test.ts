@@ -1,6 +1,6 @@
 import { ErrorType, ok } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
-import type { Server, SessionContext } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@dossierhq/server';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils.js';
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env -S bun
 import { createConsoleLogger, FieldType } from '@dossierhq/core';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { createAdapter } from './ServerUtils.js';
 
 const logger = createConsoleLogger(console);

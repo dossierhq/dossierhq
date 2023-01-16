@@ -1,6 +1,6 @@
 import { ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import type { DatabaseAdapter } from '@dossierhq/server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 
 export async function createBlogServer(databaseAdapter: DatabaseAdapter) {
   const serverResult = await createServer({

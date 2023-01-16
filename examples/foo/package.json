@@ -20,7 +20,7 @@
     "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "express": "~4.18.1",
     "express-graphql": "~0.12.0",
     "sqlite3": "~5.1.2",

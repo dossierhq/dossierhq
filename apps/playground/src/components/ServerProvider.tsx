@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk } from '@dossierhq/core';
 import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
-import type { Server } from '@jonasb/datadata-server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { useContext, useEffect, useState } from 'react';
 import type { Database } from 'sql.js';
 import { SERVER_LOGGER } from '../config/LoggerConfig.js';

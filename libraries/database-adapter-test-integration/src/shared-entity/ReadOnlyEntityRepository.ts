@@ -13,7 +13,7 @@ import {
   ok,
   withAdvisoryLock,
 } from '@dossierhq/core';
-import type { Server } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
 import { v5 as uuidv5 } from 'uuid';
 import { assertOkResult, assertSame } from '../Asserts.js';
 import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from './TestClients.js';

@@ -1,5 +1,5 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
-import type { Server, SessionContext } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@dossierhq/server';
 
 const mainPrincipal = {
   provider: 'test',

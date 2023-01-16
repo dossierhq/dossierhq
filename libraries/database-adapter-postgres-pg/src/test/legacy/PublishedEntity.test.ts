@@ -12,7 +12,7 @@ import {
   FieldType,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
-import type { Server, SessionContext } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@dossierhq/server';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils.js';
 import {

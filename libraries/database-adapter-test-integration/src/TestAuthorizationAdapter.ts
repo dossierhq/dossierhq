@@ -1,9 +1,5 @@
 import { notOk, ok } from '@dossierhq/core';
-import type {
-  AuthorizationAdapter,
-  ResolvedAuthKey,
-  SessionContext,
-} from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, ResolvedAuthKey, SessionContext } from '@dossierhq/server';
 
 export function createTestAuthorizationAdapter(): AuthorizationAdapter {
   return {

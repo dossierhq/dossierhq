@@ -20,7 +20,7 @@ import {
   ok,
   traverseEntity,
 } from '@dossierhq/core';
-import type { SessionContext } from '@jonasb/datadata-server';
+import type { SessionContext } from '@dossierhq/server';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 

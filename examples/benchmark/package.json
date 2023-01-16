@@ -33,7 +33,7 @@
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-bun": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
     "better-sqlite3": "~8.0.1",
     "dotenv": "~16.0.3",

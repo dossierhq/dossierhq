@@ -11,7 +11,7 @@ import type {
   Result,
 } from '@dossierhq/core';
 import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@jonasb/datadata-server';
+import type { DatabaseAdapter } from '@dossierhq/server';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
 import { initializeServer } from './server.js';

@@ -28,7 +28,7 @@
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "graphql": "~16.6.0",
     "graphql-voyager": "~1.0.0-rc.31",
     "leaflet": "~1.9.3",

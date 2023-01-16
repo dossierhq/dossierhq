@@ -33,7 +33,7 @@ export default defineConfig({
       '@dossierhq/core',
       '@jonasb/datadata-database-adapter-sqlite-sql.js',
       '@jonasb/datadata-design',
-      '@jonasb/datadata-server',
+      '@dossierhq/server',
     ],
   },
 });

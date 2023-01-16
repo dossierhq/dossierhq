@@ -18,7 +18,7 @@
     "@jonasb/datadata-database-adapter-better-sqlite3": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "better-sqlite3": "~8.0.1",
     "body-parser": "~1.20.1",
     "dotenv": "~16.0.3",

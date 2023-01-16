@@ -1,4 +1,4 @@
-import type { Server } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import { AdvisoryLockAcquireSubSuite } from './AdvisoryLockAcquireSubSuite.js';

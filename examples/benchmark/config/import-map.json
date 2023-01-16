@@ -5,7 +5,7 @@
     "@jonasb/datadata-database-adapter": "../node_modules/@jonasb/datadata-database-adapter/lib/esm/index.js",
     "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/esm/index.js",
     "@jonasb/datadata-database-adapter-postgres-deno": "../node_modules/@jonasb/datadata-database-adapter-postgres-deno/src/mod.ts",
-    "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/esm/index.js",
+    "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
     "benchpress": "../node_modules/benchpress/lib/esm/index.js",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",

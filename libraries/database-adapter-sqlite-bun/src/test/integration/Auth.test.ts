@@ -1,5 +1,5 @@
 import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
 registerTestSuite(

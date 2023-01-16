@@ -13,7 +13,7 @@ import type {
 } from '@dossierhq/core';
 import { assertIsDefined, LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
 import { NotificationContext } from '@jonasb/datadata-design';
-import type { CreateSessionPayload, Server } from '@jonasb/datadata-server';
+import type { CreateSessionPayload, Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Cache } from 'swr';
 import { useSWRConfig } from 'swr';

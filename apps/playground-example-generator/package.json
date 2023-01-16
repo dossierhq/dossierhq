@@ -20,7 +20,7 @@
     "@faker-js/faker": "~7.6.0",
     "@dossierhq/core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "cloudinary": "~1.33.0",
     "dotenv": "~16.0.3",
     "sqlite3": "~5.1.2",

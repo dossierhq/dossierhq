@@ -5,8 +5,8 @@ import {
   IntegrationTestSchema,
   TestSuite,
 } from "@jonasb/datadata-database-adapter-test-integration";
-import type { Server } from "@jonasb/datadata-server";
-import { createServer } from "@jonasb/datadata-server";
+import type { Server } from "@dossierhq/server";
+import { createServer } from "@dossierhq/server";
 import { config } from "dotenv";
 import { createPostgresAdapter } from "../PostgresAdapter.ts";
 

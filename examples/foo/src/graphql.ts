@@ -2,7 +2,7 @@ import type { AdminSchema } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import type { Server } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
 import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';

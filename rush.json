@@ -483,7 +483,7 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-server",
+      "packageName": "@dossierhq/server",
       "projectFolder": "libraries/server",
       "versionPolicyName": "DataDataFramework"
     },

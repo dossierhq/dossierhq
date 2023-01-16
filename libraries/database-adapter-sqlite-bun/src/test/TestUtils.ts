@@ -5,8 +5,8 @@ import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
+import { createServer } from '@dossierhq/server';
 import { Database } from 'bun:sqlite';
 import { describe, it } from 'bun:test';
 import { createBunSqliteAdapter } from '../BunSqliteAdapter.js';

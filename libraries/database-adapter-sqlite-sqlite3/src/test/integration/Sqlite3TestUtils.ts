@@ -4,8 +4,8 @@ import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
+import { createServer } from '@dossierhq/server';
 import * as Sqlite from 'sqlite3';
 import type { Sqlite3DatabaseAdapter } from '../../Sqlite3Adapter.js';
 import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';

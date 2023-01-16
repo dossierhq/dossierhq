@@ -2,7 +2,7 @@
 import {
   createServer,
   NoneAndSubjectAuthorizationAdapter,
-} from "@jonasb/datadata-server";
+} from "@dossierhq/server";
 import { createDotenvAdapter } from "./ServerUtils.ts";
 import { getLogger } from "./Logger.ts";
 

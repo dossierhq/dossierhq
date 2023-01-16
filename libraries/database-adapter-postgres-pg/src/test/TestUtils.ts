@@ -16,8 +16,8 @@ import {
   IntegrationTestSchema,
   type TestSuite,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server, SessionContext } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@dossierhq/server';
+import { createServer } from '@dossierhq/server';
 import { v4 as uuidv4 } from 'uuid';
 import { expect, test } from 'vitest';
 import { createPostgresAdapter } from '../PgDatabaseAdapter.js';

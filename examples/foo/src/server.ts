@@ -4,8 +4,8 @@ import {
   createDatabase,
   createSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, Server } from '@dossierhq/server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { Database } from 'sqlite3';
 import { schemaSpecification } from './schema.js';
 

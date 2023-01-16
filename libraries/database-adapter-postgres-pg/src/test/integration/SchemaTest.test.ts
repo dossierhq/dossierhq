@@ -4,8 +4,8 @@ import {
   createSchemaTestSuite,
   createTestAuthorizationAdapter,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
+import { createServer } from '@dossierhq/server';
 import { afterAll, beforeAll } from 'vitest';
 import { createPostgresTestAdapter, registerTestSuite } from '../TestUtils.js';
 

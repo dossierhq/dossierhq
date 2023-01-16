@@ -18,7 +18,7 @@ import {
   BetterSqlite3DatabaseAdapter,
   createBetterSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-better-sqlite3';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import bodyParser from 'body-parser';

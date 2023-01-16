@@ -10,8 +10,8 @@ import {
   createDatabase,
   createSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import type { Server } from '@jonasb/datadata-server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { unlink } from 'fs/promises';
 import type { Database } from 'sqlite3';
 import * as Sqlite from 'sqlite3';

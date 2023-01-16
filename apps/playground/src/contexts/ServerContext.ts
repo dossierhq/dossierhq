@@ -1,4 +1,4 @@
-import type { Server } from '@jonasb/datadata-server';
+import type { Server } from '@dossierhq/server';
 import { createContext } from 'react';
 
 export interface ServerContextValue {

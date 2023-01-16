@@ -10,8 +10,8 @@ import {
   createDatabase,
   createSqlite3Adapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import type { AuthorizationAdapter } from '@jonasb/datadata-server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter } from '@dossierhq/server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import * as Sqlite from 'sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 
