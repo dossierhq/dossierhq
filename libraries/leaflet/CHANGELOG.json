@@ -2,6 +2,18 @@
   "name": "@dossierhq/leaflet",
   "entries": [
     {
+      "version": "0.1.39",
+      "tag": "@dossierhq/leaflet_v0.1.39",
+      "date": "Mon, 16 Jan 2023 21:07:04 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "First release after @dossierhq/ move"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.38",
       "tag": "@jonasb/datadata-leaflet_v0.1.38",
       "date": "Mon, 02 Jan 2023 22:59:38 GMT",

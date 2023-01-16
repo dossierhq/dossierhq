@@ -1,0 +1,17 @@
+{
+  "name": "@dossierhq/cloudinary",
+  "entries": [
+    {
+      "version": "0.1.39",
+      "tag": "@dossierhq/cloudinary_v0.1.39",
+      "date": "Mon, 16 Jan 2023 21:07:04 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "First release"
+          }
+        ]
+      }
+    }
+  ]
+}
