@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-postgres-core",
+  "name": "@dossierhq/postgres-core",
   "entries": [
     {
       "version": "0.1.38",

@@ -1,9 +1,6 @@
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
-import type {
-  PostgresDatabaseAdapter,
-  PostgresTransaction,
-} from '@dossierhq/database-adapter-postgres-core';
-import { createPostgresDatabaseAdapterAdapter } from '@dossierhq/database-adapter-postgres-core';
+import type { PostgresDatabaseAdapter, PostgresTransaction } from '@dossierhq/postgres-core';
+import { createPostgresDatabaseAdapterAdapter } from '@dossierhq/postgres-core';
 import type { PoolClient, PoolConfig } from 'pg';
 import * as PG from 'pg';
 

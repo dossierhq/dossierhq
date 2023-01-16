@@ -391,8 +391,8 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@dossierhq/database-adapter-postgres-core",
-      "projectFolder": "libraries/database-adapter-postgres-core",
+      "packageName": "@dossierhq/postgres-core",
+      "projectFolder": "libraries/postgres-core",
       "versionPolicyName": "DataDataFramework"
     },
     {

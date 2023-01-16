@@ -35,7 +35,7 @@
   "dependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
-    "@dossierhq/database-adapter-postgres-core": "workspace:*",
+    "@dossierhq/postgres-core": "workspace:*",
     "pg": "~8.8.0",
     "tslib": "~2.4.1"
   },

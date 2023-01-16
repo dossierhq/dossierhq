@@ -14,7 +14,7 @@
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
-    "@dossierhq/database-adapter-postgres-core": "workspace:*",
+    "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/database-adapter-postgres-deno": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@dossierhq/server": "workspace:*",
