@@ -6,8 +6,8 @@ import type {
   SqliteDatabaseAdapter,
   SqliteDatabaseOptions,
   UniqueConstraint,
-} from '@dossierhq/database-adapter-sqlite-core';
-import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/database-adapter-sqlite-core';
+} from '@dossierhq/sqlite-core';
+import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'sql.js';
 
 export type SqlJsDatabaseAdapter = DatabaseAdapter;

@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type { Context } from '@dossierhq/database-adapter-sqlite-core';
+import type { Context } from '@dossierhq/sqlite-core';
 import type { Database, RunResult, Statement } from 'sqlite3';
 
 type DatabaseConstructor = (new (

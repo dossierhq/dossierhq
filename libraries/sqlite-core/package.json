@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-sqlite-core",
+  "name": "@dossierhq/sqlite-core",
   "version": "0.1.1-25",
   "description": "",
   "type": "module",

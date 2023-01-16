@@ -32,7 +32,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "dependencies": {
-    "@dossierhq/database-adapter-sqlite-core": "workspace:*",
+    "@dossierhq/sqlite-core": "workspace:*",
     "tslib": "~2.4.1"
   },
   "devDependencies": {

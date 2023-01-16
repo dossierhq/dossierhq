@@ -413,8 +413,8 @@
       "projectFolder": "libraries/database-adapter-sqlite-bun"
     },
     {
-      "packageName": "@dossierhq/database-adapter-sqlite-core",
-      "projectFolder": "libraries/database-adapter-sqlite-core"
+      "packageName": "@dossierhq/sqlite-core",
+      "projectFolder": "libraries/sqlite-core"
     },
     {
       "packageName": "@dossierhq/database-adapter-sqlite-sqlite3",

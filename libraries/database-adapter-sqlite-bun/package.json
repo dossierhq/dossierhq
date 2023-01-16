@@ -21,7 +21,7 @@
     "test": "bun wiptest 2>&1"
   },
   "dependencies": {
-    "@dossierhq/database-adapter-sqlite-core": "workspace:*"
+    "@dossierhq/sqlite-core": "workspace:*"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
