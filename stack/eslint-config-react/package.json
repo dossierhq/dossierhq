@@ -8,7 +8,7 @@
     "build": ""
   },
   "dependencies": {
-    "@jonasb/eslint-config-datadata-generic": "workspace:*",
+    "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/eslint-patch": "~1.2.0",
     "eslint-plugin-react": "~7.32.0",
     "eslint-plugin-react-hooks": "~4.6.0"

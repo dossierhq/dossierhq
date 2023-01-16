@@ -1,7 +1,7 @@
 function buildRules(profile) {
   return {
     extends: [
-      "@jonasb/eslint-config-datadata-generic/profile/library-esm.js",
+      "@dossierhq/eslint-config-generic/profile/library-esm.js",
       "plugin:react/recommended",
       "plugin:react-hooks/recommended",
     ],

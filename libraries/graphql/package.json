@@ -40,7 +40,7 @@
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@jonasb/eslint-config-datadata-generic": "workspace:*",
+    "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.49.0",
     "@types/sqlite3": "~3.1.8",
     "@types/uuid": "~9.0.0",

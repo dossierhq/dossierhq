@@ -1,5 +1,5 @@
-require('@jonasb/eslint-config-datadata-generic/patch/modern-module-resolution.js');
+require('@dossierhq/eslint-config-generic/patch/modern-module-resolution.js');
 
 module.exports = {
-  extends: ['@jonasb/eslint-config-datadata-generic/profile/tool-esm.js'],
+  extends: ['@dossierhq/eslint-config-generic/profile/tool-esm.js'],
 };

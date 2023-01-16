@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/eslint-config-datadata-generic",
+  "name": "@dossierhq/eslint-config-generic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

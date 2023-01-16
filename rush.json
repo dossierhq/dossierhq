@@ -497,7 +497,7 @@
       "projectFolder": "rigs/heft-node-rig"
     },
     {
-      "packageName": "@jonasb/eslint-config-datadata-generic",
+      "packageName": "@dossierhq/eslint-config-generic",
       "projectFolder": "stack/eslint-config-generic"
     },
     {
