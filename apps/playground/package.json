@@ -17,7 +17,7 @@
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/design": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
-    "@jonasb/datadata-leaflet": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "graphiql": "~2.2.0",
     "graphql": "~16.6.0",

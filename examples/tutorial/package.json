@@ -17,7 +17,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/design": "workspace:*",
-    "@jonasb/datadata-leaflet": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "better-sqlite3": "~8.0.1",
     "body-parser": "~1.20.1",

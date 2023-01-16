@@ -8,7 +8,7 @@ import {
   Text,
   toSizeClassName,
 } from '@dossierhq/design';
-import { MapContainer } from '@jonasb/datadata-leaflet';
+import { MapContainer } from '@dossierhq/leaflet';
 import React, {
   useCallback,
   useContext,

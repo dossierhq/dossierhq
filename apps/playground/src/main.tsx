@@ -1,7 +1,7 @@
 import '@dossierhq/react-components/main.css';
 import '@dossierhq/design/main.css';
-import '@jonasb/datadata-leaflet/icons.css';
-import '@jonasb/datadata-leaflet/main.css';
+import '@dossierhq/leaflet/icons.css';
+import '@dossierhq/leaflet/main.css';
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

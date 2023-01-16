@@ -28,7 +28,7 @@
     "@dossierhq/design": "workspace:*",
     "@dossierhq/design-ssr": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
-    "@jonasb/datadata-leaflet": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "graphql": "~16.6.0",
     "graphql-voyager": "~1.0.0-rc.31",

@@ -473,7 +473,7 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-leaflet",
+      "packageName": "@dossierhq/leaflet",
       "projectFolder": "libraries/leaflet",
       "versionPolicyName": "DataDataFramework"
     },

@@ -85,7 +85,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install @dossierhq/react-components @dossierhq/design @jonasb/datadata-leaflet leaflet",
+                    "text": "npm install @dossierhq/react-components @dossierhq/design @dossierhq/leaflet leaflet",
                     "type": "text",
                     "version": 1
                   }
@@ -247,7 +247,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-leaflet/icons.css'",
+                "text": "'@dossierhq/leaflet/icons.css'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -290,7 +290,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-leaflet/main.css'",
+                "text": "'@dossierhq/leaflet/main.css'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

@@ -61,7 +61,7 @@
   "dependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
-    "@jonasb/datadata-leaflet": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
     "@lexical/code": "~0.7.0",
     "@lexical/list": "~0.7.0",
     "@lexical/react": "~0.7.0",

@@ -13,11 +13,11 @@ importers:
       '@dossierhq/design': workspace:*
       '@dossierhq/design-ssr': workspace:*
       '@dossierhq/graphql': workspace:*
+      '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@types/react': ~18.0.26
       '@types/sql.js': ~1.4.4
@@ -45,11 +45,11 @@ importers:
       '@dossierhq/design': link:../../libraries/design
       '@dossierhq/design-ssr': link:../../libraries/design-ssr
       '@dossierhq/graphql': link:../../libraries/graphql
+      '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
       leaflet: 1.9.3
@@ -78,11 +78,11 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/graphql': workspace:*
+      '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@graphiql/toolkit': ~0.8.0
-      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/eslint-config-datadata-react': workspace:*
       '@types/react': ~18.0.26
       '@types/react-dom': ~18.0.9
@@ -110,10 +110,10 @@ importers:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
       '@dossierhq/graphql': link:../../libraries/graphql
+      '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
-      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphiql: 2.2.0_jkjryovyucsrsafqg26vhfmvi4
       graphql: 16.6.0
       history: 5.3.0
@@ -320,11 +320,11 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/graphql': workspace:*
+      '@dossierhq/leaflet': workspace:*
       '@dossierhq/pg': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@types/react': ~18.0.26
       '@types/sqlite3': ~3.1.8
@@ -345,11 +345,11 @@ importers:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
       '@dossierhq/graphql': link:../../libraries/graphql
+      '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/pg': link:../../libraries/pg
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
       leaflet: 1.9.3
@@ -375,9 +375,9 @@ importers:
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
+      '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
-      '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@types/better-sqlite3': ~7.6.3
       '@types/body-parser': ~1.19.2
@@ -404,9 +404,9 @@ importers:
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
+      '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
-      '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       better-sqlite3: 8.0.1
       body-parser: 1.20.1
       dotenv: 16.0.3
@@ -926,10 +926,10 @@ importers:
       '@babel/core': ~7.20.2
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
+      '@dossierhq/leaflet': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
-      '@jonasb/datadata-leaflet': workspace:*
       '@lexical/code': ~0.7.0
       '@lexical/list': ~0.7.0
       '@lexical/react': ~0.7.0
@@ -970,7 +970,7 @@ importers:
     dependencies:
       '@dossierhq/core': link:../core
       '@dossierhq/design': link:../design
-      '@jonasb/datadata-leaflet': link:../leaflet
+      '@dossierhq/leaflet': link:../leaflet
       '@lexical/code': 0.7.4_lexical@0.7.4
       '@lexical/list': 0.7.4_lexical@0.7.4
       '@lexical/react': 0.7.4_2asa6irv43wdk2z6lj5dmq6zpm

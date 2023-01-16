@@ -7,7 +7,7 @@ import type {
   PublishedSchema,
 } from '@dossierhq/core';
 import { isLocationItemField, ItemTraverseNodeType, traverseEntity } from '@dossierhq/core';
-import { MapContainer } from '@jonasb/datadata-leaflet';
+import { MapContainer } from '@dossierhq/leaflet';
 import type { Dispatch, ReactNode } from 'react';
 import { useCallback } from 'react';
 import type {

@@ -230,7 +230,7 @@
       "comments": {
         "none": [
           {
-            "comment": "Use new map (requires importing css files from @jonasb/datadata-leaflet. Fix bug when sampling entities on map. Export CJS/ESM."
+            "comment": "Use new map (requires importing css files from @dossierhq/leaflet. Fix bug when sampling entities on map. Export CJS/ESM."
           }
         ]
       }
