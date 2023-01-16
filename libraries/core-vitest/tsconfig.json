@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/@jonasb/datadata-heft-node-rig/profiles/default/tsconfig-base.json",
+  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/default/tsconfig-base.json",
   "compilerOptions": {
   }
 }

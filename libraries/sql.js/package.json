@@ -38,7 +38,7 @@
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
-    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@playwright/test": "~1.29.0",

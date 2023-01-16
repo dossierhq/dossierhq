@@ -493,7 +493,7 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-heft-node-rig",
+      "packageName": "@dossierhq/heft-node-rig",
       "projectFolder": "rigs/heft-node-rig"
     },
     {

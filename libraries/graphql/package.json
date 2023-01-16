@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",
-    "@jonasb/datadata-heft-node-rig": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
