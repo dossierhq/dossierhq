@@ -28,7 +28,7 @@
     "leaflet": "~1.9.3",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "react-router-dom": "~6.3.0"
+    "react-router-dom": "~6.6.2"
   },
   "devDependencies": {
     "@jonasb/datadata-typescript-generator": "workspace:*",
