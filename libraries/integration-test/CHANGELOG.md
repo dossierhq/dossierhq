@@ -1,4 +1,4 @@
-# Change Log - @dossierhq/database-adapter-test-integration
+# Change Log - @dossierhq/integration-test
 
 This log was last generated on Mon, 02 Jan 2023 22:59:38 GMT and should not be manually modified.
 

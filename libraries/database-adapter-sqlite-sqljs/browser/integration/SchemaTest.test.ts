@@ -1,4 +1,4 @@
-import { createSchemaTestSuite } from '@dossierhq/database-adapter-test-integration';
+import { createSchemaTestSuite } from '@dossierhq/integration-test';
 import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 

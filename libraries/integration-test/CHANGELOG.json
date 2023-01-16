@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-test-integration",
+  "name": "@dossierhq/integration-test",
   "entries": [
     {
       "version": "0.1.38",

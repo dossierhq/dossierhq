@@ -4,7 +4,7 @@ import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
   TestSuite,
-} from "@dossierhq/database-adapter-test-integration";
+} from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import { createServer } from "@dossierhq/server";
 import { config } from "dotenv";

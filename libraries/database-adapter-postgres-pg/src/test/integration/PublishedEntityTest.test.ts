@@ -2,7 +2,7 @@ import { assertIsDefined } from '@dossierhq/core';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
-} from '@dossierhq/database-adapter-test-integration';
+} from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';

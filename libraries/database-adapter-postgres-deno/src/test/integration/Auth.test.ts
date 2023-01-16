@@ -1,4 +1,4 @@
-import { createAuthTestSuite } from "@dossierhq/database-adapter-test-integration";
+import { createAuthTestSuite } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
   initializeIntegrationTestServer,

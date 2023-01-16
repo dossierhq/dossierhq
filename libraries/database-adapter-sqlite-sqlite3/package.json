@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/database-adapter-test-integration": "workspace:*",
+    "@dossierhq/integration-test": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@jonasb/eslint-config-datadata-generic": "workspace:*",

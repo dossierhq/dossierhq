@@ -1,4 +1,4 @@
-import type { TestSuite } from '@dossierhq/database-adapter-test-integration';
+import type { TestSuite } from '@dossierhq/integration-test';
 import { describe, it } from 'vitest';
 
 export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {

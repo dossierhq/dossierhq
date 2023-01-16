@@ -425,8 +425,8 @@
       "projectFolder": "libraries/database-adapter-sqlite-sqljs"
     },
     {
-      "packageName": "@dossierhq/database-adapter-test-integration",
-      "projectFolder": "libraries/database-adapter-test-integration",
+      "packageName": "@dossierhq/integration-test",
+      "projectFolder": "libraries/integration-test",
       "versionPolicyName": "DataDataFramework"
     },
     {

@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@dossierhq/core';
-import { createAuthTestSuite } from '@dossierhq/database-adapter-test-integration';
+import { createAuthTestSuite } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './Sqlite3TestUtils.js';

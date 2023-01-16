@@ -40,7 +40,7 @@
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@dossierhq/database-adapter-test-integration": "workspace:*",
+    "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/core-vitest": "workspace:*",
     "@jonasb/datadata-heft-node-rig": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",

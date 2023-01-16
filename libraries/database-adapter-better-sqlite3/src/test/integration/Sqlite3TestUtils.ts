@@ -1,9 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
-import {
-  createTestAuthorizationAdapter,
-  IntegrationTestSchema,
-} from '@dossierhq/database-adapter-test-integration';
+import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';

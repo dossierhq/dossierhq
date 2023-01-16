@@ -1,4 +1,4 @@
-import { createAdvisoryLockTestSuite } from '@dossierhq/database-adapter-test-integration';
+import { createAdvisoryLockTestSuite } from '@dossierhq/integration-test';
 import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 

@@ -1,10 +1,10 @@
 import type { AdminSchema } from '@dossierhq/core';
 import { assertIsDefined } from '@dossierhq/core';
-import type { ReadOnlyEntityRepository } from '@dossierhq/database-adapter-test-integration';
+import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
-} from '@dossierhq/database-adapter-test-integration';
+} from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';

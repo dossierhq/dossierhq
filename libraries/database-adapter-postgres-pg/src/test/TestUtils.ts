@@ -15,7 +15,7 @@ import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
   type TestSuite,
-} from '@dossierhq/database-adapter-test-integration';
+} from '@dossierhq/integration-test';
 import type { Server, SessionContext } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { v4 as uuidv4 } from 'uuid';

@@ -1,9 +1,6 @@
 import { assertIsDefined } from '@dossierhq/core';
 import { createMockLogger } from '@dossierhq/core-vitest';
-import {
-  createSchemaTestSuite,
-  createTestAuthorizationAdapter,
-} from '@dossierhq/database-adapter-test-integration';
+import { createSchemaTestSuite, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { afterAll, beforeAll } from 'vitest';
