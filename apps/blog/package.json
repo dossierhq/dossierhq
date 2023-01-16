@@ -27,7 +27,7 @@
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/design": "workspace:*",
     "@dossierhq/design-ssr": "workspace:*",
-    "@jonasb/datadata-graphql": "workspace:*",
+    "@dossierhq/graphql": "workspace:*",
     "@jonasb/datadata-leaflet": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "graphql": "~16.6.0",

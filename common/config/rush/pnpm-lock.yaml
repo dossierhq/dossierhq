@@ -12,11 +12,11 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/design-ssr': workspace:*
+      '@dossierhq/graphql': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-typescript-generator': workspace:*
       '@types/react': ~18.0.26
@@ -44,11 +44,11 @@ importers:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
       '@dossierhq/design-ssr': link:../../libraries/design-ssr
+      '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
@@ -77,11 +77,11 @@ importers:
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
+      '@dossierhq/graphql': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
       '@graphiql/toolkit': ~0.8.0
-      '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/eslint-config-datadata-react': workspace:*
       '@types/react': ~18.0.26
@@ -109,10 +109,10 @@ importers:
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
+      '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
-      '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphiql: 2.2.0_jkjryovyucsrsafqg26vhfmvi4
       graphql: 16.6.0
@@ -281,9 +281,9 @@ importers:
   ../../examples/foo:
     specifiers:
       '@dossierhq/core': workspace:*
+      '@dossierhq/graphql': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-heft-node-rig': workspace:*
       '@jonasb/eslint-config-datadata-generic': workspace:*
       '@rushstack/heft': 0.49.0
@@ -298,9 +298,9 @@ importers:
       typescript: ~4.9.4
     dependencies:
       '@dossierhq/core': link:../../libraries/core
+      '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      '@jonasb/datadata-graphql': link:../../libraries/graphql
       express: 4.18.1
       express-graphql: 0.12.0
       sqlite3: 5.1.4
@@ -319,11 +319,11 @@ importers:
     specifiers:
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
+      '@dossierhq/graphql': workspace:*
       '@dossierhq/pg': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-leaflet': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@types/react': ~18.0.26
@@ -344,11 +344,11 @@ importers:
     dependencies:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
+      '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/pg': link:../../libraries/pg
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-leaflet': link:../../libraries/leaflet
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra

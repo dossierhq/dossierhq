@@ -19,7 +19,7 @@
   "dependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
-    "@jonasb/datadata-graphql": "workspace:*",
+    "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "express": "~4.18.1",
     "express-graphql": "~0.12.0",

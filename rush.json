@@ -468,7 +468,7 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-graphql",
+      "packageName": "@dossierhq/graphql",
       "projectFolder": "libraries/graphql",
       "versionPolicyName": "DataDataFramework"
     },

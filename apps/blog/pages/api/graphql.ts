@@ -1,6 +1,6 @@
 import { AdminSchema, ok } from '@dossierhq/core';
-import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
-import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
+import type { SessionGraphQLContext } from '@dossierhq/graphql';
+import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';
