@@ -4,7 +4,7 @@ import fs from "fs/promises";
 
 const { RushConfiguration } = RushLib.default;
 
-const THIS_PACKAGE_NAME = "@jonasb/datadata-all-dependencies";
+const THIS_PACKAGE_NAME = "@dossierhq/all-dependencies";
 
 function addDependencies({
   dependencies,

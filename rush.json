@@ -517,7 +517,7 @@
       "projectFolder": "templates/tool"
     },
     {
-      "packageName": "@jonasb/datadata-all-dependencies",
+      "packageName": "@dossierhq/all-dependencies",
       "projectFolder": "tools/all-dependencies"
     }
 
