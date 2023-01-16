@@ -7,7 +7,7 @@ export default async function Head({ params }: { params: { articleSlug: string }
 
   return (
     <>
-      <title>{`${article.fields.title} | Data data`}</title>
+      <title>{`${article.fields.title} | Dossier`}</title>
     </>
   );
 }
