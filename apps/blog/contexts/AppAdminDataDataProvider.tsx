@@ -7,7 +7,7 @@ import { AdminDataDataProvider, useCachingAdminMiddleware } from '@dossierhq/rea
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
-} from '@jonasb/datadata-cloudinary';
+} from '@dossierhq/cloudinary';
 import type {
   AdminClient,
   AdminClientMiddleware,

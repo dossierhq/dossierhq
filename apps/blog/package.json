@@ -21,7 +21,7 @@
   "dependencies": {
     "@cloudinary/url-gen": "~1.8.7",
     "@dossierhq/react-components": "workspace:*",
-    "@jonasb/datadata-cloudinary": "workspace:*",
+    "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",

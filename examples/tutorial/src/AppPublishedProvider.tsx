@@ -4,7 +4,7 @@ import type {
   RichTextValueItemDisplayProps,
 } from '@dossierhq/react-components';
 import { PublishedDataDataProvider } from '@dossierhq/react-components';
-import { CloudinaryImageFieldDisplay } from '@jonasb/datadata-cloudinary';
+import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
 import { isValueItemField } from '@dossierhq/core';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';

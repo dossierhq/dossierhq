@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@dossierhq/react-components": "workspace:*",
-    "@jonasb/datadata-cloudinary": "workspace:*",
+    "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/design": "workspace:*",

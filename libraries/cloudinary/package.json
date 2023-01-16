@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-cloudinary",
+  "name": "@dossierhq/cloudinary",
   "version": "0.1.38",
   "description": "",
   "type": "module",

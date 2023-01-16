@@ -463,7 +463,7 @@
       "projectFolder": "examples/tutorial"
     },
     {
-      "packageName": "@jonasb/datadata-cloudinary",
+      "packageName": "@dossierhq/cloudinary",
       "projectFolder": "libraries/cloudinary",
       "versionPolicyName": "DataDataFramework"
     },

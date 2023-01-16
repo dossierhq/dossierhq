@@ -3,7 +3,7 @@ import { AdminDataDataContextAdapter, AdminDataDataProvider } from '@dossierhq/r
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
-} from '@jonasb/datadata-cloudinary';
+} from '@dossierhq/cloudinary';
 import { FieldType, isValueItemField } from '@dossierhq/core';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';

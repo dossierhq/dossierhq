@@ -259,7 +259,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install @jonasb/datadata-cloudinary",
+                    "text": "npm install @dossierhq/cloudinary",
                     "type": "text",
                     "version": 1
                   }
@@ -360,7 +360,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "@jonasb/datadata-cloudinary",
+                "text": "@dossierhq/cloudinary",
                 "type": "text",
                 "version": 1
               },
@@ -483,7 +483,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-cloudinary'",
+                "text": "'@dossierhq/cloudinary'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -3006,7 +3006,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-cloudinary'",
+                "text": "'@dossierhq/cloudinary'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -5388,7 +5388,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-cloudinary'",
+                "text": "'@dossierhq/cloudinary'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

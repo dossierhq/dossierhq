@@ -12,7 +12,7 @@ import {
   CloudinaryImageFieldEditorWithoutClear,
   isAdminCloudinaryImage,
   isPublishedCloudinaryImage,
-} from '@jonasb/datadata-cloudinary';
+} from '@dossierhq/cloudinary';
 import { FieldType, isValueItemField } from '@dossierhq/core';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 

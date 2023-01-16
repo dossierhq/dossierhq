@@ -1,4 +1,4 @@
-import { CLOUDINARY_IMAGE_VALUE_TYPE } from '@jonasb/datadata-cloudinary';
+import { CLOUDINARY_IMAGE_VALUE_TYPE } from '@dossierhq/cloudinary';
 import {
   AdminClientJsonOperationArgs,
   AdminClientModifyingOperations,
