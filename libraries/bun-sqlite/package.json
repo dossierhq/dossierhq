@@ -1,5 +1,5 @@
 {
-  "name": "@dossierhq/database-adapter-sqlite-bun",
+  "name": "@dossierhq/bun-sqlite",
   "version": "1.0.0",
   "description": "",
   "type": "module",

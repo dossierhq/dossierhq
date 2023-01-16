@@ -405,12 +405,12 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@dossierhq/database-adapter-better-sqlite3",
-      "projectFolder": "libraries/database-adapter-better-sqlite3"
+      "packageName": "@dossierhq/better-sqlite3",
+      "projectFolder": "libraries/better-sqlite3"
     },
     {
-      "packageName": "@dossierhq/database-adapter-sqlite-bun",
-      "projectFolder": "libraries/database-adapter-sqlite-bun"
+      "packageName": "@dossierhq/bun-sqlite",
+      "projectFolder": "libraries/bun-sqlite"
     },
     {
       "packageName": "@dossierhq/sqlite-core",

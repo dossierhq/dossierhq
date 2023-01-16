@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/database-adapter-sqlite-bun": "workspace:*",
+    "@dossierhq/bun-sqlite": "workspace:*",
     "@dossierhq/server": "workspace:*"
   }
 }
