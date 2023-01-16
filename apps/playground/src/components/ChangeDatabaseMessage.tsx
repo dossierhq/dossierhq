@@ -53,8 +53,8 @@ export function ChangeDatabaseMessage({ className }: Props) {
         <Text textStyle="headline5">Example: Data data documentation</Text>
         <p>
           The database used for the{' '}
-          <a href="https://datadata-blog.vercel.app/docs" target="_blank" rel="noopener noreferrer">
-            Data data documentation
+          <a href="https://dossierhq.dev/docs" target="_blank" rel="noopener noreferrer">
+            Dossier documentation
           </a>
           .
         </p>
@@ -69,7 +69,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
             )
           }
         >
-          Load Data data docs
+          Load Dossier docs
         </Button>
         <Text textStyle="headline5">Example: Blog</Text>
         <p>An example database with fake blog posts and people.</p>

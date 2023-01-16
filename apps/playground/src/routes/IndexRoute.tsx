@@ -14,12 +14,12 @@ export function IndexRoute() {
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row paddingVertical={5} paddingHorizontal={2}>
           <Text as="h1" textStyle="headline4">
-            Welcome to Data data Playground! 👋
+            Welcome to Dossier Playground! 👋
           </Text>
           <Text textStyle="body1">
-            This is a playground where you can explore Data data. Either start with an empty
-            database and head over to the <Link to={ROUTE.schema.url}>Schema</Link> page, or load
-            one of the example databases below.
+            This is a playground where you can explore Dossier. Either start with an empty database
+            and head over to the <Link to={ROUTE.schema.url}>Schema</Link> page, or load one of the
+            example databases below.
           </Text>
           <Text textStyle="body1">
             There is no real authentication in the Playground, but you can switch between two users

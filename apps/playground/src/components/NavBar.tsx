@@ -1,4 +1,4 @@
-import { Button, Navbar as DesignNavbar } from '@jonasb/datadata-design';
+import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
 import type { ReactNode } from 'react';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,7 @@ export function NavBar({ current }: Props) {
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
             <Link to={ROUTE.index.url}>
-              <img className={className} src={logo} alt="Data data logo" width={120} height={28} />
+              <img className={className} src={logo} alt="Dossier logo" width={270} height={28} />
             </Link>
           )}
         </DesignNavbar.Item>
@@ -41,20 +41,6 @@ export function NavBar({ current }: Props) {
           </DesignNavbar.Item>
         </DesignNavbar.Start>
         <DesignNavbar.End>
-          <DesignNavbar.Item>
-            {({ className }) => (
-              <div className={className}>
-                <Button
-                  as="a"
-                  href={import.meta.env.VITE_DATA_DATA_HOME}
-                  iconRight="openInNewWindow"
-                  target="_blank"
-                >
-                  Data data
-                </Button>
-              </div>
-            )}
-          </DesignNavbar.Item>
           <DesignNavbar.Dropdown left renderLink={(className) => <a className={className}>User</a>}>
             {users.map((user) => (
               <NavigationItem
