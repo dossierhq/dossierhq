@@ -46,7 +46,7 @@
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.4",
     "base-64": "~1.0.0",
-    "eslint": "~8.31.0",
+    "eslint": "~8.32.0",
     "prettier": "2.8.3",
     "sql.js": "~1.8.0",
     "typescript": "~4.9.4",
