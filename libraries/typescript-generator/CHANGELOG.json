@@ -1,5 +1,5 @@
 {
-  "name": "@jonasb/datadata-typescript-generator",
+  "name": "@dossierhq/typescript-generator",
   "entries": [
     {
       "version": "0.1.38",

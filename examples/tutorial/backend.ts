@@ -19,7 +19,7 @@ import {
   createBetterSqlite3Adapter,
 } from '@dossierhq/better-sqlite3';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
-import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
+import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import bodyParser from 'body-parser';
 import { config } from 'dotenv';

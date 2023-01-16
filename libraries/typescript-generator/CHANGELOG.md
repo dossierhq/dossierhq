@@ -1,4 +1,4 @@
-# Change Log - @jonasb/datadata-typescript-generator
+# Change Log - @dossierhq/typescript-generator
 
 This log was last generated on Mon, 02 Jan 2023 22:59:38 GMT and should not be manually modified.
 

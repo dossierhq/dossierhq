@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { AdminSchema } from '@dossierhq/core';
-import { generateTypescriptForSchema } from '@jonasb/datadata-typescript-generator';
+import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { readFile, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 

@@ -103,7 +103,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install -D @jonasb/datadata-typescript-generator",
+                    "text": "npm install -D @dossierhq/typescript-generator",
                     "type": "text",
                     "version": 1
                   }
@@ -338,7 +338,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@jonasb/datadata-typescript-generator'",
+                "text": "'@dossierhq/typescript-generator'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

@@ -488,7 +488,7 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-typescript-generator",
+      "packageName": "@dossierhq/typescript-generator",
       "projectFolder": "libraries/typescript-generator",
       "versionPolicyName": "DataDataFramework"
     },

@@ -41,7 +41,7 @@
     "sqlite3": "~5.1.2"
   },
   "devDependencies": {
-    "@jonasb/datadata-typescript-generator": "workspace:*",
+    "@dossierhq/typescript-generator": "workspace:*",
     "@types/react": "~18.0.26",
     "@types/sql.js": "~1.4.4",
     "@types/sqlite3": "~3.1.8",
