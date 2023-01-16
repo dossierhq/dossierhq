@@ -1,13 +1,11 @@
 'use client';
-
-import { Navbar as DesignNavbar } from '@jonasb/datadata-design';
+import { Icon, Navbar as DesignNavbar } from '@jonasb/datadata-design';
 import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';
 import { ENABLE_WEB_INTERFACE } from '../../config/WebInterfaceConfig';
 import logo from '../../public/logo.svg';
 import { BrowserUrls } from '../../utils/BrowserUrls';
-import { LinkButton } from '../LinkButton/LinkButton';
 
 export function NavBar({
   current,
@@ -57,21 +55,14 @@ export function NavBar({
             </DesignNavbar.Item>
           </>
         ) : null}
-        <DesignNavbar.End>
-          <DesignNavbar.Item>
-            {({ className }) => (
-              <div className={className}>
-                <LinkButton
-                  href={BrowserUrls.playground()}
-                  iconRight="openInNewWindow"
-                  target="_blank"
-                >
-                  Playground
-                </LinkButton>
-              </div>
-            )}
-          </DesignNavbar.Item>
-        </DesignNavbar.End>
+        <DesignNavbar.Item>
+          {({ className }) => (
+            <Link className={className} href={BrowserUrls.playground()} target="_blank">
+              Playground{' '}
+              <Icon icon="openInNewWindow" text size="small" style={{ marginLeft: '0.5em' }} />
+            </Link>
+          )}
+        </DesignNavbar.Item>
       </DesignNavbar.Menu>
     </DesignNavbar>
   );
