@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "First release after @dossierhq/ move",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

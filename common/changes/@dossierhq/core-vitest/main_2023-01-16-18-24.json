@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core-vitest",
+      "comment": "First release after @dossierhq/ move",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core-vitest"
+}

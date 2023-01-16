@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "First release after @dossierhq/ move",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

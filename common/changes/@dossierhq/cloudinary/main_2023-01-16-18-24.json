@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/cloudinary",
+      "comment": "First release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/cloudinary"
+}

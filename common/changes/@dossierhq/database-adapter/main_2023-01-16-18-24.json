@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/database-adapter",
+      "comment": "First release after @dossierhq/ move",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/database-adapter"
+}
