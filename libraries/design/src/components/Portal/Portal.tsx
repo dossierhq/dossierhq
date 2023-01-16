@@ -14,11 +14,22 @@ export function Portal({ children }: Props) {
   });
 
   useEffect(() => {
-    document.body.appendChild(container);
+    const portalRoot = getPortalRoot();
+    portalRoot.appendChild(container);
     return () => {
-      document.body.removeChild(container);
+      portalRoot.removeChild(container);
     };
   }, [container]);
 
   return createPortal(children, container);
+}
+
+function getPortalRoot() {
+  let portalRoot = document.getElementById('portal-root');
+  if (!portalRoot) {
+    portalRoot = document.createElement('div');
+    portalRoot.setAttribute('id', 'portal-root');
+    document.body.appendChild(portalRoot);
+  }
+  return portalRoot;
 }
