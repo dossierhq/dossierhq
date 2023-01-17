@@ -1,3 +1,30 @@
+# Dossier
+
+[![Node CI](https://github.com/dossierhq/dossierhq/actions/workflows/nodejs.yml/badge.svg)](https://github.com/dossierhq/dossierhq/actions/workflows/nodejs.yml) [![Benchmark](https://github.com/dossierhq/dossierhq/actions/workflows/benchmark.yml/badge.svg)](https://github.com/dossierhq/dossierhq/actions/workflows/benchmark.yml)
+
+Dossier enables you to build solutions where you’re in full control of the content. By bringing your own auth (authentication and authorization), database and backend, you can build a traditional headless Content Management System (CMS). You can also skip the web interface and use Dossier to manage the content in a backend or app.
+
+For more information about Dossier, head over to [dossierhq.dev](https://www.dossierhq.dev). The rest of this readme is focused on developing and contributing to Dossier itself.
+
+## Published packages
+
+| Package                           | Version                                                                                                                                      | Folder                                                              |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `@dossierhq/cloudinary`           | [![npm version](https://badge.fury.io/js/@dossierhq%2Fcloudinary.svg)](https://badge.fury.io/js/@dossierhq%2Fcloudinary)                     | [libraries/cloudinary](./libraries/cloudinary/)                     |
+| `@dossierhq/core`                 | [![npm version](https://badge.fury.io/js/@dossierhq%2Fcore.svg)](https://badge.fury.io/js/@dossierhq%2Fcore)                                 | [libraries/core](./libraries/core/)                                 |
+| `@dossierhq/core-vitest`          | [![npm version](https://badge.fury.io/js/@dossierhq%2Fcore-vitest.svg)](https://badge.fury.io/js/@dossierhq%2Fcore-vitest)                   | [libraries/core-vitest](./libraries/core-vitest/)                   |
+| `@dossierhq/database-adapter`     | [![npm version](https://badge.fury.io/js/@dossierhq%2Fdatabase-adapter.svg)](https://badge.fury.io/js/@dossierhq%2Fdatabase-adapter)         | [libraries/database-adapter](./libraries/database-adapter/)         |
+| `@dossierhq/design`               | [![npm version](https://badge.fury.io/js/@dossierhq%2Fdesign.svg)](https://badge.fury.io/js/@dossierhq%2Fdesign)                             | [libraries/design](./libraries/design/)                             |
+| `@dossierhq/graphql`              | [![npm version](https://badge.fury.io/js/@dossierhq%2Fgraphql.svg)](https://badge.fury.io/js/@dossierhq%2Fgraphql)                           | [libraries/graphql](./libraries/graphql/)                           |
+| `@dossierhq/integration-test`     | [![npm version](https://badge.fury.io/js/@dossierhq%2Fintegration-test.svg)](https://badge.fury.io/js/@dossierhq%2Fintegration-test)         | [libraries/integration-test](./libraries/integration-test/)         |
+| `@dossierhq/leaflet`              | [![npm version](https://badge.fury.io/js/@dossierhq%2Fleaflet.svg)](https://badge.fury.io/js/@dossierhq%2Fleaflet)                           | [libraries/leaflet](./libraries/leaflet/)                           |
+| `@dossierhq/pg`                   | [![npm version](https://badge.fury.io/js/@dossierhq%2Fpg.svg)](https://badge.fury.io/js/@dossierhq%2Fpg)                                     | [libraries/pg](./libraries/pg/)                                     |
+| `@dossierhq/postgres-core`        | [![npm version](https://badge.fury.io/js/@dossierhq%2Fpostgres-core.svg)](https://badge.fury.io/js/@dossierhq%2Fpostgres-core)               | [libraries/postgres-core](./libraries/postgres-core/)               |
+| `@dossierhq/postgres-tools`       | [![npm version](https://badge.fury.io/js/@dossierhq%2Fpostgres-tools.svg)](https://badge.fury.io/js/@dossierhq%2Fpostgres-tools)             | [libraries/postgres-tools](./libraries/postgres-tools/)             |
+| `@dossierhq/react-components`     | [![npm version](https://badge.fury.io/js/@dossierhq%2Freact-components.svg)](https://badge.fury.io/js/@dossierhq%2Freact-components)         | [libraries/react-components](./libraries/react-components/)         |
+| `@dossierhq/server`               | [![npm version](https://badge.fury.io/js/@dossierhq%2Fserver.svg)](https://badge.fury.io/js/@dossierhq%2Fserver)                             | [libraries/server](./libraries/server/)                             |
+| `@dossierhq/typescript-generator` | [![npm version](https://badge.fury.io/js/@dossierhq%2Ftypescript-generator.svg)](https://badge.fury.io/js/@dossierhq%2Ftypescript-generator) | [libraries/typescript-generator](./libraries/typescript-generator/) |
+
 ## Development dependencies
 
 - Use nvm to manage node version
