@@ -1,7 +1,13 @@
 {
   "name": "@dossierhq/database-adapter",
   "version": "0.1.42",
-  "description": "",
+  "description": "A library for adapting Dossier to a database, such as SQLite or PostgreSQL.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "database"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {
@@ -28,7 +34,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/database-adapter"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",

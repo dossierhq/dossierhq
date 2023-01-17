@@ -2,6 +2,13 @@
   "name": "@dossierhq/core",
   "version": "0.1.42",
   "description": "The core Dossier library used by clients and server alike, used to interact with schema and entities directly, as well as remotely through a client.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "schema",
+    "content"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {

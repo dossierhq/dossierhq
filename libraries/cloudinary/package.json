@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/cloudinary",
   "version": "0.1.42",
-  "description": "",
+  "version": "0.1.41",
+  "description": "A field editor Dossier for Cloudinary images.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "cloudinary"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": "./lib/index.js"
@@ -29,10 +36,10 @@
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@dossierhq/react-components": "workspace:*",
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
+    "@dossierhq/react-components": "workspace:*",
     "@rushstack/heft": "0.49.0",
     "@types/react": "~18.0.26",
     "eslint": "~8.32.0",

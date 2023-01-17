@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/react-components",
   "version": "0.1.42",
-  "description": "",
+  "description": "React components for creating a headless CMS using Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "schema",
+    "headless"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": "./lib/index.js",

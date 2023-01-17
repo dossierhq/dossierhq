@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/graphql",
   "version": "0.1.42",
-  "description": "",
+  "description": "A library for creating GraphQL servers with Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "graphql",
+    "schema-generator"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {
@@ -28,7 +35,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/graphql"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",

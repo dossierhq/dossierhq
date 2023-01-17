@@ -1,7 +1,15 @@
 {
   "name": "@dossierhq/postgres-tools",
   "version": "0.1.42",
-  "description": "",
+  "description": "Tools for managing a Postgres database for Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "schema",
+    "postgres",
+    "migration"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "main": "src/index.js",
   "type": "module",
   "license": "MIT",
@@ -14,7 +22,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/postgres-tools"
   },
   "dependencies": {
     "pg": "~8.8.0",

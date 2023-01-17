@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/server",
   "version": "0.1.42",
-  "description": "",
+  "description": "Library to set up a Dossier server.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "schema",
+    "content"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {
@@ -28,12 +35,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/server"
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",
-    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.49.0",
     "eslint": "~8.32.0",
     "prettier": "2.8.3",

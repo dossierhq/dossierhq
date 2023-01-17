@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/integration-test",
   "version": "0.1.42",
-  "description": "",
+  "description": "Integration test to ensure that different Dossier database adapters work as expected.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "schema",
+    "integration-test"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {
@@ -25,7 +32,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/integration-test"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
@@ -34,9 +42,9 @@
     "uuid": "~9.0.0"
   },
   "devDependencies": {
+    "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.49.0",
     "@types/node": "~18.11.12",
     "@types/uuid": "~9.0.0",

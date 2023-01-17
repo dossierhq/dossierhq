@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/design",
   "version": "0.1.42",
-  "description": "",
+  "description": "The design system for Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "design-system",
+    "react"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": "./lib/index.js",
@@ -24,7 +31,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/design"
   },
   "dependencies": {
     "@creativebulma/bulma-badge": "~1.0.1",

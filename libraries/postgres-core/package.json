@@ -1,7 +1,13 @@
 {
   "name": "@dossierhq/postgres-core",
   "version": "0.1.42",
-  "description": "",
+  "description": "A library used by concrete PostgreSQL adapters for Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "postgres"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {
@@ -28,7 +34,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/postgres-core"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",

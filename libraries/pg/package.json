@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/pg",
   "version": "0.1.42",
-  "description": "",
+  "description": "A Dossier database adapter for pg (PostgreSQL).",
+  "keywords": [
+    "dossier",
+    "cms",
+    "postgres",
+    "pg"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": {
@@ -30,7 +37,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/pg"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
@@ -40,12 +48,12 @@
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/core-vitest": "workspace:*",
+    "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
+    "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.49.0",
     "@types/pg": "~8.6.5",
     "@types/uuid": "~9.0.0",

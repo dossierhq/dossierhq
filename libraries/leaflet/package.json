@@ -1,7 +1,15 @@
 {
   "name": "@dossierhq/leaflet",
   "version": "0.1.42",
-  "description": "",
+  "description": "A library for rendering maps in Dossier with Leaflet.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "leaflet",
+    "map",
+    "content"
+  ],
+  "homepage": "https://www.dossierhq.dev/",
   "type": "module",
   "exports": {
     ".": "./lib/index.js",
