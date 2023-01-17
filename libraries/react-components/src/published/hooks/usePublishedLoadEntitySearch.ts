@@ -14,7 +14,7 @@ import type {
   SearchEntityStateAction,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { PublishedDataDataContext } from '../contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../contexts/PublishedDossierContext.js';
 import { usePublishedSampleEntities } from './usePublishedSampleEntities.js';
 import { usePublishedSearchEntities } from './usePublishedSearchEntities.js';
 import { usePublishedTotalCount } from './usePublishedTotalCount.js';
@@ -23,7 +23,7 @@ export function usePublishedLoadEntitySearch(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { publishedClient } = useContext(PublishedDataDataContext);
+  const { publishedClient } = useContext(PublishedDossierContext);
 
   // search
   const searchQuery = searchEntityState.paging

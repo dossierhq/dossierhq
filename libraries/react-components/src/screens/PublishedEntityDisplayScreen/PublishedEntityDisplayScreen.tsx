@@ -15,7 +15,7 @@ import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayStateContext } from '../../contexts/EntityDisplayStateContext.js';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import type {
   EntityDisplayState,
@@ -141,7 +141,7 @@ function EntityRows({
   entityId: string;
   dispatchEntityDisplayState: Dispatch<EntityDisplayStateAction>;
 }) {
-  const { publishedClient, schema } = useContext(PublishedDataDataContext);
+  const { publishedClient, schema } = useContext(PublishedDossierContext);
   const { entity, entityError: _ } = usePublishedEntity(publishedClient, { id: entityId });
 
   const handleClick = useCallback(

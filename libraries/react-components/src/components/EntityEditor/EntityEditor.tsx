@@ -3,7 +3,7 @@ import type { NotificationInfo } from '@dossierhq/design';
 import { Button, Field, Input, NotificationContext, Row } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useCallback, useContext, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type {
   EntityEditorDraftState,
   EntityEditorStateAction,
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const { showNotification } = useContext(NotificationContext);
   const [submitLoading, setSubmitLoading] = useState(false);
 

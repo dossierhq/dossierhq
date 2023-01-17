@@ -16,13 +16,13 @@ export interface RichTextValueItemEditorProps {
   onChange: (value: ValueItem<string, object>) => void;
 }
 
-export interface AdminDataDataContextAdapter {
+export interface AdminDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null;
   renderAdminRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null;
 }
 
-export interface AdminDataDataContextValue {
-  adapter: AdminDataDataContextAdapter;
+export interface AdminDossierContextValue {
+  adapter: AdminDossierContextAdapter;
   adminClient: AdminClient<AdminEntity<string, object>>;
   logger: Logger;
   schema: AdminSchema | undefined;
@@ -30,7 +30,7 @@ export interface AdminDataDataContextValue {
   authKeys: DisplayAuthKey[];
 }
 
-export const AdminDataDataContext = createContext<AdminDataDataContextValue>({
+export const AdminDossierContext = createContext<AdminDossierContextValue>({
   placeholderContextValue: true,
-} as unknown as AdminDataDataContextValue);
-AdminDataDataContext.displayName = 'AdminDataDataContext';
+} as unknown as AdminDossierContextValue);
+AdminDossierContext.displayName = 'AdminDossierContext';

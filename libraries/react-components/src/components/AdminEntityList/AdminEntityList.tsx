@@ -3,7 +3,7 @@ import { AdminQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
   SearchEntityState,
@@ -28,7 +28,7 @@ export function AdminEntityList({
     entities,
     query: { order, reverse },
   } = searchEntityState;
-  const { authKeys } = useContext(AdminDataDataContext);
+  const { authKeys } = useContext(AdminDossierContext);
 
   const direction = reverse ? 'desc' : 'asc';
   const isEmpty = searchEntityState.entities?.length === 0;

@@ -2,7 +2,7 @@ import { NotificationContainer } from '@dossierhq/design';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DatabaseProvider } from './components/DatabaseProvider.js';
-import { DataDataSharedProvider } from './components/DataDataSharedProvider.js';
+import { DossierSharedProvider } from './components/DossierSharedProvider.js';
 import { ServerProvider } from './components/ServerProvider.js';
 import type { User } from './contexts/UserContext.js';
 import { UserContext } from './contexts/UserContext.js';
@@ -28,7 +28,7 @@ export default function App() {
       <UserContext.Provider value={{ currentUserId, users, setCurrentUserId }}>
         <DatabaseProvider>
           <ServerProvider>
-            <DataDataSharedProvider>
+            <DossierSharedProvider>
               <BrowserRouter>
                 <Routes>
                   <Route path={ROUTE.index.route} element={<IndexRoute />} />
@@ -47,7 +47,7 @@ export default function App() {
                   <Route path={ROUTE.graphiql.route} element={<GraphiQLRoute />} />
                 </Routes>
               </BrowserRouter>
-            </DataDataSharedProvider>
+            </DossierSharedProvider>
           </ServerProvider>
         </DatabaseProvider>
       </UserContext.Provider>

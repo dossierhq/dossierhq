@@ -3,7 +3,7 @@ import { Dialog, FullscreenContainer, IconButton, Text, toSizeClassName } from '
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedEntitySearchFilters } from '../../published/hooks/usePublishedEntitySearchFilters.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
@@ -69,7 +69,7 @@ function Content({
   linksTo: EntityReference | undefined;
   onItemClick: (item: PublishedEntity) => void;
 }) {
-  const { schema } = useContext(PublishedDataDataContext);
+  const { schema } = useContext(PublishedDossierContext);
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,

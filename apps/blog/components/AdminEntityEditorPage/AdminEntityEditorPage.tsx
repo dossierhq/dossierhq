@@ -1,7 +1,7 @@
 import { EntityEditorScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useMemo, useState } from 'react';
-import { AppAdminDataDataProvider } from '../../contexts/AppAdminDataDataProvider';
+import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { useWarningOnExit } from '../../hooks/useWarningOnExit';
 import { BrowserUrls } from '../../utils/BrowserUrls';
@@ -21,7 +21,7 @@ export default function AdminEntityEditorPage(): JSX.Element {
   useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', shouldWarn);
 
   return (
-    <AppAdminDataDataProvider>
+    <AppAdminDossierProvider>
       <Head>
         <title>Edit entities | Blog</title>
       </Head>
@@ -31,6 +31,6 @@ export default function AdminEntityEditorPage(): JSX.Element {
         onUrlSearchParamsChange={onUrlSearchParamsChange}
         onEditorHasChangesChange={setHasChanges}
       />
-    </AppAdminDataDataProvider>
+    </AppAdminDossierProvider>
   );
 }

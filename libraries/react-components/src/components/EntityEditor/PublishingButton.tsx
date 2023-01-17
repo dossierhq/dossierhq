@@ -3,7 +3,7 @@ import { AdminEntityStatus } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
 import { Button, ButtonDropdown, NotificationContext, Row } from '@dossierhq/design';
 import { useContext, useMemo } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 
 interface Props {
   disabled?: boolean;
@@ -33,7 +33,7 @@ const errorMessages: Record<PublishingActionId, string> = {
 };
 
 export function PublishingButton({ disabled, entity, entitySpec }: Props) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const { showNotification } = useContext(NotificationContext);
 
   const [buttonAction, ...dropdownActions] = useMemo(

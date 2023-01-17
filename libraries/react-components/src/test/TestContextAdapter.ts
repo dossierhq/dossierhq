@@ -25,13 +25,13 @@ import { v5 as uuidv5 } from 'uuid';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {
-  AdminDataDataContextAdapter,
+  AdminDossierContextAdapter,
   RichTextValueItemEditorProps,
-} from '../contexts/AdminDataDataContext.js';
+} from '../contexts/AdminDossierContext.js';
 import type {
-  PublishedDataDataContextAdapter,
+  PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
-} from '../published/contexts/PublishedDataDataContext.js';
+} from '../published/contexts/PublishedDossierContext.js';
 
 interface BackendContext {
   logger: Logger;
@@ -149,7 +149,7 @@ export function createSlowPublishedMiddleware(): PublishedClientMiddleware<Clien
 }
 
 export class TestContextAdapter
-  implements AdminDataDataContextAdapter, PublishedDataDataContextAdapter
+  implements AdminDossierContextAdapter, PublishedDossierContextAdapter
 {
   renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;

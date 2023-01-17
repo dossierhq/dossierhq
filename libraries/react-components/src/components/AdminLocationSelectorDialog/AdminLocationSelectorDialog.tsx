@@ -18,7 +18,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/EntityDraftTraverser.js';
@@ -74,7 +74,7 @@ function Content({
   onChange: (location: Location | null) => void;
   onItemClick?: (item: AdminEntity | EntityEditorDraftState) => void;
 }) {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
   const entityEditorState = useContext(EntityEditorStateContext);
 
   const onChangeRef = useRef(onChange);

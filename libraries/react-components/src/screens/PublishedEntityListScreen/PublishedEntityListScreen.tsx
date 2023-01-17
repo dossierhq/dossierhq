@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntitySearchToolbar } from '../../components/PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedEntitySearchFilters } from '../../published/hooks/usePublishedEntitySearchFilters.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
@@ -35,7 +35,7 @@ export function PublishedEntityListScreen({
   onUrlSearchParamsChange,
   onOpenEntity,
 }: PublishedEntityListScreenProps): JSX.Element | null {
-  const { schema } = useContext(PublishedDataDataContext);
+  const { schema } = useContext(PublishedDossierContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlSearchParams,

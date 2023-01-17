@@ -1,6 +1,6 @@
 import {
-  AdminDataDataProvider,
-  PublishedDataDataProvider,
+  AdminDossierProvider,
+  PublishedDossierProvider,
   useCachingAdminMiddleware,
 } from '@dossierhq/react-components';
 import type {
@@ -33,7 +33,7 @@ type SessionResult = Result<
 
 const uninitializedSession = notOk.Generic('Uninitialized user');
 
-export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
+export function DossierSharedProvider({ children }: { children: React.ReactNode }) {
   const { server } = useContext(ServerContext);
   const { showNotification } = useContext(NotificationContext);
   const { users, setCurrentUserId } = useContext(UserContext);
@@ -107,9 +107,9 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   }
   return (
     <LoginContext.Provider value={login}>
-      <AdminDataDataProvider {...args.adminArgs}>
-        <PublishedDataDataProvider {...args.publishedArgs}>{children}</PublishedDataDataProvider>
-      </AdminDataDataProvider>
+      <AdminDossierProvider {...args.adminArgs}>
+        <PublishedDossierProvider {...args.publishedArgs}>{children}</PublishedDossierProvider>
+      </AdminDossierProvider>
     </LoginContext.Provider>
   );
 }

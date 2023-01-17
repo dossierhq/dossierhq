@@ -26,7 +26,7 @@ import {
 } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import { useContext } from 'react';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
 import { FieldDisplayListWrapper } from './FieldDisplayListWrapper.js';
@@ -46,7 +46,7 @@ export interface FieldDisplayProps<
 
 export function FieldDisplay(props: FieldDisplayProps) {
   const { fieldSpec, value } = props;
-  const { adapter } = useContext(PublishedDataDataContext);
+  const { adapter } = useContext(PublishedDossierContext);
 
   const overriddenDisplay = adapter.renderPublishedFieldDisplay(props);
   if (overriddenDisplay) {

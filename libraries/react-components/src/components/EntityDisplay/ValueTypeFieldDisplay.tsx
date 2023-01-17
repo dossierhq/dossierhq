@@ -6,7 +6,7 @@ import type {
 import { FieldType } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import { Fragment, useContext } from 'react';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 import { FieldDisplay } from './FieldDisplay.js';
 
@@ -16,7 +16,7 @@ interface Props
 }
 
 export function ValueTypeFieldDisplay({ className, value }: Props) {
-  const { schema } = useContext(PublishedDataDataContext);
+  const { schema } = useContext(PublishedDossierContext);
 
   if (!schema || !value) {
     return null;

@@ -1167,7 +1167,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  AdminDataDataContextAdapter",
+                "text": "  AdminDossierContextAdapter",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -1190,7 +1190,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  AdminDataDataProvider",
+                "text": "  AdminDossierProvider",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -2560,7 +2560,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "AdminDataDataProvider ",
+                "text": "AdminDossierProvider ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -2741,7 +2741,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "AdminDataDataProvider",
+                "text": "AdminDossierProvider",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -2872,7 +2872,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "AdminDataDataContextAdapter",
+                "text": "AdminDossierContextAdapter",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "class-name"
@@ -3524,7 +3524,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  PublishedDataDataContextAdapter",
+                "text": "  PublishedDossierContextAdapter",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3661,7 +3661,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " PublishedDataDataProvider ",
+                "text": " PublishedDossierProvider ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -5017,7 +5017,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "PublishedDataDataProvider ",
+                "text": "PublishedDossierProvider ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -5198,7 +5198,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "PublishedDataDataProvider",
+                "text": "PublishedDossierProvider",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -5329,7 +5329,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "PublishedDataDataContextAdapter",
+                "text": "PublishedDossierContextAdapter",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "class-name"

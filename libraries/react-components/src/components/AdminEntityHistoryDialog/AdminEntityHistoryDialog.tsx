@@ -9,7 +9,7 @@ import {
   Text,
 } from '@dossierhq/design';
 import { useCallback, useContext, useEffect, useReducer } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
 import type { VersionItem } from './VersionSelectionReducer.js';
@@ -46,7 +46,7 @@ export function AdminEntityHistoryDialog({
 }
 
 function Content({ reference }: { reference: EntityReference }) {
-  const { adminClient, schema } = useContext(AdminDataDataContext);
+  const { adminClient, schema } = useContext(AdminDossierContext);
   const [
     { leftVersion, leftVersionItems, rightVersion, rightVersionItems },
     dispatchVersionSelectionState,

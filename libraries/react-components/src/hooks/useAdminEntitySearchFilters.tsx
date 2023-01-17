@@ -8,7 +8,7 @@ import {
   initializeStatusSelectorState,
   reduceStatusSelectorState,
 } from '../components/StatusSelector/StatusSelector.js';
-import { AdminDataDataContext } from '../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
 import {
   initializeAuthKeySelectorState,
   reduceAuthKeySelectorState,
@@ -24,7 +24,7 @@ export function useAdminEntitySearchFilters(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { authKeys } = useContext(AdminDataDataContext);
+  const { authKeys } = useContext(AdminDossierContext);
 
   const [entityTypeFilterState, dispatchEntityTypeFilterState] =
     useSearchStateToEntitySelectorAdapter(searchEntityState, dispatchSearchEntityState);

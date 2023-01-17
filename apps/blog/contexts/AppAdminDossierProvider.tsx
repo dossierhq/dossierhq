@@ -1,9 +1,9 @@
 import type {
-  AdminDataDataContextAdapter,
+  AdminDossierContextAdapter,
   FieldEditorProps,
   RichTextValueItemEditorProps,
 } from '@dossierhq/react-components';
-import { AdminDataDataProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
+import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
@@ -34,7 +34,7 @@ type BackendContext = ClientContext;
 
 const logger = createConsoleLogger(console);
 
-class AdminContextAdapter implements AdminDataDataContextAdapter {
+class AdminContextAdapter implements AdminDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (
@@ -68,7 +68,7 @@ class AdminContextAdapter implements AdminDataDataContextAdapter {
   }
 }
 
-export function AppAdminDataDataProvider({ children }: { children: React.ReactNode }) {
+export function AppAdminDossierProvider({ children }: { children: React.ReactNode }) {
   const cachingMiddleware = useCachingAdminMiddleware();
 
   const args = useMemo(
@@ -85,9 +85,9 @@ export function AppAdminDataDataProvider({ children }: { children: React.ReactNo
     return null;
   }
   return (
-    <AdminDataDataProvider {...args} adminClient={adminClient}>
+    <AdminDossierProvider {...args} adminClient={adminClient}>
       {children}
-    </AdminDataDataProvider>
+    </AdminDossierProvider>
   );
 }
 

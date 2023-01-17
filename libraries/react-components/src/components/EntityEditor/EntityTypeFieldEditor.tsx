@@ -2,7 +2,7 @@ import type { AdminEntity, EntityFieldSpecification, EntityReference } from '@do
 import { Button, Column, Delete, HoverRevealContainer, Text } from '@dossierhq/design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -13,7 +13,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 type Props = FieldEditorProps<EntityFieldSpecification, EntityReference>;
 
 export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
 
@@ -83,7 +83,7 @@ export function EntityTypeFieldEditorWithoutClear({
   className?: string;
   value: EntityReference;
 }) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
 

@@ -3,21 +3,21 @@ import { NoOpLogger } from '@dossierhq/core';
 import React, { useMemo } from 'react';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import type {
-  PublishedDataDataContextAdapter,
-  PublishedDataDataContextValue,
-} from '../../contexts/PublishedDataDataContext.js';
-import { PublishedDataDataContext } from '../../contexts/PublishedDataDataContext.js';
+  PublishedDossierContextAdapter,
+  PublishedDossierContextValue,
+} from '../../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 
 interface Props {
-  adapter: PublishedDataDataContextAdapter;
+  adapter: PublishedDossierContextAdapter;
   publishedClient: PublishedClient<PublishedEntity<string, object>>;
   authKeys: DisplayAuthKey[];
   logger?: Logger;
   children: React.ReactNode;
 }
 
-export function PublishedDataDataProvider({
+export function PublishedDossierProvider({
   adapter,
   publishedClient,
   authKeys,
@@ -25,7 +25,7 @@ export function PublishedDataDataProvider({
   children,
 }: Props): JSX.Element | null {
   const { schema, schemaError } = usePublishedSchema(publishedClient);
-  const value: PublishedDataDataContextValue = useMemo(() => {
+  const value: PublishedDossierContextValue = useMemo(() => {
     return {
       adapter,
       publishedClient,
@@ -37,6 +37,6 @@ export function PublishedDataDataProvider({
   }, [adapter, publishedClient, authKeys, logger, schema, schemaError]);
 
   return (
-    <PublishedDataDataContext.Provider value={value}>{children}</PublishedDataDataContext.Provider>
+    <PublishedDossierContext.Provider value={value}>{children}</PublishedDossierContext.Provider>
   );
 }

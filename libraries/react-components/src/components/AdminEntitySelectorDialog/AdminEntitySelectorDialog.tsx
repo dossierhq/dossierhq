@@ -1,7 +1,7 @@
 import type { AdminEntity, EntityReference } from '@dossierhq/core';
 import { Dialog, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
@@ -75,7 +75,7 @@ function Content({
   onItemClick: (item: AdminEntity) => void;
   onCreateItemClick?: (type: string) => void;
 }) {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,

@@ -2,7 +2,7 @@ import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossie
 import { IconButton } from '@dossierhq/design';
 import type { Dispatch, MouseEventHandler } from 'react';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
 import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
 import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
@@ -43,7 +43,7 @@ export function AdminEntitySearchToolbar({
   onToggleMapClick,
   onCreateEntity,
 }: Props) {
-  const { authKeys, schema } = useContext(AdminDataDataContext);
+  const { authKeys, schema } = useContext(AdminDossierContext);
   return (
     <>
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />

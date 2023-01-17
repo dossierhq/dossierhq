@@ -2,7 +2,7 @@ import type { AdminEntityTypeSpecification, AdminValueTypeSpecification } from '
 import { NotificationContainer } from '@dossierhq/design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext';
 import { useAdminSchema } from '../../hooks/useAdminSchema';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import type { SchemaEditorScreenProps } from './SchemaEditorScreen';
@@ -54,7 +54,7 @@ SchemaDebug.args = {
 };
 
 function SchemaDebugFooter() {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const { schema } = useAdminSchema(adminClient);
 
   function typeToString(type: AdminEntityTypeSpecification | AdminValueTypeSpecification) {

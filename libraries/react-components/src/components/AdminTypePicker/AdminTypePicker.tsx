@@ -1,7 +1,7 @@
 import type { IconName } from '@dossierhq/design';
 import { ButtonDropdown } from '@dossierhq/design';
 import React, { useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
 import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
 
@@ -22,7 +22,7 @@ export function AdminTypePicker({
   children,
   ...filter
 }: AdminTypePickerProps): JSX.Element {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
 
   let items: Item[] = [];
   if (schema) {

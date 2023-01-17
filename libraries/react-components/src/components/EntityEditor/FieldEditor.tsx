@@ -27,7 +27,7 @@ import {
   isValueItemListField,
 } from '@dossierhq/core';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
 import { FieldListWrapper } from './FieldListWrapper.js';
@@ -49,7 +49,7 @@ export interface FieldEditorProps<
 
 export function FieldEditor(props: FieldEditorProps) {
   const { fieldSpec, value } = props;
-  const { adapter } = useContext(AdminDataDataContext);
+  const { adapter } = useContext(AdminDossierContext);
 
   const overriddenEditor = adapter.renderAdminFieldEditor(props);
   if (overriddenEditor) {

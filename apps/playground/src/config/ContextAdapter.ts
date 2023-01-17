@@ -1,8 +1,8 @@
 import type {
-  AdminDataDataContextAdapter,
+  AdminDossierContextAdapter,
   FieldDisplayProps,
   FieldEditorProps,
-  PublishedDataDataContextAdapter,
+  PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
 } from '@dossierhq/react-components';
@@ -16,9 +16,7 @@ import {
 import { FieldType, isValueItemField } from '@dossierhq/core';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
-export class ContextAdapter
-  implements AdminDataDataContextAdapter, PublishedDataDataContextAdapter
-{
+export class ContextAdapter implements AdminDossierContextAdapter, PublishedDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (

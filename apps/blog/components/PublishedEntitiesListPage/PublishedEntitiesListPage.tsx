@@ -3,7 +3,7 @@ import type { PublishedEntity } from '@dossierhq/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { AppPublishedDataDataProvider } from '../../contexts/AppPublishedDataDataProvider';
+import { AppPublishedDossierProvider } from '../../contexts/AppPublishedDossierProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import { NavBar } from '../NavBar/NavBar';
@@ -18,7 +18,7 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
   );
 
   return (
-    <AppPublishedDataDataProvider>
+    <AppPublishedDossierProvider>
       <Head>
         <title>Published entities | Blog</title>
       </Head>
@@ -28,6 +28,6 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
         onUrlSearchParamsChange={onUrlSearchParamsChange}
         onOpenEntity={handleEntityOpen}
       />
-    </AppPublishedDataDataProvider>
+    </AppPublishedDossierProvider>
   );
 }

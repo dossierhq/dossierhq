@@ -15,13 +15,13 @@ export interface RichTextValueItemDisplayProps {
   value: ValueItem;
 }
 
-export interface PublishedDataDataContextAdapter {
+export interface PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null;
   renderPublishedRichTextValueItemDisplay(props: RichTextValueItemDisplayProps): JSX.Element | null;
 }
 
-export interface PublishedDataDataContextValue {
-  adapter: PublishedDataDataContextAdapter;
+export interface PublishedDossierContextValue {
+  adapter: PublishedDossierContextAdapter;
   publishedClient: PublishedClient<PublishedEntity<string, object>>;
   logger: Logger;
   schema: PublishedSchema | undefined;
@@ -29,7 +29,7 @@ export interface PublishedDataDataContextValue {
   authKeys: DisplayAuthKey[];
 }
 
-export const PublishedDataDataContext = createContext<PublishedDataDataContextValue>({
+export const PublishedDossierContext = createContext<PublishedDossierContextValue>({
   placeholderContextValue: true,
-} as unknown as PublishedDataDataContextValue);
-PublishedDataDataContext.displayName = 'PublishedDataDataContext';
+} as unknown as PublishedDossierContextValue);
+PublishedDossierContext.displayName = 'PublishedDossierContext';

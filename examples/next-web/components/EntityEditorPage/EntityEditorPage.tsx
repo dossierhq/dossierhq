@@ -1,7 +1,7 @@
 import { EntityEditorScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useMemo, useState } from 'react';
-import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { DossierSharedProvider } from '../../contexts/DossierSharedProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { useWarningOnExit } from '../../hooks/useWarningOnExit';
 import { urls } from '../../utils/PageUtils';
@@ -21,7 +21,7 @@ export default function EntityEditorPage(): JSX.Element {
   useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', shouldWarn);
 
   return (
-    <DataDataSharedProvider>
+    <DossierSharedProvider>
       <Head>
         <title>Edit entities</title>
       </Head>
@@ -31,6 +31,6 @@ export default function EntityEditorPage(): JSX.Element {
         onUrlSearchParamsChange={onUrlSearchParamsChange}
         onEditorHasChangesChange={setHasChanges}
       />
-    </DataDataSharedProvider>
+    </DossierSharedProvider>
   );
 }

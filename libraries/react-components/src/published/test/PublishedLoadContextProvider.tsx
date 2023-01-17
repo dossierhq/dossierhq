@@ -5,7 +5,7 @@ import {
   DISPLAY_AUTH_KEYS,
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
-import { PublishedDataDataProvider } from '../components/PublishedDataDataProvider/PublishedDataDataProvider.js';
+import { PublishedDossierProvider } from '../components/PublishedDossierProvider/PublishedDossierProvider.js';
 
 interface Props {
   publishedClientMiddleware?: PublishedClientMiddleware<ClientContext>[];
@@ -23,12 +23,12 @@ export function PublishedLoadContextProvider({
   const adapter = useMemo(() => new TestContextAdapter(), []);
 
   return (
-    <PublishedDataDataProvider
+    <PublishedDossierProvider
       adapter={adapter}
       publishedClient={publishedClient}
       authKeys={DISPLAY_AUTH_KEYS}
     >
       {children}
-    </PublishedDataDataProvider>
+    </PublishedDossierProvider>
   );
 }

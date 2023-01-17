@@ -9,7 +9,7 @@ import type {
 } from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import { AdminDataDataContext } from '../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
@@ -23,7 +23,7 @@ export function useAdminLoadEntitySearch(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
 
   // search
   const searchQuery = searchEntityState.paging

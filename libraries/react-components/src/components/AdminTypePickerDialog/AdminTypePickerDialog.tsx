@@ -1,6 +1,6 @@
 import { Card2, Dialog, Table } from '@dossierhq/design';
 import { useContext } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
 import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
 
@@ -23,7 +23,7 @@ export function AdminTypePickerDialog({
   onItemClick,
   ...filter
 }: AdminTypePickerDialogProps): JSX.Element {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
 
   let items: Item[] = [];
   if (schema) {

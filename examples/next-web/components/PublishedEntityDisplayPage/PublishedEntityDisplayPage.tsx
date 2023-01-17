@@ -1,6 +1,6 @@
 import { PublishedEntityDisplayScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
-import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { PublishedDataDataSharedProvider } from '../../contexts/DossierSharedProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { NavBar } from '../NavBar/NavBar';
 

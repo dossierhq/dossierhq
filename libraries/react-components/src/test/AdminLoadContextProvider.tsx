@@ -1,7 +1,7 @@
 import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
 import React, { useMemo } from 'react';
-import { AdminDataDataProvider } from '../components/AdminDataDataProvider/AdminDataDataProvider.js';
-import type { AdminDataDataContextAdapter } from '../contexts/AdminDataDataContext.js';
+import { AdminDossierProvider } from '../components/AdminDossierProvider/AdminDossierProvider.js';
+import type { AdminDossierContextAdapter } from '../contexts/AdminDossierContext.js';
 import { useCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 import {
   createBackendAdminClient,
@@ -10,7 +10,7 @@ import {
 } from './TestContextAdapter.js';
 
 interface Props {
-  adapter?: AdminDataDataContextAdapter;
+  adapter?: AdminDossierContextAdapter;
   adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
   children: React.ReactNode;
 }
@@ -28,12 +28,12 @@ export function AdminLoadContextProvider({
   );
 
   return (
-    <AdminDataDataProvider
+    <AdminDossierProvider
       adapter={adapter || new TestContextAdapter()}
       adminClient={adminClient}
       authKeys={DISPLAY_AUTH_KEYS}
     >
       {children}
-    </AdminDataDataProvider>
+    </AdminDossierProvider>
   );
 }

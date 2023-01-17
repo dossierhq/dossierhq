@@ -5,7 +5,7 @@ import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityLis
 import { AdminEntityMapMarker } from '../../components/AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';
 import { StatusTagSelector } from '../../components/StatusTagSelector/StatusTagSelector.js';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
@@ -38,7 +38,7 @@ export function AdminEntityListScreen({
   onCreateEntity,
   onOpenEntity,
 }: AdminEntityListScreenProps): JSX.Element | null {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlSearchParams,

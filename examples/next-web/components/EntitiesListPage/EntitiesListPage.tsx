@@ -3,7 +3,7 @@ import type { AdminEntity } from '@dossierhq/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { DossierSharedProvider } from '../../contexts/DossierSharedProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
@@ -22,7 +22,7 @@ export default function EntitiesListPage(): JSX.Element | null {
   );
 
   return (
-    <DataDataSharedProvider>
+    <DossierSharedProvider>
       <Head>
         <title>Entities</title>
       </Head>
@@ -33,6 +33,6 @@ export default function EntitiesListPage(): JSX.Element | null {
         onCreateEntity={handleCreateEntity}
         onOpenEntity={handleEntityOpen}
       />
-    </DataDataSharedProvider>
+    </DossierSharedProvider>
   );
 }

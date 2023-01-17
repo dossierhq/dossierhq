@@ -3,7 +3,7 @@ import type { PublishedEntity } from '@dossierhq/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { PublishedDataDataSharedProvider } from '../../contexts/DossierSharedProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';

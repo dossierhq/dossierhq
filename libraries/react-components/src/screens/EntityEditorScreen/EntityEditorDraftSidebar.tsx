@@ -3,7 +3,7 @@ import { assertIsDefined } from '@dossierhq/core';
 import { Button, DateDisplay, Row, TabContainer, Tag, Text } from '@dossierhq/design';
 import { useContext, useState } from 'react';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
 import { useAdminPublishingHistory } from '../../hooks/useAdminPublishingHistory.js';
 import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -29,7 +29,7 @@ const ActivityFilter = {
 type ActivityFilter = (typeof ActivityFilter)[keyof typeof ActivityFilter];
 
 export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistory }: Props) {
-  const { adminClient, authKeys } = useContext(AdminDataDataContext);
+  const { adminClient, authKeys } = useContext(AdminDossierContext);
   const { activeEntityId } = entityEditorState;
 
   const [activityFilter, setActivityFilter] = useState<ActivityFilter>(ActivityFilter.All);

@@ -2,22 +2,22 @@ import type { AdminClient, AdminEntity, Logger } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
 import React, { useMemo } from 'react';
 import type {
-  AdminDataDataContextAdapter,
-  AdminDataDataContextValue,
-} from '../../contexts/AdminDataDataContext.js';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+  AdminDossierContextAdapter,
+  AdminDossierContextValue,
+} from '../../contexts/AdminDossierContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminSchema } from '../../hooks/useAdminSchema.js';
 import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 
 interface Props {
-  adapter: AdminDataDataContextAdapter;
+  adapter: AdminDossierContextAdapter;
   adminClient: AdminClient<AdminEntity<string, object>>;
   logger?: Logger;
   authKeys: DisplayAuthKey[];
   children: React.ReactNode;
 }
 
-export function AdminDataDataProvider({
+export function AdminDossierProvider({
   adapter,
   adminClient,
   logger,
@@ -25,7 +25,7 @@ export function AdminDataDataProvider({
   children,
 }: Props): JSX.Element | null {
   const { schema, schemaError } = useAdminSchema(adminClient);
-  const value: AdminDataDataContextValue = useMemo(() => {
+  const value: AdminDossierContextValue = useMemo(() => {
     return {
       adapter,
       adminClient,
@@ -36,5 +36,5 @@ export function AdminDataDataProvider({
     };
   }, [adapter, adminClient, logger, schema, schemaError, authKeys]);
 
-  return <AdminDataDataContext.Provider value={value}>{children}</AdminDataDataContext.Provider>;
+  return <AdminDossierContext.Provider value={value}>{children}</AdminDossierContext.Provider>;
 }

@@ -4,7 +4,7 @@ import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlign
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { ValueTypeFieldDisplay } from '../EntityDisplay/ValueTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
@@ -35,7 +35,7 @@ function PublishedValueItemComponent({
   data: ValueItem;
 }) {
   const { fieldSpec } = useContext(RichTextDisplayContext);
-  const { adapter } = useContext(PublishedDataDataContext);
+  const { adapter } = useContext(PublishedDossierContext);
 
   const overriddenDisplay = adapter.renderPublishedRichTextValueItemDisplay({
     value: data,

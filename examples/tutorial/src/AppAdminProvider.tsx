@@ -1,5 +1,5 @@
 import type { FieldEditorProps, RichTextValueItemEditorProps } from '@dossierhq/react-components';
-import { AdminDataDataContextAdapter, AdminDataDataProvider } from '@dossierhq/react-components';
+import { AdminDossierContextAdapter, AdminDossierProvider } from '@dossierhq/react-components';
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
@@ -28,13 +28,13 @@ export function AppAdminProvider({ children }: Props) {
   if (!adminClient) return null;
 
   return (
-    <AdminDataDataProvider {...args} adminClient={adminClient}>
+    <AdminDossierProvider {...args} adminClient={adminClient}>
       {children}
-    </AdminDataDataProvider>
+    </AdminDossierProvider>
   );
 }
 
-class AdminAdapter implements AdminDataDataContextAdapter {
+class AdminAdapter implements AdminDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (

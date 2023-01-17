@@ -1,7 +1,7 @@
 import type { AdminClient, ErrorType, PromiseResult, Result } from '@dossierhq/core';
 import { AdminEntityStatus, notOk, ok } from '@dossierhq/core';
 import React, { useContext, useEffect, useState } from 'react';
-import { AdminDataDataContext } from '..';
+import { AdminDossierContext } from '..';
 import { entitiesFixture } from './EntityFixtures';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function LoadFixtures({ children }: Props): JSX.Element | null {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const [result, setResult] = useState<Result<void, ErrorType> | null>(null);
   useEffect(() => {
     (async () => {

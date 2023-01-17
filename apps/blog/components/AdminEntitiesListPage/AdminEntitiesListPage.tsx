@@ -3,7 +3,7 @@ import type { AdminEntity } from '@dossierhq/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { AppAdminDataDataProvider } from '../../contexts/AppAdminDataDataProvider';
+import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import { NavBar } from '../NavBar/NavBar';
@@ -22,7 +22,7 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
   );
 
   return (
-    <AppAdminDataDataProvider>
+    <AppAdminDossierProvider>
       <Head>
         <title>Entities | Blog</title>
       </Head>
@@ -33,6 +33,6 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
         onCreateEntity={handleCreateEntity}
         onOpenEntity={handleEntityOpen}
       />
-    </AppAdminDataDataProvider>
+    </AppAdminDossierProvider>
   );
 }

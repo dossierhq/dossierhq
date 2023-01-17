@@ -1,15 +1,15 @@
 import type {
-  AdminDataDataContextAdapter,
+  AdminDossierContextAdapter,
   DisplayAuthKey,
   FieldDisplayProps,
   FieldEditorProps,
-  PublishedDataDataContextAdapter,
+  PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
   RichTextValueItemEditorProps,
 } from '@dossierhq/react-components';
 import {
-  AdminDataDataProvider,
-  PublishedDataDataProvider,
+  AdminDossierProvider,
+  PublishedDossierProvider,
   useCachingAdminMiddleware,
 } from '@dossierhq/react-components';
 import type {
@@ -57,7 +57,7 @@ const logger: Logger = {
   },
 };
 
-export class AdminContextAdapter implements AdminDataDataContextAdapter {
+export class AdminContextAdapter implements AdminDossierContextAdapter {
   renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
@@ -66,7 +66,7 @@ export class AdminContextAdapter implements AdminDataDataContextAdapter {
   }
 }
 
-export class PublishedContextAdapter implements PublishedDataDataContextAdapter {
+export class PublishedContextAdapter implements PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;
   }
@@ -77,7 +77,7 @@ export class PublishedContextAdapter implements PublishedDataDataContextAdapter 
   }
 }
 
-export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
+export function DossierSharedProvider({ children }: { children: React.ReactNode }) {
   const cachingMiddleware = useCachingAdminMiddleware();
 
   const args = useMemo(
@@ -88,7 +88,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     }),
     [cachingMiddleware]
   );
-  return <AdminDataDataProvider {...args}>{children}</AdminDataDataProvider>;
+  return <AdminDossierProvider {...args}>{children}</AdminDossierProvider>;
 }
 
 export function PublishedDataDataSharedProvider({ children }: { children: React.ReactNode }) {
@@ -100,7 +100,7 @@ export function PublishedDataDataSharedProvider({ children }: { children: React.
     }),
     []
   );
-  return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
+  return <PublishedDossierProvider {...args}>{children}</PublishedDossierProvider>;
 }
 
 function createBackendAdminClient(

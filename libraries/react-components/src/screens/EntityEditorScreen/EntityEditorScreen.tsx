@@ -16,7 +16,7 @@ import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDia
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker.js';
 import { EntityEditor } from '../../components/EntityEditor/EntityEditor.js';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
@@ -51,7 +51,7 @@ export function EntityEditorScreen({
   onUrlSearchParamsChange,
   onEditorHasChangesChange,
 }: EntityEditorScreenProps) {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
     urlSearchParams,
@@ -187,7 +187,7 @@ function EntityRows({
   draftState: EntityEditorDraftState;
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>;
 }) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const { entity, entityError: _unused } = useAdminEntity(adminClient, { id: draftState.id });
 
   useEffect(() => {

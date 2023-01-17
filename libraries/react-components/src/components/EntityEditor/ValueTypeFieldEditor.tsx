@@ -7,7 +7,7 @@ import type {
 import { FieldType } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import type { FieldEditorProps } from './FieldEditor.js';
@@ -63,7 +63,7 @@ export function ValueItemFieldEditorWithoutClear({
     [validationErrors]
   );
 
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
   if (!schema) {
     return null;
   }

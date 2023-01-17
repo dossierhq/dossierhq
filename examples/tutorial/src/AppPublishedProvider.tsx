@@ -1,9 +1,9 @@
 import type {
   FieldDisplayProps,
-  PublishedDataDataContextAdapter,
+  PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
 } from '@dossierhq/react-components';
-import { PublishedDataDataProvider } from '@dossierhq/react-components';
+import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
 import { isValueItemField } from '@dossierhq/core';
 import { useMemo } from 'react';
@@ -29,13 +29,13 @@ export function AppPublishedProvider({ children }: Props) {
   if (!publishedClient) return null;
 
   return (
-    <PublishedDataDataProvider {...args} publishedClient={publishedClient}>
+    <PublishedDossierProvider {...args} publishedClient={publishedClient}>
       {children}
-    </PublishedDataDataProvider>
+    </PublishedDossierProvider>
   );
 }
 
-class PublishedAdapter implements PublishedDataDataContextAdapter {
+class PublishedAdapter implements PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {

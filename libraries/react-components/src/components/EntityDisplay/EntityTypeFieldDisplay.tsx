@@ -7,7 +7,7 @@ import { Column, Text } from '@dossierhq/design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
@@ -21,7 +21,7 @@ interface Props
 }
 
 export function EntityTypeFieldDisplay({ className, value }: Props) {
-  const { publishedClient } = useContext(PublishedDataDataContext);
+  const { publishedClient } = useContext(PublishedDossierContext);
   const dispatchEntityDisplayState = useContext(EntityDisplayDispatchContext);
   const { entity, entityError: _error } = usePublishedEntity(publishedClient, value ?? undefined);
 

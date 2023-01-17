@@ -1,9 +1,9 @@
 import type {
   FieldDisplayProps,
-  PublishedDataDataContextAdapter,
+  PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
 } from '@dossierhq/react-components';
-import { PublishedDataDataProvider } from '@dossierhq/react-components';
+import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
 import type { ClientContext, PublishedClient, PublishedClientOperation } from '@dossierhq/core';
 import {
@@ -23,7 +23,7 @@ type BackendContext = ClientContext;
 
 const logger = createConsoleLogger(console);
 
-class PublishedContextAdapter implements PublishedDataDataContextAdapter {
+class PublishedContextAdapter implements PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
@@ -42,7 +42,7 @@ class PublishedContextAdapter implements PublishedDataDataContextAdapter {
   }
 }
 
-export function AppPublishedDataDataProvider({ children }: { children: React.ReactNode }) {
+export function AppPublishedDossierProvider({ children }: { children: React.ReactNode }) {
   const args = useMemo(
     () => ({
       publishedClient: createBackendPublishedClient(),
@@ -57,9 +57,9 @@ export function AppPublishedDataDataProvider({ children }: { children: React.Rea
     return null;
   }
   return (
-    <PublishedDataDataProvider {...args} publishedClient={publishedClient}>
+    <PublishedDossierProvider {...args} publishedClient={publishedClient}>
       {children}
-    </PublishedDataDataProvider>
+    </PublishedDossierProvider>
   );
 }
 

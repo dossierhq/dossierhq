@@ -34,7 +34,7 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePickerDialog } from '../AdminTypePickerDialog/AdminTypePickerDialog.js';
@@ -63,7 +63,7 @@ export function ToolbarPlugin({
 }: {
   fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
 }) {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
   const [editor] = useLexicalComposerContext();
 
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');

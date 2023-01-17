@@ -2,7 +2,7 @@ import type { EntityReference, PublishedEntity } from '@dossierhq/core';
 import { Button, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
-import { PublishedDataDataContext } from '../../published/contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedTotalCount } from '../../published/hooks/usePublishedTotalCount.js';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
-  const { publishedClient } = useContext(PublishedDataDataContext);
+  const { publishedClient } = useContext(PublishedDossierContext);
 
   const [showDialog, setShowDialog] = useState<'linksTo' | 'linksFrom' | ''>('');
   const handleCloseDialog = useCallback(() => setShowDialog(''), []);

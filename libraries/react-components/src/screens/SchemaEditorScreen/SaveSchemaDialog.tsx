@@ -2,7 +2,7 @@ import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@dossierhq/design';
 import type { Dispatch, SyntheticEvent } from 'react';
 import { useCallback, useContext, useMemo } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -23,7 +23,7 @@ export function SaveSchemaDialog({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onClose: () => void;
 }) {
-  const { adminClient } = useContext(AdminDataDataContext);
+  const { adminClient } = useContext(AdminDossierContext);
   const { showNotification } = useContext(NotificationContext);
 
   const schemaSpecUpdate = useMemo(

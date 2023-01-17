@@ -10,7 +10,7 @@ import type {
 } from '../../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
-import { PublishedDataDataContext } from '../../contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
@@ -27,7 +27,7 @@ export function PublishedEntityList({
     entities,
     query: { order, reverse },
   } = searchEntityState;
-  const { authKeys } = useContext(PublishedDataDataContext);
+  const { authKeys } = useContext(PublishedDossierContext);
 
   const direction = reverse ? 'desc' : 'asc';
   const isEmpty = searchEntityState.entities?.length === 0;

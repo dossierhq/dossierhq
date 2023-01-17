@@ -13,13 +13,13 @@ import type {
   SearchEntityStateAction,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { PublishedDataDataContext } from '../contexts/PublishedDataDataContext.js';
+import { PublishedDossierContext } from '../contexts/PublishedDossierContext.js';
 
 export function usePublishedEntitySearchFilters(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { authKeys } = useContext(PublishedDataDataContext);
+  const { authKeys } = useContext(PublishedDossierContext);
 
   const [entityTypeFilterState, dispatchEntityTypeFilterState] =
     useSearchStateToEntitySelectorAdapter(searchEntityState, dispatchSearchEntityState);

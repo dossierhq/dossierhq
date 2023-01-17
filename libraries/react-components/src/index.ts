@@ -1,17 +1,17 @@
-export { AdminDataDataProvider } from './components/AdminDataDataProvider/AdminDataDataProvider.js';
+export { AdminDossierProvider } from './components/AdminDossierProvider/AdminDossierProvider.js';
 export type { FieldDisplayProps } from './components/EntityDisplay/FieldDisplay.js';
 export type { FieldEditorProps } from './components/EntityEditor/FieldEditor.js';
-export { AdminDataDataContext } from './contexts/AdminDataDataContext.js';
+export { AdminDossierContext } from './contexts/AdminDossierContext.js';
 export type {
-  AdminDataDataContextAdapter,
+  AdminDossierContextAdapter,
   RichTextValueItemEditorProps,
-} from './contexts/AdminDataDataContext.js';
-export { PublishedDataDataProvider } from './published/components/PublishedDataDataProvider/PublishedDataDataProvider.js';
-export { PublishedDataDataContext } from './published/contexts/PublishedDataDataContext.js';
+} from './contexts/AdminDossierContext.js';
+export { PublishedDossierProvider } from './published/components/PublishedDossierProvider/PublishedDossierProvider.js';
+export { PublishedDossierContext } from './published/contexts/PublishedDossierContext.js';
 export type {
-  PublishedDataDataContextAdapter,
+  PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
-} from './published/contexts/PublishedDataDataContext.js';
+} from './published/contexts/PublishedDossierContext.js';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen.js';
 export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen.js';
 export { PublishedEntityDisplayScreen } from './screens/PublishedEntityDisplayScreen/PublishedEntityDisplayScreen.js';

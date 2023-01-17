@@ -1,6 +1,6 @@
 import { ButtonDropdown } from '@dossierhq/design';
 import { useContext, useEffect } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 
 interface Props {
   patternName: string | null;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function AuthKeyPicker({ patternName, value, onValueChange }: Props) {
-  const { schema, authKeys } = useContext(AdminDataDataContext);
+  const { schema, authKeys } = useContext(AdminDossierContext);
 
   const pattern = patternName ? schema?.getPattern(patternName) : null;
   const regexp = pattern ? new RegExp(pattern.pattern) : null;

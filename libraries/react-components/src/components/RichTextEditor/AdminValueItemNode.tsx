@@ -19,7 +19,7 @@ import type {
 import { $getNodeByKey, createCommand } from 'lexical';
 import isEqual from 'lodash/isEqual.js';
 import { useCallback, useContext, useState } from 'react';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
@@ -51,7 +51,7 @@ function AdminValueItemComponent({
   data: ValueItem;
 }) {
   const [editor] = useLexicalComposerContext();
-  const { adapter, schema } = useContext(AdminDataDataContext);
+  const { adapter, schema } = useContext(AdminDossierContext);
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
   const setValue = useCallback(

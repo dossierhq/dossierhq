@@ -13,7 +13,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useReducer, useStat
 import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaIndexEditor.js';
 import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
-import { AdminDataDataContext } from '../../contexts/AdminDataDataContext.js';
+import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -51,7 +51,7 @@ export function SchemaEditorScreen({
   footer,
   onEditorHasChangesChange,
 }: SchemaEditorScreenProps) {
-  const { schema } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDossierContext);
   const [schemaEditorState, dispatchSchemaEditorState] = useReducer(
     reduceSchemaEditorState,
     undefined,
