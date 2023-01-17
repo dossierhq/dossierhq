@@ -29,7 +29,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Data data is a platform for your content, enabling you to build solutions where you're in full control of the data. By bringing your own auth (authentication and authorization), database and server, you can build a traditional headless Content Management System (CMS). You can also choose to go without any web interface and use it to manage the data in a backend or app.",
+                "text": "Dossier is a platform for your content, enabling you to build solutions where you're in full control of the data. By bringing your own auth (authentication and authorization), database and server, you can build a traditional headless Content Management System (CMS). You can also choose to go without any web interface and use it to manage the data in a backend or app.",
                 "type": "text",
                 "version": 1
               }
@@ -47,7 +47,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "To get a flavor of Data data, let's use the Playground to create some content.",
+                "text": "To get a flavor of Dossier, let's use the Playground to create some content.",
                 "type": "text",
                 "version": 1
               }
@@ -114,7 +114,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "As you can see the schema is empty. The schema defines the structure of all content so we need to configure it before we can store any content in Data data.",
+                "text": "As you can see the schema is empty. The schema defines the structure of all content so we need to configure it before we can store any content in Dossier.",
                 "type": "text",
                 "version": 1
               }
@@ -132,7 +132,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Let's start with adding a type. There are two different kinds of types, entity type and value type. Entity types define the structure of entities, which is the main content stored in Data data. Value types define the structure of value items, which are similar but have to be stored in an entity. Click on \"Add type\", and add an entity type with the name ",
+                "text": "Let's start with adding a type. There are two different kinds of types, entity type and value type. Entity types define the structure of entities, which is the main content stored in Dossier. Value types define the structure of value items, which are similar but have to be stored in an entity. Click on \"Add type\", and add an entity type with the name ",
                 "type": "text",
                 "version": 1
               },

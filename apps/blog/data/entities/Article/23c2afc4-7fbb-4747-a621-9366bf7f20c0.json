@@ -38,7 +38,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " Have a working frontend and backend that communicates with each other, without any Data data specific functionality.",
+                "text": " Have a working frontend and backend that communicates with each other, without any Dossier specific functionality.",
                 "type": "text",
                 "version": 1
               }
@@ -56,7 +56,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Before getting started with Data data we need to have a project with a working frontend and backend. Ensure you have Node installed on your computer and run these commands in a terminal:",
+                "text": "Before getting started with Dossier we need to have a project with a working frontend and backend. Ensure you have Node installed on your computer and run these commands in a terminal:",
                 "type": "text",
                 "version": 1
               }
@@ -4034,7 +4034,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Data data",
+                "text": "Dossier",
                 "type": "code-highlight",
                 "version": 1
               },

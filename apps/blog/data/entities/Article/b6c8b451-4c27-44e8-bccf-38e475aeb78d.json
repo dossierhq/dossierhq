@@ -29,7 +29,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Data data is in active development so there are several features that you would expect from a mature CMS that are not yet supported.",
+                "text": "Dossier is in active development so there are several features that you would expect from a mature CMS that are not yet supported.",
                 "type": "text",
                 "version": 1
               }
@@ -244,7 +244,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": " in UI – currently we don't display information about the user who made changes to an entity even though we store the user id. Need to figure out how to do it without requiring storing user data in Data data",
+                    "text": " in UI – currently we don't display information about the user who made changes to an entity even though we store the user id. Need to figure out how to do it without requiring storing user data in Dossier",
                     "type": "text",
                     "version": 1
                   }

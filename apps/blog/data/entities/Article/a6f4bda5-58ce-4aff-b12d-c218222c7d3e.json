@@ -38,7 +38,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " Have a working SQLite database with a database schema for Data data.",
+                "text": " Have a working SQLite database with a database schema for Dossier.",
                 "type": "text",
                 "version": 1
               }
@@ -74,7 +74,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " as our library to talk to SQLite. In order to use it with Data data, we use the library ",
+                "text": " as our library to talk to SQLite. In order to use it with Dossier, we use the library ",
                 "type": "text",
                 "version": 1
               },

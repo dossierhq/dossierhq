@@ -88,7 +88,7 @@ function Screen({
       <FullscreenContainer.Row fullWidth>
         <Navbar>
           <Navbar.Brand>
-            <Navbar.Item>{NavItemRender('Data data')}</Navbar.Item>
+            <Navbar.Item>{NavItemRender('Dossier')}</Navbar.Item>
             <Navbar.Burger active={burgerOpen} onClick={() => setBurgerOpen(!burgerOpen)} />
           </Navbar.Brand>
           <Navbar.Menu active={burgerOpen}>

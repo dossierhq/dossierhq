@@ -51,7 +51,7 @@ export function IndexRoute() {
     <>
       <Navbar current="home" />
       <div style={{ maxWidth: '30rem', marginRight: 'auto', marginLeft: 'auto' }}>
-        <h1 style={{ fontSize: '2em' }}>Data data</h1>
+        <h1 style={{ fontSize: '2em' }}>Dossier</h1>
         {message && <div>Got: {message}</div>}
 
         <h2 style={{ fontSize: '1.75em' }}>Create message entity</h2>

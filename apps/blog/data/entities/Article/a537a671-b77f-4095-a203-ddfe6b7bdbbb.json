@@ -56,7 +56,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Data data doesn't store images itself, instead you can integrate with external services. For the tutorial we will use Cloudinary.",
+                "text": "Dossier doesn't store images itself, instead you can integrate with external services. For the tutorial we will use Cloudinary.",
                 "type": "text",
                 "version": 1
               }

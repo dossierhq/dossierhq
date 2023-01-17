@@ -2,7 +2,7 @@
 
 ## Schema
 
-The **Schema** describes the structure of the data stored in Data Data. There exists two different views of the Schema. **Admin Schema** contains all the information, whereas **Published Schema** only contains the types that can be published (i.e. `adminOnly` is `false`) and doesn't include detailed information that's only useful when editing.
+The **Schema** describes the structure of the data stored in Dossier. There exists two different views of the Schema. **Admin Schema** contains all the information, whereas **Published Schema** only contains the types that can be published (i.e. `adminOnly` is `false`) and doesn't include detailed information that's only useful when editing.
 
 The main piece of data is an **Entity**. An **Entity** has:
 
