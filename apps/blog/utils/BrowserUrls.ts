@@ -9,6 +9,7 @@ export const BrowserUrls = {
   isEditPage: (url: string): boolean => url.startsWith('/admin/admin-entities/edit'),
   glossary: '/docs/glossary',
   glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
+  github: 'https://github.com/dossierhq/dossierhq#readme',
   graphiql: '/admin/graphiql',
   limitations: '/docs/limitations',
   playground: () => ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),

@@ -4,6 +4,7 @@ import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';
 import { ENABLE_WEB_INTERFACE } from '../../config/WebInterfaceConfig';
+import githubLogo from '../../public/github-mark.svg';
 import logo from '../../public/logo.svg';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 
@@ -60,6 +61,13 @@ export function NavBar({
             <Link className={className} href={BrowserUrls.playground()} target="_blank">
               Playground{' '}
               <Icon icon="openInNewWindow" text size="small" style={{ marginLeft: '0.5em' }} />
+            </Link>
+          )}
+        </DesignNavbar.Item>
+        <DesignNavbar.Item>
+          {({ className }) => (
+            <Link className={className} href={BrowserUrls.github}>
+              <Image src={githubLogo} alt="Github logo" width={28} height={28} />
             </Link>
           )}
         </DesignNavbar.Item>
