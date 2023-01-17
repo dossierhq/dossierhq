@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 stats.html
-/public/datadata-docs.sqlite
+/public/dossier-docs.sqlite

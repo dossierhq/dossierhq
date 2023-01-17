@@ -62,7 +62,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
           onClick={() =>
             loadDatabaseFromUrl(
-              `${import.meta.env.BASE_URL}datadata-docs.sqlite`,
+              `${import.meta.env.BASE_URL}dossier-docs.sqlite`,
               createDatabase,
               showNotification,
               navigate
