@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/database-adapter",
-  "version": "0.1.45",
+  "version": "0.1.46",
   "description": "A library for adapting Dossier to a database, such as SQLite or PostgreSQL.",
   "keywords": [
     "dossier",
