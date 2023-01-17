@@ -1,6 +1,6 @@
 import { PublishedEntityDisplayScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
-import { PublishedDataDataSharedProvider } from '../../contexts/DossierSharedProvider';
+import { PublishedDossierSharedProvider } from '../../contexts/DossierSharedProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { NavBar } from '../NavBar/NavBar';
 
@@ -8,7 +8,7 @@ export default function PublishedEntityDetailPage(): JSX.Element | null {
   const { onUrlSearchParamsChange, urlSearchParams } = useUrlSearchParams();
 
   return (
-    <PublishedDataDataSharedProvider>
+    <PublishedDossierSharedProvider>
       <Head>
         <title>Published entities</title>
       </Head>
@@ -17,6 +17,6 @@ export default function PublishedEntityDetailPage(): JSX.Element | null {
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={onUrlSearchParamsChange}
       />
-    </PublishedDataDataSharedProvider>
+    </PublishedDossierSharedProvider>
   );
 }

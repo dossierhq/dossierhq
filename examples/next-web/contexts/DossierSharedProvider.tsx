@@ -91,7 +91,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   return <AdminDossierProvider {...args}>{children}</AdminDossierProvider>;
 }
 
-export function PublishedDataDataSharedProvider({ children }: { children: React.ReactNode }) {
+export function PublishedDossierSharedProvider({ children }: { children: React.ReactNode }) {
   const args = useMemo(
     () => ({
       publishedClient: createBackendPublishedClient(),
