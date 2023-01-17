@@ -2,6 +2,12 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.1.41",
+      "tag": "@dossierhq/core_v0.1.41",
+      "date": "Tue, 17 Jan 2023 08:54:04 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.40",
       "tag": "@dossierhq/core_v0.1.40",
       "date": "Mon, 16 Jan 2023 21:32:52 GMT",
