@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/integration-test",
-  "version": "0.1.44",
+  "version": "0.1.45",
   "description": "Integration test to ensure that different Dossier database adapters work as expected.",
   "keywords": [
     "dossier",
