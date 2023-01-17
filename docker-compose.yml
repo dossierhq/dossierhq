@@ -6,6 +6,6 @@ services:
       - published: 5432
         target: 5432
     environment:
-      POSTGRES_DB: datadata-core-test
+      POSTGRES_DB: dossier-root
       POSTGRES_USER: rootuser
       POSTGRES_PASSWORD: rootpass

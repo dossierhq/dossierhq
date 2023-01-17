@@ -30,28 +30,25 @@ function grant_access_for_user {
   "$THIS_DIR/db-psql-root.sh" -c "GRANT CREATE ON DATABASE \"${DATABASE_NAME}\" TO ${USERNAME}"
 }
 
+function ensure_database {
+  DATABASE_NAME="$1"
+  USER_NAME="$2"
+  PASSWORD="$3"
+
+  create_user "$USER_NAME" "$PASSWORD"
+  create_database "$DATABASE_NAME"
+  grant_access_for_user "$DATABASE_NAME" "$USER_NAME"
+}
+
 (
   set -a
   source "$THIS_DIR/../.env"
   set +a
 
-  create_user "servertestuser" "servertestpass"
-  create_database "datadata-server"
-  grant_access_for_user "datadata-server" "servertestuser"
-
-  create_user "examplesbenchmarkuser" "examplesbenchmarkpass"
-  create_database "dossierhq-examples-benchmark"
-  grant_access_for_user "dossierhq-examples-benchmark" "examplesbenchmarkuser"
-
-  create_user "examplesdenouser" "examplesdenopass"
-  create_database "datadata-examples-deno"
-  grant_access_for_user "datadata-examples-deno" "examplesdenouser"
-
-  create_user "examplesnextwebuser" "examplesnextwebpass"
-  create_database "datadata-examples-next-web"
-  grant_access_for_user "datadata-examples-next-web" "examplesnextwebuser"
-
-  create_user "librariesdenouser" "librariesdenopass"
-  create_database "datadata-libraries-deno"
-  grant_access_for_user "datadata-libraries-deno" "librariesdenouser"
+  # Usernames must match those in ./db-make-superuser.sh
+  ensure_database "dossier-benchmark" "dossierbenchmarkuser" "dossierbenchmarkpass"
+  ensure_database "dossier-deno" "dossierdenouser" "dossierdenopass"
+  ensure_database "dossier-example-deno" "dossierexampledenouser" "dossierexampledenopass"
+  ensure_database "dossier-example-next" "dossierexamplenextuser" "dossierexamplenextpass"
+  ensure_database "dossier-pg" "dossierpguser" "dossierpgpass"
 )

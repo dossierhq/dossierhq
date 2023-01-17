@@ -24,9 +24,10 @@ function set_user_superuser {
 
   SUPER_OR_NO_SUPERUSER="$1"
 
-  set_user_superuser "servertestuser" "$SUPER_OR_NO_SUPERUSER"
-  set_user_superuser "examplesbenchmarkuser" "$SUPER_OR_NO_SUPERUSER"
-  set_user_superuser "examplesdenouser" "$SUPER_OR_NO_SUPERUSER"
-  set_user_superuser "examplesnextwebuser" "$SUPER_OR_NO_SUPERUSER"
-  set_user_superuser "librariesdenouser" "$SUPER_OR_NO_SUPERUSER"
+  # Usernames must match those in ./db-ensure-databases.sh
+  set_user_superuser "dossierbenchmarkuser" "$SUPER_OR_NO_SUPERUSER"
+  set_user_superuser "dossierdenouser" "$SUPER_OR_NO_SUPERUSER"
+  set_user_superuser "dossierexampledenouser" "$SUPER_OR_NO_SUPERUSER"
+  set_user_superuser "dossierexamplenextuser" "$SUPER_OR_NO_SUPERUSER"
+  set_user_superuser "dossierpguser" "$SUPER_OR_NO_SUPERUSER"
 )

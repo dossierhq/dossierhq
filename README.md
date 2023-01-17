@@ -78,7 +78,7 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 - `rush change`
 - `git add common/changes/ && git commit`
 - `git push`
-- Start [publish](https://github.com/jonasb/datadata/actions/workflows/publish.yml) workflow
+- Start [publish](https://github.com/dossierhq/dossierhq/actions/workflows/publish.yml) workflow
 
 ## Ports
 

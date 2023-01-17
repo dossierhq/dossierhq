@@ -18,7 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "datadata-pg-migrate": "./datadata-pg-migrate.js"
+    "dossier-pg-migrate": "./dossier-pg-migrate.js"
   },
   "repository": {
     "type": "git",
