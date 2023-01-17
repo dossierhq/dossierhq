@@ -95,7 +95,7 @@ const expressMiddleWare = (router) => {
 };
 
 function getDefaultAuthKeysFromRequest(req) {
-  const defaultKeysValue = req.header('DataData-Default-Auth-Keys');
+  const defaultKeysValue = req.header('Dossier-Default-Auth-Keys');
   const defaultAuthKeys = defaultKeysValue
     ? defaultKeysValue.split(',').map((it) => it.trim())
     : [];

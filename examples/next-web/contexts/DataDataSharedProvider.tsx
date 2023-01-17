@@ -37,7 +37,7 @@ const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
   { authKey: 'subject', displayName: 'User private' },
 ];
 const AUTH_KEYS_HEADER = {
-  'DataData-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
+  'Dossier-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
 };
 
 type BackendContext = ClientContext;

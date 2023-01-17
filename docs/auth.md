@@ -26,7 +26,7 @@ An **Entity's** **Resolved Authorization Key** is not exposed to **Clients**, in
 
 When searching for entities, users of a **Client** need to provide a set of **Authorization Keys**, either explicitly or through providing **Default Authorization Keys** when creating the **Session Context**. After resolving the **Authorization Keys** to **Resolved Authorization Keys**, the result will only include **Entities** matching the **Resolved Authorization Keys**.
 
-**Convention**: For HTTP **Client Middleware** and GraphQL over HTTP, the convention is to put the **Default Authorization Keys** in a header called `DataData-Default-Auth-Keys`, with comma separated values.
+**Convention**: For HTTP **Client Middleware** and GraphQL over HTTP, the convention is to put the **Default Authorization Keys** in a header called `Dossier-Default-Auth-Keys`, with comma separated values.
 
 Some examples of key schemes that can be used by **Applications'** **Authorization Adapters**:
 
