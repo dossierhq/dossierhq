@@ -8,7 +8,7 @@
     "design-system",
     "react"
   ],
-  "homepage": "https://www.dossierhq.dev/",
+  "homepage": "https://dossierhq.dev",
   "type": "module",
   "exports": {
     ".": "./lib/index.js",

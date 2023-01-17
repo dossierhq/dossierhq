@@ -9,7 +9,7 @@
     "postgres",
     "migration"
   ],
-  "homepage": "https://www.dossierhq.dev/",
+  "homepage": "https://dossierhq.dev",
   "main": "src/index.js",
   "type": "module",
   "license": "MIT",
