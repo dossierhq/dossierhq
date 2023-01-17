@@ -88,7 +88,7 @@ async function main(port: number) {
     logger.warn('SIGINT signal received: closing HTTP server');
     expressServer.close(() => {
       logger.warn('HTTP server closed');
-      server.shutdown().then(() => logger.warn('datadata server closed'));
+      server.shutdown().then(() => logger.warn('Dossier server closed'));
       process.exit(1);
     });
   });
