@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Tue, 17 Jan 2023 10:34:29 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Jan 2023 17:41:02 GMT and should not be manually modified.
+
+## 0.1.44
+Tue, 17 Jan 2023 17:41:02 GMT
+
+### Updates
+
+- Rename AdminDataDataContext -> AdminDossierContext (and similar for AdminDossierProvider, PublishedDataDataContext etc)
 
 ## 0.1.43
 Tue, 17 Jan 2023 10:34:29 GMT

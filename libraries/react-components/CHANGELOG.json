@@ -2,6 +2,18 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.1.44",
+      "tag": "@dossierhq/react-components_v0.1.44",
+      "date": "Tue, 17 Jan 2023 17:41:02 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename AdminDataDataContext -> AdminDossierContext (and similar for AdminDossierProvider, PublishedDataDataContext etc)"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.43",
       "tag": "@dossierhq/react-components_v0.1.43",
       "date": "Tue, 17 Jan 2023 10:34:29 GMT",
