@@ -18,40 +18,40 @@ export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 
 export const CACHE_KEYS = {
   adminEntity(reference: EntityReference | EntityVersionReference) {
-    return ['datadata/useAdminEntity', reference] as const;
+    return ['dossierhq/useAdminEntity', reference] as const;
   },
   adminEntityHistory(reference: EntityReference) {
-    return ['datadata/useAdminEntityHistory', reference] as const;
+    return ['dossierhq/useAdminEntityHistory', reference] as const;
   },
   adminPublishingHistory(reference: EntityReference) {
-    return ['datadata/useAdminPublishingHistory', reference] as const;
+    return ['dossierhq/useAdminPublishingHistory', reference] as const;
   },
   adminSampleEntities(query: AdminQuery | undefined, options: EntitySamplingOptions | undefined) {
-    return ['datadata/useAdminSampleEntities', query, options] as const;
+    return ['dossierhq/useAdminSampleEntities', query, options] as const;
   },
   adminSearchEntities(query: AdminSearchQuery | undefined, paging: Paging | undefined) {
-    return ['datadata/useAdminSearchEntities', query, paging] as const;
+    return ['dossierhq/useAdminSearchEntities', query, paging] as const;
   },
   adminTotalCount(query: AdminQuery | undefined) {
-    return ['datadata/useAdminTotalCount', query] as const;
+    return ['dossierhq/useAdminTotalCount', query] as const;
   },
-  adminSchema: 'datadata/useAdminSchema',
+  adminSchema: 'dossierhq/useAdminSchema',
   publishedEntity(reference: EntityReference) {
-    return ['datadata/usePublishedEntity', reference] as const;
+    return ['dossierhq/usePublishedEntity', reference] as const;
   },
   publishedSampleEntities(
     query: PublishedQuery | undefined,
     options: EntitySamplingOptions | undefined
   ) {
-    return ['datadata/usePublishedSampleEntities', query, options] as const;
+    return ['dossierhq/usePublishedSampleEntities', query, options] as const;
   },
   publishedSearchEntities(query: PublishedSearchQuery | undefined, paging: Paging | undefined) {
-    return ['datadata/usePublishedSearchEntities', query, paging] as const;
+    return ['dossierhq/usePublishedSearchEntities', query, paging] as const;
   },
   publishedTotalCount(query: PublishedQuery | undefined) {
-    return ['datadata/usePublishedTotalCount', query] as const;
+    return ['dossierhq/usePublishedTotalCount', query] as const;
   },
-  publishedSchema: 'datadata/usePublishedSchema',
+  publishedSchema: 'dossierhq/usePublishedSchema',
 };
 
 export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSchema: AdminSchema) {

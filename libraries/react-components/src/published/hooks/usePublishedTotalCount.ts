@@ -7,6 +7,7 @@ import type {
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<[string, PublishedQuery | undefined]>;
 type FetcherData = number;
@@ -32,7 +33,7 @@ export function usePublishedTotalCount(
     FetcherData,
     FetcherError,
     FetcherKey | null
-  >(query ? ['datadata/usePublishedTotalCount', query] : null, fetcher);
+  >(query ? CACHE_KEYS.publishedTotalCount(query) : null, fetcher);
 
   // useDebugLogChangedValues('usePublishedTotalCount updated values', { publishedClient, query, totalCount, totalCountError, });
 
