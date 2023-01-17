@@ -60,7 +60,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   );
 
   const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
-    namespace: 'datadata',
+    namespace: 'dossierhq',
     onError: handleError,
     nodes: [
       AdminEntityLinkNode,

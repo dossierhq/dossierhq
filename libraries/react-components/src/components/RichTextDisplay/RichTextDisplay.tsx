@@ -35,7 +35,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
   );
 
   const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
-    namespace: 'datadata',
+    namespace: 'dossierhq',
     onError: handleError,
     nodes: [
       CodeNode,
