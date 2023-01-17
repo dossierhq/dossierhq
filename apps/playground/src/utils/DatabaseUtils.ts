@@ -74,7 +74,7 @@ export function downloadDatabase(database: Database) {
   const a = document.createElement('a');
   document.body.appendChild(a);
   a.href = window.URL.createObjectURL(blob);
-  a.download = 'datadata.sqlite';
+  a.download = 'dossier.sqlite';
   a.onclick = () => {
     setTimeout(() => {
       window.URL.revokeObjectURL(a.href);
