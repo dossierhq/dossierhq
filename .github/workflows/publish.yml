@@ -69,9 +69,9 @@ jobs:
           git config user.email github-actions@github.com
       - name: rush version
         run: node common/scripts/install-run-rush.js version --bump --target-branch main
+      - name: git push to publish
+        run: git push origin HEAD:publish
       - name: rush publish
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         run: node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all --set-access-level public
-      - name: git push to publish
-        run: git push origin HEAD:publish
