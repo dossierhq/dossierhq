@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/pg
 
-This log was last generated on Tue, 17 Jan 2023 17:41:02 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Jan 2023 17:55:40 GMT and should not be manually modified.
+
+## 0.1.45
+Tue, 17 Jan 2023 17:55:40 GMT
+
+_Version update only_
 
 ## 0.1.44
 Tue, 17 Jan 2023 17:41:02 GMT
