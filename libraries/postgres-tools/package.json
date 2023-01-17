@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/postgres-tools",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "description": "",
   "main": "src/index.js",
   "type": "module",
