@@ -137,7 +137,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "http://datadata-tutorial",
+                "text": "https://tutorial.dossierhq.dev",
                 "type": "text",
                 "version": 1
               },
@@ -201,7 +201,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "AUTH0_DOMAIN=datadata-tutorial.eu.auth0.com",
+                "text": "AUTH0_DOMAIN=dossierhq-tutorial.eu.auth0.com",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -214,7 +214,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "AUTH0_AUDIENCE=http://datadata-tutorial",
+                "text": "AUTH0_AUDIENCE=https://tutorial.dossierhq.dev",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -244,7 +244,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "VITE_AUTH0_CLIENT_ID=8vv9KP1Q6UdD1jDoU19RUi3SiVIRuNFa",
+                "text": "VITE_AUTH0_CLIENT_ID=igsCrqQlAbURC0vyP4R8QcJwwr7muHAt",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -16342,7 +16342,7 @@
             "version": 1
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",
@@ -16362,7 +16362,7 @@
             "version": 1
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",

@@ -29,7 +29,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Dossier is a platform for your content, enabling you to build solutions where you're in full control of the data. By bringing your own auth (authentication and authorization), database and server, you can build a traditional headless Content Management System (CMS). You can also choose to go without any web interface and use it to manage the data in a backend or app.",
+                "text": "Dossier enables you to build solutions where you’re in full control of the content. By bringing your own auth (authentication and authorization), database and backend, you can build a traditional headless Content Management System (CMS). You can also skip the web interface and use Dossier to manage the content in a backend or app.",
                 "type": "text",
                 "version": 1
               }
