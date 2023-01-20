@@ -15,7 +15,7 @@
   "types": "./lib/esm/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && (npm run test 2>&1) && npm run browser-test && post-process-build cjs-package-json",
+    "build": "npm run prettier:check && heft build --clean && npm run test && npm run browser-test && post-process-build cjs-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -29,7 +29,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/sql.js"
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
@@ -37,10 +38,10 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/integration-test": "workspace:*",
-    "@dossierhq/heft-node-rig": "workspace:*",
-    "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
+    "@dossierhq/integration-test": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "@playwright/test": "~1.29.0",
     "@rushstack/heft": "0.49.1",
     "@types/base-64": "~1.0.0",

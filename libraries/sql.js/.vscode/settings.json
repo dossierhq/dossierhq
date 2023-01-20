@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["rushstack", "SAVEPOINT", "uuidv", "vitest"],
+  "cSpell.words": ["dossierhq", "rushstack", "SAVEPOINT", "uuidv", "vitest"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],
