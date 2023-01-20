@@ -20,7 +20,7 @@ import {
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { HeadingTagType } from '@lexical/rich-text';
 import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text';
-import { $wrapNodes } from '@lexical/selection';
+import { $setBlocksType_experimental } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import type { LexicalEditor, NodeKey } from 'lexical';
 import {
@@ -294,7 +294,7 @@ function BlockFormatDropDown({
               const selection = $getSelection();
 
               if ($isRangeSelection(selection)) {
-                $wrapNodes(selection, () => $createParagraphNode());
+                $setBlocksType_experimental(selection, () => $createParagraphNode());
               }
             });
           }
@@ -311,7 +311,7 @@ function BlockFormatDropDown({
               const selection = $getSelection();
 
               if ($isRangeSelection(selection)) {
-                $wrapNodes(selection, () => $createHeadingNode(headingLevel));
+                $setBlocksType_experimental(selection, () => $createHeadingNode(headingLevel));
               }
             });
           }
@@ -341,16 +341,19 @@ function BlockFormatDropDown({
         case 'code':
           if (blockType !== 'code') {
             editor.update(() => {
-              const selection = $getSelection();
+              let selection = $getSelection();
 
               if ($isRangeSelection(selection)) {
                 if (selection.isCollapsed()) {
-                  $wrapNodes(selection, () => $createCodeNode());
+                  $setBlocksType_experimental(selection, () => $createCodeNode());
                 } else {
                   const textContent = selection.getTextContent();
                   const codeNode = $createCodeNode();
                   selection.insertNodes([codeNode]);
-                  selection.insertRawText(textContent);
+                  selection = $getSelection();
+                  if ($isRangeSelection(selection)) {
+                    selection.insertRawText(textContent);
+                  }
                 }
               }
             });
