@@ -245,7 +245,7 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/server': workspace:*
-      bun-types: ~0.4.0
+      bun-types: ~0.5.0
       eslint: ~8.32.0
       prettier: 2.8.3
       typescript: ~4.9.4
@@ -255,7 +255,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
-      bun-types: 0.4.0
+      bun-types: 0.5.0
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -492,7 +492,7 @@ importers:
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
       '@rushstack/heft': 0.49.1
-      bun-types: ~0.4.0
+      bun-types: ~0.5.0
       eslint: ~8.32.0
       prettier: 2.8.3
       typescript: ~4.9.4
@@ -505,7 +505,7 @@ importers:
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
       '@rushstack/heft': 0.49.1
-      bun-types: 0.4.0
+      bun-types: 0.5.0
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1307,7 +1307,7 @@ importers:
       better-sqlite3: ~8.0.1
       body-parser: ~1.20.1
       bulma: ~0.9.4
-      bun-types: ~0.4.0
+      bun-types: ~0.5.0
       cloudinary: ~1.33.0
       dotenv: ~16.0.3
       eslint: ~8.32.0
@@ -1402,7 +1402,7 @@ importers:
       better-sqlite3: 8.0.1
       body-parser: 1.20.1
       bulma: 0.9.4
-      bun-types: 0.4.0
+      bun-types: 0.5.0
       cloudinary: 1.33.0
       dotenv: 16.0.3
       eslint: 8.32.0
@@ -9554,8 +9554,8 @@ packages:
   /bulma/0.9.4:
     resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
 
-  /bun-types/0.4.0:
-    resolution: {integrity: sha512-KaXuDgaIHmvpCxpZCVUHTbsfKYRnSKBdzlYMBNjHnav7VCvT6KqEvykd007xP86iCxytO/7C9yLvR2+7JRtMrA==}
+  /bun-types/0.5.0:
+    resolution: {integrity: sha512-W74XkTKdOP2HV1PbzL7k6+8TZlcJyj1IuD7y9wX2SiHIaVjlqVwM9fXgsCvTlQQqkkkyZxSPSDFF10J6qml2eA==}
 
   /busboy/1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
