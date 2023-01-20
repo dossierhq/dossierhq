@@ -42,7 +42,7 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@playwright/test": "~1.29.0",
-    "@rushstack/heft": "0.49.0",
+    "@rushstack/heft": "0.49.1",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.4",
     "base-64": "~1.0.0",

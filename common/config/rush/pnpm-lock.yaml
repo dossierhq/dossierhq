@@ -148,7 +148,7 @@ importers:
       '@dossierhq/sqlite3': workspace:*
       '@dossierhq/typescript-generator': workspace:*
       '@faker-js/faker': ~7.6.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.0
       cloudinary: ~1.33.0
@@ -174,7 +174,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.32.0
@@ -197,7 +197,7 @@ importers:
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@faker-js/faker': ~7.6.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/better-sqlite3': ~7.6.3
       '@types/pg': ~8.6.5
       '@types/sqlite3': ~3.1.8
@@ -231,7 +231,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/postgres-tools': link:../../libraries/postgres-tools
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/better-sqlite3': 7.6.3
       '@types/pg': 8.6.5
       '@types/sqlite3': 3.1.8
@@ -286,7 +286,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/express': ~4.17.13
       '@types/sqlite3': ~3.1.8
       eslint: ~8.32.0
@@ -308,7 +308,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/express': 4.17.13
       '@types/sqlite3': 3.1.8
       eslint: 8.32.0
@@ -433,7 +433,7 @@ importers:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/node': ~18.11.12
       eslint: ~8.32.0
       prettier: 2.8.3
@@ -444,7 +444,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/node': 18.11.17
       eslint: 8.32.0
       prettier: 2.8.3
@@ -458,7 +458,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/better-sqlite3': ~7.6.3
       better-sqlite3: ~8.0.1
       eslint: ~8.32.0
@@ -475,7 +475,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/better-sqlite3': 7.6.3
       better-sqlite3: 8.0.1
       eslint: 8.32.0
@@ -491,7 +491,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       bun-types: ~0.4.0
       eslint: ~8.32.0
       prettier: 2.8.3
@@ -504,7 +504,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       bun-types: 0.4.0
       eslint: 8.32.0
       prettier: 2.8.3
@@ -518,7 +518,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/react-components': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/react': ~18.0.26
       eslint: ~8.32.0
       prettier: 2.8.3
@@ -535,7 +535,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/react-components': link:../react-components
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/react': 18.0.26
       eslint: 8.32.0
       prettier: 2.8.3
@@ -545,7 +545,7 @@ importers:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -556,7 +556,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -567,7 +567,7 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -579,7 +579,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -590,7 +590,7 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -602,7 +602,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -631,7 +631,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@fortawesome/free-solid-svg-icons': ~6.2.1
       '@react-aria/overlays': ~3.12.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@storybook/addon-actions': ~6.5.12
       '@storybook/addon-essentials': ~6.5.12
       '@storybook/addon-links': ~6.5.12
@@ -671,7 +671,7 @@ importers:
     devDependencies:
       '@babel/core': 7.20.2
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@storybook/addon-actions': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 6.5.12_vujbfdenobmosog7ooija47uk4
       '@storybook/addon-links': 6.5.12_biqbaboplfbrettd7655fr4n2y
@@ -701,7 +701,7 @@ importers:
     specifiers:
       '@babel/core': ~7.20.2
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/react': ~18.0.26
       '@types/react-dom': ~18.0.9
       '@typescript-eslint/eslint-plugin': ~5.48.0
@@ -721,7 +721,7 @@ importers:
     devDependencies:
       '@babel/core': 7.20.5
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.9
       '@typescript-eslint/eslint-plugin': 5.48.0_jmtqj3bwz6xemlrp3yko2wnir4
@@ -740,7 +740,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.0
       eslint: ~8.32.0
@@ -761,7 +761,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/server': link:../server
       '@dossierhq/sqlite3': link:../sqlite3
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.32.0
@@ -778,7 +778,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/typescript-generator': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/node': ~18.11.12
       '@types/uuid': ~9.0.0
       eslint: ~8.32.0
@@ -796,7 +796,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/typescript-generator': link:../typescript-generator
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/node': 18.11.17
       '@types/uuid': 9.0.0
       eslint: 8.32.0
@@ -808,7 +808,7 @@ importers:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/leaflet': ~1.9.0
       '@types/leaflet.locatecontrol': ~0.74.1
       '@types/react': ~18.0.26
@@ -831,7 +831,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/leaflet': 1.9.0
       '@types/leaflet.locatecontrol': 0.74.1
       '@types/react': 18.0.26
@@ -852,7 +852,7 @@ importers:
       '@dossierhq/postgres-core': workspace:*
       '@dossierhq/postgres-tools': workspace:*
       '@dossierhq/server': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/pg': ~8.6.5
       '@types/uuid': ~9.0.0
       dotenv: ~16.0.3
@@ -876,7 +876,7 @@ importers:
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/postgres-tools': link:../postgres-tools
       '@dossierhq/server': link:../server
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/pg': 8.6.5
       '@types/uuid': 9.0.0
       dotenv: 16.0.3
@@ -893,7 +893,7 @@ importers:
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -907,7 +907,7 @@ importers:
       '@dossierhq/core-vitest': link:../core-vitest
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -936,7 +936,7 @@ importers:
       '@lexical/rich-text': ~0.7.0
       '@lexical/selection': ~0.7.0
       '@lexical/utils': ~0.7.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@storybook/addon-actions': ~6.5.12
       '@storybook/addon-essentials': ~6.5.12
       '@storybook/addon-links': ~6.5.12
@@ -989,7 +989,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/server': link:../server
       '@dossierhq/sqlite3': link:../sqlite3
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@storybook/addon-actions': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 6.5.12_al4rhckvcbmonzz2dug3jnydgm
       '@storybook/addon-links': 6.5.12_biqbaboplfbrettd7655fr4n2y
@@ -1021,7 +1021,7 @@ importers:
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -1035,7 +1035,7 @@ importers:
       '@dossierhq/core-vitest': link:../core-vitest
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1050,7 +1050,7 @@ importers:
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
       '@playwright/test': ~1.29.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
       base-64: ~1.0.0
@@ -1070,7 +1070,7 @@ importers:
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
       '@playwright/test': 1.29.1
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
       base-64: 1.0.0
@@ -1087,7 +1087,7 @@ importers:
       '@dossierhq/database-adapter': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -1101,7 +1101,7 @@ importers:
       '@dossierhq/core-vitest': link:../core-vitest
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1115,7 +1115,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/sqlite3': ~3.1.8
       eslint: ~8.32.0
       prettier: 2.8.3
@@ -1132,7 +1132,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@types/sqlite3': 3.1.8
       eslint: 8.32.0
       prettier: 2.8.3
@@ -1145,7 +1145,7 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -1157,7 +1157,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1165,14 +1165,14 @@ importers:
 
   ../../rigs/heft-node-rig:
     specifiers:
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       typescript: ~4.9.4
     dependencies:
       eslint: 8.32.0
       typescript: 4.9.4
     devDependencies:
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
 
   ../../stack/eslint-config-generic:
     specifiers:
@@ -1200,7 +1200,7 @@ importers:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -1211,7 +1211,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1221,7 +1221,7 @@ importers:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -1232,7 +1232,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1242,7 +1242,7 @@ importers:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: ~8.32.0
       prettier: 2.8.3
       tslib: ~2.4.1
@@ -1252,7 +1252,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       eslint: 8.32.0
       prettier: 2.8.3
       typescript: 4.9.4
@@ -1276,7 +1276,7 @@ importers:
       '@playwright/test': ~1.29.0
       '@react-aria/overlays': ~3.12.0
       '@rushstack/eslint-patch': ~1.2.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@storybook/addon-actions': ~6.5.12
       '@storybook/addon-essentials': ~6.5.12
       '@storybook/addon-links': ~6.5.12
@@ -1371,7 +1371,7 @@ importers:
       '@playwright/test': 1.29.1
       '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
-      '@rushstack/heft': 0.49.0
+      '@rushstack/heft': 0.49.1
       '@storybook/addon-actions': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 6.5.12_al4rhckvcbmonzz2dug3jnydgm
       '@storybook/addon-links': 6.5.12_biqbaboplfbrettd7655fr4n2y
@@ -5842,8 +5842,8 @@ packages:
       '@rushstack/rig-package': 0.3.17
       jsonpath-plus: 4.0.0
 
-  /@rushstack/heft/0.49.0:
-    resolution: {integrity: sha512-nJ1W7Sy9IDOUXfp7VVeSSA+l2T9yhMNc3PuKFEPm9V4CCxayOV+3JSwDNw6IRAGgPJB6dmb6WggTI/EUktgCaQ==}
+  /@rushstack/heft/0.49.1:
+    resolution: {integrity: sha512-ky6zpJ8+TeTCsmAzx4Q7PK0bFW5/W6Z1Bhi7eYWwCI60djIhWFY3f3JwpgsjRBNWLdwdHYq1lShz8VfYwAc2eQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dependencies:
