@@ -1,11 +1,11 @@
-import type {
-  FieldDisplayProps,
-  PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
-} from '@dossierhq/react-components';
-import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
 import { isValueItemField } from '@dossierhq/core';
+import {
+  PublishedDossierProvider,
+  type FieldDisplayProps,
+  type PublishedDossierContextAdapter,
+  type RichTextValueItemDisplayProps,
+} from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { usePublishedClient } from './ClientUtils.js';

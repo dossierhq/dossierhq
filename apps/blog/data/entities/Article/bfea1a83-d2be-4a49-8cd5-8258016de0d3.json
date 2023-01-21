@@ -85,7 +85,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install @dossierhq/react-components @dossierhq/design @dossierhq/leaflet leaflet",
+                    "text": "npm install @dossierhq/design @dossierhq/leaflet @dossierhq/react-components leaflet",
                     "type": "text",
                     "version": 1
                   }
@@ -137,49 +137,6 @@
             "version": 1,
             "language": "typescript",
             "children": [
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "import",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "'@dossierhq/react-components/main.css'",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "string"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
               {
                 "detail": 0,
                 "format": 0,
@@ -333,6 +290,49 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
+                "text": "'@dossierhq/react-components/main.css'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
                 "text": "'leaflet/dist/leaflet.css'",
                 "type": "code-highlight",
                 "version": 1,
@@ -400,6 +400,25 @@
                 "mode": "normal",
                 "style": "",
                 "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "type",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "keyword"
@@ -993,6 +1012,52 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  AdminDossierProvider",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
                 "text": "type",
                 "type": "code-highlight",
                 "version": 1,
@@ -1012,23 +1077,10 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "{",
+                "text": "AdminDossierContextAdapter",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  FieldEditorProps",
-                "type": "code-highlight",
-                "version": 1
+                "highlightType": "class-name"
               },
               {
                 "detail": 0,
@@ -1049,7 +1101,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  RichTextValueItemEditorProps",
+                "text": "  ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -1058,40 +1110,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ",",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "}",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "from",
+                "text": "type",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "keyword"
@@ -1110,66 +1129,10 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@dossierhq/react-components'",
+                "text": "FieldEditorProps",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "string"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "import",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "{",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  AdminDossierContextAdapter",
-                "type": "code-highlight",
-                "version": 1
+                "highlightType": "class-name"
               },
               {
                 "detail": 0,
@@ -1190,9 +1153,38 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  AdminDossierProvider",
+                "text": "  ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "type",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "RichTextValueItemEditorProps",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "class-name"
               },
               {
                 "detail": 0,
@@ -3468,6 +3460,52 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  PublishedDossierProvider",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
                 "text": "type",
                 "type": "code-highlight",
                 "version": 1,
@@ -3487,23 +3525,10 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "{",
+                "text": "FieldDisplayProps",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  FieldDisplayProps",
-                "type": "code-highlight",
-                "version": 1
+                "highlightType": "class-name"
               },
               {
                 "detail": 0,
@@ -3524,7 +3549,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  PublishedDossierContextAdapter",
+                "text": "  ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3533,63 +3558,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ",",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "  RichTextValueItemDisplayProps",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ",",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "}",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "from",
+                "text": "type",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "keyword"
@@ -3608,17 +3577,17 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "'@dossierhq/react-components'",
+                "text": "PublishedDossierContextAdapter",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "string"
+                "highlightType": "class-name"
               },
               {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ";",
+                "text": ",",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "punctuation"
@@ -3632,7 +3601,16 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "import",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "type",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "keyword"
@@ -3651,18 +3629,23 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "{",
+                "text": "RichTextValueItemDisplayProps",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "punctuation"
+                "highlightType": "class-name"
               },
               {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " PublishedDossierProvider ",
+                "text": ",",
                 "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
                 "version": 1
               },
               {
@@ -6854,106 +6837,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "{",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " AdminEntityListScreen ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "}",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "from",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "'@dossierhq/react-components'",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "string"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "import",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": "type",
                 "type": "code-highlight",
                 "version": 1,
@@ -7031,6 +6914,106 @@
                 "mode": "normal",
                 "style": "",
                 "text": "'@dossierhq/core'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " AdminEntityListScreen ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -11657,106 +11640,6 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "{",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " PublishedEntityListScreen ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "}",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "from",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "'@dossierhq/react-components'",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "string"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "import",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
                 "text": "type",
                 "type": "code-highlight",
                 "version": 1,
@@ -11834,6 +11717,106 @@
                 "mode": "normal",
                 "style": "",
                 "text": "'@dossierhq/core'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " PublishedEntityListScreen ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'@dossierhq/react-components'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"

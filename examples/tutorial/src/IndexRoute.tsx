@@ -1,8 +1,8 @@
-import { EntitySamplingPayload } from '@dossierhq/core';
+import type { EntitySamplingPayload } from '@dossierhq/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useAdminClient } from './ClientUtils.js';
 import { Navbar } from './Navbar.js';
-import { AllAdminEntities } from './SchemaTypes.js';
+import type { AllAdminEntities } from './SchemaTypes.js';
 
 export function IndexRoute() {
   const adminClient = useAdminClient();

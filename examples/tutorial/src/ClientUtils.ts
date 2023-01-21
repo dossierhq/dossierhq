@@ -1,8 +1,5 @@
-import { Auth0ContextInterface, useAuth0 } from '@auth0/auth0-react';
-import { useCachingAdminMiddleware } from '@dossierhq/react-components';
+import { useAuth0, type Auth0ContextInterface } from '@auth0/auth0-react';
 import {
-  AdminClientOperation,
-  ClientContext,
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
   createBaseAdminClient,
@@ -11,10 +8,13 @@ import {
   encodeObjectToURLSearchParams,
   notOk,
   ok,
-  PublishedClientOperation,
+  type AdminClientOperation,
+  type ClientContext,
+  type PublishedClientOperation,
 } from '@dossierhq/core';
+import { useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
+import type { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
 
 const logger = createConsoleLogger(console);
 

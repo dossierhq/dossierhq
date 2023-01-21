@@ -1,10 +1,14 @@
-import type { FieldEditorProps, RichTextValueItemEditorProps } from '@dossierhq/react-components';
-import { AdminDossierContextAdapter, AdminDossierProvider } from '@dossierhq/react-components';
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
 } from '@dossierhq/cloudinary';
 import { FieldType, isValueItemField } from '@dossierhq/core';
+import {
+  AdminDossierProvider,
+  type AdminDossierContextAdapter,
+  type FieldEditorProps,
+  type RichTextValueItemEditorProps,
+} from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { useAdminClient } from './ClientUtils.js';

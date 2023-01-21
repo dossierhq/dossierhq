@@ -5,9 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently -n be,fe --handle-input 'nodemon --watch \"backend.ts\" --exec ts-node-esm backend.ts' 'sleep 2 && vite'",
+    "start": "concurrently -n be,fe --handle-input 'nodemon --watch \"backend/*\" --exec ts-node-esm backend/main.ts' 'sleep 2 && vite'",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "./generate-typescript.ts && tsc && vite build",
     "preview": "vite preview",
     "backend": "ts-node-esm backend.ts"
   },

@@ -1,5 +1,5 @@
-import { AdminEntityListScreen } from '@dossierhq/react-components';
 import type { AdminEntity } from '@dossierhq/core';
+import { AdminEntityListScreen } from '@dossierhq/react-components';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
