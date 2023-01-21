@@ -2570,7 +2570,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "on",
+                "text": "once",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -2662,7 +2662,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "on",
+                "text": "once",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -2683,6 +2683,98 @@
                 "mode": "normal",
                 "style": "",
                 "text": "'SIGTERM'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ",",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " shutdown",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ")",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "process",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "once",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "function"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "(",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'SIGUSR2'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -3782,7 +3874,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "exit",
+                "text": "kill",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -3802,7 +3894,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "error ",
+                "text": "process",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3811,17 +3903,17 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "?",
+                "text": ".",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "operator"
+                "highlightType": "punctuation"
               },
               {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " ",
+                "text": "pid",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3830,48 +3922,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "1",
+                "text": ",",
                 "type": "code-highlight",
                 "version": 1,
-                "highlightType": "number"
+                "highlightType": "punctuation"
               },
               {
                 "detail": 0,
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " ",
+                "text": " signal",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ":",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "operator"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "0",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "number"
               },
               {
                 "detail": 0,
@@ -3964,7 +4027,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Now when we start the backend (",
+                "text": "Now when we make changes to ",
                 "type": "text",
                 "version": 1
               },
@@ -3973,7 +4036,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "npm run backend",
+                "text": "backend.ts",
                 "type": "text",
                 "version": 1
               },
@@ -3982,7 +4045,25 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ") and shut it down, we get a log like this:",
+                "text": ", we will get a log like this when ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "nodemon",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " restarts the backend:",
                 "type": "text",
                 "version": 1
               }
@@ -4001,7 +4082,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "info: Loading schema",
+                "text": "[be] info: Received signal SIGUSR2, shutting down",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4014,7 +4095,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "info: No schema set, defaulting to empty",
+                "text": "[be] info: Shutting down database adapter",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4027,7 +4108,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Listening on http://localhost:3000",
+                "text": "[be] info: Finished shutting server",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4040,7 +4121,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "^Cinfo: Received signal SIGINT, shutting down",
+                "text": "[be] info: Backend shut down",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4053,7 +4134,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "info: Shutting down database adapter",
+                "text": "[be] info: Loading schema",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4066,7 +4147,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "info: Finished shutting server",
+                "text": "[be] info: No schema set, defaulting to empty",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -4079,7 +4160,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "info: Backend shut down",
+                "text": "[be] Listening on http://localhost:3000",
                 "type": "code-highlight",
                 "version": 1
               }

@@ -1,3 +1,7 @@
+import {
+  BetterSqlite3DatabaseAdapter,
+  createBetterSqlite3Adapter,
+} from '@dossierhq/better-sqlite3';
 import { CLOUDINARY_IMAGE_VALUE_TYPE } from '@dossierhq/cloudinary';
 import {
   AdminClientJsonOperationArgs,
@@ -14,10 +18,6 @@ import {
   PublishedClientJsonOperationArgs,
   Result,
 } from '@dossierhq/core';
-import {
-  BetterSqlite3DatabaseAdapter,
-  createBetterSqlite3Adapter,
-} from '@dossierhq/better-sqlite3';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import BetterSqlite, { type Database } from 'better-sqlite3';
@@ -266,8 +266,9 @@ const httpServer = app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
 });
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+process.once('SIGINT', shutdown);
+process.once('SIGTERM', shutdown);
+process.once('SIGUSR2', shutdown);
 
 async function shutdown(signal: NodeJS.Signals) {
   logger.info('Received signal %s, shutting down', signal);
@@ -287,6 +288,6 @@ async function shutdown(signal: NodeJS.Signals) {
       logger.error('Error while shutting down: %s', error.message);
     }
     logger.info('Backend shut down');
-    process.exit(error ? 1 : 0);
+    process.kill(process.pid, signal);
   });
 }

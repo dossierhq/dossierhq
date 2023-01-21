@@ -128,25 +128,6 @@
                     "version": 1
                   }
                 ]
-              },
-              {
-                "direction": "ltr",
-                "format": "",
-                "indent": 0,
-                "type": "listitem",
-                "version": 1,
-                "value": 4,
-                "children": [
-                  {
-                    "detail": 0,
-                    "format": 16,
-                    "mode": "normal",
-                    "style": "",
-                    "text": "npm run dev",
-                    "type": "text",
-                    "version": 1
-                  }
-                ]
               }
             ]
           },
@@ -210,7 +191,7 @@
                     "format": 16,
                     "mode": "normal",
                     "style": "",
-                    "text": "npm install -D ts-node @types/express @types/body-parser",
+                    "text": "npm install -D concurrently nodemon ts-node @types/express @types/body-parser",
                     "type": "text",
                     "version": 1
                   }
@@ -1285,25 +1266,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "After adding ",
-                "type": "text",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 16,
-                "mode": "normal",
-                "style": "",
-                "text": "\"backend\": \"ts-node-esm backend.ts\"",
-                "type": "text",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " to ",
+                "text": "After adding the following to ",
                 "type": "text",
                 "version": 1
               },
@@ -1321,7 +1284,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " ",
+                "text": ", we can start both the frontend and backend with: ",
                 "type": "text",
                 "version": 1
               },
@@ -1330,25 +1293,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "\"scripts\"",
-                "type": "text",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ", we can start the backend with: ",
-                "type": "text",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 16,
-                "mode": "normal",
-                "style": "",
-                "text": "npm run backend",
+                "text": "npm start",
                 "type": "text",
                 "version": 1
               },
@@ -1360,6 +1305,167 @@
                 "text": ".",
                 "type": "text",
                 "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "code",
+            "version": 1,
+            "language": "js",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "\"scripts\"",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string-property"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "{",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "    ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "\"start\"",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string-property"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "operator"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "\"concurrently -n be,fe --handle-input 'nodemon --watch \\\"backend.ts\\\" --exec ts-node-esm backend.ts' 'sleep 2 && vite'\"",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "  ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "}",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
               }
             ]
           },
@@ -4423,6 +4529,68 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
+                "text": " react ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "from",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "'@vitejs/plugin-react'",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "string"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ";",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "punctuation"
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "import",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "keyword"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
                 "text": " ",
                 "type": "code-highlight",
                 "version": 1
@@ -4490,68 +4658,6 @@
                 "mode": "normal",
                 "style": "",
                 "text": "'vite'",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "string"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": ";",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "punctuation"
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "import",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " react ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "from",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "keyword"
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " ",
-                "type": "code-highlight",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "'@vitejs/plugin-react'",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "string"
@@ -5064,21 +5170,13 @@
             ]
           },
           {
-            "direction": "ltr",
-            "format": "",
-            "indent": 0,
-            "type": "paragraph",
-            "version": 1,
-            "children": []
-          },
-          {
             "type": "valueItem",
             "data": {
               "type": "CloudinaryImage",
-              "publicId": "Blog/qx6gipd7luppfn7q7pll",
-              "width": 2118,
-              "height": 1040,
-              "alt": "Screenshot of the frontend"
+              "publicId": "Blog/g8xdrhytpccxjh3ckocm",
+              "width": 1834,
+              "height": 1166,
+              "alt": "The frontend showing Hello world"
             },
             "format": "",
             "version": 1
