@@ -2,6 +2,18 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.1.47",
+      "tag": "@dossierhq/react-components_v0.1.47",
+      "date": "Sun, 22 Jan 2023 22:01:52 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade dependencies."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.46",
       "tag": "@dossierhq/react-components_v0.1.46",
       "date": "Tue, 17 Jan 2023 19:56:51 GMT",
