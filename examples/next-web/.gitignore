@@ -33,7 +33,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-
 #
-public/voyager.worker.js
 tsconfig.tsbuildinfo

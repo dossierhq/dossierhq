@@ -1,14 +1,20 @@
-import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
-import { NoOpLogger, notOk, ok } from '@dossierhq/core';
-import { createPostgresAdapter } from '@dossierhq/pg';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
+import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
+import type {
+  AdminClient,
+  ErrorType,
+  Logger,
+  PromiseResult,
+  PublishedClient,
+} from '@dossierhq/core';
+import { createConsoleLogger, NoOpLogger, notOk, ok } from '@dossierhq/core';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
+import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { NextApiRequest } from 'next';
-import { Database } from 'sqlite3';
 import { schemaSpecification } from './schema';
 
 let serverConnectionPromise: Promise<{ server: Server }> | null = null;
+const logger = createConsoleLogger(console);
 
 export async function getSessionContextForRequest(
   server: Server,
@@ -49,7 +55,7 @@ function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
 export async function getServerConnection(): Promise<{ server: Server }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
-      const databaseAdapter = (await createDatabaseAdapter()).valueOrThrow();
+      const databaseAdapter = (await createDatabaseAdapter(logger)).valueOrThrow();
       const server = (
         await createServer({
           databaseAdapter,
@@ -72,27 +78,21 @@ export async function getServerConnection(): Promise<{ server: Server }> {
   return serverConnectionPromise;
 }
 
-async function createDatabaseAdapter() {
-  if (process.env.DATABASE_SQLITE_FILE) {
-    const context = { logger: NoOpLogger };
-    const databaseResult = await createDatabase(context, Database, {
-      filename: process.env.DATABASE_SQLITE_FILE,
-    });
-    if (databaseResult.isError()) return databaseResult;
-
-    const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
-      migrate: true,
-      fts: { version: 'fts5' },
-      journalMode: 'wal',
-    });
-    return databaseAdapterResult;
+async function createDatabaseAdapter(logger: Logger) {
+  const context = { logger: NoOpLogger };
+  let database: Database;
+  try {
+    database = new BetterSqlite('data/database.sqlite');
+  } catch (error) {
+    return notOk.GenericUnexpectedException({ logger }, error);
   }
 
-  return ok(
-    createPostgresAdapter({
-      connectionString: process.env.DATABASE_URL!,
-    })
-  );
+  const databaseAdapterResult = await createBetterSqlite3Adapter(context, database, {
+    migrate: true,
+    fts: { version: 'fts5' },
+    journalMode: 'wal',
+  });
+  return databaseAdapterResult;
 }
 
 function createAuthenticationAdapter(): AuthorizationAdapter {

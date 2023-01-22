@@ -49,6 +49,5 @@ function ensure_database {
   ensure_database "dossier-benchmark" "dossierbenchmarkuser" "dossierbenchmarkpass"
   ensure_database "dossier-deno" "dossierdenouser" "dossierdenopass"
   ensure_database "dossier-example-deno" "dossierexampledenouser" "dossierexampledenopass"
-  ensure_database "dossier-example-next" "dossierexamplenextuser" "dossierexamplenextpass"
   ensure_database "dossier-pg" "dossierpguser" "dossierpgpass"
 )

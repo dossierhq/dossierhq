@@ -28,6 +28,5 @@ function set_user_superuser {
   set_user_superuser "dossierbenchmarkuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "dossierdenouser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "dossierexampledenouser" "$SUPER_OR_NO_SUPERUSER"
-  set_user_superuser "dossierexamplenextuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "dossierpguser" "$SUPER_OR_NO_SUPERUSER"
 )

@@ -2,11 +2,11 @@ import { Navbar as DesignNavbar } from '@dossierhq/design';
 import Link from 'next/link';
 import { useState } from 'react';
 
-export function NavBar({
-  current,
-}: {
-  current: 'home' | 'entities' | 'published-entities' | 'schema' | 'graphiql' | 'voyager';
-}) {
+interface Props {
+  current: 'home' | 'entities' | 'published-entities' | 'schema';
+}
+
+export function NavBar({ current }: Props) {
   const [active, setActive] = useState(false);
   return (
     <DesignNavbar>
@@ -25,12 +25,6 @@ export function NavBar({
         </DesignNavbar.Item>
         <DesignNavbar.Item active={current === 'schema'}>
           {NavItemRender('Schema', '/schema')}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'graphiql'}>
-          {NavItemRender('GraphiQL', '/graphiql')}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'voyager'}>
-          {NavItemRender('Voyager', '/voyager')}
         </DesignNavbar.Item>
       </DesignNavbar.Menu>
     </DesignNavbar>
