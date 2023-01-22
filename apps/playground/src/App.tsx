@@ -1,6 +1,6 @@
 import { NotificationContainer } from '@dossierhq/design';
 import { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DatabaseProvider } from './components/DatabaseProvider.js';
 import { DossierSharedProvider } from './components/DossierSharedProvider.js';
 import { ServerProvider } from './components/ServerProvider.js';
@@ -21,6 +21,41 @@ const users: User[] = [
   { id: 'bob', name: 'Bob' },
 ];
 
+const router = createBrowserRouter([
+  {
+    path: ROUTE.index.route,
+    element: <IndexRoute />,
+  },
+  {
+    path: ROUTE.adminEntities.route,
+    element: <AdminEntitiesRoute />,
+  },
+  {
+    path: ROUTE.editEntities.route,
+    element: <EditEntitiesRoute />,
+  },
+  {
+    path: ROUTE.login.route,
+    element: <LoginRoute />,
+  },
+  {
+    path: ROUTE.publishedEntities.route,
+    element: <PublishedEntitiesRoute />,
+  },
+  {
+    path: ROUTE.publishedEntityDisplay.route,
+    element: <PublishedEntityDisplayRoute />,
+  },
+  {
+    path: ROUTE.schema.route,
+    element: <EditSchemaRoute />,
+  },
+  {
+    path: ROUTE.graphiql.route,
+    element: <GraphiQLRoute />,
+  },
+]);
+
 export default function App() {
   const [currentUserId, setCurrentUserId] = useState(users[0].id);
   return (
@@ -29,24 +64,7 @@ export default function App() {
         <DatabaseProvider>
           <ServerProvider>
             <DossierSharedProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route path={ROUTE.index.route} element={<IndexRoute />} />
-                  <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
-                  <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
-                  <Route path={ROUTE.login.route} element={<LoginRoute />} />
-                  <Route
-                    path={ROUTE.publishedEntities.route}
-                    element={<PublishedEntitiesRoute />}
-                  />
-                  <Route
-                    path={ROUTE.publishedEntityDisplay.route}
-                    element={<PublishedEntityDisplayRoute />}
-                  />
-                  <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
-                  <Route path={ROUTE.graphiql.route} element={<GraphiQLRoute />} />
-                </Routes>
-              </BrowserRouter>
+              <RouterProvider router={router} />
             </DossierSharedProvider>
           </ServerProvider>
         </DatabaseProvider>

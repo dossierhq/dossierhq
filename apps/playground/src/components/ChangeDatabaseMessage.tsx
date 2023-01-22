@@ -50,7 +50,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
         >
           Reset
         </Button>
-        <Text textStyle="headline5">Example: Dossier documentation</Text>
+        <Text textStyle="headline5">Example: Dossier docs</Text>
         <p>
           The database used for the{' '}
           <a href="https://dossierhq.dev/docs" target="_blank" rel="noopener noreferrer">

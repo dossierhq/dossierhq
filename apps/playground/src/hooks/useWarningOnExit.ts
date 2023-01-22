@@ -1,6 +1,6 @@
 import { useWindowEventListener } from '@dossierhq/design';
 import { useCallback } from 'react';
-import { usePrompt } from './ReactRouterCompatHooks.js';
+import { unstable_usePrompt as usePrompt } from 'react-router-dom';
 
 export function useWarningOnExit(message: string, when = true) {
   const handleBeforeUnload = useCallback(
@@ -13,5 +13,5 @@ export function useWarningOnExit(message: string, when = true) {
   );
 
   useWindowEventListener('beforeunload', handleBeforeUnload);
-  usePrompt(message, when);
+  usePrompt({ message, when });
 }
