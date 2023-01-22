@@ -22,38 +22,14 @@ const users: User[] = [
 ];
 
 const router = createBrowserRouter([
-  {
-    path: ROUTE.index.route,
-    element: <IndexRoute />,
-  },
-  {
-    path: ROUTE.adminEntities.route,
-    element: <AdminEntitiesRoute />,
-  },
-  {
-    path: ROUTE.editEntities.route,
-    element: <EditEntitiesRoute />,
-  },
-  {
-    path: ROUTE.login.route,
-    element: <LoginRoute />,
-  },
-  {
-    path: ROUTE.publishedEntities.route,
-    element: <PublishedEntitiesRoute />,
-  },
-  {
-    path: ROUTE.publishedEntityDisplay.route,
-    element: <PublishedEntityDisplayRoute />,
-  },
-  {
-    path: ROUTE.schema.route,
-    element: <EditSchemaRoute />,
-  },
-  {
-    path: ROUTE.graphiql.route,
-    element: <GraphiQLRoute />,
-  },
+  { path: ROUTE.index.route, element: <IndexRoute /> },
+  { path: ROUTE.adminEntities.route, element: <AdminEntitiesRoute /> },
+  { path: ROUTE.editEntities.route, element: <EditEntitiesRoute /> },
+  { path: ROUTE.login.route, element: <LoginRoute /> },
+  { path: ROUTE.publishedEntities.route, element: <PublishedEntitiesRoute /> },
+  { path: ROUTE.publishedEntityDisplay.route, element: <PublishedEntityDisplayRoute /> },
+  { path: ROUTE.schema.route, element: <EditSchemaRoute /> },
+  { path: ROUTE.graphiql.route, element: <GraphiQLRoute /> },
 ]);
 
 export default function App() {
