@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/better-sqlite3",
-  "version": "0.1.1-25",
+  "version": "0.1.47",
   "description": "",
   "type": "module",
   "exports": {
