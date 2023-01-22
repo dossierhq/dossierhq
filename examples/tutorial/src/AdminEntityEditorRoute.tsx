@@ -2,6 +2,7 @@ import { EntityEditorScreen } from '@dossierhq/react-components';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
+import { useWarningOnExit } from './useWarningOnExit.js';
 
 export function AdminEntityEditorRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,7 +13,7 @@ export function AdminEntityEditorRoute() {
     [setSearchParams]
   );
 
-  //TODO warn user if they try to leave the page with unsaved changes
+  useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', hasChanges);
 
   return (
     <EntityEditorScreen

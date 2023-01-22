@@ -1,6 +1,6 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { NotificationContainer } from '@dossierhq/design';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AdminEntityEditorRoute } from './AdminEntityEditorRoute.js';
 import { AdminEntityListRoute } from './AdminEntityListRoute.js';
 import { AdminSchemaEditorRoute } from './AdminSchemaEditorRoute.js';
@@ -10,33 +10,30 @@ import { IndexRoute } from './IndexRoute.js';
 import { PublishedEntityDisplayRoute } from './PublishedEntityDisplayRoute.js';
 import { PublishedEntityListRoute } from './PublishedEntityListRoute.js';
 
+const router = createBrowserRouter([
+  { path: '/', element: <IndexRoute /> },
+  { path: '/admin-entities', element: <AdminEntityListRoute /> },
+  { path: '/edit-entities', element: <AdminEntityEditorRoute /> },
+  { path: '/published-entities', element: <PublishedEntityListRoute /> },
+  { path: '/published-entities/display', element: <PublishedEntityDisplayRoute /> },
+  { path: '/schema', element: <AdminSchemaEditorRoute /> },
+]);
+
 export default function App() {
   return (
     <NotificationContainer>
-      <BrowserRouter>
-        <Auth0Provider
-          domain={import.meta.env.VITE_AUTH0_DOMAIN}
-          clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
-          audience={import.meta.env.VITE_AUTH0_AUDIENCE}
-          redirectUri={window.location.origin}
-        >
-          <AppAdminProvider>
-            <AppPublishedProvider>
-              <Routes>
-                <Route path="/" element={<IndexRoute />} />
-                <Route path="/admin-entities" element={<AdminEntityListRoute />} />
-                <Route path="/edit-entities" element={<AdminEntityEditorRoute />} />
-                <Route path="/published-entities" element={<PublishedEntityListRoute />} />
-                <Route
-                  path="/published-entities/display"
-                  element={<PublishedEntityDisplayRoute />}
-                />
-                <Route path="/schema" element={<AdminSchemaEditorRoute />} />
-              </Routes>
-            </AppPublishedProvider>
-          </AppAdminProvider>
-        </Auth0Provider>
-      </BrowserRouter>
+      <Auth0Provider
+        domain={import.meta.env.VITE_AUTH0_DOMAIN}
+        clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+        audience={import.meta.env.VITE_AUTH0_AUDIENCE}
+        redirectUri={window.location.origin}
+      >
+        <AppAdminProvider>
+          <AppPublishedProvider>
+            <RouterProvider router={router} />
+          </AppPublishedProvider>
+        </AppAdminProvider>
+      </Auth0Provider>
     </NotificationContainer>
   );
 }

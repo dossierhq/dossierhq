@@ -1,11 +1,12 @@
 import { SchemaEditorScreen } from '@dossierhq/react-components';
 import { useState } from 'react';
 import { Navbar } from './Navbar.js';
+import { useWarningOnExit } from './useWarningOnExit.js';
 
 export function AdminSchemaEditorRoute() {
   const [hasChanges, setHasChanges] = useState(false);
 
-  //TODO warn user if they try to leave the page with unsaved changes
+  useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', hasChanges);
 
   return (
     <SchemaEditorScreen
