@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/cloudinary",
+      "comment": "Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/cloudinary"
+}

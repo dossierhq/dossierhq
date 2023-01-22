@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/database-adapter",
+      "comment": "Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/database-adapter"
+}

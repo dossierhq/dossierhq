@@ -406,7 +406,8 @@
     },
     {
       "packageName": "@dossierhq/better-sqlite3",
-      "projectFolder": "libraries/better-sqlite3"
+      "projectFolder": "libraries/better-sqlite3",
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/bun-sqlite",

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}

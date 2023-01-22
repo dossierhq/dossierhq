@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Upgrade dependencies.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
