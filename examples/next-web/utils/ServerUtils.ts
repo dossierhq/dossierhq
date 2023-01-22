@@ -11,6 +11,7 @@ import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { NextApiRequest } from 'next';
+import { DEFAULT_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { schemaSpecification } from './schema';
 
 let serverConnectionPromise: Promise<{ server: Server }> | null = null;
@@ -24,11 +25,10 @@ export async function getSessionContextForRequest(
   typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
-  const defaultAuthKeys = getDefaultAuthKeysFromHeaders(req);
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'john-smith',
-    defaultAuthKeys,
+    defaultAuthKeys: DEFAULT_AUTH_KEYS,
   });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
@@ -39,17 +39,6 @@ export async function getSessionContextForRequest(
   const adminClient = server.createAdminClient(context);
   const publishedClient = server.createPublishedClient(context);
   return ok({ adminClient, publishedClient });
-}
-
-function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
-  const value = req.headers['Dossier-Default-Auth-Keys'.toLowerCase()];
-  const defaultAuthKeys: string[] = [];
-  if (typeof value === 'string') {
-    defaultAuthKeys.push(...value.split(',').map((it) => it.trim()));
-  } else if (Array.isArray(value)) {
-    defaultAuthKeys.push(...value.flatMap((it) => it.split(',')).map((it) => it.trim()));
-  }
-  return defaultAuthKeys;
 }
 
 export async function getServerConnection(): Promise<{ server: Server }> {

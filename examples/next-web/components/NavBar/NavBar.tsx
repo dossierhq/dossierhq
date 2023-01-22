@@ -1,6 +1,7 @@
 import { Navbar as DesignNavbar } from '@dossierhq/design';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ENABLE_WEB_INTERFACE } from '../../config/WebInterfaceConfig';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 
 interface Props {
@@ -18,15 +19,19 @@ export function NavBar({ current }: Props) {
         <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
-        <DesignNavbar.Item active={current === 'admin-entities'}>
-          {NavItemRender('Entities', BrowserUrls.adminEntities)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'published-entities'}>
-          {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'schema'}>
-          {NavItemRender('Schema', BrowserUrls.schemaEditor)}
-        </DesignNavbar.Item>
+        {ENABLE_WEB_INTERFACE ? (
+          <>
+            <DesignNavbar.Item active={current === 'admin-entities'}>
+              {NavItemRender('Entities', BrowserUrls.adminEntities)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'published-entities'}>
+              {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'schema'}>
+              {NavItemRender('Schema', BrowserUrls.schemaEditor)}
+            </DesignNavbar.Item>
+          </>
+        ) : null}
       </DesignNavbar.Menu>
     </DesignNavbar>
   );
