@@ -1,9 +1,4 @@
-import type {
-  ErrorType,
-  PublishedClientJsonOperationArgs,
-  PublishedClientOperationName,
-  Result,
-} from '@dossierhq/core';
+import type { ErrorType, PublishedClientJsonOperationArgs, Result } from '@dossierhq/core';
 import {
   decodeURLSearchParamsParam,
   executePublishedClientOperationFromJson,
@@ -18,24 +13,22 @@ export default async function publishedOperationHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  if (req.method === 'GET' || req.method === 'PUT') {
+  if (req.method === 'GET') {
     await handleRequest(res, async () => {
       return executePublishedOperation(req);
     });
   } else {
-    sendMethodNotAllowedError(res, ['GET', 'PUT']);
+    sendMethodNotAllowedError(res, ['GET']);
   }
 }
 
 function getOperationArgs(
   req: NextApiRequest
 ): Result<PublishedClientJsonOperationArgs, typeof ErrorType.BadRequest> {
-  let operationArgs: PublishedClientJsonOperationArgs | undefined;
-  if (req.method === 'GET') {
-    operationArgs = decodeURLSearchParamsParam(req.query, 'args');
-  } else {
-    operationArgs = req.body;
-  }
+  const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
+    req.query,
+    'args'
+  );
   if (!operationArgs) {
     return notOk.BadRequest('Missing args');
   }
@@ -56,7 +49,7 @@ async function executePublishedOperation(req: NextApiRequest) {
 
   const result = await executePublishedClientOperationFromJson(
     publishedClient,
-    operationName as keyof typeof PublishedClientOperationName,
+    operationName,
     operationResult.value
   );
   return result;

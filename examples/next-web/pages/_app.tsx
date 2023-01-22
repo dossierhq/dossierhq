@@ -1,12 +1,11 @@
-import '@dossierhq/react-components/main.css';
 import { NotificationContainer } from '@dossierhq/design';
 import '@dossierhq/design/main.css';
 import '@dossierhq/leaflet/icons.css';
 import '@dossierhq/leaflet/main.css';
-import 'graphql-voyager/dist/voyager.css';
+import '@dossierhq/react-components/main.css';
 import 'leaflet/dist/leaflet.css';
 
-//TODO bundle CSS in ARC and remove need to add all css files here and to have direct dependencies to design/dd-leaflet/leaflet
+//TODO bundle CSS in ARC and remove need to add all css files here and to have direct dependencies to design/dossier-leaflet/leaflet
 
 function MyApp({
   Component,

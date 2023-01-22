@@ -335,7 +335,6 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       typescript: ~4.9.4
-      vitest: 0.27.3
     dependencies:
       '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/core': link:../../libraries/core
@@ -356,7 +355,6 @@ importers:
       eslint-config-next: 13.1.0_7uibuqfxkfaozanbtbziikiqje
       prettier: 2.8.3
       typescript: 4.9.4
-      vitest: 0.27.3
 
   ../../examples/tutorial:
     specifiers:

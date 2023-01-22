@@ -5,17 +5,14 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && npm run eslint:check && npm run test && next build",
-    "clean": "rm -rf .next/ && rm -f @dossierhq/example-next-web.build.log tsconfig.tsbuildinfo",
+    "build": "npm run prettier:check && npm run eslint:check && next build",
+    "clean": "rm -rf .next/ && rm -f example-next-web.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "next dev --port 3001",
-    "start:built": "next start",
-    "test": "vitest",
-    "test:update-snapshot": "vitest --update",
-    "test:watch": "vitest --watch"
+    "start:built": "next start"
   },
   "dependencies": {
     "@dossierhq/better-sqlite3": "workspace:*",
@@ -37,7 +34,6 @@
     "eslint": "~8.32.0",
     "eslint-config-next": "~13.1.0",
     "prettier": "2.8.3",
-    "typescript": "~4.9.4",
-    "vitest": "0.27.3"
+    "typescript": "~4.9.4"
   }
 }

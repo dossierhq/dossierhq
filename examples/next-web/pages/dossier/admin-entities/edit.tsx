@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 const EntityEditorPage = dynamic(
-  () => import('../../components/EntityEditorPage/EntityEditorPage'),
+  () => import('../../../components/AdminEntityEditorPage/AdminEntityEditorPage'),
   { ssr: false }
 );
 

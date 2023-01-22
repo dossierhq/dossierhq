@@ -1,36 +1,36 @@
 import { EntityEditorScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useMemo, useState } from 'react';
-import { DossierSharedProvider } from '../../contexts/DossierSharedProvider';
+import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { useWarningOnExit } from '../../hooks/useWarningOnExit';
-import { urls } from '../../utils/PageUtils';
+import { BrowserUrls } from '../../utils/BrowserUrls';
 import { NavBar } from '../NavBar/NavBar';
 
-export default function EntityEditorPage(): JSX.Element {
+export default function AdminEntityEditorPage(): JSX.Element {
   const { onUrlSearchParamsChange, urlSearchParams } = useUrlSearchParams();
   const [hasChanges, setHasChanges] = useState(false);
 
   const shouldWarn = useMemo(() => {
     if (!hasChanges) return false;
     return (_fromUrl: string, toUrl: string) => {
-      return !urls.isEditPage(toUrl);
+      return !BrowserUrls.isEditPage(toUrl);
     };
   }, [hasChanges]);
 
   useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', shouldWarn);
 
   return (
-    <DossierSharedProvider>
+    <AppAdminDossierProvider>
       <Head>
-        <title>Edit entities</title>
+        <title>Edit entities | {process.env.NEXT_PUBLIC_SITE_NAME}</title>
       </Head>
       <EntityEditorScreen
-        header={<NavBar current="entities" />}
+        header={<NavBar current="admin-entities" />}
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={onUrlSearchParamsChange}
         onEditorHasChangesChange={setHasChanges}
       />
-    </DossierSharedProvider>
+    </AppAdminDossierProvider>
   );
 }

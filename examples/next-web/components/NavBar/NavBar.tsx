@@ -1,9 +1,10 @@
 import { Navbar as DesignNavbar } from '@dossierhq/design';
 import Link from 'next/link';
 import { useState } from 'react';
+import { BrowserUrls } from '../../utils/BrowserUrls';
 
 interface Props {
-  current: 'home' | 'entities' | 'published-entities' | 'schema';
+  current: 'home' | 'admin-entities' | 'published-entities' | 'schema';
 }
 
 export function NavBar({ current }: Props) {
@@ -12,19 +13,19 @@ export function NavBar({ current }: Props) {
     <DesignNavbar>
       <DesignNavbar.Brand>
         <DesignNavbar.Item active={current === 'home'}>
-          {NavItemRender('next-web', '/')}
+          {NavItemRender(process.env.NEXT_PUBLIC_SITE_NAME ?? 'Home', BrowserUrls.home)}
         </DesignNavbar.Item>
         <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
-        <DesignNavbar.Item active={current === 'entities'}>
-          {NavItemRender('Entities', '/entities')}
+        <DesignNavbar.Item active={current === 'admin-entities'}>
+          {NavItemRender('Entities', BrowserUrls.adminEntities)}
         </DesignNavbar.Item>
         <DesignNavbar.Item active={current === 'published-entities'}>
-          {NavItemRender('Published entities', '/published-entities')}
+          {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
         </DesignNavbar.Item>
         <DesignNavbar.Item active={current === 'schema'}>
-          {NavItemRender('Schema', '/schema')}
+          {NavItemRender('Schema', BrowserUrls.schemaEditor)}
         </DesignNavbar.Item>
       </DesignNavbar.Menu>
     </DesignNavbar>

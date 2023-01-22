@@ -1,34 +1,5 @@
-import type {
-  AdminClientJsonOperationArgs,
-  AdminClientOperationName,
-  ErrorType,
-  Logger,
-  PromiseResult,
-  PublishedClientJsonOperationArgs,
-  PublishedClientOperationName,
-} from '@dossierhq/core';
-import { encodeObjectToURLSearchParams, notOk, ok } from '@dossierhq/core';
-
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-export const urls = {
-  admin: (
-    operationName: (typeof AdminClientOperationName)[keyof typeof AdminClientOperationName],
-    args?: AdminClientJsonOperationArgs
-  ): string =>
-    `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
-      { args },
-      { keepEmptyObjects: true }
-    )}`,
-  published: (
-    operationName: (typeof PublishedClientOperationName)[keyof typeof PublishedClientOperationName],
-    args?: PublishedClientJsonOperationArgs
-  ): string =>
-    `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
-      { args },
-      { keepEmptyObjects: true }
-    )}`,
-};
+import type { ErrorType, Logger, PromiseResult } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },
