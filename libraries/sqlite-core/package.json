@@ -1,7 +1,14 @@
 {
   "name": "@dossierhq/sqlite-core",
-  "version": "0.1.1-25",
-  "description": "",
+  "version": "0.1.47",
+  "description": "A library used by concrete SQLite adapters for Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "sqlite",
+    "sqlite3"
+  ],
+  "homepage": "https://dossierhq.dev",
   "type": "module",
   "exports": {
     ".": {
@@ -28,7 +35,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dossierhq/dossierhq.git"
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/sqlite-core"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
@@ -37,8 +45,8 @@
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",
-    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.49.1",
     "eslint": "~8.32.0",
     "prettier": "2.8.3",

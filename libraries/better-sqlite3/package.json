@@ -1,7 +1,15 @@
 {
   "name": "@dossierhq/better-sqlite3",
   "version": "0.1.47",
-  "description": "",
+  "description": "A Dossier database adapter for better-sqlite3.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "sqlite",
+    "sqlite3",
+    "better-sqlite3"
+  ],
+  "homepage": "https://dossierhq.dev",
   "type": "module",
   "exports": {
     ".": {
@@ -29,7 +37,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dossierhq/dossierhq.git",
-    "directory": "libraries/database-adapter-better-sqlite3"
+    "directory": "libraries/better-sqlite3"
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
@@ -37,10 +45,10 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/integration-test": "workspace:*",
-    "@dossierhq/heft-node-rig": "workspace:*",
-    "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/heft-node-rig": "workspace:*",
+    "@dossierhq/integration-test": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.49.1",
     "@types/better-sqlite3": "~7.6.3",
     "better-sqlite3": "~8.0.1",

@@ -415,7 +415,8 @@
     },
     {
       "packageName": "@dossierhq/sqlite-core",
-      "projectFolder": "libraries/sqlite-core"
+      "projectFolder": "libraries/sqlite-core",
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/sqlite3",

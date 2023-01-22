@@ -24,6 +24,7 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 | `@dossierhq/postgres-tools`       | [![npm version](https://badge.fury.io/js/@dossierhq%2Fpostgres-tools.svg)](https://badge.fury.io/js/@dossierhq%2Fpostgres-tools)             | [libraries/postgres-tools](./libraries/postgres-tools/)             |
 | `@dossierhq/react-components`     | [![npm version](https://badge.fury.io/js/@dossierhq%2Freact-components.svg)](https://badge.fury.io/js/@dossierhq%2Freact-components)         | [libraries/react-components](./libraries/react-components/)         |
 | `@dossierhq/server`               | [![npm version](https://badge.fury.io/js/@dossierhq%2Fserver.svg)](https://badge.fury.io/js/@dossierhq%2Fserver)                             | [libraries/server](./libraries/server/)                             |
+| `@dossierhq/sqlite-core`          | [![npm version](https://badge.fury.io/js/@dossierhq%2Fsqlite-core.svg)](https://badge.fury.io/js/@dossierhq%2Fsqlite-core)                   | [libraries/sqlite-core](./libraries/sqlite-core/)                   |
 | `@dossierhq/typescript-generator` | [![npm version](https://badge.fury.io/js/@dossierhq%2Ftypescript-generator.svg)](https://badge.fury.io/js/@dossierhq%2Ftypescript-generator) | [libraries/typescript-generator](./libraries/typescript-generator/) |
 
 ## Development dependencies

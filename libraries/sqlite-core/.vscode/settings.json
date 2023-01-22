@@ -1,5 +1,14 @@
 {
-  "cSpell.words": ["pkey", "rowid", "rushstack", "SAVEPOINT", "upsert", "uuidv", "vitest"],
+  "cSpell.words": [
+    "dossierhq",
+    "pkey",
+    "rowid",
+    "rushstack",
+    "SAVEPOINT",
+    "upsert",
+    "uuidv",
+    "vitest"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],
