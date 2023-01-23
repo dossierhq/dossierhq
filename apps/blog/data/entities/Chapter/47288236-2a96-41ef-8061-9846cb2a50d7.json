@@ -62,6 +62,13 @@
         "items": [
           {
             "type": "ArticleTocItem",
+            "title": "Getting started",
+            "article": {
+              "id": "c7e5e706-e1ce-431f-b414-c713ee704318"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
             "title": "Tutorial",
             "article": {
               "id": "6985480d-e397-45e7-b793-b3411b65f906"
