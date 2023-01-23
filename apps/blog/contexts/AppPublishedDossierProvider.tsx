@@ -1,9 +1,3 @@
-import type {
-  FieldDisplayProps,
-  PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
-} from '@dossierhq/react-components';
-import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
 import type { ClientContext, PublishedClient, PublishedClientOperation } from '@dossierhq/core';
 import {
@@ -12,8 +6,14 @@ import {
   createConsoleLogger,
   isValueItemField,
 } from '@dossierhq/core';
+import type {
+  FieldDisplayProps,
+  PublishedDossierContextAdapter,
+  RichTextValueItemDisplayProps,
+} from '@dossierhq/react-components';
+import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
@@ -74,8 +74,7 @@ async function terminatingPublishedMiddleware(
 ): Promise<void> {
   const result = await fetchJsonResult(
     context,
-    BackendUrls.published(operation.name, operation.args),
-    { method: 'GET', headers: AUTH_KEYS_HEADER }
+    BackendUrls.published(operation.name, operation.args)
   );
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }

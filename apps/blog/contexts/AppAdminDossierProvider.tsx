@@ -1,9 +1,3 @@
-import type {
-  AdminDossierContextAdapter,
-  FieldEditorProps,
-  RichTextValueItemEditorProps,
-} from '@dossierhq/react-components';
-import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
@@ -23,8 +17,14 @@ import {
   FieldType,
   isValueItemField,
 } from '@dossierhq/core';
+import type {
+  AdminDossierContextAdapter,
+  FieldEditorProps,
+  RichTextValueItemEditorProps,
+} from '@dossierhq/react-components';
+import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { AUTH_KEYS_HEADER, DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
@@ -109,14 +109,11 @@ async function terminatingAdminMiddleware(
   if (operation.modifies) {
     result = await fetchJsonResult(context, BackendUrls.admin(operation.name), {
       method: 'PUT',
-      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify(operation.args),
     });
   } else {
-    result = await fetchJsonResult(context, BackendUrls.admin(operation.name, operation.args), {
-      method: 'GET',
-      headers: AUTH_KEYS_HEADER,
-    });
+    result = await fetchJsonResult(context, BackendUrls.admin(operation.name, operation.args));
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
 }

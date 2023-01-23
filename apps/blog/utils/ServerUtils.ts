@@ -1,10 +1,11 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
 import { NoOpLogger, notOk, ok } from '@dossierhq/core';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import type { Server } from '@dossierhq/server';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import type { NextApiRequest } from 'next';
 import assert from 'node:assert';
 import { Database } from 'sqlite3';
+import { DEFAULT_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { createFilesystemAdminMiddleware } from './FileSystemSerializer';
 import { createBlogServer } from './SharedServerUtils';
 
@@ -18,11 +19,10 @@ export async function getSessionContextForRequest(
   typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
-  const defaultAuthKeys = getDefaultAuthKeysFromHeaders(req);
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'john-smith',
-    defaultAuthKeys,
+    defaultAuthKeys: DEFAULT_AUTH_KEYS,
   });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
@@ -35,17 +35,6 @@ export async function getSessionContextForRequest(
   ]);
   const publishedClient = server.createPublishedClient(context);
   return ok({ adminClient, publishedClient });
-}
-
-function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
-  const value = req.headers['Dossier-Default-Auth-Keys'.toLowerCase()];
-  const defaultAuthKeys: string[] = [];
-  if (typeof value === 'string') {
-    defaultAuthKeys.push(...value.split(',').map((it) => it.trim()));
-  } else if (Array.isArray(value)) {
-    defaultAuthKeys.push(...value.flatMap((it) => it.split(',')).map((it) => it.trim()));
-  }
-  return defaultAuthKeys;
 }
 
 export async function getServerConnection(): Promise<{ server: Server }> {

@@ -5,6 +5,4 @@ export const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
   { authKey: 'subject', displayName: 'User private' },
 ];
 
-export const AUTH_KEYS_HEADER = {
-  'Dossier-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
-};
+export const DEFAULT_AUTH_KEYS = ['none', 'subject'];

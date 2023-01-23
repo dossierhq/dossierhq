@@ -6,7 +6,7 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@dossierhq/core';
-import { createConsoleLogger, NoOpLogger, notOk, ok } from '@dossierhq/core';
+import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
@@ -68,12 +68,12 @@ export async function getServerConnection(): Promise<{ server: Server }> {
 }
 
 async function createDatabaseAdapter(logger: Logger) {
-  const context = { logger: NoOpLogger };
+  const context = { logger };
   let database: Database;
   try {
     database = new BetterSqlite('data/database.sqlite');
   } catch (error) {
-    return notOk.GenericUnexpectedException({ logger }, error);
+    return notOk.GenericUnexpectedException(context, error);
   }
 
   const databaseAdapterResult = await createBetterSqlite3Adapter(context, database, {
