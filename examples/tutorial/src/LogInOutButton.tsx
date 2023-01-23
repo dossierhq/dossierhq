@@ -8,7 +8,11 @@ export function LogInOutButton() {
     return null;
   }
   if (isAuthenticated) {
-    return <Button onClick={() => logout({ returnTo: window.location.origin })}>Log out</Button>;
+    return (
+      <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+        Log out
+      </Button>
+    );
   }
   return <Button onClick={() => loginWithRedirect()}>Log in</Button>;
 }

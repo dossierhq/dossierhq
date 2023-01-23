@@ -25,8 +25,10 @@ export default function App() {
       <Auth0Provider
         domain={import.meta.env.VITE_AUTH0_DOMAIN}
         clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
-        audience={import.meta.env.VITE_AUTH0_AUDIENCE}
-        redirectUri={window.location.origin}
+        authorizationParams={{
+          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+          redirect_uri: window.location.origin,
+        }}
       >
         <AppAdminProvider>
           <AppPublishedProvider>
