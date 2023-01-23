@@ -420,7 +420,8 @@
     },
     {
       "packageName": "@dossierhq/sqlite3",
-      "projectFolder": "libraries/sqlite3"
+      "projectFolder": "libraries/sqlite3",
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/sql.js",

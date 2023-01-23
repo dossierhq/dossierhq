@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite3",
+      "comment": "First release.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite3"
+}
