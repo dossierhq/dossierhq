@@ -1,0 +1,17 @@
+{
+  "name": "@dossierhq/sqlite3",
+  "entries": [
+    {
+      "version": "0.1.49",
+      "tag": "@dossierhq/sqlite3_v0.1.49",
+      "date": "Mon, 23 Jan 2023 09:38:38 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "First release."
+          }
+        ]
+      }
+    }
+  ]
+}

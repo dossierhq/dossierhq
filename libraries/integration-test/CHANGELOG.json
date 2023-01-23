@@ -2,6 +2,12 @@
   "name": "@dossierhq/integration-test",
   "entries": [
     {
+      "version": "0.1.49",
+      "tag": "@dossierhq/integration-test_v0.1.49",
+      "date": "Mon, 23 Jan 2023 09:38:38 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.48",
       "tag": "@dossierhq/integration-test_v0.1.48",
       "date": "Sun, 22 Jan 2023 22:28:24 GMT",
