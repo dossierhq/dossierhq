@@ -46,7 +46,7 @@
   "devDependencies": {
     "@babel/core": "~7.20.2",
     "@dossierhq/heft-node-rig": "workspace:*",
-    "@rushstack/heft": "0.49.1",
+    "@rushstack/heft": "0.49.3",
     "@storybook/addon-actions": "~6.5.12",
     "@storybook/addon-essentials": "~6.5.12",
     "@storybook/addon-links": "~6.5.12",
