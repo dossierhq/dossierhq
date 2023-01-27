@@ -21,7 +21,7 @@
     "@lexical/rich-text": "0.7.6",
     "@lexical/selection": "0.7.6",
     "@lexical/utils": "0.7.6",
-    "@playwright/test": "~1.29.0",
+    "@playwright/test": "~1.30.0",
     "@react-aria/overlays": "~3.12.0",
     "@rushstack/eslint-patch": "~1.2.0",
     "@rushstack/heft": "0.49.3",
