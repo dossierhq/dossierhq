@@ -32,7 +32,7 @@
     "@cloudinary/url-gen": "~1.8.7",
     "@dossierhq/design": "workspace:*",
     "react": "~18.2.0",
-    "tslib": "~2.4.1"
+    "tslib": "~2.5.0"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",

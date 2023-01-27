@@ -39,7 +39,7 @@
     "dotenv": "~16.0.3",
     "pg": "~8.8.0",
     "sqlite3": "~5.1.2",
-    "tslib": "~2.4.1"
+    "tslib": "~2.5.0"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
