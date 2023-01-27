@@ -42,7 +42,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@playwright/test": "~1.29.0",
+    "@playwright/test": "~1.30.0",
     "@rushstack/heft": "0.49.3",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.4",

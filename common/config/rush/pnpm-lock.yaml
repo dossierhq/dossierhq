@@ -1041,7 +1041,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@playwright/test': ~1.29.0
+      '@playwright/test': ~1.30.0
       '@rushstack/heft': 0.49.3
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
@@ -1061,7 +1061,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@playwright/test': 1.29.1
+      '@playwright/test': 1.30.0
       '@rushstack/heft': 0.49.3
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
@@ -1265,7 +1265,7 @@ importers:
       '@lexical/selection': 0.7.6
       '@lexical/utils': 0.7.6
       '@microsoft/rush-lib': ~5.89.1
-      '@playwright/test': ~1.29.0
+      '@playwright/test': ~1.30.0
       '@react-aria/overlays': ~3.12.0
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': 0.49.3
@@ -1362,7 +1362,7 @@ importers:
       '@lexical/rich-text': 0.7.6_j7ml7jyttuoh5u6ccaebgucwwi
       '@lexical/selection': 0.7.6_lexical@0.7.6
       '@lexical/utils': 0.7.6_lexical@0.7.6
-      '@playwright/test': 1.29.1
+      '@playwright/test': 1.30.0
       '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
       '@rushstack/heft': 0.49.3
@@ -5314,13 +5314,13 @@ packages:
       tiny-glob: 0.2.9
       tslib: 2.5.0
 
-  /@playwright/test/1.29.1:
-    resolution: {integrity: sha512-iQxk2DX5U9wOGV3+/Jh9OHPsw5H3mleUL2S4BgQuwtlAfK3PnKvn38m4Rg9zIViGHVW24opSm99HQm/UFLEy6w==}
+  /@playwright/test/1.30.0:
+    resolution: {integrity: sha512-SVxkQw1xvn/Wk/EvBnqWIq6NLo1AppwbYOjNLmyU0R1RoQ3rLEBtmjTnElcnz8VEtn11fptj1ECxK0tgURhajw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.11.17
-      playwright-core: 1.29.1
+      playwright-core: 1.30.0
 
   /@pmmmwh/react-refresh-webpack-plugin/0.5.5_so6hj2sarpzw76zmfd25dwvqwu:
     resolution: {integrity: sha512-RbG7h6TuP6nFFYKJwbcToA1rjC1FyPg25NR2noAZ0vKI+la01KTSRPkuVPE+U88jXv7javx2JHglUcL1MHcshQ==}
@@ -15846,8 +15846,8 @@ packages:
       mlly: 1.1.0
       pathe: 1.1.0
 
-  /playwright-core/1.29.1:
-    resolution: {integrity: sha512-20Ai3d+lMkWpI9YZYlxk8gxatfgax5STW8GaMozAHwigLiyiKQrdkt7gaoT9UQR8FIVDg6qVXs9IoZUQrDjIIg==}
+  /playwright-core/1.30.0:
+    resolution: {integrity: sha512-7AnRmTCf+GVYhHbLJsGUtskWTE33SwMZkybJ0v6rqR1boxq2x36U7p1vDRV7HO2IwTZgmycracLxPEJI49wu4g==}
     engines: {node: '>=14'}
     hasBin: true
 
