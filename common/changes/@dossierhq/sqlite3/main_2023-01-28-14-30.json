@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite3",
+      "comment": "Fix open with {migrate:false}",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite3"
+}
