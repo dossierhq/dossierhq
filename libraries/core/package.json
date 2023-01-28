@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/core",
-  "version": "0.1.49",
+  "version": "0.1.50",
   "description": "The core Dossier library used by clients and server alike, used to interact with schema and entities directly, as well as remotely through a client.",
   "keywords": [
     "dossier",
