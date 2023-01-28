@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite3",
   "entries": [
     {
+      "version": "0.1.50",
+      "tag": "@dossierhq/sqlite3_v0.1.50",
+      "date": "Sat, 28 Jan 2023 14:37:31 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix open with {migrate:false}"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.49",
       "tag": "@dossierhq/sqlite3_v0.1.49",
       "date": "Mon, 23 Jan 2023 09:38:38 GMT",
