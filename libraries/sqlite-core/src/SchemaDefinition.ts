@@ -191,7 +191,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_6,
 ];
 
-export const REQUIRED_SCHEMA_VERSION = VERSIONS.length;
+export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
 
 export async function migrateDatabaseIfNecessary(
   database: Database,
