@@ -21,6 +21,7 @@ const RichTextNodesNotInPlaceholders: string[] = [
   RichTextNodeType.heading,
   RichTextNodeType.entity,
   RichTextNodeType.entityLink,
+  RichTextNodeType.link,
   RichTextNodeType.valueItem,
 ];
 
