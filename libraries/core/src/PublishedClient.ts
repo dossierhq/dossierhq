@@ -1,4 +1,3 @@
-import { assertExhaustive } from './Asserts.js';
 import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from './ErrorResult.js';
 import { ErrorType, notOk, ok } from './ErrorResult.js';
 import type { JsonConnection, JsonEdge, JsonPublishedEntity, JsonResult } from './JsonUtils.js';
@@ -92,17 +91,25 @@ export const PublishedClientOperationName = {
 } as const;
 type PublishedClientOperationName = keyof typeof PublishedClientOperationName;
 
-type MethodParameters<T extends keyof PublishedClient> = Parameters<PublishedClient[T]>;
+type MethodParameters<
+  TName extends keyof PublishedClient,
+  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+> = Parameters<TClient[TName]>;
 type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
-type MethodReturnTypeWithoutPromise<T extends keyof PublishedClient> = Awaited<
-  PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
+type MethodReturnTypeWithoutPromise<
+  TName extends keyof PublishedClient,
+  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+> = Awaited<
+  PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
-type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromResult<
-  ReturnType<PublishedClient[T]>
->;
-type MethodReturnTypeError<T extends keyof PublishedClient> = ErrorFromResult<
-  ReturnType<PublishedClient[T]>
->;
+type MethodReturnTypeOk<
+  TName extends keyof PublishedClient,
+  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+> = OkFromResult<ReturnType<TClient[TName]>>;
+type MethodReturnTypeError<
+  TName extends keyof PublishedClient,
+  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+> = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface PublishedClientOperationArguments {
   [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
@@ -316,20 +323,21 @@ export async function executePublishedClientOperationFromJson(
   }
 }
 
-export function convertJsonPublishedClientResult<TName extends PublishedClientOperationName>(
+export function convertJsonPublishedClientResult<
+  TName extends PublishedClientOperationName,
+  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+>(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>
-): MethodReturnTypeWithoutPromise<TName> {
+): MethodReturnTypeWithoutPromise<TName, TClient> {
   if (jsonResult.isError()) {
     //TODO check expected types
-    return jsonResult as MethodReturnTypeWithoutPromise<TName>;
+    return jsonResult as MethodReturnTypeWithoutPromise<TName, TClient>;
   }
   const { value } = jsonResult;
   switch (operationName) {
     case PublishedClientOperationName.getEntities: {
-      const result: MethodReturnTypeWithoutPromise<
-        typeof PublishedClientOperationName.getEntities
-      > = ok(
+      const result: MethodReturnTypeWithoutPromise<'getEntities'> = ok(
         (value as JsonResult<JsonPublishedEntity, typeof ErrorType.NotFound>[]).map(
           (jsonItemResult) => {
             const itemResult = convertJsonResult(jsonItemResult);
@@ -337,40 +345,42 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
           }
         )
       );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case PublishedClientOperationName.getEntity: {
-      const result: MethodReturnTypeWithoutPromise<typeof PublishedClientOperationName.getEntity> =
-        ok(convertJsonPublishedEntity(value as JsonPublishedEntity));
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      const result: MethodReturnTypeWithoutPromise<'getEntity'> = ok(
+        convertJsonPublishedEntity(value as JsonPublishedEntity)
+      );
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case PublishedClientOperationName.getSchemaSpecification:
-      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+      return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case PublishedClientOperationName.getTotalCount:
-      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+      return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case PublishedClientOperationName.sampleEntities: {
       const payload = value as EntitySamplingPayload<JsonPublishedEntity>;
-      const result: MethodReturnTypeWithoutPromise<
-        typeof PublishedClientOperationName.sampleEntities
-      > = ok({
+      const result: MethodReturnTypeWithoutPromise<'sampleEntities'> = ok({
         ...payload,
-        items: payload.items.map((it) => convertJsonPublishedEntity(it)),
+        items: payload.items.map(convertJsonPublishedEntity),
       });
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case PublishedClientOperationName.searchEntities: {
-      const result: MethodReturnTypeWithoutPromise<
-        typeof PublishedClientOperationName.searchEntities
-      > = ok(
+      const result: MethodReturnTypeWithoutPromise<'searchEntities'> = ok(
         convertJsonConnection(
           value as JsonConnection<JsonEdge<JsonPublishedEntity, ErrorType>> | null,
           convertJsonPublishedEntityEdge
         )
       );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    default:
-      assertExhaustive(operationName);
+    default: {
+      const _never: never = operationName; // ensure exhaustiveness
+      return notOk.Generic(`Unknown operation ${operationName}`) as MethodReturnTypeWithoutPromise<
+        TName,
+        TClient
+      >;
+    }
   }
 }
 

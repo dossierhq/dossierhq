@@ -1,4 +1,3 @@
-import { assertExhaustive } from './Asserts.js';
 import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from './ErrorResult.js';
 import { ErrorType, notOk, ok } from './ErrorResult.js';
 import type {
@@ -256,18 +255,28 @@ export const AdminClientOperationName = {
 } as const;
 type AdminClientOperationName = keyof typeof AdminClientOperationName;
 
-type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
-type MethodReturnType<T extends keyof AdminClient> = PromiseResult<
-  MethodReturnTypeOk<T>,
-  MethodReturnTypeError<T>
+type MethodParameters<
+  TName extends keyof AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+> = Parameters<TClient[TName]>;
+type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
+  MethodReturnTypeOk<TName>,
+  MethodReturnTypeError<TName>
 >;
-type MethodReturnTypeWithoutPromise<T extends keyof AdminClient> = Awaited<
-  PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
+type MethodReturnTypeWithoutPromise<
+  TName extends keyof AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+> = Awaited<
+  PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
-type MethodReturnTypeOk<T extends keyof AdminClient> = OkFromResult<ReturnType<AdminClient[T]>>;
-type MethodReturnTypeError<T extends keyof AdminClient> = ErrorFromResult<
-  ReturnType<AdminClient[T]>
->;
+type MethodReturnTypeOk<
+  TName extends keyof AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+> = OkFromResult<ReturnType<TClient[TName]>>;
+type MethodReturnTypeError<
+  TName extends keyof AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+> = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface AdminClientOperationArguments {
   [AdminClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
@@ -759,13 +768,16 @@ export async function executeAdminClientOperationFromJson(
   }
 }
 
-export function convertJsonAdminClientResult<TName extends AdminClientOperationName>(
+export function convertJsonAdminClientResult<
+  TName extends AdminClientOperationName,
+  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+>(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>
-): MethodReturnTypeWithoutPromise<TName> {
+): MethodReturnTypeWithoutPromise<TName, TClient> {
   if (jsonResult.isError()) {
     //TODO check expected types
-    return jsonResult as MethodReturnTypeWithoutPromise<TName>;
+    return jsonResult as MethodReturnTypeWithoutPromise<TName, TClient>;
   }
   const { value } = jsonResult;
   switch (operationName) {
@@ -773,7 +785,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.acquireAdvisoryLock
       > = ok(value as AdvisoryLockPayload);
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.archiveEntity: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.archiveEntity> =
@@ -782,7 +794,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
             value as JsonPublishingResult<AdminEntityArchivePayload['effect']>
           )
         );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.createEntity: {
       const valueTyped = value as JsonAdminEntityCreatePayload;
@@ -791,7 +803,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           ...valueTyped,
           entity: convertJsonAdminEntity(valueTyped.entity),
         });
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntities: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntities> =
@@ -803,28 +815,28 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
             }
           )
         );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntity: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
         convertJsonAdminEntity(value as JsonAdminEntity)
       );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntityHistory: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.getEntityHistory
       > = ok(convertJsonEntityHistory(value as JsonEntityHistory));
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getPublishingHistory: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.getPublishingHistory
       > = ok(convertJsonPublishingHistory(value as JsonPublishingHistory));
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getSchemaSpecification:
-      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+      return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case AdminClientOperationName.publishEntities: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.publishEntities
@@ -833,21 +845,21 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           convertJsonPublishingResult
         )
       );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getTotalCount:
-      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+      return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case AdminClientOperationName.releaseAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.releaseAdvisoryLock
       > = ok(value as AdvisoryLockReleasePayload);
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.renewAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.renewAdvisoryLock
       > = ok(value as AdvisoryLockPayload);
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.sampleEntities: {
       const payload = value as EntitySamplingPayload<JsonAdminEntity>;
@@ -856,7 +868,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           ...payload,
           items: payload.items.map((it) => convertJsonAdminEntity(it)),
         });
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.searchEntities: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.searchEntities> =
@@ -866,7 +878,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
             convertJsonAdminEntityEdge
           )
         );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.unarchiveEntity: {
       const result: MethodReturnTypeWithoutPromise<
@@ -876,7 +888,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           value as JsonPublishingResult<AdminEntityUnarchivePayload['effect']>
         )
       );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.unpublishEntities: {
       const result: MethodReturnTypeWithoutPromise<
@@ -886,7 +898,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           convertJsonPublishingResult
         )
       );
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.updateEntity: {
       const valueTyped = value as JsonAdminEntityUpdatePayload;
@@ -895,10 +907,10 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           ...valueTyped,
           entity: convertJsonAdminEntity(valueTyped.entity),
         });
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.updateSchemaSpecification:
-      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+      return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case AdminClientOperationName.upsertEntity: {
       const valueTyped = value as JsonAdminEntityUpsertPayload;
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.upsertEntity> =
@@ -906,10 +918,15 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           ...valueTyped,
           entity: convertJsonAdminEntity(valueTyped.entity),
         });
-      return result as MethodReturnTypeWithoutPromise<TName>;
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    default:
-      assertExhaustive(operationName);
+    default: {
+      const _never: never = operationName; // ensure exhaustiveness
+      return notOk.Generic(`Unknown operation ${operationName}`) as MethodReturnTypeWithoutPromise<
+        TName,
+        TClient
+      >;
+    }
   }
 }
 
