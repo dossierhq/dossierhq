@@ -6,11 +6,13 @@ import type {
 } from '@dossierhq/core';
 import { ClassName, LexicalTheme, toClassName } from '@dossierhq/design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
+import { LinkNode } from '@lexical/link';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin.js';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin.js';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin.js';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin.js';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
@@ -69,6 +71,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
       CodeNode,
       CodeHighlightNode,
       HeadingNode,
+      LinkNode,
       ListItemNode,
       ListNode,
     ],
@@ -93,11 +96,12 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
         placeholder={null}
         ErrorBoundary={LexicalErrorBoundary}
       />
-      <AdminClickableLinkPlugin onClick={handleEntityLinkClick} />
+      <AdminClickableLinkPlugin onEntityLinkClick={handleEntityLinkClick} />
       <CheckListPlugin />
       <CodeHighlightPlugin />
       <EntityLinkPlugin />
       <EntityPlugin />
+      <LinkPlugin />
       <ListPlugin />
       <ValueItemPlugin />
       <OnChangePlugin onChange={debouncedHandleChange} />

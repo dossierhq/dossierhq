@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "~6.2.1",
     "@graphiql/toolkit": "~0.8.0",
     "@lexical/code": "0.7.6",
+    "@lexical/link": "0.7.6",
     "@lexical/list": "0.7.6",
     "@lexical/react": "0.7.6",
     "@lexical/rich-text": "0.7.6",

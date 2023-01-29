@@ -70,6 +70,7 @@
     "@dossierhq/design": "workspace:*",
     "@dossierhq/leaflet": "workspace:*",
     "@lexical/code": "0.7.6",
+    "@lexical/link": "0.7.6",
     "@lexical/list": "0.7.6",
     "@lexical/react": "0.7.6",
     "@lexical/rich-text": "0.7.6",

@@ -1,6 +1,7 @@
 import type { EntityReference, RichText, RichTextFieldSpecification } from '@dossierhq/core';
 import { ClassName, LexicalTheme, toClassName } from '@dossierhq/design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
+import { LinkNode } from '@lexical/link';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
@@ -44,6 +45,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
       PublishedEntityLinkNode,
       PublishedValueItemNode,
       HeadingNode,
+      LinkNode,
       ListItemNode,
       ListNode,
     ],

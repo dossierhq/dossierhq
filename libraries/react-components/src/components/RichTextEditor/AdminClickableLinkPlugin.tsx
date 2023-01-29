@@ -1,4 +1,5 @@
 import type { EntityReference } from '@dossierhq/core';
+import { $isLinkNode } from '@lexical/link';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { LexicalEditor } from 'lexical';
 import { $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection } from 'lexical';
@@ -6,10 +7,10 @@ import { useEffect } from 'react';
 import { $isAdminEntityLinkNode } from './AdminEntityLinkNode.js';
 
 interface Props {
-  onClick: (reference: EntityReference) => void;
+  onEntityLinkClick: (reference: EntityReference) => void;
 }
 
-export function AdminClickableLinkPlugin({ onClick }: Props): JSX.Element | null {
+export function AdminClickableLinkPlugin({ onEntityLinkClick }: Props): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -24,33 +25,39 @@ export function AdminClickableLinkPlugin({ onClick }: Props): JSX.Element | null
       }
 
       let entityReference: EntityReference | null = null;
+      let url: string | null = null;
       editor.update(() => {
         const maybeLinkNode = $getNearestNodeFromDOMNode(anchorDomNode);
 
-        if ($isAdminEntityLinkNode(maybeLinkNode)) {
+        if ($isLinkNode(maybeLinkNode)) {
+          url = maybeLinkNode.getURL();
+        } else if ($isAdminEntityLinkNode(maybeLinkNode)) {
           entityReference = maybeLinkNode.getReference();
         }
       });
 
-      if (!entityReference) {
-        return;
+      if (url) {
+        //TODO handle opening in new tab
+        window.open(url, '_blank');
+      } else if (entityReference) {
+        onEntityLinkClick(entityReference);
       }
-
-      onClick(entityReference);
     }
 
     return editor.registerRootListener(
       (rootElement: null | HTMLElement, prevRootElement: null | HTMLElement) => {
         if (prevRootElement) {
           prevRootElement.removeEventListener('click', handleClick);
+          //TODO auxclick
         }
 
         if (rootElement) {
           rootElement.addEventListener('click', handleClick);
+          //TODO auxclick
         }
       }
     );
-  }, [editor, onClick]);
+  }, [editor, onEntityLinkClick]);
   return null;
 }
 

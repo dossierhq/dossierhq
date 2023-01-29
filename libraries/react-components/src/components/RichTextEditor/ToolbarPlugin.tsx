@@ -9,6 +9,7 @@ import {
   CODE_LANGUAGE_MAP,
   getLanguageFriendlyName,
 } from '@lexical/code';
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -41,6 +42,7 @@ import { AdminTypePickerDialog } from '../AdminTypePickerDialog/AdminTypePickerD
 import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './AdminEntityLinkNode.js';
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
 import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
+import { CreateLinkDialog } from './CreateLinkDialog.js';
 
 const blockTypeToBlockName = {
   paragraph: { title: 'Paragraph', node: RichTextNodeType.paragraph, icon: 'paragraph' },
@@ -69,6 +71,7 @@ export function ToolbarPlugin({
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(null);
 
+  const [isLink, setIsLink] = useState(false);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isSubscript, setIsSubscript] = useState(false);
@@ -114,6 +117,7 @@ export function ToolbarPlugin({
 
       const node = getSelectedNode(selection);
       const parent = node.getParent();
+      setIsLink($isLinkNode(parent) || $isLinkNode(node));
       setIsEntityLink($isAdminEntityLinkNode(parent) || $isAdminEntityLinkNode(node));
 
       if (elementDOM !== null) {
@@ -158,6 +162,7 @@ export function ToolbarPlugin({
   const enableAllNodes = !fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0;
   const enableEntityNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entity);
+  const enableLinkNode = enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.link);
   const enableEntityLinkNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entityLink);
   const enableValueItemNode =
@@ -227,8 +232,14 @@ export function ToolbarPlugin({
               onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}
             />
           </IconButton.Group>
-          {enableEntityLinkNode ? (
-            <EntityLinkButton fieldSpec={fieldSpec} isEntityLink={isEntityLink} />
+          {enableEntityLinkNode || enableLinkNode ? (
+            <LinkAndEntityLinkButton
+              fieldSpec={fieldSpec}
+              enableEntityLinkNode={enableEntityLinkNode}
+              enableLinkNode={enableLinkNode}
+              isEntityLink={isEntityLink}
+              isLink={isLink}
+            />
           ) : null}
           {insertItems.length > 0 ? (
             <>
@@ -478,39 +489,75 @@ function AddValueItemButton({
   );
 }
 
-function EntityLinkButton({
+function LinkAndEntityLinkButton({
   fieldSpec,
+  enableLinkNode,
+  enableEntityLinkNode,
+  isLink,
   isEntityLink,
 }: {
   fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  enableLinkNode: boolean;
+  enableEntityLinkNode: boolean;
+  isLink: boolean;
   isEntityLink: boolean;
 }) {
   const [editor] = useLexicalComposerContext();
-  const [showSelector, setShowSelector] = useState(false);
-  const handleDialogClose = useCallback(() => setShowSelector(false), []);
-  const handleToggleButton = useCallback(
-    () =>
-      isEntityLink
-        ? editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, null)
-        : setShowSelector(true),
-    [editor, isEntityLink]
-  );
+  const [showEntitySelector, setShowEntitySelector] = useState(false);
+  const handleEntityDialogClose = useCallback(() => setShowEntitySelector(false), []);
+  const [showLinkDialog, setShowLinkDialog] = useState(false);
+  const handleLinkDialogClose = useCallback(() => setShowLinkDialog(false), []);
+
+  const handleToggleButton = useCallback(() => {
+    if (isLink) {
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+    } else if (isEntityLink) {
+      editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, null);
+    } else if (enableLinkNode && enableEntityLinkNode) {
+      setShowLinkDialog(true);
+    } else if (enableLinkNode) {
+      showLinkPrompt(editor);
+    } else if (enableEntityLinkNode) {
+      setShowEntitySelector(true);
+    }
+  }, [editor, enableEntityLinkNode, enableLinkNode, isEntityLink, isLink]);
 
   return (
     <>
-      <IconButton icon="link" toggled={isEntityLink} onClick={handleToggleButton} />
-      {showSelector && (
+      <IconButton icon="link" toggled={isLink || isEntityLink} onClick={handleToggleButton} />
+      {showEntitySelector && (
         <AdminEntitySelectorDialog
           show
           title="Select entity"
           entityTypes={fieldSpec.linkEntityTypes}
-          onClose={handleDialogClose}
+          onClose={handleEntityDialogClose}
           onItemClick={(entity) => {
             editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, { id: entity.id });
-            setShowSelector(false);
+            setShowEntitySelector(false);
+          }}
+        />
+      )}
+      {showLinkDialog && (
+        <CreateLinkDialog
+          show
+          onClose={handleLinkDialogClose}
+          onCreateLink={() => {
+            setShowLinkDialog(false);
+            showLinkPrompt(editor);
+          }}
+          onCreateEntityLink={() => {
+            setShowEntitySelector(true);
+            setShowLinkDialog(false);
           }}
         />
       )}
     </>
   );
+}
+
+function showLinkPrompt(editor: LexicalEditor) {
+  const url = window.prompt('Enter the URL', 'https://');
+  if (url && url !== 'https://') {
+    editor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
+  }
 }

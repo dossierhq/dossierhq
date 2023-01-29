@@ -923,6 +923,7 @@ importers:
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@lexical/code': 0.7.6
+      '@lexical/link': 0.7.6
       '@lexical/list': 0.7.6
       '@lexical/react': 0.7.6
       '@lexical/rich-text': 0.7.6
@@ -964,6 +965,7 @@ importers:
       '@dossierhq/design': link:../design
       '@dossierhq/leaflet': link:../leaflet
       '@lexical/code': 0.7.6_lexical@0.7.6
+      '@lexical/link': 0.7.6_lexical@0.7.6
       '@lexical/list': 0.7.6_lexical@0.7.6
       '@lexical/react': 0.7.6_urbbhijj4bjds7dyo6fbmwct4u
       '@lexical/rich-text': 0.7.6_j7ml7jyttuoh5u6ccaebgucwwi
@@ -1259,6 +1261,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': ~6.2.1
       '@graphiql/toolkit': ~0.8.0
       '@lexical/code': 0.7.6
+      '@lexical/link': 0.7.6
       '@lexical/list': 0.7.6
       '@lexical/react': 0.7.6
       '@lexical/rich-text': 0.7.6
@@ -1357,6 +1360,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@graphiql/toolkit': 0.8.0_acoc23sloedlurnf2ovm6sgfmy
       '@lexical/code': 0.7.6_lexical@0.7.6
+      '@lexical/link': 0.7.6_lexical@0.7.6
       '@lexical/list': 0.7.6_lexical@0.7.6
       '@lexical/react': 0.7.6_urbbhijj4bjds7dyo6fbmwct4u
       '@lexical/rich-text': 0.7.6_j7ml7jyttuoh5u6ccaebgucwwi
