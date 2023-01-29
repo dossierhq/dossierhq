@@ -9,7 +9,7 @@ import type { AdminEntityListScreenProps } from './AdminEntityListScreen';
 import { AdminEntityListScreen } from './AdminEntityListScreen';
 
 type StoryProps = Omit<AdminEntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
-  initialUrlQuery?: URLSearchParams;
+  initialUrlSearchParams?: URLSearchParams;
   showUrl: boolean;
   ownCache: boolean;
   adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
@@ -38,7 +38,7 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 function Wrapper({
-  initialUrlQuery,
+  initialUrlSearchParams,
   ownCache,
   showUrl,
   header,
@@ -46,7 +46,7 @@ function Wrapper({
   ...props
 }: StoryProps) {
   const [urlSearchParams, setUrlSearchParams] = useState<URLSearchParams>(
-    initialUrlQuery ?? new URLSearchParams()
+    initialUrlSearchParams ?? new URLSearchParams()
   );
   return (
     <CacheConfig ownCache={ownCache}>
@@ -79,12 +79,12 @@ HeaderFooter.args = {
 
 export const InitialQuery = Template.bind({});
 InitialQuery.args = {
-  initialUrlQuery: { query: '{"order":"name","text":"hello"}' },
+  initialUrlSearchParams: { query: '{"order":"name","text":"hello"}' },
 };
 
 export const InitialBoundingBoxQuery = Template.bind({});
 InitialBoundingBoxQuery.args = {
-  initialUrlQuery: {
+  initialUrlSearchParams: {
     query:
       '{"boundingBox":{"minLat":55.59004909705666,"maxLat":55.63212782260112,"minLng":12.938149496912958,"maxLng":13.074276968836786}}',
   },
@@ -104,5 +104,5 @@ SlowUsingSharedCache.args = {
 export const SlowInitialTextNoMatch = Template.bind({});
 SlowInitialTextNoMatch.args = {
   adminClientMiddleware: [createSlowAdminMiddleware()],
-  initialUrlQuery: { query: '{"text":"there-are-no-matches-for-this"}' },
+  initialUrlSearchParams: { query: '{"text":"there-are-no-matches-for-this"}' },
 };

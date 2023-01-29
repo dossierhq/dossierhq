@@ -1,4 +1,4 @@
-import type { AdminClient, ErrorType, PromiseResult, Result } from '@dossierhq/core';
+import type { AdminClient, AdminEntity, ErrorType, PromiseResult, Result } from '@dossierhq/core';
 import { AdminEntityStatus, notOk, ok } from '@dossierhq/core';
 import React, { useContext, useEffect, useState } from 'react';
 import { AdminDossierContext } from '..';
@@ -30,7 +30,9 @@ export function LoadFixtures({ children }: Props): JSX.Element | null {
   );
 }
 
-async function loadFixtures(adminClient: AdminClient): PromiseResult<void, ErrorType> {
+async function loadFixtures(
+  adminClient: AdminClient<AdminEntity<string, object, string>>
+): PromiseResult<void, ErrorType> {
   for (const fixture of entitiesFixture) {
     const { id, type, name, authKey, archived, publishedVersion } = fixture;
     const latestVersion = fixture.versions[fixture.versions.length - 1];
