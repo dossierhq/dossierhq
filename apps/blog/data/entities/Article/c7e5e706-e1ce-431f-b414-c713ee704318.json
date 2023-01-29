@@ -1,13 +1,13 @@
 {
   "id": "c7e5e706-e1ce-431f-b414-c713ee704318",
   "info": {
-    "name": "Getting started developing app development",
+    "name": "Getting started developing app",
     "type": "Article",
     "authKey": "none",
     "status": "published"
   },
   "fields": {
-    "title": "Getting started developing app development",
+    "title": "Getting started developing app",
     "slug": "getting-started",
     "body": {
       "root": {
@@ -72,11 +72,32 @@
                 "value": 1,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://nextjs.org/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "Next.js",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Next.js as the full-stack framework",
+                    "text": " as the full-stack framework",
                     "type": "text",
                     "version": 1
                   }
@@ -91,15 +112,54 @@
                 "value": 2,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://sqlite.org/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "SQLite",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "SQLite as the database",
+                    "text": " as the database",
                     "type": "text",
                     "version": 1
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "In order to keep things as simple as possible, this template doesn't have any auth. I.e. there's no need to login and all users use the same anonymous user. In order to protect the data, in production only read-only published content can be accessed, and the Dossier web interface is disabled.",
+                "type": "text",
+                "version": 1
               }
             ]
           },
@@ -249,6 +309,144 @@
                 "mode": "normal",
                 "style": "",
                 "text": ". By adding it to Git you can keep the state of Dossier and synchronize it between computers.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Head over to the ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://github.com/dossierhq/dossier-next-sqlite-app#readme",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "GitHub repo",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " to read more about options for deploying the app with ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://fly.io/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Fly.io",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ", ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://www.netlify.com/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Netlify",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " or ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://vercel.com/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Vercel",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ".",
                 "type": "text",
                 "version": 1
               }

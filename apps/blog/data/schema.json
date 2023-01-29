@@ -44,7 +44,8 @@
             "code-highlight",
             "entityLink",
             "heading",
-            "valueItem"
+            "valueItem",
+            "link"
           ],
           "entityTypes": [],
           "linkEntityTypes": [
