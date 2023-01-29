@@ -81,7 +81,7 @@ async function terminatingAdminMiddleware(
 ): Promise<void> {
   let response: Response;
   if (operation.modifies) {
-    response = await fetch(`/admin?name=${operation.name}`, {
+    response = await fetch(`/api/admin/${operation.name}`, {
       method: 'PUT',
       headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(operation.args),

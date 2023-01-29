@@ -59,7 +59,7 @@ async function getServer() {
 
 const expressMiddleWare = (router) => {
   router.use(bodyParser.json());
-  router.use('/admin', (req, res) => {
+  router.use('/api/admin/:operationName', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
       const defaultAuthKeys = getDefaultAuthKeysFromRequest(req);
       const sessionResult = server.createSession({
@@ -77,7 +77,7 @@ const expressMiddleWare = (router) => {
       return await executeAdminClientOperationFromJson(adminClient, name, operation);
     });
   });
-  router.use('/published', (req, res) => {
+  router.use('/api/published/:operationName', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
       const defaultAuthKeys = getDefaultAuthKeysFromRequest(req);
       const sessionResult = server.createSession({
@@ -103,7 +103,7 @@ function getDefaultAuthKeysFromRequest(req) {
 }
 
 function handleClientOperation(req, res, executeOperation) {
-  const { name } = req.query;
+  const { operationName } = req.params;
   let operation = null;
   if (req.method === 'GET') {
     operation = decodeURLSearchParamsParam(req.query, 'args');
@@ -113,7 +113,7 @@ function handleClientOperation(req, res, executeOperation) {
     res.status(405).send('Only GET and PUT allowed');
     return;
   }
-  if (!name) {
+  if (!operationName) {
     throw new Error('No operation name');
   }
   if (!operation) {
@@ -128,7 +128,7 @@ function handleClientOperation(req, res, executeOperation) {
     }
     const server = serverResult.value;
 
-    const result = await executeOperation(server, name, operation);
+    const result = await executeOperation(server, operationName, operation);
     if (result.isError()) {
       res.status(result.httpStatus).send(result.message);
       return;
