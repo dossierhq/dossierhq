@@ -32,14 +32,14 @@ export function LoadFixtures({ children }: Props): JSX.Element | null {
 
 async function loadFixtures(adminClient: AdminClient): PromiseResult<void, ErrorType> {
   for (const fixture of entitiesFixture) {
-    const { id, type, name, archived, publishedVersion } = fixture;
+    const { id, type, name, authKey, archived, publishedVersion } = fixture;
     const latestVersion = fixture.versions[fixture.versions.length - 1];
     if (!latestVersion) return notOk.BadRequest(`Fixture is missing version: ${id}`);
 
     const { _version, ...fields } = latestVersion;
     const upsertResult = await adminClient.upsertEntity({
       id,
-      info: { type, name, authKey: 'none' },
+      info: { type, name, authKey: authKey ?? 'none' },
       fields,
     });
     if (upsertResult.isError()) {

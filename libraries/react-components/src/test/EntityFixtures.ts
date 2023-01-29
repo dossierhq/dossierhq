@@ -10,6 +10,7 @@ interface FixtureEntity {
   id: string;
   type: string;
   name: string;
+  authKey?: string;
   versions: InMemoryEntityVersion[];
   archived?: boolean;
   publishedVersion?: number | null;
@@ -101,7 +102,7 @@ export const entitiesFixture: FixtureEntity[] = [
         bodyNested: createRichTextRootNode([
           createRichTextValueItemNode({
             type: 'NestedValueItem',
-            text: 'Hello nested',
+            text: 'foo',
             child: null,
           }),
         ]),
@@ -121,6 +122,7 @@ export const entitiesFixture: FixtureEntity[] = [
     id: qux1Id,
     type: 'Qux',
     name: 'Qux 1',
+    authKey: 'subject',
     versions: [
       {
         title: 'Qux 1',
