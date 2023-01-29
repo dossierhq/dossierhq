@@ -9,15 +9,23 @@
     "headless"
   ],
   "homepage": "https://dossierhq.dev",
-  "type": "module",
   "exports": {
-    ".": "./lib/index.js",
-    "./main.css": "./lib/main.css"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    },
+    "./main.css": {
+      "import": "./lib/esm/main.css",
+      "require": "./lib/cjs/main.css"
+    }
   },
-  "types": "./lib/index.d.ts",
+  "types": "./lib/esm/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build esm-package-json",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
