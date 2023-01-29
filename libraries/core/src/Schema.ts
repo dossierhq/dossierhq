@@ -58,6 +58,7 @@ export const RichTextNodeType = {
   entityLink: 'entityLink',
   heading: 'heading',
   linebreak: 'linebreak',
+  link: 'link',
   list: 'list',
   listitem: 'listitem',
   paragraph: 'paragraph',

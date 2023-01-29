@@ -9,6 +9,7 @@ import type {
   SerializedHeadingNode,
   SerializedLexicalNode,
   SerializedLineBreakNode,
+  SerializedLinkNode,
   SerializedListItemNode,
   SerializedListNode,
   SerializedParagraphNode,
@@ -72,6 +73,8 @@ export type RichTextRootNode = SerializedRootNode;
 export type RichTextParagraphNode = SerializedParagraphNode;
 
 export type RichTextHeadingNode = SerializedHeadingNode;
+
+export type RichTextLinkNode = SerializedLinkNode;
 
 export type RichTextListNode = SerializedListNode;
 

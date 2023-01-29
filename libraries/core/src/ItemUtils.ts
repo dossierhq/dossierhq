@@ -20,6 +20,7 @@ import type {
   RichTextEntityNode,
   RichTextHeadingNode,
   RichTextLineBreakNode,
+  RichTextLinkNode,
   RichTextListItemNode,
   RichTextListNode,
   RichTextNode,
@@ -240,6 +241,10 @@ export function isRichTextCodeHighlightNode(node: RichTextNode): node is RichTex
 
 export function isRichTextHeadingNode(node: RichTextNode): node is RichTextHeadingNode {
   return node.type === RichTextNodeType.heading;
+}
+
+export function isRichTextLinkNode(node: RichTextNode): node is RichTextLinkNode {
+  return node.type === RichTextNodeType.link;
 }
 
 export function isRichTextListNode(node: RichTextNode): node is RichTextListNode {

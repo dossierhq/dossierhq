@@ -101,6 +101,22 @@ export type SerializedCodeHighlightNode = Spread<
   SerializedTextNode
 >;
 
+// from @lexical/link
+
+export type LinkAttributes = {
+  rel?: null | string;
+  target?: null | string;
+};
+
+export type SerializedLinkNode = Spread<
+  {
+    type: 'link';
+    url: string;
+    version: 1;
+  },
+  Spread<LinkAttributes, SerializedElementNode>
+>;
+
 // from @lexical/list
 
 export type SerializedListNode = Spread<
