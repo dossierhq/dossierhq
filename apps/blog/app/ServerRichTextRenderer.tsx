@@ -6,6 +6,7 @@ import {
   isRichTextEntityLinkNode,
   isRichTextHeadingNode,
   isRichTextLineBreakNode,
+  isRichTextLinkNode,
   isRichTextListItemNode,
   isRichTextListNode,
   isRichTextParagraphNode,
@@ -155,6 +156,13 @@ async function renderNode(
       <HeadingTag key={key} className={theme.heading?.[node.tag]}>
         {await renderChildren(context, node)}
       </HeadingTag>
+    );
+  }
+  if (isRichTextLinkNode(node)) {
+    return (
+      <a key={key} href={node.url} target="_blank" rel="noreferrer">
+        {await renderChildren(context, node)}
+      </a>
     );
   }
   if (isRichTextListNode(node)) {
