@@ -88,5 +88,5 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 - 3001: examples/next-web
 - 3002: apps/playground
 - 3003: apps/blog
-- 6006: libraries/admin-react-components
+- 6006: libraries/react-components
 - 6007: libraries/design

@@ -56,7 +56,8 @@ const blockTypeToBlockName = {
   h5: { title: 'Heading 5', node: RichTextNodeType.heading, icon: 'heading' },
   h6: { title: 'Heading 6', node: RichTextNodeType.heading, icon: 'heading' },
   code: { title: 'Code block', node: RichTextNodeType.code, icon: 'code' },
-} satisfies Record<string, { title: string; node: RichTextNodeType; icon: IconName }>;
+} as const;
+//TODO babel/storybook doesn't support TS 4.9 yet: satisfies Record<string, { title: string; node: RichTextNodeType; icon: IconName }>;
 
 type BlockTypeName = keyof typeof blockTypeToBlockName;
 
