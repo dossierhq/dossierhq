@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/cloudinary
 
-This log was last generated on Sat, 28 Jan 2023 14:37:31 GMT and should not be manually modified.
+This log was last generated on Sun, 29 Jan 2023 18:08:56 GMT and should not be manually modified.
+
+## 0.1.51
+Sun, 29 Jan 2023 18:08:56 GMT
+
+_Version update only_
 
 ## 0.1.50
 Sat, 28 Jan 2023 14:37:31 GMT
