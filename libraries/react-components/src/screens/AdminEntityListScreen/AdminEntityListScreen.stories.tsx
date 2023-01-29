@@ -1,17 +1,15 @@
 import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
-import { buildUrlWithUrlQuery } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useMemo, useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../..';
-import { CacheConfig } from '../../test/CacheConfig';
+import React, { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
+import { CacheConfig } from '../../test/CacheConfig';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
 import type { AdminEntityListScreenProps } from './AdminEntityListScreen';
 import { AdminEntityListScreen } from './AdminEntityListScreen';
 
 type StoryProps = Omit<AdminEntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
-  initialUrlQuery?: EntitySearchStateUrlQuery;
+  initialUrlQuery?: URLSearchParams;
   showUrl: boolean;
   ownCache: boolean;
   adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
@@ -47,8 +45,9 @@ function Wrapper({
   adminClientMiddleware,
   ...props
 }: StoryProps) {
-  const [urlQuery, setUrlQuery] = useState<EntitySearchStateUrlQuery>(initialUrlQuery ?? {});
-  const displayUrl = useMemo(() => decodeURI(buildUrlWithUrlQuery('/', urlQuery)), [urlQuery]);
+  const [urlSearchParams, setUrlSearchParams] = useState<URLSearchParams>(
+    initialUrlQuery ?? new URLSearchParams()
+  );
   return (
     <CacheConfig ownCache={ownCache}>
       <AdminLoadContextProvider adminClientMiddleware={adminClientMiddleware}>
@@ -56,12 +55,14 @@ function Wrapper({
           {...props}
           header={
             <>
-              {showUrl ? <Text textStyle="body2">{displayUrl}</Text> : null}
+              {showUrl ? (
+                <Text textStyle="body2">entities?{urlSearchParams.toString()}</Text>
+              ) : null}
               {header}
             </>
           }
-          urlQuery={urlQuery}
-          onUrlQueryChanged={setUrlQuery}
+          urlSearchParams={urlSearchParams}
+          onUrlSearchParamsChange={setUrlSearchParams}
         />
       </AdminLoadContextProvider>
     </CacheConfig>
