@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button } from '../Button/Button.js';
 import type { DropdownDisplayProps } from './DropdownDisplay.js';
 import { DropdownDisplay } from './DropdownDisplay.js';
@@ -18,14 +18,20 @@ const Template: Story<DropdownDisplayProps> = (args) => {
 
 function Wrapper({ up, left, children }: DropdownDisplayProps) {
   const [active, setActive] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   return (
     <DropdownDisplay
       active={active}
       trigger={
-        <Button iconRight={up ? 'chevronUp' : 'chevronDown'} onMouseDown={() => setActive(!active)}>
+        <Button
+          ref={triggerRef}
+          iconRight={up ? 'chevronUp' : 'chevronDown'}
+          onMouseDown={() => setActive(!active)}
+        >
           Drop down
         </Button>
       }
+      triggerRef={triggerRef}
       {...{ up, left }}
     >
       {children}
