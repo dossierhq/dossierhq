@@ -1,9 +1,6 @@
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/preset-scss'],
-  core: {
-    builder: 'webpack5',
-  },
   reactOptions: {
     strictMode: true,
   },
@@ -14,6 +11,15 @@ module.exports = {
   webpackFinal: (config) => {
     config.resolve.plugins = [...(config.resolve.plugins || []), new ResolveJsToTsPlugin()];
     return config;
+  },
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {
+      strictMode: true,
+    },
+  },
+  docs: {
+    autodocs: true,
   },
 };
 
