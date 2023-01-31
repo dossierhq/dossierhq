@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Link node in RichText and schema editor. Switch to ESM.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}
