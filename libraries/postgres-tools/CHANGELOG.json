@@ -2,6 +2,12 @@
   "name": "@dossierhq/postgres-tools",
   "entries": [
     {
+      "version": "0.1.52",
+      "tag": "@dossierhq/postgres-tools_v0.1.52",
+      "date": "Tue, 31 Jan 2023 11:27:35 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.51",
       "tag": "@dossierhq/postgres-tools_v0.1.51",
       "date": "Sun, 29 Jan 2023 18:08:56 GMT",
