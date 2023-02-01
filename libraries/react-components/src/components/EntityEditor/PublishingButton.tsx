@@ -1,4 +1,10 @@
-import type { AdminClient, AdminEntity, AdminEntityTypeSpecification } from '@dossierhq/core';
+import type {
+  AdminClient,
+  AdminEntity,
+  AdminEntityTypeSpecification,
+  ErrorType,
+  Result,
+} from '@dossierhq/core';
 import { AdminEntityStatus } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
 import { Button, ButtonDropdown, NotificationContext, Row } from '@dossierhq/design';
@@ -133,7 +139,7 @@ async function executeAction(
   showNotification: (notification: NotificationInfo) => void
 ) {
   const reference = { id: entity.id };
-  let result;
+  let result: Result<unknown, ErrorType>;
   switch (action) {
     case 'archive':
       result = await adminClient.archiveEntity(reference);

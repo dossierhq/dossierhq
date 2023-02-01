@@ -143,12 +143,23 @@ async function submitEntity(
     result = await adminClient.updateEntity(entityUpdate, { publish });
   }
   if (result.isOk()) {
-    showNotification({ color: 'success', message: isCreate ? 'Created entity' : 'Updated entity' });
+    const message = isCreate
+      ? publish
+        ? 'Created and published entity'
+        : 'Created entity'
+      : publish
+      ? 'Updated and published entity'
+      : 'Updated entity';
+    showNotification({ color: 'success', message });
   } else {
-    showNotification({
-      color: 'error',
-      message: isCreate ? 'Failed creating entity' : 'Failed updating entity',
-    });
+    const message = isCreate
+      ? publish
+        ? 'Failed creating and publishing entity'
+        : 'Failed creating entity'
+      : publish
+      ? 'Failed updating and publishing entity'
+      : 'Failed updating entity';
+    showNotification({ color: 'error', message });
     dispatchEntityEditorState(
       new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false)
     );
