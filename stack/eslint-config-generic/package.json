@@ -10,6 +10,6 @@
   "dependencies": {
     "@rushstack/eslint-patch": "~1.2.0",
     "@typescript-eslint/eslint-plugin": "~5.49.0",
-    "@typescript-eslint/parser": "~5.49.0"
+    "@typescript-eslint/parser": "~5.50.0"
   }
 }
