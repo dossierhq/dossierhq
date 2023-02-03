@@ -37,7 +37,7 @@
     "benchpress": "workspace:*",
     "better-sqlite3": "~8.0.1",
     "dotenv": "~16.0.3",
-    "pg": "~8.8.0",
+    "pg": "~8.9.0",
     "sqlite3": "~5.1.2",
     "tslib": "~2.5.0"
   },
