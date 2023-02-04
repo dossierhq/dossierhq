@@ -54,11 +54,32 @@
                 "value": 1,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://nodejs.org/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "Node",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Node as the runtime",
+                    "text": " as the runtime",
                     "type": "text",
                     "version": 1
                   }
@@ -73,11 +94,32 @@
                 "value": 2,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://www.typescriptlang.org/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "TypeScript",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "TypeScript for the code",
+                    "text": " for the code",
                     "type": "text",
                     "version": 1
                   }
@@ -92,11 +134,32 @@
                 "value": 3,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://vitejs.dev/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "Vite",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Vite as the frontend tool, using React",
+                    "text": " as the frontend tool, using React",
                     "type": "text",
                     "version": 1
                   }
@@ -111,11 +174,32 @@
                 "value": 4,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://expressjs.com/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "Express",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Express for the backend, using REST for the communication",
+                    "text": " for the backend, using REST for the communication",
                     "type": "text",
                     "version": 1
                   }
@@ -130,11 +214,32 @@
                 "value": 5,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://sqlite.org/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "SQLite",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "SQLite as the database",
+                    "text": " as the database",
                     "type": "text",
                     "version": 1
                   }
@@ -149,11 +254,32 @@
                 "value": 6,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://auth0.com/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "Auth0",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Auth0 as the auth platform",
+                    "text": " as the auth platform",
                     "type": "text",
                     "version": 1
                   }
@@ -168,11 +294,32 @@
                 "value": 7,
                 "children": [
                   {
+                    "direction": "ltr",
+                    "format": "",
+                    "indent": 0,
+                    "type": "link",
+                    "version": 1,
+                    "rel": "noopener",
+                    "target": null,
+                    "url": "https://cloudinary.com/",
+                    "children": [
+                      {
+                        "detail": 0,
+                        "format": 0,
+                        "mode": "normal",
+                        "style": "",
+                        "text": "Cloudinary",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ]
+                  },
+                  {
                     "detail": 0,
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "Cloudinary for images",
+                    "text": " for images",
                     "type": "text",
                     "version": 1
                   }
@@ -192,7 +339,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "The source code for the tutorial is up on GitHub in the ",
+                "text": "The source code for ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://github.com/dossierhq/dossierhq/tree/main/examples/tutorial",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "the tutorial is up on GitHub",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " in the ",
                 "type": "text",
                 "version": 1
               },
