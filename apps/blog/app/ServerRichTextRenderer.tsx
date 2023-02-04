@@ -33,24 +33,28 @@ interface Props {
   publishedClient: AppPublishedClient;
   theme?: EditorThemeClasses;
   isGlossaryPage?: boolean;
+  headingOffset?: number;
 }
 
 interface RenderContext {
   publishedClient: AppPublishedClient;
   theme: EditorThemeClasses;
   isGlossaryPage: boolean;
+  headingOffset: number;
 }
 
 export function ServerRichTextRenderer({
   richText,
   publishedClient,
   isGlossaryPage,
+  headingOffset,
   theme,
 }: Props): JSX.Element {
   const context: RenderContext = {
     publishedClient,
     theme: theme ?? LexicalTheme,
     isGlossaryPage: !!isGlossaryPage,
+    headingOffset: headingOffset ?? 0,
   };
   const rendered = renderNode(context, richText.root, null);
   //TODO server side components can be async, but the current typescript types don't allow that
@@ -151,7 +155,14 @@ async function renderNode(
     }
   }
   if (isRichTextHeadingNode(node)) {
-    const HeadingTag = node.tag;
+    const requestedLevel = parseInt(node.tag[1], 10);
+    const HeadingTag = `h${Math.min(requestedLevel + context.headingOffset, 6)}` as
+      | 'h1'
+      | 'h2'
+      | 'h3'
+      | 'h4'
+      | 'h5'
+      | 'h6';
     return (
       <HeadingTag key={key} className={theme.heading?.[node.tag]}>
         {await renderChildren(context, node)}

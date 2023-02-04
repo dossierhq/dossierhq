@@ -17,6 +17,7 @@ export default async function Page({ params }: { params: { articleSlug: string }
         richText={article.fields.body}
         publishedClient={publishedClient}
         theme={ArticleLexicalTheme}
+        headingOffset={1}
       />
     </>
   );
