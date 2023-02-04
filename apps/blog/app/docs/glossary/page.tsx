@@ -12,12 +12,15 @@ export default async function Page() {
 
   return (
     <>
+      <Text as="h1" textStyle="headline3">
+        Glossary of Dossier specific terms
+      </Text>
       {connection?.edges.map((edge) => {
         const entity = edge.node.valueOrThrow();
         assertIsPublishedGlossaryTerm(entity);
         return (
           <Fragment key={entity.id}>
-            <Text id={entity.fields.slug} as="h4" textStyle="headline4">
+            <Text id={entity.fields.slug} as="h2" textStyle="headline4">
               {entity.fields.title}
             </Text>
             <ServerRichTextRenderer
