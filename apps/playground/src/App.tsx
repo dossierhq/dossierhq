@@ -14,6 +14,7 @@ import { IndexRoute } from './routes/IndexRoute.js';
 import { LoginRoute } from './routes/LoginRoute.js';
 import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute.js';
 import { PublishedEntityDisplayRoute } from './routes/PublishedEntityDisplayRoute.js';
+import { ServerRoute } from './routes/ServerRoute.js';
 import { ROUTE } from './utils/RouteUtils.js';
 
 const users: User[] = [
@@ -23,6 +24,7 @@ const users: User[] = [
 
 const router = createBrowserRouter([
   { path: ROUTE.index.route, element: <IndexRoute /> },
+  { path: ROUTE.server.route, element: <ServerRoute /> },
   { path: ROUTE.adminEntities.route, element: <AdminEntitiesRoute /> },
   { path: ROUTE.editEntities.route, element: <EditEntitiesRoute /> },
   { path: ROUTE.login.route, element: <LoginRoute /> },

@@ -3,21 +3,25 @@ export const ROUTE = {
     route: '/',
     url: '/',
   },
+  server: {
+    route: '/:serverName',
+    url: (serverName: string) => `/${serverName}`,
+  },
   adminEntities: {
-    route: 'admin-entities',
-    url: '/admin-entities',
+    route: '/:serverName/admin-entities',
+    url: (serverName: string) => `/${serverName}/admin-entities`,
   },
   graphiql: {
-    route: 'graphiql',
-    url: '/graphiql',
+    route: '/:serverName/graphiql',
+    url: (serverName: string) => `/${serverName}/graphiql`,
   },
   login: {
-    route: '/login/:userId',
-    url: (userId: string) => `/login/${userId}`,
+    route: '/:serverName/login/:userId',
+    url: (serverName: string, userId: string) => `/${serverName}/login/${userId}`,
   },
   editEntities: {
-    route: 'edit-entities',
-    url: (selectors: ({ newType: string; id: string } | { id: string })[]) => {
+    route: '/:serverName/edit-entities',
+    url: (serverName: string, selectors: ({ newType: string; id: string } | { id: string })[]) => {
       const p = new URLSearchParams();
       for (const selector of selectors) {
         if ('newType' in selector) {
@@ -26,19 +30,20 @@ export const ROUTE = {
           p.set('id', selector.id);
         }
       }
-      return `/edit-entities?${p.toString()}`;
+      return `/${serverName}/edit-entities?${p.toString()}`;
     },
   },
   publishedEntities: {
-    route: 'published-entities',
-    url: '/published-entities',
+    route: '/:serverName/published-entities',
+    url: (serverName: string) => `/${serverName}/published-entities`,
   },
   publishedEntityDisplay: {
-    route: 'published-entities/display',
-    url: (entityId: string) => `/published-entities/display?id=${entityId}`,
+    route: '/:serverName/published-entities/display',
+    url: (serverName: string, entityId: string) =>
+      `/${serverName}/published-entities/display?id=${entityId}`,
   },
   schema: {
-    route: 'schema',
-    url: '/schema',
+    route: '/:serverName/schema',
+    url: (serverName: string) => `/${serverName}/schema`,
   },
 };

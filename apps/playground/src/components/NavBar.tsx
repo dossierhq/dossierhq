@@ -1,7 +1,7 @@
 import { Navbar as DesignNavbar } from '@dossierhq/design';
 import type { ReactNode } from 'react';
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 import logo from './logo.svg';
@@ -13,12 +13,13 @@ interface Props {
 export function NavBar({ current }: Props) {
   const { currentUserId, users } = useContext(UserContext);
   const [active, setActive] = useState(false);
+  const { serverName } = useParams();
   return (
     <DesignNavbar>
       <DesignNavbar.Brand>
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
-            <Link to={ROUTE.index.url}>
+            <Link to={serverName ? ROUTE.server.url(serverName) : ROUTE.index.url}>
               <img className={className} src={logo} alt="Dossier logo" width={270} height={28} />
             </Link>
           )}
@@ -27,31 +28,40 @@ export function NavBar({ current }: Props) {
       </DesignNavbar.Brand>
       <DesignNavbar.Menu active={active}>
         <DesignNavbar.Start>
-          <DesignNavbar.Item active={current === 'admin-entities'}>
-            {NavItemRender('Entities', ROUTE.adminEntities.url)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'published-entities'}>
-            {NavItemRender('Published entities', ROUTE.publishedEntities.url)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'schema'}>
-            {NavItemRender('Schema', ROUTE.schema.url)}
-          </DesignNavbar.Item>
-          <DesignNavbar.Item active={current === 'graphiql'}>
-            {NavItemRender('GraphiQL', ROUTE.graphiql.url)}
-          </DesignNavbar.Item>
+          {serverName ? (
+            <>
+              <DesignNavbar.Item active={current === 'admin-entities'}>
+                {NavItemRender('Entities', ROUTE.adminEntities.url(serverName))}
+              </DesignNavbar.Item>
+              <DesignNavbar.Item active={current === 'published-entities'}>
+                {NavItemRender('Published entities', ROUTE.publishedEntities.url(serverName))}
+              </DesignNavbar.Item>
+              <DesignNavbar.Item active={current === 'schema'}>
+                {NavItemRender('Schema', ROUTE.schema.url(serverName))}
+              </DesignNavbar.Item>
+              <DesignNavbar.Item active={current === 'graphiql'}>
+                {NavItemRender('GraphiQL', ROUTE.graphiql.url(serverName))}
+              </DesignNavbar.Item>
+            </>
+          ) : null}
         </DesignNavbar.Start>
         <DesignNavbar.End>
-          <DesignNavbar.Dropdown left renderLink={(className) => <a className={className}>User</a>}>
-            {users.map((user) => (
-              <NavigationItem
-                key={user.id}
-                active={user.id === currentUserId}
-                to={ROUTE.login.url(user.id)}
-              >
-                {user.name}
-              </NavigationItem>
-            ))}
-          </DesignNavbar.Dropdown>
+          {serverName ? (
+            <DesignNavbar.Dropdown
+              left
+              renderLink={(className) => <a className={className}>User</a>}
+            >
+              {users.map((user) => (
+                <NavigationItem
+                  key={user.id}
+                  active={user.id === currentUserId}
+                  to={ROUTE.login.url(serverName, user.id)}
+                >
+                  {user.name}
+                </NavigationItem>
+              ))}
+            </DesignNavbar.Dropdown>
+          ) : null}
         </DesignNavbar.End>
       </DesignNavbar.Menu>
     </DesignNavbar>

@@ -1,8 +1,9 @@
 import { Button, Message } from '@dossierhq/design';
 import { useCallback, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';
-import { downloadDatabase, queryDatabaseSize } from '../utils/DatabaseUtils.js';
+import { clearDatabase, downloadDatabase, queryDatabaseSize } from '../utils/DatabaseUtils.js';
 import { bytesToHumanSize } from '../utils/DisplayUtils.js';
 
 interface Props {
@@ -10,7 +11,8 @@ interface Props {
 }
 
 export function DatabaseInfoMessage({ className }: Props) {
-  const { database } = useContext(DatabaseContext);
+  const navigate = useNavigate();
+  const { database, createDatabase } = useContext(DatabaseContext);
   const { data } = useSWR(database, queryDatabaseSize);
 
   const handleDownloadOnClick = useCallback(() => {
@@ -28,6 +30,9 @@ export function DatabaseInfoMessage({ className }: Props) {
         </p>
         <Button disabled={!database} iconLeft="download" onClick={handleDownloadOnClick}>
           Download
+        </Button>
+        <Button disabled={!database} onClick={() => clearDatabase(createDatabase, navigate)}>
+          Clear
         </Button>
       </Message.FlexBody>
     </Message>

@@ -1,8 +1,12 @@
+import { assertIsDefined } from '@dossierhq/core';
 import { FullscreenContainer, Message, Text, toSpacingClassName } from '@dossierhq/design';
-import { ChangeDatabaseMessage } from '../components/ChangeDatabaseMessage.js';
+import { useParams } from 'react-router-dom';
+import { DatabaseInfoMessage } from '../components/DatabaseInfoMessage.js';
 import { NavBar } from '../components/NavBar.js';
 
-export function IndexRoute() {
+export function ServerRoute() {
+  const { serverName } = useParams();
+  assertIsDefined(serverName);
   return (
     <FullscreenContainer>
       <FullscreenContainer.Row fullWidth>
@@ -13,9 +17,11 @@ export function IndexRoute() {
           <Text as="h1" textStyle="headline4">
             Welcome to Dossier Playground! 👋
           </Text>
+          <Text textStyle="body1">This is a playground where you can explore Dossier.</Text>
           <Text textStyle="body1">
-            This is a playground where you can explore Dossier. Either start with an empty database
-            or load one of the example databases below.
+            There is no real authentication in the Playground, but you can switch between two users
+            in the User dropdown in the top right corner. The two users are Alice and Bob. No
+            password required. 😀
           </Text>
           <Text textStyle="body1" marginTop={2}>
             Happy playing! 🎉
@@ -29,7 +35,7 @@ export function IndexRoute() {
               <p>Make sure to download a copy of the database if you want to keep it.</p>
             </Message.Body>
           </Message>
-          <ChangeDatabaseMessage className={toSpacingClassName({ marginTop: 3 })} />
+          <DatabaseInfoMessage className={toSpacingClassName({ marginTop: 3 })} />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
     </FullscreenContainer>

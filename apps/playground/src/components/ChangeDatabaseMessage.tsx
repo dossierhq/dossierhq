@@ -28,27 +28,27 @@ export function ChangeDatabaseMessage({ className }: Props) {
     (event: ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files.length > 0) {
         const file = event.target.files[0];
-        uploadDatabase(file, createDatabase, showNotification);
+        uploadDatabase(file, createDatabase, showNotification, navigate);
         event.target.files = null;
       }
     },
-    [createDatabase, showNotification]
+    [createDatabase, navigate, showNotification]
   );
 
   return (
     <Message className={className} color="warning">
       <Message.Header>
-        <Message.HeaderTitle>Change database</Message.HeaderTitle>
+        <Message.HeaderTitle>Load database</Message.HeaderTitle>
       </Message.Header>
       <Message.FlexBody alignItems="flex-start">
-        <Text textStyle="headline5">Reset</Text>
-        <p>Reset the database to start from scratch.</p>
+        <Text textStyle="headline5">Empty</Text>
+        <p>Start from scratch with an empty database.</p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
           disabled={!database}
-          onClick={() => resetDatabase(createDatabase, showNotification)}
+          onClick={() => resetDatabase(createDatabase, showNotification, navigate)}
         >
-          Reset
+          Load empty database
         </Button>
         <Text textStyle="headline5">Example: Dossier docs</Text>
         <p>
@@ -62,6 +62,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
           onClick={() =>
             loadDatabaseFromUrl(
+              'dossier-docs',
               `${import.meta.env.BASE_URL}dossier-docs.sqlite`,
               createDatabase,
               showNotification,
@@ -86,7 +87,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
         </p>
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() => loadDatabaseFromUrl(blogUrl, createDatabase, showNotification, navigate)}
+          onClick={() =>
+            loadDatabaseFromUrl('blog', blogUrl, createDatabase, showNotification, navigate)
+          }
         >
           Load Blog
         </Button>
@@ -105,7 +108,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
           onClick={() =>
-            loadDatabaseFromUrl(reviewsUrl, createDatabase, showNotification, navigate)
+            loadDatabaseFromUrl('reviews', reviewsUrl, createDatabase, showNotification, navigate)
           }
         >
           Load Reviews
@@ -125,7 +128,7 @@ export function ChangeDatabaseMessage({ className }: Props) {
         <Button
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
           onClick={() =>
-            loadDatabaseFromUrl(starwarsUrl, createDatabase, showNotification, navigate)
+            loadDatabaseFromUrl('starwars', starwarsUrl, createDatabase, showNotification, navigate)
           }
         >
           Load Star Wars
