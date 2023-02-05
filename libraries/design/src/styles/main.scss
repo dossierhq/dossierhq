@@ -121,8 +121,9 @@ tr.is-sticky-row :is(td, th),
   border: none;
   background-color: transparent;
   position: absolute;
-  top: 0;
+  inset: 0;
   padding: 1rem;
+  margin: auto;
 }
 
 .isolation-isolate {
