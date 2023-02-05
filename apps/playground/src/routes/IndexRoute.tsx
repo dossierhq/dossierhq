@@ -1,5 +1,5 @@
 import { FullscreenContainer, Message, Text, toSpacingClassName } from '@dossierhq/design';
-import { ChangeDatabaseMessage } from '../components/ChangeDatabaseMessage.js';
+import { LoadDatabaseMessage } from '../components/LoadDatabaseMessage.js';
 import { NavBar } from '../components/NavBar.js';
 
 export function IndexRoute() {
@@ -29,7 +29,7 @@ export function IndexRoute() {
               <p>Make sure to download a copy of the database if you want to keep it.</p>
             </Message.Body>
           </Message>
-          <ChangeDatabaseMessage className={toSpacingClassName({ marginTop: 3 })} />
+          <LoadDatabaseMessage className={toSpacingClassName({ marginTop: 3 })} />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
     </FullscreenContainer>

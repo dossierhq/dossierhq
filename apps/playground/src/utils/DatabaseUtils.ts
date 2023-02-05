@@ -11,43 +11,20 @@ export function queryDatabaseSize(database: Database) {
   return { byteSize };
 }
 
-export function clearDatabase(
-  createDatabase: (data: Uint8Array | null) => void,
-  navigate: NavigateFunction
-) {
+export function resetDatabase(clearDatabase: () => void, navigate: NavigateFunction) {
   if (!window.confirm('Are you sure you want to delete the current database?')) {
     return;
   }
 
-  createDatabase(null);
+  clearDatabase();
   navigate(ROUTE.index.url);
 }
 
-export function resetDatabase(
-  createDatabase: (data: Uint8Array | null) => void,
-  showNotification: (notification: NotificationInfo) => void,
-  navigate: NavigateFunction
-) {
-  if (!window.confirm('Are you sure you want to delete the current database?')) {
-    return;
-  }
-
-  createDatabase(null);
-  showNotification({ color: 'success', message: 'New database created' });
-  navigate(ROUTE.schema.url('new'));
-}
-
 export async function loadDatabaseFromUrl(
-  serverName: string,
   url: string,
   createDatabase: (data: Uint8Array | null) => void,
-  showNotification: (notification: NotificationInfo) => void,
-  navigate: NavigateFunction
+  showNotification: (notification: NotificationInfo) => void
 ) {
-  if (!window.confirm('Are you sure you want to delete the current database?')) {
-    return;
-  }
-
   // Cleanup url when running in dev mode
   if (url.startsWith('/../')) {
     url = url.replace('/../', '/node_modules/');
@@ -59,7 +36,6 @@ export async function loadDatabaseFromUrl(
     const data = new Uint8Array(buffer);
     createDatabase(data);
     showNotification({ color: 'success', message: 'New database loaded' });
-    navigate(ROUTE.adminEntities.url(serverName));
   } else {
     showNotification({ color: 'error', message: 'Failed downloading database' });
   }
@@ -67,21 +43,17 @@ export async function loadDatabaseFromUrl(
 
 export function uploadDatabase(
   file: File,
-  createDatabase: (data: Uint8Array | null) => void,
+  createDatabase: (data: Uint8Array | null) => Promise<void>,
   showNotification: (notification: NotificationInfo) => void,
   navigate: NavigateFunction
 ) {
-  if (!window.confirm('Are you sure you want to delete the current database?')) {
-    return;
-  }
-
   const reader = new FileReader();
   reader.onload = () => {
     const data = new Uint8Array(reader.result as ArrayBuffer);
-    createDatabase(data);
-    showNotification({ color: 'success', message: 'New database loaded' });
-
-    navigate(ROUTE.adminEntities.url('upload'));
+    createDatabase(data).then(() => {
+      showNotification({ color: 'success', message: 'New database loaded' });
+      navigate(ROUTE.adminEntities.url('upload'));
+    });
   };
   reader.readAsArrayBuffer(file);
 }

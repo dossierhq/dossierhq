@@ -1,12 +1,8 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { FullscreenContainer, Message, Text, toSpacingClassName } from '@dossierhq/design';
-import { useParams } from 'react-router-dom';
 import { DatabaseInfoMessage } from '../components/DatabaseInfoMessage.js';
 import { NavBar } from '../components/NavBar.js';
 
 export function ServerRoute() {
-  const { serverName } = useParams();
-  assertIsDefined(serverName);
   return (
     <FullscreenContainer>
       <FullscreenContainer.Row fullWidth>

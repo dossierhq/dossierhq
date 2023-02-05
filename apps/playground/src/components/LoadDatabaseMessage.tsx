@@ -6,21 +6,19 @@ import {
   Text,
   toSpacingClassName,
 } from '@dossierhq/design';
-import blogUrl from 'playground-example-generator/dist/blog.sqlite?url';
-import reviewsUrl from 'playground-example-generator/dist/reviews.sqlite?url';
-import starwarsUrl from 'playground-example-generator/dist/starwars.sqlite?url';
 import type { ChangeEvent } from 'react';
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';
-import { loadDatabaseFromUrl, resetDatabase, uploadDatabase } from '../utils/DatabaseUtils.js';
+import { uploadDatabase } from '../utils/DatabaseUtils.js';
+import { ROUTE } from '../utils/RouteUtils.js';
 
 interface Props {
   className?: string;
 }
 
-export function ChangeDatabaseMessage({ className }: Props) {
-  const { database, createDatabase } = useContext(DatabaseContext);
+export function LoadDatabaseMessage({ className }: Props) {
+  const { createDatabase } = useContext(DatabaseContext);
   const { showNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
 
@@ -44,9 +42,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
         <Text textStyle="headline5">Empty</Text>
         <p>Start from scratch with an empty database.</p>
         <Button
+          as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          disabled={!database}
-          onClick={() => resetDatabase(createDatabase, showNotification, navigate)}
+          href={ROUTE.schema.url('new')}
         >
           Load empty database
         </Button>
@@ -59,16 +57,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
           .
         </p>
         <Button
+          as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() =>
-            loadDatabaseFromUrl(
-              'dossier-docs',
-              `${import.meta.env.BASE_URL}dossier-docs.sqlite`,
-              createDatabase,
-              showNotification,
-              navigate
-            )
-          }
+          href={ROUTE.adminEntities.url('dossier-docs')}
         >
           Load Dossier docs
         </Button>
@@ -86,10 +77,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
           .
         </p>
         <Button
+          as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() =>
-            loadDatabaseFromUrl('blog', blogUrl, createDatabase, showNotification, navigate)
-          }
+          href={ROUTE.adminEntities.url('blog')}
         >
           Load Blog
         </Button>
@@ -106,10 +96,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
           .
         </p>
         <Button
+          as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() =>
-            loadDatabaseFromUrl('reviews', reviewsUrl, createDatabase, showNotification, navigate)
-          }
+          href={ROUTE.adminEntities.url('reviews')}
         >
           Load Reviews
         </Button>
@@ -126,10 +115,9 @@ export function ChangeDatabaseMessage({ className }: Props) {
           (The Star Wars API).
         </p>
         <Button
+          as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          onClick={() =>
-            loadDatabaseFromUrl('starwars', starwarsUrl, createDatabase, showNotification, navigate)
-          }
+          href={ROUTE.adminEntities.url('starwars')}
         >
           Load Star Wars
         </Button>

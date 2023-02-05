@@ -3,7 +3,7 @@ import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';
-import { clearDatabase, downloadDatabase, queryDatabaseSize } from '../utils/DatabaseUtils.js';
+import { downloadDatabase, queryDatabaseSize, resetDatabase } from '../utils/DatabaseUtils.js';
 import { bytesToHumanSize } from '../utils/DisplayUtils.js';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 export function DatabaseInfoMessage({ className }: Props) {
   const navigate = useNavigate();
-  const { database, createDatabase } = useContext(DatabaseContext);
+  const { database, clearDatabase } = useContext(DatabaseContext);
   const { data } = useSWR(database, queryDatabaseSize);
 
   const handleDownloadOnClick = useCallback(() => {
@@ -31,7 +31,7 @@ export function DatabaseInfoMessage({ className }: Props) {
         <Button disabled={!database} iconLeft="download" onClick={handleDownloadOnClick}>
           Download
         </Button>
-        <Button disabled={!database} onClick={() => clearDatabase(createDatabase, navigate)}>
+        <Button disabled={!database} onClick={() => resetDatabase(clearDatabase, navigate)}>
           Clear
         </Button>
       </Message.FlexBody>

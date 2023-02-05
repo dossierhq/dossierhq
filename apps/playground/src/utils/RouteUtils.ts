@@ -1,26 +1,24 @@
 export const ROUTE = {
   index: {
-    route: '/',
     url: '/',
   },
   server: {
-    route: '/:serverName',
     url: (serverName: string) => `/${serverName}`,
   },
   adminEntities: {
-    route: '/:serverName/admin-entities',
+    route: 'admin-entities',
     url: (serverName: string) => `/${serverName}/admin-entities`,
   },
   graphiql: {
-    route: '/:serverName/graphiql',
+    route: 'graphiql',
     url: (serverName: string) => `/${serverName}/graphiql`,
   },
   login: {
-    route: '/:serverName/login/:userId',
+    route: 'login/:userId',
     url: (serverName: string, userId: string) => `/${serverName}/login/${userId}`,
   },
   editEntities: {
-    route: '/:serverName/edit-entities',
+    route: 'edit-entities',
     url: (serverName: string, selectors: ({ newType: string; id: string } | { id: string })[]) => {
       const p = new URLSearchParams();
       for (const selector of selectors) {
@@ -34,16 +32,16 @@ export const ROUTE = {
     },
   },
   publishedEntities: {
-    route: '/:serverName/published-entities',
+    route: 'published-entities',
     url: (serverName: string) => `/${serverName}/published-entities`,
   },
   publishedEntityDisplay: {
-    route: '/:serverName/published-entities/display',
+    route: 'published-entities/display',
     url: (serverName: string, entityId: string) =>
       `/${serverName}/published-entities/display?id=${entityId}`,
   },
   schema: {
-    route: '/:serverName/schema',
+    route: 'schema',
     url: (serverName: string) => `/${serverName}/schema`,
   },
 };
