@@ -17,6 +17,7 @@ export const ICON_NAMES = [
   'chevronUp',
   'close',
   'code',
+  'delete',
   'download',
   'first',
   'heading',

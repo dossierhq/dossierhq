@@ -19,6 +19,7 @@ const iconSources = {
   chevronUp: solidSvgIcons.faChevronUp,
   close: solidSvgIcons.faXmark,
   code: solidSvgIcons.faCode,
+  delete: solidSvgIcons.faCircleXmark,
   download: solidSvgIcons.faDownload,
   first: solidSvgIcons.faFastBackward,
   heading: solidSvgIcons.faHeading,
