@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./scripts/generate-typescript.js 2>&1 && ./scripts/create-database-if-missing.sh && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1",
+    "build": "./scripts/generate-typescript.js 2>&1 && ./scripts/create-database-if-missing.sh && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1 && ./scripts/generate-robots-txt.ts",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -47,6 +47,7 @@
     "@types/sql.js": "~1.4.4",
     "@types/sqlite3": "~3.1.8",
     "@typescript-eslint/eslint-plugin": "~5.49.0",
+    "dotenv": "~16.0.3",
     "eslint": "~8.33.0",
     "eslint-config-next": "~13.1.0",
     "prettier": "2.8.3",

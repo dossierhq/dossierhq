@@ -35,6 +35,7 @@ yarn-error.log*
 
 #
 public/database.sqlite
+public/sitemap.txt
 public/sql-wasm.wasm
 public/voyager.worker.js
 tsconfig.tsbuildinfo
