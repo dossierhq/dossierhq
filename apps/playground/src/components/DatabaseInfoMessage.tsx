@@ -1,4 +1,4 @@
-import { Button, Message, NotificationContext } from '@dossierhq/design';
+import { Button, Message, NotificationContext, Row } from '@dossierhq/design';
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
@@ -23,7 +23,7 @@ export function DatabaseInfoMessage({ className }: Props) {
   return (
     <Message className={className}>
       <Message.Header>
-        <Message.HeaderTitle>Database (sqlite3, in-memory)</Message.HeaderTitle>
+        <Message.HeaderTitle>Database (SQLite, in-memory)</Message.HeaderTitle>
       </Message.Header>
       <Message.FlexBody gap={3} alignItems="flex-start">
         <p>
@@ -32,12 +32,16 @@ export function DatabaseInfoMessage({ className }: Props) {
         <Button disabled={!database} iconLeft="download" onClick={handleDownloadOnClick}>
           Download
         </Button>
-        <Button
-          disabled={!database}
-          onClick={() => resetDatabase(clearDatabase, showNotification, navigate)}
-        >
-          Delete
-        </Button>
+        <Row alignItems="center" gap={2}>
+          <Button
+            disabled={!database}
+            iconLeft="delete"
+            onClick={() => resetDatabase(clearDatabase, showNotification, navigate)}
+          >
+            Delete
+          </Button>
+          to start from scratch or try another example.
+        </Row>
       </Message.FlexBody>
     </Message>
   );
