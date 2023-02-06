@@ -47,6 +47,7 @@ const iconSources = {
   superscript: solidSvgIcons.faSuperscript,
   underline: solidSvgIcons.faUnderline,
   upload: solidSvgIcons.faUpload,
+  user: solidSvgIcons.faUser,
 };
 
 function loadIcons() {
