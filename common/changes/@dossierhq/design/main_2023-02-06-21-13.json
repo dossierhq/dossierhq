@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Center dialogs. Add delete and user icons",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}
