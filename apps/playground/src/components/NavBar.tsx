@@ -1,4 +1,4 @@
-import { Navbar as DesignNavbar } from '@dossierhq/design';
+import { Icon, Navbar as DesignNavbar } from '@dossierhq/design';
 import type { ReactNode } from 'react';
 import { useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -14,6 +14,9 @@ export function NavBar({ current }: Props) {
   const { currentUserId, users } = useContext(UserContext);
   const [active, setActive] = useState(false);
   const { serverName } = useParams();
+
+  const currentUser = users.find((it) => it.id === currentUserId);
+
   return (
     <DesignNavbar>
       <DesignNavbar.Brand>
@@ -49,7 +52,11 @@ export function NavBar({ current }: Props) {
           {serverName ? (
             <DesignNavbar.Dropdown
               left
-              renderLink={(className) => <a className={className}>User</a>}
+              renderLink={(className) => (
+                <a className={className}>
+                  <Icon text icon="user" style={{ marginRight: '0.25em' }} /> {currentUser?.name}
+                </a>
+              )}
             >
               {users.map((user) => (
                 <NavigationItem

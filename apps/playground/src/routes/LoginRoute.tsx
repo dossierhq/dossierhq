@@ -7,7 +7,7 @@ import { UserContext } from '../contexts/UserContext.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 
 export function LoginRoute() {
-  const { userId } = useParams();
+  const { userId, serverName } = useParams();
   const navigate = useNavigate();
   const { currentUserId } = useContext(UserContext);
   const login = useContext(LoginContext);
@@ -22,9 +22,9 @@ export function LoginRoute() {
 
   useEffect(() => {
     if (currentUserId === userId) {
-      navigate(ROUTE.index.url);
+      navigate(serverName ? ROUTE.server.url(serverName) : ROUTE.index.url);
     }
-  }, [currentUserId, navigate, userId]);
+  }, [currentUserId, navigate, serverName, userId]);
 
   return (
     <FullscreenContainer>
