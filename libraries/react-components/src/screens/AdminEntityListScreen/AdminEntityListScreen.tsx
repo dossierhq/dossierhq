@@ -88,13 +88,7 @@ export function AdminEntityListScreen({
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.ScrollableRow direction="horizontal">
-        <FullscreenContainer.Row
-          center
-          flexDirection="row"
-          gap={2}
-          paddingVertical={2}
-          paddingHorizontal={2}
-        >
+        <FullscreenContainer.Row center flexDirection="row" gap={2} padding={2}>
           <AdminEntitySearchToolbar
             {...{
               showMap,
@@ -151,13 +145,7 @@ export function AdminEntityListScreen({
           </FullscreenContainer.Row>
         </FullscreenContainer.ScrollableRow>
       )}
-      <FullscreenContainer.Row
-        paddingVertical={2}
-        paddingHorizontal={2}
-        columnGap={2}
-        flexDirection="row"
-        alignItems="center"
-      >
+      <FullscreenContainer.Row padding={2} columnGap={2} flexDirection="row" alignItems="center">
         <SearchOrSampleEntitiesButtons {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}

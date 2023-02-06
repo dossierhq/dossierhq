@@ -83,7 +83,7 @@ export function PublishedEntityListScreen({
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
-      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
+      <FullscreenContainer.Row flexDirection="row" gap={2} padding={2}>
         <PublishedEntitySearchToolbar
           {...{
             showMap,
@@ -117,12 +117,17 @@ export function PublishedEntityListScreen({
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
           shadows="bottom"
         >
-          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined}>
-            <EntityTypeTagSelector
-              state={entityTypeFilterState}
-              dispatch={dispatchEntityTypeFilterState}
-            />
-            <AuthKeyTagSelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState} />
+          <FullscreenContainer.Row height={isEmpty ? '100%' : undefined} paddingHorizontal={2}>
+            <FullscreenContainer.Item paddingHorizontal={3}>
+              <EntityTypeTagSelector
+                state={entityTypeFilterState}
+                dispatch={dispatchEntityTypeFilterState}
+              />
+              <AuthKeyTagSelector
+                state={authKeyFilterState}
+                dispatch={dispatchAuthKeyFilterState}
+              />
+            </FullscreenContainer.Item>
             <PublishedEntityList
               {...{ searchEntityState, dispatchSearchEntityState }}
               onItemClick={onOpenEntity}
@@ -130,12 +135,7 @@ export function PublishedEntityListScreen({
           </FullscreenContainer.Row>
         </FullscreenContainer.ScrollableRow>
       )}
-      <FullscreenContainer.Row
-        paddingVertical={2}
-        columnGap={2}
-        flexDirection="row"
-        alignItems="center"
-      >
+      <FullscreenContainer.Row padding={2} columnGap={2} flexDirection="row" alignItems="center">
         <SearchOrSampleEntitiesButtons {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
