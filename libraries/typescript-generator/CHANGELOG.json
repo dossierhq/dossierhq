@@ -2,6 +2,18 @@
   "name": "@dossierhq/typescript-generator",
   "entries": [
     {
+      "version": "0.1.53",
+      "tag": "@dossierhq/typescript-generator_v0.1.53",
+      "date": "Mon, 06 Feb 2023 21:23:05 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump minor"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.52",
       "tag": "@dossierhq/typescript-generator_v0.1.52",
       "date": "Tue, 31 Jan 2023 11:27:35 GMT",
