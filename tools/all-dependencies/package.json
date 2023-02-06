@@ -5,7 +5,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./update-package-json.js"
+    "build": "./update-package-json.js",
+    "outdated": "rush-pnpm outdated"
   },
   "optionalDependencies": {
     "@auth0/auth0-react": "~2.0.0",
