@@ -39,7 +39,7 @@ export default function Page() {
               Keep control of your content
             </Text>
             <Text textStyle="headline4">
-              Dossier is an open source, embeddable content platform.
+              Dossier is an open source toolkit for building headless CMSs.
             </Text>
           </div>
           <LinkButton
@@ -66,6 +66,10 @@ export default function Page() {
             description="You’re in charge of who should have access to the content. Content can be public or accessible to a group or person."
           />
           <Feature
+            title="User generated and editorial content 🤝"
+            description="Thanks to the flexible access control, you can have both user generated content and editorial content in the same database."
+          />
+          <Feature
             title="Developer friendly ⌨️"
             description={
               <>
@@ -82,8 +86,7 @@ export default function Page() {
           <Text textStyle="body1">
             Dossier enables you to build solutions where you’re in full control of the content. By
             bringing your own auth (authentication and authorization), database and backend, you can
-            build a traditional headless Content Management System (CMS). You can also skip the web
-            interface and use Dossier to manage the content in a backend or app.
+            build a headless Content Management System (CMS) and integrate it with your app.
           </Text>
           <Card2>
             <Card2.Header>
@@ -117,7 +120,11 @@ export default function Page() {
             <Text textStyle="headline4">About</Text>
             <Text textStyle="body1">
               Developed with ❤️ by Jonas Bengtsson. Send an{' '}
-              <a href="mailto:jonas.b@gmail.com">✉️ email</a> if you have any questions!
+              <a href="mailto:jonas.b@gmail.com">✉️ email</a> or{' '}
+              <a href="https://github.com/dossierhq/dossierhq/issues/new">
+                🐛 create an issue on GitHub
+              </a>{' '}
+              if you have any questions!
             </Text>
           </div>
         </FullscreenContainer.Row>

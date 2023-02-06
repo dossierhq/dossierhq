@@ -279,6 +279,82 @@
             "direction": "ltr",
             "format": "",
             "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "You can ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://playground.dossierhq.dev/dossier-docs/edit-entities?id=6384629e-72aa-482c-b070-bc26d90e0fc6",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "check out this article in the Playground",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": null,
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/fnsysembz9tqtstwfcz6",
+              "width": 2720,
+              "height": 1356,
+              "alt": "This article in the playground"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": null,
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
             "type": "heading",
             "version": 1,
             "tag": "h1",
@@ -694,7 +770,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " for structured data. Value items have fields just as entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of an entity, which enables combining value items to create more complex data.",
+                "text": " for structured data. Value items have fields just as entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of another value item, which enables combining value items to create more complex data.",
                 "type": "text",
                 "version": 1
               }
@@ -815,6 +891,74 @@
                 "version": 1
               }
             ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "You can ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://playground.dossierhq.dev/dossier-docs/edit-entities?id=47288236-2a96-41ef-8061-9846cb2a50d7",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "check out the \"Main chapter\" entity in the Playground",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ":",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "valueItem",
+            "data": {
+              "type": "CloudinaryImage",
+              "publicId": "Blog/ujsqyla4mqzxzetykpib",
+              "width": 2720,
+              "height": 1882,
+              "alt": "The main chapter in the Playground"
+            },
+            "format": "",
+            "version": 1
+          },
+          {
+            "direction": null,
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": []
           }
         ]
       }

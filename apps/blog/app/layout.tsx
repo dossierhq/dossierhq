@@ -10,7 +10,7 @@ export default function Layout({ children }: Props) {
       <head>
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <title>Dossier – an open source, embeddable content platform</title>
+        <title>Dossier – the open source headless CMS toolkit</title>
       </head>
       <body>{children}</body>
     </html>

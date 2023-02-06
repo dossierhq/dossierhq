@@ -2,7 +2,7 @@
 
 [![Node CI](https://github.com/dossierhq/dossierhq/actions/workflows/nodejs.yml/badge.svg)](https://github.com/dossierhq/dossierhq/actions/workflows/nodejs.yml) [![Benchmark](https://github.com/dossierhq/dossierhq/actions/workflows/benchmark.yml/badge.svg)](https://github.com/dossierhq/dossierhq/actions/workflows/benchmark.yml)
 
-Dossier enables you to build solutions where you’re in full control of the content. By bringing your own auth (authentication and authorization), database and backend, you can build a traditional headless Content Management System (CMS). You can also skip the web interface and use Dossier to manage the content in a backend or app.
+Dossier enables you to build solutions where you’re in full control of the content. By bringing your own auth (authentication and authorization), database and backend, you can build a headless Content Management System (CMS) and integrate it with your app.
 
 For more information about Dossier, head over to [dossierhq.dev](https://www.dossierhq.dev). The rest of this readme is focused on developing and contributing to Dossier itself.
 

@@ -56,7 +56,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "The quickest way to get started with a database is to use SQLite. Let's go with ",
+                "text": "The quickest way to get started with a database is to use ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://sqlite.org/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "SQLite",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ". Let's go with ",
                 "type": "text",
                 "version": 1
               },
@@ -74,7 +104,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " as our library to talk to SQLite. In order to use it with Dossier, we use the library ",
+                "text": " as our ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://github.com/WiseLibs/better-sqlite3",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "library",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " to talk to SQLite. In order to use it with Dossier, we use the library ",
                 "type": "text",
                 "version": 1
               },
@@ -3090,7 +3150,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " we have the actual database with the latest database schema, configured with Write-Ahead Logging (WAL) (which means you might see temporary files ",
+                "text": " we have the actual database with the latest database schema, configured with ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://www.sqlite.org/wal.html",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Write-Ahead Logging (WAL)",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " (which means you might see temporary files ",
                 "type": "text",
                 "version": 1
               },
@@ -3126,7 +3216,37 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " as well) for write performance, and FTS5 as the full-text search module.",
+                "text": " as well) for write performance, and ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noopener",
+                "target": null,
+                "url": "https://www.sqlite.org/fts5.html",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "FTS5",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " as the full-text search module.",
                 "type": "text",
                 "version": 1
               }
