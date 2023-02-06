@@ -14,8 +14,16 @@ export function IndexRoute() {
             Welcome to Dossier Playground! 👋
           </Text>
           <Text textStyle="body1">
-            This is a playground where you can explore Dossier. Either start with an empty database
-            or load one of the example databases below.
+            This is a playground where you can explore{' '}
+            <a href="https://dossierhq.dev" target="_blank" rel="noopener noreferrer">
+              Dossier
+            </a>
+            . Either start with an empty database or load one of the example databases below. Check
+            out the{' '}
+            <a href="https://dossierhq.dev/docs" target="_blank" rel="noopener noreferrer">
+              documentation
+            </a>{' '}
+            for more information.
           </Text>
           <Text textStyle="body1" marginTop={2}>
             Happy playing! 🎉
