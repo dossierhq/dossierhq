@@ -1,8 +1,19 @@
 import type { ErrorResult, ErrorType, PromiseResult } from '@dossierhq/core';
 import { createConsoleLogger, notOk } from '@dossierhq/core';
+import type { ServerResponse } from 'http';
 import type { NextApiResponse } from 'next';
 
 const logger = createConsoleLogger(console);
+
+const ContentTypes = {
+  'text/plain': 'text/plain; charset=UTF-8',
+};
+
+// in seconds
+const CacheDurations = {
+  minute: { maxAge: 60, swr: 120 },
+  hour: { maxAge: 60 * 60, swr: 4 * 60 * 60 },
+} satisfies Record<string, { maxAge: number; swr: number }>;
 
 function handleError<T>(res: NextApiResponse<T>, error: ErrorResult<unknown, ErrorType>): void {
   res.status(error.httpStatus).json({ message: error.message } as any);
@@ -35,4 +46,19 @@ export async function handleRequest<T>(
     const result = notOk.GenericUnexpectedException({ logger }, error);
     handleError(res, result);
   }
+}
+
+export function setHeaderContentType(res: ServerResponse, contentType: keyof typeof ContentTypes) {
+  res.setHeader('Content-Type', ContentTypes[contentType]);
+}
+
+export function setHeaderCacheControlPublic(
+  res: ServerResponse,
+  duration: keyof typeof CacheDurations
+) {
+  const cacheDuration = CacheDurations[duration];
+  res.setHeader(
+    'Cache-Control',
+    `public, s-maxage=${cacheDuration.maxAge}, stale-while-revalidate=${cacheDuration.swr}`
+  );
 }
