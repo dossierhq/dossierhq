@@ -18,18 +18,22 @@ export function useInitializeUploadWidget(
       return;
     }
     const { cloudinary } = window;
-    setUploadWidget(
-      cloudinary.createUploadWidget(
-        {
-          cloudName,
-          uploadPreset,
-          sources: ['local', 'url', 'camera'],
-          multiple: false,
-          resourceType: 'image',
-        },
-        callback
-      )
+    const widget = cloudinary.createUploadWidget(
+      {
+        cloudName,
+        uploadPreset,
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        resourceType: 'image',
+      },
+      callback
     );
+
+    setUploadWidget(widget);
+    return () => {
+      widget.destroy();
+      setUploadWidget(null);
+    };
   }, [callback, status]);
 
   return uploadWidget;

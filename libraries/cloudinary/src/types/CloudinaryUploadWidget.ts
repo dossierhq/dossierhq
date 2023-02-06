@@ -74,4 +74,5 @@ export type CloudinaryUploadWidgetCallback = (
 
 export interface UploadWidget {
   open(): void;
+  destroy(): Promise<void>;
 }

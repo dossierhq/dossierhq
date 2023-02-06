@@ -51,20 +51,10 @@ export function CloudinaryImageFieldEditorWithoutClear({
   value: AdminCloudinaryImage;
   onChange: (value: AdminCloudinaryImage) => void;
 }) {
-  const uploadWidgetCallback = useCallback(
-    (error: Error | undefined, result: CloudinaryUploadResult | undefined) =>
-      handleUploadWidgetCallback(error, result, onChange),
-    [onChange]
-  );
-  const uploadWidget = useInitializeUploadWidget(cloudName, uploadPreset, uploadWidgetCallback);
-
-  if (!uploadWidget) {
-    return null;
-  }
   const { publicId } = value;
 
   if (!publicId) {
-    return <Button onClick={() => uploadWidget.open()}>Upload image</Button>;
+    return <UploadButton {...{ cloudName, uploadPreset, onChange }} />;
   }
 
   const cld = new Cloudinary({ cloud: { cloudName } });
@@ -123,6 +113,29 @@ export function CloudinaryImageFieldEditorWithoutClear({
         </Field.BodyColumn>
       </Field>
     </Column>
+  );
+}
+
+function UploadButton({
+  cloudName,
+  uploadPreset,
+  onChange,
+}: {
+  cloudName: string;
+  uploadPreset: string;
+  onChange: (value: AdminCloudinaryImage) => void;
+}) {
+  const uploadWidgetCallback = useCallback(
+    (error: Error | undefined, result: CloudinaryUploadResult | undefined) =>
+      handleUploadWidgetCallback(error, result, onChange),
+    [onChange]
+  );
+  const uploadWidget = useInitializeUploadWidget(cloudName, uploadPreset, uploadWidgetCallback);
+
+  return (
+    <Button disabled={!uploadWidget} onClick={uploadWidget ? () => uploadWidget.open() : undefined}>
+      Upload image
+    </Button>
   );
 }
 
