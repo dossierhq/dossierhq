@@ -23,7 +23,7 @@ export function NavBar({ current }: Props) {
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
             <Link to={serverName ? ROUTE.server.url(serverName) : ROUTE.index.url}>
-              <img className={className} src={logo} alt="Dossier logo" width={270} height={28} />
+              <img className={className} src={logo} alt="Dossier logo" width={136} />
             </Link>
           )}
         </DesignNavbar.Item>
@@ -46,7 +46,21 @@ export function NavBar({ current }: Props) {
                 {NavItemRender('GraphiQL', ROUTE.graphiql.url(serverName))}
               </DesignNavbar.Item>
             </>
-          ) : null}
+          ) : (
+            <DesignNavbar.Item>
+              {({ className }) => (
+                <a
+                  className={className}
+                  href="https://dossierhq.dev/docs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Docs{' '}
+                  <Icon icon="openInNewWindow" text size="small" style={{ marginLeft: '0.5em' }} />
+                </a>
+              )}
+            </DesignNavbar.Item>
+          )}
         </DesignNavbar.Start>
         <DesignNavbar.End>
           {serverName ? (
