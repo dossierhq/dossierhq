@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/server"
+    }
+  ],
+  "packageName": "@dossierhq/server",
+  "email": "jonas.b@gmail.com"
+}

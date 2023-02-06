@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/typescript-generator"
+    }
+  ],
+  "packageName": "@dossierhq/typescript-generator",
+  "email": "jonas.b@gmail.com"
+}

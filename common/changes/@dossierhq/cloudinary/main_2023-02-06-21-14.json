@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/cloudinary"
+    }
+  ],
+  "packageName": "@dossierhq/cloudinary",
+  "email": "jonas.b@gmail.com"
+}

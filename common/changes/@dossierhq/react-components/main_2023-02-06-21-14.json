@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/react-components"
+    }
+  ],
+  "packageName": "@dossierhq/react-components",
+  "email": "jonas.b@gmail.com"
+}

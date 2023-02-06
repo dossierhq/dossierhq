@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/database-adapter"
+    }
+  ],
+  "packageName": "@dossierhq/database-adapter",
+  "email": "jonas.b@gmail.com"
+}

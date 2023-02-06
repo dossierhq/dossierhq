@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/sqlite3"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite3",
+  "email": "jonas.b@gmail.com"
+}

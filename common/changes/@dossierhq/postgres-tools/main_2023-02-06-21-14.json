@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/postgres-tools"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-tools",
+  "email": "jonas.b@gmail.com"
+}

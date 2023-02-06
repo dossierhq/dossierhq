@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Bump minor",
+      "type": "none",
+      "packageName": "@dossierhq/graphql"
+    }
+  ],
+  "packageName": "@dossierhq/graphql",
+  "email": "jonas.b@gmail.com"
+}
