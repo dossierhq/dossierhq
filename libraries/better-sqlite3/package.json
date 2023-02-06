@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/better-sqlite3",
-  "version": "0.1.53",
+  "version": "0.2.0",
   "description": "A Dossier database adapter for better-sqlite3.",
   "keywords": [
     "dossier",
