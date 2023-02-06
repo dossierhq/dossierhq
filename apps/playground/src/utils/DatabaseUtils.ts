@@ -11,18 +11,31 @@ export function queryDatabaseSize(database: Database) {
   return { byteSize };
 }
 
-export function resetDatabase(clearDatabase: () => void, navigate: NavigateFunction) {
+export async function createNewDatabase(
+  createDatabase: (data: Uint8Array | null) => Promise<void>,
+  showNotification: (notification: NotificationInfo) => void
+) {
+  await createDatabase(null);
+  showNotification({ color: 'success', message: 'Created new database' });
+}
+
+export function resetDatabase(
+  clearDatabase: () => void,
+  showNotification: (notification: NotificationInfo) => void,
+  navigate: NavigateFunction
+) {
   if (!window.confirm('Are you sure you want to delete the current database?')) {
     return;
   }
 
   clearDatabase();
+  showNotification({ color: 'success', message: 'Deleted the database' });
   navigate(ROUTE.index.url);
 }
 
 export async function loadDatabaseFromUrl(
   url: string,
-  createDatabase: (data: Uint8Array | null) => void,
+  createDatabase: (data: Uint8Array | null) => Promise<void>,
   showNotification: (notification: NotificationInfo) => void
 ) {
   // Cleanup url when running in dev mode
@@ -34,8 +47,8 @@ export async function loadDatabaseFromUrl(
   if (response.ok) {
     const buffer = await response.arrayBuffer();
     const data = new Uint8Array(buffer);
-    createDatabase(data);
-    showNotification({ color: 'success', message: 'New database loaded' });
+    await createDatabase(data);
+    showNotification({ color: 'success', message: 'Loaded example database' });
   } else {
     showNotification({ color: 'error', message: 'Failed downloading database' });
   }
@@ -51,7 +64,7 @@ export function uploadDatabase(
   reader.onload = () => {
     const data = new Uint8Array(reader.result as ArrayBuffer);
     createDatabase(data).then(() => {
-      showNotification({ color: 'success', message: 'New database loaded' });
+      showNotification({ color: 'success', message: 'Loaded new database' });
       navigate(ROUTE.adminEntities.url('upload'));
     });
   };

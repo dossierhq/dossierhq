@@ -7,7 +7,7 @@ import initSqlJs from 'sql.js/dist/sql-wasm';
 import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
 import { ExampleConfigs } from '../config/ExamplesConfig.js';
 import { DatabaseContext } from '../contexts/DatabaseContext';
-import { loadDatabaseFromUrl } from '../utils/DatabaseUtils.js';
+import { createNewDatabase, loadDatabaseFromUrl } from '../utils/DatabaseUtils.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 
 interface Props {
@@ -47,7 +47,7 @@ export function DatabaseProvider({ children }: Props) {
 
     const config = ExampleConfigs.find((it) => it.name === serverName);
     if (serverName === 'new') {
-      createDatabase(null);
+      createNewDatabase(createDatabase, showNotification);
     } else if (serverName === 'upload') {
       showNotification({
         color: 'error',

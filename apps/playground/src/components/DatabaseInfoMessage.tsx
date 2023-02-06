@@ -1,4 +1,4 @@
-import { Button, Message } from '@dossierhq/design';
+import { Button, Message, NotificationContext } from '@dossierhq/design';
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
@@ -13,6 +13,7 @@ interface Props {
 export function DatabaseInfoMessage({ className }: Props) {
   const navigate = useNavigate();
   const { database, clearDatabase } = useContext(DatabaseContext);
+  const { showNotification } = useContext(NotificationContext);
   const { data } = useSWR(database, queryDatabaseSize);
 
   const handleDownloadOnClick = useCallback(() => {
@@ -31,8 +32,11 @@ export function DatabaseInfoMessage({ className }: Props) {
         <Button disabled={!database} iconLeft="download" onClick={handleDownloadOnClick}>
           Download
         </Button>
-        <Button disabled={!database} onClick={() => resetDatabase(clearDatabase, navigate)}>
-          Clear
+        <Button
+          disabled={!database}
+          onClick={() => resetDatabase(clearDatabase, showNotification, navigate)}
+        >
+          Delete
         </Button>
       </Message.FlexBody>
     </Message>
