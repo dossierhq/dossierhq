@@ -10,6 +10,7 @@ const meta: Meta<FileProps> = {
   title: 'Components/File',
   component: File,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

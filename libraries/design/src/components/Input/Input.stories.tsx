@@ -10,6 +10,7 @@ const meta: Meta<InputProps> = {
   title: 'Components/Input',
   component: Input,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

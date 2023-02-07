@@ -9,6 +9,7 @@ const meta: Meta<StoryProps> = {
   title: 'Components/DateDisplay',
   component: DateDisplay,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

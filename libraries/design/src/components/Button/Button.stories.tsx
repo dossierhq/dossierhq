@@ -10,6 +10,7 @@ const meta: Meta<ButtonProps> = {
   title: 'Components/Button',
   component: Button,
   args: { children: 'Button' },
+  tags: ['autodocs'],
 };
 export default meta;
 

@@ -9,6 +9,7 @@ const meta: Meta<FieldProps> = {
   title: 'Components/Field',
   component: Field,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

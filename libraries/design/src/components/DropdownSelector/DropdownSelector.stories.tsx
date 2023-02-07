@@ -35,6 +35,7 @@ const meta: Meta<StoryProps> = {
     renderItem: (item) => item.name,
   },
   parameters: { layout: 'centered' },
+  tags: ['autodocs'],
 };
 export default meta;
 

@@ -19,6 +19,7 @@ const meta: Meta<MessageProps> = {
     ),
   },
   parameters: { layout: 'centered' },
+  tags: ['autodocs'],
 };
 export default meta;
 

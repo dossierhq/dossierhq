@@ -9,6 +9,7 @@ const meta: Meta<TextProps> = {
   title: 'Components/Text',
   component: Text,
   args: { children: 'Lorem ipsum', textStyle: 'body1' },
+  tags: ['autodocs'],
 };
 export default meta;
 

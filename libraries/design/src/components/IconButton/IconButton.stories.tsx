@@ -8,6 +8,7 @@ const meta: Meta<IconButtonProps> = {
   component: IconButton,
   args: {},
   argTypes: { onClick: { action: 'clicked' } },
+  tags: ['autodocs'],
 };
 export default meta;
 

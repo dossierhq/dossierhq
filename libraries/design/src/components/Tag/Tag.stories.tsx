@@ -7,6 +7,7 @@ const meta: Meta<TagProps> = {
   title: 'Components/Tag',
   component: Tag,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

@@ -10,6 +10,7 @@ const meta: Meta<StoryProps> = {
   title: 'Components/TagInput',
   component: TagInput,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

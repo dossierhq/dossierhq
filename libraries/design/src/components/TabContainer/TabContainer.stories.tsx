@@ -17,6 +17,7 @@ const meta: Meta<StoryProps> = {
       { id: '2', title: 'Second' },
     ],
   },
+  tags: ['autodocs'],
 };
 export default meta;
 

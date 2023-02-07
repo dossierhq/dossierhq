@@ -20,6 +20,7 @@ const meta: Meta<StoryProps> = {
   ],
   args: { style: { flexGrow: 1, height: 0 } },
   parameters: { layout: 'fullscreen' },
+  tags: ['autodocs'],
 };
 export default meta;
 

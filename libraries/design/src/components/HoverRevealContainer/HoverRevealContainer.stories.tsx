@@ -9,6 +9,7 @@ const meta: Meta<HoverRevealContainerProps> = {
   title: 'Components/HoverRevealContainer',
   component: HoverRevealContainer,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

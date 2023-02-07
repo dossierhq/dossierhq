@@ -7,6 +7,7 @@ const meta: Meta<TagGroupProps> = {
   title: 'Components/Tag.Group',
   component: Tag.Group,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

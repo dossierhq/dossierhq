@@ -6,6 +6,7 @@ import { Level } from './Level.js';
 const meta: Meta<LevelProps> = {
   title: 'Components/Level',
   component: Level,
+  tags: ['autodocs'],
 };
 export default meta;
 

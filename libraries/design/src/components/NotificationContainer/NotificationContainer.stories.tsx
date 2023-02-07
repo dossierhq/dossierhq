@@ -11,6 +11,7 @@ import { NotificationContainer } from './NotificationContainer.js';
 const meta: Meta<NotificationContainerProps> = {
   title: 'Components/NotificationContainer',
   component: NotificationContainer,
+  tags: ['autodocs'],
 };
 export default meta;
 

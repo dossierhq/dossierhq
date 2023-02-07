@@ -7,6 +7,7 @@ const meta: Meta<MenuProps> = {
   title: 'Components/Menu',
   component: Menu,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

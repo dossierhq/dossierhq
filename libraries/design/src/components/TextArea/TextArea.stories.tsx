@@ -9,6 +9,7 @@ const meta: Meta<TextAreaProps> = {
   title: 'Components/TextArea',
   component: TextArea,
   args: { defaultValue: 'Hello world' },
+  tags: ['autodocs'],
 };
 export default meta;
 

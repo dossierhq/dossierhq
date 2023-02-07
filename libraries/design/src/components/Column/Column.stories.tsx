@@ -6,6 +6,7 @@ import { Column } from './Column.js';
 const meta: Meta<ColumnProps> = {
   title: 'Components/Column',
   component: Column,
+  tags: ['autodocs'],
 };
 export default meta;
 

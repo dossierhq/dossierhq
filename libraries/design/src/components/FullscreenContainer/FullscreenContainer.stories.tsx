@@ -10,6 +10,7 @@ const meta: Meta<FullscreenContainerProps> = {
   parameters: {
     layout: 'fullscreen',
   },
+  tags: ['autodocs'],
 };
 export default meta;
 

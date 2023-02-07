@@ -6,6 +6,7 @@ import { Row } from './Row.js';
 const meta: Meta<RowProps> = {
   title: 'Components/Row',
   component: Row,
+  tags: ['autodocs'],
 };
 export default meta;
 

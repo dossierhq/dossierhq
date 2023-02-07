@@ -7,6 +7,7 @@ const meta: Meta<NavbarProps> = {
   title: 'Components/Navbar',
   component: Navbar,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

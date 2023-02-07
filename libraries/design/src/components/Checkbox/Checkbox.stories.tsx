@@ -9,6 +9,7 @@ const meta: Meta<CheckboxProps> = {
   title: 'Components/Checkbox',
   component: Checkbox,
   args: { children: 'Label' },
+  tags: ['autodocs'],
 };
 export default meta;
 

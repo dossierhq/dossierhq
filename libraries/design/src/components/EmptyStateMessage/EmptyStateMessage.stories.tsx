@@ -10,6 +10,7 @@ const meta: Meta<StoryProps> = {
   component: EmptyStateMessage,
   args: { icon: 'add', title: 'Title', message: 'Message' },
   parameters: { layout: 'fullscreen' },
+  tags: ['autodocs'],
 };
 export default meta;
 

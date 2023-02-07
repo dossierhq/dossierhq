@@ -55,6 +55,7 @@ const meta: Meta<ScreenProps> = {
   parameters: {
     layout: 'fullscreen',
   },
+  tags: ['autodocs'],
 };
 export default meta;
 

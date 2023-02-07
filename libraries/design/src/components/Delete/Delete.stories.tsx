@@ -9,6 +9,7 @@ const meta: Meta<DeleteProps> = {
   title: 'Components/Delete',
   component: Delete,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

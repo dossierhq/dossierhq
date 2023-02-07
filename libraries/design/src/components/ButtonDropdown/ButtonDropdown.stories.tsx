@@ -24,6 +24,7 @@ const meta: Meta<StoryProps> = {
   },
   argTypes: { onItemClick: { action: 'clicked' } },
   parameters: { layout: 'centered' },
+  tags: ['autodocs'],
 };
 export default meta;
 

@@ -13,6 +13,7 @@ const meta: Meta<StoryProps> = {
   component: Icon,
   args: { icon: 'list' },
   parameters: { layout: 'centered' },
+  tags: ['autodocs'],
 };
 export default meta;
 

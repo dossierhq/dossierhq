@@ -9,6 +9,7 @@ const meta: Meta<DropdownDisplayProps> = {
   component: DropdownDisplay,
   args: {},
   parameters: { layout: 'centered' },
+  tags: ['autodocs'],
 };
 export default meta;
 

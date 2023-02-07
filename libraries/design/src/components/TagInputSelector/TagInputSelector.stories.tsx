@@ -38,6 +38,7 @@ const meta: Meta<StoryProps> = {
     },
     itemTag: (item) => ({ tag: item.name, color: item.color, removable: item.removable }),
   },
+  tags: ['autodocs'],
 };
 export default meta;
 

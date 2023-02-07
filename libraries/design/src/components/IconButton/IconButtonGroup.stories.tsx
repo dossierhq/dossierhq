@@ -7,6 +7,7 @@ const meta: Meta<IconButtonGroupProps> = {
   title: 'Components/IconButton.Group',
   component: IconButton.Group,
   args: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

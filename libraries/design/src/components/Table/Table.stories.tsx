@@ -18,6 +18,7 @@ const meta: Meta<StoryProps> = {
   component: Table,
   args: { orderableHeaders: [], rowCount: 50 },
   argTypes: { onHeaderClick: { action: 'clicked' }, onRowClick: { action: 'clicked' } },
+  tags: ['autodocs'],
 };
 export default meta;
 

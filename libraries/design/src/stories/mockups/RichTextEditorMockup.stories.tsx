@@ -16,6 +16,7 @@ const meta: Meta<ScreenProps> = {
   args: {},
   argTypes: {},
   parameters: {},
+  tags: ['autodocs'],
 };
 export default meta;
 

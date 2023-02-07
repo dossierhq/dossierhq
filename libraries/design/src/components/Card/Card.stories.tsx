@@ -8,6 +8,7 @@ const meta: Meta<CardProps> = {
   title: 'Components/Card',
   component: Card,
   parameters: { layout: 'centered' },
+  tags: ['autodocs'],
 };
 export default meta;
 
