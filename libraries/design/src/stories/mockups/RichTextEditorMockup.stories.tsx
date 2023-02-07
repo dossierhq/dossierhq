@@ -68,6 +68,7 @@ function Screen(): JSX.Element {
       >
         <p className={LexicalTheme.paragraph}>
           Lorem <strong className={LexicalTheme.text.bold}>ipsum</strong>.{' '}
+          <mark className={LexicalTheme.text.highlight}>Highlight</mark>{' '}
           <span className={LexicalTheme.text.strikethrough}>Strikethrough</span>{' '}
           <span className={LexicalTheme.text.underline}>Underline</span>{' '}
           <code className={LexicalTheme.text.code}>Code</code>

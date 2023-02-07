@@ -214,6 +214,10 @@ tr.is-sticky-row :is(td, th),
     font-style: italic;
   }
 
+  .is-highlight {
+    background-color: $primary-light;
+  }
+
   .is-strike-through {
     text-decoration: line-through;
   }

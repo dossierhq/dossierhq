@@ -55,6 +55,7 @@ export const LexicalTheme = {
     bold: 'is-bold',
     code: 'is-code',
     italic: 'is-italic',
+    highlight: 'is-highlight',
     strikethrough: 'is-strike-through',
     subscript: 'is-subscript',
     superscript: 'is-superscript',

@@ -30,6 +30,7 @@ export type TextFormatType =
   | 'underline'
   | 'strikethrough'
   | 'italic'
+  | 'highlight'
   | 'code'
   | 'subscript'
   | 'superscript';
@@ -70,10 +71,12 @@ const IS_UNDERLINE = 1 << 3;
 const IS_CODE = 1 << 4;
 const IS_SUBSCRIPT = 1 << 5;
 const IS_SUPERSCRIPT = 1 << 6;
+const IS_HIGHLIGHT = 1 << 7;
 
 export const TEXT_TYPE_TO_FORMAT = {
   bold: IS_BOLD,
   code: IS_CODE,
+  highlight: IS_HIGHLIGHT,
   italic: IS_ITALIC,
   strikethrough: IS_STRIKETHROUGH,
   subscript: IS_SUBSCRIPT,
