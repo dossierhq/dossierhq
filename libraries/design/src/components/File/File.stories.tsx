@@ -1,28 +1,18 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React from 'react';
-import type { FileProps } from './File.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import { File } from './File.js';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface StoryProps extends FileProps {}
-
-const meta: Meta<FileProps> = {
+const meta = {
   title: 'Components/File',
   component: File,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof File>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <File {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};
 
-export const Boxed = Template.bind({});
-Boxed.args = { boxed: true };
+export const Boxed: Story = { args: { boxed: true } };
 
-export const Accept = Template.bind({});
-Accept.args = { accept: 'image/png, .png' };
+export const Accept: Story = { args: { accept: 'image/png, .png' } };

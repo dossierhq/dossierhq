@@ -1,30 +1,29 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import type { MouseEvent } from 'react';
 import React, { useState } from 'react';
 import type { TableProps } from './Table.js';
 import { Table } from './Table.js';
 
 type ColumnName = 'one' | 'two' | 'three';
-export interface StoryProps extends TableProps {
+
+export interface StoryProps extends Omit<TableProps, 'children'> {
   rowCount: number;
-  stickyHeader: boolean;
+  stickyHeader?: boolean;
   orderableHeaders: ColumnName[];
   onHeaderClick: (event: MouseEvent) => void;
   onRowClick: (event: MouseEvent) => void;
 }
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/Table',
-  component: Table,
+  component: Wrapper,
   args: { orderableHeaders: [], rowCount: 50 },
   argTypes: { onHeaderClick: { action: 'clicked' }, onRowClick: { action: 'clicked' } },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({
   orderableHeaders,
@@ -89,16 +88,10 @@ function Wrapper({
   );
 }
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = { args: {} };
 
-export const Empty = Template.bind({});
-Empty.args = { rowCount: 0 };
+export const Empty: Story = { args: { rowCount: 0 } };
 
-export const StickyHeader = Template.bind({});
-StickyHeader.args = { stickyHeader: true };
+export const StickyHeader: Story = { args: { stickyHeader: true } };
 
-export const Orderable = Template.bind({});
-Orderable.args = {
-  orderableHeaders: ['one', 'two'],
-};
+export const Orderable: Story = { args: { orderableHeaders: ['one', 'two'] } };

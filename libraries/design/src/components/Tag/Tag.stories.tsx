@@ -1,28 +1,23 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { TagProps } from './Tag.js';
 import { Tag } from './Tag.js';
 
-const meta: Meta<TagProps> = {
+const meta = {
   title: 'Components/Tag',
   component: Tag,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Tag>;
 export default meta;
 
-const Template: Story<TagProps> = (args) => {
-  return <Tag {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = { args: { children: 'tag' } };
+
+export const Remove: Story = { args: { children: ['tag', <Tag.Remove key="1" />] } };
+
+export const Published: Story = { args: { children: 'published', color: 'published' } };
+
+export const PublishedRemove: Story = {
+  args: { color: 'published', children: ['tag', <Tag.Remove key="1" />] },
 };
-
-export const Normal = Template.bind({});
-Normal.args = { children: 'tag' };
-
-export const Remove = Template.bind({});
-Remove.args = { children: ['tag', <Tag.Remove key="1" />] };
-
-export const Published = Template.bind({});
-Published.args = { children: 'published', color: 'published' };
-
-export const PublishedRemove = Template.bind({});
-PublishedRemove.args = { color: 'published', children: ['tag', <Tag.Remove key="1" />] };

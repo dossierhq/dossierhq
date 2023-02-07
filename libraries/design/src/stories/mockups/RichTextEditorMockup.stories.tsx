@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
 import { IconButton } from '../../components/IconButton/IconButton.js';
@@ -7,22 +7,17 @@ import { LexicalTheme } from '../../config/LexicalTheme.js';
 import { ClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface ScreenProps {}
-
-const meta: Meta<ScreenProps> = {
+const meta = {
   title: 'Mockups/Rich text editor',
   component: Screen,
   args: {},
   argTypes: {},
   parameters: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Screen>;
 export default meta;
 
-const Template: Story<ScreenProps> = (args) => {
-  return <Screen {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Screen(): JSX.Element {
   return (
@@ -139,4 +134,4 @@ function Screen(): JSX.Element {
   );
 }
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};

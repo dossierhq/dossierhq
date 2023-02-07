@@ -1,45 +1,37 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Tag } from '../Tag/Tag';
-import type { TagInputProps } from './TagInput';
 import { TagInput } from './TagInput';
 
-type StoryProps = TagInputProps;
-
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/TagInput',
   component: TagInput,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof TagInput>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {
+  args: {
+    children: (
+      <>
+        <Tag color="archived">
+          One
+          <Tag.Remove />
+        </Tag>
+        <Tag color="archived">Two</Tag>
+        <Tag color="archived">Three</Tag>
+      </>
+    ),
+  },
 };
 
-function Wrapper({ ...args }: StoryProps) {
-  return <TagInput {...args} />;
-}
+export const Empty: Story = { args: { children: null } };
 
-export const Normal = Template.bind({});
-Normal.args = {
-  children: (
-    <>
-      <Tag color="archived">
-        One
-        <Tag.Remove />
-      </Tag>
-      <Tag color="archived">Two</Tag>
-      <Tag color="archived">Three</Tag>
-    </>
-  ),
-};
-
-export const Empty = Template.bind({});
-Empty.args = {};
-
-export const TwentyTags = Template.bind({});
-TwentyTags.args = {
-  children: [...Array(20).keys()].map((it) => <Tag key={it}>{`Tag ${it}`}</Tag>),
+export const TwentyTags: Story = {
+  args: {
+    children: [...Array(20).keys()].map((it) => <Tag key={it}>{`Tag ${it}`}</Tag>),
+  },
 };

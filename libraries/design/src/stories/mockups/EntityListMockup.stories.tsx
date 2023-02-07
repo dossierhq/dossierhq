@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import type { MouseEvent } from 'react';
 import React, { useReducer, useState } from 'react';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
@@ -41,7 +41,7 @@ interface ScreenProps {
   onTableRowClick: (event: MouseEvent) => void;
 }
 
-const meta: Meta<ScreenProps> = {
+const meta = {
   title: 'Mockups/Entity list',
   component: Screen,
   args: {
@@ -56,12 +56,10 @@ const meta: Meta<ScreenProps> = {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Screen>;
 export default meta;
 
-const Template: Story<ScreenProps> = (args) => {
-  return <Screen {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Screen({
   entityCount,
@@ -285,9 +283,6 @@ function EntityTypesList({
   );
 }
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};
 
-export const Empty = Template.bind({});
-Empty.args = {
-  entityCount: 0,
-};
+export const Empty: Story = { args: { entityCount: 0 } };

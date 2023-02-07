@@ -1,55 +1,56 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { LevelProps } from './Level.js';
 import { Level } from './Level.js';
 
-const meta: Meta<LevelProps> = {
+const meta = {
   title: 'Components/Level',
   component: Level,
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Level>;
 export default meta;
 
-const Template: Story<LevelProps> = (args) => {
-  return <Level {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {
+  args: {
+    children: <Level.Item>Item</Level.Item>,
+  },
 };
 
-export const Normal = Template.bind({});
-Normal.args = {
-  children: <Level.Item>Item</Level.Item>,
+export const Padding: Story = {
+  args: {
+    padding: 5,
+    children: <Level.Item>Item</Level.Item>,
+  },
 };
 
-export const Padding = Template.bind({});
-Padding.args = {
-  padding: 5,
-  children: <Level.Item>Item</Level.Item>,
+export const LeftRight: Story = {
+  args: {
+    children: (
+      <>
+        <Level.Left>
+          <Level.Item>Left</Level.Item>
+        </Level.Left>
+        <Level.Right>
+          <Level.Item>Right</Level.Item>
+        </Level.Right>
+      </>
+    ),
+  },
 };
 
-export const LeftRight = Template.bind({});
-LeftRight.args = {
-  children: (
-    <>
-      <Level.Left>
-        <Level.Item>Left</Level.Item>
-      </Level.Left>
-      <Level.Right>
-        <Level.Item>Right</Level.Item>
-      </Level.Right>
-    </>
-  ),
-};
-
-export const LeftCenterRight = Template.bind({});
-LeftCenterRight.args = {
-  children: (
-    <>
-      <Level.Left>
-        <Level.Item>Left</Level.Item>
-      </Level.Left>
-      <Level.Item>Center</Level.Item>
-      <Level.Right>
-        <Level.Item>Right</Level.Item>
-      </Level.Right>
-    </>
-  ),
+export const LeftCenterRight: Story = {
+  args: {
+    children: (
+      <>
+        <Level.Left>
+          <Level.Item>Left</Level.Item>
+        </Level.Left>
+        <Level.Item>Center</Level.Item>
+        <Level.Right>
+          <Level.Item>Right</Level.Item>
+        </Level.Right>
+      </>
+    ),
+  },
 };

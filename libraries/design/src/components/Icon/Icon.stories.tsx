@@ -1,47 +1,40 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { IconProps } from './Icon.js';
 import { Icon } from './Icon.js';
 
-interface StoryProps extends IconProps {
-  prefixText?: string;
-  suffixText?: string;
-}
-
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/Icon',
   component: Icon,
   args: { icon: 'list' },
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-};
+  decorators: [
+    (Story) => (
+      <div style={{ backgroundColor: '#1111' }}>
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof Icon>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ prefixText, suffixText, ...args }: StoryProps) => {
-  if (prefixText || suffixText) {
-    return (
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = { args: { icon: 'chevronDown' } };
+
+export const Empty: Story = { args: { icon: null } };
+
+export const TextIcon: Story = {
+  decorators: [
+    (Story) => (
       <p>
-        {prefixText}
-        <Icon {...args} />
-        {suffixText}
+        Icon in
+        <Story />
+        text
       </p>
-    );
-  }
-  return (
-    <div style={{ backgroundColor: '#1111' }}>
-      <Icon {...args} />
-    </div>
-  );
+    ),
+  ],
+  args: { icon: 'map', text: true },
 };
 
-export const Normal = Template.bind({});
-Normal.args = { icon: 'chevronDown' };
-
-export const Empty = Template.bind({});
-Empty.args = { icon: null };
-
-export const TextIcon = Template.bind({});
-TextIcon.args = { icon: 'map', text: true, prefixText: 'Icon in', suffixText: 'text' };
-
-export const SizeLarge = Template.bind({});
-SizeLarge.args = { size: 'large' };
+export const SizeLarge: Story = { args: { size: 'large' } };

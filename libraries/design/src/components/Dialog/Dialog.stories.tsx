@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { Button } from '../Button/Button.js';
 import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
@@ -11,20 +11,18 @@ import { Dialog } from './Dialog.js';
 
 type StoryProps = Omit<DialogProps, 'show'>;
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/Dialog',
-  component: Dialog,
+  component: Wrapper,
   args: {
     form: true,
     modal: true,
   },
   parameters: { layout: 'centered' },
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ children, onClose, ...args }: StoryProps) {
   const [show, setShow] = useState(true);
@@ -62,70 +60,74 @@ function Wrapper({ children, onClose, ...args }: StoryProps) {
   );
 }
 
-export const Normal = Template.bind({});
-Normal.args = {
-  children: (
-    <Card>
-      <Card.Header>
-        <Card.HeaderTitle>Card title</Card.HeaderTitle>
-      </Card.Header>
-      <Card.Content>Lorem ipsum</Card.Content>
-      <Card.Footer>
-        <Card.FooterButton value="cancel">Cancel</Card.FooterButton>
-        <Card.FooterButton value="save">Save</Card.FooterButton>
-      </Card.Footer>
-    </Card>
-  ),
+export const Normal: Story = {
+  args: {
+    children: (
+      <Card>
+        <Card.Header>
+          <Card.HeaderTitle>Card title</Card.HeaderTitle>
+        </Card.Header>
+        <Card.Content>Lorem ipsum</Card.Content>
+        <Card.Footer>
+          <Card.FooterButton value="cancel">Cancel</Card.FooterButton>
+          <Card.FooterButton value="save">Save</Card.FooterButton>
+        </Card.Footer>
+      </Card>
+    ),
+  },
 };
 
-export const WideFillHeight = Template.bind({});
-WideFillHeight.args = {
-  width: 'wide',
-  height: 'fill',
-  children: (
-    <FullscreenContainer height="100%" card>
-      <FullscreenContainer.Row flexDirection="row" alignItems="center">
-        <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
-          <Text textStyle="headline5">Header</Text>
-        </FullscreenContainer.Item>
-        <IconButton icon="close" color="white" />
-      </FullscreenContainer.Row>
-      <FullscreenContainer.ScrollableRow>
-        <div
-          style={{
-            border: '5px solid burlywood',
-            background:
-              'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
-            height: '300vh',
-          }}
-        />
-      </FullscreenContainer.ScrollableRow>
-    </FullscreenContainer>
-  ),
+export const WideFillHeight: Story = {
+  args: {
+    width: 'wide',
+    height: 'fill',
+    children: (
+      <FullscreenContainer height="100%" card>
+        <FullscreenContainer.Row flexDirection="row" alignItems="center">
+          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+            <Text textStyle="headline5">Header</Text>
+          </FullscreenContainer.Item>
+          <IconButton icon="close" color="white" />
+        </FullscreenContainer.Row>
+        <FullscreenContainer.ScrollableRow>
+          <div
+            style={{
+              border: '5px solid burlywood',
+              background:
+                'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.ScrollableRow>
+      </FullscreenContainer>
+    ),
+  },
 };
 
-export const WithDropdown = Template.bind({});
-WithDropdown.args = {
-  form: false,
-  children: (
-    <Card>
-      <Card.Header>
-        <Card.HeaderTitle>Card title</Card.HeaderTitle>
-      </Card.Header>
-      <Card.Content>
-        <ButtonDropdown
-          items={[{ id: '1' }, { id: '2' }, { id: '3' }]}
-          renderItem={(item) => `Item ${item.id}`}
-        >
-          Open dropdown
-        </ButtonDropdown>
-      </Card.Content>
-    </Card>
-  ),
+export const WithDropdown: Story = {
+  args: {
+    form: false,
+    children: (
+      <Card>
+        <Card.Header>
+          <Card.HeaderTitle>Card title</Card.HeaderTitle>
+        </Card.Header>
+        <Card.Content>
+          <ButtonDropdown
+            items={[{ id: '1' }, { id: '2' }, { id: '3' }]}
+            renderItem={(item) => `Item ${item.id}`}
+          >
+            Open dropdown
+          </ButtonDropdown>
+        </Card.Content>
+      </Card>
+    ),
+  },
 };
 
-export const NonModal = Template.bind({});
-NonModal.args = {
-  modal: false,
-  children: <p>Hello</p>,
+export const NonModal: Story = {
+  args: {
+    modal: false,
+    children: <p>Hello</p>,
+  },
 };

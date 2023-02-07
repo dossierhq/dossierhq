@@ -1,37 +1,31 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { TextProps } from './Text.js';
 import { Text } from './Text.js';
 
-type StoryProps = TextProps;
-
-const meta: Meta<TextProps> = {
+const meta = {
   title: 'Components/Text',
   component: Text,
   args: { children: 'Lorem ipsum', textStyle: 'body1' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Text>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <Text {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {};
+
+export const WithNestedSpan: Story = {
+  args: {
+    children: (
+      <>
+        Hello{' '}
+        <Text as="span" textStyle="body2">
+          World
+        </Text>
+        !
+      </>
+    ),
+  },
 };
 
-export const Normal = Template.bind({});
-Normal.args = {};
-
-export const WithNestedSpan = Template.bind({});
-WithNestedSpan.args = {
-  children: (
-    <>
-      Hello{' '}
-      <Text as="span" textStyle="body2">
-        World
-      </Text>
-      !
-    </>
-  ),
-};
-
-export const Danger = Template.bind({});
-Danger.args = { color: 'danger' };
+export const Danger: Story = { args: { color: 'danger' } };

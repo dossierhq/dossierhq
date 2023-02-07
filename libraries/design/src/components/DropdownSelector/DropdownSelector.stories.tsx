@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useReducer } from 'react';
 import type { DropdownSelectorProps } from './DropdownSelector.js';
 import { DropdownSelector } from './DropdownSelector.js';
@@ -20,9 +20,9 @@ type StoryProps = Omit<DropdownSelectorProps<StoryItem>, 'state' | 'dispatch'> &
   initialState: MultipleSelectorStateInitializerArgs<StoryItem>;
 };
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/DropdownSelector',
-  component: DropdownSelector,
+  component: Wrapper,
   args: {
     children: 'Select',
     initialState: {
@@ -36,12 +36,10 @@ const meta: Meta<StoryProps> = {
   },
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialState, ...args }: StoryProps) {
   const [state, dispatch] = useReducer<
@@ -51,28 +49,21 @@ function Wrapper({ initialState, ...args }: StoryProps) {
   return <DropdownSelector dispatch={dispatch} state={state} {...args} />;
 }
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};
 
-export const IconOnly = Template.bind({});
-IconOnly.args = {
-  iconLeft: 'add',
-  children: undefined,
+export const IconOnly: Story = {
+  args: {
+    iconLeft: 'add',
+    children: undefined,
+  },
 };
 
-export const IconText = Template.bind({});
-IconText.args = {
-  iconLeft: 'add',
-};
+export const IconText: Story = { args: { iconLeft: 'add' } };
 
-export const Left = Template.bind({});
-Left.args = { left: true };
+export const Left: Story = { args: { left: true } };
 
-export const Up = Template.bind({});
-Up.args = { up: true };
+export const Up: Story = { args: { up: true } };
 
-export const UpLeft = Template.bind({});
-UpLeft.args = { up: true, left: true };
+export const UpLeft: Story = { args: { up: true, left: true } };
 
-export const Sneaky = Template.bind({});
-Sneaky.args = { sneaky: true };
+export const Sneaky: Story = { args: { sneaky: true } };

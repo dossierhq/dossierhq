@@ -1,21 +1,14 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React from 'react';
-import type { DeleteProps } from './Delete.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Delete } from './Delete.js';
 
-type StoryProps = DeleteProps;
-
-const meta: Meta<DeleteProps> = {
+const meta = {
   title: 'Components/Delete',
   component: Delete,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Delete>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <Delete {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};

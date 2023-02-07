@@ -1,50 +1,48 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { ButtonGroupProps } from './Button.js';
 import { Button } from './Button.js';
 
-type StoryProps = ButtonGroupProps;
-
-const meta: Meta<ButtonGroupProps> = {
+const meta = {
   title: 'Components/Button.Group',
   component: Button.Group,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Button.Group>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <Button.Group {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {
+  args: {
+    children: (
+      <>
+        <Button>Foo</Button>
+        <Button>Bar</Button>
+      </>
+    ),
+  },
 };
 
-export const Normal = Template.bind({});
-Normal.args = {
-  children: (
-    <>
-      <Button>Foo</Button>
-      <Button>Bar</Button>
-    </>
-  ),
+export const Centered: Story = {
+  args: {
+    centered: true,
+    children: (
+      <>
+        <Button>Foo</Button>
+        <Button>Bar</Button>
+      </>
+    ),
+  },
 };
 
-export const Centered = Template.bind({});
-Centered.args = {
-  centered: true,
-  children: (
-    <>
-      <Button>Foo</Button>
-      <Button>Bar</Button>
-    </>
-  ),
-};
-
-export const HasAddons = Template.bind({});
-HasAddons.args = {
-  hasAddons: true,
-  children: (
-    <>
-      <Button>Foo</Button>
-      <Button>Bar</Button>
-    </>
-  ),
+export const HasAddons: Story = {
+  args: {
+    hasAddons: true,
+    children: (
+      <>
+        <Button>Foo</Button>
+        <Button>Bar</Button>
+      </>
+    ),
+  },
 };

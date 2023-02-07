@@ -1,43 +1,36 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { CheckboxProps } from './Checkbox.js';
 import { Checkbox } from './Checkbox.js';
 
-type StoryProps = CheckboxProps;
-
-const meta: Meta<CheckboxProps> = {
+const meta = {
   title: 'Components/Checkbox',
   component: Checkbox,
   args: { children: 'Label' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Checkbox>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <Checkbox {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = { args: {} };
 
-export const Checked = Template.bind({});
-Checked.args = { checked: true };
+export const Checked: Story = { args: { checked: true } };
 
-export const Disabled = Template.bind({});
-Disabled.args = { disabled: true };
+export const Disabled: Story = { args: { disabled: true } };
 
-export const LabelWithLink = Template.bind({});
-LabelWithLink.args = {
-  children: (
-    <>
-      Hello{' '}
-      <a
-        onClick={() => {
-          // do nothing
-        }}
-      >
-        World
-      </a>
-    </>
-  ),
+export const LabelWithLink: Story = {
+  args: {
+    children: (
+      <>
+        Hello{' '}
+        <a
+          onClick={() => {
+            // do nothing
+          }}
+        >
+          World
+        </a>
+      </>
+    ),
+  },
 };

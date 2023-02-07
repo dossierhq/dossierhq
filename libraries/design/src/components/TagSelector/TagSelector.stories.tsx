@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useReducer } from 'react';
 import type {
   MultipleSelectorReducer,
@@ -22,9 +22,9 @@ type StoryProps = Omit<TagSelectorProps<StoryItem>, 'state' | 'dispatch'> & {
   initialState: MultipleSelectorStateInitializerArgs<StoryItem>;
 };
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/TagSelector',
-  component: TagSelector,
+  component: Wrapper,
   args: {
     clearLabel: 'Clear',
     initialState: {
@@ -38,12 +38,10 @@ const meta: Meta<StoryProps> = {
     itemTag: (item) => ({ tag: item.name, color: item.color }),
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialState, ...args }: StoryProps) {
   const [state, dispatch] = useReducer<
@@ -53,10 +51,10 @@ function Wrapper({ initialState, ...args }: StoryProps) {
   return <TagSelector dispatch={dispatch} state={state} {...args} />;
 }
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};
 
-export const NoSelection = Template.bind({});
-NoSelection.args = {
-  initialState: { items: [{ id: 'one', name: 'One' }], selectedIds: [] },
+export const NoSelection: Story = {
+  args: {
+    initialState: { items: [{ id: 'one', name: 'One' }], selectedIds: [] },
+  },
 };

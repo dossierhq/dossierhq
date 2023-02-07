@@ -1,37 +1,36 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { IconButtonGroupProps } from './IconButton.js';
 import { IconButton } from './IconButton.js';
 
-const meta: Meta<IconButtonGroupProps> = {
+const meta = {
   title: 'Components/IconButton.Group',
   component: IconButton.Group,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof IconButton.Group>;
 export default meta;
 
-const Template: Story<IconButtonGroupProps> = (args) => {
-  return <IconButton.Group {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {
+  args: {
+    children: (
+      <>
+        <IconButton icon="previous" />
+        <IconButton icon="next" />
+      </>
+    ),
+  },
 };
 
-export const Normal = Template.bind({});
-Normal.args = {
-  children: (
-    <>
-      <IconButton icon="previous" />
-      <IconButton icon="next" />
-    </>
-  ),
-};
-
-export const Condensed = Template.bind({});
-Condensed.args = {
-  condensed: true,
-  children: (
-    <>
-      <IconButton icon="previous" />
-      <IconButton icon="next" />
-    </>
-  ),
+export const Condensed: Story = {
+  args: {
+    condensed: true,
+    children: (
+      <>
+        <IconButton icon="previous" />
+        <IconButton icon="next" />
+      </>
+    ),
+  },
 };

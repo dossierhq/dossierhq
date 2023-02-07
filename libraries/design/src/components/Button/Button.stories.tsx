@@ -1,52 +1,40 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Badge } from '../Badge/Badge.js';
-import type { ButtonProps } from './Button.js';
 import { Button } from './Button.js';
 
-type StoryProps = ButtonProps;
-
-const meta: Meta<ButtonProps> = {
+const meta = {
   title: 'Components/Button',
   component: Button,
   args: { children: 'Button' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Button>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <Button {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = { args: {} };
+
+export const Primary: Story = { args: { color: 'primary' } };
+
+export const Disabled: Story = { args: { disabled: true } };
+
+export const Title: Story = { args: { title: 'Button title' } };
+
+export const LeftIcon: Story = { args: { iconLeft: 'add' } };
+
+export const RightIconOnly: Story = { args: { iconRight: 'chevronDown', children: undefined } };
+
+export const WithBadge: Story = {
+  args: {
+    children: (
+      <>
+        Badge<Badge>123</Badge>
+      </>
+    ),
+  },
 };
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Light: Story = { args: { color: 'light' } };
 
-export const Primary = Template.bind({});
-Primary.args = { color: 'primary' };
-
-export const Disabled = Template.bind({});
-Disabled.args = { disabled: true };
-
-export const Title = Template.bind({});
-Title.args = { title: 'Button title' };
-
-export const LeftIcon = Template.bind({});
-LeftIcon.args = { iconLeft: 'add' };
-
-export const RightIconOnly = Template.bind({});
-RightIconOnly.args = { iconRight: 'chevronDown', children: undefined };
-
-export const WithBadge = Template.bind({});
-WithBadge.args = {
-  children: (
-    <>
-      Badge<Badge>123</Badge>
-    </>
-  ),
-};
-
-export const Light = Template.bind({});
-Light.args = { color: 'light' };
-
-export const Anchor = Template.bind({});
-Anchor.args = { as: 'a', href: 'javascript: alert("Clicked")' };
+export const Anchor: Story = { args: { as: 'a', href: 'javascript: alert("Clicked")' } };

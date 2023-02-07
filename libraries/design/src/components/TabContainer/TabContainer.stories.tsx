@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import type { TabContainerProps } from './TabContainer.js';
 import { TabContainer } from './TabContainer.js';
@@ -7,9 +7,9 @@ interface StoryProps extends Omit<TabContainerProps, 'children'> {
   items: { id: string; title: string }[];
 }
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/TabContainer',
-  component: TabContainer,
+  component: Wrapper,
   parameters: { layout: 'centered' },
   args: {
     items: [
@@ -18,12 +18,10 @@ const meta: Meta<StoryProps> = {
     ],
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ items, ...props }: StoryProps) {
   const [current, setCurrent] = useState(items[0].id);
@@ -43,8 +41,6 @@ function Wrapper({ items, ...props }: StoryProps) {
   );
 }
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};
 
-export const Small = Template.bind({});
-Small.args = { small: true };
+export const Small: Story = { args: { small: true } };

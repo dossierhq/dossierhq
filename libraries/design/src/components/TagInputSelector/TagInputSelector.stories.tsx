@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useReducer } from 'react';
 import type {
   MultipleSelectorReducer,
@@ -23,9 +23,9 @@ type StoryProps = Omit<TagInputSelectorProps<StoryItem>, 'state' | 'dispatch'> &
   initialState: MultipleSelectorStateInitializerArgs<StoryItem>;
 };
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Components/TagInputSelector',
-  component: TagInputSelector,
+  component: Wrapper,
   args: {
     clearLabel: 'Clear',
     initialState: {
@@ -39,12 +39,10 @@ const meta: Meta<StoryProps> = {
     itemTag: (item) => ({ tag: item.name, color: item.color, removable: item.removable }),
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialState, ...args }: StoryProps) {
   const [state, dispatch] = useReducer<
@@ -54,21 +52,22 @@ function Wrapper({ initialState, ...args }: StoryProps) {
   return <TagInputSelector dispatch={dispatch} state={state} {...args} />;
 }
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};
 
-export const NoSelection = Template.bind({});
-NoSelection.args = {
-  initialState: { items: [{ id: 'one', name: 'One' }], selectedIds: [] },
+export const NoSelection: Story = {
+  args: {
+    initialState: { items: [{ id: 'one', name: 'One' }], selectedIds: [] },
+  },
 };
 
-export const NonRemovableSelection = Template.bind({});
-NonRemovableSelection.args = {
-  initialState: {
-    items: [
-      { id: 'non-removable', name: 'Non-removable', removable: false },
-      { id: 'one', name: 'One' },
-    ],
-    selectedIds: ['non-removable', 'one'],
+export const NonRemovableSelection: Story = {
+  args: {
+    initialState: {
+      items: [
+        { id: 'non-removable', name: 'Non-removable', removable: false },
+        { id: 'one', name: 'One' },
+      ],
+      selectedIds: ['non-removable', 'one'],
+    },
   },
 };

@@ -1,37 +1,24 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React from 'react';
-import type { InputProps } from './Input.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from './Input.js';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface StoryProps extends InputProps {}
-
-const meta: Meta<InputProps> = {
+const meta = {
   title: 'Components/Input',
   component: Input,
   args: {},
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Input>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <Input {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Normal: Story = {};
 
-export const Placeholder = Template.bind({});
-Placeholder.args = { placeholder: 'Placeholder' };
+export const Placeholder: Story = { args: { placeholder: 'Placeholder' } };
 
-export const ReadOnly = Template.bind({});
-ReadOnly.args = { value: 'Read only', readOnly: true };
+export const ReadOnly: Story = { args: { value: 'Read only', readOnly: true } };
 
-export const LeftIcon = Template.bind({});
-LeftIcon.args = { iconLeft: 'map' };
+export const LeftIcon: Story = { args: { iconLeft: 'map' } };
 
-export const Number = Template.bind({});
-Number.args = { type: 'number', min: 0, max: 100, step: 1 };
+export const Number: Story = { args: { type: 'number', min: 0, max: 100, step: 1 } };
 
-export const CodeTextStyle = Template.bind({});
-CodeTextStyle.args = { textStyle: 'code1' };
+export const CodeTextStyle: Story = { args: { textStyle: 'code1' } };

@@ -1,23 +1,23 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useRef, useState } from 'react';
 import { Button } from '../Button/Button.js';
 import type { DropdownDisplayProps } from './DropdownDisplay.js';
 import { DropdownDisplay } from './DropdownDisplay.js';
 
-const meta: Meta<DropdownDisplayProps> = {
+type WrapperProps = Omit<DropdownDisplayProps, 'trigger' | 'triggerRef'>;
+
+const meta = {
   title: 'Components/DropdownDisplay',
-  component: DropdownDisplay,
+  component: Wrapper,
   args: {},
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<DropdownDisplayProps> = (args) => {
-  return <Wrapper {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
-function Wrapper({ up, left, children }: DropdownDisplayProps) {
+function Wrapper({ up, left, children }: WrapperProps) {
   const [active, setActive] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   return (
@@ -40,48 +40,52 @@ function Wrapper({ up, left, children }: DropdownDisplayProps) {
   );
 }
 
-export const Normal = Template.bind({});
-Normal.args = {
-  children: (
-    <>
-      <DropdownDisplay.Item active>One</DropdownDisplay.Item>
-      <DropdownDisplay.Item>Two</DropdownDisplay.Item>
-      <DropdownDisplay.Item>Three</DropdownDisplay.Item>
-    </>
-  ),
+export const Normal: Story = {
+  args: {
+    children: (
+      <>
+        <DropdownDisplay.Item active>One</DropdownDisplay.Item>
+        <DropdownDisplay.Item>Two</DropdownDisplay.Item>
+        <DropdownDisplay.Item>Three</DropdownDisplay.Item>
+      </>
+    ),
+  },
 };
 
-export const UpLeft = Template.bind({});
-UpLeft.args = {
-  up: true,
-  left: true,
-  children: (
-    <>
-      <DropdownDisplay.Item active>One</DropdownDisplay.Item>
-      <DropdownDisplay.Item>Two</DropdownDisplay.Item>
-      <DropdownDisplay.Item>Three</DropdownDisplay.Item>
-    </>
-  ),
+export const UpLeft: Story = {
+  args: {
+    up: true,
+    left: true,
+    children: (
+      <>
+        <DropdownDisplay.Item active>One</DropdownDisplay.Item>
+        <DropdownDisplay.Item>Two</DropdownDisplay.Item>
+        <DropdownDisplay.Item>Three</DropdownDisplay.Item>
+      </>
+    ),
+  },
 };
 
-export const ContentItem = Template.bind({});
-ContentItem.args = {
-  children: (
-    <>
-      <DropdownDisplay.Item active>One</DropdownDisplay.Item>
-      <DropdownDisplay.ContentItem>Content</DropdownDisplay.ContentItem>
-      <DropdownDisplay.Item>Three</DropdownDisplay.Item>
-    </>
-  ),
+export const ContentItem: Story = {
+  args: {
+    children: (
+      <>
+        <DropdownDisplay.Item active>One</DropdownDisplay.Item>
+        <DropdownDisplay.ContentItem>Content</DropdownDisplay.ContentItem>
+        <DropdownDisplay.Item>Three</DropdownDisplay.Item>
+      </>
+    ),
+  },
 };
 
-export const OneHundredItems = Template.bind({});
-OneHundredItems.args = {
-  children: (() => (
-    <>
-      {Array.from(Array(100).keys()).map((item) => (
-        <DropdownDisplay.Item key={item}>Item: {item}</DropdownDisplay.Item>
-      ))}
-    </>
-  ))(),
+export const OneHundredItems: Story = {
+  args: {
+    children: (() => (
+      <>
+        {Array.from(Array(100).keys()).map((item) => (
+          <DropdownDisplay.Item key={item}>Item: {item}</DropdownDisplay.Item>
+        ))}
+      </>
+    ))(),
+  },
 };

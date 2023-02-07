@@ -1,29 +1,20 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React from 'react';
-import type { TextAreaProps } from './TextArea.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import { TextArea } from './TextArea.js';
 
-type StoryProps = TextAreaProps;
-
-const meta: Meta<TextAreaProps> = {
+const meta = {
   title: 'Components/TextArea',
   component: TextArea,
   args: { defaultValue: 'Hello world' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof TextArea>;
 export default meta;
 
-const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
-  return <TextArea {...args} />;
-};
+type Story = StoryObj<typeof meta>;
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};
 
-export const ReadOnly = Template.bind({});
-ReadOnly.args = { readOnly: true };
+export const ReadOnly: Story = { args: { readOnly: true } };
 
-export const CodeTextStyle = Template.bind({});
-CodeTextStyle.args = { textStyle: 'code2' };
+export const CodeTextStyle: Story = { args: { textStyle: 'code2' } };
 
-export const FixedSize = Template.bind({});
-FixedSize.args = { fixedSize: true };
+export const FixedSize: Story = { args: { fixedSize: true } };

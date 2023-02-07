@@ -1,9 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { MessageProps } from './Message.js';
 import { Message } from './Message.js';
 
-const meta: Meta<MessageProps> = {
+const meta = {
   title: 'Components/Message',
   component: Message,
   args: {
@@ -20,47 +19,41 @@ const meta: Meta<MessageProps> = {
   },
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof Message>;
 export default meta;
 
-const Template: Story<MessageProps> = (args) => {
-  return <Message {...args} />;
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {};
+
+export const NoHeader: Story = {
+  args: {
+    children: <Message.Body>Body</Message.Body>,
+  },
 };
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const Warning: Story = { args: { color: 'warning' } };
 
-export const NoHeader = Template.bind({});
-NoHeader.args = {
-  children: (
-    <>
-      <Message.Body>Body</Message.Body>
-    </>
-  ),
+export const Danger: Story = { args: { color: 'danger' } };
+
+export const FlexBodyTwoChildren: Story = {
+  args: {
+    children: (
+      <Message.Body>
+        <div style={{ width: '100px', height: '100px', backgroundColor: 'palevioletred' }} />
+        <div style={{ width: '100px', height: '100px', backgroundColor: 'olivedrab' }} />
+      </Message.Body>
+    ),
+  },
 };
 
-export const Warning = Template.bind({});
-Warning.args = { color: 'warning' };
-
-export const Danger = Template.bind({});
-Danger.args = { color: 'danger' };
-
-export const FlexBodyTwoChildren = Template.bind({});
-FlexBodyTwoChildren.args = {
-  children: (
-    <Message.Body>
-      <div style={{ width: '100px', height: '100px', backgroundColor: 'palevioletred' }} />
-      <div style={{ width: '100px', height: '100px', backgroundColor: 'olivedrab' }} />
-    </Message.Body>
-  ),
-};
-
-export const FlexBodyNoPadding = Template.bind({});
-FlexBodyNoPadding.args = {
-  children: (
-    <Message.FlexBody padding={0}>
-      <div style={{ width: '100px', height: '100px', backgroundColor: 'palevioletred' }} />
-      <div style={{ width: '100px', height: '100px', backgroundColor: 'olivedrab' }} />
-    </Message.FlexBody>
-  ),
+export const FlexBodyNoPadding: Story = {
+  args: {
+    children: (
+      <Message.FlexBody padding={0}>
+        <div style={{ width: '100px', height: '100px', backgroundColor: 'palevioletred' }} />
+        <div style={{ width: '100px', height: '100px', backgroundColor: 'olivedrab' }} />
+      </Message.FlexBody>
+    ),
+  },
 };
