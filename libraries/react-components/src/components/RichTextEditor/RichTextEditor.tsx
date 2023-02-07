@@ -12,6 +12,7 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin.js';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin.js';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin.js';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin.js';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin.js';
@@ -101,6 +102,7 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
       <CodeHighlightPlugin />
       <EntityLinkPlugin />
       <EntityPlugin />
+      <HistoryPlugin />
       <LinkPlugin />
       <ListPlugin />
       <ValueItemPlugin />
