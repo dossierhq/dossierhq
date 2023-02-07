@@ -1,8 +1,8 @@
 import { NotificationContainer, Text } from '@dossierhq/design';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useMemo, useState } from 'react';
-import { foo1Id } from '../../test/EntityFixtures';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
+import { foo1Id } from '../../test/EntityFixtures';
 import type { EntityEditorScreenProps } from './EntityEditorScreen';
 import { EntityEditorScreen } from './EntityEditorScreen';
 
@@ -11,9 +11,9 @@ type StoryProps = Omit<EntityEditorScreenProps, 'urlSearchParams' | 'onUrlSearch
   showUrl: boolean;
 };
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Screens/EntityEditorScreen',
-  component: EntityEditorScreen,
+  component: Wrapper,
   argTypes: {
     onEditorHasChangesChange: {
       action: 'editor-has-changes',
@@ -21,12 +21,11 @@ const meta: Meta<StoryProps> = {
   },
   args: { showUrl: false },
   parameters: { layout: 'fullscreen' },
-};
+  tags: ['autodocs'],
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return Wrapper(args);
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialUrlSearchParams, showUrl, header, ...props }: StoryProps) {
   const [urlSearchParams, onUrlSearchParamsChange] = useState<URLSearchParams>(
@@ -52,18 +51,21 @@ function Wrapper({ initialUrlSearchParams, showUrl, header, ...props }: StoryPro
   );
 }
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};
 
-export const HeaderFooter = Template.bind({});
-HeaderFooter.args = {
-  header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
-  footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+export const HeaderFooter: Story = {
+  args: {
+    header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+    footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+  },
 };
 
-export const NewFooUrl = Template.bind({});
-NewFooUrl.args = {
-  initialUrlSearchParams: new URLSearchParams({ new: `Foo:${crypto.randomUUID()}` }),
+export const NewFooUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams({ new: `Foo:${crypto.randomUUID()}` }),
+  },
 };
 
-export const OpenFoo1Url = Template.bind({});
-OpenFoo1Url.args = { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) };
+export const OpenFoo1Url: Story = {
+  args: { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) },
+};

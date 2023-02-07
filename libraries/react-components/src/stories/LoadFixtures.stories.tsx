@@ -1,25 +1,22 @@
 import { Message } from '@dossierhq/design';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { AdminLoadContextProvider } from '../test/AdminLoadContextProvider.js';
 import { LoadFixtures } from '../test/LoadFixtures.js';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface StoryProps {}
-
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Setup/LoadFixtures',
   component: Screen,
   parameters: { layout: 'center' },
-};
+} satisfies Meta<typeof Screen>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return Screen(args);
-};
+type Story = StoryObj<typeof meta>;
 
-// eslint-disable-next-line no-empty-pattern
-function Screen({}: StoryProps) {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props {}
+
+function Screen(_props: Props) {
   return (
     <AdminLoadContextProvider>
       <LoadFixtures>
@@ -29,4 +26,4 @@ function Screen({}: StoryProps) {
   );
 }
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};

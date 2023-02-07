@@ -1,16 +1,13 @@
 import type { AdminEntityTypeSpecification, AdminValueTypeSpecification } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useContext } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext';
 import { useAdminSchema } from '../../hooks/useAdminSchema';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
-import type { SchemaEditorScreenProps } from './SchemaEditorScreen';
 import { SchemaEditorScreen } from './SchemaEditorScreen';
 
-type StoryProps = SchemaEditorScreenProps;
-
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Screens/SchemaEditorScreen',
   component: SchemaEditorScreen,
   argTypes: {
@@ -19,38 +16,38 @@ const meta: Meta<StoryProps> = {
     },
   },
   parameters: { layout: 'fullscreen' },
-};
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <AdminLoadContextProvider>
+        <NotificationContainer>
+          <Story />
+        </NotificationContainer>
+      </AdminLoadContextProvider>
+    ),
+  ],
+} satisfies Meta<typeof SchemaEditorScreen>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return Wrapper(args);
+type Story = StoryObj<typeof meta>;
+
+export const Normal: Story = {};
+
+export const HeaderFooter: Story = {
+  args: {
+    header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+    footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+  },
 };
 
-function Wrapper(props: StoryProps) {
-  return (
-    <AdminLoadContextProvider>
-      <NotificationContainer>
-        <SchemaEditorScreen {...props} />
-      </NotificationContainer>
-    </AdminLoadContextProvider>
-  );
-}
-
-export const Normal = Template.bind({});
-
-export const HeaderFooter = Template.bind({});
-HeaderFooter.args = {
-  header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
-  footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
-};
-
-export const SchemaDebug = Template.bind({});
-SchemaDebug.args = {
-  footer: (
-    <div style={{ backgroundColor: 'papayawhip' }}>
-      <SchemaDebugFooter />
-    </div>
-  ),
+export const SchemaDebug: Story = {
+  args: {
+    footer: (
+      <div style={{ backgroundColor: 'papayawhip' }}>
+        <SchemaDebugFooter />
+      </div>
+    ),
+  },
 };
 
 function SchemaDebugFooter() {

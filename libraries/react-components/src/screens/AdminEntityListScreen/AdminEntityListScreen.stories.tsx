@@ -1,6 +1,6 @@
 import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
@@ -15,9 +15,9 @@ type StoryProps = Omit<AdminEntityListScreenProps, 'urlQuery' | 'onUrlQueryChang
   adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
 };
 
-const meta: Meta<StoryProps> = {
+const meta = {
   title: 'Screens/AdminEntityListScreen',
-  component: AdminEntityListScreen,
+  component: Wrapper,
   argTypes: {
     onCreateEntity: {
       action: 'create-entity',
@@ -30,12 +30,11 @@ const meta: Meta<StoryProps> = {
   },
   args: { showUrl: false, ownCache: true },
   parameters: { layout: 'fullscreen' },
-};
+  tags: ['autodocs'],
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return Wrapper(args);
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({
   initialUrlSearchParams,
@@ -69,40 +68,48 @@ function Wrapper({
   );
 }
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};
 
-export const HeaderFooter = Template.bind({});
-HeaderFooter.args = {
-  header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
-  footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
-};
-
-export const InitialQuery = Template.bind({});
-InitialQuery.args = {
-  initialUrlSearchParams: { query: '{"order":"name","text":"hello"}' },
-};
-
-export const InitialBoundingBoxQuery = Template.bind({});
-InitialBoundingBoxQuery.args = {
-  initialUrlSearchParams: {
-    query:
-      '{"boundingBox":{"minLat":55.59004909705666,"maxLat":55.63212782260112,"minLng":12.938149496912958,"maxLng":13.074276968836786}}',
+export const HeaderFooter: Story = {
+  args: {
+    header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+    footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
   },
 };
 
-export const Slow = Template.bind({});
-Slow.args = {
-  adminClientMiddleware: [createSlowAdminMiddleware()],
+export const InitialQuery: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams({ query: '{"order":"name","text":"hello"}' }),
+  },
 };
 
-export const SlowUsingSharedCache = Template.bind({});
-SlowUsingSharedCache.args = {
-  ownCache: false,
-  adminClientMiddleware: [createSlowAdminMiddleware()],
+export const InitialBoundingBoxQuery: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams({
+      query:
+        '{"boundingBox":{"minLat":55.59004909705666,"maxLat":55.63212782260112,"minLng":12.938149496912958,"maxLng":13.074276968836786}}',
+    }),
+  },
 };
 
-export const SlowInitialTextNoMatch = Template.bind({});
-SlowInitialTextNoMatch.args = {
-  adminClientMiddleware: [createSlowAdminMiddleware()],
-  initialUrlSearchParams: { query: '{"text":"there-are-no-matches-for-this"}' },
+export const Slow: Story = {
+  args: {
+    adminClientMiddleware: [createSlowAdminMiddleware()],
+  },
+};
+
+export const SlowUsingSharedCache: Story = {
+  args: {
+    ownCache: false,
+    adminClientMiddleware: [createSlowAdminMiddleware()],
+  },
+};
+
+export const SlowInitialTextNoMatch: Story = {
+  args: {
+    adminClientMiddleware: [createSlowAdminMiddleware()],
+    initialUrlSearchParams: new URLSearchParams({
+      query: '{"text":"there-are-no-matches-for-this"}',
+    }),
+  },
 };

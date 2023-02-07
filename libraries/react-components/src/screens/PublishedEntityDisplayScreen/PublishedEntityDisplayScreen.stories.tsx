@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
 import { foo1Id } from '../../test/EntityFixtures';
@@ -9,18 +9,17 @@ type StoryProps = Omit<PublishedEntityDisplayScreenProps, 'urlSearchParams'> & {
   initialUrlSearchParams?: URLSearchParams;
 };
 
-const meta: Meta<PublishedEntityDisplayScreenProps> = {
+const meta = {
   title: 'Screens/PublishedEntityDisplayScreen',
-  component: PublishedEntityDisplayScreen,
+  component: Wrapper,
   argTypes: {},
   args: {},
   parameters: { layout: 'fullscreen' },
-};
+  tags: ['autodocs'],
+} satisfies Meta<typeof Wrapper>;
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  return Wrapper(args);
-};
+type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialUrlSearchParams, ...props }: StoryProps) {
   const [urlSearchParams, onUrlSearchParamsChange] = useState<URLSearchParams>(
@@ -38,13 +37,15 @@ function Wrapper({ initialUrlSearchParams, ...props }: StoryProps) {
   );
 }
 
-export const Normal = Template.bind({});
+export const Normal: Story = {};
 
-export const HeaderFooter = Template.bind({});
-HeaderFooter.args = {
-  header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
-  footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+export const HeaderFooter: Story = {
+  args: {
+    header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+    footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+  },
 };
 
-export const OpenFoo1Url = Template.bind({});
-OpenFoo1Url.args = { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) };
+export const OpenFoo1Url: Story = {
+  args: { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) },
+};
