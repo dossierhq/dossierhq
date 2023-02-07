@@ -71,6 +71,7 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 - Bun is automatically using the latest version on GitHub Actions
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
 - Upgrade individual dependencies in `tools/all-dependencies/`:
+  - `npm run outdated` to get a list of outdated dependencies
   - `rush add --package typescript@latest --dev --make-consistent`
   - or `rush upgrade-interactive`
 - Upgrade dependencies in `examples/deno/config/import-map.json`
@@ -78,10 +79,12 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 
 ## Publish packages
 
+- Normally publishing the packages bumps the patch version, change `nextBump` to `minor` in [common/config/rush/version-policies.json](./common/config/rush/version-policies.json) to bump minor instead
 - `rush change`
 - `git add common/changes/ && git commit`
 - `git push`
 - Start [publish](https://github.com/dossierhq/dossierhq/actions/workflows/publish.yml) workflow
+- When done, change back `nextBump` to `patch` if you changed it
 
 ## Ports
 
