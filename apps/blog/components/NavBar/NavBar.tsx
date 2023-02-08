@@ -27,7 +27,7 @@ export function NavBar({
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
             <Link href={BrowserUrls.home}>
-              <Image className={className} src={logo} alt="Dossier logo" height={36} />
+              <Image className={className} src={logo} alt="Dossier logo" height={36} priority />
             </Link>
           )}
         </DesignNavbar.Item>

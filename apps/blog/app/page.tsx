@@ -29,7 +29,7 @@ export default function Page() {
           gap={5}
           style={{ maxWidth: '50rem' }}
         >
-          <Image src={logoLarge} alt="Dossier logo" height={140} />
+          <Image src={logoLarge} alt="Dossier logo" height={140} priority />
           <div>
             <Text
               as="h1"
