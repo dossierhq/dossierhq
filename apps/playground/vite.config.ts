@@ -10,6 +10,7 @@ export default defineConfig({
     rollupOptions: {
       plugins: [visualizer()],
     },
+    sourcemap: true,
   },
   css: {
     postcss: {

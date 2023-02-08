@@ -23,7 +23,7 @@ export function NavBar({ current }: Props) {
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
             <Link to={serverName ? ROUTE.server.url(serverName) : ROUTE.index.url}>
-              <img className={className} src={logo} alt="Dossier logo" width={136} />
+              <img className={className} src={logo} alt="Dossier logo" width={136} height={36} />
             </Link>
           )}
         </DesignNavbar.Item>
