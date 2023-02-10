@@ -52,7 +52,7 @@
     "@vitejs/plugin-react": "~3.1.0",
     "@vitejs/plugin-react-swc": "~3.1.0",
     "base-64": "~1.0.0",
-    "better-sqlite3": "~8.0.1",
+    "better-sqlite3": "~8.1.0",
     "body-parser": "~1.20.1",
     "bulma": "~0.9.4",
     "bun-types": "~0.5.0",
