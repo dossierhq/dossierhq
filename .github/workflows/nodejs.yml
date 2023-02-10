@@ -6,6 +6,8 @@ jobs:
     timeout-minutes: 14
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
+      - name: apt-get update
+        run: sudo apt-get update # to avoid error when installing Playwright
       - uses: actions/checkout@v3
       - name: Cache Rush
         uses: actions/cache@v3
