@@ -13,6 +13,6 @@
   "editor.rulers": [100],
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
-  "typescript.tsdk": "../../common/temp/node_modules/.pnpm/typescript@4.9.4/node_modules/typescript/lib",
+  "typescript.tsdk": "../../common/temp/node_modules/.pnpm/typescript@4.9.5/node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }

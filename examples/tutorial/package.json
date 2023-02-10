@@ -23,26 +23,26 @@
     "better-sqlite3": "~8.1.0",
     "body-parser": "~1.20.1",
     "dotenv": "~16.0.3",
-    "express": "~4.18.1",
+    "express": "~4.18.2",
     "express-jwt": "~8.4.1",
-    "jwks-rsa": "~3.0.0",
+    "jwks-rsa": "~3.0.1",
     "leaflet": "~1.9.3",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "react-router-dom": "~6.8.0"
+    "react-router-dom": "~6.8.1"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.3",
     "@types/body-parser": "~1.19.2",
-    "@types/express": "~4.17.13",
-    "@types/react": "~18.0.26",
-    "@types/react-dom": "~18.0.9",
+    "@types/express": "~4.17.17",
+    "@types/react": "~18.0.27",
+    "@types/react-dom": "~18.0.10",
     "@vitejs/plugin-react": "~3.1.0",
     "concurrently": "~7.6.0",
     "nodemon": "~2.0.20",
     "ts-node": "~10.9.1",
-    "typescript": "~4.9.4",
+    "typescript": "~4.9.5",
     "vite": "~4.1.1"
   }
 }
