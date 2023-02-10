@@ -21,7 +21,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~8.0.1",
+    "better-sqlite3": "~8.1.0",
     "leaflet": "~1.9.3",
     "next": "~13.1.6",
     "react": "~18.2.0",

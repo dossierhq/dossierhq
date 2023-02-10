@@ -35,7 +35,7 @@
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
-    "better-sqlite3": "~8.0.1",
+    "better-sqlite3": "~8.1.0",
     "dotenv": "~16.0.3",
     "pg": "~8.9.0",
     "sqlite3": "~5.1.2",
