@@ -624,7 +624,7 @@ importers:
     specifiers:
       '@creativebulma/bulma-badge': ~1.0.1
       '@dossierhq/heft-node-rig': workspace:*
-      '@fortawesome/free-solid-svg-icons': ~6.2.1
+      '@fortawesome/free-solid-svg-icons': ~6.3.0
       '@react-aria/overlays': ~3.12.0
       '@rushstack/heft': 0.49.7
       '@storybook/addon-actions': ~7.0.0-beta.36
@@ -659,7 +659,7 @@ importers:
       vite: ~4.1.1
     dependencies:
       '@creativebulma/bulma-badge': 1.0.1
-      '@fortawesome/free-solid-svg-icons': 6.2.1
+      '@fortawesome/free-solid-svg-icons': 6.3.0
       '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
       lodash: 4.17.21
       react: 18.2.0
@@ -1261,7 +1261,7 @@ importers:
       '@cloudinary/url-gen': ~1.9.0
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~7.6.0
-      '@fortawesome/free-solid-svg-icons': ~6.2.1
+      '@fortawesome/free-solid-svg-icons': ~6.3.0
       '@graphiql/toolkit': ~0.8.0
       '@lexical/code': 0.7.7
       '@lexical/link': 0.7.7
@@ -1359,7 +1359,7 @@ importers:
       '@cloudinary/url-gen': 1.9.0
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 7.6.0
-      '@fortawesome/free-solid-svg-icons': 6.2.1
+      '@fortawesome/free-solid-svg-icons': 6.3.0
       '@graphiql/toolkit': 0.8.0_acoc23sloedlurnf2ovm6sgfmy
       '@lexical/code': 0.7.7_lexical@0.7.7
       '@lexical/link': 0.7.7_lexical@0.7.7
@@ -3153,18 +3153,18 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@fortawesome/fontawesome-common-types/6.2.1:
-    resolution: {integrity: sha512-Sz07mnQrTekFWLz5BMjOzHl/+NooTdW8F8kDQxjWwbpOJcnoSg4vUDng8d/WR1wOxM0O+CY9Zw0nR054riNYtQ==}
+  /@fortawesome/fontawesome-common-types/6.3.0:
+    resolution: {integrity: sha512-4BC1NMoacEBzSXRwKjZ/X/gmnbp/HU5Qqat7E8xqorUtBFZS+bwfGH5/wqOC2K6GV0rgEobp3OjGRMa5fK9pFg==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: false
 
-  /@fortawesome/free-solid-svg-icons/6.2.1:
-    resolution: {integrity: sha512-oKuqrP5jbfEPJWTij4sM+/RvgX+RMFwx3QZCZcK9PrBDgxC35zuc7AOFsyMjMd/PIFPeB2JxyqDr5zs/DZFPPw==}
+  /@fortawesome/free-solid-svg-icons/6.3.0:
+    resolution: {integrity: sha512-x5tMwzF2lTH8pyv8yeZRodItP2IVlzzmBuD1M7BjawWgg9XAvktqJJ91Qjgoaf8qJpHQ8FEU9VxRfOkLhh86QA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.2.1
+      '@fortawesome/fontawesome-common-types': 6.3.0
     dev: false
 
   /@gar/promisify/1.1.2:
