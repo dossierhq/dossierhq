@@ -31,7 +31,7 @@ importers:
       leaflet: ~1.9.3
       lexical: 0.7.7
       next: ~13.1.6
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
       sql.js: ~1.8.0
@@ -71,7 +71,7 @@ importers:
       dotenv: 16.0.3
       eslint: 8.33.0
       eslint-config-next: 13.1.6_zkdaqh7it7uc4cvz2haft7rc6u
-      prettier: 2.8.3
+      prettier: 2.8.4
       ts-node: 10.9.1_typescript@4.9.4
       typescript: 4.9.4
       vitest: 0.28.4
@@ -158,7 +158,7 @@ importers:
       cloudinary: ~1.33.0
       dotenv: ~16.0.3
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: ~5.1.2
       ts-node: ~10.9.1
       tslib: ~2.5.0
@@ -182,7 +182,7 @@ importers:
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       ts-node: 10.9.1_typescript@4.9.4
       typescript: 4.9.4
 
@@ -210,7 +210,7 @@ importers:
       dotenv: ~16.0.3
       eslint: ~8.33.0
       pg: ~8.9.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -240,7 +240,7 @@ importers:
       '@types/pg': 8.6.5
       '@types/sqlite3': 3.1.8
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../examples/bun:
@@ -251,7 +251,7 @@ importers:
       '@dossierhq/server': workspace:*
       bun-types: ~0.5.0
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: ~4.9.4
     dependencies:
       '@dossierhq/bun-sqlite': link:../../libraries/bun-sqlite
@@ -261,7 +261,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       bun-types: 0.5.0
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../examples/deno:
@@ -296,7 +296,7 @@ importers:
       eslint: ~8.33.0
       express: ~4.18.1
       express-graphql: ~0.12.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -316,7 +316,7 @@ importers:
       '@types/express': 4.17.13
       '@types/sqlite3': 3.1.8
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../examples/next-web:
@@ -335,7 +335,7 @@ importers:
       eslint-config-next: ~13.1.6
       leaflet: ~1.9.3
       next: ~13.1.6
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
       typescript: ~4.9.4
@@ -357,7 +357,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.49.0_zkdaqh7it7uc4cvz2haft7rc6u
       eslint: 8.33.0
       eslint-config-next: 13.1.6_zkdaqh7it7uc4cvz2haft7rc6u
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../examples/tutorial:
@@ -432,7 +432,7 @@ importers:
       '@rushstack/heft': 0.49.7
       '@types/node': ~18.11.12
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
     dependencies:
@@ -443,7 +443,7 @@ importers:
       '@rushstack/heft': 0.49.7_@types+node@18.11.17
       '@types/node': 18.11.17
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../libraries/better-sqlite3:
@@ -458,7 +458,7 @@ importers:
       '@types/better-sqlite3': ~7.6.3
       better-sqlite3: ~8.0.1
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -475,7 +475,7 @@ importers:
       '@types/better-sqlite3': 7.6.3
       better-sqlite3: 8.0.1
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -490,7 +490,7 @@ importers:
       '@rushstack/heft': 0.49.7
       bun-types: ~0.5.0
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: ~4.9.4
     dependencies:
       '@dossierhq/sqlite-core': link:../sqlite-core
@@ -503,7 +503,7 @@ importers:
       '@rushstack/heft': 0.49.7
       bun-types: 0.5.0
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../libraries/cloudinary:
@@ -517,7 +517,7 @@ importers:
       '@rushstack/heft': 0.49.7
       '@types/react': ~18.0.26
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -534,7 +534,7 @@ importers:
       '@rushstack/heft': 0.49.7
       '@types/react': 18.0.26
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../libraries/core:
@@ -543,7 +543,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -554,7 +554,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -565,7 +565,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -577,7 +577,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -588,7 +588,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -600,7 +600,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -647,7 +647,7 @@ importers:
       eslint-plugin-storybook: ~0.6.10
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
       sass: ~1.58.0
@@ -687,7 +687,7 @@ importers:
       eslint-plugin-react-hooks: 4.6.0_eslint@8.33.0
       eslint-plugin-storybook: 0.6.10_zkdaqh7it7uc4cvz2haft7rc6u
       mini-svg-data-uri: 1.4.4
-      prettier: 2.8.3
+      prettier: 2.8.4
       sass: 1.58.0
       sass-loader: 13.2.0_sass@1.58.0
       storybook: 7.0.0-beta.36
@@ -706,7 +706,7 @@ importers:
       eslint: ~8.33.0
       eslint-plugin-react: ~7.32.0
       eslint-plugin-react-hooks: ~4.6.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
       tslib: ~2.5.0
@@ -725,7 +725,7 @@ importers:
       eslint: 8.33.0
       eslint-plugin-react: 7.32.0_eslint@8.33.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../libraries/graphql:
@@ -741,7 +741,7 @@ importers:
       '@types/uuid': ~9.0.0
       eslint: ~8.33.0
       graphql: ~16.6.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -761,7 +761,7 @@ importers:
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: 5.1.4
       typescript: 4.9.4
       uuid: 9.0.0
@@ -778,7 +778,7 @@ importers:
       '@types/node': ~18.11.12
       '@types/uuid': ~9.0.0
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       ts-node: ~10.9.1
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -796,7 +796,7 @@ importers:
       '@types/node': 18.11.17
       '@types/uuid': 9.0.0
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       ts-node: 10.9.1_moeqx3xmzxqxagf2sz6mqkbb7m
       typescript: 4.9.4
 
@@ -812,7 +812,7 @@ importers:
       leaflet: ~1.9.3
       leaflet.locatecontrol: ~0.79.0
       mini-svg-data-uri: ~1.4.4
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-leaflet: ~4.2.0
       svgo: ~3.0.2
@@ -833,7 +833,7 @@ importers:
       '@types/react': 18.0.26
       eslint: 8.33.0
       mini-svg-data-uri: 1.4.4
-      prettier: 2.8.3
+      prettier: 2.8.4
       svgo: 3.0.2
       typescript: 4.9.4
 
@@ -854,7 +854,7 @@ importers:
       dotenv: ~16.0.3
       eslint: ~8.33.0
       pg: ~8.9.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       uuid: ~9.0.0
@@ -877,7 +877,7 @@ importers:
       '@types/uuid': 9.0.0
       dotenv: 16.0.3
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       uuid: 9.0.0
       vitest: 0.28.4
@@ -891,7 +891,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -905,7 +905,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -954,7 +954,7 @@ importers:
       leaflet: ~1.9.3
       lexical: 0.7.7
       lodash: ~4.17.21
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
       storybook: ~7.0.0-beta.36
@@ -1005,7 +1005,7 @@ importers:
       eslint-plugin-react: 7.32.0_eslint@8.33.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.33.0
       eslint-plugin-storybook: 0.6.10_zkdaqh7it7uc4cvz2haft7rc6u
-      prettier: 2.8.3
+      prettier: 2.8.4
       storybook: 7.0.0-beta.36
       typescript: 4.9.4
       uuid: 9.0.0
@@ -1021,7 +1021,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -1035,7 +1035,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -1053,7 +1053,7 @@ importers:
       '@types/sql.js': ~1.4.4
       base-64: ~1.0.0
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sql.js: ~1.8.0
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -1073,7 +1073,7 @@ importers:
       '@types/sql.js': 1.4.4
       base-64: 1.0.0
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sql.js: 1.8.0
       typescript: 4.9.4
       vitest: 0.28.4
@@ -1087,7 +1087,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -1101,7 +1101,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -1116,7 +1116,7 @@ importers:
       '@rushstack/heft': 0.49.7
       '@types/sqlite3': ~3.1.8
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~4.9.4
@@ -1133,7 +1133,7 @@ importers:
       '@rushstack/heft': 0.49.7
       '@types/sqlite3': 3.1.8
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       sqlite3: 5.1.4
       typescript: 4.9.4
       vitest: 0.28.4
@@ -1145,7 +1145,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -1157,7 +1157,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -1200,7 +1200,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -1211,7 +1211,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -1221,7 +1221,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
       vitest: 0.28.4
@@ -1232,7 +1232,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
       vitest: 0.28.4
 
@@ -1242,7 +1242,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.49.7
       eslint: ~8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       tslib: ~2.5.0
       typescript: ~4.9.4
     dependencies:
@@ -1252,7 +1252,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.49.7
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.4
 
   ../../tools/all-dependencies:
@@ -1333,7 +1333,7 @@ importers:
       nodemon: ~2.0.20
       pg: ~8.9.0
       postgrator: ~7.1.1
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
       react-leaflet: ~4.2.0
@@ -1430,7 +1430,7 @@ importers:
       nodemon: 2.0.20
       pg: 8.9.0
       postgrator: 7.1.1
-      prettier: 2.8.3
+      prettier: 2.8.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
@@ -5311,7 +5311,7 @@ packages:
       globby: 11.1.0
       jscodeshift: 0.13.1_@babel+preset-env@7.20.2
       lodash: 4.17.21
-      prettier: 2.8.3
+      prettier: 2.8.4
       recast: 0.23.1
       util: 0.12.5
     transitivePeerDependencies:
@@ -12361,8 +12361,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  /prettier/2.8.3:
-    resolution: {integrity: sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==}
+  /prettier/2.8.4:
+    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
