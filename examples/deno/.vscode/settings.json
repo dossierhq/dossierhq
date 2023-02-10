@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["Deno", "Postgres", "sprintf"],
+  "cSpell.words": ["Deno", "dossierhq", "Postgres", "sprintf"],
   "deno.enable": true,
   "deno.lint": true,
   "deno.importMap": "./config/import-map.json",

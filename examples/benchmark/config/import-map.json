@@ -1,18 +1,18 @@
 {
   "imports": {
-    "@faker-js/faker": "npm:@faker-js/faker@~7.6.0",
     "@dossierhq/core": "../node_modules/@dossierhq/core/lib/esm/index.js",
     "@dossierhq/database-adapter": "../node_modules/@dossierhq/database-adapter/lib/esm/index.js",
     "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/esm/index.js",
     "@dossierhq/deno-postgres": "../node_modules/@dossierhq/deno-postgres/src/mod.ts",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
+    "@faker-js/faker": "npm:@faker-js/faker@~7.6.0",
     "benchpress": "../node_modules/benchpress/lib/esm/index.js",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
-    "std/": "https://deno.land/std@0.162.0/",
-    "tslib": "npm:tslib@~2.4.0",
-    "node:child_process": "https://deno.land/std@0.162.0/node/child_process.ts",
-    "node:fs": "https://deno.land/std@0.162.0/node/fs.ts",
-    "node:path": "https://deno.land/std@0.162.0/node/path.ts"
+    "std/": "https://deno.land/std@0.177.0/",
+    "tslib": "npm:tslib@~2.5.0",
+    "node:child_process": "https://deno.land/std@0.177.0/node/child_process.ts",
+    "node:fs": "https://deno.land/std@0.177.0/node/fs.ts",
+    "node:path": "https://deno.land/std@0.177.0/node/path.ts"
   }
 }

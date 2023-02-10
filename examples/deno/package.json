@@ -7,6 +7,7 @@
     "build": "deno lint -q && (deno fmt --check 2>&1) && (deno cache server.ts 2>&1) && (npm run test 2>&1)",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
+    "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
     "postinstall": "deno cache external-dependencies.ts",
     "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS",
     "test:watch": "deno test --watch"

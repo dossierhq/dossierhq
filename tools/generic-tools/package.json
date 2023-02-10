@@ -13,6 +13,7 @@
     "db:start": "./scripts/db-start.sh",
     "db:stop": "./scripts/db-stop.sh",
     "db:wait": "./scripts/db-wait-for-connection.js",
+    "deno:reload-dependencies:all": "./scripts/npm-all-projects.sh run deno:reload-dependencies --if-present",
     "docs:generate-graphviz": "dot -Tsvg -O ../../docs/*.dot",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",

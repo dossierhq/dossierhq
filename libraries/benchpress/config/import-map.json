@@ -1,7 +1,7 @@
 {
   "imports": {
-    "node:child_process": "https://deno.land/std@0.162.0/node/child_process.ts",
-    "node:fs": "https://deno.land/std@0.162.0/node/fs.ts",
-    "node:path": "https://deno.land/std@0.162.0/node/path.ts"
+    "node:child_process": "https://deno.land/std@0.177.0/node/child_process.ts",
+    "node:fs": "https://deno.land/std@0.177.0/node/fs.ts",
+    "node:path": "https://deno.land/std@0.177.0/node/path.ts"
   }
 }

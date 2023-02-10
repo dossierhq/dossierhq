@@ -18,6 +18,7 @@
     "build": "npm run prettier:check && heft build --clean && post-process-build deno cjs-package-json && npm run test",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
+    "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "examples:timer-benchmark:bun": "bun run ./src/examples/timer-benchmark.ts",
