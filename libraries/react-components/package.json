@@ -63,7 +63,7 @@
     "typescript": "~4.9.4",
     "uuid": "~9.0.0",
     "vite": "~4.1.1",
-    "vitest": "0.28.2"
+    "vitest": "0.28.4"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",
