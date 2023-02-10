@@ -43,7 +43,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@playwright/test": "~1.30.0",
-    "@rushstack/heft": "0.49.5",
+    "@rushstack/heft": "0.49.7",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.4",
     "base-64": "~1.0.0",
