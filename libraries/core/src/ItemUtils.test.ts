@@ -4,6 +4,7 @@ import {
   copyEntity,
   isEntityNameAsRequested,
   isFieldValueEqual,
+  normalizeEntityFields,
   normalizeFieldValue,
 } from './ItemUtils.js';
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
@@ -134,21 +135,42 @@ describe('isFieldValueEqual', () => {
     ).toBeFalsy());
 });
 
+describe('normalizeEntityFields', () => {
+  test('empty Foo', () => {
+    expect(
+      normalizeEntityFields(schema, { info: { type: 'Foo' }, fields: {} }).valueOrThrow()
+    ).toMatchSnapshot();
+  });
+
+  test('empty Foo (excludeOmitted)', () => {
+    expect(
+      normalizeEntityFields(
+        schema,
+        { info: { type: 'Foo' }, fields: {} },
+        { excludeOmitted: true }
+      ).valueOrThrow()
+    ).toEqual({});
+  });
+});
+
 describe('normalizeFieldValue()', () => {
-  test('"" => null', () =>
+  test('"" => null', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), '')).toEqual(
       null
-    ));
+    );
+  });
 
-  test('[] => null', () =>
+  test('[] => null', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), [])).toBe(
       null
-    ));
+    );
+  });
 
-  test('[string, ""] => [string]', () =>
+  test('[string, ""] => [string]', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), ['hello', ''])
-    ).toEqual(['hello']));
+    ).toEqual(['hello']);
+  });
 
   test('[string] => [string] (no change)', () => {
     const fieldValue = ['hello', 'world'];
@@ -157,23 +179,25 @@ describe('normalizeFieldValue()', () => {
     ).toBe(fieldValue);
   });
 
-  test('{string1:string,string2:""} => {string1:string,string2:null}', () =>
+  test('{string1:string,string2:""} => {string1:string,string2:null}', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
         type: 'TwoStrings',
         string1: 'Hello',
         string2: '',
       })
-    ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null }));
+    ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null });
+  });
 
-  test('{string1:undefined} => {string1:null,string2:null}', () =>
+  test('{string1:undefined} => {string1:null,string2:null}', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
         type: 'TwoStrings',
         string1: undefined,
         // no string2
       })
-    ).toEqual({ type: 'TwoStrings', string1: null, string2: null }));
+    ).toEqual({ type: 'TwoStrings', string1: null, string2: null });
+  });
 
   test('{string1:string,string2:string} => {string1:string,string2:string} (no change)', () => {
     const fieldValue = {
@@ -186,15 +210,17 @@ describe('normalizeFieldValue()', () => {
     ).toBe(fieldValue);
   });
 
-  test('string undefined => undefined', () =>
+  test('string undefined => undefined', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined)
-    ).toBe(undefined));
+    ).toBe(undefined);
+  });
 
-  test('string[] undefined => undefined', () =>
+  test('string[] undefined => undefined', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined)
-    ).toBe(undefined));
+    ).toBe(undefined);
+  });
 
   test('ValueItem: undefined => undefined', () => {
     expect(

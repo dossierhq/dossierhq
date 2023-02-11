@@ -81,6 +81,7 @@ export {
   isValueItemField,
   isValueItemItemField,
   isValueItemListField,
+  normalizeEntityFields,
   normalizeFieldValue,
   visitorPathToString,
 } from './ItemUtils.js';

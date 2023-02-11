@@ -1,0 +1,10 @@
+// Vitest Snapshot v1
+
+exports[`normalizeEntityFields > empty Foo 1`] = `
+{
+  "richText": null,
+  "string": null,
+  "stringList": null,
+  "twoStrings": null,
+}
+`;
