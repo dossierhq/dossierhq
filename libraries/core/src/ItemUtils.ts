@@ -411,6 +411,37 @@ export function normalizeEntityFields<TEntity extends EntityLike>(
   return ok(fields);
 }
 
+export function normalizeValueItem<TValueItem extends ValueItem>(
+  schema: AdminSchema,
+  valueItem: TValueItem
+): Result<TValueItem, typeof ErrorType.BadRequest> {
+  const valueTypeSpec = schema.getValueTypeSpecification(valueItem.type);
+  if (!valueTypeSpec) {
+    return notOk.BadRequest(`Value type ${valueItem.type} doesn’t exist`);
+  }
+
+  const unsupportedFieldNames = new Set(Object.keys(valueItem));
+  unsupportedFieldNames.delete('type');
+
+  const result: ValueItem = { type: valueItem.type };
+  for (const fieldSpec of valueTypeSpec.fields) {
+    unsupportedFieldNames.delete(fieldSpec.name);
+
+    if (fieldSpec.name === 'type') {
+      continue;
+    }
+
+    const fieldValue = normalizeFieldValue(schema, fieldSpec, valueItem[fieldSpec.name] ?? null);
+    result[fieldSpec.name] = fieldValue;
+  }
+
+  if (unsupportedFieldNames.size > 0) {
+    return notOk.BadRequest(`Unsupported field names: ${[...unsupportedFieldNames].join(', ')}`);
+  }
+
+  return ok(result as TValueItem);
+}
+
 export function normalizeFieldValue(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification,

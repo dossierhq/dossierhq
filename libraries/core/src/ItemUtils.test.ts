@@ -6,6 +6,7 @@ import {
   isFieldValueEqual,
   normalizeEntityFields,
   normalizeFieldValue,
+  normalizeValueItem,
 } from './ItemUtils.js';
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
@@ -150,6 +151,18 @@ describe('normalizeEntityFields', () => {
         { excludeOmitted: true }
       ).valueOrThrow()
     ).toEqual({});
+  });
+});
+
+describe('normalizeValueItem', () => {
+  test('empty TwoStrings', () => {
+    expect(normalizeValueItem(schema, { type: 'TwoStrings' }).valueOrThrow()).toMatchSnapshot();
+  });
+
+  test('TwoStrings with empty strings', () => {
+    expect(
+      normalizeValueItem(schema, { type: 'TwoStrings', string1: '', string2: null }).valueOrThrow()
+    ).toMatchSnapshot();
   });
 });
 

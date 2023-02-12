@@ -8,3 +8,19 @@ exports[`normalizeEntityFields > empty Foo 1`] = `
   "twoStrings": null,
 }
 `;
+
+exports[`normalizeValueItem > TwoStrings with empty strings 1`] = `
+{
+  "string1": null,
+  "string2": null,
+  "type": "TwoStrings",
+}
+`;
+
+exports[`normalizeValueItem > empty TwoStrings 1`] = `
+{
+  "string1": null,
+  "string2": null,
+  "type": "TwoStrings",
+}
+`;
