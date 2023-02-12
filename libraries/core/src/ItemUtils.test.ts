@@ -210,22 +210,22 @@ describe('normalizeFieldValue()', () => {
     ).toBe(fieldValue);
   });
 
-  test('string undefined => undefined', () => {
+  test('string undefined => null', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined)
-    ).toBe(undefined);
+    ).toBe(null);
   });
 
-  test('string[] undefined => undefined', () => {
+  test('string[] undefined => null', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined)
-    ).toBe(undefined);
+    ).toBe(null);
   });
 
-  test('ValueItem: undefined => undefined', () => {
+  test('ValueItem: undefined => null', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined)
-    ).toBe(undefined);
+    ).toBe(null);
   });
 
   test('RichText: empty paragraph => null', () => {

@@ -417,7 +417,7 @@ export function normalizeFieldValue(
   value: unknown
 ): unknown {
   if (value === null || value === undefined) {
-    return value;
+    return null;
   }
 
   if (fieldSpec.list) {
