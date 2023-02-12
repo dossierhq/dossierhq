@@ -117,3 +117,31 @@ export function validateTraverseNodeForPublish(
   }
   return null;
 }
+
+export function groupValidationErrorsByTopLevelPath<
+  TError extends SaveValidationError | PublishValidationError
+>(
+  errors: TError[]
+): {
+  root: TError[];
+  children: Map<number | string, TError[]>;
+} {
+  const root: TError[] = [];
+  const children = new Map<number | string, TError[]>();
+  for (const error of errors) {
+    if (error.path.length === 0) {
+      root.push(error);
+    } else {
+      const [topLevel, ...rest] = error.path;
+      const newError = { ...error, path: rest };
+
+      const existingErrors = children.get(topLevel);
+      if (existingErrors) {
+        existingErrors.push(newError);
+      } else {
+        children.set(topLevel, [newError]);
+      }
+    }
+  }
+  return { root, children };
+}

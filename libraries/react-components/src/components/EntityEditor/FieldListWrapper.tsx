@@ -3,9 +3,9 @@ import type {
   PublishValidationError,
   SaveValidationError,
 } from '@dossierhq/core';
+import { groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
-import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>

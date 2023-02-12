@@ -5,11 +5,10 @@ import type {
   ValueItem,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
+import { FieldType, groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { FieldEditor } from './FieldEditor.js';

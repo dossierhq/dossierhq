@@ -2,7 +2,11 @@ import { describe, expect, test } from 'vitest';
 import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
 import { copyEntity, normalizeEntityFields } from './ItemUtils.js';
 import type { PublishValidationError, SaveValidationError } from './ItemValidator.js';
-import { validateTraverseNodeForPublish, validateTraverseNodeForSave } from './ItemValidator.js';
+import {
+  groupValidationErrorsByTopLevelPath,
+  validateTraverseNodeForPublish,
+  validateTraverseNodeForSave,
+} from './ItemValidator.js';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -149,5 +153,35 @@ describe('Validate entity', () => {
         })
       )
     ).toMatchSnapshot();
+  });
+});
+
+describe('groupValidationErrorsByTopLevelPath', () => {
+  test('no errors', () => {
+    expect(groupValidationErrorsByTopLevelPath([])).toEqual({ root: [], children: new Map() });
+  });
+
+  test('root errors and list errors', () => {
+    expect(
+      groupValidationErrorsByTopLevelPath([
+        { type: 'save', path: [], message: 'Root error' },
+        { type: 'save', path: [0], message: 'Index 0 error' },
+      ])
+    ).toEqual({
+      root: [{ type: 'save', path: [], message: 'Root error' }],
+      children: new Map([[0, [{ type: 'save', path: [], message: 'Index 0 error' }]]]),
+    });
+  });
+
+  test('root errors and field errors', () => {
+    expect(
+      groupValidationErrorsByTopLevelPath([
+        { type: 'save', path: [], message: 'Root error' },
+        { type: 'save', path: ['field'], message: 'Field error' },
+      ])
+    ).toEqual({
+      root: [{ type: 'save', path: [], message: 'Root error' }],
+      children: new Map([['field', [{ type: 'save', path: [], message: 'Field error' }]]]),
+    });
   });
 });
