@@ -1,8 +1,16 @@
-import type { RichTextValueItemNode, SaveValidationError, ValueItem } from '@dossierhq/core';
+import type {
+  AdminSchema,
+  PublishValidationError,
+  RichTextValueItemNode,
+  SaveValidationError,
+  ValueItem,
+} from '@dossierhq/core';
 import {
   createRichTextValueItemNode,
+  normalizeValueItem,
   RichTextNodeType,
   traverseValueItem,
+  validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
@@ -17,12 +25,13 @@ import type {
   NodeKey,
 } from 'lexical';
 import { $getNodeByKey, createCommand } from 'lexical';
-import isEqual from 'lodash/isEqual.js';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueItemFieldEditor.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
+
+type ValidationError = SaveValidationError | PublishValidationError;
 
 export function $createAdminValueItemNode(data: ValueItem): AdminValueItemNode {
   return new AdminValueItemNode(data);
@@ -51,8 +60,7 @@ function AdminValueItemComponent({
   data: ValueItem;
 }) {
   const [editor] = useLexicalComposerContext();
-  const { adapter, schema } = useContext(AdminDossierContext);
-  const [validationErrors, setValidationErrors] = useState<SaveValidationError[]>([]);
+  const { adapter, schema: adminSchema } = useContext(AdminDossierContext);
 
   const setValue = useCallback(
     (value: ValueItem) => {
@@ -62,24 +70,13 @@ function AdminValueItemComponent({
           node.setData(value);
         }
       });
-
-      const newValidationErrors: SaveValidationError[] = [];
-      if (schema) {
-        for (const node of traverseValueItem(schema, [], value)) {
-          const error = validateTraverseNodeForSave(schema, node);
-          if (error) {
-            newValidationErrors.push(error);
-          }
-        }
-        setValidationErrors((oldValidationErrors) =>
-          isEqual(oldValidationErrors, newValidationErrors)
-            ? oldValidationErrors
-            : newValidationErrors
-        );
-      }
     },
-    [editor, nodeKey, schema]
+    [editor, nodeKey]
   );
+
+  const validationErrors = useMemo(() => {
+    return validateItemValue(adminSchema, data);
+  }, [adminSchema, data]);
 
   const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
     value: data,
@@ -99,6 +96,32 @@ function AdminValueItemComponent({
       )}
     </BlockWithAlignableContents>
   );
+}
+
+function validateItemValue(
+  adminSchema: AdminSchema | undefined,
+  value: ValueItem
+): ValidationError[] {
+  const errors: ValidationError[] = [];
+  if (adminSchema) {
+    const normalizeResult = normalizeValueItem(adminSchema, value);
+    const valueToValidate = normalizeResult.isOk() ? normalizeResult.value : value;
+    for (const node of traverseValueItem(adminSchema, [], valueToValidate)) {
+      const error = validateTraverseNodeForSave(adminSchema, node);
+      if (error) {
+        errors.push(error);
+      }
+    }
+    //TODO shouldn't do this on a adminOnly fields and descendants
+    const publishedSchema = adminSchema.toPublishedSchema();
+    for (const node of traverseValueItem(publishedSchema, [], valueToValidate)) {
+      const error = validateTraverseNodeForPublish(adminSchema, node);
+      if (error) {
+        errors.push(error);
+      }
+    }
+  }
+  return errors;
 }
 
 export class AdminValueItemNode extends DecoratorBlockNode {
