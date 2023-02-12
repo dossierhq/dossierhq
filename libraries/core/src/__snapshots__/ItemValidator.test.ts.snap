@@ -1,0 +1,85 @@
+// Vitest Snapshot v1
+
+exports[`Validate entity > Fail: admin only value item in normal field 1`] = `
+[
+  {
+    "message": "Value item of type AdminOnlyValueItem is adminOnly",
+    "path": [
+      "entity",
+      "fields",
+      "any",
+    ],
+    "type": "publish",
+  },
+]
+`;
+
+exports[`Validate entity > Fail: matchPattern unmatched string 1`] = `
+[
+  {
+    "message": "Value does not match pattern foo-bar-baz",
+    "path": [
+      "entity",
+      "fields",
+      "pattern",
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity > Fail: matchPattern unmatched string item in list 1`] = `
+[
+  {
+    "message": "Value does not match pattern foo-bar-baz",
+    "path": [
+      "entity",
+      "fields",
+      "patternList",
+      1,
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity > Fail: required with no value 1`] = `
+[
+  {
+    "message": "Required field is empty",
+    "path": [
+      "entity",
+      "fields",
+      "required",
+    ],
+    "type": "publish",
+  },
+]
+`;
+
+exports[`Validate entity > Fail: rich text text node with line break 1`] = `
+[
+  {
+    "message": "Rich text text nodes cannot contain line breaks, use linebreak nodes instead",
+    "path": [
+      "entity",
+      "fields",
+      "anyNodes",
+      0,
+      0,
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`validateTraverseNode > error 1`] = `
+{
+  "message": "Error message",
+  "path": [
+    "entity",
+    "foo",
+  ],
+  "type": "save",
+}
+`;

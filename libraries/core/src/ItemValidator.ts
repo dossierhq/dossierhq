@@ -1,10 +1,11 @@
 import { assertExhaustive, assertIsDefined } from './Asserts.js';
 import type { ItemTraverseNode } from './ItemTraverser.js';
-import { ItemTraverseNodeType } from './ItemTraverser.js';
+import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ItemTraverser.js';
 import type { ItemValuePath } from './ItemUtils.js';
 import { isRichTextTextNode, isStringItemField } from './ItemUtils.js';
 import type {
   AdminSchema,
+  PublishedSchema,
   RichTextFieldSpecification,
   StringFieldSpecification,
 } from './Schema.js';
@@ -79,6 +80,39 @@ export function validateTraverseNode(
       break;
     default:
       assertExhaustive(nodeType);
+  }
+  return null;
+}
+
+export function validateTraverseNodeForPublish(
+  adminSchema: AdminSchema,
+  node: ItemTraverseNode<PublishedSchema>
+): ValidationError | null {
+  switch (node.type) {
+    case ItemTraverseNodeType.field:
+      if (node.fieldSpec.required && node.value === null) {
+        return {
+          type: 'publish',
+          path: node.path,
+          message: 'Required field is empty',
+        };
+      }
+      break;
+    case ItemTraverseNodeType.error:
+      if (
+        node.errorType === ItemTraverseNodeErrorType.missingTypeSpec &&
+        node.kind === 'valueItem'
+      ) {
+        const adminTypeSpec = adminSchema.getValueTypeSpecification(node.typeName);
+        if (adminTypeSpec && adminTypeSpec.adminOnly) {
+          return {
+            type: 'publish',
+            path: node.path,
+            message: `Value item of type ${node.typeName} is adminOnly`,
+          };
+        }
+      }
+      return { type: 'publish', path: node.path, message: node.message };
   }
   return null;
 }

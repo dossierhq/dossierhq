@@ -86,7 +86,7 @@ export {
   visitorPathToString,
 } from './ItemUtils.js';
 export type { ItemValuePath } from './ItemUtils.js';
-export { validateTraverseNode } from './ItemValidator.js';
+export { validateTraverseNode, validateTraverseNodeForPublish } from './ItemValidator.js';
 export type { ValidationError } from './ItemValidator.js';
 export {
   convertJsonConnection,
