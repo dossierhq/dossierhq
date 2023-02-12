@@ -74,6 +74,31 @@ exports[`AddDraftAction > add already open Foo 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -164,6 +189,31 @@ exports[`AddDraftAction > add new Foo 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -203,6 +253,31 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -293,6 +368,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -383,6 +483,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -473,6 +598,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -577,6 +727,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -681,6 +856,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -771,6 +971,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -861,6 +1086,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -951,6 +1201,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1041,6 +1316,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1145,6 +1445,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1249,6 +1574,31 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1353,6 +1703,31 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1457,6 +1832,31 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1574,6 +1974,31 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1678,6 +2103,31 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1782,6 +2232,31 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1886,6 +2361,31 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -1953,6 +2453,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
     "spec": {
       "entityTypes": [
         {
@@ -2057,6 +2558,31 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2161,6 +2687,28 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "entityTypes": [],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "type": "Entity",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2271,6 +2819,28 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "entityTypes": [],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "type": "Entity",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2430,6 +3000,28 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "entityTypes": [],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "type": "Entity",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2507,6 +3099,7 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
     "spec": {
       "entityTypes": [
         {
@@ -2591,6 +3184,31 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2689,6 +3307,36 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
     "cachedPatternRegExps": {
       "foo": /\\^foo\\$/,
     },
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": "foo",
+                "multiline": false,
+                "name": "string",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [
+          {
+            "name": "foo",
+            "pattern": "^foo$",
+          },
+        ],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2784,6 +3432,31 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2874,6 +3547,31 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -2964,6 +3662,31 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -3054,6 +3777,31 @@ exports[`SetNameAction > set name of new draft 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": false,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -3158,6 +3906,31 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -3274,6 +4047,31 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "isName": true,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "valueTypes": [],
+      },
+    },
     "spec": {
       "entityTypes": [
         {
@@ -3313,6 +4111,7 @@ exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
   "pendingSchemaActions": null,
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
     "spec": {
       "entityTypes": [],
       "indexes": [],
