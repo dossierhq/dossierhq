@@ -44,7 +44,7 @@ import {
   notOk,
   ok,
   traverseEntity,
-  validateTraverseNode,
+  validateTraverseNodeForSave,
   visitorPathToString,
 } from '@dossierhq/core';
 import type {
@@ -382,9 +382,8 @@ export async function encodeAdminEntity(
 
   // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
-  const validateOptions = { validatePublish: false };
   for (const node of traverseEntity(schema, ['entity'], entity)) {
-    const validationError = validateTraverseNode(schema, node, validateOptions);
+    const validationError = validateTraverseNodeForSave(schema, node);
     if (validationError) {
       return notOk.BadRequest(
         `${visitorPathToString(validationError.path)}: ${validationError.message}`

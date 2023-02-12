@@ -5,9 +5,10 @@ import type {
   FieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
+  PublishValidationError,
   RichTextFieldSpecification,
+  SaveValidationError,
   StringFieldSpecification,
-  ValidationError,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import {
@@ -44,7 +45,7 @@ export interface FieldEditorProps<
   fieldSpec: AdminFieldSpecification<TFieldSpec>;
   value: TValue | null;
   onChange: (value: TValue | null) => void;
-  validationErrors: ValidationError[];
+  validationErrors: (SaveValidationError | PublishValidationError)[];
 }
 
 export function FieldEditor(props: FieldEditorProps) {

@@ -1,4 +1,8 @@
-import type { FieldSpecification, ValidationError } from '@dossierhq/core';
+import type {
+  FieldSpecification,
+  PublishValidationError,
+  SaveValidationError,
+} from '@dossierhq/core';
 import { Column } from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
 import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
@@ -9,7 +13,7 @@ interface Props<TFieldSpec extends FieldSpecification, TItem>
   Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
 
-const noErrors: ValidationError[] = [];
+const noErrors: (PublishValidationError | SaveValidationError)[] = [];
 
 export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   value,

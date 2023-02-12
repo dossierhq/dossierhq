@@ -1,4 +1,6 @@
-import type { ValidationError } from '@dossierhq/core';
+import type { PublishValidationError, SaveValidationError } from '@dossierhq/core';
+
+type ValidationError = SaveValidationError | PublishValidationError;
 
 export function groupValidationErrorsByTopLevelPath(
   errors: ValidationError[]

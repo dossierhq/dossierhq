@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
 import { copyEntity, normalizeEntityFields } from './ItemUtils.js';
-import type { ValidationError } from './ItemValidator.js';
-import { validateTraverseNode, validateTraverseNodeForPublish } from './ItemValidator.js';
+import type { PublishValidationError, SaveValidationError } from './ItemValidator.js';
+import { validateTraverseNodeForPublish, validateTraverseNodeForSave } from './ItemValidator.js';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
@@ -55,9 +55,9 @@ function validateEntity(entity: EntityLike) {
     fields: normalizeEntityFields(adminSchema, entity).valueOrThrow(),
   };
 
-  const errors: ValidationError[] = [];
+  const errors: (SaveValidationError | PublishValidationError)[] = [];
   for (const node of traverseEntity(adminSchema, ['entity'], normalizedEntity)) {
-    const error = validateTraverseNode(adminSchema, node, { validatePublish: false });
+    const error = validateTraverseNodeForSave(adminSchema, node);
     if (error) {
       errors.push(error);
     }
@@ -77,19 +77,15 @@ function validateEntity(entity: EntityLike) {
   return errors;
 }
 
-describe('validateTraverseNode', () => {
+describe('validateTraverseNodeForSave', () => {
   test('error', () => {
     expect(
-      validateTraverseNode(
-        adminSchema,
-        {
-          type: 'error',
-          path: ['entity', 'foo'],
-          errorType: ItemTraverseNodeErrorType.generic,
-          message: 'Error message',
-        },
-        { validatePublish: true }
-      )
+      validateTraverseNodeForSave(adminSchema, {
+        type: 'error',
+        path: ['entity', 'foo'],
+        errorType: ItemTraverseNodeErrorType.generic,
+        message: 'Error message',
+      })
     ).toMatchSnapshot();
   });
 });

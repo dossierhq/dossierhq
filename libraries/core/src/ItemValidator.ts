@@ -10,23 +10,24 @@ import type {
   StringFieldSpecification,
 } from './Schema.js';
 
-export interface ValidationError {
-  type: 'save' | 'publish';
+export interface SaveValidationError {
+  type: 'save';
   path: ItemValuePath;
   message: string;
 }
 
-export interface ValidationOptions {
-  validatePublish: boolean;
+export interface PublishValidationError {
+  type: 'publish';
+  path: ItemValuePath;
+  message: string;
 }
 
 const LINE_BREAK_REGEX = /[\r\n]/;
 
-export function validateTraverseNode(
-  schema: AdminSchema,
-  node: ItemTraverseNode<AdminSchema>,
-  { validatePublish: _1 }: ValidationOptions
-): ValidationError | null {
+export function validateTraverseNodeForSave(
+  adminSchema: AdminSchema,
+  node: ItemTraverseNode<AdminSchema>
+): SaveValidationError | null {
   const nodeType = node.type;
   switch (nodeType) {
     case ItemTraverseNodeType.field:
@@ -35,7 +36,7 @@ export function validateTraverseNode(
       if (isStringItemField(node.fieldSpec, node.value) && node.value) {
         const stringFieldSpec = node.fieldSpec as StringFieldSpecification;
         if (stringFieldSpec.matchPattern) {
-          const regexp = schema.getPatternRegExp(stringFieldSpec.matchPattern);
+          const regexp = adminSchema.getPatternRegExp(stringFieldSpec.matchPattern);
           assertIsDefined(regexp);
           if (!regexp.test(node.value)) {
             return {
@@ -87,7 +88,7 @@ export function validateTraverseNode(
 export function validateTraverseNodeForPublish(
   adminSchema: AdminSchema,
   node: ItemTraverseNode<PublishedSchema>
-): ValidationError | null {
+): PublishValidationError | null {
   switch (node.type) {
     case ItemTraverseNodeType.field:
       if (node.fieldSpec.required && node.value === null) {

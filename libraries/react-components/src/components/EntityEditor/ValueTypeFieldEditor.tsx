@@ -1,6 +1,7 @@
 import type {
   AdminFieldSpecification,
-  ValidationError,
+  PublishValidationError,
+  SaveValidationError,
   ValueItem,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
@@ -45,7 +46,7 @@ export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onCha
   );
 }
 
-const noErrors: ValidationError[] = [];
+const noErrors: (SaveValidationError | PublishValidationError)[] = [];
 
 export function ValueItemFieldEditorWithoutClear({
   className,
@@ -55,7 +56,7 @@ export function ValueItemFieldEditorWithoutClear({
 }: {
   className?: string;
   value: ValueItem;
-  validationErrors: ValidationError[];
+  validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
   const fieldValidationErrors = useMemo(
@@ -115,7 +116,7 @@ function ValueItemField({
 }: {
   value: ValueItem;
   valueFieldSpec: AdminFieldSpecification;
-  validationErrors: ValidationError[];
+  validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
   const handleFieldChanged = useCallback(

@@ -73,7 +73,7 @@ exports[`Validate entity > Fail: rich text text node with line break 1`] = `
 ]
 `;
 
-exports[`validateTraverseNode > error 1`] = `
+exports[`validateTraverseNodeForSave > error 1`] = `
 {
   "message": "Error message",
   "path": [

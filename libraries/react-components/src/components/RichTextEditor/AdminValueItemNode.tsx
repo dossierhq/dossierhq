@@ -1,9 +1,9 @@
-import type { RichTextValueItemNode, ValidationError, ValueItem } from '@dossierhq/core';
+import type { RichTextValueItemNode, SaveValidationError, ValueItem } from '@dossierhq/core';
 import {
   createRichTextValueItemNode,
   RichTextNodeType,
   traverseValueItem,
-  validateTraverseNode,
+  validateTraverseNodeForSave,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
@@ -52,7 +52,7 @@ function AdminValueItemComponent({
 }) {
   const [editor] = useLexicalComposerContext();
   const { adapter, schema } = useContext(AdminDossierContext);
-  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+  const [validationErrors, setValidationErrors] = useState<SaveValidationError[]>([]);
 
   const setValue = useCallback(
     (value: ValueItem) => {
@@ -63,10 +63,10 @@ function AdminValueItemComponent({
         }
       });
 
-      const newValidationErrors: ValidationError[] = [];
+      const newValidationErrors: SaveValidationError[] = [];
       if (schema) {
         for (const node of traverseValueItem(schema, [], value)) {
-          const error = validateTraverseNode(schema, node, { validatePublish: true });
+          const error = validateTraverseNodeForSave(schema, node);
           if (error) {
             newValidationErrors.push(error);
           }
