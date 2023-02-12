@@ -69,6 +69,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
     !draftState.hasSaveErrors &&
     draftState.draft.name &&
     draftState.draft.authKey;
+  const isPublishable = !draftState.hasPublishErrors;
 
   return (
     <>
@@ -95,7 +96,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
           {isNewEntity ? 'Create' : 'Save'}
         </Button>
         {!draftState.draft.entitySpec.adminOnly ? (
-          <Button disabled={!isSubmittable} onClick={handleSubmitAndPublishClick}>
+          <Button disabled={!isSubmittable || !isPublishable} onClick={handleSubmitAndPublishClick}>
             {isNewEntity ? 'Create & publish' : 'Save & publish'}
           </Button>
         ) : null}
