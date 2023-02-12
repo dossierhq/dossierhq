@@ -2,20 +2,26 @@ import type { PublishValidationError, SaveValidationError } from '@dossierhq/cor
 
 type ValidationError = SaveValidationError | PublishValidationError;
 
-export function groupValidationErrorsByTopLevelPath(
-  errors: ValidationError[]
-): Map<number | string, ValidationError[]> {
-  const result = new Map<number | string, ValidationError[]>();
+export function groupValidationErrorsByTopLevelPath(errors: ValidationError[]): {
+  root: ValidationError[];
+  children: Map<number | string, ValidationError[]>;
+} {
+  const root: ValidationError[] = [];
+  const children = new Map<number | string, ValidationError[]>();
   for (const error of errors) {
-    const [topLevel, ...rest] = error.path;
-    const newError = { ...error, path: rest };
-
-    const existingErrors = result.get(topLevel);
-    if (existingErrors) {
-      existingErrors.push(newError);
+    if (error.path.length === 0) {
+      root.push(error);
     } else {
-      result.set(topLevel, [newError]);
+      const [topLevel, ...rest] = error.path;
+      const newError = { ...error, path: rest };
+
+      const existingErrors = children.get(topLevel);
+      if (existingErrors) {
+        existingErrors.push(newError);
+      } else {
+        children.set(topLevel, [newError]);
+      }
     }
   }
-  return result;
+  return { root, children };
 }

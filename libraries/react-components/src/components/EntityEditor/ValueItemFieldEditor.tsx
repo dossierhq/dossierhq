@@ -66,7 +66,7 @@ export function ValueItemFieldEditorWithoutClear({
   validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
-  const fieldValidationErrors = useMemo(
+  const { root: rootValidationErrors, children: fieldValidationErrors } = useMemo(
     () => groupValidationErrorsByTopLevelPath(validationErrors),
     [validationErrors]
   );
@@ -111,6 +111,11 @@ export function ValueItemFieldEditorWithoutClear({
           </Fragment>
         );
       })}
+      {rootValidationErrors.map((error, index) => (
+        <Text key={index} textStyle="body2" marginTop={1} color="danger">
+          {error.message}
+        </Text>
+      ))}
     </Column>
   );
 }
