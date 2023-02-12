@@ -14,6 +14,7 @@ import {
   isEntityNameAsRequested,
   normalizeFieldValue,
   traverseItemField,
+  validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
@@ -559,14 +560,20 @@ export const EntityEditorActions = {
 // HELPERS
 
 function validateField(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
   value: unknown,
   previousErrors: ValidationError[]
 ): ValidationError[] {
   const errors: ValidationError[] = [];
-  for (const node of traverseItemField(schema, [], fieldSpec, value)) {
-    const error = validateTraverseNodeForSave(schema, node);
+  for (const node of traverseItemField(adminSchema, [], fieldSpec, value)) {
+    const error = validateTraverseNodeForSave(adminSchema, node);
+    if (error) errors.push(error);
+  }
+  //TODO shouldn't do this on a adminOnly fields and descendants
+  const publishedSchema = adminSchema.toPublishedSchema();
+  for (const node of traverseItemField(publishedSchema, [], fieldSpec, value)) {
+    const error = validateTraverseNodeForPublish(adminSchema, node);
     if (error) errors.push(error);
   }
 
