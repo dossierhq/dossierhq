@@ -1,7 +1,11 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
-import type { FieldEditorProps } from '@dossierhq/react-components';
-import type { ValueItemFieldSpecification } from '@dossierhq/core';
+import type {
+  PublishValidationError,
+  SaveValidationError,
+  ValueItemFieldSpecification,
+} from '@dossierhq/core';
+import { groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
 import {
   Button,
   Column,
@@ -11,8 +15,10 @@ import {
   IconButton,
   Input,
   Row,
+  Text,
 } from '@dossierhq/design';
-import { useCallback } from 'react';
+import type { FieldEditorProps } from '@dossierhq/react-components';
+import { useCallback, useMemo } from 'react';
 import { useInitializeUploadWidget } from '../hooks/useInitializeUploadWidget.js';
 import type { AdminCloudinaryImage } from '../types/CloudinaryImageValueItem.js';
 import type { CloudinaryUploadResult } from '../types/CloudinaryUploadWidget.js';
@@ -23,7 +29,15 @@ type Props = FieldEditorProps<ValueItemFieldSpecification, AdminCloudinaryImage>
   value: AdminCloudinaryImage;
 };
 
-export function CloudinaryImageFieldEditor({ cloudName, uploadPreset, value, onChange }: Props) {
+const NO_VALIDATION_ERRORS: (SaveValidationError | PublishValidationError)[] = [];
+
+export function CloudinaryImageFieldEditor({
+  cloudName,
+  uploadPreset,
+  value,
+  validationErrors,
+  onChange,
+}: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   return (
     <HoverRevealStack>
@@ -34,6 +48,7 @@ export function CloudinaryImageFieldEditor({ cloudName, uploadPreset, value, onC
         cloudName={cloudName}
         uploadPreset={uploadPreset}
         value={value}
+        validationErrors={validationErrors}
         onChange={onChange}
       />
     </HoverRevealStack>
@@ -44,17 +59,35 @@ export function CloudinaryImageFieldEditorWithoutClear({
   cloudName,
   uploadPreset,
   value,
+  validationErrors,
   onChange,
 }: {
   cloudName: string;
   uploadPreset: string;
   value: AdminCloudinaryImage;
+  validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: AdminCloudinaryImage) => void;
 }) {
   const { publicId } = value;
 
+  const { publicIdValidationErrors, altValidationErrors } = useMemo(() => {
+    const { root: _, children } = groupValidationErrorsByTopLevelPath(validationErrors);
+    const publicIdValidationErrors = children.get('publicId') ?? NO_VALIDATION_ERRORS;
+    const altValidationErrors = children.get('alt') ?? NO_VALIDATION_ERRORS;
+    return { publicIdValidationErrors, altValidationErrors };
+  }, [validationErrors]);
+
   if (!publicId) {
-    return <UploadButton {...{ cloudName, uploadPreset, onChange }} />;
+    return (
+      <>
+        <UploadButton {...{ cloudName, uploadPreset, onChange }} />
+        {publicIdValidationErrors.map((error, index) => (
+          <Text key={index} textStyle="body2" marginTop={1} color="danger">
+            {error.message}
+          </Text>
+        ))}
+      </>
+    );
   }
 
   const cld = new Cloudinary({ cloud: { cloudName } });
@@ -109,6 +142,11 @@ export function CloudinaryImageFieldEditorWithoutClear({
                 }}
               />
             </Field.Control>
+            {altValidationErrors.length > 0 ? (
+              <Field.Help color="danger">
+                {altValidationErrors.map((it) => it.message).join(' ')}
+              </Field.Help>
+            ) : null}
           </Field>
         </Field.BodyColumn>
       </Field>

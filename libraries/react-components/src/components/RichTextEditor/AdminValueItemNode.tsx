@@ -83,6 +83,7 @@ function AdminValueItemComponent({
 
   const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
     value: data,
+    validationErrors,
     onChange: setValue,
   });
 
