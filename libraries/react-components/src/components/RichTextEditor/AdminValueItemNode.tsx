@@ -20,7 +20,7 @@ import { $getNodeByKey, createCommand } from 'lexical';
 import isEqual from 'lodash/isEqual.js';
 import { useCallback, useContext, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueTypeFieldEditor.js';
+import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueItemFieldEditor.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
 

@@ -16,19 +16,26 @@ import { FieldEditor } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ValueItemFieldSpecification, ValueItem>;
 
-export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
+export function ValueItemFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   const handleCreate = useCallback((type: string) => onChange({ type }), [onChange]);
 
   if (!value) {
     return (
-      <AdminTypePicker
-        showValueTypes
-        valueTypes={fieldSpec.valueTypes}
-        onTypeSelected={handleCreate}
-      >
-        Add value item
-      </AdminTypePicker>
+      <>
+        <AdminTypePicker
+          showValueTypes
+          valueTypes={fieldSpec.valueTypes}
+          onTypeSelected={handleCreate}
+        >
+          Add value item
+        </AdminTypePicker>
+        {validationErrors.map((error, index) => (
+          <Text key={index} textStyle="body2" marginTop={1} color="danger">
+            {error.message}
+          </Text>
+        ))}
+      </>
     );
   }
 
