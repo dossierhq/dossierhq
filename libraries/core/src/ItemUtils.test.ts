@@ -1,8 +1,30 @@
 import { describe, expect, test } from 'vitest';
 import { assertIsDefined } from './Asserts.js';
-import { isEntityNameAsRequested, isFieldValueEqual, normalizeFieldValue } from './ItemUtils.js';
+import {
+  copyEntity,
+  isEntityNameAsRequested,
+  isFieldValueEqual,
+  normalizeFieldValue,
+} from './ItemUtils.js';
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
+import type { AdminEntity, AdminEntityCreate, RichText, ValueItem } from './Types.js';
+
+type AdminFoo = AdminEntity<'Foo', AdminFooFields, 'none'>;
+
+interface AdminFooFields {
+  string: string | null;
+  stringList: string[] | null;
+  twoStrings: AdminTwoStrings | null;
+  richText: RichText | null;
+}
+
+type AdminTwoStrings = ValueItem<'TwoStrings', AdminTwoStringsFields>;
+
+interface AdminTwoStringsFields {
+  string1: string | null;
+  string2: string | null;
+}
 
 const schema = AdminSchema.createAndValidate({
   entityTypes: [
@@ -34,6 +56,22 @@ function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: 
   assertIsDefined(fieldSpec);
   return fieldSpec;
 }
+
+describe('copyEntity', () => {
+  test('AdminEntityCreate with app type', () => {
+    const entity: AdminEntityCreate<AdminFoo> = {
+      info: { type: 'Foo', authKey: 'none', name: 'Name' },
+      fields: { string: 'hello' },
+    };
+    const copy: AdminEntityCreate<AdminFoo> = copyEntity(entity, {
+      fields: { stringList: ['world'] },
+    });
+    expect(copy).toEqual({
+      info: { authKey: 'none', name: 'Name', type: 'Foo' },
+      fields: { string: 'hello', stringList: ['world'] },
+    });
+  });
+});
 
 describe('isEntityNameAsRequested', () => {
   test('hello=hello', () => expect(isEntityNameAsRequested('hello', 'hello')).toBeTruthy());

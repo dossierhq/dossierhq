@@ -298,7 +298,10 @@ export function visitorPathToString(path: ItemValuePath): string {
 }
 
 export function copyEntity<
-  T extends AdminEntity<string, object> | AdminEntityCreate | PublishedEntity<string, object>
+  T extends
+    | AdminEntity<string, object>
+    | AdminEntityCreate<AdminEntity<string, object>>
+    | PublishedEntity<string, object>
 >(
   entity: T,
   changes: { id?: string; info?: Partial<T['info']>; fields?: Partial<T['fields']> }
@@ -314,7 +317,7 @@ export function copyEntity<
     }
   }
   if (changes.fields) {
-    const fieldsCopy = { ...entity.fields };
+    const fieldsCopy: Record<string, unknown> = { ...entity.fields };
     copy.fields = fieldsCopy;
     for (const [key, value] of Object.entries(changes.fields)) {
       fieldsCopy[key] = value;
