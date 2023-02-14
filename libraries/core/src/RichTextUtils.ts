@@ -99,19 +99,21 @@ export function createRichTextTextAndLineBreakNodes(
 }
 
 export function createRichTextEntityNode(reference: EntityReference): RichTextEntityNode {
-  return { type: RichTextNodeType.entity, format: '', reference, version: 1 };
+  const { id } = reference;
+  return { type: RichTextNodeType.entity, format: '', reference: { id }, version: 1 };
 }
 
 export function createRichTextEntityLinkNode(
   reference: EntityReference,
   children: RichTextNode[]
 ): RichTextEntityLinkNode {
+  const { id } = reference;
   return {
     direction: 'ltr',
     format: '',
     indent: 0,
     type: RichTextNodeType.entityLink,
-    reference,
+    reference: { id },
     version: 1,
     children,
   };

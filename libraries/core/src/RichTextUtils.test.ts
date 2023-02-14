@@ -1,9 +1,57 @@
 import { describe, expect, test } from 'vitest';
 import {
+  createRichTextEntityLinkNode,
+  createRichTextEntityNode,
   createRichTextTextAndLineBreakNodes,
   createRichTextTextNode,
   richTextTextNodeHasFormat,
 } from './RichTextUtils.js';
+
+describe('createRichTextEntityNode', () => {
+  test('with full entity', () => {
+    const entity = { id: '123', info: { name: 'Hello' }, fields: { field: 'hello' } };
+    expect(createRichTextEntityNode(entity)).toMatchInlineSnapshot(`
+      {
+        "format": "",
+        "reference": {
+          "id": "123",
+        },
+        "type": "entity",
+        "version": 1,
+      }
+    `);
+  });
+});
+
+describe('createRichTextEntityLinkNode', () => {
+  test('with full entity', () => {
+    const entity = { id: '123', info: { name: 'Hello' }, fields: { field: 'hello' } };
+    expect(createRichTextEntityLinkNode(entity, [createRichTextTextNode('Foo')]))
+      .toMatchInlineSnapshot(`
+      {
+        "children": [
+          {
+            "detail": 0,
+            "format": 0,
+            "mode": "normal",
+            "style": "",
+            "text": "Foo",
+            "type": "text",
+            "version": 1,
+          },
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "reference": {
+          "id": "123",
+        },
+        "type": "entityLink",
+        "version": 1,
+      }
+    `);
+  });
+});
 
 describe('createRichTextTextNode', () => {
   test('format: bold', () => {
