@@ -1,6 +1,6 @@
 import type { AdminClient, AdminEntity } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
-import { Button, Field, Input, NotificationContext, Row } from '@dossierhq/design';
+import { Button, Field, Input, NotificationContext, Row, Text } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useCallback, useContext, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -77,6 +77,12 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         <Field.Label>Name</Field.Label>
         <Field.Control>
           <Input value={draftState.draft.name} onChange={handleNameChange} />
+          {draftState.draft.nameIsLinkedToField ? (
+            <Text textStyle="body2" marginTop={1}>
+              The name is linked to the field:{' '}
+              {draftState.draft.entitySpec.fields.find((it) => it.name)?.name}.
+            </Text>
+          ) : null}
         </Field.Control>
         {!draftState.draft.name ? <Field.Help color="danger">Name is required</Field.Help> : null}
       </Field>
