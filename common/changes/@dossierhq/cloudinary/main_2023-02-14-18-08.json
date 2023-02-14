@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/cloudinary",
+      "comment": "Break: Require validationIssues prop. Show validation issues.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/cloudinary"
+}

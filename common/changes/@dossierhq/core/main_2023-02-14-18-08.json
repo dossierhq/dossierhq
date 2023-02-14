@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Rename validateTraverseNode() to validateTraverseNodeForSave(). Add validateTraverseNodeForPublish(), normalizeValueItem(), normalizeEntityFields(), groupValidationIssuesByTopLevelPath(). Enable typing for AdminCreate<AddType> in copyEntity(). Enable typing of unique index for clients.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}
