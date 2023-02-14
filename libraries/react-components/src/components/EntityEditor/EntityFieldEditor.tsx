@@ -18,6 +18,7 @@ export function EntityFieldEditor({ field, onValueChange }: Props) {
       <Card2.Content style={{ maxHeight: '80vh' }}>
         <FieldEditor
           fieldSpec={field.fieldSpec}
+          adminOnly={field.adminOnly}
           value={field.value}
           onChange={onValueChange}
           validationErrors={field.validationErrors}

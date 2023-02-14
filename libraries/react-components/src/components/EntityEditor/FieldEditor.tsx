@@ -43,6 +43,7 @@ export interface FieldEditorProps<
   TValue = unknown
 > {
   fieldSpec: AdminFieldSpecification<TFieldSpec>;
+  adminOnly: boolean;
   value: TValue | null;
   onChange: (value: TValue | null) => void;
   validationErrors: (SaveValidationError | PublishValidationError)[];

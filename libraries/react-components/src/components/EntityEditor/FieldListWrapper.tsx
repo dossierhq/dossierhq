@@ -18,6 +18,7 @@ const noErrors: (PublishValidationError | SaveValidationError)[] = [];
 export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   value,
   fieldSpec,
+  adminOnly,
   validationErrors,
   onChange,
   Editor,
@@ -52,6 +53,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
             <Editor
               value={it}
               fieldSpec={fieldSpec}
+              adminOnly={adminOnly}
               validationErrors={indexValidationErrors.get(index) ?? noErrors}
               onChange={(newItemValue) => handleItemChange(newItemValue, index)}
             />

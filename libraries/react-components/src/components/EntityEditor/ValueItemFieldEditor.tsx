@@ -15,7 +15,13 @@ import { FieldEditor } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ValueItemFieldSpecification, ValueItem>;
 
-export function ValueItemFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
+export function ValueItemFieldEditor({
+  fieldSpec,
+  adminOnly,
+  value,
+  validationErrors,
+  onChange,
+}: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   const handleCreate = useCallback((type: string) => onChange({ type }), [onChange]);
 
@@ -45,6 +51,7 @@ export function ValueItemFieldEditor({ fieldSpec, value, validationErrors, onCha
       </HoverRevealStack.Item>
       <ValueItemFieldEditorWithoutClear
         value={value}
+        adminOnly={adminOnly}
         validationErrors={validationErrors}
         onChange={onChange}
       />
@@ -57,11 +64,13 @@ const noErrors: (SaveValidationError | PublishValidationError)[] = [];
 export function ValueItemFieldEditorWithoutClear({
   className,
   value,
+  adminOnly,
   validationErrors,
   onChange,
 }: {
   className?: string;
   value: ValueItem;
+  adminOnly: boolean;
   validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
@@ -92,6 +101,7 @@ export function ValueItemFieldEditorWithoutClear({
             {...{
               value,
               valueFieldSpec,
+              adminOnly: adminOnly || valueFieldSpec.adminOnly,
               onChange,
               validationErrors: fieldValidationErrors.get(valueFieldSpec.name) ?? noErrors,
             }}
@@ -122,11 +132,13 @@ export function ValueItemFieldEditorWithoutClear({
 function ValueItemField({
   value,
   valueFieldSpec,
+  adminOnly,
   validationErrors,
   onChange,
 }: {
   value: ValueItem;
   valueFieldSpec: AdminFieldSpecification;
+  adminOnly: boolean;
   validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
@@ -142,6 +154,7 @@ function ValueItemField({
   return (
     <FieldEditor
       fieldSpec={valueFieldSpec}
+      adminOnly={adminOnly}
       value={value[valueFieldSpec.name]}
       validationErrors={validationErrors}
       onChange={handleFieldChanged}

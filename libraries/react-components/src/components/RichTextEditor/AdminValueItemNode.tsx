@@ -28,6 +28,7 @@ import { $getNodeByKey, createCommand } from 'lexical';
 import { useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueItemFieldEditor.js';
+import { RichTextEditorContext } from './RichTextEditorContext.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
 
@@ -61,6 +62,9 @@ function AdminValueItemComponent({
 }) {
   const [editor] = useLexicalComposerContext();
   const { adapter, schema: adminSchema } = useContext(AdminDossierContext);
+  const { adminOnly: richTextAdminOnly } = useContext(RichTextEditorContext);
+  const valueSpec = adminSchema?.getValueTypeSpecification(data.type);
+  const adminOnly = richTextAdminOnly || !!valueSpec?.adminOnly;
 
   const setValue = useCallback(
     (value: ValueItem) => {
@@ -75,8 +79,8 @@ function AdminValueItemComponent({
   );
 
   const validationErrors = useMemo(() => {
-    return validateItemValue(adminSchema, data);
-  }, [adminSchema, data]);
+    return validateItemValue(adminSchema, adminOnly, data);
+  }, [adminSchema, adminOnly, data]);
 
   const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
     value: data,
@@ -89,6 +93,7 @@ function AdminValueItemComponent({
       {overriddenEditor ?? (
         <ValueItemFieldEditorWithoutClear
           className="rich-text-item-indentation"
+          adminOnly={adminOnly}
           value={data}
           validationErrors={validationErrors}
           onChange={setValue}
@@ -98,8 +103,14 @@ function AdminValueItemComponent({
   );
 }
 
+// TODO this is duplicated from the validation in validateField() in EntityEditorReducer
+// the main reason is that it's tricky to match the `path` in those validation errors with a certain
+// rich text node. We most likely need to change that validation to use the Lexical nodes instead
+// (as opposed to the serialized nodes which lack the node key)
+// Hopefully we can get rid on RichTextEditorContext and `adminOnly` parameters to the field editors
 function validateItemValue(
   adminSchema: AdminSchema | undefined,
+  adminOnly: boolean,
   value: ValueItem
 ): ValidationError[] {
   const errors: ValidationError[] = [];
@@ -112,12 +123,13 @@ function validateItemValue(
         errors.push(error);
       }
     }
-    //TODO shouldn't do this on a adminOnly fields and descendants
-    const publishedSchema = adminSchema.toPublishedSchema();
-    for (const node of traverseValueItem(publishedSchema, [], valueToValidate)) {
-      const error = validateTraverseNodeForPublish(adminSchema, node);
-      if (error) {
-        errors.push(error);
+    if (!adminOnly) {
+      const publishedSchema = adminSchema.toPublishedSchema();
+      for (const node of traverseValueItem(publishedSchema, [], valueToValidate)) {
+        const error = validateTraverseNodeForPublish(adminSchema, node);
+        if (error) {
+          errors.push(error);
+        }
       }
     }
   }
