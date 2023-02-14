@@ -1,11 +1,11 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type {
-  PublishValidationError,
-  SaveValidationError,
+  PublishValidationIssue,
+  SaveValidationIssue,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
-import { groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
+import { groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import {
   Button,
   Column,
@@ -29,13 +29,13 @@ type Props = FieldEditorProps<ValueItemFieldSpecification, AdminCloudinaryImage>
   value: AdminCloudinaryImage;
 };
 
-const NO_VALIDATION_ERRORS: (SaveValidationError | PublishValidationError)[] = [];
+const NO_VALIDATION_ISSUES: (SaveValidationIssue | PublishValidationIssue)[] = [];
 
 export function CloudinaryImageFieldEditor({
   cloudName,
   uploadPreset,
   value,
-  validationErrors,
+  validationIssues,
   onChange,
 }: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -48,7 +48,7 @@ export function CloudinaryImageFieldEditor({
         cloudName={cloudName}
         uploadPreset={uploadPreset}
         value={value}
-        validationErrors={validationErrors}
+        validationIssues={validationIssues}
         onChange={onChange}
       />
     </HoverRevealStack>
@@ -59,29 +59,29 @@ export function CloudinaryImageFieldEditorWithoutClear({
   cloudName,
   uploadPreset,
   value,
-  validationErrors,
+  validationIssues,
   onChange,
 }: {
   cloudName: string;
   uploadPreset: string;
   value: AdminCloudinaryImage;
-  validationErrors: (SaveValidationError | PublishValidationError)[];
+  validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   onChange: (value: AdminCloudinaryImage) => void;
 }) {
   const { publicId } = value;
 
-  const { publicIdValidationErrors, altValidationErrors } = useMemo(() => {
-    const { root: _, children } = groupValidationErrorsByTopLevelPath(validationErrors);
-    const publicIdValidationErrors = children.get('publicId') ?? NO_VALIDATION_ERRORS;
-    const altValidationErrors = children.get('alt') ?? NO_VALIDATION_ERRORS;
-    return { publicIdValidationErrors, altValidationErrors };
-  }, [validationErrors]);
+  const { publicIdValidationIssues, altValidationIssues } = useMemo(() => {
+    const { root: _, children } = groupValidationIssuesByTopLevelPath(validationIssues);
+    const publicIdValidationIssues = children.get('publicId') ?? NO_VALIDATION_ISSUES;
+    const altValidationIssues = children.get('alt') ?? NO_VALIDATION_ISSUES;
+    return { publicIdValidationIssues, altValidationIssues };
+  }, [validationIssues]);
 
   if (!publicId) {
     return (
       <>
         <UploadButton {...{ cloudName, uploadPreset, onChange }} />
-        {publicIdValidationErrors.map((error, index) => (
+        {publicIdValidationIssues.map((error, index) => (
           <Text key={index} textStyle="body2" marginTop={1} color="danger">
             {error.message}
           </Text>
@@ -142,9 +142,9 @@ export function CloudinaryImageFieldEditorWithoutClear({
                 }}
               />
             </Field.Control>
-            {altValidationErrors.length > 0 ? (
+            {altValidationIssues.length > 0 ? (
               <Field.Help color="danger">
-                {altValidationErrors.map((it) => it.message).join(' ')}
+                {altValidationIssues.map((it) => it.message).join(' ')}
               </Field.Help>
             ) : null}
           </Field>

@@ -9,7 +9,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<LocationFieldSpecification, Location>;
 
-export function LocationFieldEditor({ value, validationErrors, onChange }: Props) {
+export function LocationFieldEditor({ value, validationIssues, onChange }: Props) {
   const [showSelector, setShowSelector] = useState(false);
   const handleShowSelector = useCallback(() => setShowSelector(true), [setShowSelector]);
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -51,7 +51,7 @@ export function LocationFieldEditor({ value, validationErrors, onChange }: Props
           onItemClick={handleItemClick}
         />
       ) : null}
-      {validationErrors.map((error, index) => (
+      {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}
         </Text>

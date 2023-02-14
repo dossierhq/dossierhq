@@ -5,9 +5,9 @@ import type {
   FieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
-  PublishValidationError,
+  PublishValidationIssue,
   RichTextFieldSpecification,
-  SaveValidationError,
+  SaveValidationIssue,
   StringFieldSpecification,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
@@ -46,7 +46,7 @@ export interface FieldEditorProps<
   adminOnly: boolean;
   value: TValue | null;
   onChange: (value: TValue | null) => void;
-  validationErrors: (SaveValidationError | PublishValidationError)[];
+  validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
 }
 
 export function FieldEditor(props: FieldEditorProps) {

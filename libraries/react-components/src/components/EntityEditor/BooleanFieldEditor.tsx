@@ -6,7 +6,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<BooleanFieldSpecification, boolean>;
 
-export function BooleanFieldEditor({ value, validationErrors, onChange }: Props) {
+export function BooleanFieldEditor({ value, validationIssues, onChange }: Props) {
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       onChange(event.target.checked);
@@ -21,7 +21,7 @@ export function BooleanFieldEditor({ value, validationErrors, onChange }: Props)
         <Checkbox checked={!!value} onChange={handleChange}>
           {value === true ? 'True' : value === false ? 'False' : <i>Not set</i>}
         </Checkbox>
-        {validationErrors.map((error, index) => (
+        {validationIssues.map((error, index) => (
           <Text key={index} textStyle="body2" marginTop={1} color="danger">
             {error.message}
           </Text>

@@ -1,9 +1,9 @@
 import type {
   FieldSpecification,
-  PublishValidationError,
-  SaveValidationError,
+  PublishValidationIssue,
+  SaveValidationIssue,
 } from '@dossierhq/core';
-import { groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
+import { groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
@@ -13,13 +13,13 @@ interface Props<TFieldSpec extends FieldSpecification, TItem>
   Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
 
-const noErrors: (PublishValidationError | SaveValidationError)[] = [];
+const noErrors: (PublishValidationIssue | SaveValidationIssue)[] = [];
 
 export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   value,
   fieldSpec,
   adminOnly,
-  validationErrors,
+  validationIssues,
   onChange,
   Editor,
 }: Props<TFieldSpec, TItem>): JSX.Element {
@@ -38,9 +38,9 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
     [value, onChange]
   );
 
-  const { root: rootValidationErrors, children: indexValidationErrors } = useMemo(
-    () => groupValidationErrorsByTopLevelPath(validationErrors),
-    [validationErrors]
+  const { root: rootValidationIssues, children: indexValidationIssues } = useMemo(
+    () => groupValidationIssuesByTopLevelPath(validationIssues),
+    [validationIssues]
   );
 
   const itemsAndNew = value ? [...value, null] : [null];
@@ -54,13 +54,13 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
               value={it}
               fieldSpec={fieldSpec}
               adminOnly={adminOnly}
-              validationErrors={indexValidationErrors.get(index) ?? noErrors}
+              validationIssues={indexValidationIssues.get(index) ?? noErrors}
               onChange={(newItemValue) => handleItemChange(newItemValue, index)}
             />
           </div>
         );
       })}
-      {rootValidationErrors.map((error, index) => (
+      {rootValidationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" color="danger">
           {error.message}
         </Text>

@@ -265,10 +265,10 @@ function verifyFieldValuesAndCollectInformation(
   const uniqueIndexCollector = createUniqueIndexCollector(publishedSchema);
 
   for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
-    const validationError = validateTraverseNodeForPublish(adminSchema, node);
-    if (validationError) {
+    const validationIssue = validateTraverseNodeForPublish(adminSchema, node);
+    if (validationIssue) {
       return notOk.BadRequest(
-        `${visitorPathToString(validationError.path)}: ${validationError.message}`
+        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
       );
     }
 

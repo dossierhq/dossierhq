@@ -88,11 +88,11 @@ export {
 } from './ItemUtils.js';
 export type { ItemValuePath } from './ItemUtils.js';
 export {
-  groupValidationErrorsByTopLevelPath,
+  groupValidationIssuesByTopLevelPath,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
 } from './ItemValidator.js';
-export type { PublishValidationError, SaveValidationError } from './ItemValidator.js';
+export type { PublishValidationIssue, SaveValidationIssue } from './ItemValidator.js';
 export {
   convertJsonConnection,
   convertJsonEdge,

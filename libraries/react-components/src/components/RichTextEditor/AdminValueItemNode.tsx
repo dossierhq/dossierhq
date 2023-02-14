@@ -1,8 +1,8 @@
 import type {
   AdminSchema,
-  PublishValidationError,
+  PublishValidationIssue,
   RichTextValueItemNode,
-  SaveValidationError,
+  SaveValidationIssue,
   ValueItem,
 } from '@dossierhq/core';
 import {
@@ -32,7 +32,7 @@ import { RichTextEditorContext } from './RichTextEditorContext.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
 
-type ValidationError = SaveValidationError | PublishValidationError;
+type ValidationIssue = SaveValidationIssue | PublishValidationIssue;
 
 export function $createAdminValueItemNode(data: ValueItem): AdminValueItemNode {
   return new AdminValueItemNode(data);
@@ -78,13 +78,13 @@ function AdminValueItemComponent({
     [editor, nodeKey]
   );
 
-  const validationErrors = useMemo(() => {
+  const validationIssues = useMemo(() => {
     return validateItemValue(adminSchema, adminOnly, data);
   }, [adminSchema, adminOnly, data]);
 
   const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
     value: data,
-    validationErrors,
+    validationIssues,
     onChange: setValue,
   });
 
@@ -95,7 +95,7 @@ function AdminValueItemComponent({
           className="rich-text-item-indentation"
           adminOnly={adminOnly}
           value={data}
-          validationErrors={validationErrors}
+          validationIssues={validationIssues}
           onChange={setValue}
         />
       )}
@@ -104,7 +104,7 @@ function AdminValueItemComponent({
 }
 
 // TODO this is duplicated from the validation in validateField() in EntityEditorReducer
-// the main reason is that it's tricky to match the `path` in those validation errors with a certain
+// the main reason is that it's tricky to match the `path` in those validation issues with a certain
 // rich text node. We most likely need to change that validation to use the Lexical nodes instead
 // (as opposed to the serialized nodes which lack the node key)
 // Hopefully we can get rid on RichTextEditorContext and `adminOnly` parameters to the field editors
@@ -112,8 +112,8 @@ function validateItemValue(
   adminSchema: AdminSchema | undefined,
   adminOnly: boolean,
   value: ValueItem
-): ValidationError[] {
-  const errors: ValidationError[] = [];
+): ValidationIssue[] {
+  const errors: ValidationIssue[] = [];
   if (adminSchema) {
     const normalizeResult = normalizeValueItem(adminSchema, value);
     const valueToValidate = normalizeResult.isOk() ? normalizeResult.value : value;

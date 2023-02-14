@@ -814,8 +814,8 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot('1 Initial');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
     expect(state.drafts[0].hasPublishErrors).toBe(false);
-    expect(state.drafts[0].draft?.fields[0].validationErrors).toEqual([]);
-    expect(state.drafts[0].draft?.fields[1].validationErrors).toEqual([]);
+    expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);
+    expect(state.drafts[0].draft?.fields[1].validationIssues).toEqual([]);
 
     state = reduceEntityEditorState(
       state,
@@ -824,8 +824,8 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot('2 Setting adminOnly field to empty value item');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
     expect(state.drafts[0].hasPublishErrors).toBe(false);
-    expect(state.drafts[0].draft?.fields[0].validationErrors).toEqual([]);
-    expect(state.drafts[0].draft?.fields[1].validationErrors).toEqual([]);
+    expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);
+    expect(state.drafts[0].draft?.fields[1].validationIssues).toEqual([]);
 
     state = reduceEntityEditorState(
       state,
@@ -834,8 +834,8 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot('3 Setting normal field to empty value item');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
     expect(state.drafts[0].hasPublishErrors).toBe(true);
-    expect(state.drafts[0].draft?.fields[0].validationErrors).toEqual([]);
-    expect(state.drafts[0].draft?.fields[1].validationErrors).toEqual([
+    expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);
+    expect(state.drafts[0].draft?.fields[1].validationIssues).toEqual([
       { message: 'Required field is empty', path: ['required'], type: 'publish' },
     ]);
   });

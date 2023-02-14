@@ -383,10 +383,10 @@ export async function encodeAdminEntity(
   // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
   for (const node of traverseEntity(schema, ['entity'], entity)) {
-    const validationError = validateTraverseNodeForSave(schema, node);
-    if (validationError) {
+    const validationIssue = validateTraverseNodeForSave(schema, node);
+    if (validationIssue) {
       return notOk.BadRequest(
-        `${visitorPathToString(validationError.path)}: ${validationError.message}`
+        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
       );
     }
     ftsCollector.collect(node);

@@ -10,13 +10,13 @@ import type {
   StringFieldSpecification,
 } from './Schema.js';
 
-export interface SaveValidationError {
+export interface SaveValidationIssue {
   type: 'save';
   path: ItemValuePath;
   message: string;
 }
 
-export interface PublishValidationError {
+export interface PublishValidationIssue {
   type: 'publish';
   path: ItemValuePath;
   message: string;
@@ -27,7 +27,7 @@ const LINE_BREAK_REGEX = /[\r\n]/;
 export function validateTraverseNodeForSave(
   adminSchema: AdminSchema,
   node: ItemTraverseNode<AdminSchema>
-): SaveValidationError | null {
+): SaveValidationIssue | null {
   const nodeType = node.type;
   switch (nodeType) {
     case ItemTraverseNodeType.field:
@@ -88,7 +88,7 @@ export function validateTraverseNodeForSave(
 export function validateTraverseNodeForPublish(
   adminSchema: AdminSchema,
   node: ItemTraverseNode<PublishedSchema>
-): PublishValidationError | null {
+): PublishValidationIssue | null {
   switch (node.type) {
     case ItemTraverseNodeType.field:
       if (node.fieldSpec.required && node.value === null) {
@@ -118,8 +118,8 @@ export function validateTraverseNodeForPublish(
   return null;
 }
 
-export function groupValidationErrorsByTopLevelPath<
-  TError extends SaveValidationError | PublishValidationError
+export function groupValidationIssuesByTopLevelPath<
+  TError extends SaveValidationIssue | PublishValidationIssue
 >(
   errors: TError[]
 ): {

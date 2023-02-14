@@ -21,7 +21,7 @@ export function EntityFieldEditor({ field, onValueChange }: Props) {
           adminOnly={field.adminOnly}
           value={field.value}
           onChange={onValueChange}
-          validationErrors={field.validationErrors}
+          validationIssues={field.validationIssues}
         />
       </Card2.Content>
     </Card2>

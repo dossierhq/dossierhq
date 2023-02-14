@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
 import { copyEntity, normalizeEntityFields } from './ItemUtils.js';
-import type { PublishValidationError, SaveValidationError } from './ItemValidator.js';
+import type { PublishValidationIssue, SaveValidationIssue } from './ItemValidator.js';
 import {
-  groupValidationErrorsByTopLevelPath,
+  groupValidationIssuesByTopLevelPath,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
 } from './ItemValidator.js';
@@ -59,7 +59,7 @@ function validateEntity(entity: EntityLike) {
     fields: normalizeEntityFields(adminSchema, entity).valueOrThrow(),
   };
 
-  const errors: (SaveValidationError | PublishValidationError)[] = [];
+  const errors: (SaveValidationIssue | PublishValidationIssue)[] = [];
   for (const node of traverseEntity(adminSchema, ['entity'], normalizedEntity)) {
     const error = validateTraverseNodeForSave(adminSchema, node);
     if (error) {
@@ -156,14 +156,14 @@ describe('Validate entity', () => {
   });
 });
 
-describe('groupValidationErrorsByTopLevelPath', () => {
+describe('groupValidationIssuesByTopLevelPath', () => {
   test('no errors', () => {
-    expect(groupValidationErrorsByTopLevelPath([])).toEqual({ root: [], children: new Map() });
+    expect(groupValidationIssuesByTopLevelPath([])).toEqual({ root: [], children: new Map() });
   });
 
   test('root errors and list errors', () => {
     expect(
-      groupValidationErrorsByTopLevelPath([
+      groupValidationIssuesByTopLevelPath([
         { type: 'save', path: [], message: 'Root error' },
         { type: 'save', path: [0], message: 'Index 0 error' },
       ])
@@ -175,7 +175,7 @@ describe('groupValidationErrorsByTopLevelPath', () => {
 
   test('root errors and field errors', () => {
     expect(
-      groupValidationErrorsByTopLevelPath([
+      groupValidationIssuesByTopLevelPath([
         { type: 'save', path: [], message: 'Root error' },
         { type: 'save', path: ['field'], message: 'Field error' },
       ])

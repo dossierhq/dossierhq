@@ -207,7 +207,7 @@
                     "format": 1,
                     "mode": "normal",
                     "style": "",
-                    "text": "Show validation errors",
+                    "text": "Show validation issues",
                     "type": "text",
                     "version": 1
                   },
@@ -216,7 +216,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": " in UI – currently some validation errors are only checked on the server",
+                    "text": " in UI – currently some validation issues are only checked on the server",
                     "type": "text",
                     "version": 1
                   }

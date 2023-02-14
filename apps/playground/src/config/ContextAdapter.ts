@@ -37,13 +37,13 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
   }
 
   renderAdminRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
-    const { value, validationErrors, onChange } = props;
+    const { value, validationIssues, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({
         cloudName: CLOUDINARY_CLOUD_NAME,
         uploadPreset: CLOUDINARY_UPLOAD_PRESET,
         value,
-        validationErrors,
+        validationIssues,
         onChange,
       });
     }

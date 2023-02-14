@@ -6,7 +6,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<NumberFieldSpecification, number>;
 
-export function NumberFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
+export function NumberFieldEditor({ fieldSpec, value, validationIssues, onChange }: Props) {
   const isInteger = fieldSpec.integer;
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ export function NumberFieldEditor({ fieldSpec, value, validationErrors, onChange
         step={isInteger ? 1 : 'any'}
         onChange={handleChange}
       />
-      {validationErrors.map((error, index) => (
+      {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}
         </Text>

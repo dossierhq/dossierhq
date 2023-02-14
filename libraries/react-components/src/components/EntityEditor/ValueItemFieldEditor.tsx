@@ -1,11 +1,11 @@
 import type {
   AdminFieldSpecification,
-  PublishValidationError,
-  SaveValidationError,
+  PublishValidationIssue,
+  SaveValidationIssue,
   ValueItem,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
-import { FieldType, groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
+import { FieldType, groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -19,7 +19,7 @@ export function ValueItemFieldEditor({
   fieldSpec,
   adminOnly,
   value,
-  validationErrors,
+  validationIssues,
   onChange,
 }: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -35,7 +35,7 @@ export function ValueItemFieldEditor({
         >
           Add value item
         </AdminTypePicker>
-        {validationErrors.map((error, index) => (
+        {validationIssues.map((error, index) => (
           <Text key={index} textStyle="body2" marginTop={1} color="danger">
             {error.message}
           </Text>
@@ -52,31 +52,31 @@ export function ValueItemFieldEditor({
       <ValueItemFieldEditorWithoutClear
         value={value}
         adminOnly={adminOnly}
-        validationErrors={validationErrors}
+        validationIssues={validationIssues}
         onChange={onChange}
       />
     </HoverRevealStack>
   );
 }
 
-const noErrors: (SaveValidationError | PublishValidationError)[] = [];
+const noErrors: (SaveValidationIssue | PublishValidationIssue)[] = [];
 
 export function ValueItemFieldEditorWithoutClear({
   className,
   value,
   adminOnly,
-  validationErrors,
+  validationIssues,
   onChange,
 }: {
   className?: string;
   value: ValueItem;
   adminOnly: boolean;
-  validationErrors: (SaveValidationError | PublishValidationError)[];
+  validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   onChange: (value: ValueItem) => void;
 }) {
-  const { root: rootValidationErrors, children: fieldValidationErrors } = useMemo(
-    () => groupValidationErrorsByTopLevelPath(validationErrors),
-    [validationErrors]
+  const { root: rootValidationIssues, children: fieldValidationIssues } = useMemo(
+    () => groupValidationIssuesByTopLevelPath(validationIssues),
+    [validationIssues]
   );
 
   const { schema } = useContext(AdminDossierContext);
@@ -103,7 +103,7 @@ export function ValueItemFieldEditorWithoutClear({
               valueFieldSpec,
               adminOnly: adminOnly || valueFieldSpec.adminOnly,
               onChange,
-              validationErrors: fieldValidationErrors.get(valueFieldSpec.name) ?? noErrors,
+              validationIssues: fieldValidationIssues.get(valueFieldSpec.name) ?? noErrors,
             }}
           />
         );
@@ -120,7 +120,7 @@ export function ValueItemFieldEditorWithoutClear({
           </Fragment>
         );
       })}
-      {rootValidationErrors.map((error, index) => (
+      {rootValidationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}
         </Text>
@@ -133,13 +133,13 @@ function ValueItemField({
   value,
   valueFieldSpec,
   adminOnly,
-  validationErrors,
+  validationIssues,
   onChange,
 }: {
   value: ValueItem;
   valueFieldSpec: AdminFieldSpecification;
   adminOnly: boolean;
-  validationErrors: (SaveValidationError | PublishValidationError)[];
+  validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   onChange: (value: ValueItem) => void;
 }) {
   const handleFieldChanged = useCallback(
@@ -156,7 +156,7 @@ function ValueItemField({
       fieldSpec={valueFieldSpec}
       adminOnly={adminOnly}
       value={value[valueFieldSpec.name]}
-      validationErrors={validationErrors}
+      validationIssues={validationIssues}
       onChange={handleFieldChanged}
     />
   );

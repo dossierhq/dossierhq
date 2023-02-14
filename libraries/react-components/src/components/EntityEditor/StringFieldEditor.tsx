@@ -6,7 +6,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<StringFieldSpecification, string>;
 
-export function StringFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
+export function StringFieldEditor({ fieldSpec, value, validationIssues, onChange }: Props) {
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onChange(event.target.value);
@@ -21,7 +21,7 @@ export function StringFieldEditor({ fieldSpec, value, validationErrors, onChange
       ) : (
         <Input value={value ?? ''} onChange={handleChange} />
       )}
-      {validationErrors.map((error, index) => (
+      {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}
         </Text>
