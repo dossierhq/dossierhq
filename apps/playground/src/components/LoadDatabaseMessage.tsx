@@ -121,6 +121,15 @@ export function LoadDatabaseMessage({ className }: Props) {
         >
           Load Star Wars
         </Button>
+        <Text textStyle="headline5">Example: Catalog</Text>
+        <p>An example database with most variations of entity and value types.</p>
+        <Button
+          as="a"
+          className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
+          href={ROUTE.adminEntities.url('catalog')}
+        >
+          Load Catalog
+        </Button>
         <Text textStyle="headline5">Upload database</Text>
         <p>You can upload a database that you’ve previously downloaded from the Playground.</p>
         <File
