@@ -1,6 +1,8 @@
 import type { AdminClient, AdminEntity, PublishedClient, PublishedEntity, ValueItem } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminMessage;
 
@@ -42,7 +44,9 @@ export function assertIsAdminCloudinaryImage(valueItem: ValueItem<string, object
   }
 }
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = never;
 
 export type AllPublishedEntities = PublishedMessage;
 

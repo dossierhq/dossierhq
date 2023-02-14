@@ -64,7 +64,10 @@ import type {
   UniqueIndexReference,
 } from './Types.js';
 
-export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = AdminEntity> {
+export interface AdminClient<
+  TAdminEntity extends AdminEntity<string, object> = AdminEntity,
+  TUniqueIndex extends string = string
+> {
   getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
   updateSchemaSpecification(
@@ -75,7 +78,7 @@ export interface AdminClient<TAdminEntity extends AdminEntity<string, object> = 
   >;
 
   getEntity(
-    reference: EntityReference | EntityVersionReference | UniqueIndexReference
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference<TUniqueIndex>
   ): PromiseResult<
     TAdminEntity,
     | typeof ErrorType.BadRequest

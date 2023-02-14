@@ -7,7 +7,9 @@ import type {
   ValueItem,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities =
   | AdminPersonalNote

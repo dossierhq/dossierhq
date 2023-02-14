@@ -210,6 +210,23 @@ describe('generateTypescriptForSchema', () => {
       })
     ).toMatchSnapshot();
   });
+
+  test('Unique index', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Strings',
+              fields: [{ name: 'string', type: FieldType.String, index: 'slug' }],
+            },
+          ],
+          indexes: [{ name: 'slug', type: 'unique' }],
+        }).valueOrThrow(),
+        publishedSchema: null,
+      })
+    ).toMatchSnapshot();
+  });
 });
 
 describe('generateTypescriptForSchema published', () => {
@@ -267,6 +284,25 @@ describe('generateTypescriptForSchema published', () => {
               ],
             },
           ],
+        })
+          .valueOrThrow()
+          .toPublishedSchema(),
+      })
+    ).toMatchSnapshot();
+  });
+
+  test('Unique index', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: null,
+        publishedSchema: AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Strings',
+              fields: [{ name: 'string', type: FieldType.String, index: 'slug' }],
+            },
+          ],
+          indexes: [{ name: 'slug', type: 'unique' }],
         })
           .valueOrThrow()
           .toPublishedSchema(),

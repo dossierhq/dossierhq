@@ -9,7 +9,9 @@ import type {
   ValueItem,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
 export type AllAdminEntities =
   | AdminLocations
@@ -243,7 +245,9 @@ export function assertIsAdminReferencesValue(
   }
 }
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
 export type AllPublishedEntities =
   | PublishedLocations

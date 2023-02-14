@@ -8,7 +8,9 @@ import type {
   ValueItem,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = 'articleSlug' | 'glossarySlug';
 
 export type AllAdminEntities = AdminArticle | AdminChapter | AdminGlossaryTerm;
 
@@ -139,7 +141,9 @@ export function assertIsAdminTocItem(
   }
 }
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = 'articleSlug' | 'glossarySlug';
 
 export type AllPublishedEntities = PublishedArticle | PublishedChapter | PublishedGlossaryTerm;
 

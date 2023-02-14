@@ -30,12 +30,13 @@ import type {
 } from './Types.js';
 
 export interface PublishedClient<
-  TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity
+  TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
+  TUniqueIndex extends string = string
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference | UniqueIndexReference
+    reference: EntityReference | UniqueIndexReference<TUniqueIndex>
   ): PromiseResult<
     TPublishedEntity,
     | typeof ErrorType.BadRequest

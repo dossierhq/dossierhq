@@ -3,7 +3,9 @@
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminBooleans;
 
@@ -31,7 +33,9 @@ export type AllAdminValueItems = never;
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 "import type { AdminClient, AdminEntity, EntityReference } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminEntityTypes;
 
@@ -59,7 +63,9 @@ export type AllAdminValueItems = never;
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
 "import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminFoo;
 
@@ -84,7 +90,9 @@ export type AllAdminValueItems = never;
 exports[`generateTypescriptForSchema > Locations 1`] = `
 "import type { AdminClient, AdminEntity, Location } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminLocations;
 
@@ -112,7 +120,9 @@ export type AllAdminValueItems = never;
 exports[`generateTypescriptForSchema > Numbers 1`] = `
 "import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminNumbers;
 
@@ -142,7 +152,9 @@ export type AllAdminValueItems = never;
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
 "import type { AdminClient, AdminEntity, RichText } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminRichTexts;
 
@@ -170,7 +182,9 @@ export type AllAdminValueItems = never;
 exports[`generateTypescriptForSchema > Strings 1`] = `
 "import type { AdminClient, AdminEntity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminStrings;
 
@@ -195,10 +209,41 @@ export type AllAdminValueItems = never;
 "
 `;
 
+exports[`generateTypescriptForSchema > Unique index 1`] = `
+"import type { AdminClient, AdminEntity } from '@dossierhq/core';
+
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = 'slug';
+
+export type AllAdminEntities = AdminStrings;
+
+export interface AdminStringsFields {
+  string: string | null;
+}
+
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;
+
+export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
+  return entity.info.type === 'Strings';
+}
+
+export function assertIsAdminStrings(entity: AdminEntity<string, object>): asserts entity is AdminStrings {
+  if (entity.info.type !== 'Strings') {
+    throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AllAdminValueItems = never;
+"
+`;
+
 exports[`generateTypescriptForSchema > ValueItem (no fields) 1`] = `
 "import type { AdminClient, AdminEntity, ValueItem } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminValueItem;
 
@@ -239,7 +284,9 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > ValueTypes 1`] = `
 "import type { AdminClient, AdminEntity, ValueItem } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = AdminValueTypes;
 
@@ -303,7 +350,9 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > empty 1`] = `
 "import type { AdminClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities>;
+export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
 
 export type AllAdminEntities = never;
 
@@ -311,10 +360,41 @@ export type AllAdminValueItems = never;
 "
 `;
 
+exports[`generateTypescriptForSchema published > Unique index 1`] = `
+"import type { PublishedClient, PublishedEntity } from '@dossierhq/core';
+
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = 'slug';
+
+export type AllPublishedEntities = PublishedStrings;
+
+export interface PublishedStringsFields {
+  string: string | null;
+}
+
+export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields, string>;
+
+export function isPublishedStrings(entity: PublishedEntity<string, object>): entity is PublishedStrings {
+  return entity.info.type === 'Strings';
+}
+
+export function assertIsPublishedStrings(entity: PublishedEntity<string, object>): asserts entity is PublishedStrings {
+  if (entity.info.type !== 'Strings') {
+    throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AllPublishedValueItems = never;
+"
+`;
+
 exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `
 "import type { PublishedClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = never;
 
 export type AllPublishedEntities = never;
 
@@ -325,7 +405,9 @@ export type AllPublishedValueItems = never;
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
 "import type { PublishedClient, PublishedEntity } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = never;
 
 export type AllPublishedEntities = PublishedFoo;
 
@@ -350,7 +432,9 @@ export type AllPublishedValueItems = never;
 exports[`generateTypescriptForSchema published > empty 1`] = `
 "import type { PublishedClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = never;
 
 export type AllPublishedEntities = never;
 
@@ -361,7 +445,9 @@ export type AllPublishedValueItems = never;
 exports[`generateTypescriptForSchema published > required fields 1`] = `
 "import type { PublishedClient, PublishedEntity } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities>;
+export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = never;
 
 export type AllPublishedEntities = PublishedFoo;
 

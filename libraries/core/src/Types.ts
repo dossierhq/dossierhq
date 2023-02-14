@@ -53,8 +53,8 @@ export interface EntityVersionReference {
   version: number;
 }
 
-export interface UniqueIndexReference {
-  index: string;
+export interface UniqueIndexReference<TIndex extends string = string> {
+  index: TIndex;
   value: string;
 }
 

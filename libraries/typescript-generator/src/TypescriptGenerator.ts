@@ -7,6 +7,7 @@ import type {
   PublishedFieldSpecification,
   PublishedSchema,
   PublishedValueTypeSpecification,
+  SchemaIndexSpecification,
 } from '@dossierhq/core';
 import { FieldType } from '@dossierhq/core';
 
@@ -28,6 +29,7 @@ export function generateTypescriptForSchema({
 
   if (adminSchema) {
     paragraphs.push(...generateAdminClientTypes(context));
+    paragraphs.push(...generateUniqueIndexesType('Admin', adminSchema.spec.indexes));
     paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entities'));
     for (const entitySpec of adminSchema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyType));
@@ -39,6 +41,7 @@ export function generateTypescriptForSchema({
   }
   if (publishedSchema) {
     paragraphs.push(...generatePublishedClientTypes(context));
+    paragraphs.push(...generateUniqueIndexesType('Published', publishedSchema.spec.indexes));
     paragraphs.push(
       ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entities')
     );
@@ -66,12 +69,24 @@ export function generateTypescriptForSchema({
 
 function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('AdminClient');
-  return ['', 'export type AppAdminClient = AdminClient<AllAdminEntities>;'];
+  return ['', 'export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;'];
 }
 
 function generatePublishedClientTypes(context: GeneratorContext) {
   context.coreImports.add('PublishedClient');
-  return ['', 'export type AppPublishedClient = PublishedClient<AllPublishedEntities>;'];
+  return [
+    '',
+    'export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;',
+  ];
+}
+
+function generateUniqueIndexesType(
+  adminOrPublished: 'Admin' | 'Published',
+  indexes: SchemaIndexSpecification[]
+) {
+  const uniqueIndexNames = indexes.filter((it) => it.type === 'unique').map((it) => it.name);
+  const uniqueIndexTypeDefinition = stringLiteralsUnionOrNever(uniqueIndexNames);
+  return ['', `export type App${adminOrPublished}UniqueIndexes = ${uniqueIndexTypeDefinition};`];
 }
 
 function generateAllTypesUnion(
@@ -83,8 +98,7 @@ function generateAllTypesUnion(
   adminOrPublished: 'Admin' | 'Published',
   entitiesOrValueItems: 'Entities' | 'ValueItems'
 ) {
-  const typeDefinition =
-    types.length === 0 ? 'never' : types.map((it) => `${adminOrPublished}${it.name}`).join(' | ');
+  const typeDefinition = typeUnionOrNever(types.map((it) => `${adminOrPublished}${it.name}`));
   return ['', `export type All${adminOrPublished}${entitiesOrValueItems} = ${typeDefinition};`];
 }
 
@@ -262,4 +276,12 @@ function fieldType(
     return type + nullableSuffix;
   }
   return (type.includes('|') ? `Array<${type}>` : `${type}[]`) + nullableSuffix;
+}
+
+function stringLiteralsUnionOrNever(stringValues: string[]) {
+  return typeUnionOrNever(stringValues.map((it) => `'${it}'`));
+}
+
+function typeUnionOrNever(types: string[]) {
+  return types.length === 0 ? 'never' : types.join(' | ');
 }
