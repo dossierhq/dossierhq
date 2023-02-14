@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/server",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Library to set up a Dossier server.",
   "keywords": [
     "dossier",
