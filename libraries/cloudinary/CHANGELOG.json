@@ -2,6 +2,18 @@
   "name": "@dossierhq/cloudinary",
   "entries": [
     {
+      "version": "0.2.2",
+      "tag": "@dossierhq/cloudinary_v0.2.2",
+      "date": "Tue, 14 Feb 2023 18:18:06 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Require validationIssues prop. Show validation issues."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.1",
       "tag": "@dossierhq/cloudinary_v0.2.1",
       "date": "Wed, 08 Feb 2023 18:24:39 GMT",

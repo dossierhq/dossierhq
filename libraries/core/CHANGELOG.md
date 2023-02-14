@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Wed, 08 Feb 2023 18:24:39 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Feb 2023 18:18:06 GMT and should not be manually modified.
+
+## 0.2.2
+Tue, 14 Feb 2023 18:18:06 GMT
+
+### Updates
+
+- Rename validateTraverseNode() to validateTraverseNodeForSave(). Add validateTraverseNodeForPublish(), normalizeValueItem(), normalizeEntityFields(), groupValidationIssuesByTopLevelPath(). Enable typing for AdminCreate<AddType> in copyEntity(). Enable typing of unique index for clients.
 
 ## 0.2.1
 Wed, 08 Feb 2023 18:24:39 GMT

@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.2.2",
+      "tag": "@dossierhq/core_v0.2.2",
+      "date": "Tue, 14 Feb 2023 18:18:06 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename validateTraverseNode() to validateTraverseNodeForSave(). Add validateTraverseNodeForPublish(), normalizeValueItem(), normalizeEntityFields(), groupValidationIssuesByTopLevelPath(). Enable typing for AdminCreate<AddType> in copyEntity(). Enable typing of unique index for clients."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.1",
       "tag": "@dossierhq/core_v0.2.1",
       "date": "Wed, 08 Feb 2023 18:24:39 GMT",
