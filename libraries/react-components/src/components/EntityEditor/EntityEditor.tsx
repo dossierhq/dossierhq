@@ -78,6 +78,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         <Field.Control>
           <Input value={draftState.draft.name} onChange={handleNameChange} />
         </Field.Control>
+        {!draftState.draft.name ? <Field.Help color="danger">Name is required</Field.Help> : null}
       </Field>
       {!draftState.entity ? (
         <Field>
@@ -89,6 +90,9 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
               onValueChange={handleAuthKeyChange}
             />
           </Field.Control>
+          {!draftState.draft.authKey ? (
+            <Field.Help color="danger">Authorization key is required</Field.Help>
+          ) : null}
         </Field>
       ) : null}
       <Row gap={2} justifyContent="center">
