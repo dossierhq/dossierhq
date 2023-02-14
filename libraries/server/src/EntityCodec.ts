@@ -40,11 +40,11 @@ import {
   isValueItemField,
   isValueItemItemField,
   ItemTraverseNodeType,
-  normalizeFieldValue,
+  normalizeEntityFields,
   notOk,
   ok,
   traverseEntity,
-  validateTraverseNode,
+  validateTraverseNodeForSave,
   visitorPathToString,
 } from '@dossierhq/core';
 import type {
@@ -266,21 +266,9 @@ export function resolveCreateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const unsupportedFieldsResult = checkForUnsupportedFields(entitySpec, entity);
-  if (unsupportedFieldsResult.isError()) {
-    return unsupportedFieldsResult;
-  }
-
-  const fields: Record<string, unknown> = {};
-  for (const fieldSpec of entitySpec.fields) {
-    const fieldValue = normalizeFieldValue(
-      schema,
-      fieldSpec,
-      entity.fields?.[fieldSpec.name] ?? null
-    );
-    fields[fieldSpec.name] = fieldValue;
-  }
-  result.fields = fields;
+  const normalizedResult = normalizeEntityFields(schema, entity);
+  if (normalizedResult.isError()) return normalizedResult;
+  result.fields = normalizedResult.value;
 
   return ok({ createEntity: result, entitySpec });
 }
@@ -325,10 +313,13 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const unsupportedFieldsResult = checkForUnsupportedFields(entitySpec, entity);
-  if (unsupportedFieldsResult.isError()) {
-    return unsupportedFieldsResult;
-  }
+  const normalizedResult = normalizeEntityFields(
+    schema,
+    { ...entity, info: { type: result.info.type } },
+    { excludeOmitted: true }
+  );
+  if (normalizedResult.isError()) return normalizedResult;
+  const normalizedFields = normalizedResult.value;
 
   let changed = false;
   if (result.info.name !== entityInfo.name) {
@@ -343,8 +334,8 @@ export function resolveUpdateEntity(
       entityInfo.fieldValues[fieldName] ?? null
     );
 
-    if (entity.fields && fieldName in entity.fields) {
-      const newFieldValue = normalizeFieldValue(schema, fieldSpec, entity.fields[fieldName]);
+    if (fieldName in normalizedFields) {
+      const newFieldValue = normalizedFields[fieldName];
       if (!isFieldValueEqual(previousFieldValue, newFieldValue)) {
         changed = true;
       }
@@ -360,24 +351,6 @@ export function resolveUpdateEntity(
   }
 
   return ok({ changed, entity: result });
-}
-
-function checkForUnsupportedFields(
-  entitySpec: AdminEntityTypeSpecification,
-  entity: AdminEntityCreate | AdminEntityUpdate
-): Result<void, typeof ErrorType.BadRequest> {
-  if (!entity.fields) {
-    return ok(undefined);
-  }
-
-  const unsupportedFieldNames = new Set(Object.keys(entity.fields));
-
-  entitySpec.fields.forEach((it) => unsupportedFieldNames.delete(it.name));
-
-  if (unsupportedFieldNames.size > 0) {
-    return notOk.BadRequest(`Unsupported field names: ${[...unsupportedFieldNames].join(', ')}`);
-  }
-  return ok(undefined);
 }
 
 export async function encodeAdminEntity(
@@ -409,9 +382,8 @@ export async function encodeAdminEntity(
 
   // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
-  const validateOptions = { validatePublish: false };
   for (const node of traverseEntity(schema, ['entity'], entity)) {
-    const validationError = validateTraverseNode(schema, node, validateOptions);
+    const validationError = validateTraverseNodeForSave(schema, node);
     if (validationError) {
       return notOk.BadRequest(
         `${visitorPathToString(validationError.path)}: ${validationError.message}`

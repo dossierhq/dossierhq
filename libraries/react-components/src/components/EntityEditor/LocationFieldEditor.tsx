@@ -1,5 +1,5 @@
 import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
-import { Button, Delete, HoverRevealContainer } from '@dossierhq/design';
+import { Button, Delete, HoverRevealContainer, Text } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -9,7 +9,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<LocationFieldSpecification, Location>;
 
-export function LocationFieldEditor({ value, onChange }: Props) {
+export function LocationFieldEditor({ value, validationErrors, onChange }: Props) {
   const [showSelector, setShowSelector] = useState(false);
   const handleShowSelector = useCallback(() => setShowSelector(true), [setShowSelector]);
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -51,6 +51,11 @@ export function LocationFieldEditor({ value, onChange }: Props) {
           onItemClick={handleItemClick}
         />
       ) : null}
+      {validationErrors.map((error, index) => (
+        <Text key={index} textStyle="body2" marginTop={1} color="danger">
+          {error.message}
+        </Text>
+      ))}
     </>
   );
 }

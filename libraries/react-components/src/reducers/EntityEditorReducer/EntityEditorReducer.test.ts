@@ -785,4 +785,58 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state.activeEntityMenuScrollSignal).toBe(2);
     expect(state.activeEntityEditorScrollSignal).toBe(2);
   });
+
+  test('required string fields value item place in normal and adminOnly fields', async () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    let state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [
+                { name: 'adminOnly', type: FieldType.ValueItem, adminOnly: true },
+                { name: 'normal', type: FieldType.ValueItem },
+              ],
+            },
+          ],
+          valueTypes: [
+            {
+              name: 'RequiredString',
+              fields: [{ name: 'required', type: FieldType.String, required: true }],
+            },
+          ],
+        }).valueOrThrow()
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
+    );
+    expect(state).toMatchSnapshot('1 Initial');
+    expect(state.drafts[0].hasSaveErrors).toBe(false);
+    expect(state.drafts[0].hasPublishErrors).toBe(false);
+    expect(state.drafts[0].draft?.fields[0].validationErrors).toEqual([]);
+    expect(state.drafts[0].draft?.fields[1].validationErrors).toEqual([]);
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.SetField(id, 'adminOnly', { type: 'RequiredString', required: null })
+    );
+    expect(state).toMatchSnapshot('2 Setting adminOnly field to empty value item');
+    expect(state.drafts[0].hasSaveErrors).toBe(false);
+    expect(state.drafts[0].hasPublishErrors).toBe(false);
+    expect(state.drafts[0].draft?.fields[0].validationErrors).toEqual([]);
+    expect(state.drafts[0].draft?.fields[1].validationErrors).toEqual([]);
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.SetField(id, 'normal', { type: 'RequiredString', required: null })
+    );
+    expect(state).toMatchSnapshot('3 Setting normal field to empty value item');
+    expect(state.drafts[0].hasSaveErrors).toBe(false);
+    expect(state.drafts[0].hasPublishErrors).toBe(true);
+    expect(state.drafts[0].draft?.fields[0].validationErrors).toEqual([]);
+    expect(state.drafts[0].draft?.fields[1].validationErrors).toEqual([
+      { message: 'Required field is empty', path: ['required'], type: 'publish' },
+    ]);
+  });
 });

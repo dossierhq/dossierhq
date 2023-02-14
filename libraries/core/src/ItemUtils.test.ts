@@ -4,7 +4,9 @@ import {
   copyEntity,
   isEntityNameAsRequested,
   isFieldValueEqual,
+  normalizeEntityFields,
   normalizeFieldValue,
+  normalizeValueItem,
 } from './ItemUtils.js';
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
@@ -134,21 +136,54 @@ describe('isFieldValueEqual', () => {
     ).toBeFalsy());
 });
 
+describe('normalizeEntityFields', () => {
+  test('empty Foo', () => {
+    expect(
+      normalizeEntityFields(schema, { info: { type: 'Foo' }, fields: {} }).valueOrThrow()
+    ).toMatchSnapshot();
+  });
+
+  test('empty Foo (excludeOmitted)', () => {
+    expect(
+      normalizeEntityFields(
+        schema,
+        { info: { type: 'Foo' }, fields: {} },
+        { excludeOmitted: true }
+      ).valueOrThrow()
+    ).toEqual({});
+  });
+});
+
+describe('normalizeValueItem', () => {
+  test('empty TwoStrings', () => {
+    expect(normalizeValueItem(schema, { type: 'TwoStrings' }).valueOrThrow()).toMatchSnapshot();
+  });
+
+  test('TwoStrings with empty strings', () => {
+    expect(
+      normalizeValueItem(schema, { type: 'TwoStrings', string1: '', string2: null }).valueOrThrow()
+    ).toMatchSnapshot();
+  });
+});
+
 describe('normalizeFieldValue()', () => {
-  test('"" => null', () =>
+  test('"" => null', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), '')).toEqual(
       null
-    ));
+    );
+  });
 
-  test('[] => null', () =>
+  test('[] => null', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), [])).toBe(
       null
-    ));
+    );
+  });
 
-  test('[string, ""] => [string]', () =>
+  test('[string, ""] => [string]', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), ['hello', ''])
-    ).toEqual(['hello']));
+    ).toEqual(['hello']);
+  });
 
   test('[string] => [string] (no change)', () => {
     const fieldValue = ['hello', 'world'];
@@ -157,23 +192,25 @@ describe('normalizeFieldValue()', () => {
     ).toBe(fieldValue);
   });
 
-  test('{string1:string,string2:""} => {string1:string,string2:null}', () =>
+  test('{string1:string,string2:""} => {string1:string,string2:null}', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
         type: 'TwoStrings',
         string1: 'Hello',
         string2: '',
       })
-    ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null }));
+    ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null });
+  });
 
-  test('{string1:undefined} => {string1:null,string2:null}', () =>
+  test('{string1:undefined} => {string1:null,string2:null}', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
         type: 'TwoStrings',
         string1: undefined,
         // no string2
       })
-    ).toEqual({ type: 'TwoStrings', string1: null, string2: null }));
+    ).toEqual({ type: 'TwoStrings', string1: null, string2: null });
+  });
 
   test('{string1:string,string2:string} => {string1:string,string2:string} (no change)', () => {
     const fieldValue = {
@@ -186,20 +223,22 @@ describe('normalizeFieldValue()', () => {
     ).toBe(fieldValue);
   });
 
-  test('string undefined => undefined', () =>
+  test('string undefined => null', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined)
-    ).toBe(undefined));
+    ).toBe(null);
+  });
 
-  test('string[] undefined => undefined', () =>
+  test('string[] undefined => null', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined)
-    ).toBe(undefined));
+    ).toBe(null);
+  });
 
-  test('ValueItem: undefined => undefined', () => {
+  test('ValueItem: undefined => null', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined)
-    ).toBe(undefined);
+    ).toBe(null);
   });
 
   test('RichText: empty paragraph => null', () => {

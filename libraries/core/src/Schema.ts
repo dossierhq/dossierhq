@@ -274,6 +274,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
 export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
   private cachedPatternRegExps: Record<string, RegExp>;
+  private cachedPublishedSchema: PublishedSchema | null = null;
 
   static createAndValidate(
     update: AdminSchemaSpecificationUpdate
@@ -666,6 +667,10 @@ export class AdminSchema {
   }
 
   toPublishedSchema(): PublishedSchema {
+    if (this.cachedPublishedSchema) {
+      return this.cachedPublishedSchema;
+    }
+
     const spec: PublishedSchemaSpecification = {
       entityTypes: [],
       valueTypes: [],
@@ -730,7 +735,8 @@ export class AdminSchema {
       }
     }
 
-    return new PublishedSchema(spec);
+    this.cachedPublishedSchema = new PublishedSchema(spec);
+    return this.cachedPublishedSchema;
   }
 }
 

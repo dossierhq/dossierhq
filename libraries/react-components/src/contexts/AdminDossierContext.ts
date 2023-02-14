@@ -5,6 +5,8 @@ import type {
   ErrorResult,
   ErrorType,
   Logger,
+  PublishValidationError,
+  SaveValidationError,
   ValueItem,
 } from '@dossierhq/core';
 import { createContext } from 'react';
@@ -13,6 +15,7 @@ import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
 export interface RichTextValueItemEditorProps {
   value: ValueItem;
+  validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem<string, object>) => void;
 }
 

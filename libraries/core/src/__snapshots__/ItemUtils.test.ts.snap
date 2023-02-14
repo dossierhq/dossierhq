@@ -1,0 +1,26 @@
+// Vitest Snapshot v1
+
+exports[`normalizeEntityFields > empty Foo 1`] = `
+{
+  "richText": null,
+  "string": null,
+  "stringList": null,
+  "twoStrings": null,
+}
+`;
+
+exports[`normalizeValueItem > TwoStrings with empty strings 1`] = `
+{
+  "string1": null,
+  "string2": null,
+  "type": "TwoStrings",
+}
+`;
+
+exports[`normalizeValueItem > empty TwoStrings 1`] = `
+{
+  "string1": null,
+  "string2": null,
+  "type": "TwoStrings",
+}
+`;

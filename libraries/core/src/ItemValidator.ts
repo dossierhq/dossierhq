@@ -1,31 +1,33 @@
 import { assertExhaustive, assertIsDefined } from './Asserts.js';
 import type { ItemTraverseNode } from './ItemTraverser.js';
-import { ItemTraverseNodeType } from './ItemTraverser.js';
+import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ItemTraverser.js';
 import type { ItemValuePath } from './ItemUtils.js';
 import { isRichTextTextNode, isStringItemField } from './ItemUtils.js';
 import type {
   AdminSchema,
+  PublishedSchema,
   RichTextFieldSpecification,
   StringFieldSpecification,
 } from './Schema.js';
 
-export interface ValidationError {
-  type: 'save' | 'publish';
+export interface SaveValidationError {
+  type: 'save';
   path: ItemValuePath;
   message: string;
 }
 
-export interface ValidationOptions {
-  validatePublish: boolean;
+export interface PublishValidationError {
+  type: 'publish';
+  path: ItemValuePath;
+  message: string;
 }
 
 const LINE_BREAK_REGEX = /[\r\n]/;
 
-export function validateTraverseNode(
-  schema: AdminSchema,
-  node: ItemTraverseNode<AdminSchema>,
-  { validatePublish: _1 }: ValidationOptions
-): ValidationError | null {
+export function validateTraverseNodeForSave(
+  adminSchema: AdminSchema,
+  node: ItemTraverseNode<AdminSchema>
+): SaveValidationError | null {
   const nodeType = node.type;
   switch (nodeType) {
     case ItemTraverseNodeType.field:
@@ -34,7 +36,7 @@ export function validateTraverseNode(
       if (isStringItemField(node.fieldSpec, node.value) && node.value) {
         const stringFieldSpec = node.fieldSpec as StringFieldSpecification;
         if (stringFieldSpec.matchPattern) {
-          const regexp = schema.getPatternRegExp(stringFieldSpec.matchPattern);
+          const regexp = adminSchema.getPatternRegExp(stringFieldSpec.matchPattern);
           assertIsDefined(regexp);
           if (!regexp.test(node.value)) {
             return {
@@ -81,4 +83,65 @@ export function validateTraverseNode(
       assertExhaustive(nodeType);
   }
   return null;
+}
+
+export function validateTraverseNodeForPublish(
+  adminSchema: AdminSchema,
+  node: ItemTraverseNode<PublishedSchema>
+): PublishValidationError | null {
+  switch (node.type) {
+    case ItemTraverseNodeType.field:
+      if (node.fieldSpec.required && node.value === null) {
+        return {
+          type: 'publish',
+          path: node.path,
+          message: 'Required field is empty',
+        };
+      }
+      break;
+    case ItemTraverseNodeType.error:
+      if (
+        node.errorType === ItemTraverseNodeErrorType.missingTypeSpec &&
+        node.kind === 'valueItem'
+      ) {
+        const adminTypeSpec = adminSchema.getValueTypeSpecification(node.typeName);
+        if (adminTypeSpec && adminTypeSpec.adminOnly) {
+          return {
+            type: 'publish',
+            path: node.path,
+            message: `Value item of type ${node.typeName} is adminOnly`,
+          };
+        }
+      }
+      return { type: 'publish', path: node.path, message: node.message };
+  }
+  return null;
+}
+
+export function groupValidationErrorsByTopLevelPath<
+  TError extends SaveValidationError | PublishValidationError
+>(
+  errors: TError[]
+): {
+  root: TError[];
+  children: Map<number | string, TError[]>;
+} {
+  const root: TError[] = [];
+  const children = new Map<number | string, TError[]>();
+  for (const error of errors) {
+    if (error.path.length === 0) {
+      root.push(error);
+    } else {
+      const [topLevel, ...rest] = error.path;
+      const newError = { ...error, path: rest };
+
+      const existingErrors = children.get(topLevel);
+      if (existingErrors) {
+        existingErrors.push(newError);
+      } else {
+        children.set(topLevel, [newError]);
+      }
+    }
+  }
+  return { root, children };
 }

@@ -1,4 +1,6 @@
 import { assertExhaustive } from './Asserts.js';
+import type { ErrorType, Result } from './ErrorResult.js';
+import { notOk, ok } from './ErrorResult.js';
 import type {
   AdminFieldSpecification,
   AdminSchema,
@@ -374,13 +376,79 @@ export function isFieldValueEqual(a: unknown, b: unknown): boolean {
   return false;
 }
 
+export function normalizeEntityFields<TEntity extends EntityLike>(
+  schema: AdminSchema,
+  entity: EntityLike,
+  options?: { excludeOmitted: boolean }
+): Result<TEntity['fields'], typeof ErrorType.BadRequest> {
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
+  if (!entitySpec) {
+    return notOk.BadRequest(`Entity type ${entity.info.type} doesn’t exist`);
+  }
+
+  const unsupportedFieldNames = new Set(Object.keys(entity.fields));
+
+  const fields: Record<string, unknown> = {};
+  for (const fieldSpec of entitySpec.fields) {
+    unsupportedFieldNames.delete(fieldSpec.name);
+
+    if (options?.excludeOmitted && (!entity.fields || !(fieldSpec.name in entity.fields))) {
+      continue;
+    }
+
+    const fieldValue = normalizeFieldValue(
+      schema,
+      fieldSpec,
+      entity.fields?.[fieldSpec.name] ?? null
+    );
+    fields[fieldSpec.name] = fieldValue;
+  }
+
+  if (unsupportedFieldNames.size > 0) {
+    return notOk.BadRequest(`Unsupported field names: ${[...unsupportedFieldNames].join(', ')}`);
+  }
+
+  return ok(fields);
+}
+
+export function normalizeValueItem<TValueItem extends ValueItem>(
+  schema: AdminSchema,
+  valueItem: TValueItem
+): Result<TValueItem, typeof ErrorType.BadRequest> {
+  const valueTypeSpec = schema.getValueTypeSpecification(valueItem.type);
+  if (!valueTypeSpec) {
+    return notOk.BadRequest(`Value type ${valueItem.type} doesn’t exist`);
+  }
+
+  const unsupportedFieldNames = new Set(Object.keys(valueItem));
+  unsupportedFieldNames.delete('type');
+
+  const result: ValueItem = { type: valueItem.type };
+  for (const fieldSpec of valueTypeSpec.fields) {
+    unsupportedFieldNames.delete(fieldSpec.name);
+
+    if (fieldSpec.name === 'type') {
+      continue;
+    }
+
+    const fieldValue = normalizeFieldValue(schema, fieldSpec, valueItem[fieldSpec.name] ?? null);
+    result[fieldSpec.name] = fieldValue;
+  }
+
+  if (unsupportedFieldNames.size > 0) {
+    return notOk.BadRequest(`Unsupported field names: ${[...unsupportedFieldNames].join(', ')}`);
+  }
+
+  return ok(result as TValueItem);
+}
+
 export function normalizeFieldValue(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
   value: unknown
 ): unknown {
   if (value === null || value === undefined) {
-    return value;
+    return null;
   }
 
   if (fieldSpec.list) {

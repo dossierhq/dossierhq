@@ -5,9 +5,10 @@ import type {
   FieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
+  PublishValidationError,
   RichTextFieldSpecification,
+  SaveValidationError,
   StringFieldSpecification,
-  ValidationError,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import {
@@ -35,16 +36,17 @@ import { LocationFieldEditor } from './LocationFieldEditor.js';
 import { NumberFieldEditor } from './NumberFieldEditor.js';
 import { RichTextFieldEditor } from './RichTextFieldEditor.js';
 import { StringFieldEditor } from './StringFieldEditor.js';
-import { ValueTypeFieldEditor } from './ValueTypeFieldEditor.js';
+import { ValueItemFieldEditor } from './ValueItemFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
   TValue = unknown
 > {
   fieldSpec: AdminFieldSpecification<TFieldSpec>;
+  adminOnly: boolean;
   value: TValue | null;
   onChange: (value: TValue | null) => void;
-  validationErrors: ValidationError[];
+  validationErrors: (SaveValidationError | PublishValidationError)[];
 }
 
 export function FieldEditor(props: FieldEditorProps) {
@@ -161,7 +163,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isValueItemField(fieldSpec, value)) {
     editor = (
-      <ValueTypeFieldEditor
+      <ValueItemFieldEditor
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>}
         value={value}
@@ -173,7 +175,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>}
         value={value}
-        Editor={ValueTypeFieldEditor}
+        Editor={ValueItemFieldEditor}
       />
     );
   } else {

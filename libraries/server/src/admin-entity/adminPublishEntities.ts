@@ -13,11 +13,10 @@ import {
   AdminEntityStatus,
   createErrorResult,
   ErrorType,
-  ItemTraverseNodeErrorType,
-  ItemTraverseNodeType,
   notOk,
   ok,
   traverseEntity,
+  validateTraverseNodeForPublish,
   visitorPathToString,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -266,31 +265,17 @@ function verifyFieldValuesAndCollectInformation(
   const uniqueIndexCollector = createUniqueIndexCollector(publishedSchema);
 
   for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
+    const validationError = validateTraverseNodeForPublish(adminSchema, node);
+    if (validationError) {
+      return notOk.BadRequest(
+        `${visitorPathToString(validationError.path)}: ${validationError.message}`
+      );
+    }
+
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
     uniqueIndexCollector.collect(node);
-
-    switch (node.type) {
-      case ItemTraverseNodeType.error:
-        if (
-          node.errorType === ItemTraverseNodeErrorType.missingTypeSpec &&
-          node.kind === 'valueItem'
-        ) {
-          const adminTypeSpec = adminSchema.getValueTypeSpecification(node.typeName);
-          if (adminTypeSpec && adminTypeSpec.adminOnly) {
-            return notOk.BadRequest(
-              `${visitorPathToString(node.path)}: Value item of type ${node.typeName} is adminOnly`
-            );
-          }
-        }
-        return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);
-      case ItemTraverseNodeType.field:
-        if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
-          return notOk.BadRequest(`${visitorPathToString(node.path)}: Required field is empty`);
-        }
-        break;
-    }
   }
   return ok({
     fullTextSearchText: ftsCollector.result,

@@ -19,13 +19,11 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         {
           name: 'heroImage',
           type: FieldType.ValueItem,
-          required: true,
           valueTypes: ['CloudinaryImage'],
         },
         {
           name: 'description',
           type: FieldType.RichText,
-          required: true,
           richTextNodes: [
             RichTextNodeType.root,
             RichTextNodeType.paragraph,
@@ -52,7 +50,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
           name: 'authors',
           type: FieldType.Entity,
           list: true,
-          required: true,
           entityTypes: ['Person'],
         },
         { name: 'tags', type: FieldType.String, list: true },

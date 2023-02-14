@@ -12,7 +12,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<EntityFieldSpecification, EntityReference>;
 
-export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
+export function EntityTypeFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
   const { adminClient } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
@@ -72,6 +72,11 @@ export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
           onItemClick={handleItemClick}
         />
       ) : null}
+      {validationErrors.map((error, index) => (
+        <Text key={index} textStyle="body2" marginTop={1} color="danger">
+          {error.message}
+        </Text>
+      ))}
     </>
   );
 }

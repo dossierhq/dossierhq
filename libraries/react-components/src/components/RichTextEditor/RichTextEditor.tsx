@@ -30,16 +30,18 @@ import { AdminValueItemNode } from './AdminValueItemNode.js';
 import { CodeHighlightPlugin } from './CodeHighlightPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
+import { RichTextEditorContext } from './RichTextEditorContext.js';
 import { ToolbarPlugin } from './ToolbarPlugin.js';
 import { ValueItemPlugin } from './ValueItemPlugin.js';
 
 interface Props {
   fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  adminOnly: boolean;
   value: RichText | null;
   onChange: (value: RichText | null) => void;
 }
 
-export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
+export function RichTextEditor({ fieldSpec, adminOnly, value, onChange }: Props) {
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
 
   const debouncedHandleChange = useMemo(
@@ -61,6 +63,8 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
     },
     [dispatchEntityEditorState]
   );
+
+  const editorValue = useMemo(() => ({ adminOnly }), [adminOnly]);
 
   const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {
     namespace: 'dossierhq',
@@ -86,28 +90,30 @@ export function RichTextEditor({ fieldSpec, value, onChange }: Props) {
   };
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
-      <ToolbarPlugin fieldSpec={fieldSpec} />
-      <RichTextPlugin
-        contentEditable={
-          <ContentEditable
-            className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
-          />
-        }
-        placeholder={null}
-        ErrorBoundary={LexicalErrorBoundary}
-      />
-      <AdminClickableLinkPlugin onEntityLinkClick={handleEntityLinkClick} />
-      <CheckListPlugin />
-      <CodeHighlightPlugin />
-      <EntityLinkPlugin />
-      <EntityPlugin />
-      <HistoryPlugin />
-      <LinkPlugin />
-      <ListPlugin />
-      <ValueItemPlugin />
-      <OnChangePlugin onChange={debouncedHandleChange} />
-    </LexicalComposer>
+    <RichTextEditorContext.Provider value={editorValue}>
+      <LexicalComposer initialConfig={initialConfig}>
+        <ToolbarPlugin fieldSpec={fieldSpec} />
+        <RichTextPlugin
+          contentEditable={
+            <ContentEditable
+              className={toClassName(ClassName['rich-text'], ClassName['rich-text-editor'])}
+            />
+          }
+          placeholder={null}
+          ErrorBoundary={LexicalErrorBoundary}
+        />
+        <AdminClickableLinkPlugin onEntityLinkClick={handleEntityLinkClick} />
+        <CheckListPlugin />
+        <CodeHighlightPlugin />
+        <EntityLinkPlugin />
+        <EntityPlugin />
+        <HistoryPlugin />
+        <LinkPlugin />
+        <ListPlugin />
+        <ValueItemPlugin />
+        <OnChangePlugin onChange={debouncedHandleChange} />
+      </LexicalComposer>
+    </RichTextEditorContext.Provider>
   );
 }
 

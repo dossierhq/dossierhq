@@ -1,33 +1,46 @@
 import type {
   AdminFieldSpecification,
-  ValidationError,
+  PublishValidationError,
+  SaveValidationError,
   ValueItem,
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
+import { FieldType, groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { FieldEditor } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ValueItemFieldSpecification, ValueItem>;
 
-export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onChange }: Props) {
+export function ValueItemFieldEditor({
+  fieldSpec,
+  adminOnly,
+  value,
+  validationErrors,
+  onChange,
+}: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   const handleCreate = useCallback((type: string) => onChange({ type }), [onChange]);
 
   if (!value) {
     return (
-      <AdminTypePicker
-        showValueTypes
-        valueTypes={fieldSpec.valueTypes}
-        onTypeSelected={handleCreate}
-      >
-        Add value item
-      </AdminTypePicker>
+      <>
+        <AdminTypePicker
+          showValueTypes
+          valueTypes={fieldSpec.valueTypes}
+          onTypeSelected={handleCreate}
+        >
+          Add value item
+        </AdminTypePicker>
+        {validationErrors.map((error, index) => (
+          <Text key={index} textStyle="body2" marginTop={1} color="danger">
+            {error.message}
+          </Text>
+        ))}
+      </>
     );
   }
 
@@ -38,6 +51,7 @@ export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onCha
       </HoverRevealStack.Item>
       <ValueItemFieldEditorWithoutClear
         value={value}
+        adminOnly={adminOnly}
         validationErrors={validationErrors}
         onChange={onChange}
       />
@@ -45,20 +59,22 @@ export function ValueTypeFieldEditor({ fieldSpec, value, validationErrors, onCha
   );
 }
 
-const noErrors: ValidationError[] = [];
+const noErrors: (SaveValidationError | PublishValidationError)[] = [];
 
 export function ValueItemFieldEditorWithoutClear({
   className,
   value,
+  adminOnly,
   validationErrors,
   onChange,
 }: {
   className?: string;
   value: ValueItem;
-  validationErrors: ValidationError[];
+  adminOnly: boolean;
+  validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
-  const fieldValidationErrors = useMemo(
+  const { root: rootValidationErrors, children: fieldValidationErrors } = useMemo(
     () => groupValidationErrorsByTopLevelPath(validationErrors),
     [validationErrors]
   );
@@ -85,6 +101,7 @@ export function ValueItemFieldEditorWithoutClear({
             {...{
               value,
               valueFieldSpec,
+              adminOnly: adminOnly || valueFieldSpec.adminOnly,
               onChange,
               validationErrors: fieldValidationErrors.get(valueFieldSpec.name) ?? noErrors,
             }}
@@ -103,6 +120,11 @@ export function ValueItemFieldEditorWithoutClear({
           </Fragment>
         );
       })}
+      {rootValidationErrors.map((error, index) => (
+        <Text key={index} textStyle="body2" marginTop={1} color="danger">
+          {error.message}
+        </Text>
+      ))}
     </Column>
   );
 }
@@ -110,12 +132,14 @@ export function ValueItemFieldEditorWithoutClear({
 function ValueItemField({
   value,
   valueFieldSpec,
+  adminOnly,
   validationErrors,
   onChange,
 }: {
   value: ValueItem;
   valueFieldSpec: AdminFieldSpecification;
-  validationErrors: ValidationError[];
+  adminOnly: boolean;
+  validationErrors: (SaveValidationError | PublishValidationError)[];
   onChange: (value: ValueItem) => void;
 }) {
   const handleFieldChanged = useCallback(
@@ -130,6 +154,7 @@ function ValueItemField({
   return (
     <FieldEditor
       fieldSpec={valueFieldSpec}
+      adminOnly={adminOnly}
       value={value[valueFieldSpec.name]}
       validationErrors={validationErrors}
       onChange={handleFieldChanged}

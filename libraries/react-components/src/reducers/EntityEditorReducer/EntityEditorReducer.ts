@@ -5,19 +5,23 @@ import type {
   AdminEntityUpdate,
   AdminFieldSpecification,
   AdminSchema,
-  ValidationError,
+  PublishValidationError,
+  SaveValidationError,
 } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
 import {
   assertIsDefined,
+  FieldType,
   isEntityNameAsRequested,
   normalizeFieldValue,
   traverseItemField,
-  validateTraverseNode,
+  validateTraverseNodeForPublish,
+  validateTraverseNodeForSave,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 type EntityEditorSelector = { id: string } | { id: string; newType: string };
+
+type ValidationError = SaveValidationError | PublishValidationError;
 
 export interface EntityEditorState {
   status: '' | 'changed';
@@ -48,6 +52,7 @@ export interface EntityEditorDraftState {
 export interface FieldEditorState {
   status: '' | 'changed';
   fieldSpec: AdminFieldSpecification;
+  adminOnly: boolean;
   value: unknown;
   normalizedValue: unknown;
   validationErrors: ValidationError[];
@@ -370,6 +375,7 @@ class SetFieldAction extends EntityEditorFieldAction {
     const validationErrors = validateField(
       schema,
       fieldState.fieldSpec,
+      fieldState.adminOnly,
       normalizedValue,
       fieldState.validationErrors
     );
@@ -556,15 +562,23 @@ export const EntityEditorActions = {
 // HELPERS
 
 function validateField(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
+  adminOnly: boolean,
   value: unknown,
   previousErrors: ValidationError[]
 ): ValidationError[] {
   const errors: ValidationError[] = [];
-  for (const node of traverseItemField(schema, [], fieldSpec, value)) {
-    const error = validateTraverseNode(schema, node, { validatePublish: true });
+  for (const node of traverseItemField(adminSchema, [], fieldSpec, value)) {
+    const error = validateTraverseNodeForSave(adminSchema, node);
     if (error) errors.push(error);
+  }
+  if (!adminOnly) {
+    const publishedSchema = adminSchema.toPublishedSchema();
+    for (const node of traverseItemField(publishedSchema, [], fieldSpec, value)) {
+      const error = validateTraverseNodeForPublish(adminSchema, node);
+      if (error) errors.push(error);
+    }
   }
 
   if (isEqual(errors, previousErrors)) {
@@ -580,9 +594,10 @@ function createEditorEntityDraftState(
 ): EntityEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
+    const adminOnly = entitySpec.adminOnly || fieldSpec.adminOnly;
     const normalizedValue = normalizeFieldValue(schema, fieldSpec, value);
-    const validationErrors = validateField(schema, fieldSpec, normalizedValue, []);
-    return { status: '', fieldSpec, value, normalizedValue, validationErrors };
+    const validationErrors = validateField(schema, fieldSpec, adminOnly, normalizedValue, []);
+    return { status: '', fieldSpec, adminOnly, value, normalizedValue, validationErrors };
   });
 
   // Check if name is linked to a field

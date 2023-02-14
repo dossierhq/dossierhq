@@ -1,7 +1,11 @@
-import type { FieldSpecification, ValidationError } from '@dossierhq/core';
-import { Column } from '@dossierhq/design';
+import type {
+  FieldSpecification,
+  PublishValidationError,
+  SaveValidationError,
+} from '@dossierhq/core';
+import { groupValidationErrorsByTopLevelPath } from '@dossierhq/core';
+import { Column, Text } from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
-import { groupValidationErrorsByTopLevelPath } from '../../utils/ValidationUtils.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>
@@ -9,11 +13,12 @@ interface Props<TFieldSpec extends FieldSpecification, TItem>
   Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
 
-const noErrors: ValidationError[] = [];
+const noErrors: (PublishValidationError | SaveValidationError)[] = [];
 
 export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   value,
   fieldSpec,
+  adminOnly,
   validationErrors,
   onChange,
   Editor,
@@ -33,7 +38,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
     [value, onChange]
   );
 
-  const indexValidationErrors = useMemo(
+  const { root: rootValidationErrors, children: indexValidationErrors } = useMemo(
     () => groupValidationErrorsByTopLevelPath(validationErrors),
     [validationErrors]
   );
@@ -41,19 +46,25 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   const itemsAndNew = value ? [...value, null] : [null];
 
   return (
-    <Column gap={3} overflowY="auto">
+    <Column gap={2} overflowY="auto">
       {itemsAndNew.map((it, index) => {
         return (
           <div key={index} className="nested-value-item-indentation">
             <Editor
               value={it}
               fieldSpec={fieldSpec}
+              adminOnly={adminOnly}
               validationErrors={indexValidationErrors.get(index) ?? noErrors}
               onChange={(newItemValue) => handleItemChange(newItemValue, index)}
             />
           </div>
         );
       })}
+      {rootValidationErrors.map((error, index) => (
+        <Text key={index} textStyle="body2" color="danger">
+          {error.message}
+        </Text>
+      ))}
     </Column>
   );
 }
