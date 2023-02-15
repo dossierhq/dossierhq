@@ -36,7 +36,7 @@ export async function getSchemaSpecification(
     }
   }
 
-  // Version 0.2.3: moved isName from field to nameField on entity types
+  // Version 0.2.3: moved isName from field to nameField on entity types, isName is deprecated
   for (const typeSpec of specification.entityTypes) {
     if (typeSpec.nameField === undefined) {
       typeSpec.nameField =

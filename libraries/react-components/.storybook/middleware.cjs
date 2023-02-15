@@ -16,12 +16,12 @@ const schemaSpecification = require('../src/test/schema.cjs');
 
 const SQLITE_DATABASE_PATH = 'data/arc.sqlite';
 
+const logger = createConsoleLogger(console);
 let serverResultSingleton = null;
 
 async function getServer() {
   if (!serverResultSingleton) {
     serverResultSingleton = (async () => {
-      const logger = createConsoleLogger(console);
       const databaseResult = await createDatabase({ logger }, Database, {
         filename: SQLITE_DATABASE_PATH,
       });
@@ -123,7 +123,8 @@ function handleClientOperation(req, res, executeOperation) {
   (async () => {
     const serverResult = await getServer();
     if (serverResult.isError()) {
-      res.status(500).send(serverResult.toString()).end();
+      logger.error('Failed initializing server: %s: %s', serverResult.error, serverResult.message);
+      res.status(500).send(`${serverResult.error}: ${serverResult.message}`).end();
       return;
     }
     const server = serverResult.value;

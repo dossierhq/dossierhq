@@ -586,7 +586,7 @@ export class AdminSchema {
   }
 
   mergeWith(
-    other: AdminSchemaSpecificationUpdate
+    update: AdminSchemaSpecificationUpdate
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [...this.spec.entityTypes],
@@ -596,8 +596,8 @@ export class AdminSchema {
     };
 
     // Merge entity types
-    if (other.entityTypes) {
-      for (const entitySpecUpdate of other.entityTypes) {
+    if (update.entityTypes) {
+      for (const entitySpecUpdate of update.entityTypes) {
         const entitySpec: AdminEntityTypeSpecification = {
           name: entitySpecUpdate.name,
           adminOnly: entitySpecUpdate.adminOnly ?? false,
@@ -614,12 +614,20 @@ export class AdminSchema {
         } else {
           schemaSpec.entityTypes.push(entitySpec);
         }
+
+        // Version 0.2.3: moved isName from field to nameField on entity types, isName is deprecated
+        const fieldWithIsName = entitySpecUpdate.fields.find((it) => 'isName' in it);
+        if (fieldWithIsName) {
+          return notOk.BadRequest(
+            `${entitySpec.name}.${fieldWithIsName.name}: isName is specified, use nameField on the type instead`
+          );
+        }
       }
     }
 
     // Merge value types
-    if (other.valueTypes) {
-      for (const valueSpecUpdate of other.valueTypes) {
+    if (update.valueTypes) {
+      for (const valueSpecUpdate of update.valueTypes) {
         const valueSpec = {
           name: valueSpecUpdate.name,
           adminOnly: valueSpecUpdate.adminOnly ?? false,
@@ -655,7 +663,7 @@ export class AdminSchema {
     // Merge used patterns
     for (const patternName of [...usedPatterns].sort()) {
       const pattern =
-        other.patterns?.find((it) => it.name === patternName) ?? this.getPattern(patternName);
+        update.patterns?.find((it) => it.name === patternName) ?? this.getPattern(patternName);
       if (!pattern) {
         return notOk.BadRequest(`Pattern ${patternName} is used, but not defined`);
       }
@@ -664,7 +672,7 @@ export class AdminSchema {
 
     // Merge used indexes
     for (const indexName of [...usedIndexes].sort()) {
-      const index = other.indexes?.find((it) => it.name === indexName) ?? this.getIndex(indexName);
+      const index = update.indexes?.find((it) => it.name === indexName) ?? this.getIndex(indexName);
       if (!index) {
         return notOk.BadRequest(`Index ${indexName} is used, but not defined`);
       }
