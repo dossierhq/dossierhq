@@ -13,16 +13,6 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-          },
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -34,7 +24,6 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
         },
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -51,35 +40,6 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -132,7 +92,6 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -149,24 +108,6 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -205,33 +146,6 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "Foo",
-        },
-      ],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -240,16 +154,6 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-          },
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -261,7 +165,6 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
         },
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -317,22 +220,6 @@ exports[`AddFieldAction > add field to existing value type (without any fields) 
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [],
-          "name": "Foo",
-        },
-      ],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -341,7 +228,6 @@ exports[`AddFieldAction > add field to existing value type (without any fields) 
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -397,16 +283,6 @@ exports[`AddIndexAction > add index to empty schema 1`] = `
     },
   ],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -441,16 +317,6 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
       "status": "new",
     },
   ],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -490,16 +356,6 @@ exports[`AddTypeAction > add entity type to empty schema 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -552,24 +408,6 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -622,16 +460,6 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -670,16 +498,6 @@ exports[`AddTypeAction > add two value types (orders) 1`] = `
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -729,16 +547,6 @@ exports[`AddTypeAction > add value type to empty schema 1`] = `
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -776,22 +584,6 @@ exports[`AddTypeAction > add value type to schema with existing type 1`] = `
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [],
-          "name": "Foo",
-        },
-      ],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -838,7 +630,6 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "fields": [
         {
           "adminOnly": true,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -855,24 +646,6 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -919,7 +692,6 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
           "entityTypes": [
             "Foo",
           ],
-          "existingFieldSpec": null,
           "list": false,
           "name": "foo",
           "required": false,
@@ -935,24 +707,6 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -996,7 +750,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "linkEntityTypes": [
             "Foo",
           ],
@@ -1016,24 +769,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1083,7 +818,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
           "entityTypes": [
             "Foo",
           ],
-          "existingFieldSpec": null,
           "list": false,
           "name": "foo",
           "required": false,
@@ -1103,24 +837,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1174,23 +890,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
         {
           "adminOnly": false,
           "entityTypes": [],
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "entityTypes": [],
-            "linkEntityTypes": [],
-            "list": false,
-            "name": "rt",
-            "required": false,
-            "richTextNodes": [
-              "root",
-              "paragraph",
-              "text",
-              "linebreak",
-              "heading",
-            ],
-            "type": "RichText",
-            "valueTypes": [],
-          },
           "existingRichTextNodesWithPlaceholders": [
             "root, paragraph, text, linebreak",
             "heading",
@@ -1217,42 +916,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "entityTypes": [],
-              "linkEntityTypes": [],
-              "list": false,
-              "name": "rt",
-              "required": false,
-              "richTextNodes": [
-                "root",
-                "paragraph",
-                "text",
-                "linebreak",
-                "heading",
-              ],
-              "type": "RichText",
-              "valueTypes": [],
-            },
-          ],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1299,22 +962,6 @@ exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entit
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [],
-          "name": "Foo",
-        },
-      ],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -1323,7 +970,6 @@ exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entit
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "name": "foo",
           "required": false,
@@ -1377,16 +1023,6 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": "anIndex",
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "existing",
-            "required": false,
-            "type": "String",
-          },
           "index": "anIndex",
           "list": false,
           "matchPattern": null,
@@ -1398,7 +1034,6 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
         },
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "index": "anIndex",
           "list": false,
           "multiline": false,
@@ -1422,40 +1057,6 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
     },
   ],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": "anIndex",
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "existing",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [
-        {
-          "name": "anIndex",
-          "type": "unique",
-        },
-      ],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1508,7 +1109,6 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "integer": true,
           "list": false,
           "name": "bar",
@@ -1525,24 +1125,6 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1584,7 +1166,6 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "matchPattern": "a-pattern",
           "multiline": false,
@@ -1602,24 +1183,6 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1663,7 +1226,6 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": true,
           "name": "bar",
@@ -1680,24 +1242,6 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1741,7 +1285,6 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "bar",
@@ -1758,24 +1301,6 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1820,7 +1345,6 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
         {
           "adminOnly": false,
           "entityTypes": [],
-          "existingFieldSpec": null,
           "list": false,
           "name": "bar",
           "required": false,
@@ -1836,24 +1360,6 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1895,7 +1401,6 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": true,
           "name": "bar",
           "required": false,
@@ -1911,24 +1416,6 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1965,22 +1452,6 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [],
-          "name": "Foo",
-        },
-      ],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -1989,7 +1460,6 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": true,
           "name": "bar",
           "required": false,
@@ -2033,22 +1503,6 @@ exports[`ChangeFieldTypeAction > from string to number (new field of existing va
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [],
-          "name": "Foo",
-        },
-      ],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -2057,7 +1511,6 @@ exports[`ChangeFieldTypeAction > from string to number (new field of existing va
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "integer": false,
           "list": false,
           "name": "bar",
@@ -2107,7 +1560,6 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "name": "bar",
           "required": false,
@@ -2124,24 +1576,6 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2187,16 +1621,6 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
       "status": "new",
     },
   ],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2236,16 +1660,6 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2294,16 +1708,6 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
       "status": "new",
     },
   ],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2346,7 +1750,6 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "title",
@@ -2363,16 +1766,6 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2416,16 +1809,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-          },
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -2437,7 +1820,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
         },
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "other",
@@ -2454,35 +1836,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "TitleOnly",
-          "nameField": "title",
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2535,16 +1888,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-          },
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -2556,7 +1899,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
         },
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "other",
@@ -2573,35 +1915,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "TitleOnly",
-          "nameField": "title",
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2621,16 +1934,6 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-          },
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -2649,35 +1952,6 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
   "valueTypes": [],
@@ -2717,16 +1991,6 @@ exports[`DeleteTypeAction > delete newly added entity type 1`] = `
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
   "valueTypes": [],
@@ -2741,16 +2005,6 @@ exports[`DeleteTypeAction > delete newly added value type 1`] = `
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
   "valueTypes": [],
@@ -2770,16 +2024,6 @@ exports[`RenameFieldAction > add and rename field 1`] = `
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-          },
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -2791,7 +2035,6 @@ exports[`RenameFieldAction > add and rename field 1`] = `
         },
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "multiline": false,
           "name": "baz",
@@ -2808,35 +2051,6 @@ exports[`RenameFieldAction > add and rename field 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-            },
-          ],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -2954,7 +2168,6 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
           "entityTypes": [
             "Bar",
           ],
-          "existingFieldSpec": null,
           "linkEntityTypes": undefined,
           "list": false,
           "name": "self",
@@ -2971,16 +2184,6 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -3028,7 +2231,6 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
         {
           "adminOnly": false,
           "entityTypes": undefined,
-          "existingFieldSpec": null,
           "linkEntityTypes": [
             "Bar",
           ],
@@ -3048,16 +2250,6 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -3113,16 +2305,6 @@ exports[`RenameTypeAction > add and rename type 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -3154,16 +2336,6 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [
@@ -3172,7 +2344,6 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "fields": [
         {
           "adminOnly": false,
-          "existingFieldSpec": null,
           "list": false,
           "name": "self",
           "required": false,
@@ -3281,24 +2452,6 @@ exports[`SetActiveSelectorAction > set to type 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
   "valueTypes": [],
@@ -3327,24 +2480,6 @@ exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [],
-          "name": "Foo",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "valueTypes": [],
-    },
-  },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
   "valueTypes": [],

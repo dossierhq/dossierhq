@@ -64,7 +64,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('entity', 'Foo')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -78,7 +78,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('value', 'Foo')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -92,7 +92,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('entity', 'Bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -106,7 +106,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('value', 'Bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -121,7 +121,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('entity', 'Anaconda')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -136,7 +136,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.AddType('value', 'Anaconda')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -151,7 +151,7 @@ describe('AddFieldAction', () => {
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -164,7 +164,7 @@ describe('AddFieldAction', () => {
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -180,7 +180,7 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -196,7 +196,7 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -212,7 +212,7 @@ describe('AddIndexAction', () => {
       new SchemaEditorActions.AddIndex('myIndex')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -228,7 +228,7 @@ describe('AddPatternAction', () => {
       new SchemaEditorActions.AddPattern('my-pattern')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -247,7 +247,7 @@ describe('ChangeFieldAdminOnlyAction', () => {
         true
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -271,7 +271,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
         ['Foo']
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -295,7 +295,7 @@ describe('ChangeFieldAllowedLinkEntityTypesAction', () => {
         ['Foo']
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -327,7 +327,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       'root, paragraph, text, linebreak',
       RichTextNodeType.entity,
     ]);
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -373,7 +373,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
     ]);
     expect(state.entityTypes[0].fields[0].status).toBe('changed');
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -397,7 +397,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         ['Foo']
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -424,7 +424,7 @@ describe('ChangeFieldIndexAction', () => {
         'anIndex'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
@@ -455,7 +455,7 @@ describe('ChangeFieldIntegerAction', () => {
         true
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
@@ -480,7 +480,7 @@ describe('ChangeTypeNameField', () => {
         'title'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
@@ -510,7 +510,7 @@ describe('ChangeTypeNameField', () => {
         'other'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
@@ -526,7 +526,7 @@ describe('ChangeTypeNameField', () => {
         'title'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     titleOnlyDraft = state.entityTypes[0];
     expect(titleOnlyDraft.nameField).toBe('title');
@@ -550,7 +550,7 @@ describe('ChangeFieldMatchPattern', () => {
         'a-pattern'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
@@ -576,7 +576,7 @@ describe('ChangeFieldMultilineAction', () => {
         true
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
@@ -600,7 +600,7 @@ describe('ChangeFieldRequiredAction', () => {
         true
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -620,7 +620,7 @@ describe('ChangeFieldTypeAction', () => {
         true
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -638,7 +638,7 @@ describe('ChangeFieldTypeAction', () => {
         true
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -656,7 +656,7 @@ describe('ChangeFieldTypeAction', () => {
         false
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -674,7 +674,7 @@ describe('ChangeFieldTypeAction', () => {
         false
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -692,7 +692,7 @@ describe('ChangeFieldTypeAction', () => {
         false
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -711,7 +711,7 @@ describe('ChangePatternPatternAction', () => {
         '^this is a new pattern$'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -727,7 +727,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true)
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -745,7 +745,7 @@ describe('DeleteFieldAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
@@ -781,7 +781,7 @@ describe('DeleteTypeAction', () => {
       new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
 
@@ -798,7 +798,7 @@ describe('DeleteTypeAction', () => {
       new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
     expect(state.status).toBe(''); // should be reset
@@ -819,7 +819,7 @@ describe('ChangeTypeAuthKeyPatternAction', () => {
         'my-pattern'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -840,7 +840,7 @@ describe('RenameFieldAction', () => {
         'baz'
       )
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -877,7 +877,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -902,7 +902,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.entityTypes[0].name).toBe('Bar');
     expect(state.entityTypes[0].fields[0].entityTypes).toEqual(['Bar']);
 
@@ -929,7 +929,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.entityTypes[0].name).toBe('Bar');
     expect(state.entityTypes[0].fields[0].linkEntityTypes).toEqual(['Bar']);
 
@@ -956,7 +956,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar')
     );
 
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.valueTypes[0].name).toBe('Bar');
     expect(state.valueTypes[0].fields[0].valueTypes).toEqual(['Bar']);
 
@@ -973,7 +973,7 @@ describe('SetActiveSelectorAction', () => {
       ),
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, false)
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
@@ -986,7 +986,7 @@ describe('SetActiveSelectorAction', () => {
       ),
       new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, true)
     );
-    expect(state).toMatchSnapshot();
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
