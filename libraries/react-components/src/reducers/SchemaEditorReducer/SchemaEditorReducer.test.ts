@@ -1,7 +1,15 @@
-import type { NumberFieldSpecification, StringFieldSpecification } from '@dossierhq/core';
-import { AdminSchema, assertIsDefined, FieldType, RichTextNodeType } from '@dossierhq/core';
+import type {
+  AdminEntityTypeSpecificationUpdate,
+  NumberFieldSpecification,
+  StringFieldSpecification,
+} from '@dossierhq/core';
+import { AdminSchema, FieldType, RichTextNodeType } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer.js';
+import type {
+  SchemaEditorState,
+  SchemaEditorStateAction,
+  SchemaTypeDraft,
+} from './SchemaEditorReducer.js';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
@@ -19,6 +27,22 @@ function reduceSchemaEditorStateActions(
     newState = reduceSchemaEditorState(newState, action);
   }
   return newState;
+}
+
+// smaller snapshots
+function stateWithoutExistingSchema(state: Readonly<SchemaEditorState>) {
+  function removeFieldSpecs(typeDraft: Readonly<SchemaTypeDraft>) {
+    const fields = typeDraft.fields.map((fieldDraft) => {
+      const { existingFieldSpec, ...other } = fieldDraft;
+      return other;
+    });
+    return { ...typeDraft, fields };
+  }
+
+  const entityTypes = state.entityTypes.map(removeFieldSpecs);
+  const valueTypes = state.valueTypes.map(removeFieldSpecs);
+  const { schema, ...other } = state;
+  return { ...other, entityTypes, valueTypes };
 }
 
 describe('initializeSchemaEditorState', () => {
@@ -442,8 +466,8 @@ describe('ChangeFieldIntegerAction', () => {
   });
 });
 
-describe('ChangeFieldIsNameAction', () => {
-  test('make new string field is-name in new type', () => {
+describe('ChangeTypeNameField', () => {
+  test('make new string the name field in new type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -451,18 +475,18 @@ describe('ChangeFieldIsNameAction', () => {
       ),
       new SchemaEditorActions.AddType('entity', 'TitleOnly'),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'title'),
-      new SchemaEditorActions.ChangeFieldIsName(
-        { kind: 'entity', typeName: 'TitleOnly', fieldName: 'title' },
-        true
+      new SchemaEditorActions.ChangeTypeNameField(
+        { kind: 'entity', typeName: 'TitleOnly' },
+        'title'
       )
     );
     expect(state).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
-    expect(state.entityTypes[0].fields[0].isName).toBe(true);
-    expect((schemaUpdate?.entityTypes?.[0].fields[0] as StringFieldSpecification).isName).toBe(
-      true
+    expect(state.entityTypes[0].nameField).toBe('title');
+    expect((schemaUpdate?.entityTypes?.[0] as AdminEntityTypeSpecificationUpdate).nameField).toBe(
+      'title'
     );
   });
 
@@ -474,50 +498,39 @@ describe('ChangeFieldIsNameAction', () => {
           entityTypes: [
             {
               name: 'TitleOnly',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'other'),
-      new SchemaEditorActions.ChangeFieldIsName(
-        { kind: 'entity', typeName: 'TitleOnly', fieldName: 'other' },
-        true
+      new SchemaEditorActions.ChangeTypeNameField(
+        { kind: 'entity', typeName: 'TitleOnly' },
+        'other'
       )
     );
     expect(state).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
-    let titleFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'title');
-    assertIsDefined(titleFieldDraft);
-    let otherFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'other');
-    assertIsDefined(otherFieldDraft);
-
-    expect(titleFieldDraft.isName).toBe(false); // unchecked when other field is checked
-    expect(otherFieldDraft.isName).toBe(true);
-    expect(titleFieldDraft.status).toBe('changed');
-    expect(otherFieldDraft.status).toBe('new');
+    let titleOnlyDraft = state.entityTypes[0];
+    expect(titleOnlyDraft.nameField).toBe('other');
+    expect(titleOnlyDraft.status).toBe('changed');
 
     // Change back
     state = reduceSchemaEditorStateActions(
       state,
-      new SchemaEditorActions.ChangeFieldIsName(
-        { kind: 'entity', typeName: 'TitleOnly', fieldName: 'title' },
-        true
+      new SchemaEditorActions.ChangeTypeNameField(
+        { kind: 'entity', typeName: 'TitleOnly' },
+        'title'
       )
     );
     expect(state).toMatchSnapshot();
 
-    titleFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'title');
-    assertIsDefined(titleFieldDraft);
-    otherFieldDraft = state.entityTypes[0].fields.find((it) => it.name === 'other');
-    assertIsDefined(otherFieldDraft);
-
-    expect(titleFieldDraft.isName).toBe(true);
-    expect(otherFieldDraft.isName).toBe(false); // unchecked when title field is checked
-    expect(titleFieldDraft.status).toBe('');
-    expect(otherFieldDraft.status).toBe('new');
+    titleOnlyDraft = state.entityTypes[0];
+    expect(titleOnlyDraft.nameField).toBe('title');
+    expect(titleOnlyDraft.status).toBe('changed'); // since we added a field
   });
 });
 
@@ -736,6 +749,25 @@ describe('DeleteFieldAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
+
+  test('add field, set as name field and delete field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeTypeNameField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].nameField).toBe(null);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
+  });
 });
 
 describe('DeleteTypeAction', () => {
@@ -809,6 +841,26 @@ describe('RenameFieldAction', () => {
       )
     );
     expect(state).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('add field, set as name field and rename', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeTypeNameField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.RenameField(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        'baz'
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].nameField).toBe('baz');
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -961,7 +1013,8 @@ describe('UpdateSchemaSpecificationAction', () => {
           entityTypes: [
             {
               name: 'TitleOnly',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()

@@ -16,7 +16,6 @@ exports[`AddDraftAction > add already open Foo 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -26,6 +25,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -33,7 +33,6 @@ exports[`AddDraftAction > add already open Foo 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -83,7 +82,6 @@ exports[`AddDraftAction > add already open Foo 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -109,7 +107,6 @@ exports[`AddDraftAction > add already open Foo 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -119,6 +116,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -146,7 +144,6 @@ exports[`AddDraftAction > add new Foo 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -156,6 +153,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -163,7 +161,6 @@ exports[`AddDraftAction > add new Foo 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -178,7 +175,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -199,7 +196,6 @@ exports[`AddDraftAction > add new Foo 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -225,7 +221,6 @@ exports[`AddDraftAction > add new Foo 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -235,6 +230,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -263,7 +259,6 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -289,7 +284,6 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -299,6 +293,7 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -326,7 +321,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -336,6 +330,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -343,7 +338,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -358,7 +352,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -379,7 +373,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -405,7 +398,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -415,6 +407,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -442,7 +435,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -452,6 +444,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -459,7 +452,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -495,7 +487,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -521,7 +512,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -531,6 +521,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -558,7 +549,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -568,6 +558,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -575,7 +566,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -611,7 +601,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -637,7 +626,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -647,6 +635,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -688,7 +677,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -698,6 +686,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -705,7 +694,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -741,7 +729,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -767,7 +754,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -777,6 +763,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -804,7 +791,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -814,6 +800,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -821,7 +808,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -871,7 +857,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -897,7 +882,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -907,6 +891,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -934,7 +919,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -944,6 +928,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -951,7 +936,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -966,7 +950,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -987,7 +971,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1013,7 +996,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1023,6 +1005,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -1050,7 +1033,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1060,6 +1042,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -1067,7 +1050,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1103,7 +1085,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1129,7 +1110,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1139,6 +1119,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -1166,7 +1147,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1176,6 +1156,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -1183,7 +1164,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1219,7 +1199,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1245,7 +1224,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1255,6 +1233,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -1282,7 +1261,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1292,6 +1270,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -1299,7 +1278,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1335,7 +1313,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1361,7 +1338,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1371,6 +1347,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -1412,7 +1389,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1422,6 +1398,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -1429,7 +1406,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1465,7 +1441,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1491,7 +1466,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1501,6 +1475,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -1528,7 +1503,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1538,6 +1512,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -1545,7 +1520,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1595,7 +1569,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1621,7 +1594,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1631,6 +1603,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -1658,7 +1631,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1668,6 +1640,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -1675,7 +1648,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1725,7 +1697,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1751,7 +1722,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1761,6 +1731,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -1788,7 +1759,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1798,6 +1768,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -1805,7 +1776,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1855,7 +1825,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -1881,7 +1850,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1891,6 +1859,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -1931,7 +1900,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1941,6 +1909,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -1948,7 +1917,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -1998,7 +1966,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -2024,7 +1991,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2034,6 +2000,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -2061,7 +2028,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2071,6 +2037,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -2078,7 +2045,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2128,7 +2094,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -2154,7 +2119,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2164,6 +2128,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -2191,7 +2156,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2201,6 +2165,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -2208,7 +2173,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2258,7 +2222,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -2284,7 +2247,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2294,6 +2256,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -2321,7 +2284,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2331,6 +2293,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -2338,7 +2301,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2388,7 +2350,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -2414,7 +2375,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2424,6 +2384,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -2482,7 +2443,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2492,6 +2452,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -2519,7 +2480,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2529,6 +2489,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -2536,7 +2497,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2586,7 +2546,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -2612,7 +2571,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -2622,6 +2580,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -2656,6 +2615,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -2746,6 +2706,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -2780,6 +2741,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -2879,6 +2841,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -2913,6 +2876,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -2978,6 +2942,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -3062,6 +3027,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3104,6 +3070,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -3138,7 +3105,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3175,7 +3142,6 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -3213,6 +3179,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3224,7 +3191,6 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3273,6 +3239,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -3313,7 +3280,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3350,7 +3317,6 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -3388,6 +3354,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3399,7 +3366,6 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3448,6 +3414,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -3502,7 +3469,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3539,7 +3506,6 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -3577,6 +3543,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3588,7 +3555,6 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3620,10 +3586,11 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
           "authKeyPattern": null,
           "fields": [],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3640,10 +3607,11 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
           "authKeyPattern": null,
           "fields": [],
           "name": "Bar",
+          "nameField": null,
         },
         "fields": [],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3664,12 +3632,14 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
           "authKeyPattern": null,
           "fields": [],
           "name": "Bar",
+          "nameField": null,
         },
         {
           "adminOnly": false,
           "authKeyPattern": null,
           "fields": [],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3697,7 +3667,6 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3707,6 +3676,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -3714,7 +3684,6 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3729,7 +3698,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3750,7 +3719,6 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -3776,7 +3744,6 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3786,6 +3753,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3813,7 +3781,6 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": "foo",
               "multiline": false,
@@ -3823,6 +3790,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -3830,7 +3798,6 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": "foo",
               "multiline": false,
@@ -3851,7 +3818,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
           },
         ],
         "name": "",
-        "nameIsLinkedToField": true,
+        "nameIsLinkedToField": false,
       },
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
@@ -3874,7 +3841,6 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": "foo",
                 "multiline": false,
@@ -3905,7 +3871,6 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": "foo",
               "multiline": false,
@@ -3915,6 +3880,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -3947,7 +3913,6 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -3957,6 +3922,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -3964,7 +3930,6 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4000,7 +3965,6 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -4026,7 +3990,6 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4036,6 +3999,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -4063,7 +4027,6 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4073,6 +4036,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -4080,7 +4044,6 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4116,7 +4079,6 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -4142,7 +4104,6 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4152,6 +4113,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -4163,7 +4125,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
 }
 `;
 
-exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
+exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -4179,7 +4141,6 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4189,6 +4150,7 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -4196,7 +4158,6 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4232,7 +4193,6 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -4258,7 +4218,6 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4268,6 +4227,7 @@ exports[`SetNameAction > clearing name of enw draft links to name field 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -4295,7 +4255,6 @@ exports[`SetNameAction > set name of new draft 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4305,6 +4264,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
         "fields": [
           {
@@ -4312,7 +4272,6 @@ exports[`SetNameAction > set name of new draft 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4348,7 +4307,6 @@ exports[`SetNameAction > set name of new draft 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": false,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -4374,7 +4332,6 @@ exports[`SetNameAction > set name of new draft 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": false,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4384,6 +4341,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": null,
         },
       ],
       "indexes": [],
@@ -4411,7 +4369,6 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4421,6 +4378,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -4428,7 +4386,6 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4478,7 +4435,6 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -4504,7 +4460,6 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4514,6 +4469,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],
@@ -4553,7 +4509,6 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4563,6 +4518,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
         "fields": [
           {
@@ -4570,7 +4526,6 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
             "fieldSpec": {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4620,7 +4575,6 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
             "fields": [
               {
                 "index": null,
-                "isName": true,
                 "list": false,
                 "matchPattern": null,
                 "multiline": false,
@@ -4646,7 +4600,6 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
             {
               "adminOnly": false,
               "index": null,
-              "isName": true,
               "list": false,
               "matchPattern": null,
               "multiline": false,
@@ -4656,6 +4609,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
             },
           ],
           "name": "Foo",
+          "nameField": "title",
         },
       ],
       "indexes": [],

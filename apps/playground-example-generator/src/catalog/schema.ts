@@ -119,8 +119,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'StringsEntity',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'title', type: FieldType.String },
         { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },

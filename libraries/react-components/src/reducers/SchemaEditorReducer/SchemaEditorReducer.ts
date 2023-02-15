@@ -47,6 +47,8 @@ export interface SchemaTypeDraft {
 export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
   kind: 'entity';
   authKeyPattern: string | null;
+  nameField: string | null;
+  existingNameField: string | null;
 }
 
 export interface SchemaValueTypeDraft extends SchemaTypeDraft {
@@ -60,7 +62,6 @@ export interface SchemaFieldDraft {
   list: boolean;
   required: boolean;
   adminOnly: boolean;
-  isName?: boolean;
   multiline?: boolean;
   index?: string | null;
   matchPattern?: string | null;
@@ -161,13 +162,26 @@ function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['statu
   return '';
 }
 
-function resolveTypeStatus(state: SchemaTypeDraft): SchemaTypeDraft['status'] {
+function resolveTypeStatus(
+  state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>
+): SchemaTypeDraft['status'] {
   if (state.status === 'new') return state.status;
+  if (state.kind === 'entity') {
+    if (state.nameField !== state.existingNameField) return 'changed';
+  }
   //TODO check field order
   for (const field of state.fields) {
     if (field.status !== '') return 'changed';
   }
   return '';
+}
+
+function withResolvedTypeStatus(
+  state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>
+): Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft> {
+  const newStatus = resolveTypeStatus(state);
+  if (newStatus === state.status) return state;
+  return { ...state, status: newStatus };
 }
 
 function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status'] {
@@ -177,11 +191,6 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   if (
     state.existingFieldSpec.type === FieldType.Number &&
     state.existingFieldSpec.integer !== !!state.integer
-  )
-    return 'changed';
-  if (
-    state.existingFieldSpec.type === FieldType.String &&
-    !!state.existingFieldSpec.isName !== state.isName
   )
     return 'changed';
   if (
@@ -391,7 +400,13 @@ class AddTypeAction implements SchemaEditorStateAction {
     if (this.kind === 'entity') {
       newState.entityTypes = [
         ...newState.entityTypes,
-        { ...typeDraft, kind: 'entity', authKeyPattern: null },
+        {
+          ...typeDraft,
+          kind: 'entity',
+          authKeyPattern: null,
+          nameField: null,
+          existingNameField: null,
+        },
       ];
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
@@ -420,7 +435,6 @@ class AddFieldAction extends TypeAction {
       list: false,
       required: false,
       adminOnly: false,
-      isName: false,
       existingFieldSpec: null,
     };
 
@@ -607,51 +621,6 @@ class ChangeFieldIntegerAction extends FieldAction {
   }
 }
 
-class ChangeFieldIsNameAction extends FieldAction {
-  isName: boolean;
-
-  constructor(fieldSelector: SchemaFieldSelector, isName: boolean) {
-    super(fieldSelector);
-    this.isName = isName;
-  }
-
-  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
-    if (fieldDraft.isName === this.isName) {
-      return fieldDraft;
-    }
-
-    return { ...fieldDraft, isName: this.isName };
-  }
-
-  override reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
-    let newTypeDraft = super.reduceType(typeDraft);
-    if (newTypeDraft === typeDraft) {
-      return newTypeDraft;
-    }
-
-    // Reset other field with isName is set
-    if (this.isName) {
-      const otherNameFieldIndex = newTypeDraft.fields.findIndex(
-        (it) => it.isName && it.name !== this.fieldName
-      );
-      if (otherNameFieldIndex >= 0) {
-        newTypeDraft = replaceFieldWithIndex(
-          newTypeDraft,
-          otherNameFieldIndex,
-          withResolvedFieldStatus({
-            ...newTypeDraft.fields[otherNameFieldIndex],
-            isName: false,
-          })
-        );
-      }
-    }
-
-    return newTypeDraft;
-  }
-}
-
 class ChangeFieldMatchPatternAction extends FieldAction {
   pattern: string | null;
 
@@ -719,7 +688,6 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     const newFieldDraft = { ...fieldDraft, type: this.fieldType, list: this.list };
-    //TODO reset isName
 
     if (this.fieldType === FieldType.Number) {
       newFieldDraft.integer = false;
@@ -810,6 +778,24 @@ class ChangeTypeAuthKeyPatternAction extends TypeAction {
   }
 }
 
+class ChangeTypeNameFieldAction extends TypeAction {
+  nameField: string | null;
+
+  constructor(typeSelector: SchemaTypeSelector, nameField: string | null) {
+    super(typeSelector);
+    this.nameField = nameField;
+  }
+
+  reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    if (typeDraft.kind === 'value' || typeDraft.nameField === this.nameField) {
+      return typeDraft;
+    }
+    return withResolvedTypeStatus({ ...typeDraft, nameField: this.nameField });
+  }
+}
+
 class DeleteFieldAction extends TypeAction {
   fieldName: string;
 
@@ -818,8 +804,14 @@ class DeleteFieldAction extends TypeAction {
     this.fieldName = fieldName;
   }
 
-  reduceType(typeDraft: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+  reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     const fields = typeDraft.fields.filter((fieldDraft) => fieldDraft.name !== this.fieldName);
+
+    if (typeDraft.kind === 'entity' && typeDraft.nameField === this.fieldName) {
+      return { ...typeDraft, fields, nameField: null };
+    }
 
     return { ...typeDraft, fields };
   }
@@ -863,6 +855,22 @@ class RenameFieldAction extends FieldAction {
       return fieldDraft;
     }
     return { ...fieldDraft, name: this.newFieldName };
+  }
+
+  override reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    let newTypeDraft = super.reduceType(typeDraft);
+
+    if (newTypeDraft === typeDraft) {
+      return typeDraft;
+    }
+
+    if (newTypeDraft.kind === 'entity' && newTypeDraft.nameField === this.fieldName) {
+      newTypeDraft = { ...newTypeDraft, nameField: this.newFieldName };
+    }
+
+    return newTypeDraft;
   }
 }
 
@@ -989,6 +997,8 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     const entityTypes = this.schema.spec.entityTypes.map((entityTypeSpec) => ({
       ...this.convertType('entity', entityTypeSpec),
       authKeyPattern: entityTypeSpec.authKeyPattern,
+      nameField: entityTypeSpec.nameField,
+      existingNameField: entityTypeSpec.nameField,
     }));
 
     const valueTypes = this.schema.spec.valueTypes.map((valueTypeSpec) =>
@@ -1039,7 +1049,6 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           existingFieldSpec: fieldSpec,
         };
         if (fieldSpec.type === FieldType.String) {
-          fieldDraft.isName = fieldSpec.isName;
           fieldDraft.multiline = fieldSpec.multiline;
           fieldDraft.index = fieldSpec.index;
           fieldDraft.matchPattern = fieldSpec.matchPattern;
@@ -1090,10 +1099,10 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 }
 
 export const SchemaEditorActions = {
-  AddIndex: AddIndexAction,
-  AddType: AddTypeAction,
   AddField: AddFieldAction,
+  AddIndex: AddIndexAction,
   AddPattern: AddPatternAction,
+  AddType: AddTypeAction,
   ChangeFieldAdminOnly: ChangeFieldAdminOnlyAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
   ChangeFieldAllowedLinkEntityTypes: ChangeFieldAllowedLinkEntityTypesAction,
@@ -1101,7 +1110,6 @@ export const SchemaEditorActions = {
   ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldIndex: ChangeFieldIndexAction,
   ChangeFieldInteger: ChangeFieldIntegerAction,
-  ChangeFieldIsName: ChangeFieldIsNameAction,
   ChangeFieldMatchPattern: ChangeFieldMatchPatternAction,
   ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
@@ -1109,6 +1117,7 @@ export const SchemaEditorActions = {
   ChangePatternPattern: ChangePatternPatternAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   ChangeTypeAuthKeyPattern: ChangeTypeAuthKeyPatternAction,
+  ChangeTypeNameField: ChangeTypeNameFieldAction,
   DeleteField: DeleteFieldAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
@@ -1176,7 +1185,6 @@ function getTypeUpdateFromEditorState(
       type: draftField.type,
       required: draftField.required,
       adminOnly: draftField.adminOnly,
-      ...(draftField.isName ? { isName: true } : undefined),
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.String
         ? {
@@ -1198,12 +1206,12 @@ function getTypeUpdateFromEditorState(
     };
   });
 
-  return {
-    name: draftType.name,
-    adminOnly: draftType.adminOnly,
-    ...('authKeyPattern' in draftType ? { authKeyPattern: draftType.authKeyPattern } : undefined),
-    fields,
-  };
+  const shared = { name: draftType.name, adminOnly: draftType.adminOnly, fields };
+  if (draftType.kind === 'entity') {
+    return { ...shared, authKeyPattern: draftType.authKeyPattern, nameField: draftType.nameField };
+  }
+
+  return shared;
 }
 
 // SELECTORS

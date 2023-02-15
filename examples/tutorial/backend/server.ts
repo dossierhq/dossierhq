@@ -57,8 +57,9 @@ async function updateSchema(adminClient: AppAdminClient) {
     entityTypes: [
       {
         name: 'Message',
+        nameField: 'message',
         fields: [
-          { name: 'message', type: FieldType.String, required: true, isName: true },
+          { name: 'message', type: FieldType.String, required: true },
           { name: 'image', type: FieldType.ValueItem, valueTypes: ['CloudinaryImage'] },
         ],
       },

@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecification } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import { FieldType, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { getSchemaSpecification } from './Schema.js';
@@ -34,7 +34,9 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecification = {
-      entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
+      entityTypes: [
+        { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+      ],
       valueTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
       patterns: [],
       indexes: [],
@@ -51,5 +53,64 @@ describe('AdminSchema getSchema', () => {
           ],
         ]
       `);
+  });
+
+  test('Version <=0.2.2 schema', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const context = createMockTransactionContext();
+
+    const schemaSpec = {
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          // there was no nameField in <=0.2.2
+          fields: [
+            {
+              name: 'title',
+              type: FieldType.String,
+              isName: true, // this was removed in 0.2.3
+              adminOnly: false,
+              index: null,
+              matchPattern: null,
+              list: false,
+              multiline: false,
+              required: false,
+            },
+          ],
+        },
+      ],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    } as unknown as AdminSchemaSpecification;
+    databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
+    const result = await getSchemaSpecification(databaseAdapter, context, false);
+    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: 'title',
+          fields: [
+            {
+              name: 'title',
+              type: 'String',
+              list: false,
+              adminOnly: false,
+              index: null,
+              matchPattern: null,
+              multiline: false,
+              required: false,
+            },
+          ],
+        },
+      ],
+      indexes: [],
+      patterns: [],
+      valueTypes: [],
+    });
   });
 });

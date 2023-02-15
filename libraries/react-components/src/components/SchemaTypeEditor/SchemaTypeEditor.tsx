@@ -1,3 +1,4 @@
+import { FieldType } from '@dossierhq/core';
 import { Button, Checkbox, Field } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import type {
@@ -9,6 +10,7 @@ import type {
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { NameFieldSelector } from './NameFieldSelector.js';
 import { PatternSelector } from './PatternSelector.js';
 import { SchemaFieldEditor } from './SchemaFieldEditor.js';
 
@@ -30,6 +32,13 @@ export function SchemaTypeEditor({
   const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
   const canChangeAuthKeyPattern = typeSelector.kind === 'entity' && typeDraft.status === 'new';
 
+  const potentialNameFields =
+    typeDraft.kind === 'entity'
+      ? typeDraft.fields
+          .filter((it) => it.type === FieldType.String && !it.list)
+          .map((it) => it.name)
+      : [];
+
   return (
     <>
       <Field horizontal>
@@ -48,6 +57,21 @@ export function SchemaTypeEditor({
           </Checkbox>
         </Field.BodyColumn>
       </Field>
+      {typeDraft.kind === 'entity' && potentialNameFields.length > 0 ? (
+        <Field horizontal>
+          <Field.LabelColumn>
+            <Field.Label>Name field</Field.Label>
+          </Field.LabelColumn>
+          <Field.BodyColumn>
+            <NameFieldSelector
+              value={typeDraft.nameField}
+              potentialNameFields={potentialNameFields}
+              typeSelector={typeSelector}
+              dispatchSchemaEditorState={dispatchSchemaEditorState}
+            />
+          </Field.BodyColumn>
+        </Field>
+      ) : null}
       {'authKeyPattern' in typeDraft ? (
         <Field horizontal>
           <Field.LabelColumn>
@@ -76,7 +100,6 @@ export function SchemaTypeEditor({
       {typeDraft.fields.map((fieldDraft) => (
         <SchemaFieldEditor
           key={fieldDraft.name}
-          typeDraft={typeDraft}
           fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
           fieldDraft={fieldDraft}
           schemaEditorState={schemaEditorState}

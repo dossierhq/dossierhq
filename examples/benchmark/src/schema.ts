@@ -4,11 +4,11 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Organization',
+      nameField: 'name',
       fields: [
         {
           name: 'name',
           type: 'String',
-          isName: true,
         },
         {
           name: 'organizationNumber',
@@ -27,11 +27,11 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Person',
+      nameField: 'name',
       fields: [
         {
           name: 'name',
           type: 'String',
-          isName: true,
         },
         {
           name: 'address',

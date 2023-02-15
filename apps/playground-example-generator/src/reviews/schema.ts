@@ -30,8 +30,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'PlaceOfBusiness',
       authKeyPattern: 'none',
+      nameField: 'name',
       fields: [
-        { name: 'name', type: FieldType.String, isName: true, required: true },
+        { name: 'name', type: FieldType.String, required: true },
         { name: 'address', type: FieldType.ValueItem, valueTypes: ['Address'] },
         { name: 'slogan', type: FieldType.String, required: true },
         { name: 'description', type: FieldType.String, multiline: true, required: true },
@@ -54,7 +55,8 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Reviewer',
       authKeyPattern: 'none',
-      fields: [{ name: 'name', type: FieldType.String, isName: true, required: true }],
+      nameField: 'name',
+      fields: [{ name: 'name', type: FieldType.String, required: true }],
     },
   ],
   valueTypes: [

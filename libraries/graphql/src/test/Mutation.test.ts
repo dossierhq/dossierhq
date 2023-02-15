@@ -45,8 +45,9 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'MutationFoo',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'title', type: FieldType.String },
         { name: 'summary', type: FieldType.String },
         { name: 'tags', type: FieldType.String, list: true },
         { name: 'body', type: FieldType.RichText, entityTypes: ['MutationBar'] },

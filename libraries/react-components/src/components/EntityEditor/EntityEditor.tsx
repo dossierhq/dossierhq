@@ -79,8 +79,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
           <Input value={draftState.draft.name} onChange={handleNameChange} />
           {draftState.draft.nameIsLinkedToField ? (
             <Text textStyle="body2" marginTop={1}>
-              The name is linked to the field:{' '}
-              {draftState.draft.entitySpec.fields.find((it) => it.name)?.name}.
+              The name is linked to the field: {draftState.draft.entitySpec.nameField}.
             </Text>
           ) : null}
         </Field.Control>

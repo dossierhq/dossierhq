@@ -138,6 +138,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -186,6 +187,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -210,8 +212,8 @@ describe('validate()', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
-          { name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] },
-          { name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] },
+          { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
         ],
         valueTypes: [],
         patterns: [],
@@ -225,13 +227,65 @@ describe('validate()', () => {
   test('Error: Duplicate entity and value type names', () => {
     expectErrorResult(
       new AdminSchema({
-        entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
+        entityTypes: [
+          { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+        ],
         valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         patterns: [],
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo: Duplicate type name'
+    );
+  });
+
+  test('Error: nameField with missing field', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            nameField: 'missing',
+            fields: [],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo: Found no field matching nameField (missing)'
+    );
+  });
+
+  test('Error: nameField to non-single string field', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            nameField: 'booleanField',
+            fields: [
+              {
+                name: 'booleanField',
+                type: FieldType.Boolean,
+                list: false,
+                adminOnly: false,
+                required: false,
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo: nameField (booleanField) should be a string (non-list)'
     );
   });
 
@@ -251,7 +305,6 @@ describe('validate()', () => {
                 multiline: false,
                 adminOnly: false,
                 required: false,
-                isName: false,
                 matchPattern: null,
                 index: null,
               },
@@ -274,6 +327,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'boolean',
@@ -303,6 +357,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -332,6 +387,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -364,6 +420,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -375,7 +432,7 @@ describe('validate()', () => {
               } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
-          { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
+          { name: 'Bar', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
         ],
         valueTypes: [],
         patterns: [],
@@ -394,6 +451,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -423,6 +481,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -434,7 +493,7 @@ describe('validate()', () => {
               } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
-          { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
+          { name: 'Bar', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
         ],
         valueTypes: [],
         patterns: [],
@@ -453,6 +512,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -464,7 +524,7 @@ describe('validate()', () => {
               } as AdminFieldSpecification<BooleanFieldSpecification>,
             ],
           },
-          { name: 'Bar', adminOnly: false, authKeyPattern: null, fields: [] },
+          { name: 'Bar', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
         ],
         valueTypes: [],
         patterns: [],
@@ -483,6 +543,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -512,6 +573,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -544,6 +606,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -576,6 +639,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -612,6 +676,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -648,6 +713,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -684,6 +750,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -722,6 +789,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -760,6 +828,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -798,6 +867,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -836,6 +906,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -873,6 +944,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -910,6 +982,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -947,6 +1020,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -962,6 +1036,7 @@ describe('validate()', () => {
             name: 'Bar',
             adminOnly: true,
             authKeyPattern: null,
+            nameField: null,
             fields: [],
           },
         ],
@@ -982,6 +1057,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'bar',
@@ -1000,6 +1076,7 @@ describe('validate()', () => {
             name: 'Bar',
             adminOnly: true,
             authKeyPattern: null,
+            nameField: null,
             fields: [],
           },
         ],
@@ -1053,6 +1130,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'boolean',
@@ -1082,13 +1160,13 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'string',
                 type: FieldType.String,
                 list: false,
                 required: false,
-                isName: false,
                 multiline: false,
                 adminOnly: false,
                 index: null,
@@ -1125,7 +1203,9 @@ describe('validate()', () => {
   test('Error: entity authKey using missing pattern', () => {
     expectErrorResult(
       new AdminSchema({
-        entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: 'missing', fields: [] }],
+        entityTypes: [
+          { name: 'Foo', adminOnly: false, authKeyPattern: 'missing', nameField: null, fields: [] },
+        ],
         valueTypes: [],
         patterns: [],
         indexes: [],
@@ -1156,6 +1236,7 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'boolean',
@@ -1185,13 +1266,13 @@ describe('validate()', () => {
             name: 'Foo',
             adminOnly: false,
             authKeyPattern: null,
+            nameField: null,
             fields: [
               {
                 name: 'string',
                 type: FieldType.String,
                 list: false,
                 required: false,
-                isName: false,
                 multiline: false,
                 adminOnly: false,
                 matchPattern: null,
@@ -1273,7 +1354,6 @@ describe('AdminSchema.toPublishedSchema()', () => {
               type: FieldType.String,
               list: false,
               required: false,
-              isName: false,
               multiline: false,
               index: null,
               matchPattern: null,
@@ -1315,7 +1395,6 @@ describe('AdminSchema.toPublishedSchema()', () => {
               name: 'field1',
               type: FieldType.String,
               list: false,
-              isName: false,
               required: false,
               multiline: false,
               index: null,
@@ -1354,7 +1433,6 @@ describe('AdminSchema.toPublishedSchema()', () => {
               type: FieldType.String,
               list: false,
               required: false,
-              isName: false,
               multiline: false,
               index: 'anIndex',
               matchPattern: null,

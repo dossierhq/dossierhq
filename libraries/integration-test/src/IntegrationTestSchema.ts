@@ -72,7 +72,8 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
 
     {
       name: 'TitleOnly',
-      fields: [{ name: 'title', type: FieldType.String, required: true, isName: true }],
+      nameField: 'title',
+      fields: [{ name: 'title', type: FieldType.String, required: true }],
     },
     {
       name: 'ValueItems',

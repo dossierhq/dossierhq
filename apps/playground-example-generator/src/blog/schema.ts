@@ -7,8 +7,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'BlogPost',
       authKeyPattern: 'none',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, required: true, isName: true },
+        { name: 'title', type: FieldType.String, required: true },
         {
           name: 'slug',
           type: FieldType.String,
@@ -58,7 +59,8 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Person',
       authKeyPattern: 'none',
-      fields: [{ name: 'title', type: FieldType.String, required: true, isName: true }],
+      nameField: 'title',
+      fields: [{ name: 'title', type: FieldType.String, required: true }],
     },
   ],
   valueTypes: [

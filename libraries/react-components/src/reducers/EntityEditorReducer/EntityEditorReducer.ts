@@ -10,7 +10,6 @@ import type {
 } from '@dossierhq/core';
 import {
   assertIsDefined,
-  FieldType,
   isEntityNameAsRequested,
   normalizeFieldValue,
   traverseItemField,
@@ -349,7 +348,6 @@ class SetActiveEntityAction implements EntityEditorStateAction {
 
 class SetFieldAction extends EntityEditorFieldAction {
   value: unknown;
-  isNameField = false;
 
   constructor(entityId: string, fieldName: string, value: unknown) {
     super(entityId, fieldName);
@@ -363,9 +361,6 @@ class SetFieldAction extends EntityEditorFieldAction {
   ): Readonly<FieldEditorState> {
     const { schema } = editorState;
     assertIsDefined(schema);
-
-    this.isNameField =
-      fieldState.fieldSpec.type === FieldType.String && !!fieldState.fieldSpec.isName;
 
     if (fieldState.value === this.value) {
       return fieldState;
@@ -392,14 +387,17 @@ class SetFieldAction extends EntityEditorFieldAction {
       return draftState;
     }
 
-    if (
-      this.isNameField &&
-      newDraftState.draft &&
-      newDraftState.draft.nameIsLinkedToField &&
-      typeof this.value === 'string'
-    ) {
-      const name = this.value;
-      newDraftState = { ...newDraftState, draft: { ...newDraftState.draft, name } };
+    if (newDraftState.draft) {
+      const isNameField = newDraftState.draft.entitySpec.nameField === this.fieldName;
+
+      if (
+        isNameField &&
+        newDraftState.draft.nameIsLinkedToField &&
+        typeof this.value === 'string'
+      ) {
+        const name = this.value;
+        newDraftState = { ...newDraftState, draft: { ...newDraftState.draft, name } };
+      }
     }
 
     return newDraftState;
@@ -601,15 +599,19 @@ function createEditorEntityDraftState(
   });
 
   // Check if name is linked to a field
-  let nameIsLinkedToField = !entity; // default to true for new entities
+  let nameIsLinkedToField = false;
   if (entity) {
-    const nameFieldSpec = entitySpec.fields.find((it) => it.type === FieldType.String && it.isName);
+    const nameFieldSpec = entitySpec.nameField
+      ? entitySpec.fields.find((it) => it.name === entitySpec.nameField)
+      : null;
     if (nameFieldSpec) {
       const nameFieldValue = entity.fields[nameFieldSpec.name];
       if (nameFieldValue && typeof nameFieldValue === 'string') {
         nameIsLinkedToField = isEntityNameAsRequested(entity.info.name, nameFieldValue);
       }
     }
+  } else {
+    nameIsLinkedToField = !!entitySpec.nameField; // true on new entities
   }
 
   return {

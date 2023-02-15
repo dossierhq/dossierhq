@@ -11,7 +11,6 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -90,7 +89,6 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
     "fieldSpec": {
       "adminOnly": true,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -120,7 +118,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -148,7 +145,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": true,
       "matchPattern": null,
       "multiline": false,
@@ -169,7 +165,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": true,
       "matchPattern": null,
       "multiline": false,
@@ -236,7 +231,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -262,7 +256,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -313,7 +306,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": true,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -343,7 +335,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -539,7 +530,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -567,7 +557,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -595,7 +584,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
     "fieldSpec": {
       "adminOnly": true,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -624,7 +612,6 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
   {
     "fieldSpec": {
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -706,7 +693,6 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -734,7 +720,6 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": true,
       "matchPattern": null,
       "multiline": false,
@@ -755,7 +740,6 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": true,
       "matchPattern": null,
       "multiline": false,
@@ -830,7 +814,6 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
     "fieldSpec": {
       "adminOnly": true,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -867,7 +850,6 @@ exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,
@@ -891,7 +873,6 @@ exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
     "fieldSpec": {
       "adminOnly": false,
       "index": null,
-      "isName": false,
       "list": false,
       "matchPattern": null,
       "multiline": false,

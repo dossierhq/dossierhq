@@ -4,6 +4,7 @@
       "name": "Article",
       "adminOnly": false,
       "authKeyPattern": "none",
+      "nameField": "title",
       "fields": [
         {
           "name": "title",
@@ -11,7 +12,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": true,
           "multiline": false,
           "matchPattern": null,
           "index": null
@@ -22,7 +22,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": false,
           "multiline": false,
           "matchPattern": "slug",
           "index": "articleSlug"
@@ -62,6 +61,7 @@
       "name": "Chapter",
       "adminOnly": false,
       "authKeyPattern": "none",
+      "nameField": null,
       "fields": [
         {
           "name": "items",
@@ -80,6 +80,7 @@
       "name": "GlossaryTerm",
       "adminOnly": false,
       "authKeyPattern": "none",
+      "nameField": "title",
       "fields": [
         {
           "name": "title",
@@ -87,7 +88,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": true,
           "multiline": false,
           "matchPattern": null,
           "index": null
@@ -98,7 +98,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": false,
           "multiline": false,
           "matchPattern": "slug",
           "index": "glossarySlug"
@@ -136,7 +135,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": false,
           "multiline": false,
           "matchPattern": null,
           "index": null
@@ -163,7 +161,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": false,
           "multiline": false,
           "matchPattern": null,
           "index": null
@@ -190,7 +187,6 @@
           "list": false,
           "required": false,
           "adminOnly": false,
-          "isName": false,
           "multiline": false,
           "matchPattern": null,
           "index": null
@@ -207,7 +203,6 @@
           "list": false,
           "required": true,
           "adminOnly": false,
-          "isName": false,
           "multiline": false,
           "matchPattern": null,
           "index": null

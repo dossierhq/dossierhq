@@ -128,7 +128,7 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'Strings',
               fields: [
-                { name: 'string', type: FieldType.String, isName: true, required: true },
+                { name: 'string', type: FieldType.String, required: true },
                 { name: 'stringList', type: FieldType.String, list: true, required: true },
               ],
             },

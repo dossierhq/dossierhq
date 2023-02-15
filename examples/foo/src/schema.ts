@@ -4,11 +4,11 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'BlogPost',
+      nameField: 'title',
       fields: [
         {
           name: 'title',
           type: 'String',
-          isName: true,
         },
         {
           name: 'summary',
@@ -43,11 +43,11 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Category',
+      nameField: 'title',
       fields: [
         {
           name: 'title',
           type: 'String',
-          isName: true,
         },
       ],
     },

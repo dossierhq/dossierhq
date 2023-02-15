@@ -36,8 +36,9 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'QueryAdminFoo',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'title', type: FieldType.String },
         { name: 'slug', type: FieldType.String, index: 'queryAdminSlug' },
         { name: 'summary', type: FieldType.String },
         { name: 'tags', type: FieldType.String, list: true },

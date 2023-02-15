@@ -7,8 +7,9 @@ const schemaSpecification = {
       name: 'Foo',
       adminOnly: false,
       authKeyPattern: 'none',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: 'String', isName: true, required: true },
+        { name: 'title', type: 'String', required: true },
         { name: 'slug', type: 'String', index: 'fooSlug' },
         { name: 'tags', type: 'String', list: true, matchPattern: 'tag' },
         { name: 'stringMatchPattern', type: 'String', matchPattern: 'foo-bar-baz' },
@@ -31,7 +32,8 @@ const schemaSpecification = {
     {
       name: 'Bar',
       adminOnly: false,
-      fields: [{ name: 'title', type: 'String', isName: true }],
+      nameField: 'title',
+      fields: [{ name: 'title', type: 'String' }],
     },
     {
       name: 'Baz',
@@ -66,7 +68,8 @@ const schemaSpecification = {
       name: 'Qux',
       adminOnly: true,
       authKeyPattern: 'subject',
-      fields: [{ name: 'title', type: 'String', isName: true }],
+      nameField: 'title',
+      fields: [{ name: 'title', type: 'String' }],
     },
   ],
   valueTypes: [

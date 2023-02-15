@@ -36,6 +36,17 @@ export async function getSchemaSpecification(
     }
   }
 
+  // Version 0.2.3: moved isName from field to nameField on entity types
+  for (const typeSpec of specification.entityTypes) {
+    if (typeSpec.nameField === undefined) {
+      typeSpec.nameField =
+        typeSpec.fields.find((it) => (it as { isName?: boolean }).isName)?.name ?? null;
+      for (const fieldSpec of typeSpec.fields) {
+        delete (fieldSpec as { isName?: boolean }).isName;
+      }
+    }
+  }
+
   if (initialLoad) {
     logger.info(
       'Loaded schema with %d entity types, %d value types, %d patterns, %d indexes',

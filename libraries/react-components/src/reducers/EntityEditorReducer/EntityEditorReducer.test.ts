@@ -226,7 +226,7 @@ describe('SetNameAction', () => {
     expect(draftState.draft?.nameIsLinkedToField).toBe(false);
   });
 
-  test('clearing name of enw draft links to name field', () => {
+  test('clearing name of new draft links to name field', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
@@ -235,7 +235,8 @@ describe('SetNameAction', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
@@ -263,7 +264,8 @@ describe('SetFieldAction', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
@@ -283,7 +285,8 @@ describe('SetFieldAction', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
@@ -350,7 +353,8 @@ describe('UpdateEntityAction', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
@@ -390,7 +394,8 @@ describe('UpdateEntityAction', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
@@ -448,7 +453,8 @@ describe('EntityEditorReducer scenarios', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()
@@ -607,7 +613,8 @@ describe('EntityEditorReducer scenarios', () => {
           entityTypes: [
             {
               name: 'Foo',
-              fields: [{ name: 'title', type: FieldType.String, isName: true }],
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
         }).valueOrThrow()

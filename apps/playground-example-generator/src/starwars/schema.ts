@@ -6,8 +6,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Film',
       authKeyPattern: 'none',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, required: true, isName: true },
+        { name: 'title', type: FieldType.String, required: true },
         { name: 'episodeId', type: FieldType.Number, integer: true, required: true },
         { name: 'director', type: FieldType.String, required: true },
         { name: 'producers', type: FieldType.String, list: true, required: true },
@@ -53,8 +54,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Person',
       authKeyPattern: 'none',
+      nameField: 'name',
       fields: [
-        { name: 'name', type: FieldType.String, required: true, isName: true },
+        { name: 'name', type: FieldType.String, required: true },
         { name: 'gender', type: FieldType.String, required: true },
         { name: 'skinColors', type: FieldType.String, list: true, required: true },
         { name: 'hairColors', type: FieldType.String, list: true, required: true },
@@ -68,8 +70,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Planet',
       authKeyPattern: 'none',
+      nameField: 'name',
       fields: [
-        { name: 'name', type: FieldType.String, required: true, isName: true },
+        { name: 'name', type: FieldType.String, required: true },
         { name: 'climate', type: FieldType.String, list: true, required: true },
         { name: 'surfaceWater', type: FieldType.String, required: true },
         { name: 'diameter', type: FieldType.String, required: true },
@@ -83,8 +86,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Species',
       authKeyPattern: 'none',
+      nameField: 'name',
       fields: [
-        { name: 'name', type: FieldType.String, required: true, isName: true },
+        { name: 'name', type: FieldType.String, required: true },
         { name: 'classification', type: FieldType.String, required: true },
         { name: 'designation', type: FieldType.String, required: true },
         { name: 'skinColors', type: FieldType.String, list: true, required: true },
@@ -100,8 +104,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Starship',
       authKeyPattern: 'none',
+      nameField: 'starshipClass',
       fields: [
-        { name: 'starshipClass', type: FieldType.String, required: true, isName: true },
+        { name: 'starshipClass', type: FieldType.String, required: true },
         { name: 'mglt', type: FieldType.String, required: true },
         { name: 'hyperdriveRating', type: FieldType.String, required: true },
         { name: 'pilots', type: FieldType.Entity, list: true, entityTypes: ['Person'] },
@@ -110,8 +115,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Transport',
       authKeyPattern: 'none',
+      nameField: 'name',
       fields: [
-        { name: 'name', type: FieldType.String, required: true, isName: true },
+        { name: 'name', type: FieldType.String, required: true },
         { name: 'model', type: FieldType.String, required: true },
         { name: 'manufacturers', type: FieldType.String, list: true, required: true },
         { name: 'consumables', type: FieldType.String, required: true },
@@ -126,8 +132,9 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Vehicle',
       authKeyPattern: 'none',
+      nameField: 'vehicleClass',
       fields: [
-        { name: 'vehicleClass', type: FieldType.String, required: true, isName: true },
+        { name: 'vehicleClass', type: FieldType.String, required: true },
         { name: 'pilots', type: FieldType.Entity, list: true, entityTypes: ['Person'] },
       ],
     },

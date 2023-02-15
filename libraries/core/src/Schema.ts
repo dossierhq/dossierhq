@@ -7,6 +7,7 @@ export interface AdminEntityTypeSpecification {
   name: string;
   adminOnly: boolean;
   authKeyPattern: string | null;
+  nameField: string | null;
   fields: AdminFieldSpecification[];
 }
 
@@ -20,6 +21,7 @@ export interface AdminEntityTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
   authKeyPattern?: string | null;
+  nameField?: string | null;
   fields: AdminFieldSpecificationUpdate[];
 }
 
@@ -107,7 +109,6 @@ export interface RichTextFieldSpecification extends SharedFieldSpecification {
 
 export interface StringFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.String;
-  isName: boolean;
   multiline: boolean;
   matchPattern: string | null;
   index: string | null;
@@ -263,7 +264,6 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   ],
   [FieldType.String]: [
     ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
-    'isName',
     'multiline',
     'matchPattern',
     'index',
@@ -315,6 +315,20 @@ export class AdminSchema {
         if (authKeyPattern) {
           if (!this.getPattern(authKeyPattern)) {
             return notOk.BadRequest(`${typeSpec.name}: Unknown authKeyPattern (${authKeyPattern})`);
+          }
+        }
+        const nameField = (typeSpec as AdminEntityTypeSpecification).nameField;
+        if (nameField) {
+          const nameFieldSpec = typeSpec.fields.find((fieldSpec) => fieldSpec.name === nameField);
+          if (!nameFieldSpec) {
+            return notOk.BadRequest(
+              `${typeSpec.name}: Found no field matching nameField (${nameField})`
+            );
+          }
+          if (nameFieldSpec.type !== FieldType.String || nameFieldSpec.list) {
+            return notOk.BadRequest(
+              `${typeSpec.name}: nameField (${nameField}) should be a string (non-list)`
+            );
           }
         }
       }
@@ -584,10 +598,11 @@ export class AdminSchema {
     // Merge entity types
     if (other.entityTypes) {
       for (const entitySpecUpdate of other.entityTypes) {
-        const entitySpec = {
+        const entitySpec: AdminEntityTypeSpecification = {
           name: entitySpecUpdate.name,
           adminOnly: entitySpecUpdate.adminOnly ?? false,
           authKeyPattern: entitySpecUpdate.authKeyPattern ?? null,
+          nameField: entitySpecUpdate.nameField ?? null,
           fields: entitySpecUpdate.fields.map(normalizeFieldSpecUpdate),
         };
         const existingIndex = schemaSpec.entityTypes.findIndex(
@@ -775,7 +790,6 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        isName: fieldSpec.isName ?? false,
         multiline: fieldSpec.multiline ?? false,
         matchPattern: fieldSpec.matchPattern ?? null,
         index: fieldSpec.index ?? null,

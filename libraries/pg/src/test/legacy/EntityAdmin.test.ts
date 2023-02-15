@@ -78,8 +78,9 @@ beforeAll(async () => {
     entityTypes: [
       {
         name: 'EntityAdminFoo',
+        nameField: 'title',
         fields: [
-          { name: 'title', type: FieldType.String, required: true, isName: true },
+          { name: 'title', type: FieldType.String, required: true },
           { name: 'summary', type: FieldType.String },
           { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityAdminBar'] },
         ],

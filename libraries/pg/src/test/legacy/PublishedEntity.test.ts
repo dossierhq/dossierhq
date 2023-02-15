@@ -29,8 +29,9 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'PublishedEntityFoo',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'title', type: FieldType.String },
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'body', type: FieldType.RichText },
@@ -45,8 +46,9 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'PublishedEntityBar',
+      nameField: 'title',
       fields: [
-        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'title', type: FieldType.String },
         { name: 'entity', type: FieldType.Entity },
       ],
     },
