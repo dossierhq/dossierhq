@@ -318,7 +318,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Since we want to ensure that every blog post has a title, check \"Required\". We also want the title to automatically fill in the name of the entity so check \"Is name\".",
+                "text": "Since we want to ensure that every blog post has a title, check \"Required\". We also want the title to automatically fill in the name of the entity select \"title\" in the \"Name field\" dropdown.",
                 "type": "text",
                 "version": 1
               }
