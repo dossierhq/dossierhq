@@ -32,7 +32,7 @@
     "@rushstack/heft": "0.49.7",
     "@types/react": "~18.0.27",
     "@types/react-dom": "~18.0.10",
-    "@typescript-eslint/eslint-plugin": "~5.51.0",
+    "@typescript-eslint/eslint-plugin": "~5.52.0",
     "@typescript-eslint/parser": "~5.51.0",
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-react": "~7.32.2",
