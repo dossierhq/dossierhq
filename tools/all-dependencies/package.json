@@ -19,7 +19,7 @@
     "@lexical/link": "0.7.7",
     "@lexical/list": "0.7.7",
     "@lexical/react": "0.7.7",
-    "@lexical/rich-text": "0.7.7",
+    "@lexical/rich-text": "0.8.0",
     "@lexical/selection": "0.7.7",
     "@lexical/utils": "0.7.7",
     "@playwright/test": "~1.30.0",
