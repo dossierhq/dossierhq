@@ -929,7 +929,7 @@ importers:
       '@lexical/link': 0.7.7
       '@lexical/list': 0.7.7
       '@lexical/react': 0.7.7
-      '@lexical/rich-text': 0.7.7
+      '@lexical/rich-text': 0.8.0
       '@lexical/selection': 0.7.7
       '@lexical/utils': 0.7.7
       '@rushstack/heft': 0.49.7
@@ -972,7 +972,7 @@ importers:
       '@lexical/link': 0.7.7_lexical@0.7.7
       '@lexical/list': 0.7.7_lexical@0.7.7
       '@lexical/react': 0.7.7_ecuzktk64kkr4h7kbrjlcq47oe
-      '@lexical/rich-text': 0.7.7_y5cextvee5xaahoivyntn75ccu
+      '@lexical/rich-text': 0.8.0_y5cextvee5xaahoivyntn75ccu
       '@lexical/selection': 0.7.7_lexical@0.7.7
       '@lexical/utils': 0.7.7_lexical@0.7.7
       leaflet: 1.9.3
@@ -1267,7 +1267,7 @@ importers:
       '@lexical/link': 0.7.7
       '@lexical/list': 0.7.7
       '@lexical/react': 0.7.7
-      '@lexical/rich-text': 0.7.7
+      '@lexical/rich-text': 0.8.0
       '@lexical/selection': 0.7.7
       '@lexical/utils': 0.7.7
       '@microsoft/rush-lib': ~5.90.0
@@ -1365,7 +1365,7 @@ importers:
       '@lexical/link': 0.7.7_lexical@0.7.7
       '@lexical/list': 0.7.7_lexical@0.7.7
       '@lexical/react': 0.7.7_ecuzktk64kkr4h7kbrjlcq47oe
-      '@lexical/rich-text': 0.7.7_y5cextvee5xaahoivyntn75ccu
+      '@lexical/rich-text': 0.8.0_y5cextvee5xaahoivyntn75ccu
       '@lexical/selection': 0.7.7_lexical@0.7.7
       '@lexical/utils': 0.7.7_lexical@0.7.7
       '@playwright/test': 1.30.0
@@ -3761,13 +3761,13 @@ packages:
       lexical: 0.7.7
     dev: false
 
-  /@lexical/rich-text/0.7.7_y5cextvee5xaahoivyntn75ccu:
-    resolution: {integrity: sha512-Gyd4IpSuu658/nLvy+uPcWOQ/o9aU0m0mQkFwavTCixgue/lDxn1Lks9jzkFzoaDL68iqGjvP2TycCD8n9jjRw==}
+  /@lexical/rich-text/0.8.0_y5cextvee5xaahoivyntn75ccu:
+    resolution: {integrity: sha512-tndRcRDsoIQ0Lpj0/cm+xQ2Lik81fg9U2mS/WcuxZtC4FQL52TSqmNFOCl188CYtuYuj95yMZnuTFO3b2pncGQ==}
     peerDependencies:
-      '@lexical/clipboard': 0.7.7
-      '@lexical/selection': 0.7.7
-      '@lexical/utils': 0.7.7
-      lexical: 0.7.7
+      '@lexical/clipboard': 0.8.0
+      '@lexical/selection': 0.8.0
+      '@lexical/utils': 0.8.0
+      lexical: 0.8.0
     dependencies:
       '@lexical/selection': 0.7.7_lexical@0.7.7
       '@lexical/utils': 0.7.7_lexical@0.7.7
@@ -5026,7 +5026,7 @@ packages:
     dependencies:
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/global': 5.0.0
       '@storybook/manager-api': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/preview-api': 7.0.0-beta.36
@@ -5142,7 +5142,7 @@ packages:
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/components': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/docs-tools': 7.0.0-beta.36
       '@storybook/global': 5.0.0
       '@storybook/manager-api': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -5303,7 +5303,7 @@ packages:
       '@babel/core': 7.20.12
       '@babel/preset-env': 7.20.2_@babel+core@7.20.12
       '@babel/types': 7.20.7
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/csf-tools': 7.0.0-beta.36
       '@storybook/node-logger': 7.0.0-beta.36
       '@storybook/types': 7.0.0-beta.36
@@ -5324,7 +5324,7 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@storybook/client-logger': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/global': 5.0.0
       '@storybook/theming': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/types': 7.0.0-beta.36
@@ -5383,7 +5383,7 @@ packages:
       '@storybook/builder-manager': 7.0.0-beta.36
       '@storybook/core-common': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/csf-tools': 7.0.0-beta.36
       '@storybook/docs-mdx': 0.0.1-next.6
       '@storybook/global': 5.0.0
@@ -5438,7 +5438,7 @@ packages:
     resolution: {integrity: sha512-E64U8zjmbi9zB3ts2qFm9bPMqqxwF4eHfy1swB0rGnAbKY+HjEFS5sEnov5jMudqkU8ECrOpdHIDRdj73eA6iQ==}
     dependencies:
       '@babel/types': 7.20.7
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/types': 7.0.0-beta.36
       fs-extra: 11.1.0
       recast: 0.23.1
@@ -5451,11 +5451,9 @@ packages:
     dependencies:
       lodash: 4.17.21
 
-  /@storybook/csf/0.0.2-next.8:
-    resolution: {integrity: sha512-3T6rflW7D9q1iXOR+bidwoNbd9rVUTyjYH/sqsnYjbXhb/aOXsQzGKwNeq9QqZIFVpKfg5BoOF5i7DCMtoGknQ==}
+  /@storybook/csf/0.0.2-next.10:
+    resolution: {integrity: sha512-m2PFgBP/xRIF85VrDhvesn9ktaD2pN3VUjvMqkAL/cINp/3qXsCyI81uw7N5VEOkQAbWrY2FcydnvEPDEdE8fA==}
     dependencies:
-      expect-type: 0.14.2
-      lodash: 4.17.21
       type-fest: 2.19.0
 
   /@storybook/docs-mdx/0.0.1-next.6:
@@ -5486,7 +5484,7 @@ packages:
       '@storybook/channels': 7.0.0-beta.36
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/global': 5.0.0
       '@storybook/router': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/theming': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -5536,7 +5534,7 @@ packages:
       '@storybook/channels': 7.0.0-beta.36
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.8
+      '@storybook/csf': 0.0.2-next.10
       '@storybook/global': 5.0.0
       '@storybook/types': 7.0.0-beta.36
       '@types/qs': 6.9.7
@@ -8735,9 +8733,6 @@ packages:
   /expand-template/2.0.3:
     resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
     engines: {node: '>=6'}
-
-  /expect-type/0.14.2:
-    resolution: {integrity: sha512-ed3+tr5ujbIYXZ8Pl/VgIphwJQ0q5tBLGGdn7Zvwt1WyPBRX83xjT5pT77P/GkuQbctx0K2ZNSSan7eruJqTCQ==}
 
   /express-graphql/0.12.0:
     resolution: {integrity: sha512-DwYaJQy0amdy3pgNtiTDuGGM2BLdj+YO2SgbKoLliCfuHv3VVTt7vNG/ZqK2hRYjtYHE2t2KB705EU94mE64zg==}
