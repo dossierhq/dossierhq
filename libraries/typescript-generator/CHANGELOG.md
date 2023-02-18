@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/typescript-generator
 
-This log was last generated on Tue, 14 Feb 2023 18:18:06 GMT and should not be manually modified.
+This log was last generated on Sat, 18 Feb 2023 11:05:21 GMT and should not be manually modified.
+
+## 0.2.3
+Sat, 18 Feb 2023 11:05:21 GMT
+
+### Updates
+
+- Add AppAdminExceptionClient and AppPublishedExceptionClient to generated types.
 
 ## 0.2.2
 Tue, 14 Feb 2023 18:18:06 GMT

@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.2.3",
+      "tag": "@dossierhq/core_v0.2.3",
+      "date": "Sat, 18 Feb 2023 11:05:21 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break API: Remove isName from schema entity fields, add nameField to entity types. No break to database content. Introduce client.toExceptionClient() and Admin/PublishedExceptionClient."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.2",
       "tag": "@dossierhq/core_v0.2.2",
       "date": "Tue, 14 Feb 2023 18:18:06 GMT",
