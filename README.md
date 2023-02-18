@@ -68,7 +68,7 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 
 - Upgrade node version in `.nvmrc`
 - Upgrade deno version in Github Actions workflows (`deno-version`)
-- Bun is automatically using the latest version on GitHub Actions
+- Upgrade bun version in Github Actions workflows (`bun-version`)
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
 - Upgrade individual dependencies in `tools/all-dependencies/`:
   - `npm run outdated` to get a list of outdated dependencies
