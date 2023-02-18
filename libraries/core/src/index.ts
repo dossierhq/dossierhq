@@ -10,6 +10,7 @@ export type {
   AdminClientJsonOperationArgs,
   AdminClientMiddleware,
   AdminClientOperation,
+  AdminExceptionClient,
 } from './AdminClient.js';
 export { withAdvisoryLock } from './AdvisoryLockUtils.js';
 export { assertExhaustive, assertIsDefined } from './Asserts.js';
@@ -127,6 +128,7 @@ export type {
   PublishedClientJsonOperationArgs,
   PublishedClientMiddleware,
   PublishedClientOperation,
+  PublishedExceptionClient,
 } from './PublishedClient.js';
 export {
   createRichTextEntityLinkNode,

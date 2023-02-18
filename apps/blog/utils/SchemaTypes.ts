@@ -1,14 +1,22 @@
 import type {
   AdminClient,
   AdminEntity,
+  AdminExceptionClient,
   EntityReference,
   PublishedClient,
   PublishedEntity,
+  PublishedExceptionClient,
   RichText,
   ValueItem,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminClient = AdminClient<
+  AllAdminEntities,
+  AppAdminUniqueIndexes,
+  AppAdminExceptionClient
+>;
+
+export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'articleSlug' | 'glossarySlug';
 
@@ -141,7 +149,16 @@ export function assertIsAdminTocItem(
   }
 }
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+export type AppPublishedClient = PublishedClient<
+  AllPublishedEntities,
+  AppPublishedUniqueIndexes,
+  AppPublishedExceptionClient
+>;
+
+export type AppPublishedExceptionClient = PublishedExceptionClient<
+  AllPublishedEntities,
+  AppPublishedUniqueIndexes
+>;
 
 export type AppPublishedUniqueIndexes = 'articleSlug' | 'glossarySlug';
 

@@ -69,14 +69,23 @@ export function generateTypescriptForSchema({
 
 function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('AdminClient');
-  return ['', 'export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;'];
+  context.coreImports.add('AdminExceptionClient');
+  return [
+    '',
+    'export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
+    '',
+    'export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;',
+  ];
 }
 
 function generatePublishedClientTypes(context: GeneratorContext) {
   context.coreImports.add('PublishedClient');
+  context.coreImports.add('PublishedExceptionClient');
   return [
     '',
-    'export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;',
+    'export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
+    '',
+    'export type AppPublishedExceptionClient = PublishedExceptionClient<AllPublishedEntities, AppPublishedUniqueIndexes>;',
   ];
 }
 

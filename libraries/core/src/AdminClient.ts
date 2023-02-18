@@ -66,7 +66,11 @@ import type {
 
 export interface AdminClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
-  TUniqueIndex extends string = string
+  TUniqueIndex extends string = string,
+  TExceptionClient extends AdminExceptionClient<TAdminEntity, TUniqueIndex> = AdminExceptionClient<
+    TAdminEntity,
+    TUniqueIndex
+  >
 > {
   getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
@@ -233,6 +237,82 @@ export interface AdminClient<
     AdvisoryLockReleasePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
+
+  toExceptionClient(): TExceptionClient;
+}
+
+export interface AdminExceptionClient<
+  TAdminEntity extends AdminEntity<string, object> = AdminEntity,
+  TUniqueIndex extends string = string
+> {
+  getSchemaSpecification(): Promise<AdminSchemaSpecification>;
+
+  updateSchemaSpecification(
+    schemaSpec: AdminSchemaSpecificationUpdate
+  ): Promise<SchemaSpecificationUpdatePayload>;
+
+  getEntity(
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference<TUniqueIndex>
+  ): Promise<TAdminEntity>;
+
+  getEntities(
+    references: EntityReference[]
+  ): Promise<
+    Result<
+      TAdminEntity,
+      | typeof ErrorType.BadRequest
+      | typeof ErrorType.NotFound
+      | typeof ErrorType.NotAuthorized
+      | typeof ErrorType.Generic
+    >[]
+  >;
+
+  sampleEntities(
+    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
+    options?: EntitySamplingOptions
+  ): Promise<EntitySamplingPayload<TAdminEntity>>;
+
+  searchEntities(
+    query?: AdminSearchQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
+    paging?: Paging
+  ): Promise<Connection<Edge<TAdminEntity, ErrorType>> | null>;
+
+  getTotalCount(
+    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>
+  ): Promise<number>;
+
+  createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+    entity: AdminEntityCreate<T>,
+    options?: AdminEntityMutationOptions
+  ): Promise<AdminEntityCreatePayload<T>>;
+
+  updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+    entity: AdminEntityUpdate<T>,
+    options?: AdminEntityMutationOptions
+  ): Promise<AdminEntityUpdatePayload<T>>;
+
+  upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+    entity: AdminEntityUpsert<T>,
+    options?: AdminEntityMutationOptions
+  ): Promise<AdminEntityUpsertPayload<T>>;
+
+  getEntityHistory(reference: EntityReference): Promise<EntityHistory>;
+
+  publishEntities(references: EntityVersionReference[]): Promise<AdminEntityPublishPayload[]>;
+
+  unpublishEntities(references: EntityReference[]): Promise<AdminEntityUnpublishPayload[]>;
+
+  archiveEntity(reference: EntityReference): Promise<AdminEntityArchivePayload>;
+
+  unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload>;
+
+  getPublishingHistory(reference: EntityReference): Promise<PublishingHistory>;
+
+  acquireAdvisoryLock(name: string, options: AdvisoryLockOptions): Promise<AdvisoryLockPayload>;
+
+  renewAdvisoryLock(name: string, handle: number): Promise<AdvisoryLockPayload>;
+
+  releaseAdvisoryLock(name: string, handle: number): Promise<AdvisoryLockReleasePayload>;
 }
 
 export const AdminClientOperationName = {
@@ -632,6 +712,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
+  toExceptionClient(): AdminExceptionClient {
+    return new AdminExceptionClientWrapper(this);
+  }
+
   private async executeOperation<TName extends AdminClientOperationName>(
     operation: OperationWithoutCallbacks<AdminClientOperation<TName>>
   ): PromiseResult<AdminClientOperationReturnOk[TName], AdminClientOperationReturnError[TName]> {
@@ -651,6 +735,140 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     }
 
     return await executeOperationPipeline(context, this.pipeline, operation);
+  }
+}
+
+class AdminExceptionClientWrapper implements AdminExceptionClient {
+  private readonly client: AdminClient;
+
+  constructor(client: AdminClient) {
+    this.client = client;
+  }
+  async getSchemaSpecification(): Promise<AdminSchemaSpecification> {
+    return (await this.client.getSchemaSpecification()).valueOrThrow();
+  }
+
+  async updateSchemaSpecification(
+    schemaSpec: AdminSchemaSpecificationUpdate
+  ): Promise<SchemaSpecificationUpdatePayload> {
+    return (await this.client.updateSchemaSpecification(schemaSpec)).valueOrThrow();
+  }
+
+  async getEntity(
+    reference: EntityReference | EntityVersionReference | UniqueIndexReference<string>
+  ): Promise<AdminEntity<string, Record<string, unknown>, string>> {
+    return (await this.client.getEntity(reference)).valueOrThrow();
+  }
+
+  async getEntities(
+    references: EntityReference[]
+  ): Promise<
+    Result<
+      AdminEntity<string, Record<string, unknown>, string>,
+      'BadRequest' | 'NotAuthorized' | 'NotFound' | 'Generic'
+    >[]
+  > {
+    return (await this.client.getEntities(references)).valueOrThrow();
+  }
+
+  async sampleEntities(
+    query?: AdminQuery<string, string> | undefined,
+    options?: EntitySamplingOptions | undefined
+  ): Promise<EntitySamplingPayload<AdminEntity<string, Record<string, unknown>, string>>> {
+    return (await this.client.sampleEntities(query, options)).valueOrThrow();
+  }
+
+  async searchEntities(
+    query?: AdminSearchQuery<string, string> | undefined,
+    paging?: Paging | undefined
+  ): Promise<Connection<
+    Edge<AdminEntity<string, Record<string, unknown>, string>, ErrorType>
+  > | null> {
+    return (await this.client.searchEntities(query, paging)).valueOrThrow();
+  }
+
+  async getTotalCount(query?: AdminQuery<string, string> | undefined): Promise<number> {
+    return (await this.client.getTotalCount(query)).valueOrThrow();
+  }
+
+  async createEntity<
+    T extends AdminEntity<string, object, string> = AdminEntity<
+      string,
+      Record<string, unknown>,
+      string
+    >
+  >(
+    entity: AdminEntityCreate<T>,
+    options?: AdminEntityMutationOptions | undefined
+  ): Promise<AdminEntityCreatePayload<T>> {
+    return (await this.client.createEntity(entity, options)).valueOrThrow();
+  }
+
+  async updateEntity<
+    T extends AdminEntity<string, object, string> = AdminEntity<
+      string,
+      Record<string, unknown>,
+      string
+    >
+  >(
+    entity: AdminEntityUpdate<T>,
+    options?: AdminEntityMutationOptions | undefined
+  ): Promise<AdminEntityUpdatePayload<T>> {
+    return (await this.client.updateEntity(entity, options)).valueOrThrow();
+  }
+
+  async upsertEntity<
+    T extends AdminEntity<string, object, string> = AdminEntity<
+      string,
+      Record<string, unknown>,
+      string
+    >
+  >(
+    entity: AdminEntityUpsert<T>,
+    options?: AdminEntityMutationOptions | undefined
+  ): Promise<AdminEntityUpsertPayload<T>> {
+    return (await this.client.upsertEntity(entity, options)).valueOrThrow();
+  }
+
+  async getEntityHistory(reference: EntityReference): Promise<EntityHistory> {
+    return (await this.client.getEntityHistory(reference)).valueOrThrow();
+  }
+
+  async publishEntities(
+    references: EntityVersionReference[]
+  ): Promise<AdminEntityPublishPayload[]> {
+    return (await this.client.publishEntities(references)).valueOrThrow();
+  }
+
+  async unpublishEntities(references: EntityReference[]): Promise<AdminEntityUnpublishPayload[]> {
+    return (await this.client.unpublishEntities(references)).valueOrThrow();
+  }
+
+  async archiveEntity(reference: EntityReference): Promise<AdminEntityArchivePayload> {
+    return (await this.client.archiveEntity(reference)).valueOrThrow();
+  }
+
+  async unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload> {
+    return (await this.client.unarchiveEntity(reference)).valueOrThrow();
+  }
+
+  async getPublishingHistory(reference: EntityReference): Promise<PublishingHistory> {
+    return (await this.client.getPublishingHistory(reference)).valueOrThrow();
+  }
+
+  async acquireAdvisoryLock(
+    name: string,
+    options: AdvisoryLockOptions
+  ): Promise<AdvisoryLockPayload> {
+    return (await this.client.acquireAdvisoryLock(name, options)).valueOrThrow();
+  }
+
+  async renewAdvisoryLock(name: string, handle: number): Promise<AdvisoryLockPayload> {
+    return (await this.client.renewAdvisoryLock(name, handle)).valueOrThrow();
+  }
+
+  async releaseAdvisoryLock(name: string, handle: number): Promise<AdvisoryLockReleasePayload> {
+    return (await this.client.releaseAdvisoryLock(name, handle)).valueOrThrow();
   }
 }
 

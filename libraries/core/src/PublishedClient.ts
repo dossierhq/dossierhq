@@ -31,7 +31,11 @@ import type {
 
 export interface PublishedClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
-  TUniqueIndex extends string = string
+  TUniqueIndex extends string = string,
+  TExceptionClient extends PublishedExceptionClient<
+    TPublishedEntity,
+    TUniqueIndex
+  > = PublishedExceptionClient<TPublishedEntity, TUniqueIndex>
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
@@ -80,6 +84,43 @@ export interface PublishedClient<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
+
+  toExceptionClient(): TExceptionClient;
+}
+
+export interface PublishedExceptionClient<
+  TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
+  TUniqueIndex extends string = string
+> {
+  getSchemaSpecification(): Promise<PublishedSchemaSpecification>;
+
+  getEntity(
+    reference: EntityReference | UniqueIndexReference<TUniqueIndex>
+  ): Promise<TPublishedEntity>;
+
+  getEntities(
+    references: EntityReference[]
+  ): Promise<
+    Result<
+      TPublishedEntity,
+      | typeof ErrorType.BadRequest
+      | typeof ErrorType.NotFound
+      | typeof ErrorType.NotAuthorized
+      | typeof ErrorType.Generic
+    >[]
+  >;
+
+  sampleEntities(
+    query?: PublishedQuery<TPublishedEntity['info']['type']>,
+    options?: EntitySamplingOptions
+  ): Promise<EntitySamplingPayload<TPublishedEntity>>;
+
+  searchEntities(
+    query?: PublishedSearchQuery<TPublishedEntity['info']['type']>,
+    paging?: Paging
+  ): Promise<Connection<Edge<TPublishedEntity, ErrorType>> | null>;
+
+  getTotalCount(query?: PublishedQuery<TPublishedEntity['info']['type']>): Promise<number>;
 }
 
 export const PublishedClientOperationName = {
@@ -247,6 +288,10 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     });
   }
 
+  toExceptionClient(): PublishedExceptionClient {
+    return new PublishedExceptionClientWrapper(this);
+  }
+
   private async executeOperation<TName extends PublishedClientOperationName>(
     operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>
   ): PromiseResult<
@@ -269,6 +314,55 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     }
 
     return await executeOperationPipeline(context, this.pipeline, operation);
+  }
+}
+
+class PublishedExceptionClientWrapper implements PublishedExceptionClient {
+  private readonly client: PublishedClient;
+
+  constructor(client: PublishedClient) {
+    this.client = client;
+  }
+
+  async getSchemaSpecification(): Promise<PublishedSchemaSpecification> {
+    return (await this.client.getSchemaSpecification()).valueOrThrow();
+  }
+
+  async getEntity(
+    reference: EntityReference | UniqueIndexReference<string>
+  ): Promise<PublishedEntity<string, Record<string, unknown>, string>> {
+    return (await this.client.getEntity(reference)).valueOrThrow();
+  }
+
+  async getEntities(
+    references: EntityReference[]
+  ): Promise<
+    Result<
+      PublishedEntity<string, Record<string, unknown>, string>,
+      'BadRequest' | 'NotAuthorized' | 'NotFound' | 'Generic'
+    >[]
+  > {
+    return (await this.client.getEntities(references)).valueOrThrow();
+  }
+
+  async sampleEntities(
+    query?: PublishedQuery<string, string> | undefined,
+    options?: EntitySamplingOptions | undefined
+  ): Promise<EntitySamplingPayload<PublishedEntity<string, Record<string, unknown>, string>>> {
+    return (await this.client.sampleEntities(query, options)).valueOrThrow();
+  }
+
+  async searchEntities(
+    query?: PublishedSearchQuery<string> | undefined,
+    paging?: Paging | undefined
+  ): Promise<Connection<
+    Edge<PublishedEntity<string, Record<string, unknown>, string>, ErrorType>
+  > | null> {
+    return (await this.client.searchEntities(query, paging)).valueOrThrow();
+  }
+
+  async getTotalCount(query?: PublishedQuery<string, string> | undefined): Promise<number> {
+    return (await this.client.getTotalCount(query)).valueOrThrow();
   }
 }
 

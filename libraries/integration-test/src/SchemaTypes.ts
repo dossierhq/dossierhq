@@ -1,15 +1,23 @@
 import type {
   AdminClient,
   AdminEntity,
+  AdminExceptionClient,
   EntityReference,
   Location,
   PublishedClient,
   PublishedEntity,
+  PublishedExceptionClient,
   RichText,
   ValueItem,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminClient = AdminClient<
+  AllAdminEntities,
+  AppAdminUniqueIndexes,
+  AppAdminExceptionClient
+>;
+
+export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
@@ -245,7 +253,16 @@ export function assertIsAdminReferencesValue(
   }
 }
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+export type AppPublishedClient = PublishedClient<
+  AllPublishedEntities,
+  AppPublishedUniqueIndexes,
+  AppPublishedExceptionClient
+>;
+
+export type AppPublishedExceptionClient = PublishedExceptionClient<
+  AllPublishedEntities,
+  AppPublishedUniqueIndexes
+>;
 
 export type AppPublishedUniqueIndexes = 'genericUnique' | 'stringsUnique';
 

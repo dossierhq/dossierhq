@@ -1,13 +1,20 @@
 import type {
   AdminClient,
   AdminEntity,
+  AdminExceptionClient,
   EntityReference,
   Location,
   RichText,
   ValueItem,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminClient = AdminClient<
+  AllAdminEntities,
+  AppAdminUniqueIndexes,
+  AppAdminExceptionClient
+>;
+
+export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 

@@ -4,7 +4,7 @@ import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 import type {
-  AppPublishedClient,
+  AppPublishedExceptionClient,
   PublishedArticleTocItem,
   PublishedTocItem,
 } from '../../utils/SchemaTypes';
@@ -20,10 +20,8 @@ interface Props {
 }
 
 export default async function Layout({ children }: Props) {
-  const publishedClient = await getPublishedClientForServerComponent();
-  const connection = (
-    await publishedClient.searchEntities({ entityTypes: ['Chapter'] })
-  ).valueOrThrow();
+  const publishedClient = (await getPublishedClientForServerComponent()).toExceptionClient();
+  const connection = await publishedClient.searchEntities({ entityTypes: ['Chapter'] });
 
   //TODO for now we only support one chapter
   const chapter = connection?.edges[0].node.valueOrThrow() ?? null;
@@ -75,7 +73,7 @@ function ChapterItem({
   publishedClient,
 }: {
   item: PublishedTocItem;
-  publishedClient: AppPublishedClient;
+  publishedClient: AppPublishedExceptionClient;
 }) {
   return (
     <>
@@ -99,9 +97,9 @@ async function ArticleItem({
   publishedClient,
 }: {
   item: PublishedArticleTocItem;
-  publishedClient: AppPublishedClient;
+  publishedClient: AppPublishedExceptionClient;
 }) {
-  const entity = (await publishedClient.getEntity(item.article)).valueOrThrow();
+  const entity = await publishedClient.getEntity(item.article);
   assertIsPublishedArticle(entity);
   const isOverview = entity.fields.slug === 'overview';
 
