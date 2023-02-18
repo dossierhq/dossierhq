@@ -54,10 +54,10 @@
     "@storybook/react": "~7.0.0-beta.36",
     "@storybook/react-vite": "~7.0.0-beta.36",
     "@types/lodash": "~4.14.191",
-    "@types/react": "~18.0.27",
-    "@types/react-dom": "~18.0.10",
-    "@typescript-eslint/eslint-plugin": "~5.51.0",
-    "@typescript-eslint/parser": "~5.51.0",
+    "@types/react": "~18.0.28",
+    "@types/react-dom": "~18.0.11",
+    "@typescript-eslint/eslint-plugin": "~5.52.0",
+    "@typescript-eslint/parser": "~5.52.0",
     "@vitejs/plugin-react": "~3.1.0",
     "bulma": "~0.9.4",
     "eslint": "~8.34.0",
@@ -66,11 +66,11 @@
     "eslint-plugin-storybook": "~0.6.10",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.8.4",
-    "sass": "~1.58.0",
+    "sass": "~1.58.3",
     "sass-loader": "~13.2.0",
     "storybook": "~7.0.0-beta.36",
     "svgo": "~3.0.2",
     "typescript": "~4.9.5",
-    "vite": "~4.1.1"
+    "vite": "~4.1.2"
   }
 }

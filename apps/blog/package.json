@@ -43,10 +43,10 @@
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@types/react": "~18.0.27",
+    "@types/react": "~18.0.28",
     "@types/sql.js": "~1.4.4",
     "@types/sqlite3": "~3.1.8",
-    "@typescript-eslint/eslint-plugin": "~5.51.0",
+    "@typescript-eslint/eslint-plugin": "~5.52.0",
     "dotenv": "~16.0.3",
     "eslint": "~8.34.0",
     "eslint-config-next": "~13.1.6",
