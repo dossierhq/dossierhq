@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Move name field in schema editor from field to entity spec.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

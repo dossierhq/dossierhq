@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Handle change to name field in schema.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
