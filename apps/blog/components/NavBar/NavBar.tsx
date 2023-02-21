@@ -11,15 +11,7 @@ import { BrowserUrls } from '../../utils/BrowserUrls';
 export function NavBar({
   current,
 }: {
-  current:
-    | 'home'
-    | 'docs'
-    | 'blog'
-    | 'admin-entities'
-    | 'published-entities'
-    | 'schema'
-    | 'graphiql'
-    | 'voyager';
+  current: 'home' | 'docs' | 'blog' | 'admin-entities' | 'published-entities' | 'schema';
 }) {
   const [active, setActive] = useState(false);
   return (
@@ -51,12 +43,6 @@ export function NavBar({
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'schema'}>
               {NavItemRender('Schema', BrowserUrls.schemaEditor)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'graphiql'}>
-              {NavItemRender('GraphiQL', BrowserUrls.graphiql)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'voyager'}>
-              {NavItemRender('Voyager', BrowserUrls.voyager)}
             </DesignNavbar.Item>
           </>
         ) : null}

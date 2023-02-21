@@ -35,7 +35,7 @@ export default function GraphiQLPage(): JSX.Element {
   return (
     <>
       <Head>
-        <title>GraphiQL | Blog</title>
+        <title>GraphiQL</title>
       </Head>
       <FullscreenContainer>
         <FullscreenContainer.Row fullWidth>

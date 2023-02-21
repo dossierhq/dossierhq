@@ -9,4 +9,6 @@ export const BrowserUrls = {
   publishedEntityDisplay: (ids: string[]): string =>
     `/dossier/published-entities/display?id=${ids.join('&id=')}`,
   schemaEditor: '/dossier/schema',
+  graphiql: '/dossier/graphiql',
+  voyager: '/dossier/voyager',
 };

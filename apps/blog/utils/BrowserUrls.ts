@@ -12,14 +12,12 @@ export const BrowserUrls = {
   glossary: '/docs/glossary',
   glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
   github: 'https://github.com/dossierhq/dossierhq#readme',
-  graphiql: '/admin/graphiql',
   limitations: '/docs/limitations',
   playground: () => ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),
   publishedEntities: '/admin/published-entities',
   publishedEntityDisplay: (ids: string[]): string =>
     `/admin/published-entities/display?id=${ids.join('&id=')}`,
   schemaEditor: '/admin/schema',
-  voyager: '/admin/voyager',
 };
 
 function ensureEnvVar(value: string | undefined): string {

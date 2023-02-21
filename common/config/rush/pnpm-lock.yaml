@@ -12,7 +12,6 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/design-ssr': workspace:*
-      '@dossierhq/graphql': workspace:*
       '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
@@ -27,8 +26,6 @@ importers:
       dotenv: ~16.0.3
       eslint: ~8.34.0
       eslint-config-next: ~13.1.6
-      graphql: ~16.6.0
-      graphql-voyager: ~1.0.0-rc.31
       leaflet: ~1.9.3
       lexical: 0.7.7
       next: ~13.1.6
@@ -47,14 +44,11 @@ importers:
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
       '@dossierhq/design-ssr': link:../../libraries/design-ssr
-      '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sql.js': link:../../libraries/sql.js
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
-      graphql: 16.6.0
-      graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
       leaflet: 1.9.3
       lexical: 0.7.7
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
@@ -326,6 +320,7 @@ importers:
       '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
+      '@dossierhq/graphql': workspace:*
       '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
@@ -335,6 +330,8 @@ importers:
       better-sqlite3: ~8.1.0
       eslint: ~8.34.0
       eslint-config-next: ~13.1.6
+      graphql: ~16.6.0
+      graphql-voyager: ~1.0.0-rc.31
       leaflet: ~1.9.3
       next: ~13.1.6
       prettier: 2.8.4
@@ -345,10 +342,13 @@ importers:
       '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
+      '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
       better-sqlite3: 8.1.0
+      graphql: 16.6.0
+      graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
       leaflet: 1.9.3
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -3841,7 +3841,7 @@ packages:
   /@material-ui/core/3.9.4_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-r8QFLSexcYZbnqy/Hn4v8xzmAJV41yaodUVjmbGLi1iGDLG3+W941hEtEiBmxTRRqv2BdK3r4ijILcqKmDv/Sw==}
     engines: {node: '>=6.0.0'}
-    deprecated: 'You can now upgrade to @mui/material. See the guide: https://mui.com/guides/migration-v4/'
+    deprecated: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
     peerDependencies:
       react: ^16.3.0
       react-dom: ^16.3.0

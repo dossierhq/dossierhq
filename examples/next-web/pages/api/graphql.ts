@@ -4,8 +4,8 @@ import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { handleRequest, sendMethodNotAllowedError } from '../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../utils/ServerUtils';
+import { handleRequest, sendMethodNotAllowedError } from '../../utils/HandlerUtils';
 
 let graphQLSchema: GraphQLSchema | null = null;
 
