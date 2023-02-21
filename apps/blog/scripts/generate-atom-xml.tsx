@@ -109,7 +109,7 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
     }
   }
 
-  blogPosts.sort((a, b) => a.fields.publishDate.localeCompare(b.fields.publishDate));
+  blogPosts.sort((a, b) => a.fields.publishedDate.localeCompare(b.fields.publishedDate));
 
   const authorIds = new Set<string>();
   blogPosts.forEach((post) => post.fields.authors?.forEach((author) => authorIds.add(author.id)));
@@ -160,14 +160,17 @@ async function generateBlogEntry(
     </>
   );
 
+  const updated = new Date(blogPost.fields.updatedDate ?? blogPost.fields.publishedDate);
+
   return `  <entry>
     <title>${blogPost.fields.title}</title>
     <link href="${BrowserUrls.blogPost(blogPost.fields.slug)}" />
     <id>${hostname}${BrowserUrls.blogPost(blogPost.fields.slug)}</id>
 ${authors.map((author) => `    <author><name>${author.fields.name}</name></author>`).join('\n')}
-    <updated>${new Date(blogPost.fields.publishDate).toISOString()}</updated>
+    <updated>${updated.toISOString()}</updated>
+    <published>${new Date(blogPost.fields.publishedDate).toISOString()}</published>
     <content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">${content}</div></content>
-</entry>`;
+  </entry>`;
 }
 
 function FeedCloudinaryImage(

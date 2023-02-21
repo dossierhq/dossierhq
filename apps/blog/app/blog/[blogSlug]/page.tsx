@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { blogSlug: string } })
         {authors.length > 0 ? (
           <Text textStyle="subtitle1">By {authors.map((it) => it.fields.name).join(', ')}</Text>
         ) : null}
-        <DateDisplay date={new Date(blogPost.fields.publishDate)} />
+        <DateDisplay date={new Date(blogPost.fields.publishedDate)} />
       </div>
       <section className={toSpacingClassName({ marginHorizontal: 2 })}>
         <ServerRichTextRenderer richText={blogPost.fields.body} publishedClient={publishedClient} />

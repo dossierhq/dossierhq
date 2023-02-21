@@ -56,7 +56,7 @@ function BlogCard({
           <Text as="h2" textStyle="headline4">
             {blogPost.fields.title}
           </Text>
-          <DateDisplay date={new Date(blogPost.fields.publishDate)} />
+          <DateDisplay date={new Date(blogPost.fields.publishedDate)} />
           {authors.length > 0 ? (
             <Text textStyle="subtitle1">By {authors.map((it) => it.fields.name).join(', ')}</Text>
           ) : null}

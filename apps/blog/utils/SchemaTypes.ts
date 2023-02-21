@@ -68,7 +68,8 @@ export function assertIsAdminAuthor(
 export interface AdminBlogPostFields {
   title: string | null;
   slug: string | null;
-  publishDate: string | null;
+  publishedDate: string | null;
+  updatedDate: string | null;
   authors: EntityReference[] | null;
   hero: AdminCloudinaryImage | null;
   body: RichText | null;
@@ -260,7 +261,8 @@ export function assertIsPublishedAuthor(
 export interface PublishedBlogPostFields {
   title: string;
   slug: string;
-  publishDate: string;
+  publishedDate: string;
+  updatedDate: string | null;
   authors: EntityReference[] | null;
   hero: PublishedCloudinaryImage;
   body: RichText;

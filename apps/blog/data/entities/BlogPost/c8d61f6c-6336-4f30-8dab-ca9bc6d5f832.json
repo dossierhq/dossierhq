@@ -9,7 +9,7 @@
   "fields": {
     "title": "Hello world",
     "slug": "hello-world",
-    "publishDate": "2023-02-07T16:16Z",
+    "publishedDate": "2023-02-07T16:16Z",
     "authors": [
       {
         "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"

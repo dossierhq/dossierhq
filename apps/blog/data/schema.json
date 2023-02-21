@@ -102,10 +102,20 @@
           "index": "blogSlug"
         },
         {
-          "name": "publishDate",
+          "name": "publishedDate",
           "type": "String",
           "list": false,
           "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": "date",
+          "index": null
+        },
+        {
+          "name": "updatedDate",
+          "type": "String",
+          "list": false,
+          "required": false,
           "adminOnly": false,
           "multiline": false,
           "matchPattern": "date",
