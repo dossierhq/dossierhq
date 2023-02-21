@@ -38,6 +38,10 @@ tr.is-sticky-row :is(td, th),
   aspect-ratio: 1;
 }
 
+.is-aspect-16-9 {
+  aspect-ratio: 16/9;
+}
+
 .is-absolute {
   position: absolute;
 }
@@ -115,6 +119,12 @@ tr.is-sticky-row :is(td, th),
 .card-footer-button {
   white-space: normal;
   height: auto;
+}
+
+.card-media {
+  border-top-left-radius: $card-radius;
+  border-top-right-radius: $card-radius;
+  overflow: clip;
 }
 
 .dialog {

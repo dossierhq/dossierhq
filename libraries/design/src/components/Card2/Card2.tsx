@@ -39,6 +39,10 @@ interface CardHeaderIconButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+interface CardMediaProps {
+  children?: ReactNode;
+}
+
 interface CardContentProps {
   style?: React.CSSProperties;
   noPadding?: boolean;
@@ -69,6 +73,7 @@ interface CardComponent extends FunctionComponent<CardProps> {
     context?: unknown
   ) => JSX.Element;
   HeaderIconButton: FunctionComponent<CardHeaderIconButtonProps>;
+  Media: FunctionComponent<CardMediaProps>;
   Content: FunctionComponent<CardContentProps>;
   Footer: FunctionComponent<CardFooterProps>;
   FooterButton: FunctionComponent<CardFooterButtonProps>;
@@ -165,6 +170,11 @@ Card2.HeaderIconButton = ({ icon, onClick }: CardHeaderIconButtonProps) => {
   );
 };
 Card2.HeaderIconButton.displayName = 'Card2.HeaderIconButton';
+
+Card2.Media = ({ children }: CardMediaProps) => {
+  return <div className="card-media">{children}</div>;
+};
+Card2.Media.displayName = 'Card2.Media';
 
 Card2.Content = ({ style, noPadding, children }: CardContentProps) => {
   return (

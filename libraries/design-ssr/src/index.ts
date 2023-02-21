@@ -8,7 +8,7 @@ export { Text } from './components/Text/Text.js';
 export { LexicalTheme } from './config/LexicalTheme.js';
 export { toClassName } from './utils/ClassNameUtils.js';
 export { toFlexItemClassName } from './utils/FlexboxUtils.js';
-export { toSpacingClassName } from './utils/LayoutPropsUtils.js';
+export { toSizeClassName, toSpacingClassName } from './utils/LayoutPropsUtils.js';
 export { toTextStyleClassName } from './utils/TextStylePropsUtils.js';
 
 export const ClassName = { 'rich-text': 'rich-text' } as const;

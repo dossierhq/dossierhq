@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { toSizeClassName } from '../../utils/LayoutPropsUtils.js';
 import { Text } from '../Text/Text.js';
 import { Card2 } from './Card2.js';
 
@@ -148,6 +149,22 @@ export const CloseButton: Story = {
           <Card2.HeaderIconButton icon="close" onClick={console.log} />
         </Card2.Header>
         <Card2.Content>Content</Card2.Content>
+      </>
+    ),
+  },
+};
+
+export const Media: Story = {
+  args: {
+    children: (
+      <>
+        <Card2.Media>
+          <div
+            className={toSizeClassName({ aspectRatio: '16/9' })}
+            style={{ backgroundColor: '#ccc', width: '100%' }}
+          />
+        </Card2.Media>
+        <Card2.Content>Lorem ipsum lorem ipsum</Card2.Content>
       </>
     ),
   },

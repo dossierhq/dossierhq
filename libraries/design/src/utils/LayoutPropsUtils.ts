@@ -48,6 +48,7 @@ const maxWidthToClassNameMap = {
 
 const aspectRatioClassNameMap = {
   '1/1': 'is-aspect-1',
+  '16/9': 'is-aspect-16-9',
 };
 
 export interface SizeProps {
