@@ -245,6 +245,8 @@ export interface AdminExceptionClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
   TUniqueIndex extends string = string
 > {
+  client: Readonly<AdminClient<TAdminEntity, TUniqueIndex>>;
+
   getSchemaSpecification(): Promise<AdminSchemaSpecification>;
 
   updateSchemaSpecification(
@@ -739,7 +741,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 }
 
 class AdminExceptionClientWrapper implements AdminExceptionClient {
-  private readonly client: AdminClient;
+  readonly client: AdminClient;
 
   constructor(client: AdminClient) {
     this.client = client;

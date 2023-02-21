@@ -34,6 +34,7 @@ import { getImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
 import type {
   AllPublishedEntities,
   AppPublishedClient,
+  AppPublishedExceptionClient,
   PublishedAuthor,
   PublishedBlogPost,
   PublishedCloudinaryImage,
@@ -75,7 +76,7 @@ async function initializeServer() {
   return await createBlogServer(databaseAdapterResult.value);
 }
 
-async function generateAtomFeed(publishedClient: AppPublishedClient) {
+async function generateAtomFeed(publishedClient: AppPublishedExceptionClient) {
   const hostname = 'https://www.dossierhq.dev';
   const feed = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="${hostname}/">
@@ -92,11 +93,11 @@ ${(await generateBlogEntries(hostname, publishedClient)).join('\n')}
   return feed;
 }
 
-async function generateBlogEntries(hostname: string, publishedClient: AppPublishedClient) {
+async function generateBlogEntries(hostname: string, publishedClient: AppPublishedExceptionClient) {
   const blogPosts: PublishedBlogPost[] = [];
 
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.searchEntities({ entityTypes: ['BlogPost'] }, paging)
+    publishedClient.client.searchEntities({ entityTypes: ['BlogPost'] }, paging)
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {
@@ -113,9 +114,7 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
 
   const authorIds = new Set<string>();
   blogPosts.forEach((post) => post.fields.authors?.forEach((author) => authorIds.add(author.id)));
-  const authorResults = (
-    await publishedClient.getEntities([...authorIds].map((id) => ({ id })))
-  ).valueOrThrow();
+  const authorResults = await publishedClient.getEntities([...authorIds].map((id) => ({ id })));
 
   const authors: Record<string, PublishedAuthor> = {};
   authorResults.forEach((result) => {
@@ -135,13 +134,13 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
 
 async function generateBlogEntry(
   hostname: string,
-  publishedClient: AppPublishedClient,
+  publishedClient: AppPublishedExceptionClient,
   blogPost: PublishedBlogPost,
   authors: PublishedAuthor[]
 ) {
   const referencedEntities: Record<string, AllPublishedEntities> = {};
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.searchEntities({ linksFrom: { id: blogPost.id } }, paging)
+    publishedClient.client.searchEntities({ linksFrom: { id: blogPost.id } }, paging)
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {
@@ -335,9 +334,9 @@ async function main() {
   const { server } = (await initializeServer()).valueOrThrow();
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
-    const publishedClient = server.createPublishedClient<AppPublishedClient>(
-      async () => authResult
-    );
+    const publishedClient = server
+      .createPublishedClient<AppPublishedClient>(async () => authResult)
+      .toExceptionClient();
 
     const atomFeed = await generateAtomFeed(publishedClient);
     const filename = 'public/atom.xml';

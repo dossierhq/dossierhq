@@ -92,6 +92,8 @@ export interface PublishedExceptionClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
   TUniqueIndex extends string = string
 > {
+  client: Readonly<PublishedClient<TPublishedEntity, TUniqueIndex>>;
+
   getSchemaSpecification(): Promise<PublishedSchemaSpecification>;
 
   getEntity(
@@ -318,7 +320,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 }
 
 class PublishedExceptionClientWrapper implements PublishedExceptionClient {
-  private readonly client: PublishedClient;
+  readonly client: PublishedClient;
 
   constructor(client: PublishedClient) {
     this.client = client;
