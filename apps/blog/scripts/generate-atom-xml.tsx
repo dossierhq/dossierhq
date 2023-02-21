@@ -3,6 +3,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
 import {
+  assertIsDefined,
   createConsoleLogger,
   getAllPagesForConnection,
   isRichTextCodeHighlightNode,
@@ -27,7 +28,6 @@ import { writeFile } from 'node:fs/promises';
 import type { Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import * as Sqlite from 'sqlite3';
-import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig.js';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import { getImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
@@ -176,8 +176,11 @@ function FeedCloudinaryImage(
   props: { image: PublishedCloudinaryImage } & ({ height: 400 } | { aspectRatio: '16/9' })
 ) {
   const { image } = props;
+
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  assertIsDefined(cloudName);
   const cld = new Cloudinary({
-    cloud: { cloudName: CLOUDINARY_CLOUD_NAME },
+    cloud: { cloudName },
     url: { forceVersion: false, analytics: false },
   });
 
