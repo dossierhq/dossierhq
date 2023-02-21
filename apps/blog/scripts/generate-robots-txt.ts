@@ -8,7 +8,7 @@ import * as Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import type { AppPublishedClient } from '../utils/SchemaTypes.js';
-import { assertIsPublishedArticle } from '../utils/SchemaTypes.js';
+import { assertIsPublishedArticle, assertIsPublishedBlogPost } from '../utils/SchemaTypes.js';
 import { createBlogServer } from '../utils/SharedServerUtils.js';
 
 // prefer .env.local file if exists, over .env file
@@ -45,9 +45,10 @@ async function collectUrls(publishedClient: AppPublishedClient) {
   const urls: string[] = [];
   urls.push(hostname);
 
-  urls.push(`${hostname}${BrowserUrls.docs}`);
   urls.push(...(await articleUrls(hostname, publishedClient)));
   urls.push(`${hostname}${BrowserUrls.glossary}`);
+  urls.push(`${hostname}${BrowserUrls.blog}`);
+  urls.push(...(await blogUrls(hostname, publishedClient)));
 
   urls.sort();
 
@@ -65,6 +66,24 @@ async function articleUrls(hostname: string, publishedClient: AppPublishedClient
           const node = edge.node.value;
           assertIsPublishedArticle(node);
           result.push(`${hostname}${BrowserUrls.article(node.fields.slug)}`);
+        }
+      }
+    }
+  }
+  return result;
+}
+
+async function blogUrls(hostname: string, publishedClient: AppPublishedClient) {
+  const result: string[] = [];
+  for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
+    publishedClient.searchEntities({ entityTypes: ['BlogPost'] }, paging)
+  )) {
+    if (page.isOk()) {
+      for (const edge of page.value.edges) {
+        if (edge.node.isOk()) {
+          const node = edge.node.value;
+          assertIsPublishedBlogPost(node);
+          result.push(`${hostname}${BrowserUrls.blogPost(node.fields.slug)}`);
         }
       }
     }
