@@ -8,6 +8,7 @@ import {
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
   isRichTextElementNode,
+  isRichTextEntityLinkNode,
   isRichTextHeadingNode,
   isRichTextLineBreakNode,
   isRichTextLinkNode,
@@ -31,6 +32,7 @@ import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import { getImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
 import type {
+  AllPublishedEntities,
   AppPublishedClient,
   PublishedAuthor,
   PublishedBlogPost,
@@ -39,7 +41,9 @@ import type {
 import {
   assertIsPublishedAuthor,
   assertIsPublishedBlogPost,
+  isPublishedArticle,
   isPublishedCloudinaryImage,
+  isPublishedGlossaryTerm,
 } from '../utils/SchemaTypes.js';
 import { createBlogServer } from '../utils/SharedServerUtils.js';
 
@@ -118,23 +122,43 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
     authors[author.id] = author;
   });
 
-  return blogPosts.map((blogPost) => {
-    const blogPostAuthors =
-      blogPost.fields.authors?.map((reference) => authors[reference.id]) ?? [];
-    return generateBlogEntry(hostname, publishedClient, blogPost, blogPostAuthors);
-  });
+  return Promise.all(
+    blogPosts.map((blogPost) => {
+      const blogPostAuthors =
+        blogPost.fields.authors?.map((reference) => authors[reference.id]) ?? [];
+      return generateBlogEntry(hostname, publishedClient, blogPost, blogPostAuthors);
+    })
+  );
 }
 
-function generateBlogEntry(
+async function generateBlogEntry(
   hostname: string,
   publishedClient: AppPublishedClient,
   blogPost: PublishedBlogPost,
   authors: PublishedAuthor[]
 ) {
+  const referencedEntities: Record<string, AllPublishedEntities> = {};
+  for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
+    publishedClient.searchEntities({ linksFrom: { id: blogPost.id } }, paging)
+  )) {
+    if (page.isOk()) {
+      for (const edge of page.value.edges) {
+        if (edge.node.isOk()) {
+          const node = edge.node.value;
+          referencedEntities[node.id] = node;
+        }
+      }
+    }
+  }
+
   const content = ReactDOMServer.renderToStaticMarkup(
     <>
       <FeedCloudinaryImage image={blogPost.fields.hero} aspectRatio="16/9" />
-      <FeedRichTextRenderer richText={blogPost.fields.body} />
+      <FeedRichTextRenderer
+        baseUrl={hostname}
+        richText={blogPost.fields.body}
+        entities={referencedEntities}
+      />
     </>
   );
 
@@ -190,21 +214,35 @@ function FeedCloudinaryImage(
   }
 }
 
-function FeedRichTextRenderer({ richText }: { richText: RichText }) {
-  const rendered = renderNode(richText.root, null);
+interface FeedRenderContext {
+  entities: Record<string, AllPublishedEntities>;
+  baseUrl: string;
+}
+
+function FeedRichTextRenderer({
+  richText,
+  entities,
+  baseUrl,
+}: {
+  richText: RichText;
+  entities: Record<string, AllPublishedEntities>;
+  baseUrl: string;
+}) {
+  const context: FeedRenderContext = { entities, baseUrl };
+  const rendered = renderNode(context, richText.root, null);
   return rendered as JSX.Element;
 }
 
-function renderNode(node: RichTextNode, key: Key | null): ReactNode {
+function renderNode(context: FeedRenderContext, node: RichTextNode, key: Key | null): ReactNode {
   if (isRichTextRootNode(node)) {
-    return renderChildren(node);
+    return renderChildren(context, node);
   }
   if (isRichTextLineBreakNode(node)) {
     return <br key={key} />;
   }
 
   if (isRichTextCodeNode(node)) {
-    return <code key={key}>{renderChildren(node)}</code>;
+    return <code key={key}>{renderChildren(context, node)}</code>;
   }
 
   if (isRichTextCodeHighlightNode(node)) {
@@ -212,7 +250,7 @@ function renderNode(node: RichTextNode, key: Key | null): ReactNode {
   }
 
   if (isRichTextParagraphNode(node)) {
-    return <p key={key}>{renderChildren(node)}</p>;
+    return <p key={key}>{renderChildren(context, node)}</p>;
   }
 
   if (isRichTextTextNode(node)) {
@@ -226,26 +264,50 @@ function renderNode(node: RichTextNode, key: Key | null): ReactNode {
     return formattedText;
   }
 
+  if (isRichTextEntityLinkNode(node)) {
+    const entity = context.entities[node.reference.id];
+    if (entity) {
+      if (isPublishedGlossaryTerm(entity)) {
+        const description = richTextToPlainText(entity.fields.description);
+        return (
+          <a
+            key={key}
+            href={context.baseUrl + BrowserUrls.glossaryTerm(entity.fields.slug)}
+            title={description}
+          >
+            {renderChildren(context, node)}
+          </a>
+        );
+      } else if (isPublishedArticle(entity)) {
+        return (
+          <a key={key} href={context.baseUrl + BrowserUrls.article(entity.fields.slug)}>
+            {renderChildren(context, node)}
+          </a>
+        );
+      }
+    }
+  }
+
   if (isRichTextHeadingNode(node)) {
     const HeadingTag = node.tag;
-    return <HeadingTag key={key}>{renderChildren(node)}</HeadingTag>;
+    return <HeadingTag key={key}>{renderChildren(context, node)}</HeadingTag>;
   }
 
   if (isRichTextLinkNode(node)) {
     return (
       <a key={key} href={node.url}>
-        {renderChildren(node)}
+        {renderChildren(context, node)}
       </a>
     );
   }
 
   if (isRichTextListNode(node)) {
     const Tag = node.tag === 'ol' ? 'ol' : 'ul';
-    return <Tag key={key}>{renderChildren(node)}</Tag>;
+    return <Tag key={key}>{renderChildren(context, node)}</Tag>;
   }
 
   if (isRichTextListItemNode(node)) {
-    return <li key={key}>{renderChildren(node)}</li>;
+    return <li key={key}>{renderChildren(context, node)}</li>;
   }
 
   if (isRichTextValueItemNode(node)) {
@@ -256,13 +318,26 @@ function renderNode(node: RichTextNode, key: Key | null): ReactNode {
 
   // fallback for unknown element nodes
   if (isRichTextElementNode(node)) {
-    return renderChildren(node);
+    return renderChildren(context, node);
   }
   return null;
 }
 
-function renderChildren(node: RichTextElementNode): ReactNode[] {
-  return node.children.map((child, index) => renderNode(child, index));
+function renderChildren(context: FeedRenderContext, node: RichTextElementNode): ReactNode[] {
+  return node.children.map((child, index) => renderNode(context, child, index));
+}
+
+function richTextToPlainText(richText: RichText): string {
+  function visitNode(node: RichTextNode): string {
+    if (isRichTextTextNode(node)) {
+      return node.text;
+    }
+    if (isRichTextElementNode(node)) {
+      return node.children.map(visitNode).join('');
+    }
+    return '';
+  }
+  return visitNode(richText.root);
 }
 
 async function main() {
