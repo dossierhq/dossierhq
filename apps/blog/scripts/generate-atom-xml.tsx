@@ -79,10 +79,12 @@ async function generateAtomFeed(publishedClient: AppPublishedClient) {
   const hostname = 'https://www.dossierhq.dev';
   const feed = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="${hostname}/">
-  <title>Dossier Blog</title>
+  <title>Dossier blog</title>
   <link href="/atom.xml" rel="self" />
   <link href="${BrowserUrls.blog}" />
   <id>${hostname}/</id>
+  <icon>/favicon.svg</icon>
+  <logo>/logo-large.svg</logo>
   <updated>${new Date().toISOString()}</updated>
 ${(await generateBlogEntries(hostname, publishedClient)).join('\n')}
 </feed>
