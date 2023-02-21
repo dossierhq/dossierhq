@@ -1,5 +1,6 @@
 export { Button } from './components/Button/Button.js';
 export { Card2 } from './components/Card2Server/Card2Server.js';
+export { DateDisplay } from './components/DateDisplay/DateDisplay.js';
 export { FullscreenContainer } from './components/FullscreenContainerServer/FullscreenContainerServer.js';
 export { Menu } from './components/Menu/Menu.js';
 export { Message } from './components/Message/Message.js';
