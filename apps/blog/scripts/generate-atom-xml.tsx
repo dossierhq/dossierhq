@@ -207,14 +207,7 @@ function FeedCloudinaryImage(
     );
   } else {
     const { src, srcSet } = getImageUrlsForLimitFit(cld, image.publicId, 638, 359);
-    return (
-      <img
-        alt={image.alt ?? ''}
-        src={src}
-        srcSet={srcSet}
-        style={{ aspectRatio: props.aspectRatio }}
-      />
-    );
+    return <img alt={image.alt ?? ''} src={src} srcSet={srcSet} />;
   }
 }
 
