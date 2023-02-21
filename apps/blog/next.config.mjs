@@ -7,13 +7,6 @@ const config = {
   images: {
     domains: ['res.cloudinary.com'],
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Handle fs require in sql.js
-      config.resolve.fallback.fs = false;
-    }
-    return config;
-  },
 };
 
 export default config;

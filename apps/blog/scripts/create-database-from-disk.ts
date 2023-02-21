@@ -1,31 +1,34 @@
 #!/usr/bin/env -S npx ts-node -T --esm
 import type { AdminSchemaSpecificationUpdate, Logger } from '@dossierhq/core';
-import { createConsoleLogger, ok } from '@dossierhq/core';
-import { createSqlJsAdapter } from '@dossierhq/sql.js';
+import { createConsoleLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import { randomUUID } from 'node:crypto';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import fs from 'node:fs';
-import * as SqlJs from 'sql.js';
+import * as Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
 import { createBlogServer } from '../utils/SharedServerUtils.js';
 
+// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
+const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+
 const DATA_DIR = new URL('../data', import.meta.url).pathname;
 
-async function initializeServer(logger: Logger) {
-  const SQL = await SqlJs.default();
-  const db = new SQL.Database();
-  const databaseAdapterResult = await createSqlJsAdapter({ logger }, db, {
+async function initializeServer(logger: Logger, filename: string) {
+  const context = { logger };
+  const databaseResult = await createDatabase(context, SqliteDatabase, {
+    filename,
+  });
+  if (databaseResult.isError()) return databaseResult;
+
+  const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
     migrate: true,
-    fts: { version: 'fts4' },
-    journalMode: 'memory',
+    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with create-database-from-disk.ts
+    journalMode: 'wal',
   });
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
-  const serverResult = await createBlogServer(databaseAdapterResult.value);
-  if (serverResult.isError()) return serverResult;
-
-  return ok({ server: serverResult.value.server, database: db });
+  return await createBlogServer(databaseAdapterResult.value);
 }
 
 async function updateSchemaSpecification(server: Server, filename: string) {
@@ -42,9 +45,8 @@ async function updateSchemaSpecification(server: Server, filename: string) {
 }
 
 async function main(filename: string) {
-  polyfillCrypto();
   const logger = createConsoleLogger(console);
-  const { server, database } = (await initializeServer(logger)).valueOrThrow();
+  const { server } = (await initializeServer(logger, filename)).valueOrThrow();
   try {
     (await updateSchemaSpecification(server, `${DATA_DIR}/schema.json`)).throwIfError();
 
@@ -54,21 +56,11 @@ async function main(filename: string) {
     if (entities.isOk()) {
       console.log(`Loaded ${entities.value.length} entities`);
       console.log(`Writing database to ${filename}`);
-      fs.writeFileSync(filename, Buffer.from(database.export()));
     } else {
       console.log('Failed loading entities', entities);
     }
   } finally {
     (await server.shutdown()).throwIfError();
-  }
-}
-
-function polyfillCrypto() {
-  // This package is meant to be run in a browser, polyfill crypto for Node
-  if (!globalThis.crypto) {
-    globalThis.crypto = {
-      randomUUID,
-    } as Crypto;
   }
 }
 

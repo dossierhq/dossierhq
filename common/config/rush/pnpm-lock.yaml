@@ -15,12 +15,10 @@ importers:
       '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
-      '@dossierhq/sql.js': workspace:*
       '@dossierhq/sqlite3': workspace:*
       '@dossierhq/typescript-generator': workspace:*
       '@types/react': ~18.0.28
       '@types/react-dom': ~18.0.11
-      '@types/sql.js': ~1.4.4
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ~5.52.0
       dotenv: ~16.0.3
@@ -32,7 +30,6 @@ importers:
       prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
-      sql.js: ~1.8.0
       sqlite3: ~5.1.2
       ts-node: ~10.9.1
       tslib: ~2.5.0
@@ -47,21 +44,18 @@ importers:
       '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
-      '@dossierhq/sql.js': link:../../libraries/sql.js
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       leaflet: 1.9.3
       lexical: 0.7.7
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      sql.js: 1.8.0
       sqlite3: 5.1.4
       tslib: 2.5.0
     devDependencies:
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      '@types/sql.js': 1.4.4
       '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
       dotenv: 16.0.3
