@@ -58,6 +58,105 @@
       ]
     },
     {
+      "name": "Author",
+      "adminOnly": false,
+      "authKeyPattern": "none",
+      "nameField": "name",
+      "fields": [
+        {
+          "name": "name",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": null,
+          "index": null
+        }
+      ]
+    },
+    {
+      "name": "BlogPost",
+      "adminOnly": false,
+      "authKeyPattern": "none",
+      "nameField": "title",
+      "fields": [
+        {
+          "name": "title",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": null,
+          "index": null
+        },
+        {
+          "name": "slug",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": "slug",
+          "index": "blogSlug"
+        },
+        {
+          "name": "publishDate",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": "date",
+          "index": null
+        },
+        {
+          "name": "authors",
+          "type": "Entity",
+          "list": true,
+          "required": false,
+          "adminOnly": false,
+          "entityTypes": [
+            "Author"
+          ]
+        },
+        {
+          "name": "hero",
+          "type": "ValueItem",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "valueTypes": [
+            "CloudinaryImage"
+          ]
+        },
+        {
+          "name": "body",
+          "type": "RichText",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "richTextNodes": [
+            "root",
+            "paragraph",
+            "text",
+            "linebreak",
+            "valueItem",
+            "entityLink",
+            "link"
+          ],
+          "entityTypes": [],
+          "linkEntityTypes": [
+            "Article"
+          ],
+          "valueTypes": [
+            "CloudinaryImage"
+          ]
+        }
+      ]
+    },
+    {
       "name": "Chapter",
       "adminOnly": false,
       "authKeyPattern": "none",
@@ -223,6 +322,10 @@
   ],
   "patterns": [
     {
+      "name": "date",
+      "pattern": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z)$"
+    },
+    {
       "name": "none",
       "pattern": "^none$"
     },
@@ -234,6 +337,10 @@
   "indexes": [
     {
       "name": "articleSlug",
+      "type": "unique"
+    },
+    {
+      "name": "blogSlug",
       "type": "unique"
     },
     {

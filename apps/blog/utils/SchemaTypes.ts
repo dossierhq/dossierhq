@@ -18,9 +18,14 @@ export type AppAdminClient = AdminClient<
 
 export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = 'articleSlug' | 'glossarySlug';
+export type AppAdminUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
-export type AllAdminEntities = AdminArticle | AdminChapter | AdminGlossaryTerm;
+export type AllAdminEntities =
+  | AdminArticle
+  | AdminAuthor
+  | AdminBlogPost
+  | AdminChapter
+  | AdminGlossaryTerm;
 
 export interface AdminArticleFields {
   title: string | null;
@@ -39,6 +44,47 @@ export function assertIsAdminArticle(
 ): asserts entity is AdminArticle {
   if (entity.info.type !== 'Article') {
     throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface AdminAuthorFields {
+  name: string | null;
+}
+
+export type AdminAuthor = AdminEntity<'Author', AdminAuthorFields, string>;
+
+export function isAdminAuthor(entity: AdminEntity<string, object>): entity is AdminAuthor {
+  return entity.info.type === 'Author';
+}
+
+export function assertIsAdminAuthor(
+  entity: AdminEntity<string, object>
+): asserts entity is AdminAuthor {
+  if (entity.info.type !== 'Author') {
+    throw new Error('Expected info.type = Author (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface AdminBlogPostFields {
+  title: string | null;
+  slug: string | null;
+  publishDate: string | null;
+  authors: EntityReference[] | null;
+  hero: AdminCloudinaryImage | null;
+  body: RichText | null;
+}
+
+export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields, string>;
+
+export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is AdminBlogPost {
+  return entity.info.type === 'BlogPost';
+}
+
+export function assertIsAdminBlogPost(
+  entity: AdminEntity<string, object>
+): asserts entity is AdminBlogPost {
+  if (entity.info.type !== 'BlogPost') {
+    throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
   }
 }
 
@@ -160,9 +206,14 @@ export type AppPublishedExceptionClient = PublishedExceptionClient<
   AppPublishedUniqueIndexes
 >;
 
-export type AppPublishedUniqueIndexes = 'articleSlug' | 'glossarySlug';
+export type AppPublishedUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
-export type AllPublishedEntities = PublishedArticle | PublishedChapter | PublishedGlossaryTerm;
+export type AllPublishedEntities =
+  | PublishedArticle
+  | PublishedAuthor
+  | PublishedBlogPost
+  | PublishedChapter
+  | PublishedGlossaryTerm;
 
 export interface PublishedArticleFields {
   title: string;
@@ -183,6 +234,51 @@ export function assertIsPublishedArticle(
 ): asserts entity is PublishedArticle {
   if (entity.info.type !== 'Article') {
     throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedAuthorFields {
+  name: string;
+}
+
+export type PublishedAuthor = PublishedEntity<'Author', PublishedAuthorFields, string>;
+
+export function isPublishedAuthor(
+  entity: PublishedEntity<string, object>
+): entity is PublishedAuthor {
+  return entity.info.type === 'Author';
+}
+
+export function assertIsPublishedAuthor(
+  entity: PublishedEntity<string, object>
+): asserts entity is PublishedAuthor {
+  if (entity.info.type !== 'Author') {
+    throw new Error('Expected info.type = Author (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedBlogPostFields {
+  title: string;
+  slug: string;
+  publishDate: string;
+  authors: EntityReference[] | null;
+  hero: PublishedCloudinaryImage;
+  body: RichText;
+}
+
+export type PublishedBlogPost = PublishedEntity<'BlogPost', PublishedBlogPostFields, string>;
+
+export function isPublishedBlogPost(
+  entity: PublishedEntity<string, object>
+): entity is PublishedBlogPost {
+  return entity.info.type === 'BlogPost';
+}
+
+export function assertIsPublishedBlogPost(
+  entity: PublishedEntity<string, object>
+): asserts entity is PublishedBlogPost {
+  if (entity.info.type !== 'BlogPost') {
+    throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
   }
 }
 

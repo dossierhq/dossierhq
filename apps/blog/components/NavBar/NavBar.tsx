@@ -38,6 +38,9 @@ export function NavBar({
         <DesignNavbar.Item active={current === 'docs'}>
           {NavItemRender('Docs', BrowserUrls.docs)}
         </DesignNavbar.Item>
+        <DesignNavbar.Item active={current === 'blog'}>
+          {NavItemRender('Blog', BrowserUrls.blog)}
+        </DesignNavbar.Item>
         {ENABLE_WEB_INTERFACE ? (
           <>
             <DesignNavbar.Item active={current === 'admin-entities'}>

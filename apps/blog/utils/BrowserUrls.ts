@@ -2,6 +2,8 @@ export const BrowserUrls = {
   home: '/',
   adminEntities: '/admin/admin-entities',
   article: (slug: string) => (slug === 'overview' ? '/docs' : `/docs/${slug}`),
+  blog: '/blog',
+  blogPost: (slug: string) => `/blog/${slug}`,
   docs: '/docs',
   editPage: (ids: string[]): string => `/admin/admin-entities/edit?id=${ids.join('&id=')}`,
   editPageNew: (entityType: string, id: string): string =>

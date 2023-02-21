@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Cloudinary } from '@cloudinary/url-gen';
 import { limitFit } from '@cloudinary/url-gen/actions/resize';
+import { toSizeClassName } from '@dossierhq/design-ssr';
 import { CLOUDINARY_CLOUD_NAME } from '../../config/CloudinaryConfig';
 import type { PublishedCloudinaryImage } from '../../utils/SchemaTypes';
 
@@ -39,12 +40,10 @@ export function CloudinaryImage(props: Props) {
     const { src, srcSet } = getImageUrlsForLimitFit(cld, image.publicId, 638, 359);
     return (
       <img
+        className={toSizeClassName({ aspectRatio: props.aspectRatio })}
         alt={image.alt ?? ''}
         src={src}
         srcSet={srcSet}
-        style={{
-          aspectRatio: props.aspectRatio,
-        }}
       />
     );
   }
