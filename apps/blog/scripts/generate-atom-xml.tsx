@@ -78,10 +78,10 @@ async function initializeServer() {
 async function generateAtomFeed(publishedClient: AppPublishedClient) {
   const hostname = 'https://www.dossierhq.dev';
   const feed = `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="${hostname}/">
   <title>Dossier Blog</title>
-  <link href="${hostname}/atom.xml" rel="self" />
-  <link href="${hostname + BrowserUrls.blog}" />
+  <link href="/atom.xml" rel="self" />
+  <link href="${BrowserUrls.blog}" />
   <id>${hostname}/</id>
   <updated>${new Date().toISOString()}</updated>
 ${(await generateBlogEntries(hostname, publishedClient)).join('\n')}
@@ -154,17 +154,13 @@ async function generateBlogEntry(
   const content = ReactDOMServer.renderToStaticMarkup(
     <>
       <FeedCloudinaryImage image={blogPost.fields.hero} aspectRatio="16/9" />
-      <FeedRichTextRenderer
-        baseUrl={hostname}
-        richText={blogPost.fields.body}
-        entities={referencedEntities}
-      />
+      <FeedRichTextRenderer richText={blogPost.fields.body} entities={referencedEntities} />
     </>
   );
 
   return `  <entry>
     <title>${blogPost.fields.title}</title>
-    <link href="${hostname}${BrowserUrls.blogPost(blogPost.fields.slug)}" />
+    <link href="${BrowserUrls.blogPost(blogPost.fields.slug)}" />
     <id>${hostname}${BrowserUrls.blogPost(blogPost.fields.slug)}</id>
 ${authors.map((author) => `    <author><name>${author.fields.name}</name></author>`).join('\n')}
     <updated>${new Date(blogPost.fields.publishDate).toISOString()}</updated>
@@ -219,19 +215,16 @@ function FeedCloudinaryImage(
 
 interface FeedRenderContext {
   entities: Record<string, AllPublishedEntities>;
-  baseUrl: string;
 }
 
 function FeedRichTextRenderer({
   richText,
   entities,
-  baseUrl,
 }: {
   richText: RichText;
   entities: Record<string, AllPublishedEntities>;
-  baseUrl: string;
 }) {
-  const context: FeedRenderContext = { entities, baseUrl };
+  const context: FeedRenderContext = { entities };
   const rendered = renderNode(context, richText.root, null);
   return rendered as JSX.Element;
 }
@@ -273,17 +266,13 @@ function renderNode(context: FeedRenderContext, node: RichTextNode, key: Key | n
       if (isPublishedGlossaryTerm(entity)) {
         const description = richTextToPlainText(entity.fields.description);
         return (
-          <a
-            key={key}
-            href={context.baseUrl + BrowserUrls.glossaryTerm(entity.fields.slug)}
-            title={description}
-          >
+          <a key={key} href={BrowserUrls.glossaryTerm(entity.fields.slug)} title={description}>
             {renderChildren(context, node)}
           </a>
         );
       } else if (isPublishedArticle(entity)) {
         return (
-          <a key={key} href={context.baseUrl + BrowserUrls.article(entity.fields.slug)}>
+          <a key={key} href={BrowserUrls.article(entity.fields.slug)}>
             {renderChildren(context, node)}
           </a>
         );
