@@ -193,7 +193,7 @@ async function renderNode(
   }
   if (isRichTextValueItemNode(node)) {
     if (isPublishedCloudinaryImage(node.data)) {
-      return <CloudinaryImage key={key} image={node.data} />;
+      return <CloudinaryImage key={key} image={node.data} height={400} />;
     }
   }
 

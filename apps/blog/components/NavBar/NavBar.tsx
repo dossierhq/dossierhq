@@ -14,6 +14,7 @@ export function NavBar({
   current:
     | 'home'
     | 'docs'
+    | 'blog'
     | 'admin-entities'
     | 'published-entities'
     | 'schema'
