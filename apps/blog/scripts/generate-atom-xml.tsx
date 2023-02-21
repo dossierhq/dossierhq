@@ -32,8 +32,8 @@ import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import { getImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
 import type {
-  AllPublishedEntities,
   AppPublishedClient,
+  AppPublishedEntity,
   AppPublishedExceptionClient,
   PublishedAuthor,
   PublishedBlogPost,
@@ -138,7 +138,7 @@ async function generateBlogEntry(
   blogPost: PublishedBlogPost,
   authors: PublishedAuthor[]
 ) {
-  const referencedEntities: Record<string, AllPublishedEntities> = {};
+  const referencedEntities: Record<string, AppPublishedEntity> = {};
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
     publishedClient.client.searchEntities({ linksFrom: { id: blogPost.id } }, paging)
   )) {
@@ -211,7 +211,7 @@ function FeedCloudinaryImage(
 }
 
 interface FeedRenderContext {
-  entities: Record<string, AllPublishedEntities>;
+  entities: Record<string, AppPublishedEntity>;
 }
 
 function FeedRichTextRenderer({
@@ -219,7 +219,7 @@ function FeedRichTextRenderer({
   entities,
 }: {
   richText: RichText;
-  entities: Record<string, AllPublishedEntities>;
+  entities: Record<string, AppPublishedEntity>;
 }) {
   const context: FeedRenderContext = { entities };
   const rendered = renderNode(context, richText.root, null);

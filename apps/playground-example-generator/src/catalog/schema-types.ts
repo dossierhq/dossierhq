@@ -9,16 +9,16 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AllAdminEntities,
+  AppAdminEntity,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
-export type AllAdminEntities =
+export type AppAdminEntity =
   | AdminBooleansEntity
   | AdminEntitiesEntity
   | AdminLocationsEntity
@@ -184,11 +184,11 @@ export function assertIsAdminStringsEntity(
 }
 
 export interface AdminValueItemsEntityFields {
-  normal: AllAdminValueItems | null;
-  required: AllAdminValueItems | null;
-  list: AllAdminValueItems[] | null;
-  requiredList: AllAdminValueItems[] | null;
-  adminOnly: AllAdminValueItems | null;
+  normal: AppAdminValueItem | null;
+  required: AppAdminValueItem | null;
+  list: AppAdminValueItem[] | null;
+  requiredList: AppAdminValueItem[] | null;
+  adminOnly: AppAdminValueItem | null;
   cloudinaryImage: AdminCloudinaryImage | null;
 }
 
@@ -212,10 +212,7 @@ export function assertIsAdminValueItemsEntity(
   }
 }
 
-export type AllAdminValueItems =
-  | AdminCloudinaryImage
-  | AdminNestedValueItem
-  | AdminStringsValueItem;
+export type AppAdminValueItem = AdminCloudinaryImage | AdminNestedValueItem | AdminStringsValueItem;
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;

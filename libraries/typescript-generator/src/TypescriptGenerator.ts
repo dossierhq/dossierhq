@@ -30,11 +30,11 @@ export function generateTypescriptForSchema({
   if (adminSchema) {
     paragraphs.push(...generateAdminClientTypes(context));
     paragraphs.push(...generateUniqueIndexesType('Admin', adminSchema.spec.indexes));
-    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entities'));
+    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entity'));
     for (const entitySpec of adminSchema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyType));
     }
-    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.valueTypes, 'Admin', 'ValueItems'));
+    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.valueTypes, 'Admin', 'ValueItem'));
     for (const valueSpec of adminSchema.spec.valueTypes) {
       paragraphs.push(...generateAdminValueType(context, valueSpec));
     }
@@ -43,13 +43,13 @@ export function generateTypescriptForSchema({
     paragraphs.push(...generatePublishedClientTypes(context));
     paragraphs.push(...generateUniqueIndexesType('Published', publishedSchema.spec.indexes));
     paragraphs.push(
-      ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entities')
+      ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entity')
     );
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       paragraphs.push(...generatePublishedEntityType(context, entitySpec, authKeyType));
     }
     paragraphs.push(
-      ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItems')
+      ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItem')
     );
     for (const valueSpec of publishedSchema.spec.valueTypes) {
       paragraphs.push(...generatePublishedValueType(context, valueSpec));
@@ -72,9 +72,9 @@ function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('AdminExceptionClient');
   return [
     '',
-    'export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
+    'export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
     '',
-    'export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;',
+    'export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;',
   ];
 }
 
@@ -83,9 +83,9 @@ function generatePublishedClientTypes(context: GeneratorContext) {
   context.coreImports.add('PublishedExceptionClient');
   return [
     '',
-    'export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
+    'export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
     '',
-    'export type AppPublishedExceptionClient = PublishedExceptionClient<AllPublishedEntities, AppPublishedUniqueIndexes>;',
+    'export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;',
   ];
 }
 
@@ -105,10 +105,10 @@ function generateAllTypesUnion(
     | AdminValueTypeSpecification[]
     | PublishedValueTypeSpecification[],
   adminOrPublished: 'Admin' | 'Published',
-  entitiesOrValueItems: 'Entities' | 'ValueItems'
+  entityOrValueItem: 'Entity' | 'ValueItem'
 ) {
   const typeDefinition = typeUnionOrNever(types.map((it) => `${adminOrPublished}${it.name}`));
-  return ['', `export type All${adminOrPublished}${entitiesOrValueItems} = ${typeDefinition};`];
+  return ['', `export type App${adminOrPublished}${entityOrValueItem} = ${typeDefinition};`];
 }
 
 function generateAdminEntityType(
@@ -275,7 +275,7 @@ function fieldType(
       if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
         type = fieldSpec.valueTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
       } else {
-        type = `All${adminOrPublished}ValueItems`;
+        type = `App${adminOrPublished}ValueItem`;
       }
       break;
   }

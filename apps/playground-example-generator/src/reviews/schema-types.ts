@@ -9,20 +9,16 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AllAdminEntities,
+  AppAdminEntity,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
-export type AllAdminEntities =
-  | AdminPersonalNote
-  | AdminPlaceOfBusiness
-  | AdminReview
-  | AdminReviewer;
+export type AppAdminEntity = AdminPersonalNote | AdminPlaceOfBusiness | AdminReview | AdminReviewer;
 
 export interface AdminPersonalNoteFields {
   note: RichText | null;
@@ -110,7 +106,7 @@ export function assertIsAdminReviewer(
   }
 }
 
-export type AllAdminValueItems = AdminAddress;
+export type AppAdminValueItem = AdminAddress;
 
 export interface AdminAddressFields {
   location: Location | null;

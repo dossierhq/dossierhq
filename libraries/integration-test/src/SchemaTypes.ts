@@ -12,16 +12,16 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AllAdminEntities,
+  AppAdminEntity,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
-export type AllAdminEntities =
+export type AppAdminEntity =
   | AdminLocations
   | AdminReadOnly
   | AdminReferences
@@ -174,8 +174,8 @@ export function assertIsAdminTitleOnly(
 }
 
 export interface AdminValueItemsFields {
-  any: AllAdminValueItems | null;
-  anyAdminOnly: AllAdminValueItems | null;
+  any: AppAdminValueItem | null;
+  anyAdminOnly: AppAdminValueItem | null;
 }
 
 export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields, string>;
@@ -192,7 +192,7 @@ export function assertIsAdminValueItems(
   }
 }
 
-export type AllAdminValueItems = AdminAdminOnlyValue | AdminLocationsValue | AdminReferencesValue;
+export type AppAdminValueItem = AdminAdminOnlyValue | AdminLocationsValue | AdminReferencesValue;
 
 export type AdminAdminOnlyValueFields = Record<never, never>;
 
@@ -254,19 +254,19 @@ export function assertIsAdminReferencesValue(
 }
 
 export type AppPublishedClient = PublishedClient<
-  AllPublishedEntities,
+  AppPublishedEntity,
   AppPublishedUniqueIndexes,
   AppPublishedExceptionClient
 >;
 
 export type AppPublishedExceptionClient = PublishedExceptionClient<
-  AllPublishedEntities,
+  AppPublishedEntity,
   AppPublishedUniqueIndexes
 >;
 
 export type AppPublishedUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
-export type AllPublishedEntities =
+export type AppPublishedEntity =
   | PublishedLocations
   | PublishedReadOnly
   | PublishedReferences
@@ -431,7 +431,7 @@ export function assertIsPublishedTitleOnly(
 }
 
 export interface PublishedValueItemsFields {
-  any: AllPublishedValueItems | null;
+  any: AppPublishedValueItem | null;
 }
 
 export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields, string>;
@@ -450,7 +450,7 @@ export function assertIsPublishedValueItems(
   }
 }
 
-export type AllPublishedValueItems = PublishedLocationsValue | PublishedReferencesValue;
+export type AppPublishedValueItem = PublishedLocationsValue | PublishedReferencesValue;
 
 export interface PublishedLocationsValueFields {
   location: Location | null;

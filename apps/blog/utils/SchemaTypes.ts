@@ -11,16 +11,16 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AllAdminEntities,
+  AppAdminEntity,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
-export type AllAdminEntities =
+export type AppAdminEntity =
   | AdminArticle
   | AdminAuthor
   | AdminBlogPost
@@ -129,7 +129,7 @@ export function assertIsAdminGlossaryTerm(
   }
 }
 
-export type AllAdminValueItems = AdminArticleTocItem | AdminCloudinaryImage | AdminTocItem;
+export type AppAdminValueItem = AdminArticleTocItem | AdminCloudinaryImage | AdminTocItem;
 
 export interface AdminArticleTocItemFields {
   title: string | null;
@@ -197,19 +197,19 @@ export function assertIsAdminTocItem(
 }
 
 export type AppPublishedClient = PublishedClient<
-  AllPublishedEntities,
+  AppPublishedEntity,
   AppPublishedUniqueIndexes,
   AppPublishedExceptionClient
 >;
 
 export type AppPublishedExceptionClient = PublishedExceptionClient<
-  AllPublishedEntities,
+  AppPublishedEntity,
   AppPublishedUniqueIndexes
 >;
 
 export type AppPublishedUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
-export type AllPublishedEntities =
+export type AppPublishedEntity =
   | PublishedArticle
   | PublishedAuthor
   | PublishedBlogPost
@@ -330,7 +330,7 @@ export function assertIsPublishedGlossaryTerm(
   }
 }
 
-export type AllPublishedValueItems =
+export type AppPublishedValueItem =
   | PublishedArticleTocItem
   | PublishedCloudinaryImage
   | PublishedTocItem;

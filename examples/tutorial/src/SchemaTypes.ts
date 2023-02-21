@@ -1,12 +1,12 @@
 import type { AdminClient, AdminEntity, AdminExceptionClient, PublishedClient, PublishedEntity, PublishedExceptionClient, ValueItem } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AllAdminEntities, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
-export type AllAdminEntities = AdminMessage;
+export type AppAdminEntity = AdminMessage;
 
 export interface AdminMessageFields {
   message: string | null;
@@ -25,7 +25,7 @@ export function assertIsAdminMessage(entity: AdminEntity<string, object>): asser
   }
 }
 
-export type AllAdminValueItems = AdminCloudinaryImage;
+export type AppAdminValueItem = AdminCloudinaryImage;
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
@@ -46,13 +46,13 @@ export function assertIsAdminCloudinaryImage(valueItem: ValueItem<string, object
   }
 }
 
-export type AppPublishedClient = PublishedClient<AllPublishedEntities, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AllPublishedEntities, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
-export type AllPublishedEntities = PublishedMessage;
+export type AppPublishedEntity = PublishedMessage;
 
 export interface PublishedMessageFields {
   message: string;
@@ -71,7 +71,7 @@ export function assertIsPublishedMessage(entity: PublishedEntity<string, object>
   }
 }
 
-export type AllPublishedValueItems = PublishedCloudinaryImage;
+export type AppPublishedValueItem = PublishedCloudinaryImage;
 
 export interface PublishedCloudinaryImageFields {
   publicId: string;

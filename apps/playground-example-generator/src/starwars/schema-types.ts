@@ -6,16 +6,16 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AllAdminEntities,
+  AppAdminEntity,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
-export type AllAdminEntities =
+export type AppAdminEntity =
   | AdminFilm
   | AdminPerson
   | AdminPlanet
@@ -199,4 +199,4 @@ export function assertIsAdminVehicle(
   }
 }
 
-export type AllAdminValueItems = never;
+export type AppAdminValueItem = never;

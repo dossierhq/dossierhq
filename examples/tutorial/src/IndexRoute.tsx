@@ -2,14 +2,14 @@ import type { EntitySamplingPayload } from '@dossierhq/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useAdminClient } from './ClientUtils.js';
 import { Navbar } from './Navbar.js';
-import type { AllAdminEntities } from './SchemaTypes.js';
+import type { AppAdminEntity } from './SchemaTypes.js';
 
 export function IndexRoute() {
   const adminClient = useAdminClient();
   const [message, setMessage] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [adminSampleSeed, setAdminSampleSeed] = useState(Math.random);
-  const [adminSample, setAdminSample] = useState<EntitySamplingPayload<AllAdminEntities> | null>(
+  const [adminSample, setAdminSample] = useState<EntitySamplingPayload<AppAdminEntity> | null>(
     null
   );
 

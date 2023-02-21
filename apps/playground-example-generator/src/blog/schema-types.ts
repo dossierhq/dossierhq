@@ -8,16 +8,16 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AllAdminEntities,
+  AppAdminEntity,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AllAdminEntities, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'slug';
 
-export type AllAdminEntities = AdminBlogPost | AdminPerson;
+export type AppAdminEntity = AdminBlogPost | AdminPerson;
 
 export interface AdminBlogPostFields {
   title: string | null;
@@ -61,7 +61,7 @@ export function assertIsAdminPerson(
   }
 }
 
-export type AllAdminValueItems = AdminCloudinaryImage;
+export type AppAdminValueItem = AdminCloudinaryImage;
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
