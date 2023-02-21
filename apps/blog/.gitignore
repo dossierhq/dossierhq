@@ -34,6 +34,7 @@ yarn-error.log*
 .vercel
 
 #
+public/atom.xml
 public/database.sqlite
 public/sitemap.txt
 public/sql-wasm.wasm
