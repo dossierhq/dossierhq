@@ -1,9 +1,21 @@
 import { DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
+import type { Metadata } from 'next';
 import { CloudinaryImage } from '../../../components/CloudinaryImage/CloudinaryImage';
 import { assertIsPublishedBlogPost } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
 import { getBlogPost } from './getBlogPost';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { blogSlug: string };
+}): Promise<Metadata> {
+  const publishedClient = await getPublishedClientForServerComponent();
+  const { blogPost } = await getBlogPost(publishedClient, params.blogSlug);
+
+  return { title: blogPost.fields.title };
+}
 
 export default async function Page({ params }: { params: { blogSlug: string } }) {
   const publishedClient = await getPublishedClientForServerComponent();

@@ -1,8 +1,13 @@
 import { Text } from '@dossierhq/design-ssr';
+import type { Metadata } from 'next';
 import { Fragment } from 'react';
 import { assertIsPublishedGlossaryTerm } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
+
+export const metadata: Metadata = {
+  title: 'Glossary',
+};
 
 export default async function Page() {
   const publishedClient = await getPublishedClientForServerComponent();

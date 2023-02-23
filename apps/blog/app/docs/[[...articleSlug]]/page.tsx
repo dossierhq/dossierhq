@@ -1,9 +1,21 @@
 import { Text } from '@dossierhq/design-ssr';
+import type { Metadata } from 'next';
 import { ArticleLexicalTheme } from '../../../style/ArticleLexicalTheme';
 import { assertIsPublishedArticle } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
 import { getArticle } from './getArticle';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { articleSlug: string };
+}): Promise<Metadata> {
+  const publishedClient = await getPublishedClientForServerComponent();
+  const article = await getArticle(publishedClient, params.articleSlug);
+
+  return { title: article.fields.title };
+}
 
 export default async function Page({ params }: { params: { articleSlug: string } }) {
   const publishedClient = await getPublishedClientForServerComponent();

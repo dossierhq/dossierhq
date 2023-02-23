@@ -1,23 +1,26 @@
 import '@dossierhq/design/main.css';
+import type { Metadata } from 'next';
 
 interface Props {
   children: React.ReactNode;
 }
 
+export const metadata: Metadata = {
+  title: {
+    default: 'Dossier – the open source headless CMS toolkit',
+    template: '%s | Dossier',
+  },
+  icons: '/favicon.svg',
+  alternates: {
+    types: {
+      'application/atom+xml': 'https://www.dossierhq.dev/atom.xml',
+    },
+  },
+};
+
 export default function Layout({ children }: Props) {
   return (
     <html lang="en-US">
-      <head>
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link
-          href="https://www.dossierhq.dev/atom.xml"
-          rel="alternate"
-          title="Dossier blog"
-          type="application/atom+xml"
-        />
-        <title>Dossier – the open source headless CMS toolkit</title>
-      </head>
       <body>{children}</body>
     </html>
   );
