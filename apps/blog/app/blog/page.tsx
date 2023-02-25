@@ -9,6 +9,7 @@ import { getPublishedClientForServerComponent } from '../../utils/ServerComponen
 
 export const metadata: Metadata = {
   title: 'Blog',
+  description: 'The latest news and updates from the Dossier team.',
 };
 
 export default async function Page() {
@@ -35,6 +36,9 @@ export default async function Page() {
 
   return (
     <>
+      <Text as="h1" textStyle="headline3" marginBottom={3}>
+        Latest news and updates about Dossier
+      </Text>
       {blogPosts.map((item) => {
         const blogPostAuthors =
           item.fields.authors?.map((reference) => authors[reference.id]) ?? [];
