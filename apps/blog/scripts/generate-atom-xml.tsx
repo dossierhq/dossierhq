@@ -30,7 +30,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import * as Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
-import { getImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
+import { getResponsiveImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
 import type {
   AppPublishedClient,
   AppPublishedEntity,
@@ -188,7 +188,7 @@ function FeedCloudinaryImage(
     const height = props.height;
     const width = Math.round((height * image.width) / image.height);
 
-    const { src, srcSet } = getImageUrlsForLimitFit(cld, image.publicId, width, height);
+    const { src, srcSet } = getResponsiveImageUrlsForLimitFit(cld, image.publicId, width, height);
 
     return (
       <div style={{ textAlign: 'center' }}>
@@ -205,7 +205,7 @@ function FeedCloudinaryImage(
       </div>
     );
   } else {
-    const { src, srcSet } = getImageUrlsForLimitFit(cld, image.publicId, 638, 359);
+    const { src, srcSet } = getResponsiveImageUrlsForLimitFit(cld, image.publicId, 638, 359);
     return <img alt={image.alt ?? ''} src={src} srcSet={srcSet} />;
   }
 }

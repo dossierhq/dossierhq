@@ -1,6 +1,8 @@
 import { DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
 import type { Metadata } from 'next';
 import { CloudinaryImage } from '../../../components/CloudinaryImage/CloudinaryImage';
+import { getCloudinaryConfig } from '../../../config/CloudinaryConfig';
+import { getImageUrlForLimitFit } from '../../../utils/CloudinaryUtils';
 import { assertIsPublishedBlogPost } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
@@ -12,9 +14,32 @@ export async function generateMetadata({
   params: { blogSlug: string };
 }): Promise<Metadata> {
   const publishedClient = await getPublishedClientForServerComponent();
-  const { blogPost } = await getBlogPost(publishedClient, params.blogSlug);
+  const { blogPost, authors } = await getBlogPost(publishedClient, params.blogSlug);
 
-  return { title: blogPost.fields.title };
+  const imageUrl = getImageUrlForLimitFit(
+    getCloudinaryConfig(),
+    blogPost.fields.hero.publicId,
+    1200,
+    630
+  );
+
+  const metadata: Metadata = {
+    title: blogPost.fields.title,
+    description: blogPost.fields.description,
+    openGraph: {
+      type: 'article',
+      siteName: 'Dossier',
+      title: blogPost.fields.title,
+      description: blogPost.fields.description,
+      authors: authors.map((it) => it.fields.name),
+      publishedTime: new Date(blogPost.fields.publishedDate).toISOString(),
+      modifiedTime: blogPost.fields.updatedDate
+        ? new Date(blogPost.fields.updatedDate).toISOString()
+        : undefined,
+      images: [imageUrl],
+    },
+  };
+  return metadata;
 }
 
 export default async function Page({ params }: { params: { blogSlug: string } }) {

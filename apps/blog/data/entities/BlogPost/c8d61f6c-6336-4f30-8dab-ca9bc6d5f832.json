@@ -10,6 +10,7 @@
     "title": "Hello world",
     "slug": "hello-world",
     "publishedDate": "2023-02-07T16:16Z",
+    "updatedDate": null,
     "authors": [
       {
         "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
@@ -22,6 +23,7 @@
       "height": 2041,
       "alt": "Dossier stickers"
     },
+    "description": "Releasing Dossier, an open source toolkit for building headless CMSs, after two years of development.",
     "body": {
       "root": {
         "direction": "ltr",
@@ -342,7 +344,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " and I’d like to use it for a few more projects so it doesn’t become too tailored for one specific use case. But I’m happy with the progress so far and I’m looking forward to seeing what people do with it.",
+                "text": " and I’d like to use it for a few more projects so it doesn’t become too tailored for one specific use case. But I’m happy with the progress so far and I’m looking forward to seeing what people do with it!",
                 "type": "text",
                 "version": 1
               }

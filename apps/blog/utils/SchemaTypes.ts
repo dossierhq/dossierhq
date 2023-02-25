@@ -72,6 +72,7 @@ export interface AdminBlogPostFields {
   updatedDate: string | null;
   authors: EntityReference[] | null;
   hero: AdminCloudinaryImage | null;
+  description: string | null;
   body: RichText | null;
 }
 
@@ -265,6 +266,7 @@ export interface PublishedBlogPostFields {
   updatedDate: string | null;
   authors: EntityReference[] | null;
   hero: PublishedCloudinaryImage;
+  description: string;
   body: RichText;
 }
 

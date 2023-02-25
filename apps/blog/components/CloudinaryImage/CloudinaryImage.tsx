@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { Cloudinary } from '@cloudinary/url-gen';
 import { toSizeClassName } from '@dossierhq/design-ssr';
-import { CLOUDINARY_CLOUD_NAME } from '../../config/CloudinaryConfig';
-import { getImageUrlsForLimitFit } from '../../utils/CloudinaryUtils';
+import { CLOUDINARY_CLOUD_NAME, getCloudinaryConfig } from '../../config/CloudinaryConfig';
+import { getResponsiveImageUrlsForLimitFit } from '../../utils/CloudinaryUtils';
 import type { PublishedCloudinaryImage } from '../../utils/SchemaTypes';
 
 type Props = {
@@ -11,16 +11,13 @@ type Props = {
 
 export function CloudinaryImage(props: Props) {
   const { image } = props;
-  const cld = new Cloudinary({
-    cloud: { cloudName: CLOUDINARY_CLOUD_NAME },
-    url: { forceVersion: false, analytics: false },
-  });
+  const cld = getCloudinaryConfig();
 
   if ('height' in props) {
     const height = props.height;
     const width = Math.round((height * image.width) / image.height);
 
-    const { src, srcSet } = getImageUrlsForLimitFit(cld, image.publicId, width, height);
+    const { src, srcSet } = getResponsiveImageUrlsForLimitFit(cld, image.publicId, width, height);
 
     return (
       <div style={{ textAlign: 'center' }}>
@@ -37,7 +34,7 @@ export function CloudinaryImage(props: Props) {
       </div>
     );
   } else {
-    const { src, srcSet } = getImageUrlsForLimitFit(cld, image.publicId, 638, 359);
+    const { src, srcSet } = getResponsiveImageUrlsForLimitFit(cld, image.publicId, 638, 359);
     return (
       <img
         className={toSizeClassName({ aspectRatio: props.aspectRatio })}
