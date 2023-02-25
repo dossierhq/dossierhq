@@ -1043,7 +1043,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@playwright/test': ~1.30.0
+      '@playwright/test': ~1.31.1
       '@rushstack/heft': 0.49.7
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
@@ -1063,7 +1063,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@playwright/test': 1.30.0
+      '@playwright/test': 1.31.1
       '@rushstack/heft': 0.49.7
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
@@ -1267,7 +1267,7 @@ importers:
       '@lexical/selection': 0.7.7
       '@lexical/utils': 0.7.7
       '@microsoft/rush-lib': ~5.93.1
-      '@playwright/test': ~1.30.0
+      '@playwright/test': ~1.31.1
       '@react-aria/overlays': ~3.12.0
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': 0.49.7
@@ -1364,7 +1364,7 @@ importers:
       '@lexical/rich-text': 0.7.7_y5cextvee5xaahoivyntn75ccu
       '@lexical/selection': 0.7.7_lexical@0.7.7
       '@lexical/utils': 0.7.7_lexical@0.7.7
-      '@playwright/test': 1.30.0
+      '@playwright/test': 1.31.1
       '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
       '@rushstack/heft': 0.49.7_@types+node@18.14.0
@@ -4146,13 +4146,15 @@ packages:
       tiny-glob: 0.2.9
       tslib: 2.5.0
 
-  /@playwright/test/1.30.0:
-    resolution: {integrity: sha512-SVxkQw1xvn/Wk/EvBnqWIq6NLo1AppwbYOjNLmyU0R1RoQ3rLEBtmjTnElcnz8VEtn11fptj1ECxK0tgURhajw==}
+  /@playwright/test/1.31.1:
+    resolution: {integrity: sha512-IsytVZ+0QLDh1Hj83XatGp/GsI1CDJWbyDaBGbainsh0p2zC7F4toUocqowmjS6sQff2NGT3D9WbDj/3K2CJiA==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.14.0
-      playwright-core: 1.30.0
+      playwright-core: 1.31.1
+    optionalDependencies:
+      fsevents: 2.3.2
 
   /@pnpm/crypto.base32-hash/1.0.1:
     resolution: {integrity: sha512-pzAXNn6KxTA3kbcI3iEnYs4vtH51XEVqmK/1EiD18MaPKylhqy8UvMJK3zKG+jeP82cqQbozcTGm4yOQ8i3vNw==}
@@ -12162,8 +12164,8 @@ packages:
       mlly: 1.1.0
       pathe: 1.1.0
 
-  /playwright-core/1.30.0:
-    resolution: {integrity: sha512-7AnRmTCf+GVYhHbLJsGUtskWTE33SwMZkybJ0v6rqR1boxq2x36U7p1vDRV7HO2IwTZgmycracLxPEJI49wu4g==}
+  /playwright-core/1.31.1:
+    resolution: {integrity: sha512-JTyX4kV3/LXsvpHkLzL2I36aCdml4zeE35x+G5aPc4bkLsiRiQshU5lWeVpHFAuC8xAcbI6FDcw/8z3q2xtJSQ==}
     engines: {node: '>=14'}
     hasBin: true
 
