@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Setting up the server",
     "slug": "tutorial-server",
+    "description": "Lean how to set up the Dossier server in the backend.",
     "body": {
       "root": {
         "direction": "ltr",

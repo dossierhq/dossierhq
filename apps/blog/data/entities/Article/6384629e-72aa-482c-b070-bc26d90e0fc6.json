@@ -9,6 +9,7 @@
   "fields": {
     "title": "Content – entities and value items",
     "slug": "content",
+    "description": "Learn about entities (the main content type in Dossier) and value items.",
     "body": {
       "root": {
         "direction": "ltr",

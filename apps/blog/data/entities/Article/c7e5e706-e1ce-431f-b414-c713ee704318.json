@@ -9,6 +9,7 @@
   "fields": {
     "title": "Getting started developing app",
     "slug": "getting-started",
+    "description": "Learn how to get started developing your app with Dossier.",
     "body": {
       "root": {
         "direction": "ltr",

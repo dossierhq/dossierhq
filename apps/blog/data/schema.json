@@ -27,6 +27,16 @@
           "index": "articleSlug"
         },
         {
+          "name": "description",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": null,
+          "index": null
+        },
+        {
           "name": "body",
           "type": "RichText",
           "list": false,

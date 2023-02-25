@@ -9,6 +9,7 @@
   "fields": {
     "title": "Limitations",
     "slug": "limitations",
+    "description": "Learn about limitations and missing features that are currently in Dossier.",
     "body": {
       "root": {
         "direction": "ltr",

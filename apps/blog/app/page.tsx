@@ -8,12 +8,19 @@ import {
   toFlexItemClassName,
   toSpacingClassName,
 } from '@dossierhq/design-ssr';
+import type { Metadata } from 'next';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
+import type { WebSite } from 'schema-dts';
+import { JsonLd } from '../components/JsonLd/JsonLd';
 import { LinkButton } from '../components/LinkButton/LinkButton';
 import { NavBar } from '../components/NavBar/NavBar';
 import logoLarge from '../public/logo-large.svg';
-import { BrowserUrls } from '../utils/BrowserUrls';
+import { BrowserUrls, canonicalUrl } from '../utils/BrowserUrls';
+
+export const metadata: Metadata = {
+  description: 'Dossier is an open source toolkit for building headless CMSs.',
+};
 
 export default function Page() {
   return (
@@ -127,6 +134,15 @@ export default function Page() {
               if you have any questions!
             </Text>
           </div>
+          <JsonLd<WebSite>
+            data={{
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Dossier',
+              description: 'Dossier is an open source toolkit for building headless CMSs.',
+              url: canonicalUrl('/'),
+            }}
+          />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
     </FullscreenContainer>

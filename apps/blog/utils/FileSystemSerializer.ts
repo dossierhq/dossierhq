@@ -159,6 +159,22 @@ export async function loadAllEntities(
     }
   }
 
+  // Step 3: Show the errors for entities that failed to load
+  if (entitiesToRetry.length > 0) {
+    const entitiesToRetryThisRound = entitiesToRetry.splice(0);
+    logger.info(`Retrying loading ${entitiesToRetryThisRound.length} entities to show errors`);
+
+    for (const { entryPath } of entitiesToRetryThisRound) {
+      const createResult = await loadEntity(adminClient, logger, entryPath);
+      if (createResult.isError()) {
+        logger.error('Error loading entity: %s: %s', createResult.error, createResult.message);
+        entitiesToRetry.push({ entryPath });
+      }
+    }
+
+    return notOk.Generic(`Failed to load ${entitiesToRetry.length} entities`);
+  }
+
   return ok(loadedEntries);
 }
 

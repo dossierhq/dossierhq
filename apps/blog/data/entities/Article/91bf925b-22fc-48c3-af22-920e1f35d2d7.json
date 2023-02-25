@@ -9,6 +9,7 @@
   "fields": {
     "title": "Schema – structuring the content",
     "slug": "schema",
+    "description": "Learn how to structure the content in your project.",
     "body": {
       "root": {
         "direction": "ltr",

@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Configuring the schema",
     "slug": "tutorial-schema",
+    "description": "Lean how to configure an entity type and generate TypeScript types for type safe usage of the API.",
     "body": {
       "root": {
         "direction": "ltr",

@@ -9,6 +9,7 @@
   "fields": {
     "title": "Authorization key",
     "slug": "authorization-key",
+    "description": "Learn about authorization keys and how they are used to control who has access to what content.",
     "body": {
       "root": {
         "direction": "ltr",

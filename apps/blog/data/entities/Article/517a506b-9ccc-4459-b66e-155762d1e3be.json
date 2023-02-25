@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Admin REST API",
     "slug": "tutorial-admin-rest-api",
+    "description": "Learn how to set up a REST API for the admin client in the backend and use it in the frontend to create a new entity.",
     "body": {
       "root": {
         "direction": "ltr",

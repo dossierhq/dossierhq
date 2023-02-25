@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Setting up the database",
     "slug": "tutorial-database",
+    "description": "Learn how to set up a SQLite database for Dossier.",
     "body": {
       "root": {
         "direction": "ltr",

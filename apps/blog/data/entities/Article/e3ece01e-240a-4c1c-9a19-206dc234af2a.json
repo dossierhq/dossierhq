@@ -9,6 +9,7 @@
   "fields": {
     "title": "Overview",
     "slug": "overview",
+    "description": "Get a flavor of Dossier by using the Playground to create some content.",
     "body": {
       "root": {
         "direction": "ltr",

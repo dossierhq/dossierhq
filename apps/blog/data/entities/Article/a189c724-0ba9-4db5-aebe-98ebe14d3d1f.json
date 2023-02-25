@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Auth using Auth0",
     "slug": "tutorial-auth0",
+    "description": "Lean how to integrate with Auth0 for authentication and authorization.",
     "body": {
       "root": {
         "direction": "ltr",

@@ -1,6 +1,9 @@
 import { Text } from '@dossierhq/design-ssr';
 import type { Metadata } from 'next';
+import { Article } from 'schema-dts';
+import { JsonLd } from '../../../components/JsonLd/JsonLd';
 import { ArticleLexicalTheme } from '../../../style/ArticleLexicalTheme';
+import { BrowserUrls, canonicalUrl } from '../../../utils/BrowserUrls';
 import { assertIsPublishedArticle } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
@@ -14,7 +17,18 @@ export async function generateMetadata({
   const publishedClient = await getPublishedClientForServerComponent();
   const article = await getArticle(publishedClient, params.articleSlug);
 
-  return { title: article.fields.title };
+  return {
+    title: article.fields.title,
+    description: article.fields.description,
+    openGraph: {
+      type: 'article',
+      siteName: 'Dossier',
+      url: canonicalUrl(BrowserUrls.article(article.fields.slug)),
+      title: article.fields.title,
+      description: article.fields.description,
+      images: canonicalUrl('/og-dossier.png'),
+    },
+  };
 }
 
 export default async function Page({ params }: { params: { articleSlug: string } }) {
@@ -30,6 +44,14 @@ export default async function Page({ params }: { params: { articleSlug: string }
         publishedClient={publishedClient}
         theme={ArticleLexicalTheme}
         headingOffset={1}
+      />
+      <JsonLd<Article>
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: article.fields.title,
+          description: article.fields.description,
+        }}
       />
     </>
   );

@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Web interface",
     "slug": "tutorial-web-interface",
+    "description": "Learn how to add the Dossier web interface to the frontend to manage the content.",
     "body": {
       "root": {
         "direction": "ltr",

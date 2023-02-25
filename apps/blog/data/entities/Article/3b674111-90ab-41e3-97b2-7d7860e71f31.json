@@ -9,6 +9,7 @@
   "fields": {
     "title": "Key concept – admin and published views",
     "slug": "admin-published",
+    "description": "Learn the difference between the admin and published views of content in Dossier.",
     "body": {
       "root": {
         "direction": "ltr",

@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Setting up the project",
     "slug": "tutorial-project",
+    "description": "Set up a project with a React frontend and Express backend to be used in the tutorial.",
     "body": {
       "root": {
         "direction": "ltr",

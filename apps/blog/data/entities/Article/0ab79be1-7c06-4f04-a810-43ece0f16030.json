@@ -1,14 +1,15 @@
 {
   "id": "0ab79be1-7c06-4f04-a810-43ece0f16030",
   "info": {
-    "name": "Tutorial – Managing entities programatically",
+    "name": "Tutorial – Managing entities programmatically",
     "type": "Article",
     "authKey": "none",
     "status": "published"
   },
   "fields": {
-    "title": "Tutorial – Managing entities programatically",
+    "title": "Tutorial – Managing entities programmatically",
     "slug": "tutorial-entities",
+    "description": "Learn how to create and publish entities programmatically in the backend and deliver published entities to the frontend.",
     "body": {
       "root": {
         "direction": "ltr",

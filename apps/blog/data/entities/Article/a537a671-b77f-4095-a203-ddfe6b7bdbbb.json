@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial – Images using Cloudinary",
     "slug": "tutorial-images-cloudinary",
+    "description": "Learn how to add support for images by integrating Cloudinary in Dossier.",
     "body": {
       "root": {
         "direction": "ltr",

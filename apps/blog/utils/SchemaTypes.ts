@@ -30,6 +30,7 @@ export type AppAdminEntity =
 export interface AdminArticleFields {
   title: string | null;
   slug: string | null;
+  description: string | null;
   body: RichText | null;
 }
 
@@ -220,6 +221,7 @@ export type AppPublishedEntity =
 export interface PublishedArticleFields {
   title: string;
   slug: string;
+  description: string;
   body: RichText;
 }
 

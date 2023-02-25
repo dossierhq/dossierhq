@@ -1,5 +1,6 @@
 import '@dossierhq/design/main.css';
 import type { Metadata } from 'next';
+import { canonicalUrl } from '../utils/BrowserUrls';
 
 interface Props {
   children: React.ReactNode;
@@ -13,8 +14,15 @@ export const metadata: Metadata = {
   icons: '/favicon.svg',
   alternates: {
     types: {
-      'application/atom+xml': 'https://www.dossierhq.dev/atom.xml',
+      'application/atom+xml': canonicalUrl('/atom.xml'),
     },
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Dossier',
+    description: 'Dossier is an open source toolkit for building headless CMSs.',
+    url: canonicalUrl('/'),
+    images: canonicalUrl('/og-dossier.png'),
   },
 };
 

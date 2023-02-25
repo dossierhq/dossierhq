@@ -9,6 +9,7 @@
   "fields": {
     "title": "Tutorial introduction",
     "slug": "tutorial",
+    "description": "Let's get started with a project where we will get familiar with Dossier.",
     "body": {
       "root": {
         "direction": "ltr",
