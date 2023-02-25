@@ -1339,6 +1339,7 @@ importers:
       rollup-plugin-visualizer: ~5.9.0
       sass: ~1.58.3
       sass-loader: ~13.2.0
+      schema-dts: ~1.1.2
       sql.js: ~1.8.0
       sqlite3: ~5.1.2
       storybook: ~7.0.0-beta.36
@@ -1436,6 +1437,7 @@ importers:
       rollup-plugin-visualizer: 5.9.0
       sass: 1.58.3
       sass-loader: 13.2.0_sass@1.58.3
+      schema-dts: 1.1.2_typescript@4.9.5
       sql.js: 1.8.0
       sqlite3: 5.1.4
       storybook: 7.0.0-beta.36
@@ -13192,7 +13194,6 @@ packages:
       typescript: '>=4.1.0'
     dependencies:
       typescript: 4.9.5
-    dev: true
 
   /scss-parser/1.0.6:
     resolution: {integrity: sha512-SH3TaoaJFzfAtqs3eG1j5IuHJkeEW5rKUPIjIN+ZorLAyJLHItQGnsgwHk76v25GtLtpT9IqfAcqK4vFWdiw+w==}
