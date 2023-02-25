@@ -22,18 +22,17 @@ export async function createBunSqliteAdapter(
       database.close();
     },
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
-      const statement = database.prepare(query, values);
-      const result = statement.all();
-      statement.finalize();
-
-      // BEGIN/COMMIT/RELEASE return 0, not []
-      if (typeof result === 'number' && result === 0) return [];
+      const statement = database.prepare(query);
+      const result = values ? statement.all(...values) : statement.all();
       return result as R[];
     },
     run: async (query: string, values: ColumnValue[] | undefined) => {
-      const statement = database.prepare(query, values);
-      statement.run();
-      statement.finalize();
+      const statement = database.prepare(query);
+      if (values) {
+        statement.run(...values);
+      } else {
+        statement.run();
+      }
     },
 
     isFtsVirtualTableConstraintFailed,

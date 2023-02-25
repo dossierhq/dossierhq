@@ -1,18 +1,32 @@
+import { assertIsDefined } from '@dossierhq/core';
 import { createAuthTestSuite } from '@dossierhq/integration-test';
-import type { Server } from '@dossierhq/server';
+import { afterAll, beforeAll } from 'bun:test';
+import type { ServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
+
+let serverInit: ServerInit | null = null;
+
+beforeAll(async () => {
+  serverInit = (
+    await initializeIntegrationTestServer('databases/integration-test-auth.sqlite')
+  ).valueOrThrow();
+});
+afterAll(async () => {
+  if (serverInit) {
+    (await serverInit.server.shutdown()).throwIfError();
+    serverInit = null;
+  }
+});
 
 registerTestSuite(
   'AuthTest',
   createAuthTestSuite({
     before: async () => {
-      const { server } = (
-        await initializeIntegrationTestServer('databases/integration-test-auth.sqlite')
-      ).valueOrThrow();
-      return [{ server }, { server }];
+      assertIsDefined(serverInit);
+      return [{ server: serverInit.server }, undefined];
     },
-    after: async ({ server }: { server: Server }) => {
-      await server.shutdown();
+    after: async () => {
+      //empty
     },
   })
 );

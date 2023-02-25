@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
