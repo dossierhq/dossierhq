@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: 'Dossier',
     title: 'Dossier is an open source toolkit for building headless CMSs',
     description:
-      'Build solutions where you’re in full control of the content. Bring your own auth, database and backend, to build a headless CMS and integrate it with your app.',
+      "Build solutions where you're in full control of the content. Bring your own auth, database and backend, to build a headless CMS and integrate it with your app.",
     url: canonicalUrl('/'),
     images: canonicalUrl('/og-dossier.png'),
   },
