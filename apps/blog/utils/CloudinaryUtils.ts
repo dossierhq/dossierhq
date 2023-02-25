@@ -19,6 +19,19 @@ export function getResponsiveImageUrlsForLimitFit(
   return { src: url1x, srcSet };
 }
 
+export function getOpenGraphImageUrlForLimitFit(cld: Cloudinary, publicId: string) {
+  return getImageUrlForLimitFit(cld, publicId, 1200, 630);
+}
+
+export function getJsonLdImageUrlsForLimitFit(cld: Cloudinary, publicId: string) {
+  //  Google recommends 16x9, 4x3, 1x1 aspect ratios, with 50k pixels min
+  return [
+    getImageUrlForLimitFit(cld, publicId, 480, 480),
+    getImageUrlForLimitFit(cld, publicId, 480, 480 / (4 / 3)),
+    getImageUrlForLimitFit(cld, publicId, 480, 480 / (16 / 9)),
+  ];
+}
+
 export function getImageUrlForLimitFit(
   cld: Cloudinary,
   publicId: string,

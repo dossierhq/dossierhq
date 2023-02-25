@@ -1,8 +1,13 @@
 import { DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
 import type { Metadata } from 'next';
 import { CloudinaryImage } from '../../../components/CloudinaryImage/CloudinaryImage';
+import { JsonLd } from '../../../components/JsonLd/JsonLd';
 import { getCloudinaryConfig } from '../../../config/CloudinaryConfig';
-import { getImageUrlForLimitFit } from '../../../utils/CloudinaryUtils';
+import {
+  getImageUrlForLimitFit,
+  getJsonLdImageUrlsForLimitFit,
+  getOpenGraphImageUrlForLimitFit,
+} from '../../../utils/CloudinaryUtils';
 import { assertIsPublishedBlogPost } from '../../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../../utils/ServerComponentUtils';
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
@@ -15,13 +20,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const publishedClient = await getPublishedClientForServerComponent();
   const { blogPost, authors } = await getBlogPost(publishedClient, params.blogSlug);
-
-  const imageUrl = getImageUrlForLimitFit(
-    getCloudinaryConfig(),
-    blogPost.fields.hero.publicId,
-    1200,
-    630
-  );
 
   const metadata: Metadata = {
     title: blogPost.fields.title,
@@ -36,7 +34,9 @@ export async function generateMetadata({
       modifiedTime: blogPost.fields.updatedDate
         ? new Date(blogPost.fields.updatedDate).toISOString()
         : undefined,
-      images: [imageUrl],
+      images: [
+        getOpenGraphImageUrlForLimitFit(getCloudinaryConfig(), blogPost.fields.hero.publicId),
+      ],
     },
   };
   return metadata;
@@ -61,6 +61,23 @@ export default async function Page({ params }: { params: { blogSlug: string } })
       <section className={toSpacingClassName({ marginHorizontal: 2 })}>
         <ServerRichTextRenderer richText={blogPost.fields.body} publishedClient={publishedClient} />
       </section>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: blogPost.fields.title,
+          description: blogPost.fields.description,
+          datePublished: new Date(blogPost.fields.publishedDate).toISOString(),
+          dateModified: blogPost.fields.updatedDate
+            ? new Date(blogPost.fields.updatedDate).toISOString
+            : undefined,
+          author: authors.map((it) => ({ '@type': 'Person', name: it.fields.name })),
+          image: getJsonLdImageUrlsForLimitFit(
+            getCloudinaryConfig(),
+            blogPost.fields.hero.publicId
+          ),
+        }}
+      />
     </>
   );
 }

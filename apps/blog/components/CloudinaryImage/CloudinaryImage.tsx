@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { Cloudinary } from '@cloudinary/url-gen';
 import { toSizeClassName } from '@dossierhq/design-ssr';
-import { CLOUDINARY_CLOUD_NAME, getCloudinaryConfig } from '../../config/CloudinaryConfig';
+import { getCloudinaryConfig } from '../../config/CloudinaryConfig';
 import { getResponsiveImageUrlsForLimitFit } from '../../utils/CloudinaryUtils';
 import type { PublishedCloudinaryImage } from '../../utils/SchemaTypes';
 
