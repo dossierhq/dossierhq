@@ -30,6 +30,7 @@ importers:
       prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
+      schema-dts: ~1.1.2
       sqlite3: ~5.1.2
       ts-node: ~10.9.1
       tslib: ~2.5.0
@@ -62,6 +63,7 @@ importers:
       eslint: 8.34.0
       eslint-config-next: 13.2.0_7kw3g6rralp5ps6mg3uyzz6azm
       prettier: 2.8.4
+      schema-dts: 1.1.2_typescript@4.9.5
       ts-node: 10.9.1_typescript@4.9.5
       typescript: 4.9.5
       vitest: 0.28.5
@@ -13183,6 +13185,14 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
+
+  /schema-dts/1.1.2_typescript@4.9.5:
+    resolution: {integrity: sha512-MpNwH0dZJHinVxk9bT8XUdjKTxMYrA5bLtrrGmFA6PTLwlOKnhi67XoRd6/ty+Djt6ZC0slR57qFhZDNMI6DhQ==}
+    peerDependencies:
+      typescript: '>=4.1.0'
+    dependencies:
+      typescript: 4.9.5
+    dev: true
 
   /scss-parser/1.0.6:
     resolution: {integrity: sha512-SH3TaoaJFzfAtqs3eG1j5IuHJkeEW5rKUPIjIN+ZorLAyJLHItQGnsgwHk76v25GtLtpT9IqfAcqK4vFWdiw+w==}

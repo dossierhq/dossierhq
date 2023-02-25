@@ -1,5 +1,6 @@
 import { DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
 import type { Metadata } from 'next';
+import type { BlogPosting } from 'schema-dts';
 import { CloudinaryImage } from '../../../components/CloudinaryImage/CloudinaryImage';
 import { JsonLd } from '../../../components/JsonLd/JsonLd';
 import { getCloudinaryConfig } from '../../../config/CloudinaryConfig';
@@ -68,7 +69,7 @@ export default async function Page({ params }: { params: { blogSlug: string } })
       <section className={toSpacingClassName({ marginHorizontal: 2 })}>
         <ServerRichTextRenderer richText={blogPost.fields.body} publishedClient={publishedClient} />
       </section>
-      <JsonLd
+      <JsonLd<BlogPosting>
         data={{
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
@@ -76,7 +77,7 @@ export default async function Page({ params }: { params: { blogSlug: string } })
           description: blogPost.fields.description,
           datePublished: new Date(blogPost.fields.publishedDate).toISOString(),
           dateModified: blogPost.fields.updatedDate
-            ? new Date(blogPost.fields.updatedDate).toISOString
+            ? new Date(blogPost.fields.updatedDate).toISOString()
             : undefined,
           author: authors.map((it) => ({ '@type': 'Person', name: it.fields.name })),
           image: getJsonLdImageUrlsForLimitFit(

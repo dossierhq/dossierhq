@@ -92,6 +92,7 @@
     "rollup-plugin-visualizer": "~5.9.0",
     "sass": "~1.58.3",
     "sass-loader": "~13.2.0",
+    "schema-dts": "~1.1.2",
     "sql.js": "~1.8.0",
     "sqlite3": "~5.1.2",
     "storybook": "~7.0.0-beta.36",

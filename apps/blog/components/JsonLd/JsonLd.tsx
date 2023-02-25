@@ -1,8 +1,10 @@
-interface Props {
-  data: unknown;
+import type { Thing, WithContext } from 'schema-dts';
+
+interface Props<T extends Thing> {
+  data: WithContext<T>;
 }
 
-export function JsonLd({ data }: Props) {
+export function JsonLd<T extends Thing>({ data }: Props<T>) {
   return (
     <script
       type="application/ld+json"
