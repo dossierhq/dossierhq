@@ -22,6 +22,7 @@ export const BrowserUrls = {
 
 export function canonicalUrl(url: string) {
   if (!url.startsWith('/')) throw new Error(`URL must start with / (got '${url}'))`);
+  if (url === '/') url = '';
   return 'https://www.dossierhq.dev' + url;
 }
 

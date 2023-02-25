@@ -1,6 +1,6 @@
 import { Text } from '@dossierhq/design-ssr';
 import type { Metadata } from 'next';
-import { Article } from 'schema-dts';
+import type { Article } from 'schema-dts';
 import { JsonLd } from '../../../components/JsonLd/JsonLd';
 import { ArticleLexicalTheme } from '../../../style/ArticleLexicalTheme';
 import { BrowserUrls, canonicalUrl } from '../../../utils/BrowserUrls';
@@ -51,6 +51,7 @@ export default async function Page({ params }: { params: { articleSlug: string }
           '@type': 'Article',
           headline: article.fields.title,
           description: article.fields.description,
+          image: canonicalUrl('/og-dossier.png'),
         }}
       />
     </>

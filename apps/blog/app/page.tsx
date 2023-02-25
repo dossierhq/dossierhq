@@ -139,7 +139,10 @@ export default function Page() {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'Dossier',
-              description: 'Dossier is an open source toolkit for building headless CMSs.',
+              headline: 'Dossier is an open source toolkit for building headless CMSs',
+              description:
+                'Build solutions where you’re in full control of the content. Bring your own auth, database and backend, to build a headless CMS and integrate it with your app.',
+              image: canonicalUrl('/og-dossier.png'),
               url: canonicalUrl('/'),
             }}
           />
