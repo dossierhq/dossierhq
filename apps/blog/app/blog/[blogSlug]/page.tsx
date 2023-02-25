@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import { CloudinaryImage } from '../../../components/CloudinaryImage/CloudinaryImage';
 import { JsonLd } from '../../../components/JsonLd/JsonLd';
 import { getCloudinaryConfig } from '../../../config/CloudinaryConfig';
+import { BrowserUrls, canonicalUrl } from '../../../utils/BrowserUrls';
 import {
-  getImageUrlForLimitFit,
   getJsonLdImageUrlsForLimitFit,
   getOpenGraphImageUrlForLimitFit,
 } from '../../../utils/CloudinaryUtils';
@@ -27,6 +27,7 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       siteName: 'Dossier',
+      url: canonicalUrl(BrowserUrls.blogPost(blogPost.fields.slug)),
       title: blogPost.fields.title,
       description: blogPost.fields.description,
       authors: authors.map((it) => it.fields.name),
@@ -35,7 +36,13 @@ export async function generateMetadata({
         ? new Date(blogPost.fields.updatedDate).toISOString()
         : undefined,
       images: [
-        getOpenGraphImageUrlForLimitFit(getCloudinaryConfig(), blogPost.fields.hero.publicId),
+        {
+          url: getOpenGraphImageUrlForLimitFit(
+            getCloudinaryConfig(),
+            blogPost.fields.hero.publicId
+          ),
+          alt: blogPost.fields.hero.alt ?? undefined,
+        },
       ],
     },
   };

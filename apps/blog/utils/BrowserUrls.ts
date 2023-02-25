@@ -20,6 +20,11 @@ export const BrowserUrls = {
   schemaEditor: '/admin/schema',
 };
 
+export function canonicalUrl(url: string) {
+  if (!url.startsWith('/')) throw new Error(`URL must start with / (got '${url}'))`);
+  return 'https://www.dossierhq.dev' + url;
+}
+
 function ensureEnvVar(value: string | undefined): string {
   if (!value) {
     throw new Error(`Missing environment variable`);
