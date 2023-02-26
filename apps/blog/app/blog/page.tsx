@@ -1,4 +1,4 @@
-import { Card2, DateDisplay, Text } from '@dossierhq/design-ssr';
+import { Card2, DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link.js';
 import { CloudinaryImage } from '../../components/CloudinaryImage/CloudinaryImage';
@@ -22,6 +22,7 @@ export default async function Page() {
       assertIsPublishedBlogPost(node);
       return node;
     }) ?? [];
+  blogPosts.sort((a, b) => b.fields.publishedDate.localeCompare(a.fields.publishedDate));
 
   const authorIds = new Set<string>();
   blogPosts.forEach((post) => post.fields.authors?.forEach((author) => authorIds.add(author.id)));
@@ -57,7 +58,7 @@ function BlogCard({
 }) {
   return (
     <Link href={BrowserUrls.blogPost(blogPost.fields.slug)}>
-      <Card2>
+      <Card2 className={toSpacingClassName({ marginBottom: 5 })}>
         <Card2.Media>
           <CloudinaryImage image={blogPost.fields.hero} aspectRatio="16/9" />
         </Card2.Media>
