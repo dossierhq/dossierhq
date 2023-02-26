@@ -35,7 +35,4 @@ yarn-error.log*
 
 #
 public/atom.xml
-public/database.sqlite
-public/sitemap.txt
-public/sql-wasm.wasm
 tsconfig.tsbuildinfo
