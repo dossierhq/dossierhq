@@ -223,27 +223,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       return;
     }
 
-    // EntityType
+    // PublishedEntityType
     const entityTypeEnumValues: GraphQLEnumValueConfigMap = {};
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       entityTypeEnumValues[entitySpec.name] = {};
     }
     this.addType(
       new GraphQLEnumType({
-        name: 'EntityType',
+        name: 'PublishedEntityType',
         values: entityTypeEnumValues,
       })
     );
 
     if (publishedSchema.getValueTypeCount() > 0) {
-      // ValueType
+      // PublishedValueType
       const valueTypeEnumValues: GraphQLEnumValueConfigMap = {};
       for (const valueSpec of publishedSchema.spec.valueTypes) {
         valueTypeEnumValues[valueSpec.name] = {};
       }
       this.addType(
         new GraphQLEnumType({
-          name: 'ValueType',
+          name: 'PublishedValueType',
           values: valueTypeEnumValues,
         })
       );
@@ -279,7 +279,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLInterfaceType({
           name: toPublishedTypeName('Value'),
           fields: {
-            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('PublishedValueType')) },
           },
         })
       );
@@ -348,10 +348,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       })
     );
 
-    // QueryOrder
+    // PublishedQueryOrder
     this.addType(
       new GraphQLEnumType({
-        name: 'QueryOrder',
+        name: 'PublishedQueryOrder',
         values: { createdAt: {}, name: {} },
       })
     );
@@ -360,7 +360,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     const sharedQueryInputFields = {
       authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       entityTypes: {
-        type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityType'))),
+        type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedEntityType'))),
       },
       linksTo: { type: this.getInputType('EntityReferenceInput') },
       linksFrom: { type: this.getInputType('EntityReferenceInput') },
@@ -381,7 +381,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'PublishedSearchQueryInput',
         fields: {
           ...sharedQueryInputFields,
-          order: { type: this.getEnumType('QueryOrder') },
+          order: { type: this.getEnumType('PublishedQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
       })
@@ -445,7 +445,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         isTypeOf: (source, _context, _info) => source.type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
-            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('PublishedValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, false);
           return fields;

@@ -431,11 +431,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
 }
 
-enum ValueType {
+enum PublishedValueType {
   ValueTwo
 }
 
@@ -451,7 +451,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -481,14 +481,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -497,12 +497,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -517,7 +517,7 @@ type PublishedBar implements Node & PublishedEntity {
 }
 
 type PublishedValueTwo implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   body: String
 }
 
@@ -565,11 +565,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
 }
 
-enum ValueType {
+enum PublishedValueType {
   ValueTwo
 }
 
@@ -585,7 +585,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -615,14 +615,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -631,12 +631,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -651,7 +651,7 @@ type PublishedBar implements Node & PublishedEntity {
 }
 
 type PublishedValueTwo implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   body: String
 }
 
@@ -1385,11 +1385,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
-enum ValueType {
+enum PublishedValueType {
   ValueOne
 }
 
@@ -1405,7 +1405,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -1435,14 +1435,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1451,12 +1451,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -1466,7 +1466,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type Query {
@@ -1513,11 +1513,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
-enum ValueType {
+enum PublishedValueType {
   ValueOne
 }
 
@@ -1533,7 +1533,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -1563,14 +1563,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1579,12 +1579,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -1594,7 +1594,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 enum AdminEntityType {
@@ -2347,7 +2347,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Foo
 }
@@ -2390,14 +2390,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2406,12 +2406,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -2479,7 +2479,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Foo
 }
@@ -2522,14 +2522,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2538,12 +2538,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -3345,7 +3345,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Baz
   Foo
@@ -3389,14 +3389,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -3405,12 +3405,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -3493,7 +3493,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Baz
   Foo
@@ -3537,14 +3537,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -3553,12 +3553,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -4314,7 +4314,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
@@ -4356,14 +4356,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -4372,12 +4372,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -4430,7 +4430,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
@@ -4472,14 +4472,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -4488,12 +4488,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -5126,7 +5126,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
@@ -5172,14 +5172,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -5188,12 +5188,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -5251,7 +5251,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
@@ -5297,14 +5297,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -5313,12 +5313,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -5991,11 +5991,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
-enum ValueType {
+enum PublishedValueType {
   ValueOne
 }
 
@@ -6011,7 +6011,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -6041,14 +6041,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6057,12 +6057,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -6079,7 +6079,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   body: String!
 }
 
@@ -6127,11 +6127,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
-enum ValueType {
+enum PublishedValueType {
   ValueOne
 }
 
@@ -6147,7 +6147,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -6177,14 +6177,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6193,12 +6193,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -6215,7 +6215,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   body: String!
 }
 
@@ -6874,7 +6874,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
@@ -6916,14 +6916,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6932,12 +6932,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -6995,7 +6995,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Foo
 }
 
@@ -7037,14 +7037,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7053,12 +7053,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -7761,7 +7761,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Foo
 }
@@ -7804,14 +7804,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7820,12 +7820,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -7896,7 +7896,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Foo
 }
@@ -7939,14 +7939,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7955,12 +7955,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -8783,12 +8783,12 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Foo
 }
 
-enum ValueType {
+enum PublishedValueType {
   NestedValue
   ValueList
   ValueOne
@@ -8806,7 +8806,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -8836,14 +8836,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -8852,12 +8852,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -8880,13 +8880,13 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedNestedValue implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   text: String
   child: PublishedNestedValue
 }
 
 type PublishedValueList implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   one: [String!]
   two: [PublishedBar!]
   three: [Location!]
@@ -8894,7 +8894,7 @@ type PublishedValueList implements PublishedValue {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   one: String
   two: PublishedBar
   three: Location
@@ -8950,12 +8950,12 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-enum EntityType {
+enum PublishedEntityType {
   Bar
   Foo
 }
 
-enum ValueType {
+enum PublishedValueType {
   NestedValue
   ValueList
   ValueOne
@@ -8973,7 +8973,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
 }
 
 type PublishedRichText {
@@ -9003,14 +9003,14 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum QueryOrder {
+enum PublishedQueryOrder {
   createdAt
   name
 }
 
 input PublishedQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9019,12 +9019,12 @@ input PublishedQueryInput {
 
 input PublishedSearchQueryInput {
   authKeys: [String!]
-  entityTypes: [EntityType!]
+  entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: QueryOrder
+  order: PublishedQueryOrder
   reverse: Boolean
 }
 
@@ -9047,13 +9047,13 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedNestedValue implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   text: String
   child: PublishedNestedValue
 }
 
 type PublishedValueList implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   one: [String!]
   two: [PublishedBar!]
   three: [Location!]
@@ -9061,7 +9061,7 @@ type PublishedValueList implements PublishedValue {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: ValueType!
+  type: PublishedValueType!
   one: String
   two: PublishedBar
   three: Location
