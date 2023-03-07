@@ -61,10 +61,11 @@ import {
   loadPublishedEntities,
   loadPublishedEntity,
   loadPublishedSampleEntities,
-  loadPublishingHistory,
   loadPublishedSearchEntities,
+  loadPublishingHistory,
   loadVersionHistory,
 } from './DataLoaders.js';
+import { LocationScalar } from './LocationScalar.js';
 import * as Mutations from './Mutations.js';
 import {
   toAdminCreateInputTypeName,
@@ -178,28 +179,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'EntityReferenceInput',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-        },
-      })
-    );
-
-    // Location
-    this.addType(
-      new GraphQLObjectType({
-        name: 'Location',
-        fields: {
-          lat: { type: new GraphQLNonNull(GraphQLFloat) },
-          lng: { type: new GraphQLNonNull(GraphQLFloat) },
-        },
-      })
-    );
-
-    // LocationInput
-    this.addType(
-      new GraphQLInputObjectType({
-        name: 'LocationInput',
-        fields: {
-          lat: { type: new GraphQLNonNull(GraphQLFloat) },
-          lng: { type: new GraphQLNonNull(GraphQLFloat) },
         },
       })
     );
@@ -1122,7 +1101,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
         case FieldType.Location:
-          fieldType = this.getOutputType('Location');
+          fieldType = LocationScalar;
           break;
         case FieldType.Number:
           fieldType = fieldSpec.integer ? GraphQLInt : GraphQLFloat;
@@ -1165,7 +1144,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           fieldType = this.getInputType('EntityReferenceInput');
           break;
         case FieldType.Location:
-          fieldType = this.getInputType('LocationInput');
+          fieldType = LocationScalar;
           break;
         case FieldType.Number:
           fieldType = fieldSpec.integer ? GraphQLInt : GraphQLFloat;

@@ -70,14 +70,8 @@ query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) 
         slug
         summary
         tags
-        location {
-          lat
-          lng
-        }
-        locations {
-          lat
-          lng
-        }
+        location
+        locations
       }
     }
   }
@@ -153,14 +147,8 @@ describe('node()', () => {
                   title
                   summary
                   tags
-                  location {
-                    lat
-                    lng
-                  }
-                  locations {
-                    lat
-                    lng
-                  }
+                  location
+                  locations
                 }
               }
             }
@@ -230,14 +218,8 @@ describe('node()', () => {
                     id
                   }
                   tags
-                  location {
-                    lat
-                    lng
-                  }
-                  locations {
-                    lat
-                    lng
-                  }
+                  location
+                  locations
                   stringedBar {
                     __typename
                   }

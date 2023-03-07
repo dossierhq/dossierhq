@@ -99,14 +99,8 @@ query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: Stri
         activeList
         bar { id }
         bars { id }
-        location {
-          lat
-          lng
-        }
-        locations {
-          lat
-          lng
-        }
+        location
+        locations
         stringedBar {
           type
         }

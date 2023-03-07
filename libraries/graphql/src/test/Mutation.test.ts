@@ -107,14 +107,8 @@ mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolea
         title
         summary
         tags
-        location {
-          lat
-          lng
-        }
-        locations {
-          lat
-          lng
-        }
+        location
+        locations
       }
     }
   }

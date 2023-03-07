@@ -18,16 +18,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -414,16 +404,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -546,16 +526,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -1034,16 +1004,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -1368,16 +1328,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -1494,16 +1444,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -1965,16 +1905,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -2238,6 +2168,9 @@ type AdminFooFields {
   bars: [AdminBar!]
 }
 
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
+
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
@@ -2247,7 +2180,7 @@ type AdminFoo implements AdminEntity {
 input AdminFooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
-  locations: [LocationInput!]
+  locations: [Location!]
   floats: [Float!]
   integers: [Int!]
   bars: [EntityReferenceInput!]
@@ -2330,16 +2263,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -2428,6 +2351,9 @@ type PublishedFooFields {
   integers: [Int!]
   bars: [PublishedBar!]
 }
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
 
 type PublishedFoo implements Node & PublishedEntity {
   id: ID!
@@ -2462,16 +2388,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -2560,6 +2476,9 @@ type PublishedFooFields {
   integers: [Int!]
   bars: [PublishedBar!]
 }
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
 
 type PublishedFoo implements Node & PublishedEntity {
   id: ID!
@@ -2827,7 +2746,7 @@ type AdminFoo implements AdminEntity {
 input AdminFooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
-  locations: [LocationInput!]
+  locations: [Location!]
   floats: [Float!]
   integers: [Int!]
   bars: [EntityReferenceInput!]
@@ -2913,16 +2832,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -3328,16 +3237,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -3474,16 +3373,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -3993,16 +3882,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -4297,16 +4176,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -4411,16 +4280,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -4789,16 +4648,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -5109,16 +4958,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -5232,16 +5071,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -5635,16 +5464,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -5974,16 +5793,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -6108,16 +5917,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -6541,16 +6340,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -6857,16 +6646,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -6976,16 +6755,6 @@ scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
-}
-
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
 }
 
 input BoundingBoxInput {
@@ -7371,16 +7140,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -7607,6 +7366,9 @@ type AdminBarFields {
   barField4: Boolean
 }
 
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
+
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
@@ -7616,7 +7378,7 @@ type AdminBar implements AdminEntity {
 input AdminBarFieldsInput {
   barField1: String
   barField2: EntityReferenceInput
-  barField3: LocationInput
+  barField3: Location
   barField4: Boolean
 }
 
@@ -7744,16 +7506,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -7835,6 +7587,9 @@ type PublishedBarFields {
   barField3: Location
   barField4: Boolean
 }
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
 
 type PublishedBar implements Node & PublishedEntity {
   id: ID!
@@ -7879,16 +7634,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -7970,6 +7715,9 @@ type PublishedBarFields {
   barField3: Location
   barField4: Boolean
 }
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
 
 type PublishedBar implements Node & PublishedEntity {
   id: ID!
@@ -8210,7 +7958,7 @@ type AdminBar implements AdminEntity {
 input AdminBarFieldsInput {
   barField1: String
   barField2: EntityReferenceInput
-  barField3: LocationInput
+  barField3: Location
   barField4: Boolean
 }
 
@@ -8343,16 +8091,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -8693,11 +8431,14 @@ type AdminValueList implements AdminValue {
   four: [Boolean!]
 }
 
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
+
 input AdminValueListInput {
   type: AdminValueType!
   one: [String!]
   two: [EntityReferenceInput!]
-  three: [LocationInput!]
+  three: [Location!]
   four: [Boolean!]
 }
 
@@ -8713,7 +8454,7 @@ input AdminValueOneInput {
   type: AdminValueType!
   one: String
   two: EntityReferenceInput
-  three: LocationInput
+  three: Location
   four: Boolean
 }
 
@@ -8766,16 +8507,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -8892,6 +8623,9 @@ type PublishedValueList implements PublishedValue {
   three: [Location!]
   four: [Boolean!]
 }
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
 
 type PublishedValueOne implements PublishedValue {
   type: PublishedValueType!
@@ -8933,16 +8667,6 @@ input EntityReferenceInput {
   id: ID!
 }
 
-type Location {
-  lat: Float!
-  lng: Float!
-}
-
-input LocationInput {
-  lat: Float!
-  lng: Float!
-}
-
 input BoundingBoxInput {
   minLat: Float!
   maxLat: Float!
@@ -9059,6 +8783,9 @@ type PublishedValueList implements PublishedValue {
   three: [Location!]
   four: [Boolean!]
 }
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
 
 type PublishedValueOne implements PublishedValue {
   type: PublishedValueType!
@@ -9400,7 +9127,7 @@ input AdminValueListInput {
   type: AdminValueType!
   one: [String!]
   two: [EntityReferenceInput!]
-  three: [LocationInput!]
+  three: [Location!]
   four: [Boolean!]
 }
 
@@ -9416,7 +9143,7 @@ input AdminValueOneInput {
   type: AdminValueType!
   one: String
   two: EntityReferenceInput
-  three: LocationInput
+  three: Location
   four: Boolean
 }
 
