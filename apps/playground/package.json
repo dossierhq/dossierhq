@@ -28,7 +28,7 @@
     "react-router-dom": "~6.8.1",
     "react": "~18.2.0",
     "sql.js": "~1.8.0",
-    "swr": "~2.0.3"
+    "swr": "~2.1.0"
   },
   "devDependencies": {
     "@dossierhq/eslint-config-react": "workspace:*",
