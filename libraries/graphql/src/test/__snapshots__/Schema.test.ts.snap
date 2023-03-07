@@ -526,7 +526,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -990,7 +990,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -1474,7 +1474,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -1873,7 +1873,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -2440,7 +2440,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -2871,7 +2871,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -3454,7 +3454,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -3946,7 +3946,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -4391,7 +4391,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -4748,7 +4748,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -5212,7 +5212,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -5594,7 +5594,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -6088,7 +6088,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -6500,7 +6500,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -6956,7 +6956,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -7330,7 +7330,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -7857,7 +7857,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -8299,7 +8299,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
@@ -8911,7 +8911,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -9435,7 +9435,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
   publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload

@@ -110,7 +110,7 @@ export async function loadPublishedSampleEntities<TContext extends SessionGraphQ
   };
 }
 
-export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
+export async function loadPublishedSearchEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
   query: PublishedSearchQuery | undefined,

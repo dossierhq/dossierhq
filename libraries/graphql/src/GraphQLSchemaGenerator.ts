@@ -62,7 +62,7 @@ import {
   loadPublishedEntity,
   loadPublishedSampleEntities,
   loadPublishingHistory,
-  loadSearchEntities,
+  loadPublishedSearchEntities,
   loadVersionHistory,
 } from './DataLoaders.js';
 import * as Mutations from './Mutations.js';
@@ -1410,7 +1410,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldSearchEntities<TSource>(
+  buildQueryFieldPublishedSearchEntities<TSource>(
     publishedSchema: PublishedSchema
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1435,7 +1435,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, _info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadSearchEntities(publishedSchema, context, query, paging);
+        return await loadPublishedSearchEntities(publishedSchema, context, query, paging);
       },
     });
   }
@@ -1478,7 +1478,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
               publishedSampleEntities: this.buildQueryFieldPublishedSampleEntities(
                 this.publishedSchema
               ),
-              searchEntities: this.buildQueryFieldSearchEntities(this.publishedSchema),
+              publishedSearchEntities: this.buildQueryFieldPublishedSearchEntities(
+                this.publishedSchema
+              ),
             }
           : {}),
         ...(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0
