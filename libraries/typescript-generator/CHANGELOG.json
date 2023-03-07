@@ -2,6 +2,18 @@
   "name": "@dossierhq/typescript-generator",
   "entries": [
     {
+      "version": "0.2.4",
+      "tag": "@dossierhq/typescript-generator_v0.2.4",
+      "date": "Tue, 07 Mar 2023 21:38:54 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename AllAdmin/PublishedEntities to AppAdmin/PublishedEntity"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.3",
       "tag": "@dossierhq/typescript-generator_v0.2.3",
       "date": "Sat, 18 Feb 2023 11:05:21 GMT",

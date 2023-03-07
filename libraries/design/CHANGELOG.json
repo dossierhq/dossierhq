@@ -2,6 +2,18 @@
   "name": "@dossierhq/design",
   "entries": [
     {
+      "version": "0.2.4",
+      "tag": "@dossierhq/design_v0.2.4",
+      "date": "Tue, 07 Mar 2023 21:38:54 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support Card2.Media."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.3",
       "tag": "@dossierhq/design_v0.2.3",
       "date": "Sat, 18 Feb 2023 11:05:21 GMT",

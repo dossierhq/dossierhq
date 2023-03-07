@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Sat, 18 Feb 2023 11:05:21 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Mar 2023 21:38:54 GMT and should not be manually modified.
+
+## 0.2.4
+Tue, 07 Mar 2023 21:38:54 GMT
+
+### Updates
+
+- Add .client to Admin/PublishedExceptionClient.
 
 ## 0.2.3
 Sat, 18 Feb 2023 11:05:21 GMT
