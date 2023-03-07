@@ -26,7 +26,7 @@
     "directory": "libraries/postgres-tools"
   },
   "dependencies": {
-    "pg": "~8.9.0",
+    "pg": "~8.10.0",
     "postgrator": "~7.1.1"
   }
 }
