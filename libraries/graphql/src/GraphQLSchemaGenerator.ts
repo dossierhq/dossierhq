@@ -48,10 +48,8 @@ import {
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
-  GraphQLScalarType,
   GraphQLSchema,
   GraphQLString,
-  Kind,
 } from 'graphql';
 import {
   loadAdminEntities,
@@ -65,7 +63,6 @@ import {
   loadPublishingHistory,
   loadVersionHistory,
 } from './DataLoaders.js';
-import { LocationScalar } from './LocationScalar.js';
 import * as Mutations from './Mutations.js';
 import {
   toAdminCreateInputTypeName,
@@ -78,8 +75,10 @@ import {
   toAdminValueInputTypeName,
   toPublishedTypeName,
 } from './NameGenerator.js';
+import { DateTimeScalar } from './scalars/DateTimeScalar.js';
+import { LocationScalar } from './scalars/LocationScalar.js';
 import { TypeRepository } from './TypeRepository.js';
-import { GraphQLJSON } from './vendor/GraphQLScalar.js';
+import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
   adminClient: Result<
@@ -134,34 +133,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           hasPreviousPage: { type: new GraphQLNonNull(GraphQLBoolean) },
           startCursor: { type: new GraphQLNonNull(GraphQLString) },
           endCursor: { type: new GraphQLNonNull(GraphQLString) },
-        },
-      })
-    );
-
-    // DateTime
-    this.addType(
-      new GraphQLScalarType({
-        name: 'DateTime',
-        serialize(value: unknown) {
-          if (value instanceof Date) {
-            return value.toISOString();
-          }
-          throw new TypeError('DateTime must be serialized from a Date.');
-        },
-        parseLiteral(ast) {
-          if (ast.kind === Kind.STRING) {
-            return new Date(ast.value);
-          }
-          throw new TypeError('DateTime must be represented as a string.');
-        },
-        parseValue(value: unknown) {
-          if (value instanceof Date) {
-            return value;
-          }
-          if (typeof value === 'string') {
-            return new Date(value);
-          }
-          throw new TypeError('DateTime must be represented as a Date or string.');
         },
       })
     );
@@ -235,7 +206,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           name: { type: new GraphQLNonNull(GraphQLString) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
-          createdAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -269,7 +240,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: 'PublishedRichText',
         fields: {
-          root: { type: new GraphQLNonNull(GraphQLJSON) },
+          root: { type: new GraphQLNonNull(GraphQLJSONObject) },
           entities: { type: new GraphQLList(this.getInterface('PublishedEntity')) },
         },
       })
@@ -488,8 +459,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           version: { type: new GraphQLNonNull(GraphQLInt) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
           status: { type: new GraphQLNonNull(this.getOutputType('AdminEntityStatus')) },
-          createdAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
-          updatedAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
+          updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -702,7 +673,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: 'AdminRichText',
         fields: {
-          root: { type: new GraphQLNonNull(GraphQLJSON) },
+          root: { type: new GraphQLNonNull(GraphQLJSONObject) },
           entities: { type: new GraphQLList(this.getInterface('AdminEntity')) },
         },
       })
@@ -713,7 +684,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLInputObjectType({
         name: 'AdminRichTextInput',
         fields: {
-          root: { type: new GraphQLNonNull(GraphQLJSON) },
+          root: { type: new GraphQLNonNull(GraphQLJSONObject) },
         },
       })
     );
@@ -726,7 +697,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           version: { type: new GraphQLNonNull(GraphQLInt) },
           published: { type: new GraphQLNonNull(GraphQLBoolean) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
-          createdAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -751,7 +722,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           version: { type: GraphQLInt },
           publishedBy: { type: new GraphQLNonNull(GraphQLID) },
-          publishedAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          publishedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -788,7 +759,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityPublishEffect')) },
-          updatedAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -812,7 +783,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUnpublishEffect')) },
-          updatedAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -836,7 +807,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityArchiveEffect')) },
-          updatedAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );
@@ -860,7 +831,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUnarchiveEffect')) },
-          updatedAt: { type: new GraphQLNonNull(this.getOutputType('DateTime')) },
+          updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
       })
     );

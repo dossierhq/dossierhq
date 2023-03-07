@@ -12,8 +12,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -52,6 +50,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -153,17 +153,17 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -398,8 +398,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -425,6 +423,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -435,14 +435,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -522,8 +522,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -549,6 +547,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -559,14 +559,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -753,12 +753,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -998,8 +998,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -1036,6 +1034,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -1137,17 +1137,17 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -1322,8 +1322,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -1349,6 +1347,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -1359,14 +1359,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -1440,8 +1440,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -1467,6 +1465,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -1477,14 +1477,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -1663,12 +1663,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -1848,8 +1848,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 type Query"
 `;
 
@@ -1864,8 +1862,6 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
-
-scalar DateTime
 
 type Query"
 `;
@@ -1882,8 +1878,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 type Query"
 `;
 
@@ -1898,8 +1892,6 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
-
-scalar DateTime
 
 input EntityReferenceInput {
   id: ID!
@@ -1934,6 +1926,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -2031,17 +2025,17 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -2257,8 +2251,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -2281,20 +2273,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -2382,8 +2376,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -2406,20 +2398,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -2605,12 +2599,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -2828,8 +2822,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -2864,6 +2856,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -2961,17 +2955,17 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -3231,8 +3225,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -3256,20 +3248,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -3369,8 +3363,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -3394,20 +3386,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -3595,12 +3589,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -3876,8 +3870,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -3910,6 +3902,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -4007,17 +4001,17 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -4170,8 +4164,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -4193,20 +4185,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -4276,8 +4270,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -4299,20 +4291,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -4479,12 +4473,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -4642,8 +4636,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -4676,6 +4668,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -4777,17 +4771,17 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -4952,8 +4946,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -4975,20 +4967,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 enum PublishedUniqueIndex {
   fooUnique
@@ -5067,8 +5061,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -5090,20 +5082,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 enum PublishedUniqueIndex {
   fooUnique
@@ -5283,12 +5277,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -5458,8 +5452,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -5496,6 +5488,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -5597,17 +5591,17 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -5787,8 +5781,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -5814,6 +5806,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -5824,14 +5818,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -5913,8 +5907,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -5940,6 +5932,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -5950,14 +5944,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -6144,12 +6138,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -6334,8 +6328,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -6368,6 +6360,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -6465,17 +6459,17 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -6640,8 +6634,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -6663,20 +6655,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -6751,8 +6745,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -6774,20 +6766,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -6959,12 +6953,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -7134,8 +7128,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -7169,6 +7161,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -7266,17 +7260,17 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -7500,8 +7494,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -7524,20 +7516,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -7628,8 +7622,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -7652,20 +7644,22 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -7854,12 +7848,12 @@ input EntityVersionReferenceInput {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -8085,8 +8079,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -8126,6 +8118,8 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -8227,17 +8221,17 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
@@ -8501,8 +8495,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -8531,6 +8523,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -8541,14 +8535,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -8661,8 +8655,6 @@ type PageInfo {
   endCursor: String!
 }
 
-scalar DateTime
-
 input EntityReferenceInput {
   id: ID!
 }
@@ -8691,6 +8683,8 @@ type PublishedEntityInfo {
   createdAt: DateTime!
 }
 
+scalar DateTime
+
 interface PublishedEntity implements Node {
   id: ID!
   info: PublishedEntityInfo!
@@ -8701,14 +8695,14 @@ interface PublishedValue {
 }
 
 type PublishedRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [PublishedEntity]
 }
 
 \\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON
+scalar JSONObject
 
 type PublishedEntityEdge {
   node: PublishedEntity
@@ -8924,12 +8918,12 @@ interface AdminValue {
 }
 
 type AdminRichText {
-  root: JSON!
+  root: JSONObject!
   entities: [AdminEntity]
 }
 
 input AdminRichTextInput {
-  root: JSON!
+  root: JSONObject!
 }
 
 type EntityVersionInfo {
