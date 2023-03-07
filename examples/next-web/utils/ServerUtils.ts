@@ -19,7 +19,7 @@ const logger = createConsoleLogger(console);
 
 export async function getSessionContextForRequest(
   server: Server,
-  req: NextApiRequest
+  _req: NextApiRequest
 ): PromiseResult<
   { adminClient: AdminClient; publishedClient: PublishedClient },
   typeof ErrorType.NotAuthenticated
