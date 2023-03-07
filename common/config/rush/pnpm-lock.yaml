@@ -147,7 +147,7 @@ importers:
       '@rushstack/heft': 0.49.7
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.0
-      cloudinary: ~1.34.0
+      cloudinary: ~1.35.0
       dotenv: ~16.0.3
       eslint: ~8.34.0
       prettier: 2.8.4
@@ -161,7 +161,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 7.6.0
-      cloudinary: 1.34.0
+      cloudinary: 1.35.0
       dotenv: 16.0.3
       sqlite3: 5.1.4
       tslib: 2.5.0
@@ -1303,7 +1303,7 @@ importers:
       body-parser: ~1.20.1
       bulma: ~0.9.4
       bun-types: ~0.5.7
-      cloudinary: ~1.34.0
+      cloudinary: ~1.35.0
       concurrently: ~7.6.0
       dotenv: ~16.0.3
       eslint: ~8.34.0
@@ -1359,7 +1359,7 @@ importers:
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 7.6.0
       '@fortawesome/free-solid-svg-icons': 6.3.0
-      '@graphiql/toolkit': 0.8.0_4pkubosfa3h3qlb3qaahz53zdy
+      '@graphiql/toolkit': 0.8.2_4pkubosfa3h3qlb3qaahz53zdy
       '@lexical/code': 0.7.7_lexical@0.7.7
       '@lexical/link': 0.7.7_lexical@0.7.7
       '@lexical/list': 0.7.7_lexical@0.7.7
@@ -1401,7 +1401,7 @@ importers:
       body-parser: 1.20.1
       bulma: 0.9.4
       bun-types: 0.5.7
-      cloudinary: 1.34.0
+      cloudinary: 1.35.0
       concurrently: 7.6.0
       dotenv: 16.0.3
       eslint: 8.34.0
@@ -3235,23 +3235,6 @@ packages:
       - graphql-ws
       - react-is
     dev: false
-
-  /@graphiql/toolkit/0.8.0_4pkubosfa3h3qlb3qaahz53zdy:
-    resolution: {integrity: sha512-DbMFhEKejpPzB6k8W3Mj+Rl8geXiw49USDF9Wdi06EEk1XLVh1iebDqveYY+4lViITsV4+BeGikxlqi8umfP4g==}
-    peerDependencies:
-      graphql: ^15.5.0 || ^16.0.0
-      graphql-ws: '>= 4.5.0'
-    peerDependenciesMeta:
-      graphql-ws:
-        optional: true
-    dependencies:
-      '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
-      graphql: 16.6.0
-      graphql-ws: 5.11.3_graphql@16.6.0
-      meros: 1.2.0_@types+node@18.14.0
-    transitivePeerDependencies:
-      - '@types/node'
-    optional: true
 
   /@graphiql/toolkit/0.8.0_v7q3lfq66aj3bc2gojm44cb3xi:
     resolution: {integrity: sha512-DbMFhEKejpPzB6k8W3Mj+Rl8geXiw49USDF9Wdi06EEk1XLVh1iebDqveYY+4lViITsV4+BeGikxlqi8umfP4g==}
@@ -7452,8 +7435,8 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /cloudinary/1.34.0:
-    resolution: {integrity: sha512-pY0TF+SVEgBZU1FmJ1z/G+c4qEO46TYz5PvbB07U5s1G7bMmKqkwTWEhvP8gO7cpqk1AewPLr2dLl+j7kI5alQ==}
+  /cloudinary/1.35.0:
+    resolution: {integrity: sha512-0aRLVOaVsoiqDCNkSzlPGR/oYOlE3AGrtwFTPx7xlZCPyKNzqeD9t9ENmPwzHn3yn/afAvy4h1sqb2yPyJOAow==}
     engines: {node: '>=0.6'}
     dependencies:
       cloudinary-core: 2.13.0_lodash@4.17.21
