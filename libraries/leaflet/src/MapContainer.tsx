@@ -37,6 +37,7 @@ interface LocateControlProps {
   title?: string;
   outsideMapBoundsMsg?: string;
   showPopup?: boolean;
+  autoStart?: boolean;
 }
 
 interface MarkerProps {
@@ -163,7 +164,7 @@ function getZoomMetrics(map: Map) {
   return metrics;
 }
 
-function LocateControl({ outsideMapBoundsMsg, showPopup, title }: LocateControlProps) {
+function LocateControl({ outsideMapBoundsMsg, showPopup, autoStart, title }: LocateControlProps) {
   const map = useMap();
   useEffect(() => {
     const strings: Record<string, string> = {};
@@ -177,10 +178,17 @@ function LocateControl({ outsideMapBoundsMsg, showPopup, title }: LocateControlP
       strings,
     });
     map.addControl(locateControl);
+
+    if (autoStart) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        if (result.state === 'granted') locateControl.start();
+      });
+    }
+
     return () => {
       map.removeControl(locateControl);
     };
-  }, [map, outsideMapBoundsMsg, showPopup, title]);
+  }, [map, outsideMapBoundsMsg, showPopup, autoStart, title]);
   return null;
 }
 MapContainer.LocateControl = LocateControl;

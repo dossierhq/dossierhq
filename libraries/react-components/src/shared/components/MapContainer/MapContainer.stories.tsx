@@ -28,3 +28,9 @@ export const LocateControl: Story = {
     children: <MapContainer.LocateControl />,
   },
 };
+
+export const LocateControlAutoStart: Story = {
+  args: {
+    children: <MapContainer.LocateControl autoStart />,
+  },
+};
