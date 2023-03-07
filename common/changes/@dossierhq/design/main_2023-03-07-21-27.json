@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Support Card2.Media.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}

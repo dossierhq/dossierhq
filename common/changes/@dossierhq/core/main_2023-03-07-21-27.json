@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Add .client to Admin/PublishedExceptionClient.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}
