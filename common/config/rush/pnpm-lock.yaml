@@ -97,7 +97,7 @@ importers:
       react-router-dom: ~6.8.1
       rollup-plugin-visualizer: ~5.9.0
       sql.js: ~1.8.0
-      swr: ~2.0.3
+      swr: ~2.1.0
       ts-node: ~10.9.1
       typescript: ~4.9.5
       vite: ~4.1.2
@@ -119,7 +119,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
-      swr: 2.0.3_react@18.2.0
+      swr: 2.1.0_react@18.2.0
     devDependencies:
       '@dossierhq/eslint-config-react': link:../../stack/eslint-config-react
       '@graphiql/toolkit': 0.8.0_v7q3lfq66aj3bc2gojm44cb3xi
@@ -956,7 +956,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       storybook: ~7.0.0-beta.36
-      swr: ~2.0.3
+      swr: ~2.1.0
       tslib: ~2.5.0
       typescript: ~4.9.5
       uuid: ~9.0.0
@@ -978,7 +978,7 @@ importers:
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      swr: 2.0.3_react@18.2.0
+      swr: 2.1.0_react@18.2.0
       tslib: 2.5.0
     devDependencies:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
@@ -1344,7 +1344,7 @@ importers:
       sqlite3: ~5.1.2
       storybook: ~7.0.0-beta.36
       svgo: ~3.0.2
-      swr: ~2.0.3
+      swr: ~2.1.0
       ts-node: ~10.9.1
       tslib: ~2.5.0
       typescript: ~4.9.5
@@ -1442,7 +1442,7 @@ importers:
       sqlite3: 5.1.4
       storybook: 7.0.0-beta.36
       svgo: 3.0.2
-      swr: 2.0.3_react@18.2.0
+      swr: 2.1.0_react@18.2.0
       ts-node: 10.9.1_tncu2ai53lzgmizdedur7lbibe
       tslib: 2.5.0
       typescript: 4.9.5
@@ -13802,8 +13802,8 @@ packages:
       csso: 5.0.5
       picocolors: 1.0.0
 
-  /swr/2.0.3_react@18.2.0:
-    resolution: {integrity: sha512-sGvQDok/AHEWTPfhUWXEHBVEXmgGnuahyhmRQbjl9XBYxT/MSlAzvXEKQpyM++bMPaI52vcWS2HiKNaW7+9OFw==}
+  /swr/2.1.0_react@18.2.0:
+    resolution: {integrity: sha512-4hYl5p3/KalQ1MORealM79g/DtLohmud6yyfXw5l4wjtFksYUnocRFudvyaoUtgj3FrVNK9lS25Av9dsZYvz0g==}
     engines: {pnpm: '7'}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
