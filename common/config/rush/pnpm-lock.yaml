@@ -198,7 +198,7 @@ importers:
       '@types/pg': ~8.6.6
       '@types/sqlite3': ~3.1.8
       benchpress: workspace:*
-      better-sqlite3: ~8.1.0
+      better-sqlite3: ~8.2.0
       dotenv: ~16.0.3
       eslint: ~8.34.0
       pg: ~8.10.0
@@ -218,7 +218,7 @@ importers:
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 7.6.0
       benchpress: link:../../libraries/benchpress
-      better-sqlite3: 8.1.0
+      better-sqlite3: 8.2.0
       dotenv: 16.0.3
       pg: 8.10.0
       sqlite3: 5.1.4
@@ -323,7 +323,7 @@ importers:
       '@types/better-sqlite3': ~7.6.3
       '@types/react': ~18.0.28
       '@typescript-eslint/eslint-plugin': ~5.52.0
-      better-sqlite3: ~8.1.0
+      better-sqlite3: ~8.2.0
       eslint: ~8.34.0
       eslint-config-next: ~13.2.0
       graphql: ~16.6.0
@@ -342,7 +342,7 @@ importers:
       '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
-      better-sqlite3: 8.1.0
+      better-sqlite3: 8.2.0
       graphql: 16.6.0
       graphql-voyager: 1.0.0-rc.31_gdcq4dv6opitr3wbfwyjmanyra
       leaflet: 1.9.3
@@ -375,7 +375,7 @@ importers:
       '@types/react': ~18.0.28
       '@types/react-dom': ~18.0.11
       '@vitejs/plugin-react': ~3.1.0
-      better-sqlite3: ~8.1.0
+      better-sqlite3: ~8.2.0
       body-parser: ~1.20.1
       concurrently: ~7.6.0
       dotenv: ~16.0.3
@@ -399,7 +399,7 @@ importers:
       '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
-      better-sqlite3: 8.1.0
+      better-sqlite3: 8.2.0
       body-parser: 1.20.1
       dotenv: 16.0.3
       express: 4.18.2
@@ -454,7 +454,7 @@ importers:
       '@dossierhq/sqlite-core': workspace:*
       '@rushstack/heft': 0.49.7
       '@types/better-sqlite3': ~7.6.3
-      better-sqlite3: ~8.1.0
+      better-sqlite3: ~8.2.0
       eslint: ~8.34.0
       prettier: 2.8.4
       tslib: ~2.5.0
@@ -471,7 +471,7 @@ importers:
       '@dossierhq/server': link:../server
       '@rushstack/heft': 0.49.7
       '@types/better-sqlite3': 7.6.3
-      better-sqlite3: 8.1.0
+      better-sqlite3: 8.2.0
       eslint: 8.34.0
       prettier: 2.8.4
       typescript: 4.9.5
@@ -1299,7 +1299,7 @@ importers:
       '@vitejs/plugin-react': ~3.1.0
       '@vitejs/plugin-react-swc': ~3.2.0
       base-64: ~1.0.0
-      better-sqlite3: ~8.1.0
+      better-sqlite3: ~8.2.0
       body-parser: ~1.20.1
       bulma: ~0.9.4
       bun-types: ~0.5.7
@@ -1397,7 +1397,7 @@ importers:
       '@vitejs/plugin-react': 3.1.0_vite@4.1.2
       '@vitejs/plugin-react-swc': 3.2.0_vite@4.1.2
       base-64: 1.0.0
-      better-sqlite3: 8.1.0
+      better-sqlite3: 8.2.0
       body-parser: 1.20.1
       bulma: 0.9.4
       bun-types: 0.5.7
@@ -6938,8 +6938,8 @@ packages:
       is-windows: 1.0.2
     dev: false
 
-  /better-sqlite3/8.1.0:
-    resolution: {integrity: sha512-p1m09H+Oi8R9TPj810pdNswMFuVgRNgCJEWypp6jlkOgSwMIrNyuj3hW78xEuBRGok5RzeaUW8aBtTWF3l/TQA==}
+  /better-sqlite3/8.2.0:
+    resolution: {integrity: sha512-8eTzxGk9535SB3oSNu0tQ6I4ZffjVCBUjKHN9QeeIFtphBX0sEd0NxAuglBNR9TO5ThnxBB7GqzfcYo9kjadJQ==}
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
