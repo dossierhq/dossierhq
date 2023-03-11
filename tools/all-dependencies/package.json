@@ -90,7 +90,7 @@
     "react-leaflet": "~4.2.0",
     "react-router-dom": "~6.8.1",
     "rollup-plugin-visualizer": "~5.9.0",
-    "sass": "~1.58.3",
+    "sass": "~1.59.2",
     "sass-loader": "~13.2.0",
     "schema-dts": "~1.1.2",
     "sql.js": "~1.8.0",
