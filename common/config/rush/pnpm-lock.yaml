@@ -648,7 +648,7 @@ importers:
       prettier: 2.8.4
       react: ~18.2.0
       react-dom: ~18.2.0
-      sass: ~1.58.3
+      sass: ~1.59.2
       sass-loader: ~13.2.0
       storybook: ~7.0.0-beta.36
       svgo: ~3.0.2
@@ -686,12 +686,12 @@ importers:
       eslint-plugin-storybook: 0.6.10_7kw3g6rralp5ps6mg3uyzz6azm
       mini-svg-data-uri: 1.4.4
       prettier: 2.8.4
-      sass: 1.58.3
-      sass-loader: 13.2.0_sass@1.58.3
+      sass: 1.59.2
+      sass-loader: 13.2.0_sass@1.59.2
       storybook: 7.0.0-beta.36
       svgo: 3.0.2
       typescript: 4.9.5
-      vite: 4.1.2_sass@1.58.3
+      vite: 4.1.2_sass@1.59.2
 
   ../../libraries/design-ssr:
     specifiers:
@@ -1337,7 +1337,7 @@ importers:
       react-leaflet: ~4.2.0
       react-router-dom: ~6.8.1
       rollup-plugin-visualizer: ~5.9.0
-      sass: ~1.58.3
+      sass: ~1.59.2
       sass-loader: ~13.2.0
       schema-dts: ~1.1.2
       sql.js: ~1.8.0
@@ -1425,7 +1425,7 @@ importers:
       lexical: 0.7.7
       lodash: 4.17.21
       mini-svg-data-uri: 1.4.4
-      next: 13.2.0_wiv434v7erz4aedd5whhdwmpv4
+      next: 13.2.0_b7eik3blo2x47smm2jwaxpjfoq
       nodemon: 2.0.20
       pg: 8.10.0
       postgrator: 7.1.1
@@ -1435,8 +1435,8 @@ importers:
       react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
       react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
       rollup-plugin-visualizer: 5.9.0
-      sass: 1.58.3
-      sass-loader: 13.2.0_sass@1.58.3
+      sass: 1.59.2
+      sass-loader: 13.2.0_sass@1.59.2
       schema-dts: 1.1.2_typescript@4.9.5
       sql.js: 1.8.0
       sqlite3: 5.1.4
@@ -1447,8 +1447,8 @@ importers:
       tslib: 2.5.0
       typescript: 4.9.5
       uuid: 9.0.0
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
-      vitest: 0.29.2_sass@1.58.3
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
+      vitest: 0.29.2_sass@1.59.2
 
   ../../tools/generic-tools:
     specifiers:
@@ -3571,7 +3571,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2_typescript@4.9.5
       typescript: 4.9.5
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
 
   /@jridgewell/gen-mapping/0.3.2:
     resolution: {integrity: sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==}
@@ -5220,7 +5220,7 @@ packages:
       rollup: 3.12.1
       slash: 3.0.0
       typescript: 4.9.5
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
     transitivePeerDependencies:
       - supports-color
 
@@ -5523,7 +5523,7 @@ packages:
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 13.2.0_sass@1.58.3
+      sass-loader: 13.2.0_sass@1.59.2
 
   /@storybook/preview-api/7.0.0-beta.36:
     resolution: {integrity: sha512-gLaWz/IEWua6v2waDsxmBvi5VuHQhOl7F05hPXEBxpruKGqORZ2RVylKMmX4skPM+9oVi9VvPHVz0dsJ2+K3bA==}
@@ -5568,7 +5568,7 @@ packages:
       react: 18.2.0
       react-docgen: 6.0.0-alpha.3
       react-dom: 18.2.0_react@18.2.0
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - supports-color
@@ -6396,7 +6396,7 @@ packages:
       vite: ^4
     dependencies:
       '@swc/core': 1.3.36
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
 
   /@vitejs/plugin-react/3.1.0_vite@4.1.2:
     resolution: {integrity: sha512-AfgcRL8ZBhAlc3BFdigClmTUMISmmzHn7sB2h9U1odvc5U/MjWXsAaz18b/WoppUTDBzxOJwo2VdClfUcItu9g==}
@@ -6409,7 +6409,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.19.6_@babel+core@7.20.12
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
     transitivePeerDependencies:
       - supports-color
 
@@ -7965,7 +7965,7 @@ packages:
       readdirp: 3.6.0
       require-package-name: 2.0.1
       resolve: 1.22.1
-      sass: 1.58.3
+      sass: 1.59.2
       scss-parser: 1.0.6
       semver: 7.3.8
       yargs: 16.2.0
@@ -11399,6 +11399,55 @@ packages:
     dev: false
     optional: true
 
+  /next/13.2.0_b7eik3blo2x47smm2jwaxpjfoq:
+    resolution: {integrity: sha512-vhByvKHedsaMwNTwXKzK4IMmNp7XI7vN4etcGUoIpLrIuDfoYA3bS0ImS4X9F6lKzopG5aVp7a1CjuzF2NGkvA==}
+    engines: {node: '>=14.6.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.4.0
+      fibers: '>= 3.1.0'
+      node-sass: ^6.0.0 || ^7.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@next/env': 13.2.0
+      '@swc/helpers': 0.4.14
+      caniuse-lite: 1.0.30001414
+      postcss: 8.4.14
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      sass: 1.59.2
+      styled-jsx: 5.1.1_react@18.2.0
+    optionalDependencies:
+      '@next/swc-android-arm-eabi': 13.2.0
+      '@next/swc-android-arm64': 13.2.0
+      '@next/swc-darwin-arm64': 13.2.0
+      '@next/swc-darwin-x64': 13.2.0
+      '@next/swc-freebsd-x64': 13.2.0
+      '@next/swc-linux-arm-gnueabihf': 13.2.0
+      '@next/swc-linux-arm64-gnu': 13.2.0
+      '@next/swc-linux-arm64-musl': 13.2.0
+      '@next/swc-linux-x64-gnu': 13.2.0
+      '@next/swc-linux-x64-musl': 13.2.0
+      '@next/swc-win32-arm64-msvc': 13.2.0
+      '@next/swc-win32-ia32-msvc': 13.2.0
+      '@next/swc-win32-x64-msvc': 13.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+    dev: false
+    optional: true
+
   /next/13.2.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-vhByvKHedsaMwNTwXKzK4IMmNp7XI7vN4etcGUoIpLrIuDfoYA3bS0ImS4X9F6lKzopG5aVp7a1CjuzF2NGkvA==}
     engines: {node: '>=14.6.0'}
@@ -11445,55 +11494,6 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
     dev: false
-
-  /next/13.2.0_wiv434v7erz4aedd5whhdwmpv4:
-    resolution: {integrity: sha512-vhByvKHedsaMwNTwXKzK4IMmNp7XI7vN4etcGUoIpLrIuDfoYA3bS0ImS4X9F6lKzopG5aVp7a1CjuzF2NGkvA==}
-    engines: {node: '>=14.6.0'}
-    hasBin: true
-    peerDependencies:
-      '@opentelemetry/api': ^1.4.0
-      fibers: '>= 3.1.0'
-      node-sass: ^6.0.0 || ^7.0.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      fibers:
-        optional: true
-      node-sass:
-        optional: true
-      sass:
-        optional: true
-    dependencies:
-      '@next/env': 13.2.0
-      '@swc/helpers': 0.4.14
-      caniuse-lite: 1.0.30001414
-      postcss: 8.4.14
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      sass: 1.58.3
-      styled-jsx: 5.1.1_react@18.2.0
-    optionalDependencies:
-      '@next/swc-android-arm-eabi': 13.2.0
-      '@next/swc-android-arm64': 13.2.0
-      '@next/swc-darwin-arm64': 13.2.0
-      '@next/swc-darwin-x64': 13.2.0
-      '@next/swc-freebsd-x64': 13.2.0
-      '@next/swc-linux-arm-gnueabihf': 13.2.0
-      '@next/swc-linux-arm64-gnu': 13.2.0
-      '@next/swc-linux-arm64-musl': 13.2.0
-      '@next/swc-linux-x64-gnu': 13.2.0
-      '@next/swc-linux-x64-musl': 13.2.0
-      '@next/swc-win32-arm64-msvc': 13.2.0
-      '@next/swc-win32-ia32-msvc': 13.2.0
-      '@next/swc-win32-x64-msvc': 13.2.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-    dev: false
-    optional: true
 
   /node-abi/3.28.0:
     resolution: {integrity: sha512-fRlDb4I0eLcQeUvGq7IY3xHrSb0c9ummdvDSYWfT9+LKP+3jCKw/tKoqaM7r1BAoiAC6GtwyjaGnOz6B3OtF+A==}
@@ -13156,7 +13156,7 @@ packages:
   /safer-buffer/2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader/13.2.0_sass@1.58.3:
+  /sass-loader/13.2.0_sass@1.59.2:
     resolution: {integrity: sha512-JWEp48djQA4nbZxmgC02/Wh0eroSUutulROUusYJO9P9zltRbNN80JCBHqRGzjd4cmZCa/r88xgfkjGD0TXsHg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -13177,10 +13177,10 @@ packages:
     dependencies:
       klona: 2.0.5
       neo-async: 2.6.2
-      sass: 1.58.3
+      sass: 1.59.2
 
-  /sass/1.58.3:
-    resolution: {integrity: sha512-Q7RaEtYf6BflYrQ+buPudKR26/lH+10EmO9bBqbmPh/KeLqv8bjpTNqxe71ocONqXq+jYiCbpPUmQMS+JJPk4A==}
+  /sass/1.59.2:
+    resolution: {integrity: sha512-jJyO6SmbzkJexF8MUorHx5tAilcgabioYxT/BHbY4+OvoqmbHxsYlrjZ8Adhqcgl6Zqwie0TgMXLCAmPFxXOuw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -14525,28 +14525,6 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  /vite-node/0.29.2_6e4omgvd5jf4hig7wpb5tmdc3q:
-    resolution: {integrity: sha512-5oe1z6wzI3gkvc4yOBbDBbgpiWiApvuN4P55E8OI131JGrSuo4X3SOZrNmZYo4R8Zkze/dhi572blX0zc+6SdA==}
-    engines: {node: '>=v14.16.0'}
-    hasBin: true
-    dependencies:
-      cac: 6.7.14
-      debug: 4.3.4
-      mlly: 1.1.0
-      pathe: 1.1.0
-      picocolors: 1.0.0
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: false
-    optional: true
-
   /vite-node/0.29.2_@types+node@18.15.0:
     resolution: {integrity: sha512-5oe1z6wzI3gkvc4yOBbDBbgpiWiApvuN4P55E8OI131JGrSuo4X3SOZrNmZYo4R8Zkze/dhi572blX0zc+6SdA==}
     engines: {node: '>=v14.16.0'}
@@ -14567,6 +14545,28 @@ packages:
       - supports-color
       - terser
     dev: true
+
+  /vite-node/0.29.2_x7dzuadbe27hczg4caescy3qve:
+    resolution: {integrity: sha512-5oe1z6wzI3gkvc4yOBbDBbgpiWiApvuN4P55E8OI131JGrSuo4X3SOZrNmZYo4R8Zkze/dhi572blX0zc+6SdA==}
+    engines: {node: '>=v14.16.0'}
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.4
+      mlly: 1.1.0
+      pathe: 1.1.0
+      picocolors: 1.0.0
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: false
+    optional: true
 
   /vite/4.1.2:
     resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
@@ -14600,40 +14600,6 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
-
-  /vite/4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q:
-    resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 18.15.0
-      esbuild: 0.16.17
-      postcss: 8.4.21
-      resolve: 1.22.1
-      rollup: 3.12.1
-      sass: 1.58.3
-    optionalDependencies:
-      fsevents: 2.3.2
 
   /vite/4.1.2_@types+node@18.15.0:
     resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
@@ -14669,7 +14635,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.1.2_sass@1.58.3:
+  /vite/4.1.2_sass@1.59.2:
     resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -14698,10 +14664,44 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.1
       rollup: 3.12.1
-      sass: 1.58.3
+      sass: 1.59.2
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /vite/4.1.2_x7dzuadbe27hczg4caescy3qve:
+    resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.15.0
+      esbuild: 0.16.17
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.12.1
+      sass: 1.59.2
+    optionalDependencies:
+      fsevents: 2.3.2
 
   /vitest/0.29.2:
     resolution: {integrity: sha512-ydK9IGbAvoY8wkg29DQ4ivcVviCaUi3ivuPKfZEVddMTenFHUfB8EEDXQV8+RasEk1ACFLgMUqAaDuQ/Nk+mQA==}
@@ -14758,7 +14758,7 @@ packages:
       - terser
     dev: true
 
-  /vitest/0.29.2_sass@1.58.3:
+  /vitest/0.29.2_sass@1.59.2:
     resolution: {integrity: sha512-ydK9IGbAvoY8wkg29DQ4ivcVviCaUi3ivuPKfZEVddMTenFHUfB8EEDXQV8+RasEk1ACFLgMUqAaDuQ/Nk+mQA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -14801,8 +14801,8 @@ packages:
       tinybench: 2.3.1
       tinypool: 0.3.1
       tinyspy: 1.0.2
-      vite: 4.1.2_6e4omgvd5jf4hig7wpb5tmdc3q
-      vite-node: 0.29.2_6e4omgvd5jf4hig7wpb5tmdc3q
+      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
+      vite-node: 0.29.2_x7dzuadbe27hczg4caescy3qve
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
