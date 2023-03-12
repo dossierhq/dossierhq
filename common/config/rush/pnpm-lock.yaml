@@ -145,6 +145,7 @@ importers:
       '@dossierhq/typescript-generator': workspace:*
       '@faker-js/faker': ~7.6.0
       '@rushstack/heft': 0.49.7
+      '@types/prettier': ~2.7.2
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.0
       cloudinary: ~1.35.0
@@ -171,6 +172,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
       '@rushstack/heft': 0.49.7
+      '@types/prettier': 2.7.2
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.36.0
@@ -774,6 +776,7 @@ importers:
       '@dossierhq/typescript-generator': workspace:*
       '@rushstack/heft': 0.49.7
       '@types/node': ~18.15.0
+      '@types/prettier': ~2.7.2
       '@types/uuid': ~9.0.0
       eslint: ~8.36.0
       prettier: 2.8.4
@@ -792,6 +795,7 @@ importers:
       '@dossierhq/typescript-generator': link:../typescript-generator
       '@rushstack/heft': 0.49.7_@types+node@18.15.0
       '@types/node': 18.15.0
+      '@types/prettier': 2.7.2
       '@types/uuid': 9.0.0
       eslint: 8.36.0
       prettier: 2.8.4
@@ -1289,6 +1293,7 @@ importers:
       '@types/lodash': ~4.14.191
       '@types/node': ~18.15.0
       '@types/pg': ~8.6.6
+      '@types/prettier': ~2.7.2
       '@types/react': ~18.0.28
       '@types/react-dom': ~18.0.11
       '@types/sql.js': ~1.4.4
@@ -1387,6 +1392,7 @@ importers:
       '@types/lodash': 4.14.191
       '@types/node': 18.15.0
       '@types/pg': 8.6.6
+      '@types/prettier': 2.7.2
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       '@types/sql.js': 1.4.4
@@ -6018,6 +6024,9 @@ packages:
       '@types/node': 18.15.0
       pg-protocol: 1.6.0
       pg-types: 2.2.0
+
+  /@types/prettier/2.7.2:
+    resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
 
   /@types/pretty-hrtime/1.0.1:
     resolution: {integrity: sha512-VjID5MJb1eGKthz2qUerWT8+R4b9N+CHvGCzg9fn4kWZgaF9AhdYikQio3R7wV8YY1NsQKPaCwKz1Yff+aHNUQ==}

@@ -1,8 +1,8 @@
 #!/usr/bin/env -S npx ts-node-esm
 import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
-import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
+import prettier from 'prettier';
 import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
@@ -10,8 +10,10 @@ async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filenam
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
 
-  await writeFile(filename, sourceCode, { encoding: 'utf8' });
-  execFileSync('npx', ['prettier', '-w', filename]);
+  const prettierConfig = await prettier.resolveConfig(filename);
+  const formattedSource = prettier.format(sourceCode, { ...prettierConfig, filepath: filename });
+
+  await writeFile(filename, formattedSource, { encoding: 'utf8' });
 }
 
 await generateTypes(IntegrationTestSchema, './src/SchemaTypes.ts');
