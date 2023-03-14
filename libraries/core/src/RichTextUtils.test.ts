@@ -154,6 +154,22 @@ describe('createRichTextTextAndLineBreakNodes', () => {
       ]
     `);
   });
+
+  test('text with carriage return without line feed', () => {
+    expect(createRichTextTextAndLineBreakNodes('hello\r')).toMatchInlineSnapshot(`
+      [
+        {
+          "detail": 0,
+          "format": 0,
+          "mode": "normal",
+          "style": "",
+          "text": "hello",
+          "type": "text",
+          "version": 1,
+        },
+      ]
+    `);
+  });
 });
 
 describe('richTextTextNodeHasFormat', () => {

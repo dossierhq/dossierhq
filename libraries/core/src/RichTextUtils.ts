@@ -87,7 +87,10 @@ export function createRichTextTextAndLineBreakNodes(
   text: string,
   options?: { format?: TextFormatType[] }
 ): (RichTextTextNode | RichTextLineBreakNode)[] {
-  const linesOrNewline = text.split(/(\r?\n)/);
+  if (!(text.includes('\n') || text.includes('\r'))) {
+    return [createRichTextTextNode(text, options)];
+  }
+  const linesOrNewline = text.replace(/\r[^\n]|\r$/g, '').split(/(\r?\n)/);
   return linesOrNewline
     .filter((it) => it.length > 0)
     .map((it) => {
