@@ -5,7 +5,7 @@ exports[`mergeWith() > empty->entity with pattern 1`] = `
   "entityTypes": [
     {
       "adminOnly": false,
-      "authKeyPattern": "a-pattern",
+      "authKeyPattern": "aPattern",
       "fields": [],
       "name": "Foo",
       "nameField": null,
@@ -14,7 +14,7 @@ exports[`mergeWith() > empty->entity with pattern 1`] = `
   "indexes": [],
   "patterns": [
     {
-      "name": "a-pattern",
+      "name": "aPattern",
       "pattern": "^hello$",
     },
   ],
@@ -66,7 +66,7 @@ exports[`mergeWith() > field with matchPattern 1`] = `
           "adminOnly": false,
           "index": null,
           "list": false,
-          "matchPattern": "a-pattern",
+          "matchPattern": "aPattern",
           "multiline": false,
           "name": "title",
           "required": false,
@@ -80,7 +80,7 @@ exports[`mergeWith() > field with matchPattern 1`] = `
   "indexes": [],
   "patterns": [
     {
-      "name": "a-pattern",
+      "name": "aPattern",
       "pattern": "^pattern$",
     },
   ],
@@ -127,7 +127,7 @@ exports[`mergeWith() > update pattern 1`] = `
   "entityTypes": [
     {
       "adminOnly": false,
-      "authKeyPattern": "a-pattern",
+      "authKeyPattern": "aPattern",
       "fields": [],
       "name": "Foo",
       "nameField": null,
@@ -136,7 +136,7 @@ exports[`mergeWith() > update pattern 1`] = `
   "indexes": [],
   "patterns": [
     {
-      "name": "a-pattern",
+      "name": "aPattern",
       "pattern": "^new-pattern$",
     },
   ],

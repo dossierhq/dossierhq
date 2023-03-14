@@ -17,7 +17,7 @@ exports[`Validate entity > Fail: admin only value item in normal field 1`] = `
 exports[`Validate entity > Fail: matchPattern unmatched string 1`] = `
 [
   {
-    "message": "Value does not match pattern foo-bar-baz",
+    "message": "Value does not match pattern fooBarBaz",
     "path": [
       "entity",
       "fields",
@@ -31,7 +31,7 @@ exports[`Validate entity > Fail: matchPattern unmatched string 1`] = `
 exports[`Validate entity > Fail: matchPattern unmatched string item in list 1`] = `
 [
   {
-    "message": "Value does not match pattern foo-bar-baz",
+    "message": "Value does not match pattern fooBarBaz",
     "path": [
       "entity",
       "fields",

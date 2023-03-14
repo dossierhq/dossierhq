@@ -26,8 +26,8 @@ describe('mergeWith()', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
         .mergeWith({
-          entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
-          patterns: [{ name: 'a-pattern', pattern: '^hello$' }],
+          entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
+          patterns: [{ name: 'aPattern', pattern: '^hello$' }],
         })
         .valueOrThrow().spec
     ).toMatchSnapshot();
@@ -35,24 +35,24 @@ describe('mergeWith()', () => {
 
   test('update pattern', () => {
     const result = AdminSchema.createAndValidate({
-      entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
-      patterns: [{ name: 'a-pattern', pattern: '^old-pattern$' }],
+      entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
+      patterns: [{ name: 'aPattern', pattern: '^old-pattern$' }],
     })
       .valueOrThrow()
       .mergeWith({
-        patterns: [{ name: 'a-pattern', pattern: '^new-pattern$' }],
+        patterns: [{ name: 'aPattern', pattern: '^new-pattern$' }],
       })
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    expect(result.getPattern('a-pattern')?.pattern).toBe('^new-pattern$');
-    expect(result.getPatternRegExp('a-pattern')?.source).toBe('^new-pattern$');
+    expect(result.getPattern('aPattern')?.pattern).toBe('^new-pattern$');
+    expect(result.getPatternRegExp('aPattern')?.source).toBe('^new-pattern$');
   });
 
   test('unused pattern is removed', () => {
     const result = AdminSchema.createAndValidate({
-      entityTypes: [{ name: 'Foo', authKeyPattern: 'a-pattern', fields: [] }],
-      patterns: [{ name: 'a-pattern', pattern: '^pattern$' }],
+      entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
+      patterns: [{ name: 'aPattern', pattern: '^pattern$' }],
     })
       .valueOrThrow()
       .mergeWith({
@@ -72,15 +72,15 @@ describe('mergeWith()', () => {
           {
             name: 'Foo',
             adminOnly: false,
-            fields: [{ name: 'title', type: FieldType.String, matchPattern: 'a-pattern' }],
+            fields: [{ name: 'title', type: FieldType.String, matchPattern: 'aPattern' }],
           },
         ],
-        patterns: [{ name: 'a-pattern', pattern: '^pattern$' }],
+        patterns: [{ name: 'aPattern', pattern: '^pattern$' }],
       })
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    expect(result.getPattern('a-pattern')?.pattern).toBe('^pattern$');
+    expect(result.getPattern('aPattern')?.pattern).toBe('^pattern$');
   });
 
   test('unused index is removed', () => {
@@ -208,6 +208,34 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Invalid entity type name', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          { name: 'foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'foo: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123'
+    );
+  });
+
+  test('Error: Invalid value type name', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [{ name: 'foo', adminOnly: false, fields: [] }],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'foo: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123'
+    );
+  });
+
   test('Error: Duplicate entity type names', () => {
     expectErrorResult(
       new AdminSchema({
@@ -286,6 +314,36 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo: nameField (booleanField) should be a string (non-list)'
+    );
+  });
+
+  test('Error: Invalid field name', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'NotCamelCase',
+                type: FieldType.String,
+                list: false,
+                multiline: false,
+                adminOnly: false,
+                required: false,
+                matchPattern: null,
+                index: null,
+              },
+            ],
+          },
+        ],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.NotCamelCase: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123'
     );
   });
 
@@ -1190,13 +1248,26 @@ describe('validate()', () => {
         entityTypes: [],
         valueTypes: [],
         patterns: [
-          { name: 'a-pattern', pattern: '^a-pattern$' },
-          { name: 'a-pattern', pattern: '^duplicate$' },
+          { name: 'aPattern', pattern: '^a-pattern$' },
+          { name: 'aPattern', pattern: '^duplicate$' },
         ],
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'a-pattern: Duplicate pattern name'
+      'aPattern: Duplicate pattern name'
+    );
+  });
+
+  test('Error: invalid pattern name', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [],
+        patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'a-pattern: The pattern name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123'
     );
   });
 
@@ -1220,11 +1291,11 @@ describe('validate()', () => {
       new AdminSchema({
         entityTypes: [],
         valueTypes: [],
-        patterns: [{ name: 'a-pattern', pattern: 'invalid\\' }],
+        patterns: [{ name: 'aPattern', pattern: 'invalid\\' }],
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'a-pattern: Invalid regex'
+      'aPattern: Invalid regex'
     );
   });
 
@@ -1378,10 +1449,10 @@ describe('AdminSchema.toPublishedSchema()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            fields: [{ name: 'field1', type: FieldType.String, matchPattern: 'a-pattern' }],
+            fields: [{ name: 'field1', type: FieldType.String, matchPattern: 'aPattern' }],
           },
         ],
-        patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+        patterns: [{ name: 'aPattern', pattern: '^a-pattern$' }],
       })
         .valueOrThrow()
         .toPublishedSchema().spec
@@ -1398,13 +1469,13 @@ describe('AdminSchema.toPublishedSchema()', () => {
               required: false,
               multiline: false,
               index: null,
-              matchPattern: 'a-pattern',
+              matchPattern: 'aPattern',
             },
           ],
         },
       ],
       valueTypes: [],
-      patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+      patterns: [{ name: 'aPattern', pattern: '^a-pattern$' }],
       indexes: [],
     });
   });

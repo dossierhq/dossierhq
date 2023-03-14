@@ -1167,7 +1167,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
         {
           "adminOnly": false,
           "list": false,
-          "matchPattern": "a-pattern",
+          "matchPattern": "aPattern",
           "multiline": false,
           "name": "bar",
           "required": false,
@@ -1199,7 +1199,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
         {
           "adminOnly": false,
           "index": null,
-          "matchPattern": "a-pattern",
+          "matchPattern": "aPattern",
           "multiline": false,
           "name": "bar",
           "required": false,
@@ -2641,7 +2641,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "entityTypes": [
     {
       "adminOnly": false,
-      "authKeyPattern": "pattern-one",
+      "authKeyPattern": "patternOne",
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -2653,7 +2653,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "indexes": [],
   "patterns": [
     {
-      "name": "pattern-one",
+      "name": "patternOne",
       "pattern": "^foo$",
       "status": "",
     },
@@ -2665,7 +2665,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
       "entityTypes": [
         {
           "adminOnly": false,
-          "authKeyPattern": "pattern-one",
+          "authKeyPattern": "patternOne",
           "fields": [],
           "name": "Foo",
           "nameField": null,
@@ -2674,7 +2674,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
       "indexes": [],
       "patterns": [
         {
-          "name": "pattern-one",
+          "name": "patternOne",
           "pattern": "^foo$",
         },
       ],
@@ -3116,7 +3116,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
             "adminOnly": false,
             "index": null,
             "list": false,
-            "matchPattern": "a-pattern",
+            "matchPattern": "aPattern",
             "multiline": true,
             "name": "string",
             "required": false,
@@ -3124,7 +3124,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
           },
           "index": null,
           "list": false,
-          "matchPattern": "a-pattern",
+          "matchPattern": "aPattern",
           "multiline": true,
           "name": "string",
           "required": false,
@@ -3141,7 +3141,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   "indexes": [],
   "patterns": [
     {
-      "name": "a-pattern",
+      "name": "aPattern",
       "pattern": "^a-pattern$",
       "status": "",
     },
@@ -3159,7 +3159,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
               "adminOnly": false,
               "index": null,
               "list": false,
-              "matchPattern": "a-pattern",
+              "matchPattern": "aPattern",
               "multiline": true,
               "name": "string",
               "required": false,
@@ -3173,7 +3173,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
       "indexes": [],
       "patterns": [
         {
-          "name": "a-pattern",
+          "name": "aPattern",
           "pattern": "^a-pattern$",
         },
       ],

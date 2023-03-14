@@ -31,7 +31,7 @@ const DialogStatus = {
 type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 
 //TODO use from core?
-const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
+const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 
 const NAME_DEFAULT_HELP_TEXT = 'The name of the index, such as myIndex';
 const NAME_STATUS_HELP_TEST: Record<string, string> = {

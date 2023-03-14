@@ -30,13 +30,13 @@ const DialogStatus = {
 } as const;
 type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 
-//TODO move to core? add check to core
-const NAME_REGEXP = /^[-a-zA-Z0-9_]+$/;
+//TODO use from core?
+const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 
 const NAME_DEFAULT_HELP_TEXT = 'The name of the pattern, such as my-pattern';
 const NAME_STATUS_HELP_TEST: Record<string, string> = {
   [DialogStatus.invalidFormat]:
-    'The name can not be empty and can only contain letters (a-z, A-Z), numbers, underscore (_) and dash (-), such as my-pattern-123',
+    'The name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123',
   [DialogStatus.alreadyExist]: 'A pattern with that name already exists',
 };
 
@@ -106,7 +106,7 @@ function validateName(
   name: string
 ): DialogStatus {
   if (!name) return DialogStatus.empty;
-  if (!name.match(NAME_REGEXP)) {
+  if (!name.match(CAMEL_CASE_PATTERN)) {
     return DialogStatus.invalidFormat;
   }
   if (selector !== 'add' && selector.name === name) {

@@ -124,7 +124,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         { name: 'title', type: FieldType.String },
         { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
-        { name: 'matchPattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },
+        { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'list', type: FieldType.String, list: true },
         { name: 'requiredList', type: FieldType.String, list: true, required: true },
         {
@@ -132,7 +132,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
           type: FieldType.String,
           list: true,
           required: true,
-          matchPattern: 'foo-bar-baz',
+          matchPattern: 'fooBarBaz',
         },
       ],
     },
@@ -170,7 +170,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
-        { name: 'matchPattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },
+        { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'list', type: FieldType.String, list: true },
         { name: 'requiredList', type: FieldType.String, list: true, required: true },
         {
@@ -178,7 +178,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
           type: FieldType.String,
           list: true,
           required: true,
-          matchPattern: 'foo-bar-baz',
+          matchPattern: 'fooBarBaz',
         },
       ],
     },
@@ -186,7 +186,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   patterns: [
     { name: 'none', pattern: '^none$' },
     { name: 'slug', pattern: '^[a-z0-9-]+$' },
-    { name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' },
+    { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
   ],
   indexes: [{ name: 'slug', type: 'unique' }],
 };

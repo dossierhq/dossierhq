@@ -541,22 +541,22 @@ describe('ChangeFieldMatchPattern', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-          patterns: [{ name: 'a-pattern', pattern: '^.+$' }],
+          patterns: [{ name: 'aPattern', pattern: '^.+$' }],
         }).valueOrThrow()
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldMatchPattern(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        'a-pattern'
+        'aPattern'
       )
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
     expect(schemaUpdate).toMatchSnapshot();
 
-    expect(state.entityTypes[0].fields[0].matchPattern).toBe('a-pattern');
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe('aPattern');
     expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).matchPattern).toBe(
-      'a-pattern'
+      'aPattern'
     );
   });
 });
@@ -1067,18 +1067,18 @@ describe('UpdateSchemaSpecificationAction', () => {
                   name: 'string',
                   type: FieldType.String,
                   multiline: true,
-                  matchPattern: 'a-pattern',
+                  matchPattern: 'aPattern',
                 },
               ],
             },
           ],
-          patterns: [{ name: 'a-pattern', pattern: '^a-pattern$' }],
+          patterns: [{ name: 'aPattern', pattern: '^a-pattern$' }],
         }).valueOrThrow()
       )
     );
 
     expect(state.entityTypes[0].fields[0].multiline).toBe(true);
-    expect(state.entityTypes[0].fields[0].matchPattern).toBe('a-pattern');
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe('aPattern');
 
     expect(state).toMatchSnapshot();
 
@@ -1201,8 +1201,8 @@ describe('UpdateSchemaSpecificationAction', () => {
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
-          entityTypes: [{ name: 'Foo', authKeyPattern: 'pattern-one', fields: [] }],
-          patterns: [{ name: 'pattern-one', pattern: '^foo$' }],
+          entityTypes: [{ name: 'Foo', authKeyPattern: 'patternOne', fields: [] }],
+          patterns: [{ name: 'patternOne', pattern: '^foo$' }],
         }).valueOrThrow()
       )
     );

@@ -31,8 +31,8 @@ const DialogStatus = {
 
 type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 
-//TODO move to core? add check to core
-const NAME_REGEXP = /^[A-Z][a-zA-Z0-9_]*$/;
+//TODO move to core?
+const PASCAL_CASE_PATTERN = /^[A-Z][a-zA-Z0-9_]*$/;
 
 const NAME_DEFAULT_HELP_TEXT = 'The name of the type, such as MyType';
 const NAME_STATUS_HELP_TEST: Record<string, string> = {
@@ -115,7 +115,7 @@ function validateName(
   name: string
 ): DialogStatus {
   if (!name) return DialogStatus.empty;
-  if (!name.match(NAME_REGEXP)) {
+  if (!name.match(PASCAL_CASE_PATTERN)) {
     return DialogStatus.invalidFormat;
   }
   if (selector !== 'add' && selector.typeName === name) {

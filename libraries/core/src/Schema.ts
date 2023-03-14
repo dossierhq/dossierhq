@@ -221,7 +221,8 @@ export interface SchemaSpecificationUpdatePayload {
   schemaSpecification: AdminSchemaSpecification;
 }
 
-const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9]*$/;
+const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
+const PASCAL_CASE_PATTERN = /^[A-Z][a-zA-Z0-9_]*$/;
 
 const REQUIRED_RICH_TEXT_NODES = [
   RichTextNodeType.root,
@@ -305,6 +306,11 @@ export class AdminSchema {
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
       const isValueType = this.spec.valueTypes.includes(typeSpec);
 
+      if (!PASCAL_CASE_PATTERN.test(typeSpec.name)) {
+        return notOk.BadRequest(
+          `${typeSpec.name}: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123`
+        );
+      }
       if (usedNames.has(typeSpec.name)) {
         return notOk.BadRequest(`${typeSpec.name}: Duplicate type name`);
       }
@@ -334,6 +340,11 @@ export class AdminSchema {
       }
 
       for (const fieldSpec of typeSpec.fields) {
+        if (!CAMEL_CASE_PATTERN.test(fieldSpec.name)) {
+          return notOk.BadRequest(
+            `${typeSpec.name}.${fieldSpec.name}: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123`
+          );
+        }
         if (isValueType && fieldSpec.name === 'type') {
           return notOk.BadRequest(
             `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`
@@ -509,6 +520,11 @@ export class AdminSchema {
     for (const patternSpec of this.spec.patterns) {
       if (usedPatterns.has(patternSpec.name)) {
         return notOk.BadRequest(`${patternSpec.name}: Duplicate pattern name`);
+      }
+      if (!CAMEL_CASE_PATTERN.test(patternSpec.name)) {
+        return notOk.BadRequest(
+          `${patternSpec.name}: The pattern name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123`
+        );
       }
       usedPatterns.add(patternSpec.name);
 

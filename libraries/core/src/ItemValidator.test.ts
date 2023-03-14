@@ -25,8 +25,8 @@ const adminSchema = AdminSchema.createAndValidate({
       name: 'StringsEntity',
       fields: [
         { name: 'required', type: FieldType.String, required: true },
-        { name: 'pattern', type: FieldType.String, matchPattern: 'foo-bar-baz' },
-        { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'foo-bar-baz' },
+        { name: 'pattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
+        { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'fooBarBaz' },
       ],
     },
     {
@@ -35,7 +35,7 @@ const adminSchema = AdminSchema.createAndValidate({
     },
   ],
   valueTypes: [{ name: 'AdminOnlyValueItem', adminOnly: true, fields: [] }],
-  patterns: [{ name: 'foo-bar-baz', pattern: '^(foo|bar|baz)$' }],
+  patterns: [{ name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' }],
 }).valueOrThrow();
 
 const STRINGS_ENTITY_DEFAULT: AdminEntityCreate = {

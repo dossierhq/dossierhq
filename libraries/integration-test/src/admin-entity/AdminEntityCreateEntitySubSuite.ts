@@ -768,7 +768,7 @@ async function createEntity_errorStringNotMatchingMatchPattern({ server }: Admin
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    'entity.fields.pattern: Value does not match pattern foo-bar-baz'
+    'entity.fields.pattern: Value does not match pattern fooBarBaz'
   );
 }
 
@@ -800,7 +800,7 @@ async function createEntity_errorStringListNotMatchingMatchPattern({
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    'entity.fields.patternList[1]: Value does not match pattern foo-bar-baz'
+    'entity.fields.patternList[1]: Value does not match pattern fooBarBaz'
   );
 }
 
