@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/better-sqlite3",
+      "comment": "Improve indexes",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/better-sqlite3"
+}
