@@ -181,6 +181,11 @@ const VERSION_6: SchemaVersionDefinition[] = [
   `CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id)`,
 ];
 
+const VERSION_7: SchemaVersionDefinition[] = [
+  'CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id)',
+  'CREATE INDEX entity_published_references_from_entities_id ON entity_published_references(from_entities_id)',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -189,6 +194,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_4,
   VERSION_5,
   VERSION_6,
+  VERSION_7,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
