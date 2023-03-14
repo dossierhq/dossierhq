@@ -135,6 +135,8 @@ export {
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextLineBreakNode,
+  createRichTextListItemNode,
+  createRichTextListNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextAndLineBreakNodes,

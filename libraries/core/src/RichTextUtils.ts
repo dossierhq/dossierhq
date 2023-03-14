@@ -8,6 +8,8 @@ import type {
   RichTextEntityNode,
   RichTextHeadingNode,
   RichTextLineBreakNode,
+  RichTextListItemNode,
+  RichTextListNode,
   RichTextNode,
   RichTextParagraphNode,
   RichTextTextNode,
@@ -118,6 +120,40 @@ export function createRichTextEntityLinkNode(
     type: RichTextNodeType.entityLink,
     reference: { id },
     version: 1,
+    children,
+  };
+}
+
+export function createRichTextListNode(
+  listType: RichTextListNode['listType'],
+  children: RichTextNode[]
+): RichTextListNode {
+  return {
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: RichTextNodeType.list,
+    version: 1,
+    listType,
+    start: 1,
+    tag: listType === 'number' ? 'ol' : 'ul',
+    children,
+  };
+}
+
+export function createRichTextListItemNode(
+  value: number,
+  checked: boolean | undefined,
+  children: RichTextNode[]
+): RichTextListItemNode {
+  return {
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: RichTextNodeType.listitem,
+    version: 1,
+    checked,
+    value,
     children,
   };
 }
