@@ -184,6 +184,9 @@ const VERSION_6: SchemaVersionDefinition[] = [
 const VERSION_7: SchemaVersionDefinition[] = [
   'CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id)',
   'CREATE INDEX entity_published_references_from_entities_id ON entity_published_references(from_entities_id)',
+  'CREATE INDEX entity_published_locations_entities_id ON entity_published_locations(entities_id)',
+  'CREATE INDEX entity_latest_references_from_entities_id ON entity_latest_references(from_entities_id)',
+  'CREATE INDEX entity_latest_locations_entities_id ON entity_latest_locations(entities_id)',
 ];
 
 const VERSIONS: SchemaVersionDefinition[][] = [
