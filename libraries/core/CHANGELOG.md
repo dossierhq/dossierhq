@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Tue, 07 Mar 2023 21:38:54 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Mar 2023 17:47:19 GMT and should not be manually modified.
+
+## 0.2.5
+Tue, 14 Mar 2023 17:47:19 GMT
+
+### Updates
+
+- Break: Require camelCase for pattern names. Check type and field names. Export type AdminFieldSpecificationUpdate. Handle standalone carriage return (no line feed) in createRichTextTextAndLineBreakNodes(). Add createRichTextListNode()/createRichTextListItemNode().
 
 ## 0.2.4
 Tue, 07 Mar 2023 21:38:54 GMT

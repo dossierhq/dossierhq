@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.2.5",
+      "tag": "@dossierhq/core_v0.2.5",
+      "date": "Tue, 14 Mar 2023 17:47:19 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Require camelCase for pattern names. Check type and field names. Export type AdminFieldSpecificationUpdate. Handle standalone carriage return (no line feed) in createRichTextTextAndLineBreakNodes(). Add createRichTextListNode()/createRichTextListItemNode()."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.4",
       "tag": "@dossierhq/core_v0.2.4",
       "date": "Tue, 07 Mar 2023 21:38:54 GMT",

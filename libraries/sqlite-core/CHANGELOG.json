@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.2.5",
+      "tag": "@dossierhq/sqlite-core_v0.2.5",
+      "date": "Tue, 14 Mar 2023 17:47:19 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improve indexes/performance."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.4",
       "tag": "@dossierhq/sqlite-core_v0.2.4",
       "date": "Tue, 07 Mar 2023 21:38:54 GMT",
