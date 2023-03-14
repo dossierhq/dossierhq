@@ -37,6 +37,8 @@ export async function runTest(
     `\nStarting test '${options.testName}' - ${options.variant} (${options.iterations} iterations)`
   );
   const iterationDurations_ms = new Array<number | null>(options.iterations).fill(null);
+  const profileLabel = `${options.runName}-${options.variant}-${options.testName}`;
+  console.profile(profileLabel);
   for (let i = 0; i < options.iterations; i += 1) {
     replaceStdoutLineIfSupported(`Iteration [${i + 1}/${options.iterations}]`);
     controlClock.reset();
@@ -46,6 +48,7 @@ export async function runTest(
       iterationDurations_ms[i] = controlClock.duration_ms();
     }
   }
+  console.profileEnd(profileLabel);
   console.log();
 
   return {
