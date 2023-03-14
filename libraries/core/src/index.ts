@@ -147,6 +147,7 @@ export type {
   AdminEntityTypeSpecification,
   AdminEntityTypeSpecificationUpdate,
   AdminFieldSpecification,
+  AdminFieldSpecificationUpdate,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
