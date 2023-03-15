@@ -32,8 +32,8 @@ const DialogStatus = {
 } as const;
 type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 
-//TODO move to core? add check to core
-const NAME_REGEXP = /^[a-z][a-zA-Z0-9_]*$/;
+//TODO use from core?
+const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 
 const NAME_DEFAULT_HELP_TEXT = 'The name of the field, such as myField';
 const NAME_STATUS_HELP_TEST: Record<string, string> = {
@@ -107,7 +107,7 @@ function validateName(
   name: string
 ): DialogStatus {
   if (!name) return DialogStatus.empty;
-  if (!name.match(NAME_REGEXP)) {
+  if (!name.match(CAMEL_CASE_PATTERN)) {
     return DialogStatus.invalidFormat;
   }
   if ('fieldName' in selector && selector.fieldName === name) {
