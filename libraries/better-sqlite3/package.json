@@ -23,7 +23,7 @@
   "types": "./lib/esm/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json && sqlite3 databases/integration-test-admin-entity.sqlite .schema > docs/schema.sql",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
