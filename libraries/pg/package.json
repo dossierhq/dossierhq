@@ -22,10 +22,11 @@
   "types": "./lib/esm/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json && ./scripts/db-dump-schema.sh",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
+    "db:dump-schema": "./scripts/db-dump-schema.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
