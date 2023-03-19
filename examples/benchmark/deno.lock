@@ -474,6 +474,7 @@
     "specifiers": {
       "@faker-js/faker@~7.6.0": "@faker-js/faker@7.6.0",
       "@rushstack/heft@0.49.7": "@rushstack/heft@0.49.7",
+      "@rushstack/heft@0.50.0": "@rushstack/heft@0.50.0",
       "@types/better-sqlite3@~7.6.3": "@types/better-sqlite3@7.6.3",
       "@types/pg@~8.6.6": "@types/pg@8.6.6",
       "@types/sqlite3@~3.1.8": "@types/sqlite3@3.1.8",
@@ -579,6 +580,25 @@
       },
       "@rushstack/heft@0.49.7": {
         "integrity": "sha512-J3zHl4ESPDCISJzbDMpFSutzXNerza32b+3awAgLyPYUS4F9eFozg4Z5bszg8pyx91bu0xKIdCu7OvCJcwpO8Q==",
+        "dependencies": {
+          "@rushstack/heft-config-file": "@rushstack/heft-config-file@0.11.9",
+          "@rushstack/node-core-library": "@rushstack/node-core-library@3.55.2",
+          "@rushstack/rig-package": "@rushstack/rig-package@0.3.18",
+          "@rushstack/ts-command-line": "@rushstack/ts-command-line@4.13.2",
+          "@types/tapable": "@types/tapable@1.0.6",
+          "argparse": "argparse@1.0.10",
+          "chokidar": "chokidar@3.4.3",
+          "fast-glob": "fast-glob@3.2.12",
+          "glob": "glob@7.0.6",
+          "glob-escape": "glob-escape@0.0.2",
+          "prettier": "prettier@2.3.2",
+          "semver": "semver@7.3.8",
+          "tapable": "tapable@1.1.3",
+          "true-case-path": "true-case-path@2.2.1"
+        }
+      },
+      "@rushstack/heft@0.50.0": {
+        "integrity": "sha512-x/DR5kZ2Dxd93x5z+5avlck6l6GcvK5Izckakr/7/qWLfT6o8b0KF3PW3Sew/iMWJJ4xr8asxHdglfIvhIPDkw==",
         "dependencies": {
           "@rushstack/heft-config-file": "@rushstack/heft-config-file@0.11.9",
           "@rushstack/node-core-library": "@rushstack/node-core-library@3.55.2",
