@@ -13,7 +13,8 @@ const {
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
-PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+PgTypes.setTypeParser(1016 as any, (value) => PgTypes.arrayParser(value, BigInt));
 
 export type PgDatabaseAdapter = DatabaseAdapter;
 
