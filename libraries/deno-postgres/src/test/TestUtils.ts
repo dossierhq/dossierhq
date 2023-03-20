@@ -7,7 +7,7 @@ import {
 } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import { createServer } from "@dossierhq/server";
-import { config } from "dotenv";
+import { load } from "std/dotenv/mod.ts";
 import { createPostgresAdapter } from "../PostgresAdapter.ts";
 
 export interface ServerInit {
@@ -37,7 +37,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const databaseAdapter = createPostgresAdapter(
-    config().DATABASE_URL,
+    (await load()).DATABASE_URL,
   );
 
   const serverResult = await createServer({

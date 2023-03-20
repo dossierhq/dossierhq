@@ -1,6 +1,6 @@
 import { ok } from '@dossierhq/core';
 import { createPostgresAdapter } from '@dossierhq/deno-postgres';
-import { config } from 'dotenv';
+import { load } from 'std/dotenv/mod.ts';
 import { Pool } from 'postgres';
 import { initializeAndRunTests } from '../lib/benchmark.js';
 
@@ -22,7 +22,11 @@ async function createPostgresDatabaseAdapter(connectionString: string) {
 }
 
 async function main(runName: string, ciOrLocal: { githubSha: string | undefined } | 'local') {
-  const adapter = await createPostgresDatabaseAdapter(config().EXAMPLES_BENCHMARK_DATABASE_URL);
+  const adapter = await createPostgresDatabaseAdapter(
+    (
+      await load()
+    ).EXAMPLES_BENCHMARK_DATABASE_URL
+  );
   const result = await initializeAndRunTests({
     runName,
     variant: 'deno-postgres',

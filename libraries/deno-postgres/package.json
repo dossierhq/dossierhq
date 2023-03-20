@@ -9,7 +9,7 @@
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
     "postinstall": "deno cache external-dependencies.ts",
-    "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS"
+    "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",

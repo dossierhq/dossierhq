@@ -1,4 +1,3 @@
-import type {} from "dotenv";
 import type {} from "postgres";
 import type {} from "std/encoding/base64.ts";
 import type {} from "tslib";

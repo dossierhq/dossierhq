@@ -1,8 +1,8 @@
 import { createPostgresAdapter } from "@dossierhq/deno-postgres";
-import { config } from "dotenv";
+import { loadSync } from "std/dotenv/mod.ts";
 
 export function createDotenvAdapter() {
   return createPostgresAdapter(
-    config().EXAMPLES_DENO_DATABASE_URL,
+    loadSync().EXAMPLES_DENO_DATABASE_URL,
   );
 }

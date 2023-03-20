@@ -3,14 +3,13 @@
     "@dossierhq/core": "../node_modules/@dossierhq/core/lib/esm/index.js",
     "@dossierhq/database-adapter": "../node_modules/@dossierhq/database-adapter/lib/esm/index.js",
     "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/esm/index.js",
-    "@dossierhq/deno-postgres": "../node_modules/@dossierhq/deno-postgres/src/mod.ts",
+    "@dossierhq/deno-postgres": "../../../libraries/deno-postgres/src/mod.ts",
     "@dossierhq/integration-test": "../node_modules/@dossierhq/integration-test/lib/esm/index.js",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
     "@dossierhq/template-library": "../node_modules/@dossierhq/template-library/lib/esm/index.js",
-    "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
     "lexical": "npm:lexical@0.7.7",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
-    "std/": "https://deno.land/std@0.177.0/",
+    "std/": "https://deno.land/std@0.180.0/",
     "tslib": "npm:tslib@~2.5.0",
     "uuid": "npm:uuid@~9.0.0"
   }
