@@ -12,8 +12,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "start": "npm run start:cli",
-    "start:cli": "node ./lib/cli.js",
+    "start": "npm run start:graphql",
     "start:graphql": "node ./lib/graphql.js"
   },
   "dependencies": {
@@ -22,7 +21,7 @@
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "express": "~4.18.2",
-    "express-graphql": "~0.12.0",
+    "graphql-http": "~1.16.0",
     "sqlite3": "~5.1.2",
     "tslib": "~2.5.0"
   },

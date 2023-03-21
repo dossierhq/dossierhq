@@ -3,24 +3,10 @@ import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@dossierhq/graphql';
 import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
 import type { Server } from '@dossierhq/server';
-import type { Handler, NextFunction, Request, Response } from 'express';
-import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
+import express, { type Request } from 'express';
+import { createHandler } from 'graphql-http/lib/use/express';
 import type { IncomingHttpHeaders } from 'http';
 import { initializeServer, updateSchema } from './server.js';
-
-type GraphQlMiddleware = ReturnType<typeof graphqlHTTP>;
-
-function middlewareAdapter(middleware: GraphQlMiddleware): Handler {
-  return (req: Request, res: Response, next: NextFunction): void => {
-    middleware(
-      req as unknown as Parameters<GraphQlMiddleware>[0],
-      res as unknown as Parameters<GraphQlMiddleware>[1]
-    )
-      .then(() => next())
-      .catch((error) => next(error));
-  };
-}
 
 async function createSessionContext(server: Server, headers: IncomingHttpHeaders) {
   const provider = headers['insecure-auth-provider'];
@@ -47,8 +33,9 @@ function startExpressServer(server: Server, schema: AdminSchema, port: number) {
   const app = express();
   app.use(
     '/graphql',
-    middlewareAdapter(
-      graphqlHTTP(async (request, _response, _params) => {
+    createHandler({
+      schema: gqlSchema,
+      async context(request: Request) {
         const context: SessionGraphQLContext = {
           adminClient: notOk.NotAuthenticated('No session'),
           publishedClient: notOk.NotAuthenticated('No session'),
@@ -58,15 +45,11 @@ function startExpressServer(server: Server, schema: AdminSchema, port: number) {
           context.adminClient = ok(server.createAdminClient(sessionResult.value.context));
           context.publishedClient = ok(server.createPublishedClient(sessionResult.value.context));
         }
-        return {
-          schema: gqlSchema,
-          context,
-          graphiql: {
-            headerEditorEnabled: true,
-          },
-        };
-      })
-    )
+        // TODO typing in graphql-http is wrong
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return context as any;
+      },
+    })
   );
   const expressServer = app.listen(port);
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
@@ -94,9 +77,7 @@ async function main(port: number) {
   });
 }
 
-if (require.main === module) {
-  main(4000).catch((error) => {
-    console.warn(error);
-    process.exitCode = 1;
-  });
-}
+await main(4000).catch((error) => {
+  console.warn(error);
+  process.exitCode = 1;
+});

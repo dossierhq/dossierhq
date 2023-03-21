@@ -1,15 +1,20 @@
 import type { Logger } from '@dossierhq/core';
 import { AdminSchema } from '@dossierhq/core';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
-import { Database } from 'sqlite3';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
+import * as Sqlite from 'sqlite3';
 import { schemaSpecification } from './schema.js';
+
+// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
+const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
 
 const SQLITE3_DATABASE = 'data/foo.sqlite';
 
 export async function initializeServer(logger: Logger) {
-  const databaseResult = await createDatabase({ logger }, Database, { filename: SQLITE3_DATABASE });
+  const databaseResult = await createDatabase({ logger }, SqliteDatabase, {
+    filename: SQLITE3_DATABASE,
+  });
   if (databaseResult.isError()) return databaseResult;
 
   const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value, {
