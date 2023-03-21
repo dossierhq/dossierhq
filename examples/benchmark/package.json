@@ -39,7 +39,7 @@
     "better-sqlite3": "~8.2.0",
     "dotenv": "~16.0.3",
     "pg": "~8.10.0",
-    "sqlite3": "5.1.2",
+    "sqlite3": "5.1.4",
     "tslib": "~2.5.0"
   },
   "devDependencies": {

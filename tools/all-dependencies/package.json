@@ -54,7 +54,7 @@
     "react-leaflet": "~4.2.1",
     "react-router-dom": "~6.9.0",
     "sql.js": "~1.8.0",
-    "sqlite3": "5.1.2",
+    "sqlite3": "5.1.4",
     "swr": "~2.1.0",
     "tslib": "~2.5.0",
     "typescript": "~5.0.2",
