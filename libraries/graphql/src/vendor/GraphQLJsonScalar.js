@@ -3,7 +3,7 @@
 // Vendored since these was a clash with different graphql when running tests (at least under vitest)
 
 import { GraphQLScalarType } from 'graphql';
-import { Kind, print } from 'graphql/language';
+import { Kind, print } from 'graphql/language/index.js';
 
 function identity(value) {
   return value;

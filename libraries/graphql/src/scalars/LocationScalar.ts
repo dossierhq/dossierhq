@@ -1,7 +1,7 @@
 import type { Location } from '@dossierhq/core';
 import { GraphQLScalarType } from 'graphql';
-import type { ObjectValueNode } from 'graphql/language';
-import { Kind } from 'graphql/language';
+import type { ObjectValueNode } from 'graphql/language/index.js';
+import { Kind } from 'graphql/language/index.js';
 
 export const LocationScalar = new GraphQLScalarType({
   name: 'Location',
