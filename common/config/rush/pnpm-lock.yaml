@@ -23,7 +23,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ~5.56.0
       dotenv: ~16.0.3
       eslint: ~8.36.0
-      eslint-config-next: 13.2.0
+      eslint-config-next: 13.2.4
       leaflet: ~1.9.3
       lexical: 0.7.7
       next: 13.2.0
@@ -61,7 +61,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
       dotenv: 16.0.3
       eslint: 8.36.0
-      eslint-config-next: 13.2.0_j4766f7ecgqbon3u7zlxn5zszu
+      eslint-config-next: 13.2.4_j4766f7ecgqbon3u7zlxn5zszu
       prettier: 2.8.6
       schema-dts: 1.1.2_typescript@5.0.2
       ts-node: 10.9.1_typescript@5.0.2
@@ -327,7 +327,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ~5.56.0
       better-sqlite3: ~8.2.0
       eslint: ~8.36.0
-      eslint-config-next: 13.2.0
+      eslint-config-next: 13.2.4
       graphql: ~16.6.0
       graphql-voyager: ~1.0.0-rc.31
       leaflet: ~1.9.3
@@ -356,7 +356,7 @@ importers:
       '@types/react': 18.0.28
       '@typescript-eslint/eslint-plugin': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
       eslint: 8.36.0
-      eslint-config-next: 13.2.0_j4766f7ecgqbon3u7zlxn5zszu
+      eslint-config-next: 13.2.4_j4766f7ecgqbon3u7zlxn5zszu
       prettier: 2.8.6
       typescript: 5.0.2
 
@@ -1312,7 +1312,7 @@ importers:
       concurrently: ~7.6.0
       dotenv: ~16.0.3
       eslint: ~8.36.0
-      eslint-config-next: 13.2.0
+      eslint-config-next: 13.2.4
       eslint-plugin-import: ~2.27.5
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
@@ -1438,7 +1438,7 @@ importers:
       bulma: 0.9.4
       bun-types: 0.5.8
       concurrently: 7.6.0
-      eslint-config-next: 13.2.0_j4766f7ecgqbon3u7zlxn5zszu
+      eslint-config-next: 13.2.4_j4766f7ecgqbon3u7zlxn5zszu
       eslint-plugin-import: 2.27.5_eslint@8.36.0
       eslint-plugin-storybook: 0.6.11_j4766f7ecgqbon3u7zlxn5zszu
       graphql-config: 4.5.0_cqyb4buyc4habqgvcucexr22xm
@@ -4355,8 +4355,8 @@ packages:
     resolution: {integrity: sha512-yv9oaRVa+AxFa27uQOVecS931NrE+GcQSqcL2HaRxL8NunStLtPiyNm/VixvdzfiWLabMz4dXvbXfwCNaECzcw==}
     dev: false
 
-  /@next/eslint-plugin-next/13.2.0:
-    resolution: {integrity: sha512-/UW29MPgX5P1J1AVIj9g1TCv4BKzUTBB54wgtEp7X15pEKerACGYv9iny44KGZxSJDizWD2+Zaw6+E7do4kwRA==}
+  /@next/eslint-plugin-next/13.2.4:
+    resolution: {integrity: sha512-ck1lI+7r1mMJpqLNa3LJ5pxCfOB1lfJncKmRJeJxcJqcngaFwylreLP7da6Rrjr6u2gVRTfmnkSkjc80IiQCwQ==}
     dependencies:
       glob: 7.1.7
     dev: true
@@ -8983,8 +8983,8 @@ packages:
       source-map: 0.6.1
     dev: true
 
-  /eslint-config-next/13.2.0_j4766f7ecgqbon3u7zlxn5zszu:
-    resolution: {integrity: sha512-nZfIQG5m82xwgGO8EjakbF5qjnXADcveGxOxlg5J1jZ9MQlESvqqRrvl4+KHE+JKRgFD2h0q5xwDDWfFbtZmMA==}
+  /eslint-config-next/13.2.4_j4766f7ecgqbon3u7zlxn5zszu:
+    resolution: {integrity: sha512-lunIBhsoeqw6/Lfkd6zPt25w1bn0znLA/JCL+au1HoEpSb4/PpsOYsYtgV/q+YPsoKIOzFyU5xnb04iZnXjUvg==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
       typescript: '>=3.3.1'
@@ -8992,7 +8992,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@next/eslint-plugin-next': 13.2.0
+      '@next/eslint-plugin-next': 13.2.4
       '@rushstack/eslint-patch': 1.2.0
       '@typescript-eslint/parser': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
       eslint: 8.36.0

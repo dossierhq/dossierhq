@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "~5.56.0",
     "dotenv": "~16.0.3",
     "eslint": "~8.36.0",
-    "eslint-config-next": "13.2.0",
+    "eslint-config-next": "13.2.4",
     "prettier": "2.8.6",
     "schema-dts": "~1.1.2",
     "ts-node": "~10.9.1",
