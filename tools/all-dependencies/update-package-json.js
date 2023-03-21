@@ -6,57 +6,75 @@ const { RushConfiguration } = RushLib.default;
 
 const THIS_PACKAGE_NAME = "@dossierhq/all-dependencies";
 
-function addDependencies({
-  dependencies,
-  packageDependencies,
-  rushConfiguration,
-}) {
-  Object.entries(packageDependencies).forEach(([dependencyName, version]) => {
-    if (!rushConfiguration.projectsByName.has(dependencyName)) {
-      dependencies[dependencyName] = version;
-    }
-  });
-}
-
-function processPackage({ dependencies, project, rushConfiguration }) {
-  [
-    project.packageJson.dependencies,
-    project.packageJson.devDependencies,
-    project.packageJson.peerDependencies,
-  ]
-    .filter((it) => it)
-    .forEach((packageDependencies) =>
-      addDependencies({
-        dependencies,
-        packageDependencies,
-        rushConfiguration,
-      })
-    );
-}
+/** In order of importance */
+const DEPENDENCY_TYPES = ["dependencies", "devDependencies"];
 
 function extractAllExternalDependencies() {
-  const dependencies = {};
+  let dependencyInfo = {}; // { packageName: { version, type } }
+
   const rushConfiguration = RushConfiguration.loadFromDefaultLocation({
     startingFolder: process.cwd(),
   });
-  rushConfiguration.projects
-    .filter((it) => it.packageName !== THIS_PACKAGE_NAME)
-    .forEach((project) =>
-      processPackage({
-        dependencies,
-        project,
-        rushConfiguration,
-      })
-    );
-  const sortedDependencies = Object.fromEntries(
-    Object.entries(dependencies).sort((a, b) => a[0].localeCompare(b[0]))
+
+  // Iterate in reverse order of importance so we only keep the most important (i.e. "dependencies" even if there's also a "devDependencies")
+  for (const type of [...DEPENDENCY_TYPES].reverse()) {
+    for (const project of rushConfiguration.projects) {
+      if (project.packageName === THIS_PACKAGE_NAME) {
+        // For this package, we only care about the rush-lib dependency which is needed to run this script
+        const rushLibVer = project.packageJson[type]?.["@microsoft/rush-lib"];
+        if (rushLibVer) {
+          dependencyInfo["@microsoft/rush-lib"] = { version: rushLibVer, type };
+        }
+      } else {
+        const dependenciesOfType = Object.entries(
+          project.packageJson[type] ?? []
+        );
+        for (const [dependencyName, version] of dependenciesOfType) {
+          // Skip dependencies in the monorepo
+          if (!rushConfiguration.projectsByName.has(dependencyName)) {
+            dependencyInfo[dependencyName] = { version, type };
+          }
+        }
+      }
+    }
+  }
+
+  // Sort by package name
+  dependencyInfo = Object.fromEntries(
+    Object.entries(dependencyInfo).sort((a, b) => a[0].localeCompare(b[0]))
   );
-  return sortedDependencies;
+
+  const dependencies = collectDependenciesOfType(
+    dependencyInfo,
+    "dependencies"
+  );
+  const devDependencies = collectDependenciesOfType(
+    dependencyInfo,
+    "devDependencies"
+  );
+
+  return {
+    dependencies,
+    devDependencies,
+  };
 }
 
-async function updatePackageJson(dependencies) {
+function collectDependenciesOfType(dependencyInfo, type) {
+  const dependencies = {};
+  for (const [packageName, { version, type: dependencyType }] of Object.entries(
+    dependencyInfo
+  )) {
+    if (dependencyType === type) {
+      dependencies[packageName] = version;
+    }
+  }
+  return dependencies;
+}
+
+async function updatePackageJson({ dependencies, devDependencies }) {
   const packageJson = JSON.parse(await fs.readFile("package.json"));
-  packageJson.optionalDependencies = dependencies;
+  packageJson.dependencies = dependencies;
+  packageJson.devDependencies = devDependencies;
   await fs.writeFile(
     "package.json",
     JSON.stringify(packageJson, null, 2) + "\n"
