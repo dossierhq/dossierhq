@@ -37,14 +37,14 @@
     "leaflet": "~1.9.3",
     "leaflet.locatecontrol": "~0.79.0",
     "react": "~18.2.0",
-    "react-leaflet": "~4.2.0",
+    "react-leaflet": "~4.2.1",
     "tslib": "~2.5.0"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.50.0",
-    "@types/leaflet": "~1.9.0",
+    "@types/leaflet": "~1.9.3",
     "@types/leaflet.locatecontrol": "~0.74.1",
     "@types/react": "~18.0.28",
     "eslint": "~8.36.0",
