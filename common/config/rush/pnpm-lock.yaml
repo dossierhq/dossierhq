@@ -7,7 +7,7 @@ importers:
 
   ../../apps/blog:
     specifiers:
-      '@cloudinary/url-gen': ~1.9.0
+      '@cloudinary/url-gen': ~1.9.2
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
@@ -27,7 +27,7 @@ importers:
       leaflet: ~1.9.3
       lexical: 0.7.7
       next: ~13.2.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-dom: ~18.2.0
       schema-dts: ~1.1.2
@@ -37,7 +37,7 @@ importers:
       typescript: ~5.0.2
       vitest: 0.29.7
     dependencies:
-      '@cloudinary/url-gen': 1.9.0
+      '@cloudinary/url-gen': 1.9.2
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
@@ -62,7 +62,7 @@ importers:
       dotenv: 16.0.3
       eslint: 8.36.0
       eslint-config-next: 13.2.0_j4766f7ecgqbon3u7zlxn5zszu
-      prettier: 2.8.5
+      prettier: 2.8.6
       schema-dts: 1.1.2_typescript@5.0.2
       ts-node: 10.9.1_typescript@5.0.2
       typescript: 5.0.2
@@ -151,7 +151,7 @@ importers:
       cloudinary: ~1.35.0
       dotenv: ~16.0.3
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: ~5.1.2
       ts-node: ~10.9.1
       tslib: ~2.5.0
@@ -176,7 +176,7 @@ importers:
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       ts-node: 10.9.1_typescript@5.0.2
       typescript: 5.0.2
 
@@ -204,7 +204,7 @@ importers:
       dotenv: ~16.0.3
       eslint: ~8.36.0
       pg: ~8.10.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -234,7 +234,7 @@ importers:
       '@types/pg': 8.6.6
       '@types/sqlite3': 3.1.8
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../examples/bun:
@@ -245,7 +245,7 @@ importers:
       '@dossierhq/server': workspace:*
       bun-types: ~0.5.7
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: ~5.0.2
     dependencies:
       '@dossierhq/bun-sqlite': link:../../libraries/bun-sqlite
@@ -255,7 +255,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       bun-types: 0.5.7
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../examples/deno:
@@ -290,7 +290,7 @@ importers:
       eslint: ~8.36.0
       express: ~4.18.2
       graphql-http: ~1.16.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -310,7 +310,7 @@ importers:
       '@types/express': 4.17.17
       '@types/sqlite3': 3.1.8
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../examples/next-web:
@@ -332,7 +332,7 @@ importers:
       graphql-voyager: ~1.0.0-rc.31
       leaflet: ~1.9.3
       next: ~13.2.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-dom: ~18.2.0
       typescript: ~5.0.2
@@ -357,7 +357,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.54.1_j4766f7ecgqbon3u7zlxn5zszu
       eslint: 8.36.0
       eslint-config-next: 13.2.0_j4766f7ecgqbon3u7zlxn5zszu
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../examples/tutorial:
@@ -432,7 +432,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/node': ~18.15.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
     dependencies:
@@ -443,7 +443,7 @@ importers:
       '@rushstack/heft': 0.50.0_@types+node@18.15.0
       '@types/node': 18.15.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../libraries/better-sqlite3:
@@ -458,7 +458,7 @@ importers:
       '@types/better-sqlite3': ~7.6.3
       better-sqlite3: ~8.2.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -475,7 +475,7 @@ importers:
       '@types/better-sqlite3': 7.6.3
       better-sqlite3: 8.2.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -490,7 +490,7 @@ importers:
       '@rushstack/heft': 0.50.0
       bun-types: ~0.5.7
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: ~5.0.2
     dependencies:
       '@dossierhq/sqlite-core': link:../sqlite-core
@@ -503,12 +503,12 @@ importers:
       '@rushstack/heft': 0.50.0
       bun-types: 0.5.7
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../libraries/cloudinary:
     specifiers:
-      '@cloudinary/url-gen': ~1.9.0
+      '@cloudinary/url-gen': ~1.9.2
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
@@ -517,12 +517,12 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/react': ~18.0.28
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       tslib: ~2.5.0
       typescript: ~5.0.2
     dependencies:
-      '@cloudinary/url-gen': 1.9.0
+      '@cloudinary/url-gen': 1.9.2
       '@dossierhq/design': link:../design
       react: 18.2.0
       tslib: 2.5.0
@@ -534,7 +534,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/react': 18.0.28
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../libraries/core:
@@ -543,7 +543,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -554,7 +554,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -565,7 +565,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -577,7 +577,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -588,7 +588,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -600,7 +600,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -644,14 +644,14 @@ importers:
       eslint: ~8.36.0
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
-      eslint-plugin-storybook: ~0.6.10
+      eslint-plugin-storybook: ~0.6.11
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-dom: ~18.2.0
-      sass: ~1.59.2
-      sass-loader: ~13.2.0
+      sass: ~1.59.3
+      sass-loader: ~13.2.1
       storybook: ~7.0.0-beta.36
       svgo: ~3.0.2
       tslib: ~2.5.0
@@ -672,7 +672,7 @@ importers:
       '@storybook/addon-docs': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-links': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
-      '@storybook/preset-scss': 1.0.3_sass-loader@13.2.0
+      '@storybook/preset-scss': 1.0.3_sass-loader@13.2.1
       '@storybook/react': 7.0.0-beta.36_grokbpfbuuosdhrkscgthnz2vm
       '@storybook/react-vite': 7.0.0-beta.36_rd4fjkuhfporb4k77yjr5aul2a
       '@types/lodash': 4.14.191
@@ -685,15 +685,15 @@ importers:
       eslint: 8.36.0
       eslint-plugin-react: 7.32.2_eslint@8.36.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.36.0
-      eslint-plugin-storybook: 0.6.10_j4766f7ecgqbon3u7zlxn5zszu
+      eslint-plugin-storybook: 0.6.11_j4766f7ecgqbon3u7zlxn5zszu
       mini-svg-data-uri: 1.4.4
-      prettier: 2.8.5
-      sass: 1.59.2
-      sass-loader: 13.2.0_sass@1.59.2
+      prettier: 2.8.6
+      sass: 1.59.3
+      sass-loader: 13.2.1_sass@1.59.3
       storybook: 7.0.0-beta.36
       svgo: 3.0.2
       typescript: 5.0.2
-      vite: 4.1.2_sass@1.59.2
+      vite: 4.1.2_sass@1.59.3
 
   ../../libraries/design-ssr:
     specifiers:
@@ -706,7 +706,7 @@ importers:
       eslint: ~8.36.0
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-dom: ~18.2.0
       tslib: ~2.5.0
@@ -725,7 +725,7 @@ importers:
       eslint: 8.36.0
       eslint-plugin-react: 7.32.2_eslint@8.36.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../libraries/graphql:
@@ -741,7 +741,7 @@ importers:
       '@types/uuid': ~9.0.0
       eslint: ~8.36.0
       graphql: ~16.6.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -761,7 +761,7 @@ importers:
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: 5.1.4
       typescript: 5.0.2
       uuid: 9.0.0
@@ -779,7 +779,7 @@ importers:
       '@types/prettier': ~2.7.2
       '@types/uuid': ~9.0.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       ts-node: ~10.9.1
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -798,7 +798,7 @@ importers:
       '@types/prettier': 2.7.2
       '@types/uuid': 9.0.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       ts-node: 10.9.1_cntot3nyswru3zu5qhl3245ypm
       typescript: 5.0.2
 
@@ -814,7 +814,7 @@ importers:
       leaflet: ~1.9.3
       leaflet.locatecontrol: ~0.79.0
       mini-svg-data-uri: ~1.4.4
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-leaflet: ~4.2.0
       svgo: ~3.0.2
@@ -835,7 +835,7 @@ importers:
       '@types/react': 18.0.28
       eslint: 8.36.0
       mini-svg-data-uri: 1.4.4
-      prettier: 2.8.5
+      prettier: 2.8.6
       svgo: 3.0.2
       typescript: 5.0.2
 
@@ -856,7 +856,7 @@ importers:
       dotenv: ~16.0.3
       eslint: ~8.36.0
       pg: ~8.10.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       uuid: ~9.0.0
@@ -879,7 +879,7 @@ importers:
       '@types/uuid': 9.0.0
       dotenv: 16.0.3
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       uuid: 9.0.0
       vitest: 0.29.7
@@ -893,7 +893,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -907,7 +907,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -952,11 +952,11 @@ importers:
       eslint-plugin-import: ~2.27.5
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
-      eslint-plugin-storybook: ~0.6.10
+      eslint-plugin-storybook: ~0.6.11
       leaflet: ~1.9.3
       lexical: 0.7.7
       lodash: ~4.17.21
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-dom: ~18.2.0
       storybook: ~7.0.0-beta.36
@@ -1006,8 +1006,8 @@ importers:
       eslint-plugin-import: 2.27.5_eslint@8.36.0
       eslint-plugin-react: 7.32.2_eslint@8.36.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.36.0
-      eslint-plugin-storybook: 0.6.10_j4766f7ecgqbon3u7zlxn5zszu
-      prettier: 2.8.5
+      eslint-plugin-storybook: 0.6.11_j4766f7ecgqbon3u7zlxn5zszu
+      prettier: 2.8.6
       storybook: 7.0.0-beta.36
       typescript: 5.0.2
       uuid: 9.0.0
@@ -1023,7 +1023,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -1037,7 +1037,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -1055,7 +1055,7 @@ importers:
       '@types/sql.js': ~1.4.4
       base-64: ~1.0.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sql.js: ~1.8.0
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -1075,7 +1075,7 @@ importers:
       '@types/sql.js': 1.4.4
       base-64: 1.0.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sql.js: 1.8.0
       typescript: 5.0.2
       vitest: 0.29.7
@@ -1089,7 +1089,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -1103,7 +1103,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -1118,7 +1118,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/sqlite3': ~3.1.8
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: ~5.1.2
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -1135,7 +1135,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/sqlite3': 3.1.8
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       sqlite3: 5.1.4
       typescript: 5.0.2
       vitest: 0.29.7
@@ -1147,7 +1147,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -1159,7 +1159,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -1202,7 +1202,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -1213,7 +1213,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -1223,7 +1223,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
       vitest: 0.29.7
@@ -1234,7 +1234,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
       vitest: 0.29.7
 
@@ -1244,7 +1244,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       eslint: ~8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       tslib: ~2.5.0
       typescript: ~5.0.2
     dependencies:
@@ -1254,13 +1254,13 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
       eslint: 8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.6
       typescript: 5.0.2
 
   ../../tools/all-dependencies:
     specifiers:
       '@auth0/auth0-react': ~2.0.0
-      '@cloudinary/url-gen': ~1.9.0
+      '@cloudinary/url-gen': ~1.9.2
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~7.6.0
       '@fortawesome/free-solid-svg-icons': ~6.3.0
@@ -1316,7 +1316,7 @@ importers:
       eslint-plugin-import: ~2.27.5
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
-      eslint-plugin-storybook: ~0.6.10
+      eslint-plugin-storybook: ~0.6.11
       express: ~4.18.2
       express-jwt: ~8.4.1
       graphiql: ~2.4.0
@@ -1336,14 +1336,14 @@ importers:
       nodemon: ~2.0.20
       pg: ~8.10.0
       postgrator: ~7.1.1
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: ~18.2.0
       react-dom: ~18.2.0
       react-leaflet: ~4.2.0
       react-router-dom: ~6.9.0
       rollup-plugin-visualizer: ~5.9.0
-      sass: ~1.59.2
-      sass-loader: ~13.2.0
+      sass: ~1.59.3
+      sass-loader: ~13.2.1
       schema-dts: ~1.1.2
       sql.js: ~1.8.0
       sqlite3: ~5.1.2
@@ -1360,7 +1360,7 @@ importers:
       '@microsoft/rush-lib': 5.94.0_@types+node@18.15.0
     optionalDependencies:
       '@auth0/auth0-react': 2.0.0_biqbaboplfbrettd7655fr4n2y
-      '@cloudinary/url-gen': 1.9.0
+      '@cloudinary/url-gen': 1.9.2
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 7.6.0
       '@fortawesome/free-solid-svg-icons': 6.3.0
@@ -1380,7 +1380,7 @@ importers:
       '@storybook/addon-docs': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-links': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
-      '@storybook/preset-scss': 1.0.3_sass-loader@13.2.0
+      '@storybook/preset-scss': 1.0.3_sass-loader@13.2.1
       '@storybook/react': 7.0.0-beta.36_grokbpfbuuosdhrkscgthnz2vm
       '@storybook/react-vite': 7.0.0-beta.36_rd4fjkuhfporb4k77yjr5aul2a
       '@types/base-64': 1.0.0
@@ -1415,7 +1415,7 @@ importers:
       eslint-plugin-import: 2.27.5_eslint@8.36.0
       eslint-plugin-react: 7.32.2_eslint@8.36.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.36.0
-      eslint-plugin-storybook: 0.6.10_j4766f7ecgqbon3u7zlxn5zszu
+      eslint-plugin-storybook: 0.6.11_j4766f7ecgqbon3u7zlxn5zszu
       express: 4.18.2
       express-jwt: 8.4.1
       graphiql: 2.4.0_ewsshet5igpnqat7fyl5iqnizm
@@ -1431,18 +1431,18 @@ importers:
       lexical: 0.7.7
       lodash: 4.17.21
       mini-svg-data-uri: 1.4.4
-      next: 13.2.0_b7eik3blo2x47smm2jwaxpjfoq
+      next: 13.2.0_dpxg4zawgzznnxdt7it3f5d76m
       nodemon: 2.0.20
       pg: 8.10.0
       postgrator: 7.1.1
-      prettier: 2.8.5
+      prettier: 2.8.6
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
       react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
       rollup-plugin-visualizer: 5.9.0
-      sass: 1.59.2
-      sass-loader: 13.2.0_sass@1.59.2
+      sass: 1.59.3
+      sass-loader: 13.2.1_sass@1.59.3
       schema-dts: 1.1.2_typescript@5.0.2
       sql.js: 1.8.0
       sqlite3: 5.1.4
@@ -1453,8 +1453,8 @@ importers:
       tslib: 2.5.0
       typescript: 5.0.2
       uuid: 9.0.0
-      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
-      vitest: 0.29.7_sass@1.59.2
+      vite: 4.1.2_2xfa3zjpjrc7d2ftmvs4djbo5a
+      vitest: 0.29.7_sass@1.59.3
 
   ../../tools/generic-tools:
     specifiers:
@@ -2854,16 +2854,16 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  /@cloudinary/transformation-builder-sdk/1.2.1:
-    resolution: {integrity: sha512-bcgc4YD9Tfj6F+QLNkw8CwCZ9j8yO7tBouleKvpQp+whYuVq/bIuYF0P4wr5ndcrQqYbOJYk6TAq4sHlnWppsg==}
+  /@cloudinary/transformation-builder-sdk/1.2.7:
+    resolution: {integrity: sha512-Q1fhw37BXXmN6/BCxdnw3OUJ6aAy/zpDWH5t+xIwmG5GtYUYMZqOjvdOkOhWBmus9ptq9znuGsYn8h5vtSjT+w==}
     dependencies:
-      '@cloudinary/url-gen': 1.9.0
+      '@cloudinary/url-gen': 1.9.2
     dev: false
 
-  /@cloudinary/url-gen/1.9.0:
-    resolution: {integrity: sha512-rw2/KkWsb2oBTQX58E7Zm1pOb3+K7tqHPxms2C7P49qzJbqG+y/u1StwfqCrE94mZMr8q+o47cHxoQJMwWz1fQ==}
+  /@cloudinary/url-gen/1.9.2:
+    resolution: {integrity: sha512-LFL79Galcj8WZaXW6QOOt5LQVkioQdH7DR7blYcU9Zi0ae1y0L4Ujmr69RsUNshCNy/EdVAg0aVG/jjqKDnJsg==}
     dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.2.1
+      '@cloudinary/transformation-builder-sdk': 1.2.7
     dev: false
 
   /@creativebulma/bulma-badge/1.0.1:
@@ -3594,7 +3594,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2_typescript@5.0.2
       typescript: 5.0.2
-      vite: 4.1.2_sass@1.59.2
+      vite: 4.1.2_sass@1.59.3
 
   /@jridgewell/gen-mapping/0.3.2:
     resolution: {integrity: sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==}
@@ -5243,7 +5243,7 @@ packages:
       rollup: 3.12.1
       slash: 3.0.0
       typescript: 5.0.2
-      vite: 4.1.2_sass@1.59.2
+      vite: 4.1.2_sass@1.59.3
     transitivePeerDependencies:
       - supports-color
 
@@ -5332,7 +5332,7 @@ packages:
       globby: 11.1.0
       jscodeshift: 0.13.1_@babel+preset-env@7.20.2
       lodash: 4.17.21
-      prettier: 2.8.5
+      prettier: 2.8.6
       recast: 0.23.1
       util: 0.12.5
     transitivePeerDependencies:
@@ -5539,14 +5539,14 @@ packages:
   /@storybook/postinstall/7.0.0-beta.36:
     resolution: {integrity: sha512-qoyHqEmUvrF1pv4gTepmMgXGn5jSs8siBdfew1Dv8pM3QbK9GYINdO8Hh7J8s25d61v1MyaD0BkqdA3wSaQu2g==}
 
-  /@storybook/preset-scss/1.0.3_sass-loader@13.2.0:
+  /@storybook/preset-scss/1.0.3_sass-loader@13.2.1:
     resolution: {integrity: sha512-o9Iz6wxPeNENrQa2mKlsDKynBfqU2uWaRP80HeWp4TkGgf7/x3DVF2O7yi9N0x/PI1qzzTTpxlQ90D62XmpiTw==}
     peerDependencies:
       css-loader: '*'
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 13.2.0_sass@1.59.2
+      sass-loader: 13.2.1_sass@1.59.3
 
   /@storybook/preview-api/7.0.0-beta.36:
     resolution: {integrity: sha512-gLaWz/IEWua6v2waDsxmBvi5VuHQhOl7F05hPXEBxpruKGqORZ2RVylKMmX4skPM+9oVi9VvPHVz0dsJ2+K3bA==}
@@ -5591,7 +5591,7 @@ packages:
       react: 18.2.0
       react-docgen: 6.0.0-alpha.3
       react-dom: 18.2.0_react@18.2.0
-      vite: 4.1.2_sass@1.59.2
+      vite: 4.1.2_sass@1.59.3
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - supports-color
@@ -6226,13 +6226,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/scope-manager/5.49.0:
-    resolution: {integrity: sha512-clpROBOiMIzpbWNxCe1xDK14uPZh35u4QaZO1GddilEzoCLAEz4szb51rBpdgurs5k2YzPtJeTEN3qVbG+LRUQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    dependencies:
-      '@typescript-eslint/types': 5.49.0
-      '@typescript-eslint/visitor-keys': 5.49.0
-
   /@typescript-eslint/scope-manager/5.54.1:
     resolution: {integrity: sha512-zWKuGliXxvuxyM71UA/EcPxaviw39dB2504LqAmFDjmkpO8qNLHcmzlh6pbHs1h/7YQ9bnsO8CCcYCSA8sykUg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -6284,10 +6277,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/types/5.49.0:
-    resolution: {integrity: sha512-7If46kusG+sSnEpu0yOz2xFv5nRz158nzEXnJFCGVEHWnuzolXKwrH5Bsf9zsNlOQkyZuk0BZKKoJQI+1JPBBg==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
   /@typescript-eslint/types/5.54.1:
     resolution: {integrity: sha512-G9+1vVazrfAfbtmCapJX8jRo2E4MDXxgm/IMOF4oGh3kq7XuK3JRkOg6y2Qu1VsTRmWETyTkWt1wxy7X7/yLkw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -6295,26 +6284,6 @@ packages:
   /@typescript-eslint/types/5.56.0:
     resolution: {integrity: sha512-JyAzbTJcIyhuUhogmiu+t79AkdnqgPUEsxMTMc/dCZczGMJQh1MK2wgrju++yMN6AWroVAy2jxyPcPr3SWCq5w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
-  /@typescript-eslint/typescript-estree/5.49.0_typescript@5.0.2:
-    resolution: {integrity: sha512-PBdx+V7deZT/3GjNYPVQv1Nc0U46dAHbIuOG8AZ3on3vuEKiPDwFE/lG1snN2eUB9IhF7EyF7K1hmTcLztNIsA==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@typescript-eslint/types': 5.49.0
-      '@typescript-eslint/visitor-keys': 5.49.0
-      debug: 4.3.4
-      globby: 11.1.0
-      is-glob: 4.0.3
-      semver: 7.3.8
-      tsutils: 3.21.0_typescript@5.0.2
-      typescript: 5.0.2
-    transitivePeerDependencies:
-      - supports-color
 
   /@typescript-eslint/typescript-estree/5.54.1:
     resolution: {integrity: sha512-bjK5t+S6ffHnVwA0qRPTZrxKSaFYocwFIkZx5k7pvWfsB1I57pO/0M0Skatzzw1sCkjJ83AfGTL0oFIFiDX3bg==}
@@ -6396,25 +6365,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/utils/5.49.0_j4766f7ecgqbon3u7zlxn5zszu:
-    resolution: {integrity: sha512-cPJue/4Si25FViIb74sHCLtM4nTSBXtLx1d3/QT6mirQ/c65bV8arBEebBJJizfq8W2YyMoPI/WWPFWitmNqnQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
-    dependencies:
-      '@types/json-schema': 7.0.9
-      '@types/semver': 7.3.13
-      '@typescript-eslint/scope-manager': 5.49.0
-      '@typescript-eslint/types': 5.49.0
-      '@typescript-eslint/typescript-estree': 5.49.0_typescript@5.0.2
-      eslint: 8.36.0
-      eslint-scope: 5.1.1
-      eslint-utils: 3.0.0_eslint@8.36.0
-      semver: 7.3.8
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-
   /@typescript-eslint/utils/5.54.1:
     resolution: {integrity: sha512-IY5dyQM8XD1zfDe5X8jegX6r2EVU5o/WJnLu/znLPWCBF7KNGC+adacXnt5jEYS9JixDcoccI6CvE4RCjHMzCQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -6452,13 +6402,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  /@typescript-eslint/visitor-keys/5.49.0:
-    resolution: {integrity: sha512-v9jBMjpNWyn8B6k/Mjt6VbUS4J1GvUlR4x3Y+ibnP1z7y7V4n0WRz+50DY6+Myj0UaXVSuUlHohO+eZ8IJEnkg==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    dependencies:
-      '@typescript-eslint/types': 5.49.0
-      eslint-visitor-keys: 3.3.0
 
   /@typescript-eslint/visitor-keys/5.54.1:
     resolution: {integrity: sha512-q8iSoHTgwCfgcRJ2l2x+xCbu8nBlRAlsQ33k24Adj8eoVBE0f8dUeI+bAa8F84Mv05UGbAx57g2zrRsYIooqQg==}
@@ -8035,7 +7978,7 @@ packages:
       readdirp: 3.6.0
       require-package-name: 2.0.1
       resolve: 1.22.1
-      sass: 1.59.2
+      sass: 1.59.3
       scss-parser: 1.0.6
       semver: 7.3.8
       yargs: 16.2.0
@@ -8592,14 +8535,14 @@ packages:
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
 
-  /eslint-plugin-storybook/0.6.10_j4766f7ecgqbon3u7zlxn5zszu:
-    resolution: {integrity: sha512-3DKXRey06EhwnTKaG6fgMqGTy4C3z6Ikyv6VVixO5BvaExWQe3yGWIAufrC2Et0OaAMIaMwx9KWjqb/Wq+JxPg==}
+  /eslint-plugin-storybook/0.6.11_j4766f7ecgqbon3u7zlxn5zszu:
+    resolution: {integrity: sha512-lIVmCqQgA0bhcuS1yWYBFrnPHBKPEQI+LHPDtlN81UE1/17onCqgwUW7Nyt7gS2OHjCAiOR4npjTGEoe0hssKw==}
     engines: {node: 12.x || 14.x || >= 16}
     peerDependencies:
       eslint: '>=6'
     dependencies:
       '@storybook/csf': 0.0.1
-      '@typescript-eslint/utils': 5.49.0_j4766f7ecgqbon3u7zlxn5zszu
+      '@typescript-eslint/utils': 5.54.1_j4766f7ecgqbon3u7zlxn5zszu
       eslint: 8.36.0
       requireindex: 1.2.0
       ts-dedent: 2.2.0
@@ -10748,8 +10691,8 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
 
-  /klona/2.0.5:
-    resolution: {integrity: sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==}
+  /klona/2.0.6:
+    resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
   /language-subtag-registry/0.3.21:
@@ -11435,55 +11378,6 @@ packages:
     dev: false
     optional: true
 
-  /next/13.2.0_b7eik3blo2x47smm2jwaxpjfoq:
-    resolution: {integrity: sha512-vhByvKHedsaMwNTwXKzK4IMmNp7XI7vN4etcGUoIpLrIuDfoYA3bS0ImS4X9F6lKzopG5aVp7a1CjuzF2NGkvA==}
-    engines: {node: '>=14.6.0'}
-    hasBin: true
-    peerDependencies:
-      '@opentelemetry/api': ^1.4.0
-      fibers: '>= 3.1.0'
-      node-sass: ^6.0.0 || ^7.0.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      fibers:
-        optional: true
-      node-sass:
-        optional: true
-      sass:
-        optional: true
-    dependencies:
-      '@next/env': 13.2.0
-      '@swc/helpers': 0.4.14
-      caniuse-lite: 1.0.30001414
-      postcss: 8.4.14
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      sass: 1.59.2
-      styled-jsx: 5.1.1_react@18.2.0
-    optionalDependencies:
-      '@next/swc-android-arm-eabi': 13.2.0
-      '@next/swc-android-arm64': 13.2.0
-      '@next/swc-darwin-arm64': 13.2.0
-      '@next/swc-darwin-x64': 13.2.0
-      '@next/swc-freebsd-x64': 13.2.0
-      '@next/swc-linux-arm-gnueabihf': 13.2.0
-      '@next/swc-linux-arm64-gnu': 13.2.0
-      '@next/swc-linux-arm64-musl': 13.2.0
-      '@next/swc-linux-x64-gnu': 13.2.0
-      '@next/swc-linux-x64-musl': 13.2.0
-      '@next/swc-win32-arm64-msvc': 13.2.0
-      '@next/swc-win32-ia32-msvc': 13.2.0
-      '@next/swc-win32-x64-msvc': 13.2.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-    dev: false
-    optional: true
-
   /next/13.2.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-vhByvKHedsaMwNTwXKzK4IMmNp7XI7vN4etcGUoIpLrIuDfoYA3bS0ImS4X9F6lKzopG5aVp7a1CjuzF2NGkvA==}
     engines: {node: '>=14.6.0'}
@@ -11530,6 +11424,55 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
     dev: false
+
+  /next/13.2.0_dpxg4zawgzznnxdt7it3f5d76m:
+    resolution: {integrity: sha512-vhByvKHedsaMwNTwXKzK4IMmNp7XI7vN4etcGUoIpLrIuDfoYA3bS0ImS4X9F6lKzopG5aVp7a1CjuzF2NGkvA==}
+    engines: {node: '>=14.6.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.4.0
+      fibers: '>= 3.1.0'
+      node-sass: ^6.0.0 || ^7.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@next/env': 13.2.0
+      '@swc/helpers': 0.4.14
+      caniuse-lite: 1.0.30001414
+      postcss: 8.4.14
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      sass: 1.59.3
+      styled-jsx: 5.1.1_react@18.2.0
+    optionalDependencies:
+      '@next/swc-android-arm-eabi': 13.2.0
+      '@next/swc-android-arm64': 13.2.0
+      '@next/swc-darwin-arm64': 13.2.0
+      '@next/swc-darwin-x64': 13.2.0
+      '@next/swc-freebsd-x64': 13.2.0
+      '@next/swc-linux-arm-gnueabihf': 13.2.0
+      '@next/swc-linux-arm64-gnu': 13.2.0
+      '@next/swc-linux-arm64-musl': 13.2.0
+      '@next/swc-linux-x64-gnu': 13.2.0
+      '@next/swc-linux-x64-musl': 13.2.0
+      '@next/swc-win32-arm64-msvc': 13.2.0
+      '@next/swc-win32-ia32-msvc': 13.2.0
+      '@next/swc-win32-x64-msvc': 13.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+    dev: false
+    optional: true
 
   /node-abi/3.28.0:
     resolution: {integrity: sha512-fRlDb4I0eLcQeUvGq7IY3xHrSb0c9ummdvDSYWfT9+LKP+3jCKw/tKoqaM7r1BAoiAC6GtwyjaGnOz6B3OtF+A==}
@@ -12327,8 +12270,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  /prettier/2.8.5:
-    resolution: {integrity: sha512-3gzuxrHbKUePRBB4ZeU08VNkUcqEHaUaouNt0m7LGP4Hti/NuB07C7PPTM/LkWqXoJYJn2McEo5+kxPNrtQkLQ==}
+  /prettier/2.8.6:
+    resolution: {integrity: sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
@@ -13182,8 +13125,8 @@ packages:
   /safer-buffer/2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader/13.2.0_sass@1.59.2:
-    resolution: {integrity: sha512-JWEp48djQA4nbZxmgC02/Wh0eroSUutulROUusYJO9P9zltRbNN80JCBHqRGzjd4cmZCa/r88xgfkjGD0TXsHg==}
+  /sass-loader/13.2.1_sass@1.59.3:
+    resolution: {integrity: sha512-VQUrgUa5/waIzMrzyuko3sj5WD9NMsYph91cNICx+OaODbRtLl6To2fswLx8MH2qNxXFqRtpvdPQIa7mE93YOA==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       fibers: '>= 3.1.0'
@@ -13201,12 +13144,12 @@ packages:
       sass-embedded:
         optional: true
     dependencies:
-      klona: 2.0.5
+      klona: 2.0.6
       neo-async: 2.6.2
-      sass: 1.59.2
+      sass: 1.59.3
 
-  /sass/1.59.2:
-    resolution: {integrity: sha512-jJyO6SmbzkJexF8MUorHx5tAilcgabioYxT/BHbY4+OvoqmbHxsYlrjZ8Adhqcgl6Zqwie0TgMXLCAmPFxXOuw==}
+  /sass/1.59.3:
+    resolution: {integrity: sha512-QCq98N3hX1jfTCoUAsF3eyGuXLsY7BCnCEg9qAact94Yc21npG2/mVOqoDvE0fCbWDqiM4WlcJQla0gWG2YlxQ==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -14537,6 +14480,28 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+  /vite-node/0.29.7_2xfa3zjpjrc7d2ftmvs4djbo5a:
+    resolution: {integrity: sha512-PakCZLvz37yFfUPWBnLa1OYHPCGm5v4pmRrTcFN4V/N/T3I6tyP3z07S//9w+DdeL7vVd0VSeyMZuAh+449ZWw==}
+    engines: {node: '>=v14.16.0'}
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.4
+      mlly: 1.1.0
+      pathe: 1.1.0
+      picocolors: 1.0.0
+      vite: 4.1.2_2xfa3zjpjrc7d2ftmvs4djbo5a
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: false
+    optional: true
+
   /vite-node/0.29.7_@types+node@18.15.0:
     resolution: {integrity: sha512-PakCZLvz37yFfUPWBnLa1OYHPCGm5v4pmRrTcFN4V/N/T3I6tyP3z07S//9w+DdeL7vVd0VSeyMZuAh+449ZWw==}
     engines: {node: '>=v14.16.0'}
@@ -14557,28 +14522,6 @@ packages:
       - supports-color
       - terser
     dev: true
-
-  /vite-node/0.29.7_x7dzuadbe27hczg4caescy3qve:
-    resolution: {integrity: sha512-PakCZLvz37yFfUPWBnLa1OYHPCGm5v4pmRrTcFN4V/N/T3I6tyP3z07S//9w+DdeL7vVd0VSeyMZuAh+449ZWw==}
-    engines: {node: '>=v14.16.0'}
-    hasBin: true
-    dependencies:
-      cac: 6.7.14
-      debug: 4.3.4
-      mlly: 1.1.0
-      pathe: 1.1.0
-      picocolors: 1.0.0
-      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: false
-    optional: true
 
   /vite/4.1.2:
     resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
@@ -14611,6 +14554,42 @@ packages:
       rollup: 3.12.1
     optionalDependencies:
       fsevents: 2.3.2
+
+  /vite/4.1.2_2xfa3zjpjrc7d2ftmvs4djbo5a:
+    resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.15.0
+      esbuild: 0.16.17
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.12.1
+      sass: 1.59.3
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: false
+    optional: true
 
   /vite/4.1.2_@types+node@18.15.0:
     resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
@@ -14646,7 +14625,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.1.2_sass@1.59.2:
+  /vite/4.1.2_sass@1.59.3:
     resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -14675,45 +14654,9 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.1
       rollup: 3.12.1
-      sass: 1.59.2
+      sass: 1.59.3
     optionalDependencies:
       fsevents: 2.3.2
-
-  /vite/4.1.2_x7dzuadbe27hczg4caescy3qve:
-    resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 18.15.0
-      esbuild: 0.16.17
-      postcss: 8.4.21
-      resolve: 1.22.1
-      rollup: 3.12.1
-      sass: 1.59.2
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: false
-    optional: true
 
   /vitest/0.29.7:
     resolution: {integrity: sha512-aWinOSOu4jwTuZHkb+cCyrqQ116Q9TXaJrNKTHudKBknIpR0VplzeaOUuDF9jeZcrbtQKZQt6yrtd+eakbaxHg==}
@@ -14776,7 +14719,7 @@ packages:
       - terser
     dev: true
 
-  /vitest/0.29.7_sass@1.59.2:
+  /vitest/0.29.7_sass@1.59.3:
     resolution: {integrity: sha512-aWinOSOu4jwTuZHkb+cCyrqQ116Q9TXaJrNKTHudKBknIpR0VplzeaOUuDF9jeZcrbtQKZQt6yrtd+eakbaxHg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -14825,8 +14768,8 @@ packages:
       tinybench: 2.3.1
       tinypool: 0.4.0
       tinyspy: 1.0.2
-      vite: 4.1.2_x7dzuadbe27hczg4caescy3qve
-      vite-node: 0.29.7_x7dzuadbe27hczg4caescy3qve
+      vite: 4.1.2_2xfa3zjpjrc7d2ftmvs4djbo5a
+      vite-node: 0.29.7_2xfa3zjpjrc7d2ftmvs4djbo5a
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
