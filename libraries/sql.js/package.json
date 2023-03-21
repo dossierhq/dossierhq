@@ -51,6 +51,6 @@
     "prettier": "2.8.6",
     "sql.js": "~1.8.0",
     "typescript": "~5.0.2",
-    "vitest": "0.29.7"
+    "vitest": "~0.29.7"
   }
 }
