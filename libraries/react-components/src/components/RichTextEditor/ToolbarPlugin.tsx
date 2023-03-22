@@ -21,7 +21,7 @@ import {
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { HeadingTagType } from '@lexical/rich-text';
 import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text';
-import { $setBlocksType_experimental } from '@lexical/selection';
+import { $setBlocksType } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import type { LexicalEditor, NodeKey } from 'lexical';
 import {
@@ -300,15 +300,12 @@ function BlockFormatDropDown({
     (item: (typeof items)[number]) => {
       switch (item.id) {
         case 'paragraph':
-          if (blockType !== 'paragraph') {
-            editor.update(() => {
-              const selection = $getSelection();
-
-              if ($isRangeSelection(selection)) {
-                $setBlocksType_experimental(selection, () => $createParagraphNode());
-              }
-            });
-          }
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $setBlocksType(selection, () => $createParagraphNode());
+            }
+          });
           break;
         case 'h1':
         case 'h2':
@@ -320,9 +317,8 @@ function BlockFormatDropDown({
           if (blockType !== headingLevel) {
             editor.update(() => {
               const selection = $getSelection();
-
               if ($isRangeSelection(selection)) {
-                $setBlocksType_experimental(selection, () => $createHeadingNode(headingLevel));
+                $setBlocksType(selection, () => $createHeadingNode(headingLevel));
               }
             });
           }
@@ -356,7 +352,7 @@ function BlockFormatDropDown({
 
               if ($isRangeSelection(selection)) {
                 if (selection.isCollapsed()) {
-                  $setBlocksType_experimental(selection, () => $createCodeNode());
+                  $setBlocksType(selection, () => $createCodeNode());
                 } else {
                   const textContent = selection.getTextContent();
                   const codeNode = $createCodeNode();

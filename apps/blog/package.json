@@ -29,7 +29,7 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
     "leaflet": "~1.9.3",
-    "lexical": "0.8.1",
+    "lexical": "0.9.0",
     "next": "~13.2.4",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
