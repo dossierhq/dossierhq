@@ -97,7 +97,7 @@ importers:
       react-router-dom: ~6.9.0
       rollup-plugin-visualizer: ~5.9.0
       sql.js: ~1.8.0
-      swr: ~2.1.0
+      swr: ~2.1.1
       ts-node: ~10.9.1
       typescript: ~5.0.2
       vite: ~4.2.1
@@ -119,7 +119,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
-      swr: 2.1.0_react@18.2.0
+      swr: 2.1.1_react@18.2.0
     devDependencies:
       '@dossierhq/eslint-config-react': link:../../stack/eslint-config-react
       '@graphiql/toolkit': 0.8.2_yzlhyovlzlmthkil2exlte7emy
@@ -385,7 +385,7 @@ importers:
       express-jwt: ~8.4.1
       jwks-rsa: ~3.0.1
       leaflet: ~1.9.3
-      nodemon: ~2.0.21
+      nodemon: ~2.0.22
       react: ~18.2.0
       react-dom: ~18.2.0
       react-router-dom: ~6.9.0
@@ -420,7 +420,7 @@ importers:
       '@types/react-dom': 18.0.11
       '@vitejs/plugin-react': 3.1.0_vite@4.2.1
       concurrently: 7.6.0
-      nodemon: 2.0.21
+      nodemon: 2.0.22
       ts-node: 10.9.1_typescript@5.0.2
       typescript: 5.0.2
       vite: 4.2.1
@@ -960,7 +960,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       storybook: ~7.0.0-beta.36
-      swr: ~2.1.0
+      swr: ~2.1.1
       tslib: ~2.5.0
       typescript: ~5.0.2
       uuid: ~9.0.0
@@ -982,7 +982,7 @@ importers:
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      swr: 2.1.0_react@18.2.0
+      swr: 2.1.1_react@18.2.0
       tslib: 2.5.0
     devDependencies:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
@@ -1272,7 +1272,7 @@ importers:
       '@lexical/rich-text': 0.9.0
       '@lexical/selection': 0.9.0
       '@lexical/utils': 0.9.0
-      '@microsoft/rush-lib': ~5.94.0
+      '@microsoft/rush-lib': ~5.94.1
       '@playwright/test': ~1.31.2
       '@react-aria/overlays': ~3.13.0
       '@rushstack/eslint-patch': ~1.2.0
@@ -1333,7 +1333,7 @@ importers:
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
       next: ~13.2.4
-      nodemon: ~2.0.21
+      nodemon: ~2.0.22
       pg: ~8.10.0
       postgrator: ~7.1.1
       prettier: 2.8.6
@@ -1349,7 +1349,7 @@ importers:
       sqlite3: 5.1.4
       storybook: ~7.0.0-beta.36
       svgo: ~3.0.2
-      swr: ~2.1.0
+      swr: ~2.1.1
       ts-node: ~10.9.1
       tslib: ~2.5.0
       typescript: ~5.0.2
@@ -1369,7 +1369,7 @@ importers:
       '@lexical/rich-text': 0.9.0_t5zx24bq56ozew7tqqxepjt3gu
       '@lexical/selection': 0.9.0_lexical@0.9.0
       '@lexical/utils': 0.9.0_lexical@0.9.0
-      '@microsoft/rush-lib': 5.94.0_@types+node@18.15.5
+      '@microsoft/rush-lib': 5.94.1_@types+node@18.15.5
       '@react-aria/overlays': 3.13.0_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
       '@typescript-eslint/eslint-plugin': 5.56.0_2hcjazgfnbtq42tcc73br2vup4
@@ -1402,7 +1402,7 @@ importers:
       react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
       sqlite3: 5.1.4
-      swr: 2.1.0_react@18.2.0
+      swr: 2.1.1_react@18.2.0
       tslib: 2.5.0
       typescript: 5.0.2
       uuid: 9.0.0
@@ -1444,7 +1444,7 @@ importers:
       graphql-config: 4.5.0_cqyb4buyc4habqgvcucexr22xm
       graphql-ws: 5.12.0_graphql@16.6.0
       mini-svg-data-uri: 1.4.4
-      nodemon: 2.0.21
+      nodemon: 2.0.22
       prettier: 2.8.6
       rollup-plugin-visualizer: 5.9.0
       sass: 1.59.3
@@ -4291,8 +4291,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@microsoft/rush-lib/5.94.0_@types+node@18.15.5:
-    resolution: {integrity: sha512-+njOqc3hIB/YH7mGdyL3mYcdBAzq7eKJ248sOQWodjk+aWzp48hJUMj53voeDQUh0kOwU0wWRdRdaesLiwKCow==}
+  /@microsoft/rush-lib/5.94.1_@types+node@18.15.5:
+    resolution: {integrity: sha512-qXeqtYYe4ImyYyaAIR+ZdZEpNUeOZSaP+sbfksvDu9oa4kNH+5pCemII8NSfmQd9Dx7zPGPNiGf4zE4/Jcs6VA==}
     engines: {node: '>=5.6.0'}
     dependencies:
       '@pnpm/link-bins': 5.3.25
@@ -4300,8 +4300,8 @@ packages:
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
       '@rushstack/package-deps-hash': 4.0.10_@types+node@18.15.5
       '@rushstack/rig-package': 0.3.18
-      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.94.0_@types+node@18.15.5
-      '@rushstack/rush-azure-storage-build-cache-plugin': 5.94.0_@types+node@18.15.5
+      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.94.1_@types+node@18.15.5
+      '@rushstack/rush-azure-storage-build-cache-plugin': 5.94.1_@types+node@18.15.5
       '@rushstack/stream-collator': 4.0.228_@types+node@18.15.5
       '@rushstack/terminal': 0.5.3_@types+node@18.15.5
       '@rushstack/ts-command-line': 4.13.2
@@ -5143,11 +5143,11 @@ packages:
       resolve: 1.22.1
       strip-json-comments: 3.1.1
 
-  /@rushstack/rush-amazon-s3-build-cache-plugin/5.94.0_@types+node@18.15.5:
-    resolution: {integrity: sha512-Yp4ihWnm5aTRULOqKAPCXw+kv+ROmEFsIBkfa2+IkItEfkW0ABDpKUc5X1xo3AKUt78ZhhH6AbljHBQ8Ctt4Kg==}
+  /@rushstack/rush-amazon-s3-build-cache-plugin/5.94.1_@types+node@18.15.5:
+    resolution: {integrity: sha512-NCZ5YscW9Qi9avvgspE76dfHtCcsSMpfm3X4D9gaTcGPyE7RpWY5yMTZhO31Z5g0NM6cw6eWEfKwJvZ5nGbnBQ==}
     dependencies:
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
-      '@rushstack/rush-sdk': 5.94.0_@types+node@18.15.5
+      '@rushstack/rush-sdk': 5.94.1_@types+node@18.15.5
       https-proxy-agent: 5.0.1
       node-fetch: 2.6.7
     transitivePeerDependencies:
@@ -5156,13 +5156,13 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-azure-storage-build-cache-plugin/5.94.0_@types+node@18.15.5:
-    resolution: {integrity: sha512-lWCCHSP9eSg1ikOHajGyOsOR87YkPCu+FgJbhVKTyTyWfGdoA/lAIDuQaJ1CSIwlI+hNqE7KCBhQpLK29ixOkA==}
+  /@rushstack/rush-azure-storage-build-cache-plugin/5.94.1_@types+node@18.15.5:
+    resolution: {integrity: sha512-uIdyoeGHyFlAnmAHF0KKDsg5KBde9nRl15x8wTr/zwzwydMMIdbfxHAMc3C78YE05SUYeIIut4qh5KCoEn9/Hw==}
     dependencies:
       '@azure/identity': 2.1.0
       '@azure/storage-blob': 12.11.0
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
-      '@rushstack/rush-sdk': 5.94.0_@types+node@18.15.5
+      '@rushstack/rush-sdk': 5.94.1_@types+node@18.15.5
       '@rushstack/terminal': 0.5.3_@types+node@18.15.5
     transitivePeerDependencies:
       - '@types/node'
@@ -5170,8 +5170,8 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-sdk/5.94.0_@types+node@18.15.5:
-    resolution: {integrity: sha512-lFw7nD9E1C/sdSaSI0r2Ls0l19Vu9upc58D3ucbW1KMp7UWvOwalDyv7jKAFc72G0kLSFcjzrhjyKs97N3OF8w==}
+  /@rushstack/rush-sdk/5.94.1_@types+node@18.15.5:
+    resolution: {integrity: sha512-T5euwYB4GzBGGCWCdk0djjHqsI7boGWKjutyNb+AguB7WsnRjDujEHC7CdosYtbsJo5caIwEdi9sspiaS4vyjA==}
     dependencies:
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
       '@types/node-fetch': 2.6.2
@@ -12287,8 +12287,8 @@ packages:
     resolution: {integrity: sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==}
     dev: true
 
-  /nodemon/2.0.21:
-    resolution: {integrity: sha512-djN/n2549DUtY33S7o1djRCd7dEm0kBnj9c7S9XVXqRUbuggN1MZH/Nqa+5RFQr63Fbefq37nFXAE9VU86yL1A==}
+  /nodemon/2.0.22:
+    resolution: {integrity: sha512-B8YqaKMmyuCO7BowF1Z1/mkPqLk6cs/l63Ojtd6otKjMx47Dq1utxfRxcavH1I7VSaL8n5BUaoutadnsX3AAVQ==}
     engines: {node: '>=8.10.0'}
     hasBin: true
     dependencies:
@@ -14611,8 +14611,8 @@ packages:
       picocolors: 1.0.0
     dev: true
 
-  /swr/2.1.0_react@18.2.0:
-    resolution: {integrity: sha512-4hYl5p3/KalQ1MORealM79g/DtLohmud6yyfXw5l4wjtFksYUnocRFudvyaoUtgj3FrVNK9lS25Av9dsZYvz0g==}
+  /swr/2.1.1_react@18.2.0:
+    resolution: {integrity: sha512-OgwqZmpjOgxNbaez6qzTVqiRWn+Ti5Uzmktk2c01Afqwc50q6z15DeNC8m9G1aY+w2BwEAsKvk59iq6aHlhgyw==}
     engines: {pnpm: '7'}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
