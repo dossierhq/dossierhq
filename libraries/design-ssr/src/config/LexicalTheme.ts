@@ -43,6 +43,7 @@ export const LexicalTheme = {
     h5: 'is-size-5',
     h6: 'is-size-6',
   },
+  indent: 'indent',
   list: {
     ol: 'ol',
     ul: 'ul',

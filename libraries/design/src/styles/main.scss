@@ -212,6 +212,10 @@ tr.is-sticky-row :is(td, th),
     margin-bottom: 0.5rem;
   }
 
+  .indent {
+    --lexical-indent-base-value: 30px;
+  }
+
   .is-bold {
     font-weight: bold;
   }
