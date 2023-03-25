@@ -313,10 +313,10 @@ export type AppAdminEntity = AdminValueTypes;
 export interface AdminValueTypesFields {
   valueType: AppAdminValueItem | null;
   valueTypeFoo: AdminFoo | null;
-  valueTypeFooBar: AdminFoo | AdminBar | null;
+  valueTypeFooBar: AdminBar | AdminFoo | null;
   valueTypeList: AppAdminValueItem[] | null;
   valueTypeListFoo: AdminFoo[] | null;
-  valueTypeListFooBar: Array<AdminFoo | AdminBar> | null;
+  valueTypeListFooBar: Array<AdminBar | AdminFoo> | null;
 }
 
 export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields, string>;

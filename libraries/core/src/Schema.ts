@@ -790,7 +790,14 @@ function normalizeFieldSpecUpdate(
     case FieldType.Boolean:
       return { name, type, list, required, adminOnly };
     case FieldType.Entity:
-      return { name, type, list, required, adminOnly, entityTypes: fieldSpec.entityTypes ?? [] };
+      return {
+        name,
+        type,
+        list,
+        required,
+        adminOnly,
+        entityTypes: [...(fieldSpec.entityTypes ?? [])].sort(),
+      };
     case FieldType.Location:
       return { name, type, list, required, adminOnly };
     case FieldType.Number:
@@ -802,10 +809,10 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        richTextNodes: fieldSpec.richTextNodes ?? [],
-        entityTypes: fieldSpec.entityTypes ?? [],
-        linkEntityTypes: fieldSpec.linkEntityTypes ?? [],
-        valueTypes: fieldSpec.valueTypes ?? [],
+        richTextNodes: [...(fieldSpec.richTextNodes ?? [])].sort(),
+        entityTypes: [...(fieldSpec.entityTypes ?? [])].sort(),
+        linkEntityTypes: [...(fieldSpec.linkEntityTypes ?? [])].sort(),
+        valueTypes: [...(fieldSpec.valueTypes ?? [])].sort(),
       };
     case FieldType.String:
       return {
@@ -819,7 +826,14 @@ function normalizeFieldSpecUpdate(
         index: fieldSpec.index ?? null,
       };
     case FieldType.ValueItem:
-      return { name, type, list, required, adminOnly, valueTypes: fieldSpec.valueTypes ?? [] };
+      return {
+        name,
+        type,
+        list,
+        required,
+        adminOnly,
+        valueTypes: [...(fieldSpec.valueTypes ?? [])].sort(),
+      };
     default:
       assertExhaustive(type);
   }
