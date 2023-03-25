@@ -1049,7 +1049,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@playwright/test': ~1.31.2
+      '@playwright/test': ~1.32.1
       '@rushstack/heft': 0.50.0
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
@@ -1069,7 +1069,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@playwright/test': 1.31.2
+      '@playwright/test': 1.32.1
       '@rushstack/heft': 0.50.0
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
@@ -1273,7 +1273,7 @@ importers:
       '@lexical/selection': 0.9.0
       '@lexical/utils': 0.9.0
       '@microsoft/rush-lib': ~5.95.0
-      '@playwright/test': ~1.31.2
+      '@playwright/test': ~1.32.1
       '@react-aria/overlays': ~3.13.0
       '@rushstack/eslint-patch': ~1.2.0
       '@rushstack/heft': 0.50.0
@@ -1408,7 +1408,7 @@ importers:
       uuid: 9.0.0
     devDependencies:
       '@graphiql/toolkit': 0.8.2_3hqqkcjpgkcoyv6lewt4zbzrzy
-      '@playwright/test': 1.31.2
+      '@playwright/test': 1.32.1
       '@rushstack/heft': 0.50.0_@types+node@18.15.5
       '@storybook/addon-actions': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-docs': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -4530,13 +4530,13 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@playwright/test/1.31.2:
-    resolution: {integrity: sha512-BYVutxDI4JeZKV1+ups6dt5WiqKhjBtIYowyZIJ3kBDmJgsuPKsqqKNIMFbUePLSCmp2cZu+BDL427RcNKTRYw==}
+  /@playwright/test/1.32.1:
+    resolution: {integrity: sha512-FTwjCuhlm1qHUGf4hWjfr64UMJD/z0hXYbk+O387Ioe6WdyZQ+0TBDAc6P+pHjx2xCv1VYNgrKbYrNixFWy4Dg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.15.5
-      playwright-core: 1.31.2
+      playwright-core: 1.32.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -12917,8 +12917,8 @@ packages:
       pathe: 1.1.0
     dev: true
 
-  /playwright-core/1.31.2:
-    resolution: {integrity: sha512-a1dFgCNQw4vCsG7bnojZjDnPewZcw7tZUNFN0ZkcLYKj+mPmXvg4MpaaKZ5SgqPsOmqIf2YsVRkgqiRDxD+fDQ==}
+  /playwright-core/1.32.1:
+    resolution: {integrity: sha512-KZYUQC10mXD2Am1rGlidaalNGYk3LU1vZqqNk0gT4XPty1jOqgup8KDP8l2CUlqoNKhXM5IfGjWgW37xvGllBA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
