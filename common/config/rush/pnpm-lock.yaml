@@ -1272,7 +1272,7 @@ importers:
       '@lexical/rich-text': 0.9.0
       '@lexical/selection': 0.9.0
       '@lexical/utils': 0.9.0
-      '@microsoft/rush-lib': ~5.94.1
+      '@microsoft/rush-lib': ~5.95.0
       '@playwright/test': ~1.31.2
       '@react-aria/overlays': ~3.13.0
       '@rushstack/eslint-patch': ~1.2.0
@@ -1369,7 +1369,7 @@ importers:
       '@lexical/rich-text': 0.9.0_t5zx24bq56ozew7tqqxepjt3gu
       '@lexical/selection': 0.9.0_lexical@0.9.0
       '@lexical/utils': 0.9.0_lexical@0.9.0
-      '@microsoft/rush-lib': 5.94.1_@types+node@18.15.5
+      '@microsoft/rush-lib': 5.95.0_@types+node@18.15.5
       '@react-aria/overlays': 3.13.0_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
       '@typescript-eslint/eslint-plugin': 5.56.0_2hcjazgfnbtq42tcc73br2vup4
@@ -4291,8 +4291,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@microsoft/rush-lib/5.94.1_@types+node@18.15.5:
-    resolution: {integrity: sha512-qXeqtYYe4ImyYyaAIR+ZdZEpNUeOZSaP+sbfksvDu9oa4kNH+5pCemII8NSfmQd9Dx7zPGPNiGf4zE4/Jcs6VA==}
+  /@microsoft/rush-lib/5.95.0_@types+node@18.15.5:
+    resolution: {integrity: sha512-UcL7Z1D5ToF3gQ7CY9V473ePhziEErj+TYX8Lb2ahxxzfeHLHHuYaSeiSvz9K7eBxwW6zKGzUyS9HgmMMhV4Ew==}
     engines: {node: '>=5.6.0'}
     dependencies:
       '@pnpm/link-bins': 5.3.25
@@ -4300,8 +4300,8 @@ packages:
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
       '@rushstack/package-deps-hash': 4.0.10_@types+node@18.15.5
       '@rushstack/rig-package': 0.3.18
-      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.94.1_@types+node@18.15.5
-      '@rushstack/rush-azure-storage-build-cache-plugin': 5.94.1_@types+node@18.15.5
+      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.95.0_@types+node@18.15.5
+      '@rushstack/rush-azure-storage-build-cache-plugin': 5.95.0_@types+node@18.15.5
       '@rushstack/stream-collator': 4.0.228_@types+node@18.15.5
       '@rushstack/terminal': 0.5.3_@types+node@18.15.5
       '@rushstack/ts-command-line': 4.13.2
@@ -5143,11 +5143,11 @@ packages:
       resolve: 1.22.1
       strip-json-comments: 3.1.1
 
-  /@rushstack/rush-amazon-s3-build-cache-plugin/5.94.1_@types+node@18.15.5:
-    resolution: {integrity: sha512-NCZ5YscW9Qi9avvgspE76dfHtCcsSMpfm3X4D9gaTcGPyE7RpWY5yMTZhO31Z5g0NM6cw6eWEfKwJvZ5nGbnBQ==}
+  /@rushstack/rush-amazon-s3-build-cache-plugin/5.95.0_@types+node@18.15.5:
+    resolution: {integrity: sha512-/X2SFQt9akmY+DFV0auIJAMSDcSq6nxPZl14EnULFvMSB103K3CGCRE0nxLbYdSmmRAD4KApy8FrV84SnJBLkQ==}
     dependencies:
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
-      '@rushstack/rush-sdk': 5.94.1_@types+node@18.15.5
+      '@rushstack/rush-sdk': 5.95.0_@types+node@18.15.5
       https-proxy-agent: 5.0.1
       node-fetch: 2.6.7
     transitivePeerDependencies:
@@ -5156,13 +5156,13 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-azure-storage-build-cache-plugin/5.94.1_@types+node@18.15.5:
-    resolution: {integrity: sha512-uIdyoeGHyFlAnmAHF0KKDsg5KBde9nRl15x8wTr/zwzwydMMIdbfxHAMc3C78YE05SUYeIIut4qh5KCoEn9/Hw==}
+  /@rushstack/rush-azure-storage-build-cache-plugin/5.95.0_@types+node@18.15.5:
+    resolution: {integrity: sha512-apWovvLeCMee2RjBakhIJHJ6tN4yvhK+fzW7wXGoJSDftLmETd/oSPY8RNU7mrP7HNdoJWtR2a4M3F1cGAyBgQ==}
     dependencies:
       '@azure/identity': 2.1.0
       '@azure/storage-blob': 12.11.0
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
-      '@rushstack/rush-sdk': 5.94.1_@types+node@18.15.5
+      '@rushstack/rush-sdk': 5.95.0_@types+node@18.15.5
       '@rushstack/terminal': 0.5.3_@types+node@18.15.5
     transitivePeerDependencies:
       - '@types/node'
@@ -5170,8 +5170,8 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-sdk/5.94.1_@types+node@18.15.5:
-    resolution: {integrity: sha512-T5euwYB4GzBGGCWCdk0djjHqsI7boGWKjutyNb+AguB7WsnRjDujEHC7CdosYtbsJo5caIwEdi9sspiaS4vyjA==}
+  /@rushstack/rush-sdk/5.95.0_@types+node@18.15.5:
+    resolution: {integrity: sha512-kLCCeKY8hL1UAk+wnxEjMoG83J0zpbelO9qNxLRJgv7m6bLJ/QTu2rIA7M8qS4flqDgZ3WTMqAt6hl9je756Vw==}
     dependencies:
       '@rushstack/node-core-library': 3.55.2_@types+node@18.15.5
       '@types/node-fetch': 2.6.2
