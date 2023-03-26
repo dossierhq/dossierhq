@@ -487,6 +487,8 @@
       "eslint@~8.36.0": "eslint@8.36.0",
       "pg@~8.10.0": "pg@8.10.0",
       "prettier@2.8.4": "prettier@2.8.4",
+      "prettier@2.8.7": "prettier@2.8.7",
+      "sqlite3@5.1.4": "sqlite3@5.1.4",
       "sqlite3@~5.1.2": "sqlite3@5.1.6",
       "tslib@~2.4.0": "tslib@2.4.1",
       "tslib@~2.5.0": "tslib@2.5.0",
@@ -1596,6 +1598,10 @@
         "integrity": "sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==",
         "dependencies": {}
       },
+      "prettier@2.8.7": {
+        "integrity": "sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==",
+        "dependencies": {}
+      },
       "pump@3.0.0": {
         "integrity": "sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==",
         "dependencies": {
@@ -1713,6 +1719,14 @@
       "sprintf-js@1.0.3": {
         "integrity": "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==",
         "dependencies": {}
+      },
+      "sqlite3@5.1.4": {
+        "integrity": "sha512-i0UlWAzPlzX3B5XP2cYuhWQJsTtlMD6obOa1PgeEQ4DHEXUuyJkgv50I3isqZAP5oFc2T8OFvakmDh2W6I+YpA==",
+        "dependencies": {
+          "@mapbox/node-pre-gyp": "@mapbox/node-pre-gyp@1.0.10",
+          "node-addon-api": "node-addon-api@4.3.0",
+          "tar": "tar@6.1.13"
+        }
       },
       "sqlite3@5.1.6": {
         "integrity": "sha512-olYkWoKFVNSSSQNvxVUfjiVbz3YtBwTJj+mfV5zpHmqW3sELx2Cf4QCdirMelhM5Zh+KDVaKgQHqCxrqiWHybw==",

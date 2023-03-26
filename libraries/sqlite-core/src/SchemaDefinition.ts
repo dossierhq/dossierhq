@@ -189,6 +189,13 @@ const VERSION_7: SchemaVersionDefinition[] = [
   'CREATE INDEX entity_latest_locations_entities_id ON entity_latest_locations(entities_id)',
 ];
 
+const VERSION_8: SchemaVersionDefinition[] = [
+  'CREATE INDEX entities_resolved_auth_key ON entities(resolved_auth_key)',
+  'CREATE INDEX entity_publishing_events_entities_id ON entity_publishing_events(entities_id)',
+  'CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name)',
+  'CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq)',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -198,6 +205,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_5,
   VERSION_6,
   VERSION_7,
+  VERSION_8,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
