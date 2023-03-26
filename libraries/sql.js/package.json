@@ -25,7 +25,8 @@
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch",
-    "browser-test": "playwright test"
+    "browser-test": "playwright test",
+    "browser-test:ui": "playwright test --ui"
   },
   "repository": {
     "type": "git",
