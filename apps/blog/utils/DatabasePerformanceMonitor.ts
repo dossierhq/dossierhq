@@ -3,6 +3,7 @@ import type { DatabasePerformanceCallbacks } from '@dossierhq/server';
 export class DatabasePerformanceMonitor implements DatabasePerformanceCallbacks {
   queryCount = 0;
   queryDuration = 0;
+  mutexDuration = 0;
   rootTransactionCount = 0;
   rootTransactionDuration = 0;
   rootTransactionAcquisitionCount = 0;
@@ -11,6 +12,10 @@ export class DatabasePerformanceMonitor implements DatabasePerformanceCallbacks 
   onQueryCompleted(_query: string, _success: boolean, duration: number) {
     this.queryCount++;
     this.queryDuration += duration;
+  }
+
+  onMutexAcquired(duration: number) {
+    this.mutexDuration += duration;
   }
 
   onRootTransactionAcquired(duration: number) {
@@ -27,6 +32,9 @@ export class DatabasePerformanceMonitor implements DatabasePerformanceCallbacks 
     const metrics = [];
     if (this.queryCount > 0) {
       metrics.push(`db;desc="${this.queryCount} queries";dur=${this.queryDuration.toFixed(2)}`);
+    }
+    if (this.mutexDuration > 0) {
+      metrics.push(`db-mutex;dur=${this.mutexDuration.toFixed(2)}`);
     }
     if (this.rootTransactionCount > 0) {
       metrics.push(

@@ -10,6 +10,7 @@ export interface Transaction {
 }
 
 export interface DatabasePerformanceCallbacks {
+  onMutexAcquired: (duration: number) => void;
   onQueryCompleted: (query: string, success: boolean, duration: number) => void;
   onRootTransactionAcquired: (duration: number) => void;
   onRootTransactionCompleted: (duration: number) => void;

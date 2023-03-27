@@ -49,9 +49,15 @@ async function queryCommon<TRow, TError extends ErrorType>(
     }
   };
 
-  return context.transaction
-    ? queryAndConvert()
-    : database.mutex.withLock(context, queryAndConvert);
+  if (context.transaction) {
+    return queryAndConvert();
+  }
+  const mutexStartTime = performance.now();
+  return database.mutex.withLock(context, () => {
+    const duration = performance.now() - mutexStartTime;
+    context.databasePerformance?.onMutexAcquired(duration);
+    return queryAndConvert();
+  });
 }
 
 export async function queryRun<
