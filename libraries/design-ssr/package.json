@@ -30,7 +30,7 @@
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.50.0",
-    "@types/react": "~18.0.28",
+    "@types/react": "~18.0.29",
     "@types/react-dom": "~18.0.11",
     "@typescript-eslint/eslint-plugin": "~5.56.0",
     "@typescript-eslint/parser": "~5.56.0",
