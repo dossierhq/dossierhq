@@ -196,6 +196,10 @@ const VERSION_8: SchemaVersionDefinition[] = [
   'CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq)',
 ];
 
+const VERSION_9: SchemaVersionDefinition[] = [
+  'CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid)',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -206,6 +210,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_6,
   VERSION_7,
   VERSION_8,
+  VERSION_9,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
