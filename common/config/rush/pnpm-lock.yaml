@@ -326,6 +326,7 @@ importers:
       '@types/react': ~18.0.29
       '@typescript-eslint/eslint-plugin': ~5.56.0
       better-sqlite3: ~8.2.0
+      browserslist: ^4.21.5
       eslint: ~8.36.0
       eslint-config-next: ~13.2.4
       graphql: ~16.6.0
@@ -355,6 +356,7 @@ importers:
       '@types/better-sqlite3': 7.6.3
       '@types/react': 18.0.29
       '@typescript-eslint/eslint-plugin': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
+      browserslist: 4.21.5
       eslint: 8.36.0
       eslint-config-next: 13.2.4_j4766f7ecgqbon3u7zlxn5zszu
       prettier: 2.8.7
@@ -1306,6 +1308,7 @@ importers:
       base-64: ~1.0.0
       better-sqlite3: ~8.2.0
       body-parser: ~1.20.2
+      browserslist: ^4.21.5
       bulma: ~0.9.4
       bun-types: ~0.5.8
       cloudinary: ~1.35.0
@@ -1435,6 +1438,7 @@ importers:
       '@vitejs/plugin-react': 3.1.0_vite@4.2.1
       '@vitejs/plugin-react-swc': 3.2.0_vite@4.2.1
       base-64: 1.0.0
+      browserslist: 4.21.5
       bulma: 0.9.4
       bun-types: 0.5.8
       concurrently: 7.6.0
