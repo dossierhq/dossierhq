@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/sqlite3
 
-This log was last generated on Wed, 22 Mar 2023 21:32:23 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Mar 2023 11:41:48 GMT and should not be manually modified.
+
+## 0.2.8
+Mon, 27 Mar 2023 11:41:48 GMT
+
+### Updates
+
+- Improve indexes
 
 ## 0.2.7
 Wed, 22 Mar 2023 21:32:23 GMT
