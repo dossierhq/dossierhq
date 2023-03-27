@@ -3,6 +3,7 @@ import { AdminSchema, getPagingInfo, NoOpLogger } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,
+  DatabasePerformanceCallbacks,
   Transaction,
   TransactionContext,
 } from '@dossierhq/database-adapter';
@@ -23,15 +24,25 @@ type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
 type QueryFn = PostgresDatabaseAdapter['query'];
 
 class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
-  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
-    super(databaseAdapter, logger, transaction);
+  constructor(
+    databaseAdapter: DatabaseAdapter,
+    logger: Logger,
+    databasePerformance: DatabasePerformanceCallbacks | null,
+    transaction: Transaction | null
+  ) {
+    super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
     transaction: Transaction
   ): TransactionContext {
-    return new DummyContextImpl(databaseAdapter, this.logger, transaction);
+    return new DummyContextImpl(
+      databaseAdapter,
+      this.logger,
+      this.databasePerformance,
+      transaction
+    );
   }
 }
 
@@ -53,7 +64,7 @@ export class MockUniqueViolationOfConstraintError extends Error {
 
 export function createMockContext(adapter: PostgresDatabaseAdapter): TransactionContext {
   const databaseAdapter = createPostgresDatabaseAdapterAdapter(adapter);
-  return new DummyContextImpl(databaseAdapter, NoOpLogger, null);
+  return new DummyContextImpl(databaseAdapter, NoOpLogger, null, null);
 }
 
 export function createMockAdapter(): MockedPostgresDatabaseAdapter {

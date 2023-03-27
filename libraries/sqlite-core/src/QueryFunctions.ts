@@ -30,10 +30,18 @@ async function queryCommon<TRow, TError extends ErrorType>(
     TRow[],
     TError | typeof ErrorType.Generic
   > = async () => {
+    const startTime = performance.now();
     try {
       const rows = await database.adapter.query<TRow>(text, values);
+
+      const duration = performance.now() - startTime;
+      context.databasePerformance?.onQueryCompleted(text, true, duration);
+
       return ok(rows);
     } catch (error) {
+      const duration = performance.now() - startTime;
+      context.databasePerformance?.onQueryCompleted(text, false, duration);
+
       if (errorConverter) {
         return errorConverter(error);
       }

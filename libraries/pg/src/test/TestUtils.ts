@@ -48,6 +48,8 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
     provider: 'test',
     identifier: 'identifier',
     defaultAuthKeys: ['none'],
+    logger: null,
+    databasePerformance: null,
   });
   if (sessionResult.isError()) {
     await server.shutdown(); // ignore result
@@ -81,6 +83,8 @@ export async function initializeIntegrationTestServer(): PromiseResult<
       provider: 'test',
       identifier: 'schema-loader',
       defaultAuthKeys: ['none'],
+      logger: null,
+      databasePerformance: null,
     })
   );
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);

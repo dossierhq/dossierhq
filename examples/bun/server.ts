@@ -18,6 +18,8 @@ try {
     provider: 'sys',
     identifier: 'test',
     defaultAuthKeys: ['none', 'subject'],
+    logger,
+    databasePerformance: null,
   });
   if (sessionResult.isError()) throw sessionResult.toError();
   const adminClient = server.createAdminClient(sessionResult.value.context);

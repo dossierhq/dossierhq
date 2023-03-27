@@ -16,27 +16,47 @@ const secondaryPrincipal = {
 export async function sessionForMainPrincipal(
   server: Server
 ): PromiseResult<SessionContext, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const result = await server.createSession(mainPrincipal);
+  const result = await server.createSession({
+    ...mainPrincipal,
+    logger: null,
+    databasePerformance: null,
+  });
   if (result.isError()) return result;
   return result.map((it) => it.context);
 }
 
 export function adminClientForMainPrincipal(server: Server): AdminClient {
-  const sessionResult = server.createSession(mainPrincipal);
+  const sessionResult = server.createSession({
+    ...mainPrincipal,
+    logger: null,
+    databasePerformance: null,
+  });
   return server.createAdminClient(() => sessionResult);
 }
 
 export function adminClientForSecondaryPrincipal(server: Server): AdminClient {
-  const sessionResult = server.createSession(secondaryPrincipal);
+  const sessionResult = server.createSession({
+    ...secondaryPrincipal,
+    logger: null,
+    databasePerformance: null,
+  });
   return server.createAdminClient(() => sessionResult);
 }
 
 export function publishedClientForMainPrincipal(server: Server): PublishedClient {
-  const sessionResult = server.createSession(mainPrincipal);
+  const sessionResult = server.createSession({
+    ...mainPrincipal,
+    logger: null,
+    databasePerformance: null,
+  });
   return server.createPublishedClient(() => sessionResult);
 }
 
 export function publishedClientForSecondaryPrincipal(server: Server): PublishedClient {
-  const sessionResult = server.createSession(secondaryPrincipal);
+  const sessionResult = server.createSession({
+    ...secondaryPrincipal,
+    logger: null,
+    databasePerformance: null,
+  });
   return server.createPublishedClient(() => sessionResult);
 }

@@ -25,6 +25,8 @@ registerTestSuite(
         provider: 'test',
         identifier: 'id',
         defaultAuthKeys: ['none'],
+        logger: null,
+        databasePerformance: null,
       });
       if (sessionResult.isError()) {
         throw sessionResult.toError();

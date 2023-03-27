@@ -14,7 +14,11 @@ import type {
   Result,
 } from '@dossierhq/core';
 import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok } from '@dossierhq/core';
-import type { DatabaseAdapter, Session } from '@dossierhq/database-adapter';
+import type {
+  DatabaseAdapter,
+  DatabasePerformanceCallbacks,
+  Session,
+} from '@dossierhq/database-adapter';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { InternalContext, SessionContext } from './Context.js';
@@ -34,7 +38,8 @@ export interface Server {
     provider: string;
     identifier: string;
     defaultAuthKeys: readonly string[];
-    logger?: Logger;
+    logger: Logger | null;
+    databasePerformance: DatabasePerformanceCallbacks | null;
   }): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
   createAdminClient<TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
     context: SessionContext | ContextProvider<SessionContext>,
@@ -99,15 +104,16 @@ export class ServerImpl {
     this.#publishedSchema = this.#adminSchema.toPublishedSchema();
   }
 
-  createInternalContext(logger?: Logger): InternalContext {
+  createInternalContext(databasePerformance: DatabasePerformanceCallbacks | null): InternalContext {
     assertIsDefined(this.#databaseAdapter);
-    return new InternalContextImpl(this.#databaseAdapter, logger ?? this.#logger);
+    return new InternalContextImpl(this.#databaseAdapter, this.#logger, databasePerformance);
   }
 
   createSessionContext(
     session: Readonly<Session>,
     defaultAuthKeys: readonly string[],
-    logger: Logger | undefined
+    logger: Logger | null,
+    databasePerformance: DatabasePerformanceCallbacks | null
   ): Result<SessionContext, typeof ErrorType.BadRequest> {
     assertIsDefined(this.#databaseAdapter);
 
@@ -119,7 +125,8 @@ export class ServerImpl {
         session,
         defaultAuthKeys,
         this.#databaseAdapter,
-        logger ?? this.#logger
+        logger ?? this.#logger,
+        databasePerformance
       )
     );
   }
@@ -138,11 +145,9 @@ export async function createServer({
     databaseAdapter,
     logger: serverLogger,
   });
-  const authContext = serverImpl.createInternalContext();
-  const loadSchemaResult = await serverImpl.reloadSchema(authContext);
-  if (loadSchemaResult.isError()) {
-    return loadSchemaResult;
-  }
+  const loadSchemaResult = await serverImpl.reloadSchema(serverImpl.createInternalContext(null));
+  if (loadSchemaResult.isError()) return loadSchemaResult;
+
   const server: Server = {
     shutdown() {
       return serverImpl.shutdown();
@@ -152,10 +157,12 @@ export async function createServer({
       identifier,
       defaultAuthKeys,
       logger: sessionLogger,
+      databasePerformance,
     }): PromiseResult<
       CreateSessionPayload,
       typeof ErrorType.BadRequest | typeof ErrorType.Generic
     > => {
+      const authContext = serverImpl.createInternalContext(databasePerformance);
       const sessionResult = await authCreateSession(
         databaseAdapter,
         authContext,
@@ -168,7 +175,8 @@ export async function createServer({
       const contextResult = serverImpl.createSessionContext(
         session,
         defaultAuthKeys ?? [],
-        sessionLogger ?? serverLogger
+        (sessionLogger ?? serverLogger) || null,
+        databasePerformance
       );
       if (contextResult.isError()) return contextResult;
 

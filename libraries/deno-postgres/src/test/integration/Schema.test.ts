@@ -16,6 +16,8 @@ registerTestSuite(
         provider: "test",
         identifier: "id",
         defaultAuthKeys: ["none"],
+        logger: null,
+        databasePerformance: null,
       });
       const client = server.createAdminClient(() => sessionResult);
 

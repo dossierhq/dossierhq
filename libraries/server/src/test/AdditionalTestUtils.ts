@@ -66,6 +66,9 @@ export function createMockTransactionContext(logger: Logger | null = null): Tran
     get logger() {
       return resolvedLogger;
     },
+    get databasePerformance() {
+      return null;
+    },
     get transaction() {
       return null;
     },

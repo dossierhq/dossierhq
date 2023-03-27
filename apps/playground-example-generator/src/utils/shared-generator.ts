@@ -59,6 +59,7 @@ export async function createAdapterAndServer<
       identifier: 'alice',
       defaultAuthKeys: ['none', 'subject'],
       logger: createConsoleLogger(console),
+      databasePerformance: null,
     })
   ).valueOrThrow();
 
@@ -72,6 +73,7 @@ export async function createAdapterAndServer<
     identifier: 'bob',
     defaultAuthKeys: ['none', 'subject'],
     logger: createConsoleLogger(console),
+    databasePerformance: null,
   });
   const bobAdminClient = server.createAdminClient<TAdminClient>(
     () => bobSession,

@@ -41,6 +41,7 @@ describe('publishedSearchEntities', () => {
           [
             "publishedEntitySearchEntities",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],
@@ -138,6 +139,7 @@ describe('publishedSearchEntities', () => {
           [
             "publishedEntitySearchEntities",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],
@@ -234,6 +236,7 @@ describe('publishedSearchEntities', () => {
           [
             "publishedEntitySearchEntities",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],
@@ -268,6 +271,7 @@ describe('publishedSearchEntities', () => {
           [
             "publishedEntitySearchEntities",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],

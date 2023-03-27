@@ -1,6 +1,7 @@
 import type { Logger } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
+  DatabasePerformanceCallbacks,
   Session,
   Transaction,
   TransactionContext,
@@ -31,16 +32,22 @@ export class InternalContextImpl
   constructor(
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
+    databasePerformance: DatabasePerformanceCallbacks | null,
     transaction: Transaction | null = null
   ) {
-    super(databaseAdapter, logger, transaction);
+    super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
     transaction: Transaction
   ): InternalContext {
-    return new InternalContextImpl(databaseAdapter, this.logger, transaction);
+    return new InternalContextImpl(
+      databaseAdapter,
+      this.logger,
+      this.databasePerformance,
+      transaction
+    );
   }
 }
 
@@ -60,9 +67,10 @@ export class SessionContextImpl
     defaultAuthKeys: readonly string[],
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
+    databasePerformance: DatabasePerformanceCallbacks | null,
     transaction: Transaction | null = null
   ) {
-    super(databaseAdapter, logger, transaction);
+    super(databaseAdapter, logger, databasePerformance, transaction);
     this.session = session;
     this.defaultAuthKeys = defaultAuthKeys;
   }
@@ -76,6 +84,7 @@ export class SessionContextImpl
       this.defaultAuthKeys,
       databaseAdapter,
       this.logger,
+      this.databasePerformance,
       transaction
     );
   }

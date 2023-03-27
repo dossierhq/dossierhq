@@ -1,6 +1,6 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
 import { NoOpLogger, notOk, ok } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
+import type { DatabasePerformanceCallbacks, Server } from '@dossierhq/server';
 import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import type { NextApiRequest } from 'next';
 import assert from 'node:assert';
@@ -13,7 +13,8 @@ let serverConnectionPromise: Promise<{ server: Server }> | null = null;
 
 export async function getSessionContextForRequest(
   server: Server,
-  _req: NextApiRequest
+  _req: NextApiRequest,
+  databasePerformance: DatabasePerformanceCallbacks
 ): PromiseResult<
   { adminClient: AdminClient; publishedClient: PublishedClient },
   typeof ErrorType.NotAuthenticated
@@ -23,6 +24,8 @@ export async function getSessionContextForRequest(
     provider: 'test',
     identifier: 'john-smith',
     defaultAuthKeys: DEFAULT_AUTH_KEYS,
+    logger: null,
+    databasePerformance,
   });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(

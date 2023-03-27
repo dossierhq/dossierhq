@@ -3,6 +3,7 @@ import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,
+  DatabasePerformanceCallbacks,
   Transaction,
   TransactionContext,
 } from '@dossierhq/database-adapter';
@@ -42,15 +43,25 @@ interface MockedDatabase {
 }
 
 class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
-  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
-    super(databaseAdapter, logger, transaction);
+  constructor(
+    databaseAdapter: DatabaseAdapter,
+    logger: Logger,
+    databasePerformance: DatabasePerformanceCallbacks | null,
+    transaction: Transaction | null
+  ) {
+    super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
     transaction: Transaction
   ): TransactionContext {
-    return new DummyContextImpl(databaseAdapter, this.logger, transaction);
+    return new DummyContextImpl(
+      databaseAdapter,
+      this.logger,
+      this.databasePerformance,
+      transaction
+    );
   }
 }
 
@@ -67,7 +78,7 @@ export async function createMockInnerAndOuterAdapter(): PromiseResult<
 }
 
 export function createMockContext(adapter: DatabaseAdapter): TransactionContext {
-  return new DummyContextImpl(adapter, NoOpLogger, null);
+  return new DummyContextImpl(adapter, NoOpLogger, null, null);
 }
 
 /** Used when unit testing functions not needing the full SqliteAdapter */

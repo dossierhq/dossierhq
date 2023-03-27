@@ -21,14 +21,22 @@ async function queryCommon<TRow, TError extends ErrorType>(
       ? { text: queryOrQueryAndValues, values: undefined }
       : queryOrQueryAndValues;
 
+  const startTime = performance.now();
   try {
     const rows = await adapter.query<TRow>(
       context.transaction as PostgresTransaction,
       text,
       values
     );
+
+    const duration = performance.now() - startTime;
+    context.databasePerformance?.onQueryCompleted(text, true, duration);
+
     return ok(rows);
   } catch (error) {
+    const duration = performance.now() - startTime;
+    context.databasePerformance?.onQueryCompleted(text, false, duration);
+
     if (errorConverter) {
       return errorConverter(error);
     }

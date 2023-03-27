@@ -493,6 +493,8 @@ export async function initializeAndRunTests({
       provider: 'test',
       identifier: 'principal1',
       defaultAuthKeys: ['none'],
+      logger: null,
+      databasePerformance: null,
     });
     if (sessionResult.isError()) return sessionResult;
 

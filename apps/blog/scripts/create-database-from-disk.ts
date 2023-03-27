@@ -36,7 +36,11 @@ async function updateSchemaSpecification(server: Server, filename: string) {
     fs.readFileSync(filename, { encoding: 'utf8' })
   ) as AdminSchemaSpecificationUpdate;
 
-  const sessionResult = await server.createSession(SYSTEM_USERS.schemaLoader);
+  const sessionResult = await server.createSession({
+    ...SYSTEM_USERS.schemaLoader,
+    logger: null,
+    databasePerformance: null,
+  });
   if (sessionResult.isError()) return sessionResult;
 
   const client = server.createAdminClient(sessionResult.value.context);
@@ -50,7 +54,13 @@ async function main(filename: string) {
   try {
     (await updateSchemaSpecification(server, `${DATA_DIR}/schema.json`)).throwIfError();
 
-    const session = (await server.createSession(SYSTEM_USERS.serverRenderer)).valueOrThrow();
+    const session = (
+      await server.createSession({
+        ...SYSTEM_USERS.serverRenderer,
+        logger: null,
+        databasePerformance: null,
+      })
+    ).valueOrThrow();
     const adminClient = server.createAdminClient(session.context);
     const entities = await loadAllEntities(adminClient, logger, DATA_DIR);
     if (entities.isOk()) {

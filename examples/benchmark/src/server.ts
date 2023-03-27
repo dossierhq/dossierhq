@@ -14,6 +14,8 @@ export async function initializeServer(databaseAdapter: DatabaseAdapter) {
     provider: 'sys',
     identifier: 'schemaloader',
     defaultAuthKeys: ['none'],
+    logger: null,
+    databasePerformance: null,
   });
   if (sessionResult.isError()) return sessionResult;
 

@@ -21,6 +21,8 @@ async function createSessionContext(server: Server, headers: IncomingHttpHeaders
     provider,
     identifier,
     defaultAuthKeys: ['none'],
+    logger: null,
+    databasePerformance: null,
   });
   return sessionResult;
 }

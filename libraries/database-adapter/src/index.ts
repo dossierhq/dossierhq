@@ -43,4 +43,9 @@ export {
   type SqliteQueryBuilder,
 } from './SqlQueryBuilder.js';
 export { TransactionContextImpl } from './TransactionContext.js';
-export type { Context, Transaction, TransactionContext } from './TransactionContext.js';
+export type {
+  Context,
+  DatabasePerformanceCallbacks,
+  Transaction,
+  TransactionContext,
+} from './TransactionContext.js';

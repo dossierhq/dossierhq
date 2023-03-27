@@ -21,6 +21,8 @@ async function getAdminSchema(server: Server) {
     provider: 'sys',
     identifier: 'init',
     defaultAuthKeys: [],
+    logger: null,
+    databasePerformance: null,
   });
   const adminClient = server.createAdminClient(() => initSession);
   const schemaResult = await adminClient.getSchemaSpecification();

@@ -42,6 +42,8 @@ export async function initializeIntegrationTestServer(
     provider: 'test',
     identifier: 'schema-loader',
     defaultAuthKeys: [],
+    logger: null,
+    databasePerformance: null,
   });
   const client = server.createAdminClient(() => sessionResult);
 

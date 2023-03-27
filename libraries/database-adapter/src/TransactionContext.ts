@@ -9,10 +9,17 @@ export interface Transaction {
   _type: 'Transaction';
 }
 
+export interface DatabasePerformanceCallbacks {
+  onQueryCompleted: (query: string, success: boolean, duration: number) => void;
+  onRootTransactionAcquired: (duration: number) => void;
+  onRootTransactionCompleted: (duration: number) => void;
+}
+
 export interface TransactionContext<
   TContext extends TransactionContext<any> = TransactionContext<any> // eslint-disable-line @typescript-eslint/no-explicit-any
 > extends Context {
   readonly transaction: Transaction | null;
+  databasePerformance: DatabasePerformanceCallbacks | null;
 
   withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
@@ -26,10 +33,17 @@ export abstract class TransactionContextImpl<TContext extends TransactionContext
   readonly #databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
   readonly transaction: Transaction | null;
+  readonly databasePerformance: DatabasePerformanceCallbacks | null;
 
-  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
+  constructor(
+    databaseAdapter: DatabaseAdapter,
+    logger: Logger,
+    databasePerformance: DatabasePerformanceCallbacks | null,
+    transaction: Transaction | null
+  ) {
     this.#databaseAdapter = databaseAdapter;
     this.logger = logger;
+    this.databasePerformance = databasePerformance;
     this.transaction = transaction;
   }
 
@@ -48,12 +62,21 @@ export abstract class TransactionContextImpl<TContext extends TransactionContext
       });
     }
 
-    return await this.#databaseAdapter.withRootTransaction(
+    const startTime = performance.now();
+    const result = await this.#databaseAdapter.withRootTransaction(
       this,
       (transaction) => this.copyWithNewTransaction(this.#databaseAdapter, transaction),
       async (context) => {
+        const acquireDuration = performance.now() - startTime;
+        this.databasePerformance?.onRootTransactionAcquired(acquireDuration);
+
         return callback(context as unknown as TContext);
       }
     );
+
+    const completeDuration = performance.now() - startTime;
+    this.databasePerformance?.onRootTransactionCompleted(completeDuration);
+
+    return result;
   }
 }

@@ -37,6 +37,8 @@ export async function updateSchema(server: Server) {
     provider: 'sys',
     identifier: 'schemaloader',
     defaultAuthKeys: [],
+    logger: null,
+    databasePerformance: null,
   });
 
   const adminClient = server.createAdminClient(() => sessionResult);

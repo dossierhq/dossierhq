@@ -38,6 +38,7 @@ describe('Published publishedSampleEntities', () => {
           [
             "publishedEntitySearchTotalCount",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],
@@ -119,6 +120,7 @@ describe('Published publishedSampleEntities', () => {
           [
             "publishedEntitySampleEntities",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],
@@ -147,6 +149,7 @@ describe('Published publishedSampleEntities', () => {
           [
             "publishedEntitySearchTotalCount",
             _SessionContextImpl {
+              "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
               ],

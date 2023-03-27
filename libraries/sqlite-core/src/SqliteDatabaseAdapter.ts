@@ -97,7 +97,7 @@ export async function createSqliteDatabaseAdapterAdapter(
   const database: Database = { mutex: new Mutex(), adapter: sqliteAdapter };
 
   const outerAdapter = createOuterAdapter(database);
-  const initializationContext = createInitializationContext(outerAdapter, context.logger);
+  const initializationContext = createInitializationContext(outerAdapter, context.logger, null);
 
   const validityResult = await checkAdapterValidity(database, initializationContext);
   if (validityResult.isError()) return validityResult;
