@@ -91,12 +91,12 @@ function sharedSearchEntitiesQuery<
 
   const queryBuilder = createSqliteSqlQuery();
   const { sql } = queryBuilder;
-  sql`SELECT`;
+  sql`WITH entities_cte AS (SELECT`;
   addEntityQuerySelectColumn(queryBuilder, query, published);
 
   sql`WHERE`;
 
-  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, true);
+  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published);
   if (filterResult.isError()) return filterResult;
 
   // Paging 1/2
@@ -133,6 +133,14 @@ function sharedSearchEntitiesQuery<
   const countToRequest = paging.count + 1; // request one more to calculate hasMore
   if (!ascending) sql`DESC`;
   sql`LIMIT ${countToRequest}`;
+
+  if (published) {
+    sql`)
+SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id`;
+  } else {
+    sql`)
+SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id`;
+  }
 
   return ok({
     sqlQuery: queryBuilder.query,
@@ -288,16 +296,24 @@ function sampleEntitiesQuery(
   const queryBuilder = createSqliteSqlQuery();
   const { sql } = queryBuilder;
 
-  sql`SELECT`;
+  sql`WITH entities_cte AS (SELECT`;
 
   addEntityQuerySelectColumn(queryBuilder, query, published);
 
   sql`WHERE`;
 
-  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, true);
+  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published);
   if (filterResult.isError()) return filterResult;
 
   sql`ORDER BY e.uuid LIMIT ${limit} OFFSET ${offset}`;
+
+  if (published) {
+    sql`)
+SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id`;
+  } else {
+    sql`)
+SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id`;
+  }
 
   return ok(queryBuilder.query);
 }
@@ -365,7 +381,7 @@ function totalCountQuery(
 
   sql`WHERE`;
 
-  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, false);
+  const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published);
   if (filterResult.isError()) return filterResult;
 
   return ok(queryBuilder.query);
@@ -380,9 +396,9 @@ function addEntityQuerySelectColumn(
     sql`DISTINCT`;
   }
   if (published) {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields FROM entities e, entity_versions ev`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.latest_entity_versions_id FROM entities e`;
   }
   if (query?.linksTo) {
     if (published) {
@@ -419,18 +435,11 @@ function addQueryFilters(
   schema: AdminSchema | PublishedSchema,
   query: PublishedQuery | AdminQuery | undefined,
   authKeys: ResolvedAuthKey[],
-  published: boolean,
-  linkToEntityVersion: boolean
+  published: boolean
 ): Result<void, typeof ErrorType.BadRequest> {
   const { addValueList, sql } = queryBuilder;
 
-  if (linkToEntityVersion) {
-    if (published) {
-      sql`AND e.published_entity_versions_id = ev.id`;
-    } else {
-      sql`AND e.latest_entity_versions_id = ev.id`;
-    }
-  } else if (published) {
+  if (published) {
     sql`AND e.published_entity_versions_id IS NOT NULL`;
   }
 
