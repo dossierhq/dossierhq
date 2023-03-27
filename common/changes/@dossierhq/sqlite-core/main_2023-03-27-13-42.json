@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite-core",
+      "comment": "Add index. Use CTE to speed up entity search/sample.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite-core"
+}

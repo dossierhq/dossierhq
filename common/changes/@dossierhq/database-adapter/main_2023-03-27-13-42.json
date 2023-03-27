@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/database-adapter",
+      "comment": "Support mutex timings for DatabasePerformanceCallbacks.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/database-adapter"
+}
