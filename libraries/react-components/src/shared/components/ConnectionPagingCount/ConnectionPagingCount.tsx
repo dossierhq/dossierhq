@@ -1,7 +1,7 @@
 import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
 import { getPagingInfo } from '@dossierhq/core';
 import { ButtonDropdown } from '@dossierhq/design';
-import React from 'react';
+import { numberWithThousandsSeparator } from '../../../utils/NumberDisplayUtils.js';
 
 interface Props {
   connection: Connection<Edge<unknown, ErrorType>> | null | undefined;
@@ -18,9 +18,10 @@ export function ConnectionPagingCount({
   totalCount,
   onPagingChange,
 }: Props) {
-  const currentPage = connection?.edges.length
-    ? `${connection.edges.length} of ${totalCount}`
-    : pagingCount;
+  const currentPage =
+    connection?.edges.length && totalCount !== null
+      ? `${connection.edges.length} of ${numberWithThousandsSeparator(totalCount)}`
+      : pagingCount;
 
   const items = [
     { id: '25', count: 25 },
