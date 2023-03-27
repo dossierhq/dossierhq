@@ -2,6 +2,12 @@
   "name": "@dossierhq/cloudinary",
   "entries": [
     {
+      "version": "0.2.9",
+      "tag": "@dossierhq/cloudinary_v0.2.9",
+      "date": "Mon, 27 Mar 2023 13:49:59 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.2.8",
       "tag": "@dossierhq/cloudinary_v0.2.8",
       "date": "Mon, 27 Mar 2023 11:41:48 GMT",
