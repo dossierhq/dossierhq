@@ -382,8 +382,7 @@ function addEntityQuerySelectColumn(
   if (published) {
     sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
-  FROM entities e, entity_versions ev`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields FROM entities e, entity_versions ev`;
   }
   if (query?.linksTo) {
     if (published) {
