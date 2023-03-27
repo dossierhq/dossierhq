@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Normalize/sort schema arrays",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}
