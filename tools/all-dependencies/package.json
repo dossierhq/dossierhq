@@ -89,7 +89,6 @@
     "@vitejs/plugin-react": "~3.1.0",
     "@vitejs/plugin-react-swc": "~3.2.0",
     "base-64": "~1.0.0",
-    "browserslist": "^4.21.5",
     "bulma": "~0.9.4",
     "bun-types": "~0.5.8",
     "concurrently": "~7.6.0",

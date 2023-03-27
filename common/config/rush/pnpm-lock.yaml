@@ -326,7 +326,6 @@ importers:
       '@types/react': ~18.0.29
       '@typescript-eslint/eslint-plugin': ~5.56.0
       better-sqlite3: ~8.2.0
-      browserslist: ^4.21.5
       eslint: ~8.36.0
       eslint-config-next: ~13.2.4
       graphql: ~16.6.0
@@ -356,7 +355,6 @@ importers:
       '@types/better-sqlite3': 7.6.3
       '@types/react': 18.0.29
       '@typescript-eslint/eslint-plugin': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
-      browserslist: 4.21.5
       eslint: 8.36.0
       eslint-config-next: 13.2.4_j4766f7ecgqbon3u7zlxn5zszu
       prettier: 2.8.7
@@ -1308,7 +1306,6 @@ importers:
       base-64: ~1.0.0
       better-sqlite3: ~8.2.0
       body-parser: ~1.20.2
-      browserslist: ^4.21.5
       bulma: ~0.9.4
       bun-types: ~0.5.8
       cloudinary: ~1.35.0
@@ -1438,7 +1435,6 @@ importers:
       '@vitejs/plugin-react': 3.1.0_vite@4.2.1
       '@vitejs/plugin-react-swc': 3.2.0_vite@4.2.1
       base-64: 1.0.0
-      browserslist: 4.21.5
       bulma: 0.9.4
       bun-types: 0.5.8
       concurrently: 7.6.0
@@ -7773,13 +7769,8 @@ packages:
     resolution: {integrity: sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==}
     engines: {node: '>=10'}
 
-  /caniuse-lite/1.0.30001414:
-    resolution: {integrity: sha512-t55jfSaWjCdocnFdKQoO+d2ct9C59UZg4dY3OnUlSZ447r8pUtIKdp0hpAzrGFultmTC+Us+KpKi4GZl/LXlFg==}
-    dev: false
-
   /caniuse-lite/1.0.30001470:
     resolution: {integrity: sha512-065uNwY6QtHCBOExzbV6m236DDhYCCtPmQUCoQtwkVqzud8v5QPidoMr6CoMkC2nfp6nksjttqWQRRh75LqUmA==}
-    dev: true
 
   /chai/4.3.7:
     resolution: {integrity: sha512-HLnAzZ2iupm25PlN0xFreAlBA5zaBSv3og0DdeGA4Ar6h6rJ3A0rolRUKJhSF2V10GZKDgWF/VmAEsNWjCRB+A==}
@@ -12141,7 +12132,7 @@ packages:
     dependencies:
       '@next/env': 13.2.4
       '@swc/helpers': 0.4.14
-      caniuse-lite: 1.0.30001414
+      caniuse-lite: 1.0.30001470
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -12189,7 +12180,7 @@ packages:
     dependencies:
       '@next/env': 13.2.4
       '@swc/helpers': 0.4.14
-      caniuse-lite: 1.0.30001414
+      caniuse-lite: 1.0.30001470
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0

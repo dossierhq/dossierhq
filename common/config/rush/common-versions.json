@@ -25,7 +25,8 @@
      */
     // "some-library": "1.2.3"
     // Handle "Browserslist: caniuse-lite is outdated" by specifying a version. Bump to latest version when build is failing.
-    "browserslist": "^4.21.5"
+    "browserslist": "^4.21.5",
+    "caniuse-lite": "1.0.30001470"
   },
 
   /**
