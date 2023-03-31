@@ -94,7 +94,7 @@ importers:
       playground-example-generator: workspace:*
       react: ~18.2.0
       react-dom: ~18.2.0
-      react-router-dom: ~6.9.0
+      react-router-dom: ~6.10.0
       rollup-plugin-visualizer: ~5.9.0
       sql.js: ~1.8.0
       swr: ~2.1.1
@@ -117,7 +117,7 @@ importers:
       playground-example-generator: link:../playground-example-generator
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.10.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
       swr: 2.1.1_react@18.2.0
     devDependencies:
@@ -388,7 +388,7 @@ importers:
       nodemon: ~2.0.22
       react: ~18.2.0
       react-dom: ~18.2.0
-      react-router-dom: ~6.9.0
+      react-router-dom: ~6.10.0
       ts-node: ~10.9.1
       typescript: ~5.0.2
       vite: ~4.2.1
@@ -410,7 +410,7 @@ importers:
       leaflet: 1.9.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.10.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
       '@types/better-sqlite3': 7.6.3
@@ -1340,7 +1340,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       react-leaflet: ~4.2.1
-      react-router-dom: ~6.9.0
+      react-router-dom: ~6.10.0
       rollup-plugin-visualizer: ~5.9.0
       sass: ~1.60.0
       sass-loader: ~13.2.1
@@ -1399,7 +1399,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.2.1_yydtlhsdonbqao6vgvkwhv2zki
-      react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.10.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
       sqlite3: 5.1.4
       swr: 2.1.1_react@18.2.0
@@ -5242,8 +5242,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@remix-run/router/1.4.0:
-    resolution: {integrity: sha512-BJ9SxXux8zAg991UmT8slpwpsd31K1dHHbD3Ba4VzD+liLQ4WAMSxQp2d2ZPRPfN0jN2NPRowcSSoM7lCaF08Q==}
+  /@remix-run/router/1.5.0:
+    resolution: {integrity: sha512-bkUDCp8o1MvFO+qxkODcbhSqRa6P2GXgrGZVpt0dCXNW2HCSCqYI0ZoAqEOSAjRWmmlKcYgFvN4B4S+zo/f8kg==}
     engines: {node: '>=14'}
     dev: false
 
@@ -5623,7 +5623,7 @@ packages:
     dependencies:
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/manager-api': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/preview-api': 7.0.0-beta.36
@@ -5744,7 +5744,7 @@ packages:
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/components': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/docs-tools': 7.0.0-beta.36
       '@storybook/global': 5.0.0
       '@storybook/manager-api': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -5913,7 +5913,7 @@ packages:
       '@babel/core': 7.20.12
       '@babel/preset-env': 7.20.2_@babel+core@7.20.12
       '@babel/types': 7.20.7
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0-beta.36
       '@storybook/node-logger': 7.0.0-beta.36
       '@storybook/types': 7.0.0-beta.36
@@ -5935,7 +5935,7 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@storybook/client-logger': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/theming': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/types': 7.0.0-beta.36
@@ -5998,7 +5998,7 @@ packages:
       '@storybook/builder-manager': 7.0.0-beta.36
       '@storybook/core-common': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0-beta.36
       '@storybook/docs-mdx': 0.0.1-next.6
       '@storybook/global': 5.0.0
@@ -6055,7 +6055,7 @@ packages:
     resolution: {integrity: sha512-E64U8zjmbi9zB3ts2qFm9bPMqqxwF4eHfy1swB0rGnAbKY+HjEFS5sEnov5jMudqkU8ECrOpdHIDRdj73eA6iQ==}
     dependencies:
       '@babel/types': 7.20.7
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/types': 7.0.0-beta.36
       fs-extra: 11.1.0
       recast: 0.23.1
@@ -6070,8 +6070,8 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /@storybook/csf/0.0.2-next.10:
-    resolution: {integrity: sha512-m2PFgBP/xRIF85VrDhvesn9ktaD2pN3VUjvMqkAL/cINp/3qXsCyI81uw7N5VEOkQAbWrY2FcydnvEPDEdE8fA==}
+  /@storybook/csf/0.0.2-next.11:
+    resolution: {integrity: sha512-xGt0YSVxZb43sKmEf1GIQD8xEbo+c+S6khDEL7Qu/pYA0gh5z3WUuhOlovnelYj/YJod+XRsfVvk23AaRfUJ4Q==}
     dependencies:
       type-fest: 2.19.0
     dev: true
@@ -6107,7 +6107,7 @@ packages:
       '@storybook/channels': 7.0.0-beta.36
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/router': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/theming': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -6163,7 +6163,7 @@ packages:
       '@storybook/channels': 7.0.0-beta.36
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/types': 7.0.0-beta.36
       '@types/qs': 6.9.7
@@ -8950,6 +8950,7 @@ packages:
 
   /encoding/0.1.13:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+    requiresBuild: true
     dependencies:
       iconv-lite: 0.6.3
     optional: true
@@ -13511,26 +13512,26 @@ packages:
       use-sidecar: 1.1.2_k4en7uapxoluuejoeg6o3ic2aa
     dev: false
 
-  /react-router-dom/6.9.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-/seUAPY01VAuwkGyVBPCn1OXfVbaWGGu4QN9uj0kCPcTyNYgL1ldZpxZUpRU7BLheKQI4Twtl/OW2nHRF1u26Q==}
+  /react-router-dom/6.10.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-E5dfxRPuXKJqzwSe/qGcqdwa18QiWC6f3H3cWXM24qj4N0/beCIf/CWTipop2xm7mR0RCS99NnaqPNjHtrAzCg==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.4.0
+      '@remix-run/router': 1.5.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router: 6.9.0_react@18.2.0
+      react-router: 6.10.0_react@18.2.0
     dev: false
 
-  /react-router/6.9.0_react@18.2.0:
-    resolution: {integrity: sha512-51lKevGNUHrt6kLuX3e/ihrXoXCa9ixY/nVWRLlob4r/l0f45x3SzBvYJe3ctleLUQQ5fVa4RGgJOTH7D9Umhw==}
+  /react-router/6.10.0_react@18.2.0:
+    resolution: {integrity: sha512-Nrg0BWpQqrC3ZFFkyewrflCud9dio9ME3ojHCF/WLsprJVzkq3q3UeEhMCAW1dobjeGbWgjNn/PVF6m46ANxXQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.4.0
+      '@remix-run/router': 1.5.0
       react: 18.2.0
     dev: false
 
