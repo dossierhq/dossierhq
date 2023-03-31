@@ -931,7 +931,7 @@ importers:
       '@lexical/link': 0.9.0
       '@lexical/list': 0.9.0
       '@lexical/react': 0.9.0
-      '@lexical/rich-text': 0.9.0
+      '@lexical/rich-text': 0.9.1
       '@lexical/selection': 0.9.0
       '@lexical/utils': 0.9.0
       '@rushstack/heft': 0.50.0
@@ -974,7 +974,7 @@ importers:
       '@lexical/link': 0.9.0_lexical@0.9.0
       '@lexical/list': 0.9.0_lexical@0.9.0
       '@lexical/react': 0.9.0_2mv7kewri2bqbh4ekiqtgik624
-      '@lexical/rich-text': 0.9.0_t5zx24bq56ozew7tqqxepjt3gu
+      '@lexical/rich-text': 0.9.1_t5zx24bq56ozew7tqqxepjt3gu
       '@lexical/selection': 0.9.0_lexical@0.9.0
       '@lexical/utils': 0.9.0_lexical@0.9.0
       leaflet: 1.9.3
@@ -1269,7 +1269,7 @@ importers:
       '@lexical/link': 0.9.0
       '@lexical/list': 0.9.0
       '@lexical/react': 0.9.0
-      '@lexical/rich-text': 0.9.0
+      '@lexical/rich-text': 0.9.1
       '@lexical/selection': 0.9.0
       '@lexical/utils': 0.9.0
       '@microsoft/rush-lib': ~5.95.0
@@ -1366,7 +1366,7 @@ importers:
       '@lexical/link': 0.9.0_lexical@0.9.0
       '@lexical/list': 0.9.0_lexical@0.9.0
       '@lexical/react': 0.9.0_2mv7kewri2bqbh4ekiqtgik624
-      '@lexical/rich-text': 0.9.0_t5zx24bq56ozew7tqqxepjt3gu
+      '@lexical/rich-text': 0.9.1_t5zx24bq56ozew7tqqxepjt3gu
       '@lexical/selection': 0.9.0_lexical@0.9.0
       '@lexical/utils': 0.9.0_lexical@0.9.0
       '@microsoft/rush-lib': 5.95.0_@types+node@18.15.10
@@ -4208,19 +4208,6 @@ packages:
       - yjs
     dev: false
 
-  /@lexical/rich-text/0.9.0_t5zx24bq56ozew7tqqxepjt3gu:
-    resolution: {integrity: sha512-FC2stGty/S5hrQW3uL3xsrNXvKmPqhsSG73gwfx5VH6CxwABQjBGfNq1wO5p02c3J/KOC8OeKuEtgbwldEX48Q==}
-    peerDependencies:
-      '@lexical/clipboard': 0.9.0
-      '@lexical/selection': 0.9.0
-      '@lexical/utils': 0.9.0
-      lexical: 0.9.0
-    dependencies:
-      '@lexical/selection': 0.9.0_lexical@0.9.0
-      '@lexical/utils': 0.9.0_lexical@0.9.0
-      lexical: 0.9.0
-    dev: false
-
   /@lexical/rich-text/0.9.0_ygdiab3l25ii2thiryscflw2vq:
     resolution: {integrity: sha512-FC2stGty/S5hrQW3uL3xsrNXvKmPqhsSG73gwfx5VH6CxwABQjBGfNq1wO5p02c3J/KOC8OeKuEtgbwldEX48Q==}
     peerDependencies:
@@ -4230,6 +4217,19 @@ packages:
       lexical: 0.9.0
     dependencies:
       '@lexical/clipboard': 0.9.0_lexical@0.9.0
+      '@lexical/selection': 0.9.0_lexical@0.9.0
+      '@lexical/utils': 0.9.0_lexical@0.9.0
+      lexical: 0.9.0
+    dev: false
+
+  /@lexical/rich-text/0.9.1_t5zx24bq56ozew7tqqxepjt3gu:
+    resolution: {integrity: sha512-ac5lUam6e4YAC2Lo0op7pTxTqK1mQUiATGDG2A99LY6HIzmZUeK8Pi/LG0u/KRaJ8C4kCPVMmI3SzXQo28oUIQ==}
+    peerDependencies:
+      '@lexical/clipboard': 0.9.1
+      '@lexical/selection': 0.9.1
+      '@lexical/utils': 0.9.1
+      lexical: 0.9.1
+    dependencies:
       '@lexical/selection': 0.9.0_lexical@0.9.0
       '@lexical/utils': 0.9.0_lexical@0.9.0
       lexical: 0.9.0
@@ -5623,7 +5623,7 @@ packages:
     dependencies:
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/manager-api': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/preview-api': 7.0.0-beta.36
@@ -5744,7 +5744,7 @@ packages:
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/components': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/docs-tools': 7.0.0-beta.36
       '@storybook/global': 5.0.0
       '@storybook/manager-api': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -5913,7 +5913,7 @@ packages:
       '@babel/core': 7.20.12
       '@babel/preset-env': 7.20.2_@babel+core@7.20.12
       '@babel/types': 7.20.7
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0-beta.36
       '@storybook/node-logger': 7.0.0-beta.36
       '@storybook/types': 7.0.0-beta.36
@@ -5935,7 +5935,7 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@storybook/client-logger': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/theming': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/types': 7.0.0-beta.36
@@ -5998,7 +5998,7 @@ packages:
       '@storybook/builder-manager': 7.0.0-beta.36
       '@storybook/core-common': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0-beta.36
       '@storybook/docs-mdx': 0.0.1-next.6
       '@storybook/global': 5.0.0
@@ -6055,7 +6055,7 @@ packages:
     resolution: {integrity: sha512-E64U8zjmbi9zB3ts2qFm9bPMqqxwF4eHfy1swB0rGnAbKY+HjEFS5sEnov5jMudqkU8ECrOpdHIDRdj73eA6iQ==}
     dependencies:
       '@babel/types': 7.20.7
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/types': 7.0.0-beta.36
       fs-extra: 11.1.0
       recast: 0.23.1
@@ -6070,8 +6070,8 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /@storybook/csf/0.0.2-next.10:
-    resolution: {integrity: sha512-m2PFgBP/xRIF85VrDhvesn9ktaD2pN3VUjvMqkAL/cINp/3qXsCyI81uw7N5VEOkQAbWrY2FcydnvEPDEdE8fA==}
+  /@storybook/csf/0.0.2-next.11:
+    resolution: {integrity: sha512-xGt0YSVxZb43sKmEf1GIQD8xEbo+c+S6khDEL7Qu/pYA0gh5z3WUuhOlovnelYj/YJod+XRsfVvk23AaRfUJ4Q==}
     dependencies:
       type-fest: 2.19.0
     dev: true
@@ -6107,7 +6107,7 @@ packages:
       '@storybook/channels': 7.0.0-beta.36
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/router': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/theming': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
@@ -6163,7 +6163,7 @@ packages:
       '@storybook/channels': 7.0.0-beta.36
       '@storybook/client-logger': 7.0.0-beta.36
       '@storybook/core-events': 7.0.0-beta.36
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/global': 5.0.0
       '@storybook/types': 7.0.0-beta.36
       '@types/qs': 6.9.7
@@ -8950,6 +8950,7 @@ packages:
 
   /encoding/0.1.13:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+    requiresBuild: true
     dependencies:
       iconv-lite: 0.6.3
     optional: true
