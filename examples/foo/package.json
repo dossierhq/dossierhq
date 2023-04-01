@@ -21,7 +21,7 @@
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "express": "~4.18.2",
-    "graphql-http": "~1.16.0",
+    "graphql-http": "~1.17.0",
     "sqlite3": "5.1.4",
     "tslib": "~2.5.0"
   },
