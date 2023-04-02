@@ -15,9 +15,9 @@
   "devDependencies": {
     "@dossierhq/eslint-config-generic": "workspace:*",
     "bun-types": "~0.5.8",
-    "eslint": "~8.36.0",
+    "eslint": "~8.37.0",
     "prettier": "2.8.7",
-    "typescript": "~5.0.2"
+    "typescript": "~5.0.3"
   },
   "dependencies": {
     "@dossierhq/bun-sqlite": "workspace:*",

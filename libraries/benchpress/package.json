@@ -33,10 +33,10 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.50.0",
-    "@types/node": "~18.15.10",
-    "eslint": "~8.36.0",
+    "@types/node": "~18.15.11",
+    "eslint": "~8.37.0",
     "prettier": "2.8.7",
-    "typescript": "~5.0.2"
+    "typescript": "~5.0.3"
   },
   "dependencies": {
     "tslib": "~2.5.0"
