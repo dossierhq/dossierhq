@@ -116,7 +116,11 @@ describe('Admin adminCreateEntity', () => {
       undefined
     );
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Entity type Invalid doesn’t exist');
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity.info.type: Entity type Invalid doesn’t exist'
+    );
     expect(
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
     ).toMatchInlineSnapshot('[]');
@@ -140,7 +144,7 @@ describe('Admin adminCreateEntity', () => {
       undefined
     );
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.type');
+    expectErrorResult(result, ErrorType.BadRequest, 'entity.info.type: Type is required');
     expect(
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
     ).toMatchInlineSnapshot('[]');

@@ -90,6 +90,8 @@ export {
 export type { ItemValuePath } from './ItemUtils.js';
 export {
   groupValidationIssuesByTopLevelPath,
+  validateEntityInfoForCreate,
+  validateEntityInfoForUpdate,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
 } from './ItemValidator.js';

@@ -1,14 +1,18 @@
-import type {
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityCreatePayload,
-  AdminEntityMutationOptions,
-  AdminSchema,
-  ErrorType,
-  PromiseResult,
-  PublishedSchema,
+import {
+  AdminEntityStatus,
+  notOk,
+  ok,
+  validateEntityInfoForCreate,
+  visitorPathToString,
+  type AdminEntity,
+  type AdminEntityCreate,
+  type AdminEntityCreatePayload,
+  type AdminEntityMutationOptions,
+  type AdminSchema,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedSchema,
 } from '@dossierhq/core';
-import { AdminEntityStatus, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -33,6 +37,14 @@ export async function adminCreateEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  // validate
+  const validationIssue = validateEntityInfoForCreate(adminSchema, ['entity'], entity);
+  if (validationIssue) {
+    return notOk.BadRequest(
+      `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
+    );
+  }
+
   // entity
   const resolvedResult = resolveCreateEntity(adminSchema, entity);
   if (resolvedResult.isError()) return resolvedResult;
@@ -46,22 +58,14 @@ export async function adminCreateEntity(
   );
   if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
 
-  if (entitySpec.authKeyPattern) {
-    const authKeyRegExp = adminSchema.getPatternRegExp(entitySpec.authKeyPattern);
-    if (!authKeyRegExp) {
-      return notOk.Generic(
-        `Pattern '${entitySpec.authKeyPattern}' for authKey of type '${entitySpec.name}' not found`
-      );
-    }
-    if (!authKeyRegExp.test(createEntity.info.authKey)) {
-      return notOk.BadRequest(
-        `AuthKey '${createEntity.info.authKey}' does not match pattern '${entitySpec.authKeyPattern}' (${authKeyRegExp.source})`
-      );
-    }
-  }
-
   // encode fields
-  const encodeResult = await encodeAdminEntity(adminSchema, databaseAdapter, context, createEntity);
+  const encodeResult = await encodeAdminEntity(
+    adminSchema,
+    databaseAdapter,
+    context,
+    entitySpec,
+    createEntity
+  );
   if (encodeResult.isError()) return encodeResult;
   const encodeEntityResult = encodeResult.value;
 

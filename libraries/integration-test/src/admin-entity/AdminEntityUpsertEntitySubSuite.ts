@@ -157,7 +157,7 @@ async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
   assertErrorResult(
     upsertResult,
     ErrorType.BadRequest,
-    "AuthKey 'none' does not match pattern 'subject' (^subject$)"
+    "info.authKey: AuthKey 'none' does not match pattern 'subject' (^subject$)"
   );
 
   const getResult = await client.getEntity({ id });
@@ -182,7 +182,7 @@ async function upsertEntity_errorUpdateTryingToChangeAuthKey({ server }: AdminEn
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'New authKey subject doesn’t correspond to previous authKey none'
+    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none'
   );
 
   const getResult = await client.getEntity({ id });
@@ -202,5 +202,5 @@ async function upsertEntity_errorUpdateNoAuthKey({ server }: AdminEntityTestCont
     fields: {},
   } as AdminEntityUpsert);
 
-  assertErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.authKey');
+  assertErrorResult(result, ErrorType.BadRequest, 'entity.info.authKey: AuthKey is required');
 }

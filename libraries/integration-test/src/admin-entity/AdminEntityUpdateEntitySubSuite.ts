@@ -517,7 +517,7 @@ async function updateEntity_errorDifferentType({ server }: AdminEntityTestContex
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'New type References doesn’t correspond to previous type TitleOnly'
+    'entity.info.type: New type References doesn’t correspond to previous type TitleOnly'
   );
 }
 
@@ -537,7 +537,7 @@ async function updateEntity_errorTryingToChangeAuthKey({ server }: AdminEntityTe
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'New authKey subject doesn’t correspond to previous authKey none'
+    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none'
   );
 
   const getResult = await client.getEntity({ id });

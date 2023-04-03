@@ -209,6 +209,7 @@ export interface AdminEntityUpdate<T extends AdminEntity<string, object> = Admin
     name?: string;
     /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
     type?: T['info']['type'];
+    /** If provided, has to be the same as the existing version + 1 */
     version?: number;
     /** If provided, has to be the same as the existing authKey, i.e. there's no way to change the authKey of an entity */
     authKey?: T['info']['authKey'];

@@ -736,7 +736,7 @@ async function createEntity_errorAuthKeyNotMatchingPattern({ server }: AdminEnti
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    "AuthKey 'none' does not match pattern 'subject' (^subject$)"
+    "info.authKey: AuthKey 'none' does not match pattern 'subject' (^subject$)"
   );
 
   const getResult = await client.getEntity({ id });

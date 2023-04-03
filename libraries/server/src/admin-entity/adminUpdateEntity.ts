@@ -1,13 +1,17 @@
-import type {
-  AdminEntityMutationOptions,
-  AdminEntityUpdate,
-  AdminEntityUpdatePayload,
-  AdminSchema,
-  ErrorType,
-  PromiseResult,
-  PublishedSchema,
+import {
+  AdminEntityStatus,
+  notOk,
+  ok,
+  validateEntityInfoForUpdate,
+  visitorPathToString,
+  type AdminEntityMutationOptions,
+  type AdminEntityUpdate,
+  type AdminEntityUpdatePayload,
+  type AdminSchema,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedSchema,
 } from '@dossierhq/core';
-import { AdminEntityStatus, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -33,12 +37,11 @@ export async function adminUpdateEntity(
   | typeof ErrorType.Generic
 > {
   return await context.withTransaction(async (context) => {
+    // get info of existing entity
     const entityInfoResult = await databaseAdapter.adminEntityUpdateGetEntityInfo(context, {
       id: entity.id,
     });
-    if (entityInfoResult.isError()) {
-      return entityInfoResult;
-    }
+    if (entityInfoResult.isError()) return entityInfoResult;
     const {
       entityInternalId,
       name: previousName,
@@ -46,19 +49,29 @@ export async function adminUpdateEntity(
       resolvedAuthKey,
     } = entityInfoResult.value;
 
+    // validate
+    const validationIssue = validateEntityInfoForUpdate(
+      ['entity'],
+      { info: entityInfoResult.value },
+      entity
+    );
+    if (validationIssue) {
+      return notOk.BadRequest(
+        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
+      );
+    }
+
+    // auth key
     const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
       authKey,
       resolvedAuthKey,
     });
-    if (authResult.isError()) {
-      return authResult;
-    }
+    if (authResult.isError()) return authResult;
 
     const resolvedResult = resolveUpdateEntity(adminSchema, entity, entityInfoResult.value);
-    if (resolvedResult.isError()) {
-      return resolvedResult;
-    }
-    const { changed, entity: updatedEntity } = resolvedResult.value;
+    if (resolvedResult.isError()) return resolvedResult;
+    const { changed, entity: updatedEntity, entitySpec } = resolvedResult.value;
+
     if (!changed) {
       const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
       if (options?.publish && updatedEntity.info.status !== AdminEntityStatus.published) {
@@ -88,11 +101,10 @@ export async function adminUpdateEntity(
       adminSchema,
       databaseAdapter,
       context,
+      entitySpec,
       updatedEntity
     );
-    if (encodeResult.isError()) {
-      return encodeResult;
-    }
+    if (encodeResult.isError()) return encodeResult;
     const { data, name, referenceIds, locations, fullTextSearchText } = encodeResult.value;
 
     const updateResult = await databaseAdapter.adminEntityUpdateEntity(

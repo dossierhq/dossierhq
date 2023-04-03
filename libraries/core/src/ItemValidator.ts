@@ -9,6 +9,7 @@ import type {
   RichTextFieldSpecification,
   StringFieldSpecification,
 } from './Schema.js';
+import type { AdminEntityCreate, AdminEntityUpdate } from './Types.js';
 
 export interface SaveValidationIssue {
   type: 'save';
@@ -23,6 +24,120 @@ export interface PublishValidationIssue {
 }
 
 const LINE_BREAK_REGEX = /[\r\n]/;
+
+export function validateEntityInfoForCreate(
+  adminSchema: AdminSchema,
+  path: ItemValuePath,
+  entity: AdminEntityCreate
+): SaveValidationIssue | null {
+  // info.type
+  const type = entity.info.type;
+  if (!type) {
+    return { type: 'save', path: [...path, 'info', 'type'], message: 'Type is required' };
+  }
+
+  const entitySpec = adminSchema.getEntityTypeSpecification(type);
+  if (!entitySpec) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'type'],
+      message: `Entity type ${type} doesn’t exist`,
+    };
+  }
+
+  // info.authKey
+  const authKey = entity.info.authKey;
+  if (!authKey) {
+    return { type: 'save', path: [...path, 'info', 'authKey'], message: 'AuthKey is required' };
+  }
+
+  if (entitySpec.authKeyPattern) {
+    const authKeyRegExp = adminSchema.getPatternRegExp(entitySpec.authKeyPattern);
+    if (!authKeyRegExp) {
+      return {
+        type: 'save',
+        path: [...path, 'info', 'authKey'],
+        message: `Pattern '${entitySpec.authKeyPattern}' for authKey of type '${entitySpec.name}' not found`,
+      };
+    }
+    if (!authKeyRegExp.test(authKey)) {
+      return {
+        type: 'save',
+        path: ['info', 'authKey'],
+        message: `AuthKey '${authKey}' does not match pattern '${entitySpec.authKeyPattern}' (${authKeyRegExp.source})`,
+      };
+    }
+  }
+
+  // info.name
+  const saveValidation = validateName(path, entity.info.name);
+  if (saveValidation) return saveValidation;
+
+  // info.version
+  const version = entity.info.version;
+  if (version !== undefined && version !== 0) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'version'],
+      message: `Version must be 0 when creating a new entity`,
+    };
+  }
+
+  return null;
+}
+
+export function validateEntityInfoForUpdate(
+  path: ItemValuePath,
+  existingEntity: { info: { type: string; authKey: string; version: number } },
+  entity: AdminEntityUpdate
+): SaveValidationIssue | null {
+  if (entity.info?.type && entity.info.type !== existingEntity.info.type) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'type'],
+      message: `New type ${entity.info.type} doesn’t correspond to previous type ${existingEntity.info.type}`,
+    };
+  }
+
+  if (entity.info?.authKey && entity.info.authKey !== existingEntity.info.authKey) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'authKey'],
+      message: `New authKey ${entity.info.authKey} doesn’t correspond to previous authKey ${existingEntity.info.authKey}`,
+    };
+  }
+
+  if (entity.info?.name) {
+    const saveValidation = validateName(path, entity.info.name);
+    if (saveValidation) return saveValidation;
+  }
+
+  const expectedVersion = existingEntity.info.version + 1;
+  if (entity.info?.version !== undefined && entity.info.version !== expectedVersion) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'version'],
+      message: `The latest version of the entity is ${existingEntity.info.version}, so the new version must be ${expectedVersion} (got ${entity.info.version})`,
+    };
+  }
+
+  return null;
+}
+
+function validateName(path: ItemValuePath, name: string): SaveValidationIssue | null {
+  if (!name) {
+    return { type: 'save', path: [...path, 'info', 'name'], message: 'Name is required' };
+  }
+  if (LINE_BREAK_REGEX.test(name)) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'name'],
+      message: 'Name cannot contain line breaks',
+    };
+  }
+
+  return null;
+}
 
 export function validateTraverseNodeForSave(
   adminSchema: AdminSchema,

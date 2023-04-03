@@ -1213,7 +1213,7 @@ describe('create*Entity()', () => {
           "createMutationFooEntity": null,
         },
         "errors": [
-          [GraphQLError: BadRequest: Unsupported version for create: 1],
+          [GraphQLError: BadRequest: entity.info.version: Version must be 0 when creating a new entity],
         ],
       }
     `);
@@ -1827,7 +1827,7 @@ describe('update*Entity()', () => {
             "updateMutationFooEntity": null,
           },
           "errors": [
-            [GraphQLError: BadRequest: New authKey none doesn’t correspond to previous authKey subject],
+            [GraphQLError: BadRequest: entity.info.authKey: New authKey none doesn’t correspond to previous authKey subject],
           ],
         }
       `);

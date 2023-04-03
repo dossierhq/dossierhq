@@ -1176,7 +1176,7 @@ describe('createEntity()', () => {
       fields: { title: 'title' },
     });
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.name');
+    expectErrorResult(result, ErrorType.BadRequest, 'entity.info.name: Name is required');
   });
 
   test('Error: Create with invalid version', async () => {
@@ -1191,7 +1191,11 @@ describe('createEntity()', () => {
       fields: {},
     });
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Unsupported version for create: 1');
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity.info.version: Version must be 0 when creating a new entity'
+    );
   });
 
   test('Error: Create without authKey', async () => {
@@ -1203,7 +1207,7 @@ describe('createEntity()', () => {
       fields: {},
     } as AdminEntityCreate);
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.authKey');
+    expectErrorResult(result, ErrorType.BadRequest, 'entity.info.authKey: AuthKey is required');
   });
 
   test('Error: Using authKey where adapter returns error', async () => {
@@ -2544,7 +2548,11 @@ describe('upsertEntity()', () => {
         info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
         fields: {},
       });
-      expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+      expectErrorResult(
+        updateResult,
+        ErrorType.BadRequest,
+        'entity.info.authKey: New authKey none doesn’t correspond to previous authKey subject'
+      );
     }
   });
 });

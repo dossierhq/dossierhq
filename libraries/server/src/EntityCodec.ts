@@ -54,7 +54,6 @@ import type {
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
 } from '@dossierhq/database-adapter';
-import { ensureRequired } from './Assertions.js';
 import type { SessionContext } from './Context.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import { transformRichText } from './utils/RichTextTransformer.js';
@@ -241,16 +240,6 @@ export function resolveCreateEntity(
   { createEntity: AdminEntityCreate; entitySpec: AdminEntityTypeSpecification },
   typeof ErrorType.BadRequest
 > {
-  if (!entity.info.type) {
-    return notOk.BadRequest('Missing entity.info.type');
-  }
-  if (!entity.info.authKey) {
-    return notOk.BadRequest('Missing entity.info.authKey');
-  }
-  if (entity.info.version && entity.info.version !== 0) {
-    return notOk.BadRequest(`Unsupported version for create: ${entity.info.version}`);
-  }
-
   const result: AdminEntityCreate = {
     info: {
       name: entity.info.name,
@@ -277,18 +266,10 @@ export function resolveUpdateEntity(
   schema: AdminSchema,
   entity: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload
-): Result<{ changed: boolean; entity: AdminEntity }, typeof ErrorType.BadRequest> {
-  if (entity.info?.type && entity.info.type !== entityInfo.type) {
-    return notOk.BadRequest(
-      `New type ${entity.info.type} doesn’t correspond to previous type ${entityInfo.type}`
-    );
-  }
-  if (entity.info?.authKey && entity.info.authKey !== entityInfo.authKey) {
-    return notOk.BadRequest(
-      `New authKey ${entity.info.authKey} doesn’t correspond to previous authKey ${entityInfo.authKey}`
-    );
-  }
-
+): Result<
+  { changed: boolean; entity: AdminEntity; entitySpec: AdminEntityTypeSpecification },
+  typeof ErrorType.BadRequest
+> {
   const status =
     entityInfo.status === AdminEntityStatus.published
       ? AdminEntityStatus.modified
@@ -350,30 +331,16 @@ export function resolveUpdateEntity(
     result.info.status = entityInfo.status;
   }
 
-  return ok({ changed, entity: result });
+  return ok({ changed, entity: result, entitySpec });
 }
 
 export async function encodeAdminEntity(
   schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
+  entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const assertion = ensureRequired({
-    'entity.info.type': entity.info.type,
-    'entity.info.name': entity.info.name,
-  });
-  if (assertion.isError()) {
-    return assertion;
-  }
-
-  const { type, name } = entity.info;
-
-  const entitySpec = schema.getEntityTypeSpecification(type);
-  if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
-  }
-
   // Collect values and validate entity fields
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createRequestedReferencesCollector();
@@ -396,8 +363,8 @@ export async function encodeAdminEntity(
   }
 
   const result: EncodeAdminEntityResult = {
-    type,
-    name,
+    type: entity.info.type,
+    name: entity.info.name,
     data: {},
     referenceIds: [],
     locations: locationsCollector.result,

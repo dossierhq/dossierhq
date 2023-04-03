@@ -1,11 +1,14 @@
 import { describe, expect, test } from 'vitest';
 import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
 import { copyEntity, normalizeEntityFields } from './ItemUtils.js';
-import type { PublishValidationIssue, SaveValidationIssue } from './ItemValidator.js';
 import {
   groupValidationIssuesByTopLevelPath,
+  validateEntityInfoForCreate,
+  validateEntityInfoForUpdate,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
+  type PublishValidationIssue,
+  type SaveValidationIssue,
 } from './ItemValidator.js';
 import {
   createRichTextParagraphNode,
@@ -23,6 +26,7 @@ const adminSchema = AdminSchema.createAndValidate({
     },
     {
       name: 'StringsEntity',
+      authKeyPattern: 'noneSubject',
       fields: [
         { name: 'required', type: FieldType.String, required: true },
         { name: 'pattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
@@ -35,7 +39,10 @@ const adminSchema = AdminSchema.createAndValidate({
     },
   ],
   valueTypes: [{ name: 'AdminOnlyValueItem', adminOnly: true, fields: [] }],
-  patterns: [{ name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' }],
+  patterns: [
+    { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
+    { name: 'noneSubject', pattern: '^(none|subject)$' },
+  ],
 }).valueOrThrow();
 
 const STRINGS_ENTITY_DEFAULT: AdminEntityCreate = {
@@ -80,6 +87,149 @@ function validateEntity(entity: EntityLike) {
 
   return errors;
 }
+
+describe('validateEntityInfoForCreate', () => {
+  test('no type', () => {
+    expect(
+      validateEntityInfoForCreate(adminSchema, ['entity'], {
+        info: { type: '', name: 'No type', authKey: 'none' },
+        fields: {},
+      })
+    ).toMatchSnapshot();
+  });
+
+  test('invalid type', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: 'InvalidType' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('no authKey', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: '' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('authKey not matching pattern', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: 'something else' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('no name', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: '' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('name with line break', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: 'Hello\nworld' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('invalid version', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { version: 1 as 0 } })
+      )
+    ).toMatchSnapshot();
+  });
+});
+
+describe('validateEntityInfoForUpdate', () => {
+  test('change type', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { type: 'RichTextsEntity' }, fields: {} }
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('valid: same type', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { type: 'StringEntity' }, fields: {} }
+      )
+    ).toBeNull();
+  });
+
+  test('change authKey', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { authKey: 'subject' }, fields: {} }
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('valid: same authKey', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { authKey: 'none' }, fields: {} }
+      )
+    ).toBeNull();
+  });
+
+  test('name with line break', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { name: 'hello\nworld' }, fields: {} }
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('version with wrong value', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { version: 1 }, fields: {} }
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('valid: version with correct value', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { version: 2 }, fields: {} }
+      )
+    ).toBeNull();
+  });
+});
 
 describe('validateTraverseNodeForSave', () => {
   test('error', () => {
