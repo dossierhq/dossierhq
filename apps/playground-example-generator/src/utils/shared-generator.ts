@@ -5,10 +5,14 @@ import type {
   AdminSchemaSpecificationUpdate,
   ClientContext,
 } from '@dossierhq/core';
-import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
+import { LoggingClientMiddleware, NoOpLogger, createConsoleLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
+import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import {
+  createDatabase,
+  createSqlite3Adapter,
+  type SqliteDatabaseOptimizationOptions,
+} from '@dossierhq/sqlite3';
 import { unlink } from 'fs/promises';
 import type { Database } from 'sqlite3';
 import * as Sqlite from 'sqlite3';
@@ -36,7 +40,11 @@ export async function createAdapterAndServer<
 >(
   database: Database,
   schema: AdminSchemaSpecificationUpdate
-): Promise<{ adminClient: TAdminClient; bobAdminClient: TAdminClient; server: Server }> {
+): Promise<{
+  adminClient: TAdminClient;
+  bobAdminClient: TAdminClient;
+  server: Server<SqliteDatabaseOptimizationOptions>;
+}> {
   const databaseAdapter = (
     await createSqlite3Adapter({ logger: NoOpLogger }, database, {
       migrate: true,

@@ -5,8 +5,6 @@ import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
 import { getCurrentSchemaVersion, migrate } from './SchemaMigrator.js';
 import type { SqliteDatabaseMigrationOptions } from './SqliteDatabaseAdapter.js';
 
-//TODO optimize fts indices
-
 type SchemaVersionDefinition =
   | QueryOrQueryAndValues
   | ((options: SqliteDatabaseMigrationOptions) => QueryOrQueryAndValues);

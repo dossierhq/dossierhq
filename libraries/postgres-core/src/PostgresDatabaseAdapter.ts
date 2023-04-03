@@ -1,4 +1,6 @@
-import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter, DatabaseOptimizationOptions } from '@dossierhq/database-adapter';
+import type { PostgresTransaction } from './PostgresTransaction.js';
+import { withNestedTransaction, withRootTransaction } from './PostgresTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
@@ -39,8 +41,7 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
-import type { PostgresTransaction } from './PostgresTransaction.js';
-import { withNestedTransaction, withRootTransaction } from './PostgresTransaction.js';
+import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -48,6 +49,8 @@ import { publishedEntitySampleEntities } from './published-entity/sampleEntities
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
+
+export type PostgresDatabaseOptimizationOptions = DatabaseOptimizationOptions;
 
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
@@ -68,7 +71,7 @@ export interface PostgresDatabaseAdapter {
 
 export function createPostgresDatabaseAdapterAdapter(
   databaseAdapter: PostgresDatabaseAdapter
-): DatabaseAdapter {
+): DatabaseAdapter<PostgresDatabaseOptimizationOptions> {
   return {
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(databaseAdapter, ...args),
@@ -117,6 +120,7 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
+    managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),
     publishedEntitySampleEntities: (...args) =>

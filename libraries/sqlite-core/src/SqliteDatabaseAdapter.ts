@@ -1,6 +1,18 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type { Context, DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
+import type {
+  Context,
+  DatabaseAdapter,
+  DatabaseOptimizationOptions,
+  TransactionContext,
+} from '@dossierhq/database-adapter';
+import type { UniqueConstraint } from './DatabaseSchema.js';
+import { createInitializationContext } from './InitializationContext.js';
+import type { Database } from './QueryFunctions.js';
+import { queryOne, queryRun } from './QueryFunctions.js';
+import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
+import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
+import { withNestedTransaction, withRootTransaction } from './SqliteTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
@@ -41,20 +53,14 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
-import type { UniqueConstraint } from './DatabaseSchema.js';
-import { createInitializationContext } from './InitializationContext.js';
+import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
 import { publishedEntitySampleEntities } from './published-entity/sampleEntities.js';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
-import type { Database } from './QueryFunctions.js';
-import { queryOne, queryRun } from './QueryFunctions.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
-import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
-import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
-import { withNestedTransaction, withRootTransaction } from './SqliteTransaction.js';
 import { Mutex } from './utils/MutexUtils.js';
 
 export type ColumnValue = number | string | Uint8Array | null;
@@ -89,11 +95,19 @@ export interface SqliteDatabaseMigrationOptions {
   };
 }
 
+export interface SqliteDatabaseOptimizationOptions extends DatabaseOptimizationOptions {
+  fullTextSearchAdmin?: boolean;
+  fullTextSearchPublished?: boolean;
+}
+
 export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
   sqliteAdapter: SqliteDatabaseAdapter,
   options: SqliteDatabaseOptions
-): PromiseResult<DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<
+  DatabaseAdapter<SqliteDatabaseOptimizationOptions>,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const database: Database = { mutex: new Mutex(), adapter: sqliteAdapter };
 
   const outerAdapter = createOuterAdapter(database);
@@ -138,8 +152,11 @@ async function setJournalMode(
   return await queryRun(database, context, `PRAGMA journal_mode = ${journalMode}`, undefined);
 }
 
-function createOuterAdapter(database: Database): DatabaseAdapter {
+function createOuterAdapter(
+  database: Database
+): DatabaseAdapter<SqliteDatabaseOptimizationOptions> {
   return {
+    managementOptimize: (...args) => managementOptimize(database, ...args),
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(database, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(database, ...args),

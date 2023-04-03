@@ -245,7 +245,13 @@ export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePubl
   cursor: string;
 }
 
-export interface DatabaseAdapter {
+export interface DatabaseOptimizationOptions {
+  all?: boolean;
+}
+
+export interface DatabaseAdapter<
+  TOptimizationOptions extends DatabaseOptimizationOptions = DatabaseOptimizationOptions
+> {
   disconnect(): Promise<void>;
 
   withRootTransaction<TOk, TError extends ErrorType>(
@@ -259,6 +265,11 @@ export interface DatabaseAdapter {
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
+
+  managementOptimize(
+    context: TransactionContext,
+    options: TOptimizationOptions
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityArchivingGetEntityInfo(
     context: TransactionContext,

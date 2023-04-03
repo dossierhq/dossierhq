@@ -4,13 +4,14 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptimizationOptions,
   SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@dossierhq/sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'bun:sqlite';
 
-export type BunSqliteDatabaseAdapter = DatabaseAdapter;
+export type BunSqliteDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 export async function createBunSqliteAdapter(
   context: Context,

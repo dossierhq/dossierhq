@@ -483,6 +483,8 @@ async function main() {
     cloudinaryImageValueItems,
   });
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await server.shutdown();
 }
 

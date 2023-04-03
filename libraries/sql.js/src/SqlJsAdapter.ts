@@ -4,13 +4,14 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptimizationOptions,
   SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@dossierhq/sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'sql.js';
 
-export type SqlJsDatabaseAdapter = DatabaseAdapter;
+export type SqlJsDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 export async function createSqlJsAdapter(
   context: Context,

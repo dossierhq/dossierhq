@@ -9,9 +9,9 @@ export type {
   DatabaseAdminEntityHistoryGetVersionInfoPayload,
   DatabaseAdminEntityPayload,
   DatabaseAdminEntityPublishGetVersionInfoPayload,
+  DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntityPublishingCreateEventArg,
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
-  DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntitySearchPayload,
   DatabaseAdminEntitySearchPayloadEntity,
   DatabaseAdminEntityUniqueIndexArg,
@@ -24,6 +24,7 @@ export type {
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
+  DatabaseOptimizationOptions,
   DatabasePagingInfo,
   DatabasePublishedEntityGetOnePayload,
   DatabasePublishedEntityPayload,
@@ -34,11 +35,11 @@ export type {
 } from './DatabaseAdapter.js';
 export type { ResolvedAuthKey, Session } from './Session.js';
 export {
+  DEFAULT,
   buildPostgresSqlQuery,
   buildSqliteSqlQuery,
   createPostgresSqlQuery,
   createSqliteSqlQuery,
-  DEFAULT,
   type PostgresQueryBuilder,
   type SqliteQueryBuilder,
 } from './SqlQueryBuilder.js';

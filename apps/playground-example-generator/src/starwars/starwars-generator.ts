@@ -227,6 +227,8 @@ async function main() {
   await createVehicles(adminClient);
   await createFilms(adminClient);
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await server.shutdown();
 }
 

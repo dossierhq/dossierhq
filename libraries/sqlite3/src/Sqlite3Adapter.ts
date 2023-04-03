@@ -4,6 +4,7 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptimizationOptions,
   SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@dossierhq/sqlite-core';
@@ -12,7 +13,7 @@ import { randomUUID } from 'node:crypto';
 import type { Database } from 'sqlite3';
 import { closeDatabase, queryAll, queryRun } from './SqliteUtils.js';
 
-export type Sqlite3DatabaseAdapter = DatabaseAdapter;
+export type Sqlite3DatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 interface Sqlite3Error {
   code: 'SQLITE_CONSTRAINT';

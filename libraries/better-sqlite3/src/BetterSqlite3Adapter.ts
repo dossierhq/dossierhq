@@ -4,6 +4,7 @@ import type {
   Context,
   DatabaseAdapter,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptimizationOptions,
   SqliteDatabaseOptions,
   UniqueConstraint,
 } from '@dossierhq/sqlite-core';
@@ -11,7 +12,7 @@ import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'better-sqlite3';
 import { randomUUID } from 'node:crypto';
 
-export type BetterSqlite3DatabaseAdapter = DatabaseAdapter;
+export type BetterSqlite3DatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 interface SqliteError extends Error {
   code: string;

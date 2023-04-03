@@ -87,6 +87,8 @@ async function main() {
     await createBlogPost(adminClient, persons, images);
   }
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await server.shutdown();
 }
 

@@ -4,5 +4,6 @@ export { createSqliteDatabaseAdapterAdapter } from './SqliteDatabaseAdapter.js';
 export type {
   ColumnValue,
   SqliteDatabaseAdapter,
+  SqliteDatabaseOptimizationOptions,
   SqliteDatabaseOptions,
 } from './SqliteDatabaseAdapter.js';

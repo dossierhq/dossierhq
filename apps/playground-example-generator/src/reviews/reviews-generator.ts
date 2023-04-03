@@ -154,6 +154,8 @@ async function main() {
     await createPersonalNote(bobAdminClient, faker.helpers.arrayElement(placesOfBusiness), 'Bob');
   }
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await server.shutdown();
 }
 

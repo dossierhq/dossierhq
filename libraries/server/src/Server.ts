@@ -13,9 +13,10 @@ import type {
   PublishedSchema,
   Result,
 } from '@dossierhq/core';
-import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok } from '@dossierhq/core';
+import { AdminSchema, NoOpLogger, assertIsDefined, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
+  DatabaseOptimizationOptions,
   DatabasePerformanceCallbacks,
   Session,
 } from '@dossierhq/database-adapter';
@@ -32,8 +33,15 @@ export interface CreateSessionPayload {
   context: SessionContext;
 }
 
-export interface Server {
+export interface Server<
+  TDatabaseOptimizationOptions extends DatabaseOptimizationOptions = DatabaseOptimizationOptions
+> {
   shutdown(): PromiseResult<void, typeof ErrorType.Generic>;
+
+  optimizeDatabase(
+    options: TDatabaseOptimizationOptions
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
   createSession(params: {
     provider: string;
     identifier: string;
@@ -41,10 +49,12 @@ export interface Server {
     logger: Logger | null;
     databasePerformance: DatabasePerformanceCallbacks | null;
   }): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
   createAdminClient<TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[]
   ): TClient;
+
   createPublishedClient<
     TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
   >(
@@ -132,15 +142,17 @@ export class ServerImpl {
   }
 }
 
-export async function createServer({
+export async function createServer<
+  TDatabaseOptimizationOptions extends DatabaseOptimizationOptions
+>({
   databaseAdapter,
   authorizationAdapter,
   logger: serverLogger,
 }: {
-  databaseAdapter: DatabaseAdapter;
+  databaseAdapter: DatabaseAdapter<TDatabaseOptimizationOptions>;
   authorizationAdapter: AuthorizationAdapter;
   logger?: Logger;
-}): PromiseResult<Server, typeof ErrorType.Generic> {
+}): PromiseResult<Server<TDatabaseOptimizationOptions>, typeof ErrorType.Generic> {
   const serverImpl = new ServerImpl({
     databaseAdapter,
     logger: serverLogger,
@@ -148,10 +160,16 @@ export async function createServer({
   const loadSchemaResult = await serverImpl.reloadSchema(serverImpl.createInternalContext(null));
   if (loadSchemaResult.isError()) return loadSchemaResult;
 
-  const server: Server = {
+  const server: Server<TDatabaseOptimizationOptions> = {
     shutdown() {
       return serverImpl.shutdown();
     },
+
+    optimizeDatabase(options) {
+      const managementContext = serverImpl.createInternalContext(null);
+      return databaseAdapter.managementOptimize(managementContext, options);
+    },
+
     createSession: async ({
       provider,
       identifier,
@@ -182,6 +200,7 @@ export async function createServer({
 
       return ok({ principalEffect, context: contextResult.value });
     },
+
     createAdminClient: <TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: AdminClientMiddleware<SessionContext>[]
@@ -193,6 +212,7 @@ export async function createServer({
         serverImpl,
         middleware: middleware ?? [],
       }) as TClient,
+
     createPublishedClient: <
       TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
     >(

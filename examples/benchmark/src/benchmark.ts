@@ -11,7 +11,7 @@ import type {
   Result,
 } from '@dossierhq/core';
 import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@dossierhq/server';
+import type { DatabaseAdapter, Server } from '@dossierhq/server';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
 import { initializeServer } from './server.js';
@@ -363,10 +363,13 @@ async function runTests(
   runName: string,
   variant: string,
   tsvFilename: string,
+  server: Server,
   adminClient: AdminClient
 ) {
   const warmup = 30;
   const iterations = 1_000;
+
+  (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
     testCreateEntities(adminClient, {
@@ -380,6 +383,8 @@ async function runTests(
     tsvFilename
   );
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await report(
     testCreateOrganizationEntities(adminClient, {
       testName: 'create entity organization',
@@ -391,6 +396,8 @@ async function runTests(
     `${runName}-${variant}-create-entity-organization`,
     tsvFilename
   );
+
+  (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
     testCreatePersonEntities(adminClient, {
@@ -404,6 +411,8 @@ async function runTests(
     tsvFilename
   );
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await report(
     testCreateAndPublishEntity(adminClient, {
       testName: 'create and publish entity',
@@ -415,6 +424,8 @@ async function runTests(
     `${runName}-${variant}-create-publish-entity`,
     tsvFilename
   );
+
+  (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
     testEditEntity(adminClient, {
@@ -428,6 +439,8 @@ async function runTests(
     tsvFilename
   );
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await report(
     testArchiveEntity(adminClient, {
       testName: 'archive entity',
@@ -440,6 +453,8 @@ async function runTests(
     tsvFilename
   );
 
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
   await report(
     testGetAdminEntity(adminClient, {
       testName: 'get admin entity',
@@ -451,6 +466,8 @@ async function runTests(
     `${runName}-${variant}-get-admin-entity`,
     tsvFilename
   );
+
+  (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
     testSearchAdminEntitiesAnyFirst50(adminClient, {
@@ -501,7 +518,7 @@ export async function initializeAndRunTests({
     const adminClient = server.createAdminClient(sessionResult.value.context);
 
     const tsvFilename = isCI ? 'ci-benchmark.tsv' : 'local-benchmark.tsv';
-    await runTests(runName, variant, tsvFilename, adminClient);
+    await runTests(runName, variant, tsvFilename, server, adminClient);
   } finally {
     await server.shutdown();
   }
