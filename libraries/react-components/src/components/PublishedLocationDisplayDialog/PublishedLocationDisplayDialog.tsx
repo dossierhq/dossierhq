@@ -66,7 +66,10 @@ function Content({
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    { actions: [new SearchEntityStateActions.SetSampling({ count: 100 }, false)] },
+    {
+      mode: 'published',
+      actions: [new SearchEntityStateActions.SetSampling({ count: 100 }, false)],
+    },
     initializeSearchEntityState
   );
 

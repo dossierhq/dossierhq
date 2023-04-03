@@ -69,7 +69,7 @@ function reduceSearchEntityStateActions(
 
 describe('initializeSearchEntityState', () => {
   test('default', () => {
-    expect(initializeSearchEntityState({})).toMatchInlineSnapshot(`
+    expect(initializeSearchEntityState({ mode: 'admin' })).toMatchInlineSnapshot(`
       {
         "connection": undefined,
         "connectionError": undefined,
@@ -78,9 +78,11 @@ describe('initializeSearchEntityState', () => {
         "entitySamples": undefined,
         "entitySamplesError": undefined,
         "loadingState": "",
+        "mode": "admin",
         "paging": {},
         "query": {
-          "order": "name",
+          "order": "updatedAt",
+          "reverse": true,
         },
         "requestedCount": 25,
         "restrictEntityTypes": [],
@@ -94,7 +96,7 @@ describe('initializeSearchEntityState', () => {
   });
 
   test('restrict entity types', () => {
-    expect(initializeSearchEntityState({ restrictEntityTypes: ['Foo', 'Bar'] }))
+    expect(initializeSearchEntityState({ mode: 'admin', restrictEntityTypes: ['Foo', 'Bar'] }))
       .toMatchInlineSnapshot(`
         {
           "connection": undefined,
@@ -104,13 +106,15 @@ describe('initializeSearchEntityState', () => {
           "entitySamples": undefined,
           "entitySamplesError": undefined,
           "loadingState": "",
+          "mode": "admin",
           "paging": {},
           "query": {
             "entityTypes": [
               "Foo",
               "Bar",
             ],
-            "order": "name",
+            "order": "updatedAt",
+            "reverse": true,
           },
           "requestedCount": 25,
           "restrictEntityTypes": [
@@ -127,13 +131,13 @@ describe('initializeSearchEntityState', () => {
   });
 
   test('restrict linksFrom', () => {
-    const state = initializeSearchEntityState({ restrictLinksFrom: { id: '123' } });
+    const state = initializeSearchEntityState({ mode: 'admin', restrictLinksFrom: { id: '123' } });
     expect(state).toMatchSnapshot();
     expect(state.query.linksFrom).toEqual({ id: '123' });
   });
 
   test('restrict linksTo', () => {
-    const state = initializeSearchEntityState({ restrictLinksTo: { id: '123' } });
+    const state = initializeSearchEntityState({ mode: 'admin', restrictLinksTo: { id: '123' } });
     expect(state).toMatchSnapshot();
     expect(state.query.linksTo).toEqual({ id: '123' });
   });
@@ -143,6 +147,7 @@ describe('SearchEntityStateActions.SetQuery', () => {
   test('Resets sampling if setting order', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [new SearchEntityStateActions.SetSampling({}, true)],
       }),
       new SearchEntityStateActions.SetQuery(
@@ -158,16 +163,17 @@ describe('SearchEntityStateActions.SetQuery', () => {
   test('Resets paging (when configured)', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [
           new SearchEntityStateActions.SetPaging({ after: 'cursor', first: 10 }, 'next-page'),
         ],
       }),
       new SearchEntityStateActions.SetQuery(
-        { order: AdminQueryOrder.updatedAt },
+        { order: AdminQueryOrder.name, reverse: false },
         { partial: true, resetPagingIfModifying: true }
       )
     );
-    expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
+    expect(state.query).toEqual({ order: AdminQueryOrder.name, reverse: false });
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
   });
@@ -175,6 +181,7 @@ describe('SearchEntityStateActions.SetQuery', () => {
   test('Does not reset paging when changing bounding box and not sampling', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [new SearchEntityStateActions.SetSampling({ count: 10, seed: 123 }, false)],
       }),
       new SearchEntityStateActions.SetQuery(
@@ -193,7 +200,7 @@ describe('SearchEntityStateActions.SetQuery', () => {
 describe('SearchEntityStateActions.SetPaging', () => {
   test('Empty paging', () => {
     const state = reduceSearchEntityState(
-      initializeSearchEntityState({}),
+      initializeSearchEntityState({ mode: 'admin' }),
       new SearchEntityStateActions.SetPaging({})
     );
     expect(state.paging).toEqual({});
@@ -203,6 +210,7 @@ describe('SearchEntityStateActions.SetPaging', () => {
   test('Resets sampling', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [new SearchEntityStateActions.SetSampling({}, true)],
       }),
       new SearchEntityStateActions.SetPaging({})
@@ -215,7 +223,7 @@ describe('SearchEntityStateActions.SetPaging', () => {
 describe('SearchEntityStateActions.SetSampling', () => {
   test('Empty sampling', () => {
     const state = reduceSearchEntityState(
-      initializeSearchEntityState({}),
+      initializeSearchEntityState({ mode: 'admin' }),
       new SearchEntityStateActions.SetSampling({}, true)
     );
     expect(state.sampling).toEqual({ seed: expect.any(Number) });
@@ -225,6 +233,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
   test('Resets paging', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [new SearchEntityStateActions.SetPaging({ first: 200 })],
       }),
       new SearchEntityStateActions.SetSampling({}, true)
@@ -236,6 +245,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
   test('Resets order', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [
           new SearchEntityStateActions.SetQuery(
             { order: AdminQueryOrder.updatedAt },
@@ -252,6 +262,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
   test('Partial count, keeps seed', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({
+        mode: 'admin',
         actions: [new SearchEntityStateActions.SetSampling({ seed: 123 }, false)],
       }),
       new SearchEntityStateActions.SetSampling({ count: 100 }, true)
@@ -264,6 +275,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
 describe('SearchEntityState scenarios', () => {
   test('Next page -> loading -> loaded', () => {
     const initialState = initializeSearchEntityState({
+      mode: 'admin',
       actions: [
         new SearchEntityStateActions.SetPaging({ first: 1 }),
         new SearchEntityStateActions.UpdateSearchResult(
@@ -298,6 +310,7 @@ describe('SearchEntityState scenarios', () => {
 
   test('Sampling -> change seed -> loading -> loaded', () => {
     const initialState = initializeSearchEntityState({
+      mode: 'admin',
       actions: [
         new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
         new SearchEntityStateActions.UpdateSampleResult(
@@ -331,6 +344,7 @@ describe('SearchEntityState scenarios', () => {
 
   test('From searching -> set sampling -> loading -> loaded', () => {
     const initialState = initializeSearchEntityState({
+      mode: 'admin',
       actions: [
         new SearchEntityStateActions.SetPaging({ first: 1 }),
         new SearchEntityStateActions.UpdateSearchResult(
@@ -367,6 +381,7 @@ describe('SearchEntityState scenarios', () => {
 
   test('From sampling -> set paging -> loading -> loaded', () => {
     const initialState = initializeSearchEntityState({
+      mode: 'admin',
       actions: [
         new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
         new SearchEntityStateActions.UpdateSampleResult(
@@ -403,6 +418,7 @@ describe('SearchEntityState scenarios', () => {
 
   test('Refresh', () => {
     const initialState = initializeSearchEntityState({
+      mode: 'admin',
       actions: [
         new SearchEntityStateActions.SetPaging({ first: 1 }),
         new SearchEntityStateActions.UpdateSearchResult(

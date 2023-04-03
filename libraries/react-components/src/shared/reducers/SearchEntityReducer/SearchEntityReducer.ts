@@ -1,26 +1,38 @@
-import type {
-  AdminEntity,
-  AdminSearchQuery,
-  Connection,
-  Edge,
-  EntityReference,
-  EntitySamplingOptions,
-  EntitySamplingPayload,
-  ErrorResult,
-  ErrorType,
-  Paging,
-  PublishedEntity,
+import {
   PublishedQueryOrder,
-  PublishedSearchQuery,
-  Result,
+  type AdminEntity,
+  type AdminSearchQuery,
+  type Connection,
+  type Edge,
+  type EntityReference,
+  type EntitySamplingOptions,
+  type EntitySamplingPayload,
+  type ErrorResult,
+  type ErrorType,
+  type Paging,
+  type PublishedEntity,
+  type PublishedSearchQuery,
+  type Result,
 } from '@dossierhq/core';
 import { AdminQueryOrder, getPagingInfo, ok } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
-const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name;
-const defaultRequestedCount = 25;
+const DEFAULT_VALUES = {
+  admin: {
+    order: AdminQueryOrder.updatedAt,
+    reverse: true,
+    requestedCount: 25,
+  },
+  published: {
+    order: PublishedQueryOrder.name,
+    reverse: false,
+    requestedCount: 25,
+  },
+} as const;
 
 export interface SearchEntityState {
+  mode: 'admin' | 'published';
+
   restrictEntityTypes: string[];
   restrictLinksFrom: EntityReference | null;
   restrictLinksTo: EntityReference | null;
@@ -52,24 +64,28 @@ export interface SearchEntityStateAction {
 }
 
 export function initializeSearchEntityState({
+  mode,
   actions,
   restrictEntityTypes,
   restrictLinksFrom,
   restrictLinksTo,
 }: {
+  mode: 'admin' | 'published';
   actions?: SearchEntityStateAction[];
   restrictEntityTypes?: string[];
   restrictLinksFrom?: EntityReference;
   restrictLinksTo?: EntityReference;
 }): SearchEntityState {
+  const defaultValues = DEFAULT_VALUES[mode];
   let state: SearchEntityState = {
+    mode,
     restrictEntityTypes: restrictEntityTypes ?? [],
     restrictLinksFrom: restrictLinksFrom ?? null,
     restrictLinksTo: restrictLinksTo ?? null,
     query: {},
     paging: {},
     sampling: undefined,
-    requestedCount: defaultRequestedCount,
+    requestedCount: defaultValues.requestedCount,
     text: '',
     connection: undefined,
     connectionError: undefined,
@@ -229,7 +245,9 @@ class SetQueryAction implements SearchEntityStateAction {
 
     if (paging) {
       if (!query.order) {
-        query.order = defaultOrder;
+        const defaultValues = DEFAULT_VALUES[state.mode];
+        query.order = defaultValues.order;
+        query.reverse = defaultValues.reverse;
       }
     } else {
       delete query.order;
@@ -354,12 +372,15 @@ export const SearchEntityStateActions = {
 };
 
 export function getQueryWithoutDefaults(
+  mode: 'admin' | 'published',
   query: AdminSearchQuery | PublishedSearchQuery
 ): AdminSearchQuery | PublishedSearchQuery {
   let changed = false;
   const newQuery = { ...query };
-  if (query.order === defaultOrder) {
+  const defaultValues = DEFAULT_VALUES[mode];
+  if (query.order === defaultValues.order && query.reverse === defaultValues.reverse) {
     delete newQuery.order;
+    delete newQuery.reverse;
     changed = true;
   }
   if (query.reverse === false) {

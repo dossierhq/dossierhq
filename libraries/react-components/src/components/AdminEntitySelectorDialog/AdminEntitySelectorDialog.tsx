@@ -79,7 +79,12 @@ function Content({
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    { restrictEntityTypes: entityTypes, restrictLinksFrom: linksFrom, restrictLinksTo: linksTo },
+    {
+      mode: 'admin',
+      restrictEntityTypes: entityTypes,
+      restrictLinksFrom: linksFrom,
+      restrictLinksTo: linksTo,
+    },
     initializeSearchEntityState
   );
 

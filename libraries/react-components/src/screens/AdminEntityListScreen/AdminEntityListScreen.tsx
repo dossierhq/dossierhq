@@ -41,7 +41,7 @@ export function AdminEntityListScreen({
   const { schema } = useContext(AdminDossierContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    urlSearchParams,
+    { mode: 'admin', urlSearchParams },
     initializeSearchEntityStateFromUrlQuery
   );
 
@@ -71,6 +71,7 @@ export function AdminEntityListScreen({
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
+    'admin',
     urlSearchParams,
     onUrlSearchParamsChange,
     searchEntityState,

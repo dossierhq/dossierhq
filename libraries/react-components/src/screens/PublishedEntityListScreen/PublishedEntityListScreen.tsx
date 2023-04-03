@@ -38,7 +38,7 @@ export function PublishedEntityListScreen({
   const { schema } = useContext(PublishedDossierContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    urlSearchParams,
+    { mode: 'published', urlSearchParams },
     initializeSearchEntityStateFromUrlQuery
   );
 
@@ -67,6 +67,7 @@ export function PublishedEntityListScreen({
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
+    'published',
     urlSearchParams,
     onUrlSearchParamsChange,
     searchEntityState,

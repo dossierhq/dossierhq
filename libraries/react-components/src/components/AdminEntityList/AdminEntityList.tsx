@@ -153,11 +153,17 @@ function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
   order: AdminQueryOrder | PublishedQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: AdminQueryOrder
+  headerOrder: AdminQueryOrder | PublishedQueryOrder
 ) {
   let newReverse = false;
   if (order === headerOrder) {
     newReverse = !reverse;
+  } else if (
+    headerOrder === AdminQueryOrder.updatedAt ||
+    headerOrder === AdminQueryOrder.createdAt
+  ) {
+    // Default to descending order for dates
+    newReverse = true;
   }
   dispatchSearchEntityState(
     new SearchEntityStateActions.SetQuery(

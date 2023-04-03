@@ -111,7 +111,7 @@ function Content({
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    { actions: [new SearchEntityStateActions.SetSampling({ count: 100 }, false)] },
+    { mode: 'admin', actions: [new SearchEntityStateActions.SetSampling({ count: 100 }, false)] },
     initializeSearchEntityState
   );
 

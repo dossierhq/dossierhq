@@ -15,11 +15,15 @@ interface Params {
   paging: Paging | undefined;
 }
 
-export function initializeSearchEntityStateFromUrlQuery(
-  urlSearchParams: Readonly<URLSearchParams> | undefined
-): SearchEntityState {
+export function initializeSearchEntityStateFromUrlQuery({
+  mode,
+  urlSearchParams,
+}: {
+  mode: SearchEntityState['mode'];
+  urlSearchParams: Readonly<URLSearchParams> | undefined;
+}): SearchEntityState {
   const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
-  return initializeSearchEntityState({ actions });
+  return initializeSearchEntityState({ mode, actions });
 }
 
 function urlQueryToSearchEntityStateActions(
@@ -50,6 +54,7 @@ function urlQueryToSearchEntityStateActions(
 }
 
 export function useSynchronizeUrlQueryAndSearchEntityState(
+  mode: 'admin' | 'published',
   urlSearchParams: Readonly<URLSearchParams> | undefined,
   onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
   searchEntityState: SearchEntityState,
@@ -59,7 +64,7 @@ export function useSynchronizeUrlQueryAndSearchEntityState(
   useEffect(() => {
     if (!onUrlSearchParamsChange || !urlSearchParams) return;
     const params: Params = {
-      query: getQueryWithoutDefaults(query),
+      query: getQueryWithoutDefaults(mode, query),
       paging,
       sampling,
     };
