@@ -4,21 +4,29 @@ import type { Context } from '@dossierhq/database-adapter';
 
 export class Mutex {
   #locking: Promise<void>;
-  #locked: boolean;
+  #queueCount: number;
 
   constructor() {
     this.#locking = Promise.resolve();
-    this.#locked = false;
+    this.#queueCount = 0;
   }
 
   #lock() {
-    this.#locked = true;
+    this.#queueCount++;
     let unlockNext: (value: void) => void;
+
     const willLock: Promise<void> = new Promise((resolve) => (unlockNext = resolve));
-    willLock.then(() => (this.#locked = false));
+    willLock.then(() => this.#queueCount--);
+
     const willUnlock: Promise<() => void> = this.#locking.then(() => unlockNext);
+
     this.#locking = this.#locking.then(() => willLock);
+
     return willUnlock;
+  }
+
+  isLocked(): boolean {
+    return this.#queueCount > 0;
   }
 
   async withLock<TOk, TError extends ErrorType>(
