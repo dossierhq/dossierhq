@@ -17,8 +17,8 @@ export async function managementRevalidateGetNextEntity(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields`;
-  sql`FROM entities e, entity_versions ev WHERE e.revalidate AND e.latest_entity_versions_id = ev.id`;
+  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data`;
+  sql`FROM entities e, entity_versions ev WHERE e.revalidate AND e.latest_draft_entity_versions_id = ev.id`;
   sql`LIMIT 1`;
 
   const result = await queryNoneOrOne<
