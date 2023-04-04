@@ -81,6 +81,10 @@ export interface DatabaseAdminEntityGetOnePayload extends DatabaseAdminEntityPay
   resolvedAuthKey: string;
 }
 
+export interface DatabaseAdminEntityWithResolvedReferencePayload
+  extends DatabaseAdminEntityPayload,
+    DatabaseResolvedEntityReference {}
+
 export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
   extends DatabaseResolvedEntityReference {
   id: string;
@@ -267,11 +271,6 @@ export interface DatabaseAdapter<
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
-
-  managementOptimize(
-    context: TransactionContext,
-    options: TOptimizationOptions
-  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityArchivingGetEntityInfo(
     context: TransactionContext,
@@ -474,6 +473,24 @@ export interface DatabaseAdapter<
     provider: string,
     identifier: string
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
+
+  managementOptimize(
+    context: TransactionContext,
+    options: TOptimizationOptions
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  managementRevalidateGetNextEntity(
+    context: TransactionContext
+  ): PromiseResult<
+    DatabaseAdminEntityWithResolvedReferencePayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
+
+  managementRevalidateUpdateEntity(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    valid: boolean
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   publishedEntityGetOne(
     context: TransactionContext,

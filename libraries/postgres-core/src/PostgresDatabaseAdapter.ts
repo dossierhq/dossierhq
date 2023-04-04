@@ -42,6 +42,8 @@ import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
 import { managementOptimize } from './management/optimize.js';
+import { managementRevalidateGetNextEntity } from './management/revalidateGetNextEntity.js';
+import { managementRevalidateUpdateEntity } from './management/revalidateUpdateEntity.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -121,6 +123,10 @@ export function createPostgresDatabaseAdapterAdapter(
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
     managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),
+    managementRevalidateGetNextEntity: (...args) =>
+      managementRevalidateGetNextEntity(databaseAdapter, ...args),
+    managementRevalidateUpdateEntity: (...args) =>
+      managementRevalidateUpdateEntity(databaseAdapter, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),
     publishedEntitySampleEntities: (...args) =>

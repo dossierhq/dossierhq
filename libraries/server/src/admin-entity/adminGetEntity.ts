@@ -28,18 +28,14 @@ export async function adminGetEntity(
   | typeof ErrorType.Generic
 > {
   const getResult = await databaseAdapter.adminEntityGetOne(context, reference);
-  if (getResult.isError()) {
-    return getResult;
-  }
+  if (getResult.isError()) return getResult;
   const entityValues = getResult.value;
 
   const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
     authKey: entityValues.authKey,
     resolvedAuthKey: entityValues.resolvedAuthKey,
   });
-  if (authResult.isError()) {
-    return authResult;
-  }
+  if (authResult.isError()) return authResult;
 
   const entity = decodeAdminEntity(schema, entityValues);
 

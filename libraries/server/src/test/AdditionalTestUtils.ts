@@ -134,6 +134,8 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     authCreateSession: vi.fn(),
     disconnect: vi.fn(),
     managementOptimize: vi.fn(),
+    managementRevalidateGetNextEntity: vi.fn(),
+    managementRevalidateUpdateEntity: vi.fn(),
     publishedEntityGetOne: vi.fn(),
     publishedEntityGetEntities: vi.fn(),
     publishedEntitySampleEntities: vi.fn(),

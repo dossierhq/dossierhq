@@ -27,6 +27,7 @@ import { InternalContextImpl, SessionContextImpl } from './Context.js';
 import { getSchemaSpecification } from './Schema.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
+import { managementRevalidateEntity } from './management/managementRevalidateEntity.js';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';
@@ -41,6 +42,11 @@ export interface Server<
   optimizeDatabase(
     options: TDatabaseOptimizationOptions
   ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  revalidateNextEntity(): PromiseResult<
+    { id: string; valid: boolean } | null,
+    typeof ErrorType.Generic
+  >;
 
   createSession(params: {
     provider: string;
@@ -168,6 +174,15 @@ export async function createServer<
     optimizeDatabase(options) {
       const managementContext = serverImpl.createInternalContext(null);
       return databaseAdapter.managementOptimize(managementContext, options);
+    },
+
+    revalidateNextEntity() {
+      const managementContext = serverImpl.createInternalContext(null);
+      return managementRevalidateEntity(
+        serverImpl.getAdminSchema(),
+        databaseAdapter,
+        managementContext
+      );
     },
 
     createSession: async ({

@@ -25,8 +25,9 @@ import type {
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
-  assertIsDefined,
   FieldType,
+  ItemTraverseNodeType,
+  assertIsDefined,
   isEntityItemField,
   isFieldValueEqual,
   isLocationItemField,
@@ -39,7 +40,6 @@ import {
   isStringItemField,
   isValueItemField,
   isValueItemItemField,
-  ItemTraverseNodeType,
   normalizeEntityFields,
   notOk,
   ok,
@@ -53,8 +53,8 @@ import type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { SessionContext } from './Context.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import { transformRichText } from './utils/RichTextTransformer.js';
 
@@ -344,7 +344,7 @@ export function resolveUpdateEntity(
 export async function encodeAdminEntity(
   schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
+  context: TransactionContext,
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
@@ -662,7 +662,7 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
 
 async function resolveRequestedEntityReferences(
   databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
+  context: TransactionContext,
   requestedReferences: RequestedReference[]
 ): PromiseResult<
   DatabaseResolvedEntityReference[],
