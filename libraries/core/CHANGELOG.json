@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.2.10",
+      "tag": "@dossierhq/core_v0.2.10",
+      "date": "Tue, 04 Apr 2023 09:26:20 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Move entity info validation to core and validate name and version"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.9",
       "tag": "@dossierhq/core_v0.2.9",
       "date": "Mon, 27 Mar 2023 13:49:59 GMT",

@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/postgres-core
 
-This log was last generated on Mon, 27 Mar 2023 13:49:59 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Apr 2023 09:26:20 GMT and should not be manually modified.
+
+## 0.2.10
+Tue, 04 Apr 2023 09:26:20 GMT
+
+### Updates
+
+- Support optimizing db (currently a no-op)
 
 ## 0.2.9
 Mon, 27 Mar 2023 13:49:59 GMT

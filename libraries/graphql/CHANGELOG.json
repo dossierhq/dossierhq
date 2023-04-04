@@ -2,6 +2,12 @@
   "name": "@dossierhq/graphql",
   "entries": [
     {
+      "version": "0.2.10",
+      "tag": "@dossierhq/graphql_v0.2.10",
+      "date": "Tue, 04 Apr 2023 09:26:20 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.2.9",
       "tag": "@dossierhq/graphql_v0.2.9",
       "date": "Mon, 27 Mar 2023 13:49:59 GMT",
