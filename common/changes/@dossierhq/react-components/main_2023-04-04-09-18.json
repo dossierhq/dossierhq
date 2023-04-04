@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Default to order entities by updatedAt (reversed) for admin",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

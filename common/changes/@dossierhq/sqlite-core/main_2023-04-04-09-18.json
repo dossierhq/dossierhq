@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite-core",
+      "comment": "Support optimizing db (fts)",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite-core"
+}
