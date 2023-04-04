@@ -1,4 +1,5 @@
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { PostgresDatabaseOptimizationOptions } from '@dossierhq/postgres-core';
 import type { PostgresDatabaseAdapter, PostgresTransaction } from '@dossierhq/postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@dossierhq/postgres-core';
 import type { PoolClient, PoolConfig } from 'pg';
@@ -16,7 +17,7 @@ PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PgTypes.setTypeParser(1016 as any, (value) => PgTypes.arrayParser(value, BigInt));
 
-export type PgDatabaseAdapter = DatabaseAdapter;
+export type PgDatabaseAdapter = DatabaseAdapter<PostgresDatabaseOptimizationOptions>;
 
 interface TransactionWrapper extends PostgresTransaction {
   client: PoolClient;

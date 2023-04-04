@@ -1,6 +1,7 @@
 import type { DatabaseAdapter } from "@dossierhq/database-adapter";
 import type {
   PostgresDatabaseAdapter,
+  PostgresDatabaseOptimizationOptions,
   PostgresTransaction,
 } from "@dossierhq/postgres-core";
 import { createPostgresDatabaseAdapterAdapter } from "@dossierhq/postgres-core";
@@ -12,13 +13,19 @@ interface TransactionWrapper extends PostgresTransaction {
   client: PoolClient;
 }
 
+export type DenoPostgresDatabaseAdapter = DatabaseAdapter<
+  PostgresDatabaseOptimizationOptions
+>;
+
 const textDecoder = new TextDecoder("utf-8");
 
 function getTransaction(transaction: PostgresTransaction): PoolClient {
   return (transaction as TransactionWrapper).client;
 }
 
-export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
+export function createPostgresAdapter(
+  databaseUrl: string,
+): DenoPostgresDatabaseAdapter {
   const pool = new Pool(databaseUrl, 4, true);
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
