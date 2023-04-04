@@ -137,9 +137,7 @@ export async function adminEntityUpdateEntity(
       }
     );
 
-    if (nameResult.isError()) {
-      return nameResult;
-    }
+    if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
   }
 
@@ -152,15 +150,15 @@ export async function adminEntityUpdateEntity(
       latest_fts = to_tsvector($2),
       updated_at = NOW(),
       updated = nextval('entities_updated_seq'),
-      status = $3
+      status = $3,
+      valid = TRUE,
+      revalidate = FALSE
     WHERE id = $4
     RETURNING updated_at`,
       values: [versionsId, entity.fullTextSearchText, entity.status, entity.entityInternalId],
     }
   );
-  if (updateEntityResult.isError()) {
-    return updateEntityResult;
-  }
+  if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;
 
   const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(

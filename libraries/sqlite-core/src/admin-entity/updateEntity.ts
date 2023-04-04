@@ -45,9 +45,8 @@ export async function adminEntityUpdateGetEntityInfo(
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
@@ -99,9 +98,7 @@ export async function adminEntityUpdateEntity(
       JSON.stringify(entity.fieldValues),
     ],
   });
-  if (createVersionResult.isError()) {
-    return createVersionResult;
-  }
+  if (createVersionResult.isError()) return createVersionResult;
   const { id: versionsId } = createVersionResult.value;
 
   let newName = entity.name;
@@ -135,9 +132,7 @@ export async function adminEntityUpdateEntity(
       }
     );
 
-    if (nameResult.isError()) {
-      return nameResult;
-    }
+    if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
   }
 
@@ -149,7 +144,9 @@ export async function adminEntityUpdateEntity(
              latest_entity_versions_id = ?1,
              updated_at = ?2,
              updated_seq = ?3,
-             status = ?4
+             status = ?4,
+             valid = TRUE,
+             revalidate = FALSE
            WHERE id = ?5`,
     values: [
       versionsId,
@@ -159,9 +156,7 @@ export async function adminEntityUpdateEntity(
       entity.entityInternalId as number,
     ],
   });
-  if (updateEntityResult.isError()) {
-    return updateEntityResult;
-  }
+  if (updateEntityResult.isError()) return updateEntityResult;
 
   const ftsResult = await queryRun(
     database,
