@@ -8,20 +8,9 @@ import {
 registerTestSuite(
   createSchemaTestSuite({
     before: async () => {
-      const { server } = (
-        await initializeIntegrationTestServer()
-      ).valueOrThrow();
-
-      const sessionResult = server.createSession({
-        provider: "test",
-        identifier: "id",
-        defaultAuthKeys: ["none"],
-        logger: null,
-        databasePerformance: null,
-      });
-      const client = server.createAdminClient(() => sessionResult);
-
-      return [{ client }, { server }];
+      const serverInit = (await initializeIntegrationTestServer())
+        .valueOrThrow();
+      return [serverInit, serverInit];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();
