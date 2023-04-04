@@ -20,7 +20,7 @@ export async function managementOptimize(
     );
     if (result.isError()) return result;
     const duration = performance.now() - start;
-    logger.info(`Finished optimizing admin full text search in ${duration}ms`);
+    logger.info(`Finished optimizing admin full text search in ${duration.toFixed(2)}ms`);
   }
 
   if (options.all || options.fullTextSearchPublished) {
@@ -33,7 +33,7 @@ export async function managementOptimize(
     );
     if (result.isError()) return result;
     const duration = performance.now() - start;
-    logger.info(`Finished optimizing published full text search in ${duration}ms`);
+    logger.info(`Finished optimizing published full text search in ${duration.toFixed(2)}ms`);
   }
 
   return ok(undefined);
