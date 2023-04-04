@@ -459,6 +459,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           version: { type: new GraphQLNonNull(GraphQLInt) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
           status: { type: new GraphQLNonNull(this.getOutputType('AdminEntityStatus')) },
+          valid: { type: new GraphQLNonNull(GraphQLBoolean) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
