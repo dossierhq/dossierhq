@@ -198,6 +198,12 @@ const VERSION_9: SchemaVersionDefinition[] = [
   'CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid)',
 ];
 
+const VERSION_10: SchemaVersionDefinition[] = [
+  'ALTER TABLE entities ADD COLUMN valid INTEGER NOT NULL DEFAULT TRUE',
+  'ALTER TABLE entities ADD COLUMN revalidate INTEGER NOT NULL DEFAULT FALSE',
+  'UPDATE entities SET revalidate = TRUE',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -209,6 +215,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_7,
   VERSION_8,
   VERSION_9,
+  VERSION_10,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

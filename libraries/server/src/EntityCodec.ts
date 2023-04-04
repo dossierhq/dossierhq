@@ -210,6 +210,7 @@ export function decodeAdminEntity(
       version: values.version,
       authKey: values.authKey,
       status: values.status,
+      valid: values.valid,
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
@@ -283,6 +284,7 @@ export function resolveUpdateEntity(
       version: entityInfo.version + 1,
       authKey: entityInfo.authKey,
       status,
+      valid: true,
       createdAt: entityInfo.createdAt,
       updatedAt: entityInfo.updatedAt,
     },
@@ -329,6 +331,7 @@ export function resolveUpdateEntity(
   if (!changed) {
     result.info.version = entityInfo.version;
     result.info.status = entityInfo.status;
+    result.info.valid = entityInfo.valid;
   }
 
   return ok({ changed, entity: result, entitySpec });

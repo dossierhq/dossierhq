@@ -31,6 +31,7 @@ describe('Admin adminUpdateEntity', () => {
           authKey: 'none',
           resolvedAuthKey: 'none',
           status: AdminEntityStatus.draft,
+          valid: true,
           version: 0,
           createdAt,
           updatedAt: createdAt,
@@ -69,6 +70,7 @@ describe('Admin adminUpdateEntity', () => {
           createdAt: createdAt,
           updatedAt: now,
           status: AdminEntityStatus.draft,
+          valid: true,
         },
         fields: {
           title: 'Updated title',

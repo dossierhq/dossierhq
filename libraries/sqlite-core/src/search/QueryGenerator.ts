@@ -8,7 +8,7 @@ import type {
   PublishedSearchQuery,
   Result,
 } from '@dossierhq/core';
-import { AdminQueryOrder, assertExhaustive, notOk, ok, PublishedQueryOrder } from '@dossierhq/core';
+import { AdminQueryOrder, PublishedQueryOrder, assertExhaustive, notOk, ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   ResolvedAuthKey,
@@ -34,6 +34,7 @@ export type SearchAdminEntitiesItem = Pick<
   | 'updated_at'
   | 'updated_seq'
   | 'status'
+  | 'valid'
 > &
   Pick<EntityVersionsTable, 'version' | 'fields'>;
 export type SearchPublishedEntitiesItem = Pick<
@@ -398,7 +399,7 @@ function addEntityQuerySelectColumn(
   if (published) {
     sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.latest_entity_versions_id FROM entities e`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e`;
   }
   if (query?.linksTo) {
     if (published) {

@@ -20,6 +20,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     updated_at: '2021-08-17T07:51:25.56Z',
     updated_seq: id,
     status: 'draft',
+    valid: 1,
     version: 0,
     fields: JSON.stringify({ title: 'Title' }),
   };
@@ -43,7 +44,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           26,
@@ -81,6 +82,7 @@ describe('adminEntitySearchEntities', () => {
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
               "version": 0,
             },
           ],
@@ -91,7 +93,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           26,
@@ -129,6 +131,7 @@ describe('adminEntitySearchEntities', () => {
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
               "version": 0,
             },
           ],
@@ -139,7 +142,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           1,
@@ -179,6 +182,7 @@ describe('adminEntitySearchEntities', () => {
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
               "version": 0,
             },
           ],
@@ -189,7 +193,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           1,

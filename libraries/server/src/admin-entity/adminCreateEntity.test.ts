@@ -57,6 +57,7 @@ describe('Admin adminCreateEntity', () => {
           createdAt: now,
           updatedAt: now,
           status: AdminEntityStatus.draft,
+          valid: true,
         },
         fields: {
           title: 'Title',

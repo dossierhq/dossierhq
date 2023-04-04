@@ -58,6 +58,7 @@ export async function adminEntitySearchEntities(
       updatedAt: it.updated_at,
       authKey: it.auth_key,
       status: resolveEntityStatus(it.status),
+      valid: it.valid,
       fieldValues: it.data,
       cursor: cursorExtractor(it),
     })),

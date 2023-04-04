@@ -36,10 +36,11 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -58,6 +59,7 @@ export async function adminEntityUpdateGetEntityInfo(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
+    valid,
     version,
     created_at: createdAt,
     updated_at: updatedAt,
@@ -71,6 +73,7 @@ export async function adminEntityUpdateGetEntityInfo(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
+    valid: !!valid,
     version,
     createdAt: new Date(createdAt),
     updatedAt: new Date(updatedAt),

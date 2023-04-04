@@ -41,6 +41,8 @@ export interface EntitiesTable {
   archived: boolean; // TODO remove and rely on status instead
   published_entity_versions_id: number | null;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
+  valid: boolean;
+  revalidate: boolean;
   auth_key: string;
   resolved_auth_key: string;
 }

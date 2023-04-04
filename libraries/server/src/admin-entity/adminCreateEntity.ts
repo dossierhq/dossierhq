@@ -91,6 +91,7 @@ export async function adminCreateEntity(
         ...createEntity.info,
         name,
         status: AdminEntityStatus.draft,
+        valid: true,
         version: 0,
         createdAt,
         updatedAt,

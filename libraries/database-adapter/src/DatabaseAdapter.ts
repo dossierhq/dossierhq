@@ -71,6 +71,7 @@ export interface DatabaseAdminEntityPayload {
   version: number;
   authKey: string;
   status: AdminEntityStatus;
+  valid: boolean;
   createdAt: Date;
   updatedAt: Date;
   fieldValues: Record<string, unknown>;
@@ -177,6 +178,7 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
+  valid: boolean;
   version: number;
   createdAt: Date;
   updatedAt: Date;
