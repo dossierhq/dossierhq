@@ -332,6 +332,10 @@ export function resolveUpdateEntity(
     result.info.version = entityInfo.version;
     result.info.status = entityInfo.status;
     result.info.valid = entityInfo.valid;
+
+    if (!result.info.valid) {
+      return notOk.BadRequest('No change to entity that is already invalid');
+    }
   }
 
   return ok({ changed, entity: result, entitySpec });
