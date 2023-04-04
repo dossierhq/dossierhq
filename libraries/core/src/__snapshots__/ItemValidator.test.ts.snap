@@ -73,6 +73,77 @@ exports[`Validate entity > Fail: rich text text node with line break 1`] = `
 ]
 `;
 
+exports[`validateEntityInfo > authKey not matching pattern 1`] = `
+{
+  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(none|subject)$)",
+  "path": [
+    "info",
+    "authKey",
+  ],
+  "type": "save",
+}
+`;
+
+exports[`validateEntityInfo > invalid type 1`] = `
+{
+  "message": "Entity type InvalidType doesn’t exist",
+  "path": [
+    "entity",
+    "info",
+    "type",
+  ],
+  "type": "save",
+}
+`;
+
+exports[`validateEntityInfo > name with line break 1`] = `
+{
+  "message": "Name cannot contain line breaks",
+  "path": [
+    "entity",
+    "info",
+    "name",
+  ],
+  "type": "save",
+}
+`;
+
+exports[`validateEntityInfo > no authKey 1`] = `
+{
+  "message": "AuthKey is required",
+  "path": [
+    "entity",
+    "info",
+    "authKey",
+  ],
+  "type": "save",
+}
+`;
+
+exports[`validateEntityInfo > no name 1`] = `
+{
+  "message": "Name is required",
+  "path": [
+    "entity",
+    "info",
+    "name",
+  ],
+  "type": "save",
+}
+`;
+
+exports[`validateEntityInfo > no type 1`] = `
+{
+  "message": "Type is required",
+  "path": [
+    "entity",
+    "info",
+    "type",
+  ],
+  "type": "save",
+}
+`;
+
 exports[`validateEntityInfoForCreate > authKey not matching pattern 1`] = `
 {
   "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(none|subject)$)",

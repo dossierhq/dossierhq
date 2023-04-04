@@ -3,6 +3,7 @@ import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
 import { copyEntity, normalizeEntityFields } from './ItemUtils.js';
 import {
   groupValidationIssuesByTopLevelPath,
+  validateEntityInfo,
   validateEntityInfoForCreate,
   validateEntityInfoForUpdate,
   validateTraverseNodeForPublish,
@@ -16,7 +17,7 @@ import {
   createRichTextTextNode,
 } from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
-import type { AdminEntityCreate, EntityLike } from './Types.js';
+import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
@@ -45,17 +46,32 @@ const adminSchema = AdminSchema.createAndValidate({
   ],
 }).valueOrThrow();
 
-const STRINGS_ENTITY_DEFAULT: AdminEntityCreate = {
+const STRINGS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
   info: { type: 'StringsEntity', name: 'StringsEntity', authKey: 'none' },
   fields: { required: '-' },
 };
 
-const RICH_TEXTS_ENTITY_DEFAULT: AdminEntityCreate = {
+const STRINGS_ENTITY_DEFAULT: AdminEntity = {
+  id: '123',
+  info: {
+    type: 'StringsEntity',
+    name: 'StringsEntity',
+    authKey: 'none',
+    version: 0,
+    status: 'draft',
+    valid: true,
+    createdAt: new Date('2023-04-04T19:26:16.546Z'),
+    updatedAt: new Date('2023-04-04T19:26:16.546Z'),
+  },
+  fields: {},
+};
+
+const RICH_TEXTS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
   info: { type: 'RichTextsEntity', name: 'RichTextsEntity', authKey: 'none' },
   fields: {},
 };
 
-const VALUE_ITEMS_ENTITY_DEFAULT: AdminEntityCreate = {
+const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
   info: { type: 'ValueItemsEntity', name: 'ValueItemsEntity', authKey: 'none' },
   fields: {},
 };
@@ -88,6 +104,68 @@ function validateEntity(entity: EntityLike) {
   return errors;
 }
 
+describe('validateEntityInfo', () => {
+  test('no type', () => {
+    expect(
+      validateEntityInfo(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: '' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('invalid type', () => {
+    expect(
+      validateEntityInfo(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: 'InvalidType' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('no authKey', () => {
+    expect(
+      validateEntityInfo(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: '' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('authKey not matching pattern', () => {
+    expect(
+      validateEntityInfo(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: 'something else' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('no name', () => {
+    expect(
+      validateEntityInfo(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: '' } })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('name with line break', () => {
+    expect(
+      validateEntityInfo(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: 'Hello\nworld' } })
+      )
+    ).toMatchSnapshot();
+  });
+});
+
 describe('validateEntityInfoForCreate', () => {
   test('no type', () => {
     expect(
@@ -103,7 +181,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: 'InvalidType' } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { type: 'InvalidType' } })
       )
     ).toMatchSnapshot();
   });
@@ -113,7 +191,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: '' } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: '' } })
       )
     ).toMatchSnapshot();
   });
@@ -123,7 +201,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: 'something else' } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: 'something else' } })
       )
     ).toMatchSnapshot();
   });
@@ -133,7 +211,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: '' } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: '' } })
       )
     ).toMatchSnapshot();
   });
@@ -143,7 +221,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: 'Hello\nworld' } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: 'Hello\nworld' } })
       )
     ).toMatchSnapshot();
   });
@@ -153,7 +231,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { version: 1 as 0 } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { version: 1 as 0 } })
       )
     ).toMatchSnapshot();
   });
@@ -247,26 +325,30 @@ describe('validateTraverseNodeForSave', () => {
 describe('Validate entity', () => {
   test('Pass: matchPattern matched string', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_DEFAULT, { fields: { pattern: 'baz' } }))
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'baz' } }))
     ).toEqual([]);
   });
 
   test('Fail: matchPattern unmatched string', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_DEFAULT, { fields: { pattern: 'will not match' } }))
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'will not match' } })
+      )
     ).toMatchSnapshot();
   });
 
   test('Fail: required with no value', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_DEFAULT, { fields: { required: null } }))
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { required: null } }))
     ).toMatchSnapshot();
   });
 
   test('Pass: matchPattern matched string items in list', () => {
     expect(
       validateEntity(
-        copyEntity(STRINGS_ENTITY_DEFAULT, { fields: { patternList: ['foo', 'bar', 'baz'] } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
+          fields: { patternList: ['foo', 'bar', 'baz'] },
+        })
       )
     ).toEqual([]);
   });
@@ -274,7 +356,9 @@ describe('Validate entity', () => {
   test('Fail: matchPattern unmatched string item in list', () => {
     expect(
       validateEntity(
-        copyEntity(STRINGS_ENTITY_DEFAULT, { fields: { patternList: ['foo', 'will not match'] } })
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
+          fields: { patternList: ['foo', 'will not match'] },
+        })
       )
     ).toMatchSnapshot();
   });
@@ -282,7 +366,7 @@ describe('Validate entity', () => {
   test('Fail: rich text text node with line break', () => {
     expect(
       validateEntity(
-        copyEntity(RICH_TEXTS_ENTITY_DEFAULT, {
+        copyEntity(RICH_TEXTS_ENTITY_CREATE_DEFAULT, {
           fields: {
             anyNodes: createRichTextRootNode([
               createRichTextParagraphNode([createRichTextTextNode('hello\nworld')]),
@@ -296,7 +380,7 @@ describe('Validate entity', () => {
   test('Fail: admin only value item in normal field', () => {
     expect(
       validateEntity(
-        copyEntity(VALUE_ITEMS_ENTITY_DEFAULT, {
+        copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
           fields: {
             any: { type: 'AdminOnlyValueItem' },
           },
