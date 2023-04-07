@@ -92,7 +92,7 @@
     "bulma": "~0.9.4",
     "bun-types": "~0.5.8",
     "concurrently": "~8.0.1",
-    "eslint-config-next": "~13.2.4",
+    "eslint-config-next": "~13.3.0",
     "eslint-plugin-import": "~2.27.5",
     "eslint-plugin-storybook": "~0.6.11",
     "graphql-config": "~4.5.0",
