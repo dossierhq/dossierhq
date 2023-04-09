@@ -7,6 +7,7 @@ import type {
 } from '@dossierhq/core';
 import { AdminSchema, isFieldValueEqual, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
+import { calculateSchemaChangeRevalidation } from './schema/calculateSchemaChangeRevalidation.js';
 
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
@@ -87,6 +88,10 @@ export async function updateSchemaSpecification(
     if (isFieldValueEqual(oldSchema.spec, newSchema.spec)) {
       return ok({ effect: 'none', schemaSpecification: newSchema.spec });
     }
+
+    const revalidateResult = calculateSchemaChangeRevalidation(oldSchema, newSchema);
+    if (revalidateResult.isError()) return revalidateResult;
+    //TODO mark entities as needing revalidation
 
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) return updateResult;
