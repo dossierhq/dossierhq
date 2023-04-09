@@ -50,11 +50,11 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.50.0",
-    "@types/better-sqlite3": "~7.6.3",
+    "@types/better-sqlite3": "~7.6.4",
     "better-sqlite3": "~8.2.0",
-    "eslint": "~8.37.0",
+    "eslint": "~8.38.0",
     "prettier": "2.8.7",
-    "typescript": "~5.0.3",
+    "typescript": "~5.0.4",
     "vitest": "~0.29.8"
   }
 }

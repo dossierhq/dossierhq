@@ -11,8 +11,8 @@
     "post-process-build": "./scripts/post-process-build.js"
   },
   "dependencies": {
-    "typescript": "~5.0.3",
-    "eslint": "~8.37.0"
+    "typescript": "~5.0.4",
+    "eslint": "~8.38.0"
   },
   "devDependencies": {
     "@rushstack/heft": "0.50.0"
