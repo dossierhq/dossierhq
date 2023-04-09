@@ -650,7 +650,7 @@ importers:
       prettier: 2.8.7
       react: ~18.2.0
       react-dom: ~18.2.0
-      sass: ~1.60.0
+      sass: ~1.61.0
       sass-loader: ~13.2.2
       storybook: ~7.0.0-beta.36
       svgo: ~3.0.2
@@ -688,12 +688,12 @@ importers:
       eslint-plugin-storybook: 0.6.11_vwh6htx42aidho2qgfca5u5rwm
       mini-svg-data-uri: 1.4.4
       prettier: 2.8.7
-      sass: 1.60.0
-      sass-loader: 13.2.2_sass@1.60.0
+      sass: 1.61.0
+      sass-loader: 13.2.2_sass@1.61.0
       storybook: 7.0.0-beta.36
       svgo: 3.0.2
       typescript: 5.0.3
-      vite: 4.2.1_sass@1.60.0
+      vite: 4.2.1_sass@1.61.0
 
   ../../libraries/design-ssr:
     specifiers:
@@ -1342,7 +1342,7 @@ importers:
       react-leaflet: ~4.2.1
       react-router-dom: ~6.9.0
       rollup-plugin-visualizer: ~5.9.0
-      sass: ~1.60.0
+      sass: ~1.61.0
       sass-loader: ~13.2.2
       schema-dts: ~1.1.2
       sql.js: ~1.8.0
@@ -1393,7 +1393,7 @@ importers:
       leaflet.locatecontrol: 0.79.0
       lexical: 0.9.0
       lodash: 4.17.21
-      next: 13.2.4_5y7qh6ykubtj2qr2evk3di7hpa
+      next: 13.2.4_mublyuuz2b2dt2ayxcwwuulj4q
       pg: 8.10.0
       postgrator: 7.1.1
       react: 18.2.0
@@ -1447,14 +1447,14 @@ importers:
       nodemon: 2.0.22
       prettier: 2.8.7
       rollup-plugin-visualizer: 5.9.0
-      sass: 1.60.0
-      sass-loader: 13.2.2_sass@1.60.0
+      sass: 1.61.0
+      sass-loader: 13.2.2_sass@1.61.0
       schema-dts: 1.1.2_typescript@5.0.3
       storybook: 7.0.0-beta.36
       svgo: 3.0.2
       ts-node: 10.9.1_pj3xut33gta66wns5w7rs6cilm
-      vite: 4.2.1_hghbulspu73jfdazs4i6yiqype
-      vitest: 0.29.8_sass@1.60.0
+      vite: 4.2.1_4q5mxzltflcgkzvnigcbiggbqa
+      vitest: 0.29.8_sass@1.61.0
 
   ../../tools/generic-tools:
     specifiers:
@@ -4010,7 +4010,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2_typescript@5.0.3
       typescript: 5.0.3
-      vite: 4.2.1_sass@1.60.0
+      vite: 4.2.1_sass@1.61.0
     dev: true
 
   /@jridgewell/gen-mapping/0.3.2:
@@ -5826,7 +5826,7 @@ packages:
       rollup: 3.20.0
       slash: 3.0.0
       typescript: 5.0.3
-      vite: 4.2.1_sass@1.60.0
+      vite: 4.2.1_sass@1.61.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6153,7 +6153,7 @@ packages:
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 13.2.2_sass@1.60.0
+      sass-loader: 13.2.2_sass@1.61.0
     dev: true
 
   /@storybook/preview-api/7.0.0-beta.36:
@@ -6201,7 +6201,7 @@ packages:
       react: 18.2.0
       react-docgen: 6.0.0-alpha.3
       react-dom: 18.2.0_react@18.2.0
-      vite: 4.2.1_sass@1.60.0
+      vite: 4.2.1_sass@1.61.0
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - supports-color
@@ -8735,7 +8735,7 @@ packages:
       readdirp: 3.6.0
       require-package-name: 2.0.1
       resolve: 1.22.1
-      sass: 1.60.0
+      sass: 1.61.0
       scss-parser: 1.0.6
       semver: 7.3.8
       yargs: 16.2.0
@@ -12208,54 +12208,6 @@ packages:
     dev: false
     optional: true
 
-  /next/13.2.4_5y7qh6ykubtj2qr2evk3di7hpa:
-    resolution: {integrity: sha512-g1I30317cThkEpvzfXujf0O4wtaQHtDCLhlivwlTJ885Ld+eOgcz7r3TGQzeU+cSRoNHtD8tsJgzxVdYojFssw==}
-    engines: {node: '>=14.6.0'}
-    hasBin: true
-    peerDependencies:
-      '@opentelemetry/api': ^1.4.0
-      fibers: '>= 3.1.0'
-      node-sass: ^6.0.0 || ^7.0.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      fibers:
-        optional: true
-      node-sass:
-        optional: true
-      sass:
-        optional: true
-    dependencies:
-      '@next/env': 13.2.4
-      '@swc/helpers': 0.4.14
-      caniuse-lite: 1.0.30001470
-      postcss: 8.4.14
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      sass: 1.60.0
-      styled-jsx: 5.1.1_react@18.2.0
-    optionalDependencies:
-      '@next/swc-android-arm-eabi': 13.2.4
-      '@next/swc-android-arm64': 13.2.4
-      '@next/swc-darwin-arm64': 13.2.4
-      '@next/swc-darwin-x64': 13.2.4
-      '@next/swc-freebsd-x64': 13.2.4
-      '@next/swc-linux-arm-gnueabihf': 13.2.4
-      '@next/swc-linux-arm64-gnu': 13.2.4
-      '@next/swc-linux-arm64-musl': 13.2.4
-      '@next/swc-linux-x64-gnu': 13.2.4
-      '@next/swc-linux-x64-musl': 13.2.4
-      '@next/swc-win32-arm64-msvc': 13.2.4
-      '@next/swc-win32-ia32-msvc': 13.2.4
-      '@next/swc-win32-x64-msvc': 13.2.4
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-    dev: false
-
   /next/13.2.4_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-g1I30317cThkEpvzfXujf0O4wtaQHtDCLhlivwlTJ885Ld+eOgcz7r3TGQzeU+cSRoNHtD8tsJgzxVdYojFssw==}
     engines: {node: '>=14.6.0'}
@@ -12283,6 +12235,54 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      styled-jsx: 5.1.1_react@18.2.0
+    optionalDependencies:
+      '@next/swc-android-arm-eabi': 13.2.4
+      '@next/swc-android-arm64': 13.2.4
+      '@next/swc-darwin-arm64': 13.2.4
+      '@next/swc-darwin-x64': 13.2.4
+      '@next/swc-freebsd-x64': 13.2.4
+      '@next/swc-linux-arm-gnueabihf': 13.2.4
+      '@next/swc-linux-arm64-gnu': 13.2.4
+      '@next/swc-linux-arm64-musl': 13.2.4
+      '@next/swc-linux-x64-gnu': 13.2.4
+      '@next/swc-linux-x64-musl': 13.2.4
+      '@next/swc-win32-arm64-msvc': 13.2.4
+      '@next/swc-win32-ia32-msvc': 13.2.4
+      '@next/swc-win32-x64-msvc': 13.2.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+    dev: false
+
+  /next/13.2.4_mublyuuz2b2dt2ayxcwwuulj4q:
+    resolution: {integrity: sha512-g1I30317cThkEpvzfXujf0O4wtaQHtDCLhlivwlTJ885Ld+eOgcz7r3TGQzeU+cSRoNHtD8tsJgzxVdYojFssw==}
+    engines: {node: '>=14.6.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.4.0
+      fibers: '>= 3.1.0'
+      node-sass: ^6.0.0 || ^7.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@next/env': 13.2.4
+      '@swc/helpers': 0.4.14
+      caniuse-lite: 1.0.30001470
+      postcss: 8.4.14
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      sass: 1.61.0
       styled-jsx: 5.1.1_react@18.2.0
     optionalDependencies:
       '@next/swc-android-arm-eabi': 13.2.4
@@ -13987,7 +13987,7 @@ packages:
   /safer-buffer/2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader/13.2.2_sass@1.60.0:
+  /sass-loader/13.2.2_sass@1.61.0:
     resolution: {integrity: sha512-nrIdVAAte3B9icfBiGWvmMhT/D+eCDwnk+yA7VE/76dp/WkHX+i44Q/pfo71NYbwj0Ap+PGsn0ekOuU1WFJ2AA==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -14008,12 +14008,12 @@ packages:
     dependencies:
       klona: 2.0.6
       neo-async: 2.6.2
-      sass: 1.60.0
+      sass: 1.61.0
     dev: true
 
-  /sass/1.60.0:
-    resolution: {integrity: sha512-updbwW6fNb5gGm8qMXzVO7V4sWf7LMXnMly/JEyfbfERbVH46Fn6q02BX7/eHTdKpE7d+oTkMMQpFWNUMfFbgQ==}
-    engines: {node: '>=12.0.0'}
+  /sass/1.61.0:
+    resolution: {integrity: sha512-PDsN7BrVkNZK2+dj/dpKQAWZavbAQ87IXqVvw2+oEYI+GwlTWkvbQtL7F2cCNbMqJEYKPh1EcjSxsnqIb/kyaQ==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       chokidar: 3.5.3
@@ -15401,6 +15401,27 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+  /vite-node/0.29.8_4q5mxzltflcgkzvnigcbiggbqa:
+    resolution: {integrity: sha512-b6OtCXfk65L6SElVM20q5G546yu10/kNrhg08afEoWlFRJXFq9/6glsvSVY+aI6YeC1tu2TtAqI2jHEQmOmsFw==}
+    engines: {node: '>=v14.16.0'}
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.4
+      mlly: 1.1.0
+      pathe: 1.1.0
+      picocolors: 1.0.0
+      vite: 4.2.1_4q5mxzltflcgkzvnigcbiggbqa
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
   /vite-node/0.29.8_@types+node@18.15.11:
     resolution: {integrity: sha512-b6OtCXfk65L6SElVM20q5G546yu10/kNrhg08afEoWlFRJXFq9/6glsvSVY+aI6YeC1tu2TtAqI2jHEQmOmsFw==}
     engines: {node: '>=v14.16.0'}
@@ -15412,27 +15433,6 @@ packages:
       pathe: 1.1.0
       picocolors: 1.0.0
       vite: 4.2.1_@types+node@18.15.11
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
-  /vite-node/0.29.8_hghbulspu73jfdazs4i6yiqype:
-    resolution: {integrity: sha512-b6OtCXfk65L6SElVM20q5G546yu10/kNrhg08afEoWlFRJXFq9/6glsvSVY+aI6YeC1tu2TtAqI2jHEQmOmsFw==}
-    engines: {node: '>=v14.16.0'}
-    hasBin: true
-    dependencies:
-      cac: 6.7.14
-      debug: 4.3.4
-      mlly: 1.1.0
-      pathe: 1.1.0
-      picocolors: 1.0.0
-      vite: 4.2.1_hghbulspu73jfdazs4i6yiqype
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -15476,6 +15476,41 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /vite/4.2.1_4q5mxzltflcgkzvnigcbiggbqa:
+    resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.15.11
+      esbuild: 0.17.12
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.20.0
+      sass: 1.61.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /vite/4.2.1_@types+node@18.15.11:
     resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -15510,42 +15545,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.2.1_hghbulspu73jfdazs4i6yiqype:
-    resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 18.15.11
-      esbuild: 0.17.12
-      postcss: 8.4.21
-      resolve: 1.22.1
-      rollup: 3.20.0
-      sass: 1.60.0
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
-  /vite/4.2.1_sass@1.60.0:
+  /vite/4.2.1_sass@1.61.0:
     resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -15574,7 +15574,7 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.1
       rollup: 3.20.0
-      sass: 1.60.0
+      sass: 1.61.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -15643,7 +15643,7 @@ packages:
       - terser
     dev: true
 
-  /vitest/0.29.8_sass@1.60.0:
+  /vitest/0.29.8_sass@1.61.0:
     resolution: {integrity: sha512-JIAVi2GK5cvA6awGpH0HvH/gEG9PZ0a/WoxdiV3PmqK+3CjQMf8c+J/Vhv4mdZ2nRyXFw66sAg6qz7VNkaHfDQ==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -15695,8 +15695,8 @@ packages:
       tinybench: 2.3.1
       tinypool: 0.4.0
       tinyspy: 1.0.2
-      vite: 4.2.1_hghbulspu73jfdazs4i6yiqype
-      vite-node: 0.29.8_hghbulspu73jfdazs4i6yiqype
+      vite: 4.2.1_4q5mxzltflcgkzvnigcbiggbqa
+      vite-node: 0.29.8_4q5mxzltflcgkzvnigcbiggbqa
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
