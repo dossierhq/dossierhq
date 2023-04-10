@@ -8,3 +8,4 @@ export type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 export type { SessionContext } from './Context.js';
 export { createServer } from './Server.js';
 export type { CreateSessionPayload, Server } from './Server.js';
+export { BackgroundEntityValidator } from './middleware/BackgroundEntityValidator.js';
