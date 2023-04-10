@@ -22,18 +22,18 @@ export async function createBunSqliteAdapter(
     disconnect: async () => {
       database.close();
     },
+
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
-      const statement = database.prepare(query);
+      const statement = database.prepare<R, ColumnValue[]>(query);
       const result = values ? statement.all(...values) : statement.all();
-      return result as R[];
+      return result;
     },
+
     run: async (query: string, values: ColumnValue[] | undefined) => {
       const statement = database.prepare(query);
-      if (values) {
-        statement.run(...values);
-      } else {
-        statement.run();
-      }
+      const result = values ? statement.all(...values) : statement.all();
+      return typeof result === 'number' ? result : 0;
+      // TODO https://github.com/oven-sh/bun/issues/2608
     },
 
     isFtsVirtualTableConstraintFailed,

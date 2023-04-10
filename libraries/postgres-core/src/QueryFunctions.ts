@@ -1,11 +1,10 @@
-import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
+import type { PostgresDatabaseAdapter, PostgresQueryResult } from './PostgresDatabaseAdapter.js';
 import type { PostgresTransaction } from './PostgresTransaction.js';
 
 interface ErrorConverter<TRow, TError extends ErrorType> {
-  (error: unknown): Result<TRow[], TError | typeof ErrorType.Generic>;
+  (error: unknown): Result<PostgresQueryResult<TRow>, TError | typeof ErrorType.Generic>;
 }
 
 type QueryOrQueryAndValues = string | { text: string; values?: unknown[] };
@@ -15,7 +14,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
   errorConverter: ErrorConverter<TRow, TError> | undefined
-): PromiseResult<TRow[], TError | typeof ErrorType.Generic> {
+): PromiseResult<PostgresQueryResult<TRow>, TError | typeof ErrorType.Generic> {
   const { text, values } =
     typeof queryOrQueryAndValues === 'string'
       ? { text: queryOrQueryAndValues, values: undefined }
@@ -23,7 +22,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
 
   const startTime = performance.now();
   try {
-    const rows = await adapter.query<TRow>(
+    const result = await adapter.query<TRow>(
       context.transaction as PostgresTransaction,
       text,
       values
@@ -32,7 +31,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
     const duration = performance.now() - startTime;
     context.databasePerformance?.onQueryCompleted(text, true, duration);
 
-    return ok(rows);
+    return ok(result);
   } catch (error) {
     const duration = performance.now() - startTime;
     context.databasePerformance?.onQueryCompleted(text, false, duration);
@@ -58,14 +57,34 @@ export async function queryNone<
     query,
     errorConverter as ErrorConverter<unknown, TError>
   );
-  if (result.isError()) {
-    return result;
-  }
-  const rows = result.value;
+  if (result.isError()) return result;
+  const rows = result.value.rows;
   if (rows && rows.length !== 0) {
     return notOk.Generic(`Expected 0 rows, got ${rows.length}`);
   }
   return ok(undefined);
+}
+
+export async function queryRun<
+  TError extends ErrorType | typeof ErrorType.Generic = typeof ErrorType.Generic
+>(
+  adapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  query: QueryOrQueryAndValues,
+  errorConverter?: ErrorConverter<unknown, TError | typeof ErrorType.Generic>
+): PromiseResult<number, TError | typeof ErrorType.Generic> {
+  const result = await queryCommon<unknown, TError>(
+    adapter,
+    context,
+    query,
+    errorConverter as ErrorConverter<unknown, TError>
+  );
+  if (result.isError()) return result;
+  const rows = result.value.rows;
+  if (rows && rows.length !== 0) {
+    return notOk.Generic(`Expected 0 rows, got ${rows.length}`);
+  }
+  return ok(result.value.rowCount ?? 0);
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof ErrorType.Generic>(
@@ -80,10 +99,8 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof Err
     query,
     errorConverter as ErrorConverter<TRow, TError>
   );
-  if (result.isError()) {
-    return result;
-  }
-  const rows = result.value;
+  if (result.isError()) return result;
+  const rows = result.value.rows;
   if (rows.length === 0) {
     return ok(null);
   }
@@ -105,10 +122,8 @@ export async function queryOne<TRow, TError extends ErrorType = typeof ErrorType
     query,
     errorConverter as ErrorConverter<TRow, TError>
   );
-  if (result.isError()) {
-    return result;
-  }
-  const rows = result.value;
+  if (result.isError()) return result;
+  const rows = result.value.rows;
   if (rows.length !== 1) {
     return notOk.Generic(`Expected 1 row, got ${rows.length}`);
   }
@@ -127,5 +142,5 @@ export async function queryMany<TRow, TError extends ErrorType = typeof ErrorTyp
     query,
     errorConverter as ErrorConverter<TRow, TError>
   );
-  return result;
+  return result.isOk() ? ok(result.value.rows) : result;
 }

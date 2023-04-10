@@ -90,3 +90,17 @@ export async function createAdapterAndServer<
 
   return { adminClient, bobAdminClient, server };
 }
+
+export async function optimizeAndCloseDatabase(server: Server) {
+  let keepOnGoing = true;
+  while (keepOnGoing) {
+    const revalidated = (await server.revalidateNextEntity()).valueOrThrow();
+    if (!revalidated) {
+      keepOnGoing = false;
+    }
+  }
+
+  (await server.optimizeDatabase({ all: true })).throwIfError();
+
+  await server.shutdown();
+}

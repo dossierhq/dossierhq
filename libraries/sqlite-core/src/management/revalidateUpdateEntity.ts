@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   createSqliteSqlQuery,
   type DatabaseResolvedEntityReference,
@@ -16,5 +16,6 @@ export async function managementRevalidateUpdateEntity(
   sql`UPDATE entities SET valid = ${valid ? 1 : 0}, revalidate = FALSE WHERE id = ${
     reference.entityInternalId as number
   }`;
-  return await queryRun(database, context, query);
+  const result = await queryRun(database, context, query);
+  return result.isOk() ? ok(undefined) : result;
 }

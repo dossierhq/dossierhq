@@ -11,22 +11,24 @@ describe('adminGetEntity', () => {
     const context = createMockContext(adapter);
     adapter.query.mockImplementation(async (_transaction, query, _values) => {
       if (query.startsWith('SELECT e.uuid'))
-        return [
-          {
-            uuid: '123',
-            type: 'TitleOnly',
-            name: 'Name',
-            auth_key: 'authKey-123',
-            resolved_auth_key: 'resolvedAuthKey-123',
-            created_at: now,
-            updated_at: now,
-            status: 'modified',
-            valid: true,
-            version: 2,
-            data: { title: 'Title' },
-          },
-        ];
-      return [];
+        return {
+          rows: [
+            {
+              uuid: '123',
+              type: 'TitleOnly',
+              name: 'Name',
+              auth_key: 'authKey-123',
+              resolved_auth_key: 'resolvedAuthKey-123',
+              created_at: now,
+              updated_at: now,
+              status: 'modified',
+              valid: true,
+              version: 2,
+              data: { title: 'Title' },
+            },
+          ],
+        };
+      return { rows: [] };
     });
 
     const result = await adminGetEntity(adapter, context, { id: '123' });
@@ -60,22 +62,24 @@ describe('adminGetEntity', () => {
     const context = createMockContext(adapter);
     adapter.query.mockImplementation(async (_transaction, query, _values) => {
       if (query.startsWith('SELECT e.uuid'))
-        return [
-          {
-            uuid: '123',
-            type: 'TitleOnly',
-            name: 'Name',
-            auth_key: 'authKey-123',
-            resolved_auth_key: 'resolvedAuthKey-123',
-            created_at: now,
-            updated_at: now,
-            status: 'modified',
-            valid: true,
-            version: 5,
-            data: { title: 'Title' },
-          },
-        ];
-      return [];
+        return {
+          rows: [
+            {
+              uuid: '123',
+              type: 'TitleOnly',
+              name: 'Name',
+              auth_key: 'authKey-123',
+              resolved_auth_key: 'resolvedAuthKey-123',
+              created_at: now,
+              updated_at: now,
+              status: 'modified',
+              valid: true,
+              version: 5,
+              data: { title: 'Title' },
+            },
+          ],
+        };
+      return { rows: [] };
     });
 
     const result = await adminGetEntity(adapter, context, { id: '123', version: 5 });

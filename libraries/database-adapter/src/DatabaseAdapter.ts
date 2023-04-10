@@ -229,6 +229,10 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
+export interface DatabaseMarkEntitiesForRevalidationPayload {
+  count: number;
+}
+
 export interface DatabasePublishedEntityPayload {
   id: string;
   name: string;
@@ -473,6 +477,12 @@ export interface DatabaseAdapter<
     provider: string,
     identifier: string
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
+
+  managementMarkEntitiesForRevalidation(
+    context: TransactionContext,
+    entityTypes: string[],
+    valueTypes: string[]
+  ): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic>;
 
   managementOptimize(
     context: TransactionContext,

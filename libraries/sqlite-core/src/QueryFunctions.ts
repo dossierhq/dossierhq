@@ -66,21 +66,29 @@ export async function queryRun<
   database: Database,
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<void, TError>
-): PromiseResult<void, TError | typeof ErrorType.Generic> {
+  errorConverter?: ErrorConverter<number, TError>
+): PromiseResult<number, TError | typeof ErrorType.Generic> {
   const { text, values } =
     typeof queryOrQueryAndValues === 'string'
       ? { text: queryOrQueryAndValues, values: undefined }
       : queryOrQueryAndValues;
 
   const queryAndConvert: () => PromiseResult<
-    void,
+    number,
     TError | typeof ErrorType.Generic
   > = async () => {
+    const startTime = performance.now();
     try {
-      await database.adapter.run(text, values);
-      return ok(undefined);
+      const changes = await database.adapter.run(text, values);
+
+      const duration = performance.now() - startTime;
+      context.databasePerformance?.onQueryCompleted(text, true, duration);
+
+      return ok(changes);
     } catch (error) {
+      const duration = performance.now() - startTime;
+      context.databasePerformance?.onQueryCompleted(text, false, duration);
+
       if (errorConverter) {
         return errorConverter(error);
       }
@@ -88,9 +96,15 @@ export async function queryRun<
     }
   };
 
-  return context.transaction
-    ? queryAndConvert()
-    : database.mutex.withLock(context, queryAndConvert);
+  if (context.transaction) {
+    return queryAndConvert();
+  }
+  const mutexStartTime = performance.now();
+  return database.mutex.withLock(context, () => {
+    const duration = performance.now() - mutexStartTime;
+    context.databasePerformance?.onMutexAcquired(duration);
+    return queryAndConvert();
+  });
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof ErrorType.Generic>(

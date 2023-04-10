@@ -123,6 +123,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
 
   mockAdapter.run.mockImplementation(async (query, values) => {
     allQueries.push([query, ...(values ?? [])]);
+    return 0;
   });
 
   mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));

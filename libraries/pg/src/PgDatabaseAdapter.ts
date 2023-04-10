@@ -29,8 +29,10 @@ function getPoolClient(transaction: PostgresTransaction): PoolClient {
 
 export function createPostgresAdapter(poolConfig: PoolConfig): PgDatabaseAdapter {
   const pool = new Pool(poolConfig);
+
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
+
     createTransaction: async () => {
       const client = await pool.connect();
       const transaction: TransactionWrapper = {
@@ -41,12 +43,14 @@ export function createPostgresAdapter(poolConfig: PoolConfig): PgDatabaseAdapter
       };
       return transaction;
     },
+
     query: async (transaction, query, values) => {
       const result = await (transaction
         ? getPoolClient(transaction).query(query, values)
         : pool.query(query, values));
-      return result.rows;
+      return result;
     },
+
     isUniqueViolationOfConstraint,
 
     base64Encode(value) {
@@ -57,6 +61,7 @@ export function createPostgresAdapter(poolConfig: PoolConfig): PgDatabaseAdapter
       return Buffer.from(value, 'base64').toString('utf8');
     },
   };
+
   return createPostgresDatabaseAdapterAdapter(adapter);
 }
 

@@ -22,6 +22,7 @@ export async function createSqlJsAdapter(
     disconnect: async () => {
       database.close();
     },
+
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
       const result: R[] = [];
       const statement = database.prepare(query, values);
@@ -32,8 +33,10 @@ export async function createSqlJsAdapter(
       statement.free();
       return result;
     },
+
     run: async (query: string, values: ColumnValue[] | undefined) => {
       database.run(query, values);
+      return database.getRowsModified();
     },
 
     isFtsVirtualTableConstraintFailed,
@@ -46,6 +49,7 @@ export async function createSqlJsAdapter(
     decodeCursor(value) {
       return decodeURIComponent(escape(atob(value)));
     },
+
     randomUUID: () => crypto.randomUUID(),
   };
 
