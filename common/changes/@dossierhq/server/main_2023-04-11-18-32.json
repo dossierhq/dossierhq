@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Reduce logging for BackgroundEntityValidatorPlugin to at most 1/s",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
