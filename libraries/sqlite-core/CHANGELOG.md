@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/sqlite-core
 
-This log was last generated on Tue, 11 Apr 2023 18:39:14 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Apr 2023 19:08:01 GMT and should not be manually modified.
+
+## 0.2.13
+Tue, 11 Apr 2023 19:08:01 GMT
+
+### Updates
+
+- Fix invalid SQL for managementRevalidateGetNextEntity()
 
 ## 0.2.12
 Tue, 11 Apr 2023 18:39:14 GMT

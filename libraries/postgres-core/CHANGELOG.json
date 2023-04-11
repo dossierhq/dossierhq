@@ -2,6 +2,12 @@
   "name": "@dossierhq/postgres-core",
   "entries": [
     {
+      "version": "0.2.13",
+      "tag": "@dossierhq/postgres-core_v0.2.13",
+      "date": "Tue, 11 Apr 2023 19:08:01 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.2.12",
       "tag": "@dossierhq/postgres-core_v0.2.12",
       "date": "Tue, 11 Apr 2023 18:39:14 GMT",
