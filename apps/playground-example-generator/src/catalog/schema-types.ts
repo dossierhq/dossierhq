@@ -161,6 +161,7 @@ export interface AdminStringsEntityFields {
   title: string | null;
   normal: string | null;
   required: string | null;
+  multiline: string | null;
   matchPattern: string | null;
   list: string[] | null;
   requiredList: string[] | null;
