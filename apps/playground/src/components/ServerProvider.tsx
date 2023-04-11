@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
+import { BackgroundEntityValidatorPlugin, type Server } from '@dossierhq/server';
 import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
 import { useContext, useEffect, useState } from 'react';
@@ -54,6 +54,12 @@ async function initializeServer(
       authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
       logger: SERVER_LOGGER,
     });
+    if (serverResult.isError()) return serverResult;
+
+    const validatorPlugin = new BackgroundEntityValidatorPlugin(serverResult.value, SERVER_LOGGER);
+    serverResult.value.addPlugin(validatorPlugin);
+    validatorPlugin.start();
+
     return serverResult;
   } catch (error) {
     return notOk.GenericUnexpectedException({ logger: SERVER_LOGGER }, error);

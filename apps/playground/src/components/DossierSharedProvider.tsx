@@ -13,17 +13,13 @@ import {
   PublishedDossierProvider,
   useCachingAdminMiddleware,
 } from '@dossierhq/react-components';
-import {
-  BackgroundEntityValidator,
-  type CreateSessionPayload,
-  type Server,
-} from '@dossierhq/server';
+import { type CreateSessionPayload, type Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Cache } from 'swr';
 import { useSWRConfig } from 'swr';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig.js';
 import { ContextAdapter } from '../config/ContextAdapter.js';
-import { SERVER_LOGGER, SESSION_LOGGER } from '../config/LoggerConfig.js';
+import { SESSION_LOGGER } from '../config/LoggerConfig.js';
 import { LoginContext } from '../contexts/LoginContext.js';
 import { ServerContext } from '../contexts/ServerContext.js';
 import { UserContext } from '../contexts/UserContext.js';
@@ -85,17 +81,11 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   const args = useMemo(() => {
     if (!server) return null;
 
-    const backgroundEntityValidator = new BackgroundEntityValidator(server, SERVER_LOGGER);
-
     const adapter = new ContextAdapter();
     const adminArgs = {
       adminClient: server.createAdminClient(
         () => Promise.resolve(sessionResultRef.current),
-        [
-          backgroundEntityValidator.adminMiddleware,
-          LoggingClientMiddleware as AdminClientMiddleware<ClientContext>,
-          cachingAdminMiddleware,
-        ]
+        [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>, cachingAdminMiddleware]
       ),
       adapter,
       authKeys: DISPLAY_AUTH_KEYS,
@@ -105,23 +95,12 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       adapter,
       publishedClient: server.createPublishedClient(
         () => Promise.resolve(sessionResultRef.current),
-        [
-          backgroundEntityValidator.publishedMiddleware,
-          LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>,
-        ]
+        [LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>]
       ),
       authKeys: DISPLAY_AUTH_KEYS,
     };
-    return { adminArgs, publishedArgs, backgroundEntityValidator };
+    return { adminArgs, publishedArgs };
   }, [server, cachingAdminMiddleware]);
-
-  useEffect(() => {
-    if (!args?.backgroundEntityValidator) return;
-    args.backgroundEntityValidator.start();
-    return () => {
-      args.backgroundEntityValidator.stop();
-    };
-  }, [args?.backgroundEntityValidator]);
 
   if (!args || sessionResult === uninitializedSession) {
     return null;
