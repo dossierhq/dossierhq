@@ -20,6 +20,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   private handle: NodeJS.Timeout | null = null;
   private lastOperationTimestamp = 0;
   private revalidate = false;
+  private batchCount = 0;
 
   constructor(server: Server, logger: Logger) {
     this.server = server;
@@ -33,6 +34,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   start() {
     this.logger.info('BackgroundEntityValidatorPlugin: starting');
     this.revalidate = true;
+    this.batchCount = 0;
     if (this.handle) {
       clearTimeout(this.handle);
     }
@@ -98,22 +100,30 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
 
     if (this.revalidate) {
       const result = await this.server.revalidateNextEntity();
+      this.batchCount++;
+
+      if (this.batchCount % 200 === 0) {
+        this.logger.info(
+          'BackgroundEntityValidatorPlugin: revalidated %d entities',
+          this.batchCount
+        );
+      }
+
       if (result.isOk()) {
         if (result.value) {
-          if (result.value.valid) {
-            this.logger.info(
-              'BackgroundEntityValidatorPlugin: revalidated entity: %s',
-              result.value.id
-            );
-          } else {
+          if (!result.value.valid) {
             this.logger.warn(
               'BackgroundEntityValidatorPlugin: revalidated entity: %s, but it was invalid',
               result.value.id
             );
           }
         } else {
-          this.logger.info('BackgroundEntityValidatorPlugin: no more entities to revalidate');
+          this.logger.info(
+            'BackgroundEntityValidatorPlugin: no more entities to revalidate, validated %d entities',
+            this.batchCount
+          );
           this.revalidate = false;
+          this.batchCount = 0;
         }
       } else {
         this.logger.error(
