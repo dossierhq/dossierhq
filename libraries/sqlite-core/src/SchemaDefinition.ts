@@ -204,6 +204,10 @@ const VERSION_10: SchemaVersionDefinition[] = [
   'UPDATE entities SET revalidate = TRUE',
 ];
 
+const VERSION_11: SchemaVersionDefinition[] = [
+  'CREATE INDEX entities_revalidate ON entities(revalidate)',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -216,6 +220,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_8,
   VERSION_9,
   VERSION_10,
+  VERSION_11,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

@@ -138,3 +138,4 @@ CREATE INDEX entity_publishing_events_entities_id ON entity_publishing_events(en
 CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name);
 CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq);
 CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid);
+CREATE INDEX entities_revalidate ON entities(revalidate);

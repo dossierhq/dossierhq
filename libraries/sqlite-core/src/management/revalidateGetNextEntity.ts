@@ -1,12 +1,31 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import {
-  createSqliteSqlQuery,
-  type DatabaseAdminEntityWithResolvedReferencePayload,
-  type TransactionContext,
+import type {
+  DatabaseAdminEntityWithResolvedReferencePayload,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { queryNoneOrOne, type Database } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
+
+type EntityRow = Pick<
+  EntitiesTable,
+  | 'id'
+  | 'uuid'
+  | 'type'
+  | 'name'
+  | 'auth_key'
+  | 'resolved_auth_key'
+  | 'created_at'
+  | 'updated_at'
+  | 'status'
+  | 'valid'
+> &
+  Pick<EntityVersionsTable, 'version' | 'fields'>;
+
+const query =
+  'WITH entities_cte AS (SELECT id FROM entities WHERE revalidate LIMIT 1) ' +
+  'SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid ' +
+  'FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id';
 
 export async function managementRevalidateGetNextEntity(
   database: Database,
@@ -15,27 +34,7 @@ export async function managementRevalidateGetNextEntity(
   DatabaseAdminEntityWithResolvedReferencePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const { sql, query } = createSqliteSqlQuery();
-  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields`;
-  sql`FROM entities e, entity_versions ev WHERE e.revalidate AND e.latest_entity_versions_id = ev.id`;
-  sql`LIMIT 1`;
-
-  const result = await queryNoneOrOne<
-    Pick<
-      EntitiesTable,
-      | 'id'
-      | 'uuid'
-      | 'type'
-      | 'name'
-      | 'auth_key'
-      | 'resolved_auth_key'
-      | 'created_at'
-      | 'updated_at'
-      | 'status'
-      | 'valid'
-    > &
-      Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(database, context, query);
+  const result = await queryNoneOrOne<EntityRow>(database, context, query);
   if (result.isError()) return result;
   if (!result.value) {
     return notOk.NotFound('No entity needing revalidation');
