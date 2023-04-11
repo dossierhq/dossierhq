@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Tue, 04 Apr 2023 09:26:20 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Apr 2023 15:53:50 GMT and should not be manually modified.
+
+## 0.2.11
+Tue, 11 Apr 2023 15:53:50 GMT
+
+### Updates
+
+- Add revalidateNextEntity(). Calculate types to revalidate after schema update and mark entities for revalidation. Introduce ServerPlugin and BackgroundEntityValidatorPlugin.
 
 ## 0.2.10
 Tue, 04 Apr 2023 09:26:20 GMT

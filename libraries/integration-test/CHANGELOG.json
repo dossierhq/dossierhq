@@ -2,6 +2,18 @@
   "name": "@dossierhq/integration-test",
   "entries": [
     {
+      "version": "0.2.11",
+      "tag": "@dossierhq/integration-test_v0.2.11",
+      "date": "Tue, 11 Apr 2023 15:53:50 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add test to run revalidateNextEntity() on all entities."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.10",
       "tag": "@dossierhq/integration-test_v0.2.10",
       "date": "Tue, 04 Apr 2023 09:26:20 GMT",
