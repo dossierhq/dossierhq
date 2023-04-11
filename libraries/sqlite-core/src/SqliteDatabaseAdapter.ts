@@ -53,7 +53,10 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
+import { managementMarkEntitiesForRevalidation } from './management/markEntitiesForRevalidation.js';
 import { managementOptimize } from './management/optimize.js';
+import { managementRevalidateGetNextEntity } from './management/revalidateGetNextEntity.js';
+import { managementRevalidateUpdateEntity } from './management/revalidateUpdateEntity.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -73,7 +76,7 @@ const supportedJournalModes = ['wal', 'delete', 'memory'] as const;
 export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
   query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]>;
-  run(query: string, values: ColumnValue[] | undefined): Promise<void>;
+  run(query: string, values: ColumnValue[] | undefined): Promise<number>;
   isFtsVirtualTableConstraintFailed(error: unknown): boolean;
   isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean;
   encodeCursor(value: string): string;
@@ -149,14 +152,19 @@ async function setJournalMode(
     return notOk.Generic(`Unsupported journal mode (${journalMode})`);
   }
   // journalMode is safe to use here because we check it above
-  return await queryRun(database, context, `PRAGMA journal_mode = ${journalMode}`, undefined);
+  const result = await queryRun(
+    database,
+    context,
+    `PRAGMA journal_mode = ${journalMode}`,
+    undefined
+  );
+  return result.isOk() ? ok(undefined) : result;
 }
 
 function createOuterAdapter(
   database: Database
 ): DatabaseAdapter<SqliteDatabaseOptimizationOptions> {
   return {
-    managementOptimize: (...args) => managementOptimize(database, ...args),
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(database, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(database, ...args),
@@ -201,6 +209,13 @@ function createOuterAdapter(
     advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
     authCreateSession: (...args) => authCreateSession(database, ...args),
     disconnect: database.adapter.disconnect,
+    managementMarkEntitiesForRevalidation: (...args) =>
+      managementMarkEntitiesForRevalidation(database, ...args),
+    managementOptimize: (...args) => managementOptimize(database, ...args),
+    managementRevalidateGetNextEntity: (...args) =>
+      managementRevalidateGetNextEntity(database, ...args),
+    managementRevalidateUpdateEntity: (...args) =>
+      managementRevalidateUpdateEntity(database, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(database, ...args),
     publishedEntitySampleEntities: (...args) => publishedEntitySampleEntities(database, ...args),

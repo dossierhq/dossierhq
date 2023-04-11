@@ -23,21 +23,7 @@ registerTestSuite(
   createSchemaTestSuite({
     before: async () => {
       assertIsDefined(serverInit);
-      const { server } = serverInit;
-      const sessionResult = await server.createSession({
-        provider: 'test',
-        identifier: 'id',
-        defaultAuthKeys: ['none'],
-        logger: null,
-        databasePerformance: null,
-      });
-      if (sessionResult.isError()) {
-        throw sessionResult.toError();
-      }
-      const { context } = sessionResult.value;
-      const client = server.createAdminClient(context);
-
-      return [{ client }, undefined];
+      return [serverInit, undefined];
     },
     after: async () => {
       //empty

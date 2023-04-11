@@ -1,5 +1,5 @@
-import { AdminEntityStatus, ok } from '@dossierhq/core';
-import { expectResultValue } from '@dossierhq/core-vitest';
+import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
+import { expectErrorResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
@@ -31,6 +31,7 @@ describe('Admin adminUpdateEntity', () => {
           authKey: 'none',
           resolvedAuthKey: 'none',
           status: AdminEntityStatus.draft,
+          valid: true,
           version: 0,
           createdAt,
           updatedAt: createdAt,
@@ -69,12 +70,57 @@ describe('Admin adminUpdateEntity', () => {
           createdAt: createdAt,
           updatedAt: now,
           status: AdminEntityStatus.draft,
+          valid: true,
         },
         fields: {
           title: 'Updated title',
         },
       },
     });
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchSnapshot();
+  });
+
+  test('Error: No change to invalid entity', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const authorizationAdapter = createMockAuthorizationAdapter();
+    const context = createMockSessionContext({ databaseAdapter });
+    const id = '123';
+    const createdAt = new Date('2020-01-01T00:00:00.000Z');
+
+    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+    );
+    databaseAdapter.adminEntityUpdateGetEntityInfo.mockReturnValueOnce(
+      Promise.resolve(
+        ok({
+          entityInternalId: 'internal-123',
+          type: 'TitleOnly',
+          name: 'Old name',
+          authKey: 'none',
+          resolvedAuthKey: 'none',
+          status: AdminEntityStatus.draft,
+          valid: false,
+          version: 0,
+          createdAt,
+          updatedAt: createdAt,
+          fieldValues: { title: 'Old title' },
+        })
+      )
+    );
+
+    const result = await adminUpdateEntity(
+      adminTestSchema,
+      publishedTestSchema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      { id, fields: {} },
+      undefined
+    );
+
+    expectErrorResult(result, ErrorType.BadRequest, 'No change to entity that is already invalid');
     expect(
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
     ).toMatchSnapshot();

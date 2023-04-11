@@ -71,6 +71,7 @@ export interface DatabaseAdminEntityPayload {
   version: number;
   authKey: string;
   status: AdminEntityStatus;
+  valid: boolean;
   createdAt: Date;
   updatedAt: Date;
   fieldValues: Record<string, unknown>;
@@ -79,6 +80,10 @@ export interface DatabaseAdminEntityPayload {
 export interface DatabaseAdminEntityGetOnePayload extends DatabaseAdminEntityPayload {
   resolvedAuthKey: string;
 }
+
+export interface DatabaseAdminEntityWithResolvedReferencePayload
+  extends DatabaseAdminEntityPayload,
+    DatabaseResolvedEntityReference {}
 
 export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
   extends DatabaseResolvedEntityReference {
@@ -177,6 +182,7 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
+  valid: boolean;
   version: number;
   createdAt: Date;
   updatedAt: Date;
@@ -223,6 +229,10 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
+export interface DatabaseMarkEntitiesForRevalidationPayload {
+  count: number;
+}
+
 export interface DatabasePublishedEntityPayload {
   id: string;
   name: string;
@@ -265,11 +275,6 @@ export interface DatabaseAdapter<
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
-
-  managementOptimize(
-    context: TransactionContext,
-    options: TOptimizationOptions
-  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityArchivingGetEntityInfo(
     context: TransactionContext,
@@ -472,6 +477,30 @@ export interface DatabaseAdapter<
     provider: string,
     identifier: string
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
+
+  managementMarkEntitiesForRevalidation(
+    context: TransactionContext,
+    entityTypes: string[],
+    valueTypes: string[]
+  ): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic>;
+
+  managementOptimize(
+    context: TransactionContext,
+    options: TOptimizationOptions
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  managementRevalidateGetNextEntity(
+    context: TransactionContext
+  ): PromiseResult<
+    DatabaseAdminEntityWithResolvedReferencePayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
+
+  managementRevalidateUpdateEntity(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    valid: boolean
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   publishedEntityGetOne(
     context: TransactionContext,

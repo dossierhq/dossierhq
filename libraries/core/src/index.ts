@@ -15,12 +15,12 @@ export type {
 export { withAdvisoryLock } from './AdvisoryLockUtils.js';
 export { assertExhaustive, assertIsDefined } from './Asserts.js';
 export {
+  ErrorResultError,
+  ErrorType,
   assertErrorResultType,
   assertOkResult,
   createErrorResult,
   createErrorResultFromError,
-  ErrorResultError,
-  ErrorType,
   notOk,
   ok,
 } from './ErrorResult.js';
@@ -90,6 +90,7 @@ export {
 export type { ItemValuePath } from './ItemUtils.js';
 export {
   groupValidationIssuesByTopLevelPath,
+  validateEntityInfo,
   validateEntityInfoForCreate,
   validateEntityInfoForUpdate,
   validateTraverseNodeForPublish,
@@ -111,7 +112,7 @@ export type {
   JsonPublishingHistory,
   JsonResult,
 } from './JsonUtils.js';
-export { createConsoleLogger, NoOpLogger } from './Logger.js';
+export { NoOpLogger, createConsoleLogger } from './Logger.js';
 export type { Logger } from './Logger.js';
 export {
   getAllNodesForConnection,
@@ -120,10 +121,10 @@ export {
 } from './PagingUtils.js';
 export type { PagingInfo } from './PagingUtils.js';
 export {
+  PublishedClientOperationName,
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
-  PublishedClientOperationName,
 } from './PublishedClient.js';
 export type {
   PublishedClient,
@@ -188,8 +189,8 @@ export type {
   AdminEntityCreatePayload,
   AdminEntityInfo,
   AdminEntityMutationOptions,
-  AdminEntityPublishingPayload,
   AdminEntityPublishPayload,
+  AdminEntityPublishingPayload,
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
   AdminEntityUpdate,

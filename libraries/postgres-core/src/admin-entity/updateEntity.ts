@@ -34,10 +34,11 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -56,6 +57,7 @@ export async function adminEntityUpdateGetEntityInfo(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
+    valid,
     version,
     created_at: createdAt,
     updated_at: updatedAt,
@@ -69,6 +71,7 @@ export async function adminEntityUpdateGetEntityInfo(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
+    valid,
     version,
     createdAt,
     updatedAt,
@@ -134,9 +137,7 @@ export async function adminEntityUpdateEntity(
       }
     );
 
-    if (nameResult.isError()) {
-      return nameResult;
-    }
+    if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
   }
 
@@ -149,15 +150,15 @@ export async function adminEntityUpdateEntity(
       latest_fts = to_tsvector($2),
       updated_at = NOW(),
       updated = nextval('entities_updated_seq'),
-      status = $3
+      status = $3,
+      valid = TRUE,
+      revalidate = FALSE
     WHERE id = $4
     RETURNING updated_at`,
       values: [versionsId, entity.fullTextSearchText, entity.status, entity.entityInternalId],
     }
   );
-  if (updateEntityResult.isError()) {
-    return updateEntityResult;
-  }
+  if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;
 
   const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(

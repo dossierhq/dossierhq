@@ -197,5 +197,5 @@ export async function adminEntityPublishUpdatePublishedReferencesIndex(
       }
     })
   );
-  return insertResult;
+  return insertResult.isOk() ? ok(undefined) : insertResult;
 }

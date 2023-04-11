@@ -24,7 +24,16 @@ import { resolvePagingCursors } from './Paging.js';
 // id and updated are included for order by
 export type SearchAdminEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'updated' | 'status'
+  | 'id'
+  | 'uuid'
+  | 'type'
+  | 'name'
+  | 'auth_key'
+  | 'created_at'
+  | 'updated_at'
+  | 'updated'
+  | 'status'
+  | 'valid'
 > &
   Pick<EntityVersionsTable, 'version' | 'data'>;
 export type SearchPublishedEntitiesItem = Pick<
@@ -369,7 +378,7 @@ function addEntityQuerySelectColumn(
   if (published) {
     sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
   FROM entities e, entity_versions ev`;
   }
   if (query?.linksTo) {

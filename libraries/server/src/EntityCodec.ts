@@ -25,8 +25,9 @@ import type {
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
-  assertIsDefined,
   FieldType,
+  ItemTraverseNodeType,
+  assertIsDefined,
   isEntityItemField,
   isFieldValueEqual,
   isLocationItemField,
@@ -39,7 +40,6 @@ import {
   isStringItemField,
   isValueItemField,
   isValueItemItemField,
-  ItemTraverseNodeType,
   normalizeEntityFields,
   notOk,
   ok,
@@ -53,8 +53,8 @@ import type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { SessionContext } from './Context.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import { transformRichText } from './utils/RichTextTransformer.js';
 
@@ -210,6 +210,7 @@ export function decodeAdminEntity(
       version: values.version,
       authKey: values.authKey,
       status: values.status,
+      valid: values.valid,
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
@@ -283,6 +284,7 @@ export function resolveUpdateEntity(
       version: entityInfo.version + 1,
       authKey: entityInfo.authKey,
       status,
+      valid: true,
       createdAt: entityInfo.createdAt,
       updatedAt: entityInfo.updatedAt,
     },
@@ -329,6 +331,11 @@ export function resolveUpdateEntity(
   if (!changed) {
     result.info.version = entityInfo.version;
     result.info.status = entityInfo.status;
+    result.info.valid = entityInfo.valid;
+
+    if (!result.info.valid) {
+      return notOk.BadRequest('No change to entity that is already invalid');
+    }
   }
 
   return ok({ changed, entity: result, entitySpec });
@@ -337,7 +344,7 @@ export function resolveUpdateEntity(
 export async function encodeAdminEntity(
   schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
+  context: TransactionContext,
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
@@ -655,7 +662,7 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
 
 async function resolveRequestedEntityReferences(
   databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
+  context: TransactionContext,
   requestedReferences: RequestedReference[]
 ): PromiseResult<
   DatabaseResolvedEntityReference[],

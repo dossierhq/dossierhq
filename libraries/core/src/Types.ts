@@ -173,6 +173,13 @@ export interface AdminEntityInfo<TType extends string = string, TAuthKey extends
    * It is not connected to the requested version so if you get an old version of the entity, the
    * status refer to the latest version. */
   status: AdminEntityStatus;
+  /**
+   * The current validation state of the entity. An invalid entity needs to be fixed before it can
+   * be saved.
+   *
+   * It is not connected to the requested version so if you get an old version of the entity, the
+   * validation state refers to the latest version. */
+  valid: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

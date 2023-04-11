@@ -21,6 +21,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     updated_at: new Date('2021-08-17T07:51:25.56Z'),
     updated: id,
     status: 'draft',
+    valid: true,
     version: 0,
     data: { title: 'Title' },
   };
@@ -30,7 +31,7 @@ describe('adminEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => []);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({ rows: [] }));
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -43,7 +44,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "none",
           26,
@@ -55,9 +56,9 @@ describe('adminEntitySearchEntities', () => {
   test('Minimal, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => [
-      createEntityDbRow(1),
-    ]);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(1)],
+    }));
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -82,6 +83,7 @@ describe('adminEntitySearchEntities', () => {
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
               "version": 0,
             },
           ],
@@ -92,7 +94,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "none",
           26,
@@ -104,9 +106,9 @@ describe('adminEntitySearchEntities', () => {
   test('Paging after, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => [
-      createEntityDbRow(2),
-    ]);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(2)],
+    }));
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -131,6 +133,7 @@ describe('adminEntitySearchEntities', () => {
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
               "version": 0,
             },
           ],
@@ -141,7 +144,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
           "none",
           1,
@@ -154,9 +157,9 @@ describe('adminEntitySearchEntities', () => {
   test('Paging before, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => [
-      createEntityDbRow(2),
-    ]);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(2)],
+    }));
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -181,6 +184,7 @@ describe('adminEntitySearchEntities', () => {
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
               "version": 0,
             },
           ],
@@ -191,7 +195,7 @@ describe('adminEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "none",
           1,

@@ -33,7 +33,7 @@ CREATE TABLE entities (
     updated_at TEXT NOT NULL,
     updated_seq INTEGER NOT NULL,
     latest_entity_versions_id INTEGER,
-    published_entity_versions_id INTEGER,
+    published_entity_versions_id INTEGER, valid INTEGER NOT NULL DEFAULT TRUE, revalidate INTEGER NOT NULL DEFAULT FALSE,
     CONSTRAINT entities_uuid UNIQUE (uuid),
     CONSTRAINT entities_name UNIQUE (name),
     CONSTRAINT entities_updated_seq UNIQUE (updated_seq),

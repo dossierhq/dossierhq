@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import type { EntityReference, Location } from '@dossierhq/core';
 import {
   createRichTextParagraphNode,
@@ -6,7 +5,12 @@ import {
   createRichTextTextAndLineBreakNodes,
   createRichTextTextNode,
 } from '@dossierhq/core';
-import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
+import { faker } from '@faker-js/faker';
+import {
+  createAdapterAndServer,
+  createNewDatabase,
+  optimizeAndCloseDatabase,
+} from '../utils/shared-generator.js';
 import type {
   AdminPersonalNote,
   AdminPlaceOfBusiness,
@@ -154,9 +158,7 @@ async function main() {
     await createPersonalNote(bobAdminClient, faker.helpers.arrayElement(placesOfBusiness), 'Bob');
   }
 
-  (await server.optimizeDatabase({ all: true })).throwIfError();
-
-  await server.shutdown();
+  await optimizeAndCloseDatabase(server);
 }
 
 main().catch((error) => {

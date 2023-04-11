@@ -1,11 +1,11 @@
 import type { FunctionComponent, MouseEventHandler, ReactElement } from 'react';
-import type { StatusColor } from '../../config/Colors.js';
+import type { Color } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TagProps {
   className?: string;
-  color?: (typeof StatusColor)[keyof typeof StatusColor];
+  color?: Color;
   children: string | [string, ReactElement<TagRemoveProps> | null];
 }
 

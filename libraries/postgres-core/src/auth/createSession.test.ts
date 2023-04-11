@@ -8,8 +8,8 @@ describe('authCreateSession', () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
     adapter.query.mockImplementation(async (_transaction, query, _values) => {
-      if (query.startsWith('INSERT INTO subjects')) return [{ id: 123, uuid: '4321' }];
-      return [];
+      if (query.startsWith('INSERT INTO subjects')) return { rows: [{ id: 123, uuid: '4321' }] };
+      return { rows: [] };
     });
     const result = await authCreateSession(adapter, context, 'test', 'hello');
     expectResultValue(result, {
@@ -47,8 +47,9 @@ describe('authCreateSession', () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
     adapter.query.mockImplementation(async (_transaction, query, _values) => {
-      if (query.startsWith('SELECT s.id, s.uuid FROM')) return [{ id: 123, uuid: '4321' }];
-      return [];
+      if (query.startsWith('SELECT s.id, s.uuid FROM'))
+        return { rows: [{ id: 123, uuid: '4321' }] };
+      return { rows: [] };
     });
     const result = await authCreateSession(adapter, context, 'test', 'hello');
     expectResultValue(result, {

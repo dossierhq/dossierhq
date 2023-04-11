@@ -49,6 +49,6 @@ export async function adminEntityArchivingGetEntityInfo(
     resolvedAuthKey,
     status: resolveEntityStatus(status),
     updatedAt: new Date(updatedAt),
-    neverPublished,
+    neverPublished: !!neverPublished,
   });
 }

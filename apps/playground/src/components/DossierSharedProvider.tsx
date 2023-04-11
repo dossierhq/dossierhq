@@ -1,8 +1,3 @@
-import {
-  AdminDossierProvider,
-  PublishedDossierProvider,
-  useCachingAdminMiddleware,
-} from '@dossierhq/react-components';
 import type {
   AdminClientMiddleware,
   ClientContext,
@@ -11,9 +6,14 @@ import type {
   PublishedClientMiddleware,
   Result,
 } from '@dossierhq/core';
-import { assertIsDefined, LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
+import { LoggingClientMiddleware, assertIsDefined, notOk, ok } from '@dossierhq/core';
 import { NotificationContext } from '@dossierhq/design';
-import type { CreateSessionPayload, Server } from '@dossierhq/server';
+import {
+  AdminDossierProvider,
+  PublishedDossierProvider,
+  useCachingAdminMiddleware,
+} from '@dossierhq/react-components';
+import { type CreateSessionPayload, type Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Cache } from 'swr';
 import { useSWRConfig } from 'swr';

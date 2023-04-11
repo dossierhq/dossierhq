@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishingCreateEventArg,
   TransactionContext,
@@ -28,5 +28,6 @@ export async function adminEntityPublishingCreateEvents(
       'entityVersionInternalId' in reference ? (reference.entityVersionInternalId as number) : null;
     sql`(${entitiesId}, ${entityVersionId}, ${subjectValue}, ${publishedAtValue}, ${kindValue})`;
   }
-  return await queryRun(database, context, query);
+  const result = await queryRun(database, context, query);
+  return result.isOk() ? ok(undefined) : result;
 }

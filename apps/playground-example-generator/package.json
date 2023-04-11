@@ -12,6 +12,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
+    "generate:all": "npm run generate:blog && npm run generate:catalog && npm run generate:reviews && npm run generate:starwars",
     "generate:blog": "node lib/blog/blog-generator.js",
     "generate:catalog": "node lib/catalog/catalog-generator.js",
     "generate:reviews": "node lib/reviews/reviews-generator.js",

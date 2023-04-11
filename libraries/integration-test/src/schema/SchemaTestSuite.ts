@@ -1,16 +1,27 @@
-import type { AdminClient } from '@dossierhq/core';
 import { AdminSchema } from '@dossierhq/core';
-import type { TestFunctionInitializer, TestSuite } from '../index.js';
+import type { Server } from '@dossierhq/server';
 import { assertOkResult } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import { ServerRevalidateNextEntitySubSuite } from './ServerRevalidateNextEntitySubSuite.js';
 
-export function createSchemaTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<{ client: AdminClient }, TCleanup>
-): TestSuite {
-  return buildSuite(initializer, getSchemaSpecification_normal);
+export interface SchemaTestContext {
+  server: Server;
 }
 
-async function getSchemaSpecification_normal({ client }: { client: AdminClient }) {
+export function createSchemaTestSuite<TCleanup>(
+  initializer: TestFunctionInitializer<SchemaTestContext, TCleanup>
+): TestSuite {
+  return buildSuite(
+    initializer,
+    getSchemaSpecification_normal,
+    ...ServerRevalidateNextEntitySubSuite
+  );
+}
+
+async function getSchemaSpecification_normal({ server }: SchemaTestContext) {
+  const client = adminClientForMainPrincipal(server);
   const result = await client.getSchemaSpecification();
   assertOkResult(result);
   const schema = new AdminSchema(result.value);

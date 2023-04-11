@@ -41,7 +41,10 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
+import { managementMarkEntitiesForRevalidation } from './management/markEntitiesForRevalidation.js';
 import { managementOptimize } from './management/optimize.js';
+import { managementRevalidateGetNextEntity } from './management/revalidateGetNextEntity.js';
+import { managementRevalidateUpdateEntity } from './management/revalidateUpdateEntity.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -52,6 +55,11 @@ import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 
 export type PostgresDatabaseOptimizationOptions = DatabaseOptimizationOptions;
 
+export interface PostgresQueryResult<R> {
+  rowCount?: number;
+  rows: R[];
+}
+
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
 
@@ -61,7 +69,7 @@ export interface PostgresDatabaseAdapter {
     transaction: PostgresTransaction | null,
     query: string,
     values: unknown[] | undefined
-  ): Promise<R[]>;
+  ): Promise<PostgresQueryResult<R>>;
 
   isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
 
@@ -120,7 +128,13 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
+    managementMarkEntitiesForRevalidation: (...args) =>
+      managementMarkEntitiesForRevalidation(databaseAdapter, ...args),
     managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),
+    managementRevalidateGetNextEntity: (...args) =>
+      managementRevalidateGetNextEntity(databaseAdapter, ...args),
+    managementRevalidateUpdateEntity: (...args) =>
+      managementRevalidateUpdateEntity(databaseAdapter, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),
     publishedEntitySampleEntities: (...args) =>

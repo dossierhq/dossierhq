@@ -1,6 +1,10 @@
 import { v5 as uuidv5 } from 'uuid';
 import { fetchJsonCached } from '../utils/fetchUtils.js';
-import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
+import {
+  createAdapterAndServer,
+  createNewDatabase,
+  optimizeAndCloseDatabase,
+} from '../utils/shared-generator.js';
 import type {
   AdminFilm,
   AdminPerson,
@@ -227,9 +231,7 @@ async function main() {
   await createVehicles(adminClient);
   await createFilms(adminClient);
 
-  (await server.optimizeDatabase({ all: true })).throwIfError();
-
-  await server.shutdown();
+  await optimizeAndCloseDatabase(server);
 }
 
 main().catch((error) => {

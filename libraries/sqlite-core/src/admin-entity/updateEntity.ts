@@ -36,17 +36,17 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
@@ -58,6 +58,7 @@ export async function adminEntityUpdateGetEntityInfo(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
+    valid,
     version,
     created_at: createdAt,
     updated_at: updatedAt,
@@ -71,6 +72,7 @@ export async function adminEntityUpdateGetEntityInfo(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
+    valid: !!valid,
     version,
     createdAt: new Date(createdAt),
     updatedAt: new Date(updatedAt),
@@ -96,9 +98,7 @@ export async function adminEntityUpdateEntity(
       JSON.stringify(entity.fieldValues),
     ],
   });
-  if (createVersionResult.isError()) {
-    return createVersionResult;
-  }
+  if (createVersionResult.isError()) return createVersionResult;
   const { id: versionsId } = createVersionResult.value;
 
   let newName = entity.name;
@@ -132,9 +132,7 @@ export async function adminEntityUpdateEntity(
       }
     );
 
-    if (nameResult.isError()) {
-      return nameResult;
-    }
+    if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
   }
 
@@ -146,7 +144,9 @@ export async function adminEntityUpdateEntity(
              latest_entity_versions_id = ?1,
              updated_at = ?2,
              updated_seq = ?3,
-             status = ?4
+             status = ?4,
+             valid = TRUE,
+             revalidate = FALSE
            WHERE id = ?5`,
     values: [
       versionsId,
@@ -156,9 +156,7 @@ export async function adminEntityUpdateEntity(
       entity.entityInternalId as number,
     ],
   });
-  if (updateEntityResult.isError()) {
-    return updateEntityResult;
-  }
+  if (updateEntityResult.isError()) return updateEntityResult;
 
   const ftsResult = await queryRun(
     database,

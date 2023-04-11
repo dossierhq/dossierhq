@@ -9,7 +9,7 @@ import type {
   RichTextFieldSpecification,
   StringFieldSpecification,
 } from './Schema.js';
-import type { AdminEntityCreate, AdminEntityUpdate } from './Types.js';
+import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from './Types.js';
 
 export interface SaveValidationIssue {
   type: 'save';
@@ -25,49 +25,30 @@ export interface PublishValidationIssue {
 
 const LINE_BREAK_REGEX = /[\r\n]/;
 
+export function validateEntityInfo(
+  adminSchema: AdminSchema,
+  path: ItemValuePath,
+  entity: AdminEntity
+): SaveValidationIssue | null {
+  // info.type, info.authKey
+  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity);
+  if (typeAuthKeyValidation) return typeAuthKeyValidation;
+
+  // info.name
+  const saveValidation = validateName(path, entity.info.name);
+  if (saveValidation) return saveValidation;
+
+  return null;
+}
+
 export function validateEntityInfoForCreate(
   adminSchema: AdminSchema,
   path: ItemValuePath,
   entity: AdminEntityCreate
 ): SaveValidationIssue | null {
-  // info.type
-  const type = entity.info.type;
-  if (!type) {
-    return { type: 'save', path: [...path, 'info', 'type'], message: 'Type is required' };
-  }
-
-  const entitySpec = adminSchema.getEntityTypeSpecification(type);
-  if (!entitySpec) {
-    return {
-      type: 'save',
-      path: [...path, 'info', 'type'],
-      message: `Entity type ${type} doesn’t exist`,
-    };
-  }
-
-  // info.authKey
-  const authKey = entity.info.authKey;
-  if (!authKey) {
-    return { type: 'save', path: [...path, 'info', 'authKey'], message: 'AuthKey is required' };
-  }
-
-  if (entitySpec.authKeyPattern) {
-    const authKeyRegExp = adminSchema.getPatternRegExp(entitySpec.authKeyPattern);
-    if (!authKeyRegExp) {
-      return {
-        type: 'save',
-        path: [...path, 'info', 'authKey'],
-        message: `Pattern '${entitySpec.authKeyPattern}' for authKey of type '${entitySpec.name}' not found`,
-      };
-    }
-    if (!authKeyRegExp.test(authKey)) {
-      return {
-        type: 'save',
-        path: ['info', 'authKey'],
-        message: `AuthKey '${authKey}' does not match pattern '${entitySpec.authKeyPattern}' (${authKeyRegExp.source})`,
-      };
-    }
-  }
+  // info.type, info.authKey
+  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity);
+  if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
   const saveValidation = validateName(path, entity.info.name);
@@ -119,6 +100,53 @@ export function validateEntityInfoForUpdate(
       path: [...path, 'info', 'version'],
       message: `The latest version of the entity is ${existingEntity.info.version}, so the new version must be ${expectedVersion} (got ${entity.info.version})`,
     };
+  }
+
+  return null;
+}
+
+function validateTypeAndAuthKey(
+  adminSchema: AdminSchema,
+  path: ItemValuePath,
+  entity: AdminEntityCreate | AdminEntity
+): SaveValidationIssue | null {
+  // info.type
+  const type = entity.info.type;
+  if (!type) {
+    return { type: 'save', path: [...path, 'info', 'type'], message: 'Type is required' };
+  }
+
+  const entitySpec = adminSchema.getEntityTypeSpecification(type);
+  if (!entitySpec) {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'type'],
+      message: `Entity type ${type} doesn’t exist`,
+    };
+  }
+
+  // info.authKey
+  const authKey = entity.info.authKey;
+  if (!authKey) {
+    return { type: 'save', path: [...path, 'info', 'authKey'], message: 'AuthKey is required' };
+  }
+
+  if (entitySpec.authKeyPattern) {
+    const authKeyRegExp = adminSchema.getPatternRegExp(entitySpec.authKeyPattern);
+    if (!authKeyRegExp) {
+      return {
+        type: 'save',
+        path: [...path, 'info', 'authKey'],
+        message: `Pattern '${entitySpec.authKeyPattern}' for authKey of type '${entitySpec.name}' not found`,
+      };
+    }
+    if (!authKeyRegExp.test(authKey)) {
+      return {
+        type: 'save',
+        path: ['info', 'authKey'],
+        message: `AuthKey '${authKey}' does not match pattern '${entitySpec.authKeyPattern}' (${authKeyRegExp.source})`,
+      };
+    }
   }
 
   return null;

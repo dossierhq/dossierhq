@@ -13,7 +13,11 @@ import {
 import { faker } from '@faker-js/faker';
 import { v5 as uuidv5 } from 'uuid';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
-import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
+import {
+  createAdapterAndServer,
+  createNewDatabase,
+  optimizeAndCloseDatabase,
+} from '../utils/shared-generator.js';
 import type {
   AdminBooleansEntity,
   AdminCloudinaryImage,
@@ -362,6 +366,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
         fields: {
           title: 'Strings filled',
           normal: 'Hello',
+          multiline: 'Hello\nWorld',
           matchPattern: 'baz',
           list: ['uno', 'dos', 'tres'],
         },
@@ -483,9 +488,7 @@ async function main() {
     cloudinaryImageValueItems,
   });
 
-  (await server.optimizeDatabase({ all: true })).throwIfError();
-
-  await server.shutdown();
+  await optimizeAndCloseDatabase(server);
 }
 
 main().catch((error) => {

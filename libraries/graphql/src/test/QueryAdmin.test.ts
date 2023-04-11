@@ -88,6 +88,7 @@ query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: Stri
       version
       authKey
       status
+      valid
     }
     ... on AdminQueryAdminFoo {
       fields {
@@ -281,6 +282,7 @@ describe('adminEntity()', () => {
             name,
             authKey: 'none',
             status: AdminEntityStatus.draft,
+            valid: true,
           },
           fields: {
             ...ADMIN_FOO_EMPTY_FIELDS,
@@ -335,6 +337,7 @@ describe('adminEntity()', () => {
               name,
               authKey: 'none',
               status: AdminEntityStatus.draft,
+              valid: true,
             },
             fields: {
               ...ADMIN_FOO_EMPTY_FIELDS,
@@ -386,6 +389,7 @@ describe('adminEntity()', () => {
               version: 0,
               authKey: 'none',
               status: AdminEntityStatus.draft,
+              valid: true,
             },
             fields: ADMIN_FOO_EMPTY_FIELDS,
           },

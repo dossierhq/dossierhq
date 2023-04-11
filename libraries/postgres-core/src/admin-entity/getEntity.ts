@@ -40,6 +40,7 @@ export async function adminGetEntity(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
+    valid,
     created_at: createdAt,
     updated_at: updatedAt,
     data: fieldValues,
@@ -53,6 +54,7 @@ export async function adminGetEntity(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
+    valid,
     createdAt,
     updatedAt,
     fieldValues,
@@ -65,7 +67,7 @@ async function getEntityWithLatestVersion(
   reference: EntityReference | UniqueIndexReference
 ) {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data`;
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
@@ -84,6 +86,7 @@ async function getEntityWithLatestVersion(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(databaseAdapter, context, query);
@@ -110,10 +113,11 @@ async function getEntityWithVersion(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data
     FROM entities e, entity_versions ev
     WHERE e.uuid = $1
     AND e.id = ev.entities_id

@@ -15,7 +15,9 @@ export interface EntitiesTable {
   auth_key: string;
   resolved_auth_key: string;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
-  never_published: boolean;
+  never_published: number; // boolean
+  valid: number; // boolean
+  revalidate: number; // boolean
   created_at: string;
   updated_at: string;
   updated_seq: number;

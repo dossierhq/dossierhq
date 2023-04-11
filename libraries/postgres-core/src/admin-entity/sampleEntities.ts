@@ -45,6 +45,7 @@ export async function adminEntitySampleEntities(
       updatedAt: it.updated_at,
       authKey: it.auth_key,
       status: resolveEntityStatus(it.status),
+      valid: it.valid,
       fieldValues: it.data,
     }))
   );

@@ -34,20 +34,19 @@ export async function createBetterSqlite3Adapter(
     disconnect: async () => {
       database.close();
     },
+
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
       const statement = database.prepare(convertedQuery);
       const result = convertedValues ? statement.all(convertedValues) : statement.all();
       return result as R[];
     },
+
     run: async (query: string, values: ColumnValue[] | undefined) => {
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
       const statement = database.prepare(convertedQuery);
-      if (convertedValues) {
-        statement.run(convertedValues);
-      } else {
-        statement.run();
-      }
+      const result = convertedValues ? statement.run(convertedValues) : statement.run();
+      return result.changes;
     },
 
     isFtsVirtualTableConstraintFailed,

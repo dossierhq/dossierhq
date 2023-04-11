@@ -1,0 +1,7 @@
+ALTER TABLE entities
+  ADD COLUMN valid BOOLEAN NOT NULL DEFAULT TRUE;
+
+ALTER TABLE entities
+  ADD COLUMN revalidate BOOLEAN NOT NULL DEFAULT FALSE;
+
+UPDATE entities SET revalidate = TRUE;

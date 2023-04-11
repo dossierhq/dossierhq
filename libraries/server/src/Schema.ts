@@ -7,6 +7,7 @@ import type {
 } from '@dossierhq/core';
 import { AdminSchema, isFieldValueEqual, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
+import { calculateSchemaChangeRevalidation } from './schema/calculateSchemaChangeRevalidation.js';
 
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
@@ -88,8 +89,30 @@ export async function updateSchemaSpecification(
       return ok({ effect: 'none', schemaSpecification: newSchema.spec });
     }
 
+    const revalidateCalculationResult = calculateSchemaChangeRevalidation(oldSchema, newSchema);
+    if (revalidateCalculationResult.isError()) return revalidateCalculationResult;
+
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) return updateResult;
+
+    if (
+      revalidateCalculationResult.value.entityTypes.length > 0 ||
+      revalidateCalculationResult.value.valueTypes.length > 0
+    ) {
+      logger.info(
+        'Marking entities with for revalidation (entity types=%s, value types=%s)',
+        revalidateCalculationResult.value.entityTypes.join(','),
+        revalidateCalculationResult.value.valueTypes.join(',')
+      );
+      const revalidationResult = await databaseAdapter.managementMarkEntitiesForRevalidation(
+        context,
+        revalidateCalculationResult.value.entityTypes,
+        revalidateCalculationResult.value.valueTypes
+      );
+      if (revalidationResult.isError()) return revalidationResult;
+
+      logger.info('Marked %d entities for revalidation', revalidationResult.value.count);
+    }
 
     logger.info(
       'Updated schema, new schema has %d entity types, %d value types, %d patterns, %d indexes',

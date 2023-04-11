@@ -4,8 +4,8 @@ import type {
   DatabaseAdminEntityGetOnePayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
@@ -25,10 +25,11 @@ export async function adminEntityGetMultiple(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data
     FROM entities e, entity_versions ev
     WHERE e.uuid = ANY($1)
     AND e.latest_draft_entity_versions_id = ev.id`,
@@ -49,6 +50,7 @@ export async function adminEntityGetMultiple(
       createdAt: row.created_at,
       updatedAt: row.updated_at,
       status: resolveEntityStatus(row.status),
+      valid: row.valid,
       version: row.version,
       fieldValues: row.data,
     }))

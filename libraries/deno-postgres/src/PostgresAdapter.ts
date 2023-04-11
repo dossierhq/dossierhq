@@ -47,8 +47,8 @@ export function createPostgresAdapter(
       transaction: PostgresTransaction | null,
       query: string,
       values: unknown[] | undefined,
-    ): Promise<R[]> {
-      let result: { rows: R[] };
+    ) {
+      let result: { rows: R[]; rowCount?: number };
       if (transaction) {
         result = await getTransaction(transaction).queryObject(query, values);
       } else {
@@ -59,7 +59,7 @@ export function createPostgresAdapter(
           poolClient.release();
         }
       }
-      return result.rows;
+      return result;
     },
 
     isUniqueViolationOfConstraint,

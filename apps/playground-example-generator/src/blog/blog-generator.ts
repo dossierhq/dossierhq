@@ -1,14 +1,18 @@
 import 'dotenv/config';
 //
-import { faker } from '@faker-js/faker';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
 } from '@dossierhq/core';
+import { faker } from '@faker-js/faker';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
-import { createAdapterAndServer, createNewDatabase } from '../utils/shared-generator.js';
+import {
+  createAdapterAndServer,
+  createNewDatabase,
+  optimizeAndCloseDatabase,
+} from '../utils/shared-generator.js';
 import type {
   AdminBlogPost,
   AdminCloudinaryImage,
@@ -87,9 +91,7 @@ async function main() {
     await createBlogPost(adminClient, persons, images);
   }
 
-  (await server.optimizeDatabase({ all: true })).throwIfError();
-
-  await server.shutdown();
+  await optimizeAndCloseDatabase(server);
 }
 
 main().catch((error) => {

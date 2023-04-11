@@ -77,12 +77,12 @@ export function queryAll<R>(db: Database, query: string, values: unknown[] = [])
 }
 
 export function queryRun(db: Database, query: string, values: unknown[] = []) {
-  return new Promise<void>((resolve, reject) =>
+  return new Promise<number>((resolve, reject) =>
     db.run(query, values, function (this: RunResult, error: Error | null) {
       if (error) {
         reject(error);
       }
-      resolve(undefined);
+      resolve(this.changes);
     })
   );
 }

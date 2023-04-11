@@ -52,12 +52,14 @@ async function addValues(
     }
   });
 
-  return queryRun(database, context, query, (error) => {
+  const result = await queryRun(database, context, query, (error) => {
     if (database.adapter.isUniqueViolationOfConstraint(error, UniqueIndexValueConstraint)) {
       return notOk.Conflict('Conflict with unique index value');
     }
     return notOk.GenericUnexpectedException(context, error);
   });
+
+  return result.isOk() ? ok(undefined) : result;
 }
 
 async function updateValues(

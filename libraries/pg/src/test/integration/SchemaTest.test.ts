@@ -30,17 +30,7 @@ registerTestSuite(
   createSchemaTestSuite({
     before: async () => {
       assertIsDefined(server);
-      const resolvedServer = server;
-
-      const sessionResult = resolvedServer.createSession({
-        provider: 'test',
-        identifier: 'id',
-        defaultAuthKeys: ['none'],
-        logger: null,
-        databasePerformance: null,
-      });
-      const client = server.createAdminClient(() => sessionResult);
-      return [{ client }, undefined];
+      return [{ server }, undefined];
     },
     after: async () => {
       // empty

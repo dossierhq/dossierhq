@@ -26,7 +26,7 @@ describe('publishedEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => []);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({ rows: [] }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -50,9 +50,9 @@ describe('publishedEntitySearchEntities', () => {
   test('Minimal, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => [
-      createEntityDbRow(1),
-    ]);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(1)],
+    }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -95,9 +95,9 @@ describe('publishedEntitySearchEntities', () => {
   test('Paging after, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => [
-      createEntityDbRow(2),
-    ]);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(2)],
+    }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -141,9 +141,9 @@ describe('publishedEntitySearchEntities', () => {
   test('Paging before, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => [
-      createEntityDbRow(2),
-    ]);
+    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(2)],
+    }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
