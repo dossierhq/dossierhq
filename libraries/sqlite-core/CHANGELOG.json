@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.2.12",
+      "tag": "@dossierhq/sqlite-core_v0.2.12",
+      "date": "Tue, 11 Apr 2023 18:39:14 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Speed up managementRevalidateGetNextEntity()"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.11",
       "tag": "@dossierhq/sqlite-core_v0.2.11",
       "date": "Tue, 11 Apr 2023 15:53:50 GMT",

@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Tue, 11 Apr 2023 15:53:50 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Apr 2023 18:39:14 GMT and should not be manually modified.
+
+## 0.2.12
+Tue, 11 Apr 2023 18:39:14 GMT
+
+### Updates
+
+- Reduce logging for BackgroundEntityValidatorPlugin to at most 1/s
 
 ## 0.2.11
 Tue, 11 Apr 2023 15:53:50 GMT
