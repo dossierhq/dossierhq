@@ -1,18 +1,20 @@
 import {
   AdminClientOperationName,
   type AdminClient,
+  type AdminClientMiddleware,
   type AdminClientOperation,
-  type ClientContext,
   type Logger,
   type OkFromResult,
+  type PublishedClientMiddleware,
   type PublishedClientOperation,
 } from '@dossierhq/core';
-import type { Server } from '../Server.js';
+import type { SessionContext } from '../Context.js';
+import type { Server, ServerPlugin } from '../Server.js';
 
 const TIME_SINCE_LAST_OPERATION_MS = 1000 * 2;
 const TIME_SINCE_LAST_REVALIDATION_MS = 5;
 
-export class BackgroundEntityValidator<TContext extends ClientContext> {
+export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   private server: Server;
   private logger: Logger;
   private handle: NodeJS.Timeout | null = null;
@@ -37,7 +39,7 @@ export class BackgroundEntityValidator<TContext extends ClientContext> {
     this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
   }
 
-  stop() {
+  onServerShutdown() {
     this.logger.info('BackgroundEntityValidator stopping');
     if (this.handle) {
       clearTimeout(this.handle);
@@ -45,7 +47,19 @@ export class BackgroundEntityValidator<TContext extends ClientContext> {
     }
   }
 
-  async adminMiddleware(_context: TContext, operation: AdminClientOperation) {
+  onCreateAdminClient(
+    pipeline: AdminClientMiddleware<SessionContext>[]
+  ): AdminClientMiddleware<SessionContext>[] {
+    return [this.adminMiddleware, ...pipeline];
+  }
+
+  onCreatePublishedClient(
+    pipeline: PublishedClientMiddleware<SessionContext>[]
+  ): PublishedClientMiddleware<SessionContext>[] {
+    return [this.publishedMiddleware, ...pipeline];
+  }
+
+  private async adminMiddleware(_context: SessionContext, operation: AdminClientOperation) {
     this.lastOperationTimestamp = Date.now();
 
     const result = await operation.next();
@@ -64,7 +78,7 @@ export class BackgroundEntityValidator<TContext extends ClientContext> {
     operation.resolve(result);
   }
 
-  async publishedMiddleware(_context: TContext, operation: PublishedClientOperation) {
+  private async publishedMiddleware(_context: SessionContext, operation: PublishedClientOperation) {
     this.lastOperationTimestamp = Date.now();
 
     const result = await operation.next();

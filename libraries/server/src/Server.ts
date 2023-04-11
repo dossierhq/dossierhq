@@ -39,6 +39,8 @@ export interface Server<
 > {
   shutdown(): PromiseResult<void, typeof ErrorType.Generic>;
 
+  addPlugin(plugin: ServerPlugin): void;
+
   optimizeDatabase(
     options: TDatabaseOptimizationOptions
   ): PromiseResult<void, typeof ErrorType.Generic>;
@@ -69,11 +71,24 @@ export interface Server<
   ): TClient;
 }
 
+export interface ServerPlugin {
+  onCreateAdminClient(
+    pipeline: AdminClientMiddleware<SessionContext>[]
+  ): AdminClientMiddleware<SessionContext>[];
+
+  onCreatePublishedClient(
+    pipeline: PublishedClientMiddleware<SessionContext>[]
+  ): PublishedClientMiddleware<SessionContext>[];
+
+  onServerShutdown(): void;
+}
+
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
   #adminSchema: AdminSchema | null = null;
   #publishedSchema: PublishedSchema | null = null;
+  #plugins: ServerPlugin[] = [];
 
   constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
@@ -82,6 +97,11 @@ export class ServerImpl {
 
   async shutdown(): PromiseResult<void, typeof ErrorType.Generic> {
     if (this.#databaseAdapter) {
+      for (const plugin of this.#plugins) {
+        plugin.onServerShutdown();
+      }
+      this.#plugins = [];
+
       this.#logger.info('Shutting down database adapter');
       await this.#databaseAdapter.disconnect();
       this.#databaseAdapter = null;
@@ -99,6 +119,10 @@ export class ServerImpl {
     }
     this.setAdminSchema(result.value);
     return ok(undefined);
+  }
+
+  addPlugin(plugin: ServerPlugin): void {
+    this.#plugins.push(plugin);
   }
 
   getAdminSchema(): AdminSchema {
@@ -146,6 +170,20 @@ export class ServerImpl {
       )
     );
   }
+
+  resolveAdminClientMiddleware(middleware: AdminClientMiddleware<SessionContext>[]) {
+    for (const plugin of this.#plugins) {
+      middleware = plugin.onCreateAdminClient(middleware);
+    }
+    return middleware;
+  }
+
+  resolvePublishedClientMiddleware(middleware: PublishedClientMiddleware<SessionContext>[]) {
+    for (const plugin of this.#plugins) {
+      middleware = plugin.onCreatePublishedClient(middleware);
+    }
+    return middleware;
+  }
 }
 
 export async function createServer<
@@ -169,6 +207,10 @@ export async function createServer<
   const server: Server<TDatabaseOptimizationOptions> = {
     shutdown() {
       return serverImpl.shutdown();
+    },
+
+    addPlugin(plugin) {
+      serverImpl.addPlugin(plugin);
     },
 
     optimizeDatabase(options) {
@@ -225,7 +267,7 @@ export async function createServer<
         authorizationAdapter,
         databaseAdapter,
         serverImpl,
-        middleware: middleware ?? [],
+        middleware: serverImpl.resolveAdminClientMiddleware(middleware ?? []),
       }) as TClient,
 
     createPublishedClient: <
@@ -239,7 +281,7 @@ export async function createServer<
         authorizationAdapter,
         databaseAdapter,
         serverImpl,
-        middleware: middleware ?? [],
+        middleware: serverImpl.resolvePublishedClientMiddleware(middleware ?? []),
       }) as TClient,
   };
 
