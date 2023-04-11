@@ -1,6 +1,6 @@
 import type { AdminEntity, PublishedQueryOrder } from '@dossierhq/core';
 import { AdminQueryOrder } from '@dossierhq/core';
-import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
+import { DateDisplay, EmptyStateMessage, Table, Tag, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -132,6 +132,12 @@ function EntityListRow({
       <Table.Cell>{entity.info.type}</Table.Cell>
       <Table.Cell narrow>
         <StatusTag status={entity.info.status} />
+        {!entity.info.valid ? (
+          <>
+            {' '}
+            <Tag color="danger">Invalid</Tag>
+          </>
+        ) : null}
       </Table.Cell>
       <Table.Cell narrow>
         <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
