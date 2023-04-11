@@ -31,7 +31,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   }
 
   start() {
-    this.logger.info('BackgroundEntityValidator starting');
+    this.logger.info('BackgroundEntityValidatorPlugin: starting');
     this.revalidate = true;
     if (this.handle) {
       clearTimeout(this.handle);
@@ -40,7 +40,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   }
 
   onServerShutdown() {
-    this.logger.info('BackgroundEntityValidator stopping');
+    this.logger.info('BackgroundEntityValidatorPlugin: stopping');
     if (this.handle) {
       clearTimeout(this.handle);
       this.handle = null;
@@ -70,7 +70,9 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
       if (payload.effect === 'updated') {
         this.revalidate = true;
         if (!this.handle) {
-          this.logger.info('BackgroundEntityValidator starting revalidation after schema update');
+          this.logger.info(
+            'BackgroundEntityValidatorPlugin: starting revalidation after schema update'
+          );
           this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
         }
       }
@@ -99,20 +101,23 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
       if (result.isOk()) {
         if (result.value) {
           if (result.value.valid) {
-            this.logger.info('BackgroundEntityValidator revalidated entity: %s', result.value.id);
+            this.logger.info(
+              'BackgroundEntityValidatorPlugin: revalidated entity: %s',
+              result.value.id
+            );
           } else {
             this.logger.warn(
-              'BackgroundEntityValidator revalidated entity: %s, but it was invalid',
+              'BackgroundEntityValidatorPlugin: revalidated entity: %s, but it was invalid',
               result.value.id
             );
           }
         } else {
-          this.logger.info('BackgroundEntityValidator no more entities to revalidate');
+          this.logger.info('BackgroundEntityValidatorPlugin: no more entities to revalidate');
           this.revalidate = false;
         }
       } else {
         this.logger.error(
-          'BackgroundEntityValidator failed validating %s: %s',
+          'BackgroundEntityValidatorPlugin: failed validating %s: %s',
           result.error,
           result.message
         );
