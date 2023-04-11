@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-tools",
+      "comment": "Add support for entity revalidation",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-tools"
+}

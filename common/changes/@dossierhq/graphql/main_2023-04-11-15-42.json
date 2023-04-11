@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Add valid to AdminEntityInfo",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Add test to run revalidateNextEntity() on all entities.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

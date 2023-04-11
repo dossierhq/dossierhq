@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Allow all colors on Tag",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}

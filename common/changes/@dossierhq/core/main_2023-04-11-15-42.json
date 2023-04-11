@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Add valid to AdminEntityStatus. Add validateEntityInfo().",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}
