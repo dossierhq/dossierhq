@@ -7,7 +7,7 @@ importers:
 
   ../../apps/blog:
     specifiers:
-      '@cloudinary/url-gen': ~1.9.2
+      '@cloudinary/url-gen': ~1.10.0
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
@@ -37,7 +37,7 @@ importers:
       typescript: ~5.0.4
       vitest: ~0.29.8
     dependencies:
-      '@cloudinary/url-gen': 1.9.2
+      '@cloudinary/url-gen': 1.10.0
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
@@ -508,7 +508,7 @@ importers:
 
   ../../libraries/cloudinary:
     specifiers:
-      '@cloudinary/url-gen': ~1.9.2
+      '@cloudinary/url-gen': ~1.10.0
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
@@ -522,7 +522,7 @@ importers:
       tslib: ~2.5.0
       typescript: ~5.0.4
     dependencies:
-      '@cloudinary/url-gen': 1.9.2
+      '@cloudinary/url-gen': 1.10.0
       '@dossierhq/design': link:../design
       react: 18.2.0
       tslib: 2.5.0
@@ -1260,7 +1260,7 @@ importers:
   ../../tools/all-dependencies:
     specifiers:
       '@auth0/auth0-react': ~2.0.1
-      '@cloudinary/url-gen': ~1.9.2
+      '@cloudinary/url-gen': ~1.10.0
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~7.6.0
       '@fortawesome/free-solid-svg-icons': ~6.4.0
@@ -1358,7 +1358,7 @@ importers:
       vitest: ~0.29.8
     dependencies:
       '@auth0/auth0-react': 2.0.1_biqbaboplfbrettd7655fr4n2y
-      '@cloudinary/url-gen': 1.9.2
+      '@cloudinary/url-gen': 1.10.0
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 7.6.0
       '@fortawesome/free-solid-svg-icons': 6.4.0
@@ -4053,11 +4053,11 @@ packages:
   /@cloudinary/transformation-builder-sdk/1.2.7:
     resolution: {integrity: sha512-Q1fhw37BXXmN6/BCxdnw3OUJ6aAy/zpDWH5t+xIwmG5GtYUYMZqOjvdOkOhWBmus9ptq9znuGsYn8h5vtSjT+w==}
     dependencies:
-      '@cloudinary/url-gen': 1.9.2
+      '@cloudinary/url-gen': 1.10.0
     dev: false
 
-  /@cloudinary/url-gen/1.9.2:
-    resolution: {integrity: sha512-LFL79Galcj8WZaXW6QOOt5LQVkioQdH7DR7blYcU9Zi0ae1y0L4Ujmr69RsUNshCNy/EdVAg0aVG/jjqKDnJsg==}
+  /@cloudinary/url-gen/1.10.0:
+    resolution: {integrity: sha512-J3V+gzT6Tepw9bMrR3prWVbW22cIFJtPS8Wkt1WFSZVHWpZx8/vv9ACHaxUmRqaSkjhX8ErsuzDY5YxdWnaCbw==}
     dependencies:
       '@cloudinary/transformation-builder-sdk': 1.2.7
     dev: false
