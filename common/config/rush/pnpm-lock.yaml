@@ -289,7 +289,7 @@ importers:
       '@types/sqlite3': ~3.1.8
       eslint: ~8.38.0
       express: ~4.18.2
-      graphql-http: ~1.17.1
+      graphql-http: ~1.18.0
       prettier: 2.8.7
       sqlite3: 5.1.4
       tslib: ~2.5.0
@@ -300,7 +300,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       express: 4.18.2
-      graphql-http: 1.17.1
+      graphql-http: 1.18.0
       sqlite3: 5.1.4
       tslib: 2.5.0
     devDependencies:
@@ -1322,7 +1322,7 @@ importers:
       graphiql: ~2.4.1
       graphql: ~16.6.0
       graphql-config: ~4.5.0
-      graphql-http: ~1.17.1
+      graphql-http: ~1.18.0
       graphql-voyager: ~1.0.2
       graphql-ws: ~5.12.1
       history: ~5.3.0
@@ -1385,7 +1385,7 @@ importers:
       express-jwt: 8.4.1
       graphiql: 2.4.1_lybbofi2q4l47ntrzpcgcbyuki
       graphql: 16.6.0
-      graphql-http: 1.17.1_graphql@16.6.0
+      graphql-http: 1.18.0_graphql@16.6.0
       graphql-voyager: 1.0.2_qd5hdkxxcgkhhr2a3ie2ikyllu
       history: 5.3.0
       jwks-rsa: 3.0.1
@@ -11122,15 +11122,15 @@ packages:
       graphql: 16.6.0
     dev: true
 
-  /graphql-http/1.17.1:
-    resolution: {integrity: sha512-FZyZNd/3sz4n1smEa3A7d/OCPR9iYeqTPypsLjaYu6QbthKuMqZldxSSXVE2p+WwEHWx7EYfeVl4U7LQ7bFYNA==}
+  /graphql-http/1.18.0:
+    resolution: {integrity: sha512-r2sIo6jCTQi1aj7s+Srg7oU3+r5pUUgxgDD5JDZOmFzrbXVGz+yMhIKhvqW0cV10DcnVIFCOzuFuc1qvnjJ7yQ==}
     engines: {node: '>=12'}
     peerDependencies:
       graphql: '>=0.11 <=16'
     dev: false
 
-  /graphql-http/1.17.1_graphql@16.6.0:
-    resolution: {integrity: sha512-FZyZNd/3sz4n1smEa3A7d/OCPR9iYeqTPypsLjaYu6QbthKuMqZldxSSXVE2p+WwEHWx7EYfeVl4U7LQ7bFYNA==}
+  /graphql-http/1.18.0_graphql@16.6.0:
+    resolution: {integrity: sha512-r2sIo6jCTQi1aj7s+Srg7oU3+r5pUUgxgDD5JDZOmFzrbXVGz+yMhIKhvqW0cV10DcnVIFCOzuFuc1qvnjJ7yQ==}
     engines: {node: '>=12'}
     peerDependencies:
       graphql: '>=0.11 <=16'
