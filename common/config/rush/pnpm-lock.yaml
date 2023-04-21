@@ -22,7 +22,7 @@ importers:
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ~5.57.1
       dotenv: ~16.0.3
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       eslint-config-next: ~13.3.0
       leaflet: ~1.9.3
       lexical: 0.9.1
@@ -58,10 +58,10 @@ importers:
       '@types/react': 18.0.33
       '@types/react-dom': 18.0.11
       '@types/sqlite3': 3.1.8
-      '@typescript-eslint/eslint-plugin': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/eslint-plugin': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
       dotenv: 16.0.3
-      eslint: 8.38.0
-      eslint-config-next: 13.3.0_voubu7prgxjfsfbgx5d4sqnwiy
+      eslint: 8.39.0
+      eslint-config-next: 13.3.0_iacogk7kkaymxepzhgcbytyi7q
       prettier: 2.8.7
       schema-dts: 1.1.2_typescript@5.0.4
       ts-node: 10.9.1_typescript@5.0.4
@@ -84,7 +84,7 @@ importers:
       '@types/react-dom': ~18.0.11
       '@types/sql.js': ~1.4.4
       '@vitejs/plugin-react-swc': ~3.3.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       graphiql: ~2.4.1
       graphql: ~16.6.0
       graphql-config: ~4.5.0
@@ -127,7 +127,7 @@ importers:
       '@types/react-dom': 18.0.11
       '@types/sql.js': 1.4.4
       '@vitejs/plugin-react-swc': 3.3.0_vite@4.3.1
-      eslint: 8.38.0
+      eslint: 8.39.0
       graphql-config: 4.5.0_graphql@16.6.0
       graphql-ws: 5.12.1_graphql@16.6.0
       rollup-plugin-visualizer: 5.9.0
@@ -150,7 +150,7 @@ importers:
       '@types/uuid': ~9.0.1
       cloudinary: ~1.36.1
       dotenv: ~16.0.3
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       sqlite3: 5.1.4
       ts-node: ~10.9.1
@@ -175,7 +175,7 @@ importers:
       '@types/prettier': 2.7.2
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.1
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       ts-node: 10.9.1_typescript@5.0.4
       typescript: 5.0.4
@@ -202,7 +202,7 @@ importers:
       benchpress: workspace:*
       better-sqlite3: ~8.3.0
       dotenv: ~16.0.3
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       pg: ~8.10.0
       prettier: 2.8.7
       sqlite3: 5.1.4
@@ -233,7 +233,7 @@ importers:
       '@types/better-sqlite3': 7.6.4
       '@types/pg': 8.6.6
       '@types/sqlite3': 3.1.8
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -244,7 +244,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/server': workspace:*
       bun-types: ~0.5.8
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       typescript: ~5.0.4
     dependencies:
@@ -254,7 +254,7 @@ importers:
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       bun-types: 0.5.8
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -287,7 +287,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/express': ~4.17.17
       '@types/sqlite3': ~3.1.8
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       express: ~4.18.2
       graphql-http: ~1.18.0
       prettier: 2.8.7
@@ -309,7 +309,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/express': 4.17.17
       '@types/sqlite3': 3.1.8
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -326,7 +326,7 @@ importers:
       '@types/react': ~18.0.33
       '@typescript-eslint/eslint-plugin': ~5.57.1
       better-sqlite3: ~8.3.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       eslint-config-next: ~13.3.0
       graphql: ~16.6.0
       graphql-voyager: ~1.0.2
@@ -354,9 +354,9 @@ importers:
     devDependencies:
       '@types/better-sqlite3': 7.6.4
       '@types/react': 18.0.33
-      '@typescript-eslint/eslint-plugin': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
-      eslint: 8.38.0
-      eslint-config-next: 13.3.0_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/eslint-plugin': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
+      eslint: 8.39.0
+      eslint-config-next: 13.3.0_iacogk7kkaymxepzhgcbytyi7q
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -431,7 +431,7 @@ importers:
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
       '@types/node': ~18.15.11
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -442,7 +442,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0_@types+node@18.15.11
       '@types/node': 18.15.11
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -457,7 +457,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/better-sqlite3': ~7.6.4
       better-sqlite3: ~8.3.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -474,7 +474,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/better-sqlite3': 7.6.4
       better-sqlite3: 8.3.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -489,7 +489,7 @@ importers:
       '@dossierhq/sqlite-core': workspace:*
       '@rushstack/heft': 0.50.0
       bun-types: ~0.5.8
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       typescript: ~5.0.4
     dependencies:
@@ -502,7 +502,7 @@ importers:
       '@dossierhq/server': link:../server
       '@rushstack/heft': 0.50.0
       bun-types: 0.5.8
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -516,7 +516,7 @@ importers:
       '@dossierhq/react-components': workspace:*
       '@rushstack/heft': 0.50.0
       '@types/react': ~18.0.33
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       react: ~18.2.0
       tslib: ~2.5.0
@@ -533,7 +533,7 @@ importers:
       '@dossierhq/react-components': link:../react-components
       '@rushstack/heft': 0.50.0
       '@types/react': 18.0.33
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -542,7 +542,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -553,7 +553,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -564,7 +564,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -576,7 +576,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -587,7 +587,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -599,7 +599,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -641,7 +641,7 @@ importers:
       '@typescript-eslint/parser': ~5.58.0
       '@vitejs/plugin-react': ~3.1.0
       bulma: ~0.9.4
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
       eslint-plugin-storybook: ~0.6.11
@@ -678,14 +678,14 @@ importers:
       '@types/lodash': 4.14.192
       '@types/react': 18.0.33
       '@types/react-dom': 18.0.11
-      '@typescript-eslint/eslint-plugin': 5.57.1_gjoxkwycl3ml7yxlw3iuo7gyna
-      '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/eslint-plugin': 5.57.1_ht4hxsssh3hshbto63ltm7rytu
+      '@typescript-eslint/parser': 5.58.0_iacogk7kkaymxepzhgcbytyi7q
       '@vitejs/plugin-react': 3.1.0_vite@4.3.1
       bulma: 0.9.4
-      eslint: 8.38.0
-      eslint-plugin-react: 7.32.2_eslint@8.38.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.38.0
-      eslint-plugin-storybook: 0.6.11_voubu7prgxjfsfbgx5d4sqnwiy
+      eslint: 8.39.0
+      eslint-plugin-react: 7.32.2_eslint@8.39.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.39.0
+      eslint-plugin-storybook: 0.6.11_iacogk7kkaymxepzhgcbytyi7q
       mini-svg-data-uri: 1.4.4
       prettier: 2.8.7
       sass: 1.62.0
@@ -703,7 +703,7 @@ importers:
       '@types/react-dom': ~18.0.11
       '@typescript-eslint/eslint-plugin': ~5.57.1
       '@typescript-eslint/parser': ~5.58.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
       prettier: 2.8.7
@@ -720,11 +720,11 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/react': 18.0.33
       '@types/react-dom': 18.0.11
-      '@typescript-eslint/eslint-plugin': 5.57.1_gjoxkwycl3ml7yxlw3iuo7gyna
-      '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
-      eslint: 8.38.0
-      eslint-plugin-react: 7.32.2_eslint@8.38.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.38.0
+      '@typescript-eslint/eslint-plugin': 5.57.1_ht4hxsssh3hshbto63ltm7rytu
+      '@typescript-eslint/parser': 5.58.0_iacogk7kkaymxepzhgcbytyi7q
+      eslint: 8.39.0
+      eslint-plugin-react: 7.32.2_eslint@8.39.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -739,7 +739,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.1
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       graphql: ~16.6.0
       prettier: 2.8.7
       sqlite3: 5.1.4
@@ -760,7 +760,7 @@ importers:
       '@rushstack/heft': 0.50.0
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.1
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       sqlite3: 5.1.4
       typescript: 5.0.4
@@ -778,7 +778,7 @@ importers:
       '@types/node': ~18.15.11
       '@types/prettier': ~2.7.2
       '@types/uuid': ~9.0.1
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       ts-node: ~10.9.1
       tslib: ~2.5.0
@@ -797,7 +797,7 @@ importers:
       '@types/node': 18.15.11
       '@types/prettier': 2.7.2
       '@types/uuid': 9.0.1
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       ts-node: 10.9.1_bhanhq442dy43ncydsavgi4jfi
       typescript: 5.0.4
@@ -810,7 +810,7 @@ importers:
       '@types/leaflet': ~1.9.3
       '@types/leaflet.locatecontrol': ~0.74.1
       '@types/react': ~18.0.33
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       leaflet: ~1.9.3
       leaflet.locatecontrol: ~0.79.0
       mini-svg-data-uri: ~1.4.4
@@ -833,7 +833,7 @@ importers:
       '@types/leaflet': 1.9.3
       '@types/leaflet.locatecontrol': 0.74.1
       '@types/react': 18.0.33
-      eslint: 8.38.0
+      eslint: 8.39.0
       mini-svg-data-uri: 1.4.4
       prettier: 2.8.7
       svgo: 3.0.2
@@ -854,7 +854,7 @@ importers:
       '@types/pg': ~8.6.6
       '@types/uuid': ~9.0.1
       dotenv: ~16.0.3
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       pg: ~8.10.0
       prettier: 2.8.7
       tslib: ~2.5.0
@@ -878,7 +878,7 @@ importers:
       '@types/pg': 8.6.6
       '@types/uuid': 9.0.1
       dotenv: 16.0.3
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       uuid: 9.0.0
@@ -892,7 +892,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -906,7 +906,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -948,7 +948,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ~5.57.1
       '@typescript-eslint/parser': ~5.58.0
       '@vitejs/plugin-react': ~3.1.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       eslint-plugin-import: ~2.27.5
       eslint-plugin-react: ~7.32.2
       eslint-plugin-react-hooks: ~4.6.0
@@ -999,14 +999,14 @@ importers:
       '@types/react': 18.0.33
       '@types/react-dom': 18.0.11
       '@types/uuid': 9.0.1
-      '@typescript-eslint/eslint-plugin': 5.57.1_gjoxkwycl3ml7yxlw3iuo7gyna
-      '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/eslint-plugin': 5.57.1_ht4hxsssh3hshbto63ltm7rytu
+      '@typescript-eslint/parser': 5.58.0_iacogk7kkaymxepzhgcbytyi7q
       '@vitejs/plugin-react': 3.1.0_vite@4.3.1
-      eslint: 8.38.0
-      eslint-plugin-import: 2.27.5_eslint@8.38.0
-      eslint-plugin-react: 7.32.2_eslint@8.38.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.38.0
-      eslint-plugin-storybook: 0.6.11_voubu7prgxjfsfbgx5d4sqnwiy
+      eslint: 8.39.0
+      eslint-plugin-import: 2.27.5_eslint@8.39.0
+      eslint-plugin-react: 7.32.2_eslint@8.39.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.39.0
+      eslint-plugin-storybook: 0.6.11_iacogk7kkaymxepzhgcbytyi7q
       prettier: 2.8.7
       storybook: 7.0.2
       typescript: 5.0.4
@@ -1022,7 +1022,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -1036,7 +1036,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -1054,7 +1054,7 @@ importers:
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
       base-64: ~1.0.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       sql.js: ~1.8.0
       tslib: ~2.5.0
@@ -1074,7 +1074,7 @@ importers:
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
       base-64: 1.0.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       sql.js: 1.8.0
       typescript: 5.0.4
@@ -1088,7 +1088,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -1102,7 +1102,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -1117,7 +1117,7 @@ importers:
       '@dossierhq/sqlite-core': workspace:*
       '@rushstack/heft': 0.50.0
       '@types/sqlite3': ~3.1.8
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       sqlite3: 5.1.4
       tslib: ~2.5.0
@@ -1134,7 +1134,7 @@ importers:
       '@dossierhq/server': link:../server
       '@rushstack/heft': 0.50.0
       '@types/sqlite3': 3.1.8
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       sqlite3: 5.1.4
       typescript: 5.0.4
@@ -1146,7 +1146,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -1158,7 +1158,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -1166,10 +1166,10 @@ importers:
   ../../rigs/heft-node-rig:
     specifiers:
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       typescript: ~5.0.4
     dependencies:
-      eslint: 8.38.0
+      eslint: 8.39.0
       typescript: 5.0.4
     devDependencies:
       '@rushstack/heft': 0.50.0
@@ -1201,7 +1201,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -1212,7 +1212,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -1222,7 +1222,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -1233,7 +1233,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
       vitest: 0.30.1
@@ -1243,7 +1243,7 @@ importers:
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@rushstack/heft': 0.50.0
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       prettier: 2.8.7
       tslib: ~2.5.0
       typescript: ~5.0.4
@@ -1253,7 +1253,7 @@ importers:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.50.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       prettier: 2.8.7
       typescript: 5.0.4
 
@@ -1311,7 +1311,7 @@ importers:
       cloudinary: ~1.36.1
       concurrently: ~8.0.1
       dotenv: ~16.0.3
-      eslint: ~8.38.0
+      eslint: ~8.39.0
       eslint-config-next: ~13.3.0
       eslint-plugin-import: ~2.27.5
       eslint-plugin-react: ~7.32.2
@@ -1372,15 +1372,15 @@ importers:
       '@microsoft/rush-lib': 5.97.0_@types+node@18.15.11
       '@react-aria/overlays': 3.13.0_biqbaboplfbrettd7655fr4n2y
       '@rushstack/eslint-patch': 1.2.0
-      '@typescript-eslint/eslint-plugin': 5.57.1_gjoxkwycl3ml7yxlw3iuo7gyna
-      '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/eslint-plugin': 5.57.1_ht4hxsssh3hshbto63ltm7rytu
+      '@typescript-eslint/parser': 5.58.0_iacogk7kkaymxepzhgcbytyi7q
       better-sqlite3: 8.3.0
       body-parser: 1.20.2
       cloudinary: 1.36.1
       dotenv: 16.0.3
-      eslint: 8.38.0
-      eslint-plugin-react: 7.32.2_eslint@8.38.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.38.0
+      eslint: 8.39.0
+      eslint-plugin-react: 7.32.2_eslint@8.39.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.39.0
       express: 4.18.2
       express-jwt: 8.4.1
       graphiql: 2.4.1_lybbofi2q4l47ntrzpcgcbyuki
@@ -1438,9 +1438,9 @@ importers:
       bulma: 0.9.4
       bun-types: 0.5.8
       concurrently: 8.0.1
-      eslint-config-next: 13.3.0_voubu7prgxjfsfbgx5d4sqnwiy
-      eslint-plugin-import: 2.27.5_eslint@8.38.0
-      eslint-plugin-storybook: 0.6.11_voubu7prgxjfsfbgx5d4sqnwiy
+      eslint-config-next: 13.3.0_iacogk7kkaymxepzhgcbytyi7q
+      eslint-plugin-import: 2.27.5_eslint@8.39.0
+      eslint-plugin-storybook: 0.6.11_iacogk7kkaymxepzhgcbytyi7q
       graphql-config: 4.5.0_3q6avhgaaacez4ctqk4xik246q
       graphql-ws: 5.12.1_graphql@16.6.0
       mini-svg-data-uri: 1.4.4
@@ -4412,13 +4412,13 @@ packages:
       eslint-visitor-keys: 3.4.0
     dev: false
 
-  /@eslint-community/eslint-utils/4.2.0_eslint@8.38.0:
+  /@eslint-community/eslint-utils/4.2.0_eslint@8.39.0:
     resolution: {integrity: sha512-gB8T4H4DEfX2IV9zGDJPOBgP1e/DbfCPDTtEqUMckpvzS1OYtva8JdFYBqMwYk7xAQ429WGF/UPqn8uQ//h2vQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
-      eslint: 8.38.0
+      eslint: 8.39.0
       eslint-visitor-keys: 3.4.0
 
   /@eslint-community/regexpp/4.4.0:
@@ -4441,8 +4441,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@eslint/js/8.38.0:
-    resolution: {integrity: sha512-IoD2MfUnOV58ghIHCiil01PcohxjbYR/qCxsoC+xNgUwh1EY8jOOrYmu3d3a71+tJJ23uscEV4X2HJWMsPJu4g==}
+  /@eslint/js/8.39.0:
+    resolution: {integrity: sha512-kf9RB0Fg7NZfap83B3QOqOGg9QmD9yBudqQXzzOtn3i4y7ZUXe5ONeW34Gwi+TxhH4mvj72R1Zc300KUMa9Bng==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   /@faker-js/faker/7.6.0:
@@ -7661,7 +7661,7 @@ packages:
       '@types/yargs-parser': 20.2.1
     dev: true
 
-  /@typescript-eslint/eslint-plugin/5.57.1_gjoxkwycl3ml7yxlw3iuo7gyna:
+  /@typescript-eslint/eslint-plugin/5.57.1_ht4hxsssh3hshbto63ltm7rytu:
     resolution: {integrity: sha512-1MeobQkQ9tztuleT3v72XmY0XuKXVXusAhryoLuU5YZ+mXoYKZP9SQ7Flulh1NX4DTjpGTc2b/eMu4u7M7dhnQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -7673,12 +7673,12 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.4.0
-      '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/parser': 5.58.0_iacogk7kkaymxepzhgcbytyi7q
       '@typescript-eslint/scope-manager': 5.57.1
-      '@typescript-eslint/type-utils': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
-      '@typescript-eslint/utils': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/type-utils': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
+      '@typescript-eslint/utils': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
       debug: 4.3.4
-      eslint: 8.38.0
+      eslint: 8.39.0
       grapheme-splitter: 1.0.4
       ignore: 5.2.0
       natural-compare-lite: 1.4.0
@@ -7687,6 +7687,33 @@ packages:
       typescript: 5.0.4
     transitivePeerDependencies:
       - supports-color
+
+  /@typescript-eslint/eslint-plugin/5.57.1_iacogk7kkaymxepzhgcbytyi7q:
+    resolution: {integrity: sha512-1MeobQkQ9tztuleT3v72XmY0XuKXVXusAhryoLuU5YZ+mXoYKZP9SQ7Flulh1NX4DTjpGTc2b/eMu4u7M7dhnQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      '@typescript-eslint/parser': ^5.0.0
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@eslint-community/regexpp': 4.4.0
+      '@typescript-eslint/scope-manager': 5.57.1
+      '@typescript-eslint/type-utils': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
+      '@typescript-eslint/utils': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
+      debug: 4.3.4
+      eslint: 8.39.0
+      grapheme-splitter: 1.0.4
+      ignore: 5.2.0
+      natural-compare-lite: 1.4.0
+      semver: 7.3.8
+      tsutils: 3.21.0_typescript@5.0.4
+      typescript: 5.0.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@typescript-eslint/eslint-plugin/5.57.1_kmhr73uzlj6rvabgbeswpb76by:
     resolution: {integrity: sha512-1MeobQkQ9tztuleT3v72XmY0XuKXVXusAhryoLuU5YZ+mXoYKZP9SQ7Flulh1NX4DTjpGTc2b/eMu4u7M7dhnQ==}
@@ -7714,33 +7741,6 @@ packages:
       - supports-color
     dev: false
 
-  /@typescript-eslint/eslint-plugin/5.57.1_voubu7prgxjfsfbgx5d4sqnwiy:
-    resolution: {integrity: sha512-1MeobQkQ9tztuleT3v72XmY0XuKXVXusAhryoLuU5YZ+mXoYKZP9SQ7Flulh1NX4DTjpGTc2b/eMu4u7M7dhnQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      '@typescript-eslint/parser': ^5.0.0
-      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@eslint-community/regexpp': 4.4.0
-      '@typescript-eslint/scope-manager': 5.57.1
-      '@typescript-eslint/type-utils': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
-      '@typescript-eslint/utils': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
-      debug: 4.3.4
-      eslint: 8.38.0
-      grapheme-splitter: 1.0.4
-      ignore: 5.2.0
-      natural-compare-lite: 1.4.0
-      semver: 7.3.8
-      tsutils: 3.21.0_typescript@5.0.4
-      typescript: 5.0.4
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@typescript-eslint/parser/5.58.0:
     resolution: {integrity: sha512-ixaM3gRtlfrKzP8N6lRhBbjTow1t6ztfBvQNGuRM8qH1bjFFXIJ35XY+FC0RRBKn3C6cT+7VW1y8tNm7DwPHDQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -7759,7 +7759,7 @@ packages:
       - supports-color
     dev: false
 
-  /@typescript-eslint/parser/5.58.0_voubu7prgxjfsfbgx5d4sqnwiy:
+  /@typescript-eslint/parser/5.58.0_iacogk7kkaymxepzhgcbytyi7q:
     resolution: {integrity: sha512-ixaM3gRtlfrKzP8N6lRhBbjTow1t6ztfBvQNGuRM8qH1bjFFXIJ35XY+FC0RRBKn3C6cT+7VW1y8tNm7DwPHDQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -7773,7 +7773,7 @@ packages:
       '@typescript-eslint/types': 5.58.0
       '@typescript-eslint/typescript-estree': 5.58.0_typescript@5.0.4
       debug: 4.3.4
-      eslint: 8.38.0
+      eslint: 8.39.0
       typescript: 5.0.4
     transitivePeerDependencies:
       - supports-color
@@ -7818,7 +7818,7 @@ packages:
       - supports-color
     dev: false
 
-  /@typescript-eslint/type-utils/5.57.1_voubu7prgxjfsfbgx5d4sqnwiy:
+  /@typescript-eslint/type-utils/5.57.1_iacogk7kkaymxepzhgcbytyi7q:
     resolution: {integrity: sha512-/RIPQyx60Pt6ga86hKXesXkJ2WOS4UemFrmmq/7eOyiYjYv/MUSHPlkhU6k9T9W1ytnTJueqASW+wOmW4KrViw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -7829,9 +7829,9 @@ packages:
         optional: true
     dependencies:
       '@typescript-eslint/typescript-estree': 5.57.1_typescript@5.0.4
-      '@typescript-eslint/utils': 5.57.1_voubu7prgxjfsfbgx5d4sqnwiy
+      '@typescript-eslint/utils': 5.57.1_iacogk7kkaymxepzhgcbytyi7q
       debug: 4.3.4
-      eslint: 8.38.0
+      eslint: 8.39.0
       tsutils: 3.21.0_typescript@5.0.4
       typescript: 5.0.4
     transitivePeerDependencies:
@@ -7951,7 +7951,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/utils/5.54.1_voubu7prgxjfsfbgx5d4sqnwiy:
+  /@typescript-eslint/utils/5.54.1_iacogk7kkaymxepzhgcbytyi7q:
     resolution: {integrity: sha512-IY5dyQM8XD1zfDe5X8jegX6r2EVU5o/WJnLu/znLPWCBF7KNGC+adacXnt5jEYS9JixDcoccI6CvE4RCjHMzCQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -7962,9 +7962,9 @@ packages:
       '@typescript-eslint/scope-manager': 5.54.1
       '@typescript-eslint/types': 5.54.1
       '@typescript-eslint/typescript-estree': 5.54.1_typescript@5.0.4
-      eslint: 8.38.0
+      eslint: 8.39.0
       eslint-scope: 5.1.1
-      eslint-utils: 3.0.0_eslint@8.38.0
+      eslint-utils: 3.0.0_eslint@8.39.0
       semver: 7.3.8
     transitivePeerDependencies:
       - supports-color
@@ -7990,19 +7990,19 @@ packages:
       - typescript
     dev: false
 
-  /@typescript-eslint/utils/5.57.1_voubu7prgxjfsfbgx5d4sqnwiy:
+  /@typescript-eslint/utils/5.57.1_iacogk7kkaymxepzhgcbytyi7q:
     resolution: {integrity: sha512-kN6vzzf9NkEtawECqze6v99LtmDiUJCVpvieTFA1uL7/jDghiJGubGZ5csicYHU1Xoqb3oH/R5cN5df6W41Nfg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
+      '@eslint-community/eslint-utils': 4.2.0_eslint@8.39.0
       '@types/json-schema': 7.0.9
       '@types/semver': 7.3.13
       '@typescript-eslint/scope-manager': 5.57.1
       '@typescript-eslint/types': 5.57.1
       '@typescript-eslint/typescript-estree': 5.57.1_typescript@5.0.4
-      eslint: 8.38.0
+      eslint: 8.39.0
       eslint-scope: 5.1.1
       semver: 7.3.8
     transitivePeerDependencies:
@@ -10029,7 +10029,7 @@ packages:
       source-map: 0.6.1
     dev: true
 
-  /eslint-config-next/13.3.0_voubu7prgxjfsfbgx5d4sqnwiy:
+  /eslint-config-next/13.3.0_iacogk7kkaymxepzhgcbytyi7q:
     resolution: {integrity: sha512-6YEwmFBX0VjBd3ODGW9df0Is0FLaRFdMN8eAahQG9CN6LjQ28J8AFr19ngxqMSg7Qv6Uca/3VeeBosJh1bzu0w==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
@@ -10040,14 +10040,14 @@ packages:
     dependencies:
       '@next/eslint-plugin-next': 13.3.0
       '@rushstack/eslint-patch': 1.2.0
-      '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
-      eslint: 8.38.0
+      '@typescript-eslint/parser': 5.58.0_iacogk7kkaymxepzhgcbytyi7q
+      eslint: 8.39.0
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.5.2_cshkc2qhcu55b7r3t6b6lfgcxm
-      eslint-plugin-import: 2.27.5_eslint@8.38.0
-      eslint-plugin-jsx-a11y: 6.5.1_eslint@8.38.0
-      eslint-plugin-react: 7.32.2_eslint@8.38.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.38.0
+      eslint-import-resolver-typescript: 3.5.2_ihzpda66j6eqxiupas72wssxyy
+      eslint-plugin-import: 2.27.5_eslint@8.39.0
+      eslint-plugin-jsx-a11y: 6.5.1_eslint@8.39.0
+      eslint-plugin-react: 7.32.2_eslint@8.39.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.39.0
       typescript: 5.0.4
     transitivePeerDependencies:
       - supports-color
@@ -10061,7 +10061,7 @@ packages:
       resolve: 1.22.1
     dev: true
 
-  /eslint-import-resolver-typescript/3.5.2_cshkc2qhcu55b7r3t6b6lfgcxm:
+  /eslint-import-resolver-typescript/3.5.2_ihzpda66j6eqxiupas72wssxyy:
     resolution: {integrity: sha512-zX4ebnnyXiykjhcBvKIf5TNvt8K7yX6bllTRZ14MiurKPjDpCAZujlszTdB8pcNXhZcOf+god4s9SjQa5GnytQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -10070,8 +10070,8 @@ packages:
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.12.0
-      eslint: 8.38.0
-      eslint-plugin-import: 2.27.5_eslint@8.38.0
+      eslint: 8.39.0
+      eslint-plugin-import: 2.27.5_eslint@8.39.0
       get-tsconfig: 4.2.0
       globby: 13.1.3
       is-core-module: 2.11.0
@@ -10081,7 +10081,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-module-utils/2.7.4_eslint@8.38.0:
+  /eslint-module-utils/2.7.4_eslint@8.39.0:
     resolution: {integrity: sha512-j4GT+rqzCoRKHwURX7pddtIPGySnX9Si/cgMI5ztrcqOPtk5dDEeZ34CQVPphnqkJytlc97Vuk05Um2mJ3gEQA==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -10091,10 +10091,10 @@ packages:
         optional: true
     dependencies:
       debug: 3.2.7
-      eslint: 8.38.0
+      eslint: 8.39.0
     dev: true
 
-  /eslint-plugin-import/2.27.5_eslint@8.38.0:
+  /eslint-plugin-import/2.27.5_eslint@8.39.0:
     resolution: {integrity: sha512-LmEt3GVofgiGuiE+ORpnvP+kAm3h6MLZJ4Q5HCyHADofsb4VzXFsRiWj3c0OFiV+3DWFh0qg3v9gcPlfc3zRow==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -10105,9 +10105,9 @@ packages:
       array.prototype.flatmap: 1.3.1
       debug: 3.2.7
       doctrine: 2.1.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       eslint-import-resolver-node: 0.3.7
-      eslint-module-utils: 2.7.4_eslint@8.38.0
+      eslint-module-utils: 2.7.4_eslint@8.39.0
       has: 1.0.3
       is-core-module: 2.11.0
       is-glob: 4.0.3
@@ -10118,7 +10118,7 @@ packages:
       tsconfig-paths: 3.14.1
     dev: true
 
-  /eslint-plugin-jsx-a11y/6.5.1_eslint@8.38.0:
+  /eslint-plugin-jsx-a11y/6.5.1_eslint@8.39.0:
     resolution: {integrity: sha512-sVCFKX9fllURnXT2JwLN5Qgo24Ug5NF6dxhkmxsMEUZhXRcGg+X3e1JbJ84YePQKBl5E0ZjAH5Q4rkdcGY99+g==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -10132,7 +10132,7 @@ packages:
       axobject-query: 2.2.0
       damerau-levenshtein: 1.0.7
       emoji-regex: 9.2.2
-      eslint: 8.38.0
+      eslint: 8.39.0
       has: 1.0.3
       jsx-ast-utils: 3.2.1
       language-tags: 1.0.5
@@ -10146,13 +10146,13 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dev: false
 
-  /eslint-plugin-react-hooks/4.6.0_eslint@8.38.0:
+  /eslint-plugin-react-hooks/4.6.0_eslint@8.39.0:
     resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dependencies:
-      eslint: 8.38.0
+      eslint: 8.39.0
 
   /eslint-plugin-react/7.32.2:
     resolution: {integrity: sha512-t2fBMa+XzonrrNkyVirzKlvn5RXzzPwRHtMvLAtVZrt8oxgnTQaYbU6SXTOO1mwQgp1y5+toMSKInnzGr0Knqg==}
@@ -10177,7 +10177,7 @@ packages:
       string.prototype.matchall: 4.0.8
     dev: false
 
-  /eslint-plugin-react/7.32.2_eslint@8.38.0:
+  /eslint-plugin-react/7.32.2_eslint@8.39.0:
     resolution: {integrity: sha512-t2fBMa+XzonrrNkyVirzKlvn5RXzzPwRHtMvLAtVZrt8oxgnTQaYbU6SXTOO1mwQgp1y5+toMSKInnzGr0Knqg==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -10187,7 +10187,7 @@ packages:
       array.prototype.flatmap: 1.3.1
       array.prototype.tosorted: 1.1.1
       doctrine: 2.1.0
-      eslint: 8.38.0
+      eslint: 8.39.0
       estraverse: 5.3.0
       jsx-ast-utils: 3.2.1
       minimatch: 3.1.2
@@ -10200,15 +10200,15 @@ packages:
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
 
-  /eslint-plugin-storybook/0.6.11_voubu7prgxjfsfbgx5d4sqnwiy:
+  /eslint-plugin-storybook/0.6.11_iacogk7kkaymxepzhgcbytyi7q:
     resolution: {integrity: sha512-lIVmCqQgA0bhcuS1yWYBFrnPHBKPEQI+LHPDtlN81UE1/17onCqgwUW7Nyt7gS2OHjCAiOR4npjTGEoe0hssKw==}
     engines: {node: 12.x || 14.x || >= 16}
     peerDependencies:
       eslint: '>=6'
     dependencies:
       '@storybook/csf': 0.0.1
-      '@typescript-eslint/utils': 5.54.1_voubu7prgxjfsfbgx5d4sqnwiy
-      eslint: 8.38.0
+      '@typescript-eslint/utils': 5.54.1_iacogk7kkaymxepzhgcbytyi7q
+      eslint: 8.39.0
       requireindex: 1.2.0
       ts-dedent: 2.2.0
     transitivePeerDependencies:
@@ -10223,20 +10223,20 @@ packages:
       esrecurse: 4.3.0
       estraverse: 4.3.0
 
-  /eslint-scope/7.1.1:
-    resolution: {integrity: sha512-QKQM/UXpIiHcLqJ5AOyIW7XZmzjkzQXYE54n1++wb0u9V/abW3l9uQnxX8Z5Xd18xyKIMTUAyQ0k1e8pz6LUrw==}
+  /eslint-scope/7.2.0:
+    resolution: {integrity: sha512-DYj5deGlHBfMt15J7rdtyKNq/Nqlv5KfU4iodrQ019XESsRnwXH9KAE0y3cwtUHDo2ob7CypAnCqefh6vioWRw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
 
-  /eslint-utils/3.0.0_eslint@8.38.0:
+  /eslint-utils/3.0.0_eslint@8.39.0:
     resolution: {integrity: sha512-uuQC43IGctw68pJA1RgbQS8/NP7rch6Cwd4j3ZBtgo4/8Flj4eGE7ZYSZRN3iq5pVUv6GPdW5Z1RFleo84uLDA==}
     engines: {node: ^10.0.0 || ^12.0.0 || >= 14.0.0}
     peerDependencies:
       eslint: '>=5'
     dependencies:
-      eslint: 8.38.0
+      eslint: 8.39.0
       eslint-visitor-keys: 2.1.0
     dev: true
 
@@ -10249,15 +10249,15 @@ packages:
     resolution: {integrity: sha512-HPpKPUBQcAsZOsHAFwTtIKcYlCje62XB7SEAcxjtmW6TD1WVpkS6i6/hOVtTZIl4zGj/mBqpFVGvaDneik+VoQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  /eslint/8.38.0:
-    resolution: {integrity: sha512-pIdsD2jwlUGf/U38Jv97t8lq6HpaU/G9NKbYmpWpZGw3LdTNhZLbJePqxOXGB5+JEKfOPU/XLxYxFh03nr1KTg==}
+  /eslint/8.39.0:
+    resolution: {integrity: sha512-mwiok6cy7KTW7rBpo05k6+p4YVZByLNjAZ/ACB9DRCu4YDRwjXI01tWHp6KAUWelsBetTxKK/2sHB0vdS8Z2Og==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     hasBin: true
     dependencies:
-      '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
+      '@eslint-community/eslint-utils': 4.2.0_eslint@8.39.0
       '@eslint-community/regexpp': 4.4.0
       '@eslint/eslintrc': 2.0.2
-      '@eslint/js': 8.38.0
+      '@eslint/js': 8.39.0
       '@humanwhocodes/config-array': 0.11.8
       '@humanwhocodes/module-importer': 1.0.1
       '@nodelib/fs.walk': 1.2.8
@@ -10267,7 +10267,7 @@ packages:
       debug: 4.3.4
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
-      eslint-scope: 7.1.1
+      eslint-scope: 7.2.0
       eslint-visitor-keys: 3.4.0
       espree: 9.5.1
       esquery: 1.5.0
