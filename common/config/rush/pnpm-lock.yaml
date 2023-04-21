@@ -931,7 +931,7 @@ importers:
       '@lexical/link': 0.9.1
       '@lexical/list': 0.9.1
       '@lexical/react': 0.9.1
-      '@lexical/rich-text': 0.9.1
+      '@lexical/rich-text': 0.10.0
       '@lexical/selection': 0.9.1
       '@lexical/utils': 0.9.1
       '@rushstack/heft': 0.50.0
@@ -974,7 +974,7 @@ importers:
       '@lexical/link': 0.9.1_lexical@0.9.1
       '@lexical/list': 0.9.1_lexical@0.9.1
       '@lexical/react': 0.9.1_6fsomkmya6w7wio6jlpe4i7dvy
-      '@lexical/rich-text': 0.9.1_gt2cxnli3j3fvavomgp4qyvcbq
+      '@lexical/rich-text': 0.10.0_gt2cxnli3j3fvavomgp4qyvcbq
       '@lexical/selection': 0.9.1_lexical@0.9.1
       '@lexical/utils': 0.9.1_lexical@0.9.1
       leaflet: 1.9.3
@@ -1269,7 +1269,7 @@ importers:
       '@lexical/link': 0.9.1
       '@lexical/list': 0.9.1
       '@lexical/react': 0.9.1
-      '@lexical/rich-text': 0.9.1
+      '@lexical/rich-text': 0.10.0
       '@lexical/selection': 0.9.1
       '@lexical/utils': 0.9.1
       '@microsoft/rush-lib': ~5.97.0
@@ -1366,7 +1366,7 @@ importers:
       '@lexical/link': 0.9.1_lexical@0.9.1
       '@lexical/list': 0.9.1_lexical@0.9.1
       '@lexical/react': 0.9.1_6fsomkmya6w7wio6jlpe4i7dvy
-      '@lexical/rich-text': 0.9.1_gt2cxnli3j3fvavomgp4qyvcbq
+      '@lexical/rich-text': 0.10.0_gt2cxnli3j3fvavomgp4qyvcbq
       '@lexical/selection': 0.9.1_lexical@0.9.1
       '@lexical/utils': 0.9.1_lexical@0.9.1
       '@microsoft/rush-lib': 5.97.0_@types+node@18.15.11
@@ -5114,6 +5114,19 @@ packages:
       - yjs
     dev: false
 
+  /@lexical/rich-text/0.10.0_gt2cxnli3j3fvavomgp4qyvcbq:
+    resolution: {integrity: sha512-mkg+8h5qh09daCc8+PhzHjczSVhlTOkrr8S4oma89mfQZ/CODJYd0tOOd9y/8JaDrBddTqjd4xTjXwEEJzVA4g==}
+    peerDependencies:
+      '@lexical/clipboard': 0.10.0
+      '@lexical/selection': 0.10.0
+      '@lexical/utils': 0.10.0
+      lexical: 0.10.0
+    dependencies:
+      '@lexical/selection': 0.9.1_lexical@0.9.1
+      '@lexical/utils': 0.9.1_lexical@0.9.1
+      lexical: 0.9.1
+    dev: false
+
   /@lexical/rich-text/0.9.1_3oy5el6kflt2ceodnzbhobrtwa:
     resolution: {integrity: sha512-ac5lUam6e4YAC2Lo0op7pTxTqK1mQUiATGDG2A99LY6HIzmZUeK8Pi/LG0u/KRaJ8C4kCPVMmI3SzXQo28oUIQ==}
     peerDependencies:
@@ -5123,19 +5136,6 @@ packages:
       lexical: 0.9.1
     dependencies:
       '@lexical/clipboard': 0.9.1_lexical@0.9.1
-      '@lexical/selection': 0.9.1_lexical@0.9.1
-      '@lexical/utils': 0.9.1_lexical@0.9.1
-      lexical: 0.9.1
-    dev: false
-
-  /@lexical/rich-text/0.9.1_gt2cxnli3j3fvavomgp4qyvcbq:
-    resolution: {integrity: sha512-ac5lUam6e4YAC2Lo0op7pTxTqK1mQUiATGDG2A99LY6HIzmZUeK8Pi/LG0u/KRaJ8C4kCPVMmI3SzXQo28oUIQ==}
-    peerDependencies:
-      '@lexical/clipboard': 0.9.1
-      '@lexical/selection': 0.9.1
-      '@lexical/utils': 0.9.1
-      lexical: 0.9.1
-    dependencies:
       '@lexical/selection': 0.9.1_lexical@0.9.1
       '@lexical/utils': 0.9.1_lexical@0.9.1
       lexical: 0.9.1
