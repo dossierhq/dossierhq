@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Filter admin search/sample on validity and status",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}
