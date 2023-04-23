@@ -305,6 +305,7 @@ export interface AdminQuery<TEntityType extends string = string, TAuthKey extend
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
   status?: AdminEntityStatus[];
+  valid?: boolean;
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
   boundingBox?: BoundingBox;

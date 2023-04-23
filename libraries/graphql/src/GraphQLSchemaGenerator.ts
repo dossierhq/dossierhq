@@ -24,8 +24,8 @@ import type {
   ValueItem,
 } from '@dossierhq/core';
 import {
-  assertExhaustive,
   FieldType,
+  assertExhaustive,
   isItemValueItem,
   isValueItemField,
   notOk,
@@ -75,9 +75,9 @@ import {
   toAdminValueInputTypeName,
   toPublishedTypeName,
 } from './NameGenerator.js';
+import { TypeRepository } from './TypeRepository.js';
 import { DateTimeScalar } from './scalars/DateTimeScalar.js';
 import { LocationScalar } from './scalars/LocationScalar.js';
-import { TypeRepository } from './TypeRepository.js';
 import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
@@ -621,6 +621,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
       },
+      status: { type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityStatus'))) },
+      valid: { type: GraphQLBoolean },
       linksTo: { type: this.getInputType('EntityReferenceInput') },
       linksFrom: { type: this.getInputType('EntityReferenceInput') },
       boundingBox: { type: this.getInputType('BoundingBoxInput') },

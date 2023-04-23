@@ -121,7 +121,6 @@ describe('searchAdminEntitiesQuery()', () => {
           { first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 999) },
           { afterInclusive: true }
         ),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -208,7 +207,6 @@ describe('searchAdminEntitiesQuery()', () => {
           { last: 10, before: toOpaqueCursor(databaseAdapter, 'int', 456) },
           { beforeInclusive: true }
         ),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -241,7 +239,6 @@ describe('searchAdminEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -275,7 +272,6 @@ describe('searchAdminEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -678,7 +674,6 @@ describe('searchAdminEntitiesQuery()', () => {
             AdminEntityStatus.withdrawn,
           ],
         },
-
         resolvePaging(undefined),
         authKeysNone
       )
@@ -696,6 +691,60 @@ describe('searchAdminEntitiesQuery()', () => {
               "modified",
               "archived",
               "withdrawn",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query valid only', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valid: true },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.valid ORDER BY e.id LIMIT ?2)
+      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query invalid only', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valid: false },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND NOT e.valid ORDER BY e.id LIMIT ?2)
+      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+            "values": [
+              "none",
               26,
             ],
           },
@@ -774,7 +823,6 @@ describe('searchAdminEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-
         resolvePaging(undefined),
         authKeysNone
       )
@@ -868,7 +916,6 @@ describe('searchAdminEntitiesQuery()', () => {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
-
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 123) }),
         authKeysNone
       )
@@ -1053,7 +1100,6 @@ describe('searchPublishedEntitiesQuery()', () => {
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 999),
         }),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1169,7 +1215,6 @@ describe('searchPublishedEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1203,7 +1248,6 @@ describe('searchPublishedEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1237,7 +1281,6 @@ describe('searchPublishedEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1470,7 +1513,6 @@ describe('searchPublishedEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-
         resolvePaging(undefined),
         authKeysNone
       )
@@ -1564,7 +1606,6 @@ describe('searchPublishedEntitiesQuery()', () => {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
-
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 123) }),
         authKeysNone
       )

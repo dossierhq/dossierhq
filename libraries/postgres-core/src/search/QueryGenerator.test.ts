@@ -125,7 +125,6 @@ describe('searchAdminEntitiesQuery()', () => {
             first: 10,
             after: toOpaqueCursor(databaseAdapter, 'int', 999),
           },
-
           { afterInclusive: true }
         ),
         authKeysNone
@@ -700,7 +699,6 @@ describe('searchAdminEntitiesQuery()', () => {
             AdminEntityStatus.withdrawn,
           ],
         },
-
         resolvePaging(undefined),
         authKeysNone
       )
@@ -720,6 +718,60 @@ describe('searchAdminEntitiesQuery()', () => {
                 "archived",
                 "withdrawn",
               ],
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query valid only', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valid: true },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.valid ORDER BY e.id LIMIT $2",
+            "values": [
+              "none",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query invalid only', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valid: false },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND NOT e.valid ORDER BY e.id LIMIT $2",
+            "values": [
+              "none",
               26,
             ],
           },
@@ -798,7 +850,6 @@ describe('searchAdminEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-
         resolvePaging(undefined),
         authKeysNone
       )
@@ -829,10 +880,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         schema,
-        {
-          text: 'foo bar',
-        },
-
+        { text: 'foo bar' },
         resolvePaging({}),
         authKeysNone
       )
@@ -864,7 +912,6 @@ describe('searchAdminEntitiesQuery()', () => {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
-
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
@@ -1466,7 +1513,6 @@ describe('searchPublishedEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-
         resolvePaging(undefined),
         authKeysNone
       )
@@ -1496,10 +1542,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         schema,
-        {
-          text: 'foo bar',
-        },
-
+        { text: 'foo bar' },
         resolvePaging({}),
         authKeysNone
       )
@@ -1530,7 +1573,6 @@ describe('searchPublishedEntitiesQuery()', () => {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
-
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),

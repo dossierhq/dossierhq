@@ -127,6 +127,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -136,6 +138,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -728,6 +732,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -737,6 +743,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1113,6 +1121,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1122,6 +1132,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1640,6 +1652,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1649,6 +1663,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2007,6 +2023,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2016,6 +2034,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2582,6 +2602,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2591,6 +2613,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2939,6 +2963,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -2948,6 +2974,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -3574,6 +3602,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -3583,6 +3613,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -3987,6 +4019,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -3996,6 +4030,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -4460,6 +4496,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -4469,6 +4507,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -4759,6 +4799,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -4768,6 +4810,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -5266,6 +5310,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -5275,6 +5321,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -5577,6 +5625,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -5586,6 +5636,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6125,6 +6177,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6134,6 +6188,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6451,6 +6507,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6460,6 +6518,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6946,6 +7006,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6955,6 +7017,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7254,6 +7318,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7263,6 +7329,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7843,6 +7911,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7852,6 +7922,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -8213,6 +8285,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -8222,6 +8296,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -8911,6 +8987,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -8920,6 +8998,8 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput

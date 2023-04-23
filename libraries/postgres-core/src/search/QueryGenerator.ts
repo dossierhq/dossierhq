@@ -8,7 +8,7 @@ import type {
   PublishedSearchQuery,
   Result,
 } from '@dossierhq/core';
-import { AdminQueryOrder, assertExhaustive, notOk, ok, PublishedQueryOrder } from '@dossierhq/core';
+import { AdminQueryOrder, PublishedQueryOrder, assertExhaustive, notOk, ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   PostgresQueryBuilder,
@@ -433,6 +433,15 @@ function addQueryFilters(
   // Filter: status
   if (!published && query && 'status' in query) {
     addFilterStatusSqlSegment(query, queryBuilder);
+  }
+
+  // Filter: valid
+  if (!published && query && 'valid' in query) {
+    if (query.valid === true) {
+      sql`AND e.valid`;
+    } else if (query.valid === false) {
+      sql`AND NOT e.valid`;
+    }
   }
 
   // Filter: linksTo

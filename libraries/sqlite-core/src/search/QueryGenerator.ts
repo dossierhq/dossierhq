@@ -466,6 +466,15 @@ function addQueryFilters(
     addFilterStatusSqlSegment(query, queryBuilder);
   }
 
+  // Filter: valid
+  if (!published && query && 'valid' in query) {
+    if (query.valid === true) {
+      sql`AND e.valid`;
+    } else if (query.valid === false) {
+      sql`AND NOT e.valid`;
+    }
+  }
+
   // Filter: linksTo
   if (query?.linksTo) {
     sql`AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ${query.linksTo.id}`;
