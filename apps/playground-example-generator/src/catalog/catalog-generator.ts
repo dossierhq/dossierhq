@@ -31,7 +31,7 @@ import type {
   AdminValueItemsEntity,
   AppAdminClient,
 } from './schema-types.js';
-import { SCHEMA } from './schema.js';
+import { SCHEMA, SCHEMA_WITHOUT_VALIDATIONS } from './schema.js';
 
 const UUID_NAMESPACE = 'fdf4e979-6f82-4d61-ab14-26c318cb6731';
 
@@ -372,6 +372,16 @@ async function createStringsEntities(adminClient: AppAdminClient) {
         },
       })
     ),
+
+    adminClient.createEntity(
+      copyEntity(minimal, {
+        id: id('strings-invalid'),
+        info: { name: 'Strings invalid' },
+        fields: {
+          matchPattern: 'invalid string',
+        },
+      })
+    ),
   ];
 
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
@@ -458,7 +468,10 @@ async function createCloudinaryImageValueItems() {
 
 async function main() {
   const database = await createNewDatabase('dist/catalog.sqlite');
-  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
+  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(
+    database,
+    SCHEMA_WITHOUT_VALIDATIONS
+  );
 
   const cloudinaryImageValueItems = await createCloudinaryImageValueItems();
 
@@ -487,6 +500,8 @@ async function main() {
     stringsEntities,
     cloudinaryImageValueItems,
   });
+
+  (await adminClient.updateSchemaSpecification(SCHEMA)).throwIfError();
 
   await optimizeAndCloseDatabase(server);
 }

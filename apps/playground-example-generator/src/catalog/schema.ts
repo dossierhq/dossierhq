@@ -1,7 +1,11 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import type {
+  AdminEntityTypeSpecificationUpdate,
+  AdminSchemaSpecificationUpdate,
+  AdminStringFieldSpecificationUpdate,
+} from '@dossierhq/core';
 import { FieldType, RichTextNodeType } from '@dossierhq/core';
 
-export const SCHEMA: AdminSchemaSpecificationUpdate = {
+export const SCHEMA = {
   entityTypes: [
     {
       name: 'BooleansEntity',
@@ -186,8 +190,49 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   ],
   patterns: [
     { name: 'none', pattern: '^none$' },
-    { name: 'slug', pattern: '^[a-z0-9-]+$' },
     { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
   ],
   indexes: [{ name: 'slug', type: 'unique' }],
+} satisfies AdminSchemaSpecificationUpdate;
+
+export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
+  ...SCHEMA,
+  entityTypes: SCHEMA.entityTypes.map((entityType) => {
+    switch (entityType.name) {
+      case 'StringsEntity':
+        return copyEntityType(entityType, (entityType) => {
+          stringFieldSpec(entityType, 'matchPattern').matchPattern = null;
+        });
+      default:
+        return entityType;
+    }
+  }),
 };
+
+function copyEntityType(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  modifier: (entityType: AdminEntityTypeSpecificationUpdate) => void
+): AdminEntityTypeSpecificationUpdate {
+  const copy = structuredClone(entityType);
+  modifier(copy);
+  return copy;
+}
+
+function fieldSpec(entityType: AdminEntityTypeSpecificationUpdate, name: string) {
+  const field = entityType.fields.find((field) => field.name === name);
+  if (!field) {
+    throw new Error(`Field ${name} not found`);
+  }
+  return field;
+}
+
+function stringFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminStringFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.String) {
+    throw new Error(`Field ${name} is not a string`);
+  }
+  return field;
+}
