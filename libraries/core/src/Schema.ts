@@ -135,31 +135,31 @@ export type AdminFieldSpecification<TFieldSpec extends FieldSpecification = Fiel
 
 type PartialExcept<T, K extends keyof T> = Pick<T, K> & Partial<Omit<T, K>>;
 
-type AdminBooleanFieldSpecificationUpdate = PartialExcept<
+export type AdminBooleanFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<BooleanFieldSpecification>,
   'name' | 'type'
 >;
-type AdminEntityFieldSpecificationUpdate = PartialExcept<
+export type AdminEntityFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<EntityFieldSpecification>,
   'name' | 'type'
 >;
-type AdminLocationFieldSpecificationUpdate = PartialExcept<
+export type AdminLocationFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<LocationFieldSpecification>,
   'name' | 'type'
 >;
-type AdminNumberFieldSpecificationUpdate = PartialExcept<
+export type AdminNumberFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<NumberFieldSpecification>,
   'name' | 'type'
 >;
-type AdminRichTextFieldSpecificationUpdate = PartialExcept<
+export type AdminRichTextFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<RichTextFieldSpecification>,
   'name' | 'type'
 >;
-type AdminStringFieldSpecificationUpdate = PartialExcept<
+export type AdminStringFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<StringFieldSpecification>,
   'name' | 'type'
 >;
-type AdminValueItemFieldSpecificationUpdate = PartialExcept<
+export type AdminValueItemFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<ValueItemFieldSpecification>,
   'name' | 'type'
 >;
