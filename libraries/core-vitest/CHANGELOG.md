@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/core-vitest
 
-This log was last generated on Tue, 11 Apr 2023 19:08:01 GMT and should not be manually modified.
+This log was last generated on Sun, 23 Apr 2023 21:31:27 GMT and should not be manually modified.
+
+## 0.2.14
+Sun, 23 Apr 2023 21:31:27 GMT
+
+_Version update only_
 
 ## 0.2.13
 Tue, 11 Apr 2023 19:08:01 GMT
