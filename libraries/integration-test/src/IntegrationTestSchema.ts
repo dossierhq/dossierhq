@@ -15,6 +15,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [{ name: 'message', type: FieldType.String, required: true }],
     },
     {
+      name: 'ChangeValidations',
+      fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' }],
+    },
+    {
       name: 'References',
       fields: [
         { name: 'any', type: FieldType.Entity },
@@ -101,5 +105,11 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   indexes: [
     { name: 'genericUnique', type: 'unique' },
     { name: 'stringsUnique', type: 'unique' },
+  ],
+};
+
+export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
+  entityTypes: [
+    { name: 'ChangeValidations', fields: [{ name: 'matchPattern', type: FieldType.String }] },
   ],
 };

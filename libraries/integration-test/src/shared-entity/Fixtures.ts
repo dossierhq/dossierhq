@@ -10,6 +10,7 @@ import type {
 import { AdminEntityStatus, assertIsDefined } from '@dossierhq/core';
 import { assertEquals } from '../Asserts.js';
 import type {
+  AdminChangeValidations,
   AdminLocations,
   AdminReferences,
   AdminRichTexts,
@@ -19,6 +20,15 @@ import type {
   AdminValueItems,
   PublishedTitleOnly,
 } from '../SchemaTypes.js';
+
+export const CHANGE_VALIDATIONS_CREATE: Readonly<AdminEntityCreate<AdminChangeValidations>> = {
+  info: {
+    type: 'ChangeValidations',
+    name: 'ChangeValidations name',
+    authKey: 'none',
+  },
+  fields: {},
+};
 
 export const LOCATIONS_CREATE: Readonly<AdminEntityCreate<AdminLocations>> = {
   info: {

@@ -15,12 +15,14 @@ import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '.
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminLocationsValue, AdminReferencesValue } from '../SchemaTypes.js';
 import {
+  CHANGE_VALIDATIONS_CREATE,
   LOCATIONS_CREATE,
   REFERENCES_CREATE,
   RICH_TEXTS_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import {
   boundingBoxBelowCenter,
   boundingBoxCenter,
@@ -61,6 +63,8 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_statusDraftArchived,
   searchEntities_statusModifiedPublished,
   searchEntities_statusAll,
+  searchEntities_invalidOnly,
+  searchEntities_validOnly,
   searchEntities_linksToOneReference,
   searchEntities_linksToOneReferenceFromRichText,
   searchEntities_linksToOneReferenceFromLinkRichText,
@@ -421,13 +425,15 @@ async function searchEntities_statusDraft({ server }: AdminEntityTestContext) {
     status: [AdminEntityStatus.draft],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.draft]: draft, ...otherStatuses } = statusesResult.value;
+  const { [AdminEntityStatus.draft]: draft, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(draft > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.published]: 0,
     [AdminEntityStatus.modified]: 0,
     [AdminEntityStatus.withdrawn]: 0,
     [AdminEntityStatus.archived]: 0,
+    invalid: 0,
   });
 }
 
@@ -437,13 +443,19 @@ async function searchEntities_statusPublished({ server }: AdminEntityTestContext
     status: [AdminEntityStatus.published],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.published]: published, ...otherStatuses } = statusesResult.value;
+  const {
+    [AdminEntityStatus.published]: published,
+    valid,
+    ...otherStatuses
+  } = statusesResult.value;
   assertTruthy(published > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.draft]: 0,
     [AdminEntityStatus.modified]: 0,
     [AdminEntityStatus.withdrawn]: 0,
     [AdminEntityStatus.archived]: 0,
+    invalid: 0,
   });
 }
 
@@ -453,13 +465,15 @@ async function searchEntities_statusModified({ server }: AdminEntityTestContext)
     status: [AdminEntityStatus.modified],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.modified]: modified, ...otherStatuses } = statusesResult.value;
+  const { [AdminEntityStatus.modified]: modified, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(modified > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.draft]: 0,
     [AdminEntityStatus.published]: 0,
     [AdminEntityStatus.withdrawn]: 0,
     [AdminEntityStatus.archived]: 0,
+    invalid: 0,
   });
 }
 
@@ -469,13 +483,19 @@ async function searchEntities_statusWithdrawn({ server }: AdminEntityTestContext
     status: [AdminEntityStatus.withdrawn],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.withdrawn]: withdrawn, ...otherStatuses } = statusesResult.value;
+  const {
+    [AdminEntityStatus.withdrawn]: withdrawn,
+    valid,
+    ...otherStatuses
+  } = statusesResult.value;
   assertTruthy(withdrawn > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.draft]: 0,
     [AdminEntityStatus.published]: 0,
     [AdminEntityStatus.modified]: 0,
     [AdminEntityStatus.archived]: 0,
+    invalid: 0,
   });
 }
 
@@ -485,13 +505,15 @@ async function searchEntities_statusArchived({ server }: AdminEntityTestContext)
     status: [AdminEntityStatus.archived],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.archived]: archived, ...otherStatuses } = statusesResult.value;
+  const { [AdminEntityStatus.archived]: archived, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(archived > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.draft]: 0,
     [AdminEntityStatus.published]: 0,
     [AdminEntityStatus.modified]: 0,
     [AdminEntityStatus.withdrawn]: 0,
+    invalid: 0,
   });
 }
 
@@ -504,14 +526,17 @@ async function searchEntities_statusDraftArchived({ server }: AdminEntityTestCon
   const {
     [AdminEntityStatus.draft]: draft,
     [AdminEntityStatus.archived]: archived,
+    valid,
     ...otherStatuses
   } = statusesResult.value;
   assertTruthy(draft > 0);
   assertTruthy(archived > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.published]: 0,
     [AdminEntityStatus.modified]: 0,
     [AdminEntityStatus.withdrawn]: 0,
+    invalid: 0,
   });
 }
 
@@ -524,14 +549,17 @@ async function searchEntities_statusModifiedPublished({ server }: AdminEntityTes
   const {
     [AdminEntityStatus.modified]: modified,
     [AdminEntityStatus.published]: published,
+    valid,
     ...otherStatuses
   } = statusesResult.value;
   assertTruthy(modified > 0);
   assertTruthy(published > 0);
+  assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
     [AdminEntityStatus.draft]: 0,
     [AdminEntityStatus.withdrawn]: 0,
     [AdminEntityStatus.archived]: 0,
+    invalid: 0,
   });
 }
 
@@ -559,6 +587,50 @@ async function searchEntities_statusAll({ server }: AdminEntityTestContext) {
   assertTruthy(published > 0);
   assertTruthy(modified > 0);
   assertTruthy(withdrawn > 0);
+}
+
+async function searchEntities_invalidOnly({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const entity = await createInvalidEntity(server, adminClient);
+
+  const matches = await countSearchResultWithEntity(
+    adminClient,
+    { entityTypes: ['ChangeValidations'], valid: false },
+    entity.id
+  );
+  assertResultValue(matches, 1);
+
+  const { valid, invalid } = (
+    await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+      entityTypes: ['ChangeValidations'],
+      valid: false,
+    })
+  ).valueOrThrow();
+
+  assertEquals(valid, 0);
+  assertTruthy(invalid > 0);
+}
+
+async function searchEntities_validOnly({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const { entity } = (await adminClient.createEntity(CHANGE_VALIDATIONS_CREATE)).valueOrThrow();
+
+  const matches = await countSearchResultWithEntity(
+    adminClient,
+    { entityTypes: ['ChangeValidations'], valid: true },
+    entity.id
+  );
+  assertResultValue(matches, 1);
+
+  const { valid, invalid } = (
+    await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+      entityTypes: ['ChangeValidations'],
+      valid: true,
+    })
+  ).valueOrThrow();
+
+  assertEquals(invalid, 0);
+  assertTruthy(valid > 0);
 }
 
 async function searchEntities_linksToOneReference({ server }: AdminEntityTestContext) {

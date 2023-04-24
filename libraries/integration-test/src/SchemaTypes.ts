@@ -22,6 +22,7 @@ export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAd
 export type AppAdminUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
 export type AppAdminEntity =
+  | AdminChangeValidations
   | AdminLocations
   | AdminReadOnly
   | AdminReferences
@@ -30,6 +31,30 @@ export type AppAdminEntity =
   | AdminSubjectOnly
   | AdminTitleOnly
   | AdminValueItems;
+
+export interface AdminChangeValidationsFields {
+  matchPattern: string | null;
+}
+
+export type AdminChangeValidations = AdminEntity<
+  'ChangeValidations',
+  AdminChangeValidationsFields,
+  string
+>;
+
+export function isAdminChangeValidations(
+  entity: AdminEntity<string, object>
+): entity is AdminChangeValidations {
+  return entity.info.type === 'ChangeValidations';
+}
+
+export function assertIsAdminChangeValidations(
+  entity: AdminEntity<string, object>
+): asserts entity is AdminChangeValidations {
+  if (entity.info.type !== 'ChangeValidations') {
+    throw new Error('Expected info.type = ChangeValidations (but was ' + entity.info.type + ')');
+  }
+}
 
 export interface AdminLocationsFields {
   location: Location | null;
@@ -267,6 +292,7 @@ export type AppPublishedExceptionClient = PublishedExceptionClient<
 export type AppPublishedUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
 export type AppPublishedEntity =
+  | PublishedChangeValidations
   | PublishedLocations
   | PublishedReadOnly
   | PublishedReferences
@@ -275,6 +301,30 @@ export type AppPublishedEntity =
   | PublishedSubjectOnly
   | PublishedTitleOnly
   | PublishedValueItems;
+
+export interface PublishedChangeValidationsFields {
+  matchPattern: string | null;
+}
+
+export type PublishedChangeValidations = PublishedEntity<
+  'ChangeValidations',
+  PublishedChangeValidationsFields,
+  string
+>;
+
+export function isPublishedChangeValidations(
+  entity: PublishedEntity<string, object>
+): entity is PublishedChangeValidations {
+  return entity.info.type === 'ChangeValidations';
+}
+
+export function assertIsPublishedChangeValidations(
+  entity: PublishedEntity<string, object>
+): asserts entity is PublishedChangeValidations {
+  if (entity.info.type !== 'ChangeValidations') {
+    throw new Error('Expected info.type = ChangeValidations (but was ' + entity.info.type + ')');
+  }
+}
 
 export interface PublishedLocationsFields {
   location: Location | null;

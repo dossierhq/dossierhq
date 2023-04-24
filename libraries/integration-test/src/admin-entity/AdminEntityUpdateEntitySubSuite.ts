@@ -11,6 +11,7 @@ import {
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
@@ -27,6 +28,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateAndPublishEntityWithUniqueIndexValue,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
+  updateEntity_fixInvalidEntity,
   updateEntity_withMultilineField,
   updateEntity_withTwoReferences,
   updateEntity_withMultipleLocations,
@@ -334,6 +336,41 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminE
     effect: 'none',
     entity: createResult.value.entity,
   });
+}
+
+async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  const entity = await createInvalidEntity(server, adminClient);
+
+  const updateResult = await adminClient.updateEntity({
+    id: entity.id,
+    fields: { matchPattern: 'foo' },
+  });
+  const {
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.valueOrThrow();
+
+  const expectedEntity = copyEntity(entity, {
+    info: {
+      updatedAt,
+      version: 1,
+      valid: true,
+    },
+    fields: {
+      matchPattern: 'foo',
+    },
+  });
+
+  assertResultValue(updateResult, {
+    effect: 'updated',
+    entity: expectedEntity,
+  });
+
+  const getResult = await adminClient.getEntity({ id: entity.id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function updateEntity_withMultilineField({ server }: AdminEntityTestContext) {

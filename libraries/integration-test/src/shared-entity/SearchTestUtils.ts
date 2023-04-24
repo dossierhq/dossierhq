@@ -184,7 +184,7 @@ export async function countSearchResultStatuses(
   client: AdminClient,
   query: AdminSearchQuery
 ): PromiseResult<
-  Record<AdminEntityStatus, number>,
+  Record<AdminEntityStatus | 'valid' | 'invalid', number>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const result = {
@@ -193,6 +193,8 @@ export async function countSearchResultStatuses(
     [AdminEntityStatus.modified]: 0,
     [AdminEntityStatus.withdrawn]: 0,
     [AdminEntityStatus.archived]: 0,
+    valid: 0,
+    invalid: 0,
   };
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
@@ -205,6 +207,11 @@ export async function countSearchResultStatuses(
       if (edge.node.isOk()) {
         const entity = edge.node.value;
         result[entity.info.status] += 1;
+        if (entity.info.valid) {
+          result.valid += 1;
+        } else {
+          result.invalid += 1;
+        }
       }
     }
   }
