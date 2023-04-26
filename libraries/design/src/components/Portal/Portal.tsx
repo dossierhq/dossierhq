@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, ReactPortal } from 'react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function Portal({ children }: Props) {
+export function Portal({ children }: Props): ReactPortal {
   const [container] = useState(() => {
     const div = document.createElement('div');
     div.setAttribute('class', 'portal-container');

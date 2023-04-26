@@ -16,7 +16,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "bun-types": "~0.5.8",
     "eslint": "~8.39.0",
-    "prettier": "2.8.7",
+    "prettier": "2.8.8",
     "typescript": "~5.0.4"
   },
   "dependencies": {
