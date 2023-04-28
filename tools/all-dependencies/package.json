@@ -63,7 +63,7 @@
   "devDependencies": {
     "@graphiql/toolkit": "~0.8.3",
     "@playwright/test": "~1.32.3",
-    "@rushstack/heft": "0.50.0",
+    "@rushstack/heft": "0.50.1",
     "@storybook/addon-actions": "~7.0.7",
     "@storybook/addon-docs": "~7.0.7",
     "@storybook/addon-essentials": "~7.0.7",
