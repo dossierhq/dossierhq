@@ -46,7 +46,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.50.0",
+    "@rushstack/heft": "0.50.1",
     "@types/better-sqlite3": "~7.6.4",
     "@types/pg": "~8.6.6",
     "@types/sqlite3": "~3.1.8",
