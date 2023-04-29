@@ -94,7 +94,7 @@ importers:
       playground-example-generator: workspace:*
       react: ~18.2.0
       react-dom: ~18.2.0
-      react-router-dom: ~6.9.0
+      react-router-dom: ~6.11.0
       rollup-plugin-visualizer: ~5.9.0
       sql.js: ~1.8.0
       swr: ~2.1.5
@@ -117,7 +117,7 @@ importers:
       playground-example-generator: link:../playground-example-generator
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.11.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
       swr: 2.1.5_react@18.2.0
     devDependencies:
@@ -388,7 +388,7 @@ importers:
       nodemon: ~2.0.22
       react: ~18.2.0
       react-dom: ~18.2.0
-      react-router-dom: ~6.9.0
+      react-router-dom: ~6.11.0
       ts-node: ~10.9.1
       typescript: ~5.0.4
       vite: ~4.3.3
@@ -410,7 +410,7 @@ importers:
       leaflet: 1.9.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.11.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
       '@types/better-sqlite3': 7.6.4
@@ -1340,7 +1340,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       react-leaflet: ~4.2.1
-      react-router-dom: ~6.9.0
+      react-router-dom: ~6.11.0
       rollup-plugin-visualizer: ~5.9.0
       sass: ~1.62.1
       sass-loader: ~13.2.2
@@ -1399,7 +1399,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.2.1_yydtlhsdonbqao6vgvkwhv2zki
-      react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.11.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
       sqlite3: 5.1.4
       swr: 2.1.5_react@18.2.0
@@ -5016,8 +5016,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@remix-run/router/1.4.0:
-    resolution: {integrity: sha512-BJ9SxXux8zAg991UmT8slpwpsd31K1dHHbD3Ba4VzD+liLQ4WAMSxQp2d2ZPRPfN0jN2NPRowcSSoM7lCaF08Q==}
+  /@remix-run/router/1.6.0:
+    resolution: {integrity: sha512-N13NRw3T2+6Xi9J//3CGLsK2OqC8NMme3d/YX+nh05K9YHWGcv8DycHJrqGScSP4T75o8IN6nqIMhVFU8ohg8w==}
     engines: {node: '>=14'}
     dev: false
 
@@ -12995,26 +12995,26 @@ packages:
       use-sidecar: 1.1.2_3mjolpizrsjgnt7s4ahgoveqvu
     dev: false
 
-  /react-router-dom/6.9.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-/seUAPY01VAuwkGyVBPCn1OXfVbaWGGu4QN9uj0kCPcTyNYgL1ldZpxZUpRU7BLheKQI4Twtl/OW2nHRF1u26Q==}
+  /react-router-dom/6.11.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Q3mK1c/CYoF++J6ZINz7EZzwlgSOZK/kc7lxIA7PhtWhKju4KfF1WHqlx0kVCIFJAWztuYVpXZeljEbds8z4Og==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.4.0
+      '@remix-run/router': 1.6.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router: 6.9.0_react@18.2.0
+      react-router: 6.11.0_react@18.2.0
     dev: false
 
-  /react-router/6.9.0_react@18.2.0:
-    resolution: {integrity: sha512-51lKevGNUHrt6kLuX3e/ihrXoXCa9ixY/nVWRLlob4r/l0f45x3SzBvYJe3ctleLUQQ5fVa4RGgJOTH7D9Umhw==}
+  /react-router/6.11.0_react@18.2.0:
+    resolution: {integrity: sha512-hTm6KKNpj9SDG4syIWRjCU219O0RZY8RUPobCFt9p+PlF7nnkRgMoh2DieTKvw3F3Mw6zg565HGnSv8BuoY5oQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.4.0
+      '@remix-run/router': 1.6.0
       react: 18.2.0
     dev: false
 
