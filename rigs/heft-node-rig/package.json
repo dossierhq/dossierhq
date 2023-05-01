@@ -15,6 +15,6 @@
     "eslint": "~8.39.0"
   },
   "devDependencies": {
-    "@rushstack/heft": "0.50.1"
+    "@rushstack/heft": "0.50.3"
   }
 }
