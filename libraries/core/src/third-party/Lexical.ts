@@ -15,9 +15,9 @@ export type SerializedLexicalNode = {
 
 type ElementFormatType = 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
 
-export type SerializedElementNode = Spread<
+export type SerializedElementNode<T extends SerializedLexicalNode = SerializedLexicalNode> = Spread<
   {
-    children: Array<SerializedLexicalNode>;
+    children: Array<T>;
     direction: 'ltr' | 'rtl' | null;
     format: ElementFormatType;
     indent: number;
@@ -34,7 +34,8 @@ export type TextFormatType =
   | 'code'
   | 'subscript'
   | 'superscript';
-export type TextModeType = 'normal' | 'token' | 'segmented' | 'inert';
+
+export type TextModeType = 'normal' | 'token' | 'segmented';
 
 export type SerializedTextNode = Spread<
   {
@@ -47,20 +48,9 @@ export type SerializedTextNode = Spread<
   SerializedLexicalNode
 >;
 
-export type SerializedLineBreakNode = Spread<
-  {
-    type: 'linebreak';
-  },
-  SerializedLexicalNode
->;
+export type SerializedLineBreakNode = SerializedLexicalNode;
 
-export type SerializedParagraphNode = Spread<
-  {
-    type: 'paragraph';
-    version: 1;
-  },
-  SerializedElementNode
->;
+export type SerializedParagraphNode = SerializedElementNode;
 
 // Copy from LexicalConstants. Would be good to ensure they are identical to Lexical's constants but
 // they are not exported and we don't want a runtime dependency on Lexical.
@@ -87,20 +77,12 @@ export const TEXT_TYPE_TO_FORMAT = {
 // from @lexical/code
 
 export type SerializedCodeNode = Spread<
-  {
-    language: string | null | undefined;
-    type: 'code';
-    version: 1;
-  },
+  { language: string | null | undefined },
   SerializedElementNode
 >;
 
 export type SerializedCodeHighlightNode = Spread<
-  {
-    highlightType: string | null | undefined;
-    type: 'code-highlight';
-    version: 1;
-  },
+  { highlightType: string | null | undefined },
   SerializedTextNode
 >;
 
@@ -112,24 +94,14 @@ export type LinkAttributes = {
 };
 
 export type SerializedLinkNode = Spread<
-  {
-    type: 'link';
-    url: string;
-    version: 1;
-  },
+  { url: string },
   Spread<LinkAttributes, SerializedElementNode>
 >;
 
 // from @lexical/list
 
 export type SerializedListNode = Spread<
-  {
-    listType: ListType;
-    start: number;
-    tag: ListNodeTagType;
-    type: 'list';
-    version: 1;
-  },
+  { listType: ListType; start: number; tag: ListNodeTagType },
   SerializedElementNode
 >;
 
@@ -140,9 +112,7 @@ export type ListNodeTagType = 'ul' | 'ol';
 export type SerializedListItemNode = Spread<
   {
     checked: boolean | undefined;
-    type: 'listitem';
     value: number;
-    version: 1;
   },
   SerializedElementNode
 >;
@@ -150,9 +120,7 @@ export type SerializedListItemNode = Spread<
 // from @lexical/react
 
 export type SerializedDecoratorBlockNode = Spread<
-  {
-    format: ElementFormatType;
-  },
+  { format: ElementFormatType },
   SerializedLexicalNode
 >;
 
@@ -161,10 +129,6 @@ export type SerializedDecoratorBlockNode = Spread<
 export type HeadingTagType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export declare type SerializedHeadingNode = Spread<
-  {
-    tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-    type: 'heading';
-    version: 1;
-  },
+  { tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' },
   SerializedElementNode
 >;

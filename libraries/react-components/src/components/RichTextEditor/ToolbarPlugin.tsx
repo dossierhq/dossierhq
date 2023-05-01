@@ -1,5 +1,5 @@
 import type { AdminFieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
-import { assertExhaustive, RichTextNodeType } from '@dossierhq/core';
+import { RichTextNodeType, assertExhaustive } from '@dossierhq/core';
 import type { IconName } from '@dossierhq/design';
 import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@dossierhq/design';
 import {
@@ -86,7 +86,7 @@ export function ToolbarPlugin({
   const [showAddEntityDialog, setShowAddEntityDialog] = useState(false);
   const [showAddValueItemDialog, setShowAddValueItemDialog] = useState(false);
 
-  const updateToolbar = useCallback(() => {
+  const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       //TODO why can't we only use nodes, why looking at the dom?
@@ -146,18 +146,18 @@ export function ToolbarPlugin({
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         (_payload, _newEditor) => {
-          updateToolbar();
+          $updateToolbar();
           return false;
         },
         COMMAND_PRIORITY_CRITICAL
       ),
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          updateToolbar();
+          $updateToolbar();
         });
       })
     );
-  }, [editor, updateToolbar]);
+  }, [editor, $updateToolbar]);
 
   const enableAllNodes = !fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0;
   const enableEntityNode =

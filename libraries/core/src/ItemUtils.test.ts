@@ -4,13 +4,25 @@ import {
   copyEntity,
   isEntityNameAsRequested,
   isFieldValueEqual,
+  isRichTextCodeHighlightNode,
+  isRichTextCodeNode,
+  isRichTextEntityLinkNode,
+  isRichTextEntityNode,
+  isRichTextHeadingNode,
+  isRichTextLineBreakNode,
+  isRichTextLinkNode,
+  isRichTextListItemNode,
+  isRichTextListNode,
+  isRichTextParagraphNode,
+  isRichTextTextNode,
+  isRichTextValueItemNode,
   normalizeEntityFields,
   normalizeFieldValue,
   normalizeValueItem,
 } from './ItemUtils.js';
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
 import { AdminSchema, FieldType } from './Schema.js';
-import type { AdminEntity, AdminEntityCreate, RichText, ValueItem } from './Types.js';
+import type { AdminEntity, AdminEntityCreate, RichText, RichTextNode, ValueItem } from './Types.js';
 
 type AdminFoo = AdminEntity<'Foo', AdminFooFields, 'none'>;
 
@@ -134,6 +146,38 @@ describe('isFieldValueEqual', () => {
         }
       )
     ).toBeFalsy());
+});
+
+describe('isRichTextXxxNode', () => {
+  test('all', () => {
+    // checking that all the 'leaf' types are covered and are distinct
+    const node: RichTextNode = { type: 'any', version: 1 };
+    if (isRichTextTextNode(node)) {
+      const _type: 'text' = node.type;
+    } else if (isRichTextLineBreakNode(node)) {
+      const _type: 'linebreak' = node.type;
+    } else if (isRichTextParagraphNode(node)) {
+      const _type: 'paragraph' = node.type;
+    } else if (isRichTextEntityNode(node)) {
+      const _type: 'entity' = node.type;
+    } else if (isRichTextEntityLinkNode(node)) {
+      const _type: 'entityLink' = node.type;
+    } else if (isRichTextValueItemNode(node)) {
+      const _type: 'valueItem' = node.type;
+    } else if (isRichTextCodeNode(node)) {
+      const _type: 'code' = node.type;
+    } else if (isRichTextCodeHighlightNode(node)) {
+      const _type: 'code-highlight' = node.type;
+    } else if (isRichTextHeadingNode(node)) {
+      const _type: 'heading' = node.type;
+    } else if (isRichTextLinkNode(node)) {
+      const _type: 'link' = node.type;
+    } else if (isRichTextListNode(node)) {
+      const _type: 'list' = node.type;
+    } else if (isRichTextListItemNode(node)) {
+      const _type: 'listitem' = node.type;
+    }
+  });
 });
 
 describe('normalizeEntityFields', () => {

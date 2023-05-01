@@ -33,6 +33,11 @@ import type {
   ValueItem,
 } from './Types.js';
 
+type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType> = Omit<
+  TNode,
+  'type'
+> & { type: TType };
+
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(
   fieldSpec: FieldSpecification,
@@ -201,11 +206,15 @@ export function isValueItemItemField(
   return fieldSpec.type === FieldType.ValueItem;
 }
 
-export function isRichTextTextNode(node: RichTextNode): node is RichTextTextNode {
+export function isRichTextTextNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextTextNode, 'text'> {
   return node.type === RichTextNodeType.text;
 }
 
-export function isRichTextLineBreakNode(node: RichTextNode): node is RichTextLineBreakNode {
+export function isRichTextLineBreakNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextLineBreakNode, 'linebreak'> {
   return node.type === RichTextNodeType.linebreak;
 }
 
@@ -217,43 +226,63 @@ export function isRichTextRootNode(node: RichTextNode): node is RichTextRootNode
   return node.type === RichTextNodeType.root;
 }
 
-export function isRichTextParagraphNode(node: RichTextNode): node is RichTextParagraphNode {
+export function isRichTextParagraphNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextParagraphNode, 'paragraph'> {
   return node.type === RichTextNodeType.paragraph;
 }
 
-export function isRichTextEntityNode(node: RichTextNode): node is RichTextEntityNode {
+export function isRichTextEntityNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextEntityNode, 'entity'> {
   return node.type === RichTextNodeType.entity;
 }
 
-export function isRichTextEntityLinkNode(node: RichTextNode): node is RichTextEntityLinkNode {
+export function isRichTextEntityLinkNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextEntityLinkNode, 'entityLink'> {
   return node.type === RichTextNodeType.entityLink;
 }
 
-export function isRichTextValueItemNode(node: RichTextNode): node is RichTextValueItemNode {
+export function isRichTextValueItemNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextValueItemNode, 'valueItem'> {
   return node.type === RichTextNodeType.valueItem;
 }
 
-export function isRichTextCodeNode(node: RichTextNode): node is RichTextCodeNode {
+export function isRichTextCodeNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextCodeNode, 'code'> {
   return node.type === RichTextNodeType.code;
 }
 
-export function isRichTextCodeHighlightNode(node: RichTextNode): node is RichTextCodeHighlightNode {
+export function isRichTextCodeHighlightNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextCodeHighlightNode, 'code-highlight'> {
   return node.type === RichTextNodeType['code-highlight'];
 }
 
-export function isRichTextHeadingNode(node: RichTextNode): node is RichTextHeadingNode {
+export function isRichTextHeadingNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextHeadingNode, 'heading'> {
   return node.type === RichTextNodeType.heading;
 }
 
-export function isRichTextLinkNode(node: RichTextNode): node is RichTextLinkNode {
+export function isRichTextLinkNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextLinkNode, 'link'> {
   return node.type === RichTextNodeType.link;
 }
 
-export function isRichTextListNode(node: RichTextNode): node is RichTextListNode {
+export function isRichTextListNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextListNode, 'list'> {
   return node.type === RichTextNodeType.list;
 }
 
-export function isRichTextListItemNode(node: RichTextNode): node is RichTextListItemNode {
+export function isRichTextListItemNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextListItemNode, 'listitem'> {
   return node.type === RichTextNodeType.listitem;
 }
 

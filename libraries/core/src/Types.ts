@@ -1,5 +1,4 @@
 import type { ErrorType, Result } from './ErrorResult.js';
-import type { RichTextNodeType } from './Schema.js';
 import type {
   SerializedCodeHighlightNode,
   SerializedCodeNode,
@@ -85,31 +84,13 @@ export type RichTextCodeNode = SerializedCodeNode;
 export type RichTextCodeHighlightNode = SerializedCodeHighlightNode;
 
 export type RichTextEntityNode = Spread<
-  {
-    type: typeof RichTextNodeType.entity;
-    reference: EntityReference;
-    version: 1;
-  },
+  { reference: EntityReference },
   SerializedDecoratorBlockNode
 >;
 
-export type RichTextEntityLinkNode = Spread<
-  {
-    type: typeof RichTextNodeType.entityLink;
-    reference: EntityReference;
-    version: 1;
-  },
-  RichTextElementNode
->;
+export type RichTextEntityLinkNode = Spread<{ reference: EntityReference }, RichTextElementNode>;
 
-export type RichTextValueItemNode = Spread<
-  {
-    type: typeof RichTextNodeType.valueItem;
-    data: ValueItem;
-    version: 1;
-  },
-  SerializedDecoratorBlockNode
->;
+export type RichTextValueItemNode = Spread<{ data: ValueItem }, SerializedDecoratorBlockNode>;
 
 /** Geographic location using EPSG:4326/WGS 84 */
 export interface Location {
