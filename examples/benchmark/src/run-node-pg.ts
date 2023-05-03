@@ -4,11 +4,10 @@ import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { assertIsDefined, ok } from '@dossierhq/core';
 import type { PgDatabaseAdapter } from '@dossierhq/pg';
 import { createPostgresAdapter } from '@dossierhq/pg';
-import * as PG from 'pg';
+import PG from 'pg';
 import { initializeAndRunTests } from './benchmark.js';
 
-// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
-const { Client: PGClient } = (PG as unknown as { default: typeof PG }).default;
+const { Client: PGClient } = PG;
 
 async function createPostgresDatabaseAdapter(
   connectionString: string

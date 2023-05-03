@@ -1,16 +1,14 @@
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseOptimizationOptions } from '@dossierhq/postgres-core';
-import type { PostgresDatabaseAdapter, PostgresTransaction } from '@dossierhq/postgres-core';
+import type {
+  PostgresDatabaseAdapter,
+  PostgresDatabaseOptimizationOptions,
+  PostgresTransaction,
+} from '@dossierhq/postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@dossierhq/postgres-core';
 import type { PoolClient, PoolConfig } from 'pg';
-import * as PG from 'pg';
+import PG from 'pg';
 
-// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
-const {
-  types: PgTypes,
-  DatabaseError,
-  Pool,
-} = 'default' in PG ? (PG as unknown as { default: typeof PG }).default : PG;
+const { types: PgTypes, DatabaseError, Pool } = PG;
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)

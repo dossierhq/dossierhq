@@ -4,13 +4,12 @@ import { createConsoleLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import fs from 'node:fs';
-import * as Sqlite from 'sqlite3';
+import Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
 import { createBlogServer } from '../utils/SharedServerUtils.js';
 
-// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
-const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+const { Database: SqliteDatabase } = Sqlite;
 
 const DATA_DIR = new URL('../data', import.meta.url).pathname;
 

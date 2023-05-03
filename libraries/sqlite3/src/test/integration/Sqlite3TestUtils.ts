@@ -1,15 +1,14 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
-import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
+import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
-import * as Sqlite from 'sqlite3';
+import Sqlite from 'sqlite3';
 import type { Sqlite3DatabaseAdapter } from '../../Sqlite3Adapter.js';
 import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';
 import { createDatabase } from '../../SqliteUtils.js';
 
-// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
-const { Database } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+const { Database } = Sqlite;
 
 export interface ServerInit {
   server: Server;

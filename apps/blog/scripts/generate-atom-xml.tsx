@@ -27,7 +27,7 @@ import assert from 'node:assert';
 import { writeFile } from 'node:fs/promises';
 import type { Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import * as Sqlite from 'sqlite3';
+import Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import { getResponsiveImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
@@ -52,8 +52,7 @@ import { createBlogServer } from '../utils/SharedServerUtils.js';
 config({ path: '.env.local' });
 config({ path: '.env' });
 
-// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
-const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+const { Database: SqliteDatabase } = Sqlite;
 
 export {};
 

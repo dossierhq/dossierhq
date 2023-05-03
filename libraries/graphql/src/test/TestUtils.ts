@@ -5,15 +5,14 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@dossierhq/core';
-import { AdminSchema, assertOkResult, NoOpLogger } from '@dossierhq/core';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
+import { AdminSchema, NoOpLogger, assertOkResult } from '@dossierhq/core';
 import type { AuthorizationAdapter } from '@dossierhq/server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
-import * as Sqlite from 'sqlite3';
+import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
+import Sqlite from 'sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 
-// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
-const { Database } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+const { Database } = Sqlite;
 
 export interface TestServerWithSession {
   schema: AdminSchema;

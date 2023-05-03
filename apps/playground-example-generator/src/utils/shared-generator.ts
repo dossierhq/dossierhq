@@ -14,11 +14,7 @@ import {
   type SqliteDatabaseOptimizationOptions,
 } from '@dossierhq/sqlite3';
 import { unlink } from 'fs/promises';
-import type { Database } from 'sqlite3';
-import * as Sqlite from 'sqlite3';
-
-// TODO @types/sqlite is slightly wrong in terms of CommonJS/ESM export
-const { Database: SqliteDatabase } = (Sqlite as unknown as { default: typeof Sqlite }).default;
+import Sqlite from 'sqlite3';
 
 export async function createNewDatabase(databasePath: string) {
   try {
@@ -29,7 +25,7 @@ export async function createNewDatabase(databasePath: string) {
   }
 
   const context = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(context, SqliteDatabase, {
+  const databaseResult = await createDatabase(context, Sqlite.Database, {
     filename: databasePath,
   });
   return databaseResult.valueOrThrow();
@@ -38,7 +34,7 @@ export async function createNewDatabase(databasePath: string) {
 export async function createAdapterAndServer<
   TAdminClient extends AdminClient<AdminEntity<string, object>>
 >(
-  database: Database,
+  database: Sqlite.Database,
   schema: AdminSchemaSpecificationUpdate
 ): Promise<{
   adminClient: TAdminClient;
