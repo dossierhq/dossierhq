@@ -1,0 +1,256 @@
+{
+  "id": "176d04d7-8db5-4f93-8890-0e172aee27e5",
+  "info": {
+    "name": "April summary",
+    "type": "BlogPost",
+    "authKey": "none",
+    "status": "published",
+    "valid": true
+  },
+  "fields": {
+    "title": "April summary",
+    "slug": "april-summary",
+    "publishedDate": "2023-05-03T19:13Z",
+    "updatedDate": null,
+    "authors": [
+      {
+        "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
+      }
+    ],
+    "hero": {
+      "type": "CloudinaryImage",
+      "publicId": "Blog/cucjxi4qzdr4o2u3doeb",
+      "width": 1920,
+      "height": 1920,
+      "alt": "Correction fluid"
+    },
+    "description": "During april we've added detection av invalid entities and made improvements to full text search performance for SQLite.",
+    "body": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Hi everyone! It's time to share some of the updates we've made to Dossier in April.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "One of the main features we've added is the ability to detect invalid entities. Dossier is quite strict about saving and publishing entities that match the schema. But sometimes you might change the schema later, for example by changing a regular expression pattern. And then some of the entities that were valid before might become invalid.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "That's why we've added an ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "info.valid",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " property to every entity, which will be  ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "false",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " if that happens. You can also filter the entities by this property, so you can easily find and fix the invalid ones.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "We've made this validation process run in the background, so it doesn't affect your performance. There's a standard plugin called ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "BackgroundEntityValidatorPlugin",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " that you can use or modify to suit your needs. For instance, you can make it run only when the traffic is low.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "We're still working on some improvements for this feature. For example, right now we only validate the latest version of each entity. But what if you published an older version that have since become invalid due to a schema change? We want to make sure you're aware of that too. We also want to make schema changes faster by validating fewer entities.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Another thing we've done is to optimize the fulltext search indexes when using SQLite. You can now use ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "Server.optimizeDatabase()",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " to do that.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "And of course, we've updated a bunch of dependencies to keep Dossier fresh :-)",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "That's all for now. Thanks for reading and stay tuned for more updates!",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
