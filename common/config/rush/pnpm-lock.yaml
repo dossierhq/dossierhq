@@ -362,7 +362,7 @@ importers:
 
   ../../examples/tutorial:
     specifiers:
-      '@auth0/auth0-react': ~2.0.2
+      '@auth0/auth0-react': ~2.1.0
       '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
@@ -393,7 +393,7 @@ importers:
       typescript: ~5.0.4
       vite: ~4.3.3
     dependencies:
-      '@auth0/auth0-react': 2.0.2_biqbaboplfbrettd7655fr4n2y
+      '@auth0/auth0-react': 2.1.0_biqbaboplfbrettd7655fr4n2y
       '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
@@ -1259,7 +1259,7 @@ importers:
 
   ../../tools/all-dependencies:
     specifiers:
-      '@auth0/auth0-react': ~2.0.2
+      '@auth0/auth0-react': ~2.1.0
       '@cloudinary/url-gen': ~1.10.0
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~7.6.0
@@ -1357,7 +1357,7 @@ importers:
       vite: ~4.3.3
       vitest: ~0.31.0
     dependencies:
-      '@auth0/auth0-react': 2.0.2_biqbaboplfbrettd7655fr4n2y
+      '@auth0/auth0-react': 2.1.0_biqbaboplfbrettd7655fr4n2y
       '@cloudinary/url-gen': 1.10.0
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 7.6.0
@@ -1476,8 +1476,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.18
     dev: true
 
-  /@auth0/auth0-react/2.0.2_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-MyN1FdB+Ogo9S3YWShfUq7eVsq37ioh885oThnwZ1OjYrKUlImM+dWwybDD+Bg8U28sYBt3QEqFbMAQC/p4ONQ==}
+  /@auth0/auth0-react/2.1.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-+86qLx97BcSwL/ZwIzGq9jFa5SaV5z7goLU5gi+4R9KhzDg9vhmmZ+iQWW0GMiuwjJ8vcfX4hRTD6iF0DbGZWw==}
     peerDependencies:
       react: ^16.11.0 || ^17 || ^18
       react-dom: ^16.11.0 || ^17 || ^18
