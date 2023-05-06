@@ -1361,7 +1361,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.boolean: Can’t specify both matchPattern and values'
+      'Foo.string: Can’t specify both matchPattern and values'
     );
   });
 
