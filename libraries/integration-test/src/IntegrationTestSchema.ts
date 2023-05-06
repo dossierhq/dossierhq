@@ -58,6 +58,17 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'stringAdminOnly', type: FieldType.String, adminOnly: true },
         { name: 'pattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'fooBarBaz' },
+        {
+          name: 'values',
+          type: FieldType.String,
+          values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+        },
+        {
+          name: 'valuesList',
+          type: FieldType.String,
+          list: true,
+          values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+        },
         { name: 'unique', type: FieldType.String, index: 'stringsUnique' },
         {
           name: 'uniqueAdminOnly',

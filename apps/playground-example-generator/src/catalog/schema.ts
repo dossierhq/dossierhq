@@ -130,6 +130,17 @@ export const SCHEMA = {
         { name: 'required', type: FieldType.String, required: true },
         { name: 'multiline', type: FieldType.String, multiline: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
+        {
+          name: 'values',
+          type: FieldType.String,
+          values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+        },
+        {
+          name: 'valuesList',
+          type: FieldType.String,
+          list: true,
+          values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+        },
         { name: 'list', type: FieldType.String, list: true },
         { name: 'requiredList', type: FieldType.String, list: true, required: true },
         {

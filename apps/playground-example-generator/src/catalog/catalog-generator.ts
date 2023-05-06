@@ -368,6 +368,8 @@ async function createStringsEntities(adminClient: AppAdminClient) {
           normal: 'Hello',
           multiline: 'Hello\nWorld',
           matchPattern: 'baz',
+          values: 'bar',
+          valuesList: ['foo', 'bar', 'baz'],
           list: ['uno', 'dos', 'tres'],
         },
       })

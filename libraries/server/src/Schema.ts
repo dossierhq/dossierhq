@@ -1,11 +1,14 @@
-import type {
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
-  ErrorType,
-  PromiseResult,
-  SchemaSpecificationUpdatePayload,
+import {
+  AdminSchema,
+  FieldType,
+  isFieldValueEqual,
+  ok,
+  type AdminSchemaSpecification,
+  type AdminSchemaSpecificationUpdate,
+  type ErrorType,
+  type PromiseResult,
+  type SchemaSpecificationUpdatePayload,
 } from '@dossierhq/core';
-import { AdminSchema, isFieldValueEqual, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
 import { calculateSchemaChangeRevalidation } from './schema/calculateSchemaChangeRevalidation.js';
 
@@ -44,6 +47,15 @@ export async function getSchemaSpecification(
         typeSpec.fields.find((it) => (it as { isName?: boolean }).isName)?.name ?? null;
       for (const fieldSpec of typeSpec.fields) {
         delete (fieldSpec as { isName?: boolean }).isName;
+      }
+    }
+  }
+
+  for (const typeSpec of [...specification.entityTypes, ...specification.valueTypes]) {
+    for (const fieldSpec of typeSpec.fields) {
+      if (fieldSpec.type === FieldType.String) {
+        // Version 0.2.15: added values to string fields
+        if (fieldSpec.values === undefined) fieldSpec.values = [];
       }
     }
   }

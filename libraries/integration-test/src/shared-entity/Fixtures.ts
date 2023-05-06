@@ -133,6 +133,8 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     stringAdminOnly: null,
     pattern: null,
     patternList: null,
+    values: null,
+    valuesList: null,
     unique: null,
     uniqueAdminOnly: null,
     uniqueGenericIndex: null,

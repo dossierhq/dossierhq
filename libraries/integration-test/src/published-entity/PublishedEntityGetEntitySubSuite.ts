@@ -152,6 +152,8 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
     multiline: 'multiline\nmultiline',
     pattern: null,
     patternList: null,
+    values: null,
+    valuesList: null,
     unique: null,
     uniqueGenericIndex: null,
   });

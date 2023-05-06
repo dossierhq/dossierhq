@@ -32,6 +32,17 @@ const adminSchema = AdminSchema.createAndValidate({
         { name: 'required', type: FieldType.String, required: true },
         { name: 'pattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'fooBarBaz' },
+        {
+          name: 'values',
+          type: FieldType.String,
+          values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+        },
+        {
+          name: 'valuesList',
+          type: FieldType.String,
+          list: true,
+          values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+        },
       ],
     },
     {
@@ -359,6 +370,34 @@ describe('Validate entity', () => {
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
           fields: { patternList: ['foo', 'will not match'] },
         })
+      )
+    ).toMatchSnapshot();
+  });
+
+  test('Pass: values matched string', () => {
+    expect(
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { values: 'baz' } }))
+    ).toEqual([]);
+  });
+
+  test('Pass: values matched string list', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { valuesList: ['foo', 'bar', 'baz'] } })
+      )
+    ).toEqual([]);
+  });
+
+  test('Fail: values unmatched string', () => {
+    expect(
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { values: 'other' } }))
+    ).toMatchSnapshot();
+  });
+
+  test('Fail: values unmatched string list', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { valuesList: ['foo', 'other'] } })
       )
     ).toMatchSnapshot();
   });

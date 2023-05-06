@@ -189,6 +189,16 @@ export function validateTraverseNodeForSave(
             };
           }
         }
+        if (stringFieldSpec.values.length > 0) {
+          const match = stringFieldSpec.values.some((it) => it.value === node.value);
+          if (!match) {
+            return {
+              type: 'save',
+              path: node.path,
+              message: 'Value does not match any of the allowed values',
+            };
+          }
+        }
       }
       break;
     case ItemTraverseNodeType.error:

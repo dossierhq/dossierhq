@@ -73,6 +73,35 @@ exports[`Validate entity > Fail: rich text text node with line break 1`] = `
 ]
 `;
 
+exports[`Validate entity > Fail: values unmatched string 1`] = `
+[
+  {
+    "message": "Value does not match any of the allowed values",
+    "path": [
+      "entity",
+      "fields",
+      "values",
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity > Fail: values unmatched string list 1`] = `
+[
+  {
+    "message": "Value does not match any of the allowed values",
+    "path": [
+      "entity",
+      "fields",
+      "valuesList",
+      1,
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`validateEntityInfo > authKey not matching pattern 1`] = `
 {
   "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(none|subject)$)",

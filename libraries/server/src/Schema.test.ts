@@ -102,6 +102,67 @@ describe('AdminSchema getSchema', () => {
               adminOnly: false,
               index: null,
               matchPattern: null,
+              values: [],
+              multiline: false,
+              required: false,
+            },
+          ],
+        },
+      ],
+      indexes: [],
+      patterns: [],
+      valueTypes: [],
+    });
+  });
+
+  test('Version <=0.2.14 schema', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const context = createMockTransactionContext();
+
+    const schemaSpec = {
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: 'title',
+          fields: [
+            {
+              name: 'title',
+              type: FieldType.String,
+              adminOnly: false,
+              index: null,
+              matchPattern: null,
+              list: false,
+              multiline: false,
+              required: false,
+              // No values field on string fields in <=0.2.14
+            },
+          ],
+        },
+      ],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    } as unknown as AdminSchemaSpecification;
+    databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
+    const result = await getSchemaSpecification(databaseAdapter, context, false);
+    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: 'title',
+          fields: [
+            {
+              name: 'title',
+              type: 'String',
+              list: false,
+              adminOnly: false,
+              index: null,
+              matchPattern: null,
+              values: [],
               multiline: false,
               required: false,
             },

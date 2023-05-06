@@ -334,6 +334,7 @@ describe('validate()', () => {
                 adminOnly: false,
                 required: false,
                 matchPattern: null,
+                values: [],
                 index: null,
               },
             ],
@@ -364,6 +365,7 @@ describe('validate()', () => {
                 adminOnly: false,
                 required: false,
                 matchPattern: null,
+                values: [],
                 index: null,
               },
             ],
@@ -1228,6 +1230,7 @@ describe('validate()', () => {
                 multiline: false,
                 adminOnly: false,
                 index: null,
+                values: [],
                 matchPattern: 'foo',
               },
             ],
@@ -1299,6 +1302,69 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Boolean (i.e. non-String) with values', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            nameField: null,
+            fields: [
+              {
+                name: 'boolean',
+                type: FieldType.Boolean,
+                list: false,
+                required: false,
+                adminOnly: false,
+                values: [{ value: 'foo' }],
+              } as AdminFieldSpecification<BooleanFieldSpecification>,
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [{ name: 'foo', pattern: '^foo$' }],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.boolean: Field with type Boolean shouldn’t specify values'
+    );
+  });
+
+  test('Error: both matchPattern and values on same field', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            nameField: null,
+            fields: [
+              {
+                name: 'string',
+                type: FieldType.String,
+                list: false,
+                required: false,
+                multiline: false,
+                index: null,
+                adminOnly: false,
+                values: [{ value: 'foo' }],
+                matchPattern: 'foo',
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [{ name: 'foo', pattern: '^foo$' }],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.boolean: Can’t specify both matchPattern and values'
+    );
+  });
+
   test('Error: Boolean (i.e. non-String) with index', () => {
     expectErrorResult(
       new AdminSchema({
@@ -1347,6 +1413,7 @@ describe('validate()', () => {
                 multiline: false,
                 adminOnly: false,
                 matchPattern: null,
+                values: [],
                 index: 'foo',
               },
             ],
@@ -1428,6 +1495,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
               multiline: false,
               index: null,
               matchPattern: null,
+              values: [],
             },
           ],
         },
@@ -1469,6 +1537,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
               required: false,
               multiline: false,
               index: null,
+              values: [],
               matchPattern: 'aPattern',
             },
           ],
@@ -1507,6 +1576,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
               multiline: false,
               index: 'anIndex',
               matchPattern: null,
+              values: [],
             },
           ],
         },

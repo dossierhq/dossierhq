@@ -111,6 +111,7 @@ export interface StringFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.String;
   multiline: boolean;
   matchPattern: string | null;
+  values: { value: string }[];
   index: string | null;
 }
 
@@ -267,6 +268,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
     ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
     'multiline',
     'matchPattern',
+    'values',
     'index',
   ],
   [FieldType.ValueItem]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
@@ -503,6 +505,16 @@ export class AdminSchema {
               `${typeSpec.name}.${fieldSpec.name}: Unknown matchPattern (${fieldSpec.matchPattern})`
             );
           }
+        }
+
+        if (
+          fieldSpec.type === FieldType.String &&
+          fieldSpec.matchPattern &&
+          fieldSpec.values.length > 0
+        ) {
+          return notOk.BadRequest(
+            `${typeSpec.name}.${fieldSpec.name}: Can’t specify both matchPattern and values`
+          );
         }
 
         if (fieldSpec.type === FieldType.String && fieldSpec.index) {
@@ -823,6 +835,7 @@ function normalizeFieldSpecUpdate(
         adminOnly,
         multiline: fieldSpec.multiline ?? false,
         matchPattern: fieldSpec.matchPattern ?? null,
+        values: (fieldSpec.values ?? []).sort((a, b) => a.value.localeCompare(b.value)),
         index: fieldSpec.index ?? null,
       };
     case FieldType.ValueItem:

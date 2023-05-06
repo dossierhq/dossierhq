@@ -141,6 +141,8 @@ export interface AdminStringsFields {
   stringAdminOnly: string | null;
   pattern: string | null;
   patternList: string[] | null;
+  values: string | null;
+  valuesList: string[] | null;
   unique: string | null;
   uniqueAdminOnly: string | null;
   uniqueGenericIndex: string | null;
@@ -416,6 +418,8 @@ export interface PublishedStringsFields {
   multiline: string | null;
   pattern: string | null;
   patternList: string[] | null;
+  values: string | null;
+  valuesList: string[] | null;
   unique: string | null;
   uniqueGenericIndex: string | null;
 }
