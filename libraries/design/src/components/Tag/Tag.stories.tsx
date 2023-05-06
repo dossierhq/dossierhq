@@ -21,3 +21,5 @@ export const Published: Story = { args: { children: 'published', color: 'publish
 export const PublishedRemove: Story = {
   args: { color: 'published', children: ['tag', <Tag.Remove key="1" />] },
 };
+
+export const NoTransform: Story = { args: { children: 'lowercase tag', transform: '' } };

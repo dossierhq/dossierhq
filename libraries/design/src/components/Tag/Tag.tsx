@@ -6,6 +6,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 export interface TagProps {
   className?: string;
   color?: Color;
+  transform?: 'capitalized' | '';
   children: string | [string, ReactElement<TagRemoveProps> | null];
 }
 
@@ -28,8 +29,12 @@ interface TagComponent extends FunctionComponent<TagProps> {
   Group: FunctionComponent<TagGroupProps>;
 }
 
-export const Tag: TagComponent = ({ className, color, children }: TagProps) => {
-  const tagClassName = toClassName('tag is-capitalized', toColorClassName(color));
+export const Tag: TagComponent = ({ className, color, transform, children }: TagProps) => {
+  const tagClassName = toClassName(
+    'tag',
+    (transform === undefined || transform === 'capitalized') && 'is-capitalized',
+    toColorClassName(color)
+  );
   if (typeof children === 'string') {
     return <span className={toClassName(tagClassName, 'control', className)}>{children}</span>;
   }
