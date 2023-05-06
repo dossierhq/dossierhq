@@ -9,7 +9,7 @@ import type {
   SchemaIndexSpecification,
   SchemaPatternSpecification,
 } from '@dossierhq/core';
-import { assertIsDefined, FieldType, RichTextNodeType } from '@dossierhq/core';
+import { FieldType, RichTextNodeType, assertIsDefined } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 export type SchemaSelector =
@@ -62,15 +62,23 @@ export interface SchemaFieldDraft {
   list: boolean;
   required: boolean;
   adminOnly: boolean;
+  // string
   multiline?: boolean;
   index?: string | null;
   matchPattern?: string | null;
+  values?: { value: string }[];
+  // rich text
   richTextNodes?: string[];
   existingRichTextNodesWithPlaceholders?: string[];
+  // entity, rich text
   entityTypes?: string[];
+  // rich text
   linkEntityTypes?: string[];
+  // value item, rich text
   valueTypes?: string[];
+  // number
   integer?: boolean;
+  //
   existingFieldSpec: AdminFieldSpecification | null;
 }
 
@@ -699,10 +707,12 @@ class ChangeFieldTypeAction extends FieldAction {
       newFieldDraft.multiline = !!newFieldDraft.multiline;
       newFieldDraft.index = newFieldDraft.index ?? null;
       newFieldDraft.matchPattern = newFieldDraft.matchPattern ?? null;
+      newFieldDraft.values = newFieldDraft.values ?? [];
     } else {
       delete newFieldDraft.multiline;
       delete newFieldDraft.index;
       delete newFieldDraft.matchPattern;
+      delete newFieldDraft.values;
     }
 
     if (this.fieldType === FieldType.RichText) {
@@ -727,6 +737,23 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     return newFieldDraft;
+  }
+}
+
+class ChangeFieldValuesAction extends FieldAction {
+  values: { value: string }[];
+
+  constructor(fieldSelector: SchemaFieldSelector, values: { value: string }[]) {
+    super(fieldSelector);
+    this.values = [...values].sort((a, b) => a.value.localeCompare(b.value));
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (isEqual(fieldDraft.values, this.values)) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, values: this.values };
   }
 }
 
@@ -1052,6 +1079,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           fieldDraft.multiline = fieldSpec.multiline;
           fieldDraft.index = fieldSpec.index;
           fieldDraft.matchPattern = fieldSpec.matchPattern;
+          fieldDraft.values = fieldSpec.values;
         }
         if (fieldSpec.type === FieldType.RichText) {
           fieldDraft.richTextNodes = this.getRichTextNodesWithPlaceholders(fieldSpec.richTextNodes);
@@ -1114,6 +1142,7 @@ export const SchemaEditorActions = {
   ChangeFieldMultiline: ChangeFieldMultilineAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
+  ChangeFieldValues: ChangeFieldValuesAction,
   ChangePatternPattern: ChangePatternPatternAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   ChangeTypeAuthKeyPattern: ChangeTypeAuthKeyPatternAction,
@@ -1191,6 +1220,7 @@ function getTypeUpdateFromEditorState(
             multiline: draftField.multiline,
             index: draftField.index ?? null,
             matchPattern: draftField.matchPattern ?? null,
+            values: draftField.values ?? [],
           }
         : undefined),
       ...(draftField.type === FieldType.RichText

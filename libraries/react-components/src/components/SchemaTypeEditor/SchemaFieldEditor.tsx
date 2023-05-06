@@ -16,6 +16,7 @@ import { IndexSelector } from './IndexSelector.js';
 import { NumberVariantSelector } from './NumberVariantSelector.js';
 import { PatternSelector } from './PatternSelector.js';
 import { RichTextNodeSelector } from './RichTextNodeSelector.js';
+import { ValuesEditor } from './ValuesEditor.js';
 
 interface Props {
   fieldSelector: SchemaFieldSelector;
@@ -65,6 +66,7 @@ export function SchemaFieldEditor({
   const canChangeMultiline = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeValues = fieldDraft.status === 'new'; //TODO too restrictive
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeRichTextNodes =
     fieldDraft.status === 'new' ||
@@ -99,6 +101,12 @@ export function SchemaFieldEditor({
       dispatchSchemaEditorState(
         new SchemaEditorActions.ChangeFieldMatchPattern(fieldSelector, value)
       ),
+    [dispatchSchemaEditorState, fieldSelector]
+  );
+
+  const handleValuesChange = useCallback(
+    (value: { value: string }[]) =>
+      dispatchSchemaEditorState(new SchemaEditorActions.ChangeFieldValues(fieldSelector, value)),
     [dispatchSchemaEditorState, fieldSelector]
   );
 
@@ -237,7 +245,8 @@ export function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {fieldDraft.type === FieldType.String ? (
+        {fieldDraft.type === FieldType.String &&
+        (!fieldDraft.values || fieldDraft.values.length === 0) ? (
           <Field horizontal>
             <Field.LabelColumn>
               <Field.Label>Match pattern</Field.Label>
@@ -249,6 +258,24 @@ export function SchemaFieldEditor({
                 schemaEditorState={schemaEditorState}
                 onChange={handleMatchPatternChange}
               />
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
+        {fieldDraft.type === FieldType.String && !fieldDraft.matchPattern ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Values</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field>
+                <Field.Control>
+                  <ValuesEditor
+                    readOnly={!canChangeValues}
+                    value={fieldDraft.values ?? []}
+                    onChange={handleValuesChange}
+                  />
+                </Field.Control>
+              </Field>
             </Field.BodyColumn>
           </Field>
         ) : null}

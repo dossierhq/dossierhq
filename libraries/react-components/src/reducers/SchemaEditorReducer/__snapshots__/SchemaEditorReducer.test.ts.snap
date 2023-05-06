@@ -21,6 +21,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -61,6 +62,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
           "name": "title",
           "required": false,
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -70,6 +72,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -129,6 +132,7 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -162,6 +166,7 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -195,6 +200,7 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
           "name": "title",
           "required": false,
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -204,6 +210,7 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -258,6 +265,7 @@ exports[`AddFieldAction > add field to existing value type (without any fields) 
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -667,6 +675,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -1031,6 +1040,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -1078,6 +1088,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
           "name": "existing",
           "required": false,
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -1087,6 +1098,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -1204,6 +1216,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -1263,6 +1276,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
           "name": "bar",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -1322,6 +1336,7 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
           "name": "bar",
           "required": true,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -1604,6 +1619,87 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
 }
 `;
 
+exports[`ChangeFieldValues > set values on new string field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+          "values": [
+            {
+              "value": "bar",
+            },
+            {
+              "value": "baz",
+            },
+            {
+              "value": "foo",
+            },
+          ],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldValues > set values on new string field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [
+            {
+              "value": "bar",
+            },
+            {
+              "value": "baz",
+            },
+            {
+              "value": "foo",
+            },
+          ],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
 {
   "activeSelector": {
@@ -1787,6 +1883,7 @@ exports[`ChangeTypeNameField > make new string the name field in new type 2`] = 
           "name": "title",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "TitleOnly",
@@ -1817,6 +1914,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -1857,6 +1955,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 2`] = `
           "name": "title",
           "required": false,
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -1866,6 +1965,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 2`] = `
           "name": "other",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "TitleOnly",
@@ -1896,6 +1996,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -1942,6 +2043,7 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
       ],
       "kind": "entity",
@@ -2032,6 +2134,7 @@ exports[`RenameFieldAction > add and rename field 1`] = `
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -2072,6 +2175,7 @@ exports[`RenameFieldAction > add and rename field 2`] = `
           "name": "title",
           "required": false,
           "type": "String",
+          "values": [],
         },
         {
           "adminOnly": false,
@@ -2081,6 +2185,7 @@ exports[`RenameFieldAction > add and rename field 2`] = `
           "name": "baz",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -2140,6 +2245,7 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
           "name": "baz",
           "required": false,
           "type": "String",
+          "values": [],
         },
       ],
       "name": "Foo",
@@ -2719,6 +2825,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
       ],
       "kind": "entity",
@@ -2808,6 +2915,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
       ],
       "kind": "entity",
@@ -3135,6 +3243,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
       ],
       "kind": "entity",
@@ -3255,6 +3364,7 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
           "required": false,
           "status": "",
           "type": "String",
+          "values": [],
         },
       ],
       "kind": "value",

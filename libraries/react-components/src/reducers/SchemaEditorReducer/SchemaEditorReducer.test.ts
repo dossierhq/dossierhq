@@ -698,6 +698,38 @@ describe('ChangeFieldTypeAction', () => {
   });
 });
 
+describe('ChangeFieldValues', () => {
+  test('set values on new string field in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldValues(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }]
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].values).toEqual([
+      { value: 'bar' },
+      { value: 'baz' },
+      { value: 'foo' },
+    ]);
+    expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).values).toEqual([
+      { value: 'bar' },
+      { value: 'baz' },
+      { value: 'foo' },
+    ]);
+  });
+});
+
 describe('ChangePatternPatternAction', () => {
   test('change pattern of new pattern', () => {
     const state = reduceSchemaEditorStateActions(
