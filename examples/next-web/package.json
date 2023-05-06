@@ -27,7 +27,7 @@
     "graphql": "~16.6.0",
     "graphql-voyager": "~1.0.2",
     "leaflet": "~1.9.3",
-    "next": "~13.3.4",
+    "next": "~13.4.0",
     "react": "~18.2.0",
     "react-dom": "~18.2.0"
   },
