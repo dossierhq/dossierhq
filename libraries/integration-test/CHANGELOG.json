@@ -2,6 +2,18 @@
   "name": "@dossierhq/integration-test",
   "entries": [
     {
+      "version": "0.2.15",
+      "tag": "@dossierhq/integration-test_v0.2.15",
+      "date": "Tue, 09 May 2023 22:20:37 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add values to string field schemas"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.14",
       "tag": "@dossierhq/integration-test_v0.2.14",
       "date": "Sun, 23 Apr 2023 21:31:27 GMT",

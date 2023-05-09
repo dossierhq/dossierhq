@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Sun, 23 Apr 2023 21:31:27 GMT and should not be manually modified.
+This log was last generated on Tue, 09 May 2023 22:20:38 GMT and should not be manually modified.
+
+## 0.2.15
+Tue, 09 May 2023 22:20:38 GMT
+
+### Updates
+
+- Support values in string fields
 
 ## 0.2.14
 Sun, 23 Apr 2023 21:31:27 GMT
