@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "Fix CommonJS usage",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

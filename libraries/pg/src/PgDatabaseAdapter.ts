@@ -6,9 +6,15 @@ import type {
 } from '@dossierhq/postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@dossierhq/postgres-core';
 import type { PoolClient, PoolConfig } from 'pg';
-import PG from 'pg';
+import * as PG from 'pg';
 
-const { types: PgTypes, DatabaseError, Pool } = PG;
+// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
+// If simplifying this, ensure users of this library still work (CJS usage)
+const {
+  types: PgTypes,
+  DatabaseError,
+  Pool,
+} = 'default' in PG ? (PG as unknown as { default: typeof PG }).default : PG;
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
