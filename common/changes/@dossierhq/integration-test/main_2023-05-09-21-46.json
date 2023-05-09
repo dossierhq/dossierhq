@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Add values to string field schemas",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
