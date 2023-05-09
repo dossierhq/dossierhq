@@ -2,6 +2,18 @@
   "name": "@dossierhq/pg",
   "entries": [
     {
+      "version": "0.2.16",
+      "tag": "@dossierhq/pg_v0.2.16",
+      "date": "Tue, 09 May 2023 22:47:11 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix CommonJS usage"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.15",
       "tag": "@dossierhq/pg_v0.2.15",
       "date": "Tue, 09 May 2023 22:20:37 GMT",

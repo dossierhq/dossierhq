@@ -2,6 +2,12 @@
   "name": "@dossierhq/sqlite3",
   "entries": [
     {
+      "version": "0.2.16",
+      "tag": "@dossierhq/sqlite3_v0.2.16",
+      "date": "Tue, 09 May 2023 22:47:11 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.2.15",
       "tag": "@dossierhq/sqlite3_v0.2.15",
       "date": "Tue, 09 May 2023 22:20:38 GMT",
