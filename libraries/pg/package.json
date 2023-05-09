@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/pg",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "A Dossier database adapter for pg (PostgreSQL).",
   "keywords": [
     "dossier",
