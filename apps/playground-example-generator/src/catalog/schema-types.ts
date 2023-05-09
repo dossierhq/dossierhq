@@ -163,8 +163,8 @@ export interface AdminStringsEntityFields {
   required: string | null;
   multiline: string | null;
   matchPattern: string | null;
-  values: string | null;
-  valuesList: string[] | null;
+  values: 'bar' | 'baz' | 'foo' | null;
+  valuesList: Array<'bar' | 'baz' | 'foo'> | null;
   list: string[] | null;
   requiredList: string[] | null;
   requiredListMatchPattern: string[] | null;

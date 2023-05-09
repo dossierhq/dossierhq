@@ -130,6 +130,19 @@ describe('generateTypescriptForSchema', () => {
               fields: [
                 { name: 'string', type: FieldType.String, required: true },
                 { name: 'stringList', type: FieldType.String, list: true, required: true },
+                {
+                  name: 'values',
+                  type: FieldType.String,
+                  required: true,
+                  values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+                },
+                {
+                  name: 'valuesList',
+                  type: FieldType.String,
+                  list: true,
+                  required: true,
+                  values: [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+                },
               ],
             },
           ],

@@ -269,7 +269,11 @@ function fieldType(
       type = 'RichText';
       break;
     case FieldType.String:
-      type = 'string';
+      if (fieldSpec.values.length > 0) {
+        type = fieldSpec.values.map((it) => `'${it.value}'`).join(' | ');
+      } else {
+        type = 'string';
+      }
       break;
     case FieldType.ValueItem:
       if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {

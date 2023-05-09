@@ -205,6 +205,8 @@ export type AppAdminEntity = AdminStrings;
 export interface AdminStringsFields {
   string: string | null;
   stringList: string[] | null;
+  values: 'bar' | 'baz' | 'foo' | null;
+  valuesList: Array<'bar' | 'baz' | 'foo'> | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;

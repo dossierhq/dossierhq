@@ -840,7 +840,7 @@ async function createEntity_errorStringListNotMatchingValues({ server }: AdminEn
   const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
   const createResult = await client.createEntity(
-    copyEntity(STRINGS_CREATE, { id, fields: { valuesList: ['foo', 'not matching'] } })
+    copyEntity(STRINGS_CREATE, { id, fields: { valuesList: ['foo', 'not matching' as 'bar'] } })
   );
   assertErrorResult(
     createResult,
