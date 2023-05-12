@@ -45,7 +45,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@rushstack/heft": "0.50.4",
+    "@rushstack/heft": "0.50.5",
     "@types/node": "~20.1.1",
     "@types/prettier": "~2.7.2",
     "@types/uuid": "~9.0.1",
