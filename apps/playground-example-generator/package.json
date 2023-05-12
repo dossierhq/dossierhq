@@ -19,7 +19,7 @@
     "generate:starwars": "node lib/starwars/starwars-generator.js"
   },
   "dependencies": {
-    "@faker-js/faker": "~7.6.0",
+    "@faker-js/faker": "~8.0.0",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
