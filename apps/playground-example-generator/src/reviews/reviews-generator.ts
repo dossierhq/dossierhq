@@ -24,9 +24,13 @@ function* generateLocation(): Generator<Location, void> {
   let lat = 55.6;
   let lng = 13;
   while (true) {
-    const [latString, lngString] = faker.address.nearbyGPSCoordinate([lat, lng], 100, true);
-    lat = Number.parseFloat(latString);
-    lng = Number.parseFloat(lngString);
+    const location = faker.location.nearbyGPSCoordinate({
+      origin: [lat, lng],
+      radius: 100,
+      isMetric: true,
+    });
+    lat = location[0];
+    lng = location[1];
     yield { lat, lng };
   }
 }
