@@ -61,11 +61,7 @@ export function ServerRichTextRenderer({
   return rendered as unknown as JSX.Element;
 }
 
-async function renderNode(
-  context: RenderContext,
-  node: RichTextNode,
-  key: Key | null
-): Promise<ReactNode> {
+async function renderNode(context: RenderContext, node: RichTextNode, key: Key | null) {
   const { theme } = context;
 
   if (isRichTextRootNode(node)) {
