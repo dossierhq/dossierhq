@@ -72,7 +72,6 @@ export function SchemaFieldEditor({
     (fieldDraft.existingFieldSpec?.type === FieldType.RichText &&
       fieldDraft.existingFieldSpec.richTextNodes &&
       fieldDraft.existingFieldSpec.richTextNodes.length > 0);
-  const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeLinkEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeNumberVariant =
@@ -308,17 +307,14 @@ export function SchemaFieldEditor({
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  {canChangeEntityTypes ? (
-                    <FieldEntityTypeSelector
-                      fieldSelector={fieldSelector}
-                      referenceOrLink="reference"
-                      entityTypes={fieldDraft.entityTypes ?? []}
-                      schemaEditorState={schemaEditorState}
-                      dispatchSchemaEditorState={dispatchSchemaEditorState}
-                    />
-                  ) : (
-                    <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
-                  )}
+                  <FieldEntityTypeSelector
+                    fieldSelector={fieldSelector}
+                    referenceOrLink="reference"
+                    entityTypes={fieldDraft.entityTypes ?? []}
+                    schemaEditorState={schemaEditorState}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                  {/* <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} /> */}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>

@@ -746,6 +746,67 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
 }
 `;
 
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing entity field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "status": "changed",
+          "type": "Entity",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing entity field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a new entity field 1`] = `
 {
   "activeSelector": null,

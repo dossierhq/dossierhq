@@ -11,11 +11,11 @@ import type {
   SchemaTypeDraft,
 } from './SchemaEditorReducer.js';
 import {
+  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+  SchemaEditorActions,
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
-  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
-  SchemaEditorActions,
 } from './SchemaEditorReducer.js';
 
 function reduceSchemaEditorStateActions(
@@ -268,6 +268,26 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        ['Foo']
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('change entity types of existing entity field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            { name: 'Foo', fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: [] }] },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'entity' },
         ['Foo']
       )
     );
