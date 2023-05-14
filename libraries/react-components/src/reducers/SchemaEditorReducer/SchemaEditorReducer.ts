@@ -193,13 +193,14 @@ function withResolvedTypeStatus(
 }
 
 function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status'] {
-  if (state.existingFieldSpec === null) {
+  const { existingFieldSpec } = state;
+  if (existingFieldSpec === null) {
     return 'new';
   }
-  if (
-    state.existingFieldSpec.type === FieldType.Number &&
-    state.existingFieldSpec.integer !== !!state.integer
-  )
+  if (existingFieldSpec.required !== state.required) {
+    return 'changed';
+  }
+  if (existingFieldSpec.type === FieldType.Number && existingFieldSpec.integer !== !!state.integer)
     return 'changed';
   if (
     state.richTextNodes &&

@@ -61,7 +61,6 @@ export function SchemaFieldEditor({
   dispatchSchemaEditorState,
   onAddOrRenameField,
 }: Props) {
-  const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
   const canChangeMultiline = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
@@ -157,7 +156,6 @@ export function SchemaFieldEditor({
           <Field.BodyColumn>
             <Checkbox
               checked={fieldDraft.required}
-              disabled={!canChangeRequired}
               onChange={(event) =>
                 dispatchSchemaEditorState(
                   new SchemaEditorActions.ChangeFieldRequired(fieldSelector, event.target.checked)

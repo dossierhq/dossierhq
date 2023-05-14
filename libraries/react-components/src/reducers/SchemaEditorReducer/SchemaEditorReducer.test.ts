@@ -604,6 +604,26 @@ describe('ChangeFieldRequiredAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('make existing field required', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, required: false }] },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeFieldRequired(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        true
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('ChangeFieldTypeAction', () => {
