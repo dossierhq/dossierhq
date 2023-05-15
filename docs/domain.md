@@ -16,7 +16,31 @@ The main piece of data is an **Entity**. An **Entity** has:
 
 ### Entity status
 
-![Entity statuses overview](./entity-statuses.dot.svg)
+```mermaid
+stateDiagram-v2
+    [*] --> draft: Create
+    draft --> draft: Update
+    draft --> published: Publish
+    draft --> modified: Publish (old version)
+    draft --> archived: Archive
+    published --> modified: Update
+    published --> modified: Publish (old version)
+    published --> withdrawn: Unpublish
+    modified --> modified: Update
+    modified --> published: Publish
+    modified --> modified: Publish (old version)
+    modified --> withdrawn: Unpublish
+    withdrawn --> withdrawn: Update
+    withdrawn --> published: Publish
+    withdrawn --> modified: Publish (old version)
+    withdrawn --> archived: Archive
+    archived --> draft: Unarchive
+    archived --> withdrawn: Unarchive
+    archived --> archived: Update
+    archived --> published: Publish
+    archived --> modified: Archive (old version)
+
+```
 
 ## Clients (APIs)
 
