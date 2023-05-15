@@ -214,13 +214,19 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   ) {
     return 'changed';
   }
-  if (existingFieldSpec.type === FieldType.Number && existingFieldSpec.integer !== !!state.integer)
-    return 'changed';
   if (
-    existingFieldSpec.type === FieldType.RichText &&
-    !isEqual(state.richTextNodes, state.existingRichTextNodesWithPlaceholders)
+    existingFieldSpec.type === FieldType.Number &&
+    existingFieldSpec.integer !== !!state.integer
   ) {
     return 'changed';
+  }
+  if (existingFieldSpec.type === FieldType.RichText) {
+    if (!isEqual(state.linkEntityTypes, existingFieldSpec.linkEntityTypes)) {
+      return 'changed';
+    }
+    if (!isEqual(state.richTextNodes, state.existingRichTextNodesWithPlaceholders)) {
+      return 'changed';
+    }
   }
   // TODO expand when supporting changing more properties of a field
   return '';
@@ -556,7 +562,7 @@ class ChangeFieldAllowedLinkEntityTypesAction extends FieldAction {
 
   constructor(fieldSelector: SchemaFieldSelector, linkEntityTypes: string[]) {
     super(fieldSelector);
-    this.linkEntityTypes = linkEntityTypes;
+    this.linkEntityTypes = [...linkEntityTypes].sort();
   }
 
   reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {

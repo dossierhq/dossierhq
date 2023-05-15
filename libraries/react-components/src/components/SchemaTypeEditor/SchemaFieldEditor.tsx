@@ -72,7 +72,6 @@ export function SchemaFieldEditor({
     (fieldDraft.existingFieldSpec?.type === FieldType.RichText &&
       fieldDraft.existingFieldSpec.richTextNodes &&
       fieldDraft.existingFieldSpec.richTextNodes.length > 0);
-  const canChangeLinkEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeNumberVariant =
     fieldDraft.status === 'new' ||
     (fieldDraft.existingFieldSpec?.type === FieldType.Number &&
@@ -327,17 +326,14 @@ export function SchemaFieldEditor({
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  {canChangeLinkEntityTypes ? (
-                    <FieldEntityTypeSelector
-                      fieldSelector={fieldSelector}
-                      referenceOrLink="link"
-                      entityTypes={fieldDraft.linkEntityTypes ?? []}
-                      schemaEditorState={schemaEditorState}
-                      dispatchSchemaEditorState={dispatchSchemaEditorState}
-                    />
-                  ) : (
-                    <FieldEntityTypeDisplay entityTypes={fieldDraft.linkEntityTypes ?? []} />
-                  )}
+                  <FieldEntityTypeSelector
+                    fieldSelector={fieldSelector}
+                    referenceOrLink="link"
+                    entityTypes={fieldDraft.linkEntityTypes ?? []}
+                    schemaEditorState={schemaEditorState}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                  {/* <FieldEntityTypeDisplay entityTypes={fieldDraft.linkEntityTypes ?? []} /> */}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
@@ -393,15 +389,15 @@ function FieldTypeDisplay({ type, list }: { type: FieldType; list: boolean }) {
   return <Input value={item?.display} readOnly />;
 }
 
-function FieldEntityTypeDisplay({ entityTypes }: { entityTypes: string[] }) {
-  return (
-    <TagInput>
-      {entityTypes.map((entityType) => (
-        <Tag key={entityType}>{entityType}</Tag>
-      ))}
-    </TagInput>
-  );
-}
+// function FieldEntityTypeDisplay({ entityTypes }: { entityTypes: string[] }) {
+//   return (
+//     <TagInput>
+//       {entityTypes.map((entityType) => (
+//         <Tag key={entityType}>{entityType}</Tag>
+//       ))}
+//     </TagInput>
+//   );
+// }
 
 // function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
 //   return (

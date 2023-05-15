@@ -298,7 +298,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
 });
 
 describe('ChangeFieldAllowedLinkEntityTypesAction', () => {
-  test('change link entity types of a new entity field', () => {
+  test('change link entity types of a new rich text field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -309,6 +309,24 @@ describe('ChangeFieldAllowedLinkEntityTypesAction', () => {
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
         FieldType.RichText,
         false
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        ['Foo']
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('change link entity types of existing rich text field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [{ name: 'foo', type: FieldType.RichText }] }],
+        }).valueOrThrow()
       ),
       new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
