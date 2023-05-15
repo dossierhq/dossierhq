@@ -73,7 +73,6 @@ export function SchemaFieldEditor({
       fieldDraft.existingFieldSpec.richTextNodes &&
       fieldDraft.existingFieldSpec.richTextNodes.length > 0);
   const canChangeLinkEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
-  const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeNumberVariant =
     fieldDraft.status === 'new' ||
     (fieldDraft.existingFieldSpec?.type === FieldType.Number &&
@@ -352,16 +351,13 @@ export function SchemaFieldEditor({
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  {canChangeValueTypes ? (
-                    <FieldValueTypeSelector
-                      fieldSelector={fieldSelector}
-                      valueTypes={fieldDraft.valueTypes ?? []}
-                      schemaEditorState={schemaEditorState}
-                      dispatchSchemaEditorState={dispatchSchemaEditorState}
-                    />
-                  ) : (
-                    <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
-                  )}
+                  <FieldValueTypeSelector
+                    fieldSelector={fieldSelector}
+                    valueTypes={fieldDraft.valueTypes ?? []}
+                    schemaEditorState={schemaEditorState}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                  {/* <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} /> */}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
@@ -407,15 +403,15 @@ function FieldEntityTypeDisplay({ entityTypes }: { entityTypes: string[] }) {
   );
 }
 
-function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
-  return (
-    <TagInput>
-      {valueTypes.map((valueType) => (
-        <Tag key={valueType}>{valueType}</Tag>
-      ))}
-    </TagInput>
-  );
-}
+// function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
+//   return (
+//     <TagInput>
+//       {valueTypes.map((valueType) => (
+//         <Tag key={valueType}>{valueType}</Tag>
+//       ))}
+//     </TagInput>
+//   );
+// }
 
 function RichTextNodeDisplay({ richTextNodes }: { richTextNodes: string[] }) {
   return (

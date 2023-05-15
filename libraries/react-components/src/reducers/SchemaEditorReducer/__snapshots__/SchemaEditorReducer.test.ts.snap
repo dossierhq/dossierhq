@@ -1024,7 +1024,63 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entity field 1`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing value item field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "changed",
+          "type": "ValueItem",
+          "valueTypes": [
+            "Foo",
+          ],
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing value item field 2`] = `
+{
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "Foo",
+          ],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value item field 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
@@ -1058,7 +1114,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entit
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change entity types of a new entity field 2`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value item field 2`] = `
 {
   "valueTypes": [
     {

@@ -400,7 +400,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
 });
 
 describe('ChangeFieldAllowedValueTypesAction', () => {
-  test('change entity types of a new entity field', () => {
+  test('change value types of a new value item field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -414,6 +414,24 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'value', typeName: 'Foo', fieldName: 'foo' },
+        ['Foo']
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('change value types of a existing value item field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          valueTypes: [{ name: 'Foo', fields: [{ name: 'valueItem', type: FieldType.ValueItem }] }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+        { kind: 'value', typeName: 'Foo', fieldName: 'valueItem' },
         ['Foo']
       )
     );

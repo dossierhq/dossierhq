@@ -207,6 +207,13 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   ) {
     return 'changed';
   }
+  if (
+    (existingFieldSpec.type === FieldType.ValueItem ||
+      existingFieldSpec.type === FieldType.RichText) &&
+    !isEqual(state.valueTypes, existingFieldSpec.valueTypes)
+  ) {
+    return 'changed';
+  }
   if (existingFieldSpec.type === FieldType.Number && existingFieldSpec.integer !== !!state.integer)
     return 'changed';
   if (
@@ -591,7 +598,7 @@ class ChangeFieldAllowedValueTypesAction extends FieldAction {
 
   constructor(fieldSelector: SchemaFieldSelector, valueTypes: string[]) {
     super(fieldSelector);
-    this.valueTypes = valueTypes;
+    this.valueTypes = [...valueTypes].sort();
   }
 
   reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
