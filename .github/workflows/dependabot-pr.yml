@@ -22,7 +22,7 @@ jobs:
       - name: Use bun
         uses: antongolub/action-setup-bun@v1
         with:
-          bun-version: 0.5.9
+          bun-version: 0.6.1
       - name: Make dependencies consistent
         run: |
           which node
