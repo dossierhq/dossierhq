@@ -228,6 +228,11 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
       return 'changed';
     }
   }
+  if (existingFieldSpec.type === FieldType.String) {
+    if (!!state.multiline !== !!existingFieldSpec.multiline) {
+      return 'changed';
+    }
+  }
   // TODO expand when supporting changing more properties of a field
   return '';
 }

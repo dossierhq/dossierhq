@@ -62,7 +62,6 @@ export function SchemaFieldEditor({
   onAddOrRenameField,
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
-  const canChangeMultiline = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValues = fieldDraft.status === 'new'; //TODO too restrictive
@@ -207,7 +206,6 @@ export function SchemaFieldEditor({
               <Field>
                 <Field.Control>
                   <Checkbox
-                    disabled={!canChangeMultiline}
                     checked={fieldDraft.multiline}
                     onChange={(event) =>
                       dispatchSchemaEditorState(

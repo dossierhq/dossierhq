@@ -641,6 +641,32 @@ describe('ChangeFieldMultilineAction', () => {
       true
     );
   });
+
+  test('change multiline in existing string field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [{ name: 'bar', type: FieldType.String }] }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeFieldMultiline(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        true
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].multiline).toBe(true);
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+    expect(state.entityTypes[0].status).toBe('changed');
+    expect(state.status).toBe('changed');
+    expect((schemaUpdate?.entityTypes?.[0].fields[0] as StringFieldSpecification).multiline).toBe(
+      true
+    );
+  });
 });
 
 describe('ChangeFieldRequiredAction', () => {
