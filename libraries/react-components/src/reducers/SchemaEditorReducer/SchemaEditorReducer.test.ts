@@ -361,7 +361,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
         ['Foo']
       )
     );
-    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+    expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak',
       RichTextNodeType.entity,
     ]);
@@ -404,10 +404,10 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
         ]
       )
     );
-    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+    expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak',
-      RichTextNodeType.heading,
       RichTextNodeType.entity,
+      RichTextNodeType.heading,
     ]);
     expect(state.entityTypes[0].fields[0].status).toBe('changed');
 
@@ -447,7 +447,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
         [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name, RichTextNodeType.heading]
       )
     );
-    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+    expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak',
       RichTextNodeType.heading,
     ]);
@@ -1290,10 +1290,10 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
 
-    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+    expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak',
-      'list, listitem',
       RichTextNodeType.entity,
+      'list, listitem',
     ]);
 
     expect(state).toMatchSnapshot();

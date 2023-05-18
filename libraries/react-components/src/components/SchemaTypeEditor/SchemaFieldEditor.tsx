@@ -115,20 +115,20 @@ export function SchemaFieldEditor({
   const showEntityTypes =
     fieldDraft.type === FieldType.Entity ||
     (fieldDraft.type === FieldType.RichText &&
-      (!fieldDraft.richTextNodes ||
-        fieldDraft.richTextNodes.length === 0 ||
-        fieldDraft.richTextNodes?.includes(RichTextNodeType.entity)));
+      (!fieldDraft.richTextNodesWithPlaceholders ||
+        fieldDraft.richTextNodesWithPlaceholders.length === 0 ||
+        fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.entity)));
   const showLinkEntityTypes =
     fieldDraft.type === FieldType.RichText &&
-    (!fieldDraft.richTextNodes ||
-      fieldDraft.richTextNodes.length === 0 ||
-      fieldDraft.richTextNodes?.includes(RichTextNodeType.entityLink));
+    (!fieldDraft.richTextNodesWithPlaceholders ||
+      fieldDraft.richTextNodesWithPlaceholders.length === 0 ||
+      fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.entityLink));
   const showValueTypes =
     fieldDraft.type === FieldType.ValueItem ||
     (fieldDraft.type === FieldType.RichText &&
-      (!fieldDraft.richTextNodes ||
-        fieldDraft.richTextNodes.length === 0 ||
-        fieldDraft.richTextNodes?.includes(RichTextNodeType.valueItem)));
+      (!fieldDraft.richTextNodesWithPlaceholders ||
+        fieldDraft.richTextNodesWithPlaceholders.length === 0 ||
+        fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.valueItem)));
   return (
     <Card>
       <Card.Header>
@@ -277,7 +277,7 @@ export function SchemaFieldEditor({
                 <Field.Control>
                   <RichTextNodeSelector
                     fieldSelector={fieldSelector}
-                    richTextNodes={fieldDraft.richTextNodes ?? []}
+                    richTextNodes={fieldDraft.richTextNodesWithPlaceholders ?? []}
                     dispatchSchemaEditorState={dispatchSchemaEditorState}
                   />
                   {/* <RichTextNodeDisplay richTextNodes={fieldDraft.richTextNodes ?? []} /> */}

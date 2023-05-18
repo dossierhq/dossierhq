@@ -7,14 +7,13 @@ import {
 } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useEffect, useMemo, useReducer } from 'react';
-import type {
-  SchemaEditorStateAction,
-  SchemaFieldSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   RichTextNodePlaceholders,
   ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
+  sortRichTextNodesWithPlaceholders,
+  type SchemaEditorStateAction,
+  type SchemaFieldSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 const RichTextNodesNotInPlaceholders: string[] = [
@@ -31,20 +30,16 @@ function useSynchronizeMultipleSelectorState(
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
 ) {
   const items = useMemo(() => {
-    const result: { id: string; removable: boolean }[] = [];
-    for (const placeholder of RichTextNodePlaceholders) {
-      let removable = true;
-      if (placeholder === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER) {
-        if (selectedIds.length > 1) {
-          removable = false;
-        }
-      }
-      result.push({ id: placeholder.name, removable });
-    }
+    const allNodes = [
+      ...RichTextNodePlaceholders.map((it) => it.name),
+      ...RichTextNodesNotInPlaceholders,
+    ];
+    sortRichTextNodesWithPlaceholders(allNodes);
 
-    for (const nodeType of RichTextNodesNotInPlaceholders) {
-      result.push({ id: nodeType, removable: true });
-    }
+    const result: { id: string; removable: boolean }[] = allNodes.map((it) => ({
+      id: it,
+      removable: it === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name ? selectedIds.length <= 1 : true,
+    }));
     return result;
   }, [selectedIds.length]);
 

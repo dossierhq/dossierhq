@@ -68,7 +68,7 @@ export interface SchemaFieldDraft {
   matchPattern?: string | null;
   values?: { value: string }[];
   // rich text
-  richTextNodes?: string[];
+  richTextNodesWithPlaceholders?: string[];
   existingRichTextNodesWithPlaceholders?: string[];
   // entity, rich text
   entityTypes?: string[];
@@ -121,8 +121,8 @@ export const RichTextNodePlaceholders: NodePlaceholderConfig[] = [
     RichTextNodeType.text,
     RichTextNodeType.linebreak,
   ],
-  [RichTextNodeType.list, RichTextNodeType.listitem],
   [RichTextNodeType.code, RichTextNodeType['code-highlight']],
+  [RichTextNodeType.list, RichTextNodeType.listitem],
 ].map((nodes) => ({ name: nodes.join(', '), nodes }));
 
 const RichTextNodesInPlaceholders = new Set(
@@ -224,7 +224,9 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
     if (!isEqual(state.linkEntityTypes, existingFieldSpec.linkEntityTypes)) {
       return 'changed';
     }
-    if (!isEqual(state.richTextNodes, state.existingRichTextNodesWithPlaceholders)) {
+    if (
+      !isEqual(state.richTextNodesWithPlaceholders, state.existingRichTextNodesWithPlaceholders)
+    ) {
       return 'changed';
     }
   }
@@ -580,27 +582,27 @@ class ChangeFieldAllowedLinkEntityTypesAction extends FieldAction {
 }
 
 class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
-  richTextNodes: string[];
+  richTextNodesWithPlaceholders: string[];
 
   constructor(fieldSelector: SchemaFieldSelector, richTextNodes: string[]) {
     super(fieldSelector);
-    this.richTextNodes = richTextNodes;
+    this.richTextNodesWithPlaceholders = richTextNodes;
   }
 
   reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
-    if (isEqual(fieldDraft.richTextNodes, this.richTextNodes)) {
+    const value = [...this.richTextNodesWithPlaceholders];
+
+    if (value.length > 0 && !value.includes(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name)) {
+      value.push(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name);
+    }
+
+    sortRichTextNodesWithPlaceholders(value);
+
+    if (isEqual(fieldDraft.richTextNodesWithPlaceholders, value)) {
       return fieldDraft;
     }
 
-    let newRichTextNodes = this.richTextNodes;
-
-    if (newRichTextNodes.length > 0) {
-      if (!newRichTextNodes.includes(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name)) {
-        newRichTextNodes = [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name, ...newRichTextNodes];
-      }
-    }
-
-    return { ...fieldDraft, richTextNodes: newRichTextNodes };
+    return { ...fieldDraft, richTextNodesWithPlaceholders: value };
   }
 }
 
@@ -742,9 +744,9 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     if (this.fieldType === FieldType.RichText) {
-      newFieldDraft.richTextNodes = [];
+      newFieldDraft.richTextNodesWithPlaceholders = [];
     } else {
-      delete newFieldDraft.richTextNodes;
+      delete newFieldDraft.richTextNodesWithPlaceholders;
     }
 
     //TODO handle rich text?
@@ -1108,8 +1110,12 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           fieldDraft.values = fieldSpec.values;
         }
         if (fieldSpec.type === FieldType.RichText) {
-          fieldDraft.richTextNodes = this.getRichTextNodesWithPlaceholders(fieldSpec.richTextNodes);
-          fieldDraft.existingRichTextNodesWithPlaceholders = [...fieldDraft.richTextNodes];
+          fieldDraft.richTextNodesWithPlaceholders = getRichTextNodesWithPlaceholders(
+            fieldSpec.richTextNodes
+          );
+          fieldDraft.existingRichTextNodesWithPlaceholders = [
+            ...fieldDraft.richTextNodesWithPlaceholders,
+          ];
         }
         if (fieldSpec.type === FieldType.Entity || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes;
@@ -1127,29 +1133,59 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       }),
     };
   }
+}
 
-  private getRichTextNodesWithPlaceholders(richTextNodes: string[]) {
-    let result = richTextNodes;
-    if (result.length > 0) {
-      const placeholders: string[] = [];
-      result = result.filter((richTextNode) => {
-        if (RichTextNodesInPlaceholders.has(richTextNode)) {
-          const placeholder = RichTextNodePlaceholders.find((it) =>
-            it.nodes.includes(richTextNode)
-          );
-          assertIsDefined(placeholder);
-          if (!placeholders.includes(placeholder.name)) {
-            placeholders.push(placeholder.name);
-          }
-          return false;
+function getRichTextNodesWithPlaceholders(richTextNodes: string[]) {
+  let result = richTextNodes;
+  if (result.length > 0) {
+    const placeholders: string[] = [];
+    result = result.filter((richTextNode) => {
+      if (RichTextNodesInPlaceholders.has(richTextNode)) {
+        const placeholder = RichTextNodePlaceholders.find((it) => it.nodes.includes(richTextNode));
+        assertIsDefined(placeholder);
+        if (!placeholders.includes(placeholder.name)) {
+          placeholders.push(placeholder.name);
         }
-        return true;
-      });
+        return false;
+      }
+      return true;
+    });
 
-      result = [...placeholders, ...result];
-    }
-    return result;
+    result = [...placeholders, ...result];
+    sortRichTextNodesWithPlaceholders(result);
   }
+  return result;
+}
+
+function getRichTextNodesWithoutPlaceholders(richTextNodesWithPlaceholders: string[] | undefined) {
+  if (!richTextNodesWithPlaceholders || richTextNodesWithPlaceholders.length === 0) {
+    return richTextNodesWithPlaceholders;
+  }
+  const richTextNodes = richTextNodesWithPlaceholders.flatMap((node) => {
+    const placeholder = RichTextNodePlaceholders.find((placeholder) => placeholder.name === node);
+    if (placeholder) {
+      return placeholder.nodes;
+    }
+    return node;
+  });
+  richTextNodes.sort();
+  return richTextNodes;
+}
+
+export function sortRichTextNodesWithPlaceholders(richTextNodesWithPlaceholders: string[]) {
+  if (richTextNodesWithPlaceholders.length <= 1) {
+    return;
+  }
+
+  richTextNodesWithPlaceholders.sort((a, b) => {
+    if (a === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name) {
+      return -1;
+    }
+    if (b === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name) {
+      return 1;
+    }
+    return a.localeCompare(b);
+  });
 }
 
 export const SchemaEditorActions = {
@@ -1225,16 +1261,6 @@ function getTypeUpdateFromEditorState(
   draftType: SchemaValueTypeDraft | SchemaEntityTypeDraft
 ): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
-    let richTextNodes = draftField.richTextNodes;
-    if (richTextNodes && richTextNodes.length > 0) {
-      richTextNodes = richTextNodes.flatMap((it) => {
-        const placeholder = RichTextNodePlaceholders.find((placeholder) => placeholder.name === it);
-        if (placeholder) {
-          return placeholder.nodes;
-        }
-        return it;
-      });
-    }
     return {
       name: draftField.name,
       type: draftField.type,
@@ -1250,7 +1276,12 @@ function getTypeUpdateFromEditorState(
           }
         : undefined),
       ...(draftField.type === FieldType.RichText
-        ? { richTextNodes, linkEntityTypes: draftField.linkEntityTypes ?? [] }
+        ? {
+            richTextNodes: getRichTextNodesWithoutPlaceholders(
+              draftField.richTextNodesWithPlaceholders
+            ),
+            linkEntityTypes: draftField.linkEntityTypes ?? [],
+          }
         : undefined),
       ...(draftField.type === FieldType.Number ? { integer: !!draftField.integer } : undefined),
       ...(draftField.type === FieldType.Entity || draftField.type === FieldType.RichText
