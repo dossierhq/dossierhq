@@ -1092,6 +1092,83 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
 }
 `;
 
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entity) of an existing rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak",
+            "entity",
+            "heading",
+          ],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "rt",
+          "required": false,
+          "richTextNodes": [
+            "root, paragraph, text, linebreak",
+            "heading",
+          ],
+          "status": "changed",
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entity) of an existing rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "rt",
+          "required": false,
+          "richTextNodes": [
+            "root",
+            "paragraph",
+            "text",
+            "linebreak",
+            "heading",
+          ],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing value item field 1`] = `
 {
   "activeSelector": null,

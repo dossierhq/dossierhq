@@ -415,6 +415,48 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('change node types (remove entity) of an existing rich text field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [
+                {
+                  name: 'rt',
+                  type: FieldType.RichText,
+                  richTextNodes: [
+                    RichTextNodeType.root,
+                    RichTextNodeType.paragraph,
+                    RichTextNodeType.text,
+                    RichTextNodeType.linebreak,
+                    RichTextNodeType.heading,
+                    RichTextNodeType.entity,
+                  ],
+                },
+              ],
+            },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'rt' },
+        [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name, RichTextNodeType.heading]
+      )
+    );
+    expect(state.entityTypes[0].fields[0].richTextNodes).toEqual([
+      'root, paragraph, text, linebreak',
+      RichTextNodeType.heading,
+    ]);
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('ChangeFieldAllowedValueTypesAction', () => {

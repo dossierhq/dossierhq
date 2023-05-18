@@ -1,5 +1,5 @@
 import { FieldType, RichTextNodeType } from '@dossierhq/core';
-import { Card, Checkbox, Field, Input, SelectDisplay, Tag, TagInput } from '@dossierhq/design';
+import { Card, Checkbox, Field, Input, SelectDisplay } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch } from 'react';
 import { useCallback } from 'react';
 import type {
@@ -66,11 +66,6 @@ export function SchemaFieldEditor({
   const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeValues = fieldDraft.status === 'new'; //TODO too restrictive
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
-  const canChangeRichTextNodes =
-    fieldDraft.status === 'new' ||
-    (fieldDraft.existingFieldSpec?.type === FieldType.RichText &&
-      fieldDraft.existingFieldSpec.richTextNodes &&
-      fieldDraft.existingFieldSpec.richTextNodes.length > 0);
   const canChangeNumberVariant =
     fieldDraft.status === 'new' ||
     (fieldDraft.existingFieldSpec?.type === FieldType.Number &&
@@ -280,16 +275,12 @@ export function SchemaFieldEditor({
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  {canChangeRichTextNodes ? (
-                    <RichTextNodeSelector
-                      fieldSelector={fieldSelector}
-                      richTextNodes={fieldDraft.richTextNodes ?? []}
-                      existingRichTextNodes={fieldDraft.existingRichTextNodesWithPlaceholders}
-                      dispatchSchemaEditorState={dispatchSchemaEditorState}
-                    />
-                  ) : (
-                    <RichTextNodeDisplay richTextNodes={fieldDraft.richTextNodes ?? []} />
-                  )}
+                  <RichTextNodeSelector
+                    fieldSelector={fieldSelector}
+                    richTextNodes={fieldDraft.richTextNodes ?? []}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                  {/* <RichTextNodeDisplay richTextNodes={fieldDraft.richTextNodes ?? []} /> */}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
@@ -407,15 +398,15 @@ function FieldTypeDisplay({ type, list }: { type: FieldType; list: boolean }) {
 //   );
 // }
 
-function RichTextNodeDisplay({ richTextNodes }: { richTextNodes: string[] }) {
-  return (
-    <TagInput>
-      {richTextNodes.map((richTextNode) => (
-        <Tag key={richTextNode}>{richTextNode}</Tag>
-      ))}
-    </TagInput>
-  );
-}
+// function RichTextNodeDisplay({ richTextNodes }: { richTextNodes: string[] }) {
+//   return (
+//     <TagInput>
+//       {richTextNodes.map((richTextNode) => (
+//         <Tag key={richTextNode}>{richTextNode}</Tag>
+//       ))}
+//     </TagInput>
+//   );
+// }
 
 function FieldTypeSelector({
   fieldSelector,
