@@ -86,7 +86,7 @@ export function RichTextNodeSelector({
   return (
     <TagInputSelector
       clearLabel="Clear"
-      itemTag={(item) => ({ tag: item.id })}
+      itemTag={(item) => ({ tag: item.id, transform: '' })}
       state={state}
       dispatch={dispatch}
     />

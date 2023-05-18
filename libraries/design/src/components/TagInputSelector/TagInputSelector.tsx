@@ -13,7 +13,11 @@ import { TagInput } from '../TagInput/TagInput.js';
 
 export interface TagInputSelectorProps<TItem extends MultipleSelectorItem> {
   clearLabel: string;
-  itemTag: (item: TItem) => { tag: string; color?: TagProps['color'] };
+  itemTag: (item: TItem) => {
+    tag: string;
+    color?: TagProps['color'];
+    transform?: TagProps['transform'];
+  };
   state: MultipleSelectorState<TItem>;
   dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
 }
@@ -39,9 +43,9 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
       activeItemIds={selectedIds}
       isContentItem={(item) => item.removable === false}
       renderItem={(item) => {
-        const { tag, color } = itemTag(item);
+        const { tag, color, transform } = itemTag(item);
         return (
-          <Tag key={item.id} color={color}>
+          <Tag key={item.id} color={color} transform={transform}>
             {tag}
           </Tag>
         );
@@ -50,9 +54,9 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
         return (
           <TagInput ref={ref} onClick={onOpenDropDown}>
             {selectedItems.map((item) => {
-              const { tag, color } = itemTag(item);
+              const { tag, color, transform } = itemTag(item);
               return (
-                <Tag key={item.id} color={color}>
+                <Tag key={item.id} color={color} transform={transform}>
                   {tag}
                   {item.removable !== false ? (
                     <Tag.Remove
