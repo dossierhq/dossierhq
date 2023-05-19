@@ -23,7 +23,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "cloudinary": "~1.36.4",
+    "cloudinary": "~1.37.0",
     "dotenv": "~16.0.3",
     "sqlite3": "5.1.4",
     "tslib": "~2.5.0",
