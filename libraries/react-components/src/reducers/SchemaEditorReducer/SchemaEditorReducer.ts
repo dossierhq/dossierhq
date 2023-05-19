@@ -777,6 +777,13 @@ class ChangeFieldValuesAction extends FieldAction {
   constructor(fieldSelector: SchemaFieldSelector, values: { value: string }[]) {
     super(fieldSelector);
     this.values = [...values].sort((a, b) => a.value.localeCompare(b.value));
+
+    // remove duplicates iterating from the end
+    for (let i = this.values.length - 1; i > 0; i--) {
+      if (this.values[i].value === this.values[i - 1].value) {
+        this.values.splice(i, 1);
+      }
+    }
   }
 
   reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {

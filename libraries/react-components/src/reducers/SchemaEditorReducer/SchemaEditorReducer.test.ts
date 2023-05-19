@@ -894,7 +894,8 @@ describe('ChangeFieldValues', () => {
       ),
       new SchemaEditorActions.ChangeFieldValues(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        [{ value: 'world' }, { value: 'hello' }]
+        // wrong order and duplicate values
+        [{ value: 'world' }, { value: 'hello' }, { value: 'hello' }]
       )
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
