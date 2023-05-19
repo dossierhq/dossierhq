@@ -2007,6 +2007,83 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
 }
 `;
 
+exports[`ChangeFieldValues > set values on existing string field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [
+            {
+              "value": "hello",
+            },
+            {
+              "value": "world",
+            },
+          ],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldValues > set values on existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [
+            {
+              "value": "hello",
+            },
+            {
+              "value": "world",
+            },
+          ],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldValues > set values on new string field in existing entity type 1`] = `
 {
   "activeSelector": null,

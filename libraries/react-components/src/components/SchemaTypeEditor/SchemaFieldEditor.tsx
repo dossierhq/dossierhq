@@ -64,7 +64,6 @@ export function SchemaFieldEditor({
   const canChangeType = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
-  const canChangeValues = fieldDraft.status === 'new'; //TODO too restrictive
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeNumberVariant =
     fieldDraft.status === 'new' ||
@@ -257,11 +256,7 @@ export function SchemaFieldEditor({
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  <ValuesEditor
-                    readOnly={!canChangeValues}
-                    value={fieldDraft.values ?? []}
-                    onChange={handleValuesChange}
-                  />
+                  <ValuesEditor value={fieldDraft.values ?? []} onChange={handleValuesChange} />
                 </Field.Control>
               </Field>
             </Field.BodyColumn>

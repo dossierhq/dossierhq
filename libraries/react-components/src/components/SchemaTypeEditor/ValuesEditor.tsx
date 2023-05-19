@@ -1,7 +1,7 @@
 import { Button, Column, Tag, Text } from '@dossierhq/design';
 
 interface Props {
-  readOnly: boolean;
+  readOnly?: boolean;
   value: { value: string }[];
   onChange: (value: { value: string }[]) => void;
 }

@@ -234,6 +234,9 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
     if (!!state.multiline !== !!existingFieldSpec.multiline) {
       return 'changed';
     }
+    if (!isEqual(state.values, existingFieldSpec.values)) {
+      return 'changed';
+    }
   }
   // TODO expand when supporting changing more properties of a field
   return '';
