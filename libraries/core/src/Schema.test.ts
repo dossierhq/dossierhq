@@ -121,6 +121,29 @@ describe('mergeWith()', () => {
     expect(result.spec).toMatchSnapshot();
     expect(result.getIndex('unique-index')).toEqual({ name: 'unique-index', type: 'unique' });
   });
+
+  test('duplicate values', () => {
+    const result = AdminSchema.createAndValidate({})
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'string',
+                type: FieldType.String,
+                values: [{ value: 'a' }, { value: 'b' }, { value: 'a' }],
+              },
+            ],
+          },
+        ],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+  });
 });
 
 describe('validate()', () => {

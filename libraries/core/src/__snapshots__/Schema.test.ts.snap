@@ -1,5 +1,41 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`mergeWith() > duplicate values 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "string",
+          "required": false,
+          "type": "String",
+          "values": [
+            {
+              "value": "a",
+            },
+            {
+              "value": "b",
+            },
+          ],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "valueTypes": [],
+}
+`;
+
 exports[`mergeWith() > empty->entity with pattern 1`] = `
 {
   "entityTypes": [

@@ -568,14 +568,14 @@ export class AdminSchema {
   }
 
   getEntityTypeSpecification(type: string): AdminEntityTypeSpecification | null {
-    return this.spec.entityTypes.find((x) => x.name === type) ?? null;
+    return this.spec.entityTypes.find((it) => it.name === type) ?? null;
   }
 
   getEntityFieldSpecification(
     entitySpec: AdminEntityTypeSpecification,
     fieldName: string
   ): AdminFieldSpecification | null {
-    return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
+    return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 
   getValueTypeCount(): number {
@@ -583,14 +583,14 @@ export class AdminSchema {
   }
 
   getValueTypeSpecification(type: string): AdminValueTypeSpecification | null {
-    return this.spec.valueTypes.find((x) => x.name === type) ?? null;
+    return this.spec.valueTypes.find((it) => it.name === type) ?? null;
   }
 
   getValueFieldSpecification(
     valueSpec: AdminValueTypeSpecification,
     fieldName: string
   ): AdminFieldSpecification | null {
-    return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
+    return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 
   getPattern(name: string): SchemaPatternSpecification | null {
@@ -826,7 +826,9 @@ function normalizeFieldSpecUpdate(
         linkEntityTypes: [...(fieldSpec.linkEntityTypes ?? [])].sort(),
         valueTypes: [...(fieldSpec.valueTypes ?? [])].sort(),
       };
-    case FieldType.String:
+    case FieldType.String: {
+      const values = (fieldSpec.values ?? []).sort((a, b) => a.value.localeCompare(b.value));
+      removeDuplicatesFromSorted(values, (it) => it.value);
       return {
         name,
         type,
@@ -835,9 +837,10 @@ function normalizeFieldSpecUpdate(
         adminOnly,
         multiline: fieldSpec.multiline ?? false,
         matchPattern: fieldSpec.matchPattern ?? null,
-        values: (fieldSpec.values ?? []).sort((a, b) => a.value.localeCompare(b.value)),
+        values,
         index: fieldSpec.index ?? null,
       };
+    }
     case FieldType.ValueItem:
       return {
         name,
@@ -849,6 +852,14 @@ function normalizeFieldSpecUpdate(
       };
     default:
       assertExhaustive(type);
+  }
+}
+
+function removeDuplicatesFromSorted<T>(values: T[], predicate: (value: T) => unknown = (it) => it) {
+  for (let i = values.length - 1; i > 0; i--) {
+    if (predicate(values[i]) === predicate(values[i - 1])) {
+      values.splice(i, 1);
+    }
   }
 }
 
