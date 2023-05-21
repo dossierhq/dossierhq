@@ -128,17 +128,38 @@ describe('mergeWith()', () => {
       .mergeWith({
         entityTypes: [
           {
-            name: 'Foo',
+            name: 'Entity',
             adminOnly: false,
             fields: [
+              { name: 'entity', type: FieldType.Entity, entityTypes: ['Entity', 'Entity'] },
               {
                 name: 'string',
                 type: FieldType.String,
                 values: [{ value: 'a' }, { value: 'b' }, { value: 'a' }],
               },
+              {
+                name: 'richText',
+                type: FieldType.RichText,
+                entityTypes: ['Entity', 'Entity'],
+                linkEntityTypes: ['Entity', 'Entity'],
+                valueTypes: ['ValueType', 'ValueType'],
+                richTextNodes: [
+                  RichTextNodeType.root,
+                  RichTextNodeType.text,
+                  RichTextNodeType.root,
+                  RichTextNodeType.paragraph,
+                  RichTextNodeType.linebreak,
+                ],
+              },
+              {
+                name: 'valueItem',
+                type: FieldType.ValueItem,
+                valueTypes: ['ValueType', 'ValueType'],
+              },
             ],
           },
         ],
+        valueTypes: [{ name: 'ValueType', fields: [] }],
       })
       .valueOrThrow();
 

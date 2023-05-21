@@ -9,6 +9,16 @@ exports[`mergeWith() > duplicate values 1`] = `
       "fields": [
         {
           "adminOnly": false,
+          "entityTypes": [
+            "Entity",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
           "index": null,
           "list": false,
           "matchPattern": null,
@@ -25,14 +35,52 @@ exports[`mergeWith() > duplicate values 1`] = `
             },
           ],
         },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Entity",
+          ],
+          "linkEntityTypes": [
+            "Entity",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [
+            "linebreak",
+            "paragraph",
+            "root",
+            "text",
+          ],
+          "type": "RichText",
+          "valueTypes": [
+            "ValueType",
+          ],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "ValueType",
+          ],
+        },
       ],
-      "name": "Foo",
+      "name": "Entity",
       "nameField": null,
     },
   ],
   "indexes": [],
   "patterns": [],
-  "valueTypes": [],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "ValueType",
+    },
+  ],
 }
 `;
 

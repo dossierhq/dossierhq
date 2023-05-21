@@ -808,7 +808,7 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        entityTypes: [...(fieldSpec.entityTypes ?? [])].sort(),
+        entityTypes: sortAndRemoveDuplicates(fieldSpec.entityTypes),
       };
     case FieldType.Location:
       return { name, type, list, required, adminOnly };
@@ -821,13 +821,13 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        richTextNodes: [...(fieldSpec.richTextNodes ?? [])].sort(),
-        entityTypes: [...(fieldSpec.entityTypes ?? [])].sort(),
-        linkEntityTypes: [...(fieldSpec.linkEntityTypes ?? [])].sort(),
-        valueTypes: [...(fieldSpec.valueTypes ?? [])].sort(),
+        richTextNodes: sortAndRemoveDuplicates(fieldSpec.richTextNodes),
+        entityTypes: sortAndRemoveDuplicates(fieldSpec.entityTypes),
+        linkEntityTypes: sortAndRemoveDuplicates(fieldSpec.linkEntityTypes),
+        valueTypes: sortAndRemoveDuplicates(fieldSpec.valueTypes),
       };
     case FieldType.String: {
-      const values = (fieldSpec.values ?? []).sort((a, b) => a.value.localeCompare(b.value));
+      const values = [...(fieldSpec.values ?? [])].sort((a, b) => a.value.localeCompare(b.value));
       removeDuplicatesFromSorted(values, (it) => it.value);
       return {
         name,
@@ -848,11 +848,21 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        valueTypes: [...(fieldSpec.valueTypes ?? [])].sort(),
+        valueTypes: sortAndRemoveDuplicates(fieldSpec.valueTypes),
       };
     default:
       assertExhaustive(type);
   }
+}
+
+function sortAndRemoveDuplicates(values: string[] | undefined) {
+  if (!values) return [];
+  if (values.length <= 1) {
+    return values;
+  }
+  const copy = [...values].sort();
+  removeDuplicatesFromSorted(copy);
+  return copy;
 }
 
 function removeDuplicatesFromSorted<T>(values: T[], predicate: (value: T) => unknown = (it) => it) {
