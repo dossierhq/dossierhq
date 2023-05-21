@@ -320,6 +320,7 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": null,
       "name": "my-pattern",
       "pattern": "",
       "status": "new",
@@ -1463,11 +1464,16 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": null,
       "name": "anotherPattern",
       "pattern": "^hello$",
       "status": "new",
     },
     {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^.+$",
+      },
       "name": "aPattern",
       "pattern": "^.+$",
       "status": "",
@@ -1544,6 +1550,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": null,
       "name": "aPattern",
       "pattern": "^.*$",
       "status": "new",
@@ -2263,6 +2270,65 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
 }
 `;
 
+exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "aPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^this is a pattern$",
+      },
+      "name": "aPattern",
+      "pattern": "^this is a new pattern$",
+      "status": "changed",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangePatternPatternAction > change pattern of existing pattern 2`] = `
+{
+  "patterns": [
+    {
+      "name": "aPattern",
+      "pattern": "^this is a new pattern$",
+    },
+  ],
+}
+`;
+
 exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
 {
   "activeSelector": {
@@ -2275,6 +2341,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": null,
       "name": "foo",
       "pattern": "^this is a new pattern$",
       "status": "new",
@@ -2362,6 +2429,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": null,
       "name": "my-pattern",
       "pattern": "",
       "status": "new",
@@ -3322,6 +3390,10 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": {
+        "name": "patternOne",
+        "pattern": "^foo$",
+      },
       "name": "patternOne",
       "pattern": "^foo$",
       "status": "",
@@ -3818,6 +3890,10 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   "indexes": [],
   "patterns": [
     {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^a-pattern$",
+      },
       "name": "aPattern",
       "pattern": "^a-pattern$",
       "status": "",

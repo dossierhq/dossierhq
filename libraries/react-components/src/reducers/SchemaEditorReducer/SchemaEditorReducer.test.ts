@@ -962,6 +962,30 @@ describe('ChangePatternPatternAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('change pattern of existing pattern', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [{ name: 'bar', type: FieldType.String, matchPattern: 'aPattern' }],
+            },
+          ],
+          patterns: [{ name: 'aPattern', pattern: '^this is a pattern$' }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangePatternPattern(
+        { kind: 'pattern', name: 'aPattern' },
+        '^this is a new pattern$'
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('ChangeTypeAdminOnlyAction', () => {

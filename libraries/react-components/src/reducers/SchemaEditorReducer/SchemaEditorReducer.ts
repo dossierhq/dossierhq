@@ -87,7 +87,8 @@ export interface SchemaIndexDraft extends SchemaIndexSpecification {
 }
 
 export interface SchemaPatternDraft extends SchemaPatternSpecification {
-  status: 'new' | '';
+  status: 'new' | '' | 'changed';
+  existingPatternSpec: SchemaPatternSpecification | null;
 }
 
 export interface SchemaEditorState {
@@ -249,6 +250,19 @@ function withResolvedFieldStatus(state: Readonly<SchemaFieldDraft>): Readonly<Sc
   const newStatus = resolveFieldStatus(state);
   if (newStatus === state.status) return state;
   return { ...state, status: newStatus };
+}
+
+function resolvePatternStatus(state: Readonly<SchemaPatternDraft>): SchemaPatternDraft['status'] {
+  if (!state.existingPatternSpec) {
+    return 'new';
+  }
+  if (state.name !== state.existingPatternSpec.name) {
+    return 'changed';
+  }
+  if (state.pattern !== state.existingPatternSpec.pattern) {
+    return 'changed';
+  }
+  return '';
 }
 
 // ACTION HELPERS
@@ -523,6 +537,7 @@ class AddPatternAction implements SchemaEditorStateAction {
       status: 'new',
       name: this.name,
       pattern: '',
+      existingPatternSpec: null,
     };
     const newState: SchemaEditorState = {
       ...state,
@@ -810,7 +825,9 @@ class ChangePatternPatternAction extends PatternAction {
     if (draft.pattern === this.pattern) {
       return draft;
     }
-    return { ...draft, pattern: this.pattern };
+    const newDraft = { ...draft, pattern: this.pattern };
+    newDraft.status = resolvePatternStatus(newDraft);
+    return newDraft;
   }
 }
 
@@ -1081,6 +1098,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     const patterns = this.schema.spec.patterns.map<SchemaPatternDraft>((patternSpec) => ({
       ...patternSpec,
       status: '',
+      existingPatternSpec: patternSpec,
     }));
 
     if (!state.schemaWillBeUpdatedDueToSave && state.schema) return state; //TODO handle update to schema
