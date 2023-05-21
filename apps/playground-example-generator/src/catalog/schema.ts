@@ -129,6 +129,7 @@ export const SCHEMA = {
         { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
         { name: 'multiline', type: FieldType.String, multiline: true },
+        { name: 'index', type: FieldType.String, index: 'slug' },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         {
           name: 'values',

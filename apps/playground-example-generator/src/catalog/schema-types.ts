@@ -16,7 +16,7 @@ export type AppAdminClient = AdminClient<
 
 export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppAdminUniqueIndexes = 'slug';
 
 export type AppAdminEntity =
   | AdminBooleansEntity
@@ -162,6 +162,7 @@ export interface AdminStringsEntityFields {
   normal: string | null;
   required: string | null;
   multiline: string | null;
+  index: string | null;
   matchPattern: string | null;
   values: 'bar' | 'baz' | 'foo' | null;
   valuesList: Array<'bar' | 'baz' | 'foo'> | null;

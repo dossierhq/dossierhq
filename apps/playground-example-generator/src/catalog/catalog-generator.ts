@@ -367,6 +367,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
           title: 'Strings filled',
           normal: 'Hello',
           multiline: 'Hello\nWorld',
+          index: 'strings-filled',
           matchPattern: 'baz',
           values: 'bar',
           valuesList: ['foo', 'bar', 'baz'],
