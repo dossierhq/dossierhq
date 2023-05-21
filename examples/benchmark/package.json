@@ -25,7 +25,7 @@
     "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci"
   },
   "dependencies": {
-    "@faker-js/faker": "~8.0.0",
+    "@faker-js/faker": "~8.0.1",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/better-sqlite3": "workspace:*",
@@ -36,11 +36,11 @@
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
-    "better-sqlite3": "~8.3.0",
+    "better-sqlite3": "~8.4.0",
     "dotenv": "~16.0.3",
     "pg": "~8.11.0",
     "sqlite3": "5.1.4",
-    "tslib": "~2.5.0"
+    "tslib": "~2.5.2"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
@@ -50,7 +50,7 @@
     "@types/better-sqlite3": "~7.6.4",
     "@types/pg": "~8.6.6",
     "@types/sqlite3": "~3.1.8",
-    "eslint": "~8.40.0",
+    "eslint": "~8.41.0",
     "prettier": "2.8.8",
     "typescript": "~5.0.4"
   }

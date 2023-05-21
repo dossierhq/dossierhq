@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.5.0"
+    "tslib": "~2.5.2"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -51,10 +51,10 @@
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.50.5",
     "@types/better-sqlite3": "~7.6.4",
-    "better-sqlite3": "~8.3.0",
-    "eslint": "~8.40.0",
+    "better-sqlite3": "~8.4.0",
+    "eslint": "~8.41.0",
     "prettier": "2.8.8",
     "typescript": "~5.0.4",
-    "vitest": "~0.31.0"
+    "vitest": "~0.31.1"
   }
 }

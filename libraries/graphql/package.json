@@ -41,7 +41,7 @@
   "dependencies": {
     "@dossierhq/core": "workspace:*",
     "graphql": "~16.6.0",
-    "tslib": "~2.5.0"
+    "tslib": "~2.5.2"
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",
@@ -52,11 +52,11 @@
     "@rushstack/heft": "0.50.5",
     "@types/sqlite3": "~3.1.8",
     "@types/uuid": "~9.0.1",
-    "eslint": "~8.40.0",
+    "eslint": "~8.41.0",
     "prettier": "2.8.8",
     "sqlite3": "5.1.4",
     "typescript": "~5.0.4",
     "uuid": "~9.0.0",
-    "vitest": "~0.31.0"
+    "vitest": "~0.31.1"
   }
 }

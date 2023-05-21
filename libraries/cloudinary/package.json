@@ -32,7 +32,7 @@
     "@cloudinary/url-gen": "~1.10.0",
     "@dossierhq/design": "workspace:*",
     "react": "~18.2.0",
-    "tslib": "~2.5.0"
+    "tslib": "~2.5.2"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -41,7 +41,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@rushstack/heft": "0.50.5",
     "@types/react": "~18.2.6",
-    "eslint": "~8.40.0",
+    "eslint": "~8.41.0",
     "prettier": "2.8.8",
     "typescript": "~5.0.4"
   }
