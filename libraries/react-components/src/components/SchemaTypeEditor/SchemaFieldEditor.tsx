@@ -62,7 +62,7 @@ export function SchemaFieldEditor({
   onAddOrRenameField,
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
-  const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeIndex = fieldDraft.status === 'new';
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeNumberVariant =
     fieldDraft.status === 'new' ||
@@ -216,7 +216,7 @@ export function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {fieldDraft.type === FieldType.String ? (
+        {fieldDraft.type === FieldType.String && (canChangeIndex || fieldDraft.index) ? (
           <Field horizontal>
             <Field.LabelColumn>
               <Field.Label>Index</Field.Label>
