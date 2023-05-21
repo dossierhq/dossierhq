@@ -639,10 +639,11 @@ describe('ChangeFieldMatchPattern', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-          patterns: [{ name: 'aPattern', pattern: '^.+$' }],
         }).valueOrThrow()
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddPattern('aPattern'),
+      new SchemaEditorActions.ChangePatternPattern({ kind: 'pattern', name: 'aPattern' }, '^.*$'),
       new SchemaEditorActions.ChangeFieldMatchPattern(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         'aPattern'
@@ -655,6 +656,40 @@ describe('ChangeFieldMatchPattern', () => {
     expect(state.entityTypes[0].fields[0].matchPattern).toBe('aPattern');
     expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).matchPattern).toBe(
       'aPattern'
+    );
+  });
+
+  test('change pattern on existing string field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [{ name: 'bar', type: FieldType.String, matchPattern: 'aPattern' }],
+            },
+          ],
+          patterns: [{ name: 'aPattern', pattern: '^.+$' }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddPattern('anotherPattern'),
+      new SchemaEditorActions.ChangePatternPattern(
+        { kind: 'pattern', name: 'anotherPattern' },
+        '^hello$'
+      ),
+      new SchemaEditorActions.ChangeFieldMatchPattern(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        'anotherPattern'
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe('anotherPattern');
+    expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).matchPattern).toBe(
+      'anotherPattern'
     );
   });
 });

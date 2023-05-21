@@ -63,7 +63,6 @@ export function SchemaFieldEditor({
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new'; //TODO too restrictive
-  const canChangeMatchPattern = fieldDraft.status === 'new'; //TODO too restrictive
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeNumberVariant =
     fieldDraft.status === 'new' ||
@@ -240,7 +239,6 @@ export function SchemaFieldEditor({
             </Field.LabelColumn>
             <Field.BodyColumn>
               <PatternSelector
-                readOnly={!canChangeMatchPattern}
                 value={fieldDraft.matchPattern ?? null}
                 schemaEditorState={schemaEditorState}
                 onChange={handleMatchPatternChange}

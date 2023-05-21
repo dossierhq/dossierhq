@@ -231,6 +231,9 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
     }
   }
   if (existingFieldSpec.type === FieldType.String) {
+    if (state.matchPattern !== existingFieldSpec.matchPattern) {
+      return 'changed';
+    }
     if (!!state.multiline !== !!existingFieldSpec.multiline) {
       return 'changed';
     }

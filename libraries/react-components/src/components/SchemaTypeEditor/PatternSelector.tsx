@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import type { SchemaEditorState } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
-  readOnly: boolean;
+  readOnly?: boolean;
   value: string | null;
   schemaEditorState: SchemaEditorState;
   onChange: (value: string | null) => void;

@@ -1427,11 +1427,97 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
 }
 `;
 
+exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "anotherPattern",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "anotherPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "name": "anotherPattern",
+      "pattern": "^hello$",
+      "status": "new",
+    },
+    {
+      "name": "aPattern",
+      "pattern": "^.+$",
+      "status": "",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldMatchPattern > change pattern on existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "anotherPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "anotherPattern",
+      "pattern": "^hello$",
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldMatchPattern > set pattern on new string field in existing entity type 1`] = `
 {
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "aPattern",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1456,7 +1542,13 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
     },
   ],
   "indexes": [],
-  "patterns": [],
+  "patterns": [
+    {
+      "name": "aPattern",
+      "pattern": "^.*$",
+      "status": "new",
+    },
+  ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
   "valueTypes": [],
@@ -1483,6 +1575,12 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       ],
       "name": "Foo",
       "nameField": null,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "aPattern",
+      "pattern": "^.*$",
     },
   ],
 }
