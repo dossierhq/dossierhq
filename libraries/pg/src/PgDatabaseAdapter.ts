@@ -18,8 +18,8 @@ const {
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-PgTypes.setTypeParser(1016 as any, (value) => PgTypes.arrayParser(value, BigInt));
+const parseBigIntArray = PgTypes.getTypeParser<string[]>(1016);
+PgTypes.setTypeParser(1016, (it) => (parseBigIntArray(it) as string[]).map(BigInt));
 
 export type PgDatabaseAdapter = DatabaseAdapter<PostgresDatabaseOptimizationOptions>;
 

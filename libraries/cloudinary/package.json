@@ -29,7 +29,7 @@
     "directory": "libraries/cloudinary"
   },
   "dependencies": {
-    "@cloudinary/url-gen": "~1.10.0",
+    "@cloudinary/url-gen": "~1.10.1",
     "@dossierhq/design": "workspace:*",
     "react": "~18.2.0",
     "tslib": "~2.5.2"
@@ -39,7 +39,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
-    "@rushstack/heft": "0.50.5",
+    "@rushstack/heft": "0.50.6",
     "@types/react": "~18.2.6",
     "eslint": "~8.41.0",
     "prettier": "2.8.8",

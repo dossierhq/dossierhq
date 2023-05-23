@@ -26,10 +26,10 @@
     "express": "~4.18.2",
     "express-jwt": "~8.4.1",
     "jwks-rsa": "~3.0.1",
-    "leaflet": "~1.9.3",
+    "leaflet": "~1.9.4",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "react-router-dom": "~6.11.1"
+    "react-router-dom": "~6.11.2"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
