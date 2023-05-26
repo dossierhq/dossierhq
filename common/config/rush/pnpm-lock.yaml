@@ -931,7 +931,7 @@ importers:
       '@lexical/link': 0.10.0
       '@lexical/list': 0.10.0
       '@lexical/react': 0.10.0
-      '@lexical/rich-text': 0.10.0
+      '@lexical/rich-text': 0.11.0
       '@lexical/selection': 0.10.0
       '@lexical/utils': 0.10.0
       '@rushstack/heft': 0.50.6
@@ -974,7 +974,7 @@ importers:
       '@lexical/link': 0.10.0_lexical@0.10.0
       '@lexical/list': 0.10.0_lexical@0.10.0
       '@lexical/react': 0.10.0_db36t6n32t7pqfmb6cenu7pg5e
-      '@lexical/rich-text': 0.10.0_b7ywsxvpipcmizsohmkt4qeolm
+      '@lexical/rich-text': 0.11.0_b7ywsxvpipcmizsohmkt4qeolm
       '@lexical/selection': 0.10.0_lexical@0.10.0
       '@lexical/utils': 0.10.0_lexical@0.10.0
       leaflet: 1.9.4
@@ -1269,7 +1269,7 @@ importers:
       '@lexical/link': 0.10.0
       '@lexical/list': 0.10.0
       '@lexical/react': 0.10.0
-      '@lexical/rich-text': 0.10.0
+      '@lexical/rich-text': 0.11.0
       '@lexical/selection': 0.10.0
       '@lexical/utils': 0.10.0
       '@microsoft/rush-lib': ~5.98.0
@@ -1366,7 +1366,7 @@ importers:
       '@lexical/link': 0.10.0_lexical@0.10.0
       '@lexical/list': 0.10.0_lexical@0.10.0
       '@lexical/react': 0.10.0_db36t6n32t7pqfmb6cenu7pg5e
-      '@lexical/rich-text': 0.10.0_b7ywsxvpipcmizsohmkt4qeolm
+      '@lexical/rich-text': 0.11.0_b7ywsxvpipcmizsohmkt4qeolm
       '@lexical/selection': 0.10.0_lexical@0.10.0
       '@lexical/utils': 0.10.0_lexical@0.10.0
       '@microsoft/rush-lib': 5.98.0_@types+node@20.2.3
@@ -4010,19 +4010,6 @@ packages:
       - yjs
     dev: false
 
-  /@lexical/rich-text/0.10.0_b7ywsxvpipcmizsohmkt4qeolm:
-    resolution: {integrity: sha512-mkg+8h5qh09daCc8+PhzHjczSVhlTOkrr8S4oma89mfQZ/CODJYd0tOOd9y/8JaDrBddTqjd4xTjXwEEJzVA4g==}
-    peerDependencies:
-      '@lexical/clipboard': 0.10.0
-      '@lexical/selection': 0.10.0
-      '@lexical/utils': 0.10.0
-      lexical: 0.10.0
-    dependencies:
-      '@lexical/selection': 0.10.0_lexical@0.10.0
-      '@lexical/utils': 0.10.0_lexical@0.10.0
-      lexical: 0.10.0
-    dev: false
-
   /@lexical/rich-text/0.10.0_ubb7e6aohp6etsvppjz5nplnxy:
     resolution: {integrity: sha512-mkg+8h5qh09daCc8+PhzHjczSVhlTOkrr8S4oma89mfQZ/CODJYd0tOOd9y/8JaDrBddTqjd4xTjXwEEJzVA4g==}
     peerDependencies:
@@ -4032,6 +4019,19 @@ packages:
       lexical: 0.10.0
     dependencies:
       '@lexical/clipboard': 0.10.0_lexical@0.10.0
+      '@lexical/selection': 0.10.0_lexical@0.10.0
+      '@lexical/utils': 0.10.0_lexical@0.10.0
+      lexical: 0.10.0
+    dev: false
+
+  /@lexical/rich-text/0.11.0_b7ywsxvpipcmizsohmkt4qeolm:
+    resolution: {integrity: sha512-cWSJbd2a/Y05BDdG6EInYc64TgXFel0ehWvA6FT2uz+nb+6xM9PYQDtsS+Izuo3hWha2rXUoIgRNhl7WtSvvpg==}
+    peerDependencies:
+      '@lexical/clipboard': 0.11.0
+      '@lexical/selection': 0.11.0
+      '@lexical/utils': 0.11.0
+      lexical: 0.11.0
+    dependencies:
       '@lexical/selection': 0.10.0_lexical@0.10.0
       '@lexical/utils': 0.10.0_lexical@0.10.0
       lexical: 0.10.0
@@ -5028,13 +5028,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rushstack/eslint-patch/1.2.0:
-    resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
-    dev: true
-
   /@rushstack/eslint-patch/1.3.0:
     resolution: {integrity: sha512-IthPJsJR85GhOkp3Hvp8zFOPK5ynKn6STyHa/WZpioK7E1aYDiBzpqQPrngc14DszIUkIrdd3k9Iu0XSzlP/1w==}
-    dev: false
 
   /@rushstack/heft-config-file/0.12.1_@types+node@20.2.3:
     resolution: {integrity: sha512-7sZuM3NVnXrDn4wRGj8K3rqs/QDs2UsRw5LyRamNtlIi2MT+NW0ALbOt41oU7nYLtTKt6IItvqIdlqME5/f5Iw==}
@@ -6328,14 +6323,14 @@ packages:
   /@types/better-sqlite3/7.6.4:
     resolution: {integrity: sha512-dzrRZCYPXIXfSR1/surNbJ/grU3scTaygS0OMzjlGf71i9sc2fGyHPXXiXmEvNIoE0cGwsanEFMVJxPXmco9Eg==}
     dependencies:
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
     dev: true
 
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
 
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
@@ -6503,9 +6498,6 @@ packages:
     resolution: {integrity: sha512-3oJbGBUWuS6ahSnEq1eN2XrCyf4YsWI8OyCvo7c64zQJNplk3mO84t53o8lfTk+2ji59g5ycfc6qQ3fdHliHuA==}
     dev: true
 
-  /@types/node/20.2.1:
-    resolution: {integrity: sha512-DqJociPbZP1lbZ5SQPk4oag6W7AyaGMO6gSfRwq3PWl4PXTwJpRQJhDq4W0kzrg3w6tJ1SwlvGZ5uKFHY13LIg==}
-
   /@types/node/20.2.3:
     resolution: {integrity: sha512-pg9d0yC4rVNWQzX8U7xb4olIOFuuVL9za3bzMT2pu2SU0SNEi66i2qrvhE2qt0HvkhuCaWJu7pLNOt/Pj8BIrw==}
 
@@ -6586,13 +6578,13 @@ packages:
     resolution: {integrity: sha512-6EWU2wfiBtzgTy18WQoXZAGTreBjhZcBCfD8CDvyI1Nj0a4KNDDt41IYeAZ40cRUdfqWHb7VGx7t6nK0yBOI5A==}
     dependencies:
       '@types/emscripten': 1.39.5
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
     dev: true
 
   /@types/sqlite3/3.1.8:
     resolution: {integrity: sha512-sQMt/qnyUWnqiTcJXm5ZfNPIBeJ/DVvJDwxw+0tAxPJvadzfiP1QhryO1JOR6t1yfb8NpzQb/Rud06mob5laIA==}
     dependencies:
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
     dev: true
 
   /@types/tapable/1.0.6:
@@ -8924,7 +8916,7 @@ packages:
         optional: true
     dependencies:
       '@next/eslint-plugin-next': 13.4.2
-      '@rushstack/eslint-patch': 1.2.0
+      '@rushstack/eslint-patch': 1.3.0
       '@typescript-eslint/parser': 5.59.7_opaykosi7ysrbskpnffskmbrki
       eslint: 8.41.0
       eslint-import-resolver-node: 0.3.7
@@ -14814,7 +14806,7 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  /vite-node/0.31.1_4oablbnzuoee4tfznruyytglaa:
+  /vite-node/0.31.1_@types+node@20.2.3:
     resolution: {integrity: sha512-BajE/IsNQ6JyizPzu9zRgHrBwczkAs0erQf/JRpgTIESpKvNj9/Gd0vxX905klLkb0I0SJVCKbdrl5c6FnqYKA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -14824,7 +14816,7 @@ packages:
       mlly: 1.2.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.8_4oablbnzuoee4tfznruyytglaa
+      vite: 4.3.8_@types+node@20.2.3
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14835,7 +14827,7 @@ packages:
       - terser
     dev: true
 
-  /vite-node/0.31.1_@types+node@20.2.1:
+  /vite-node/0.31.1_qfjot3hk66nrjcovmj332zpt7u:
     resolution: {integrity: sha512-BajE/IsNQ6JyizPzu9zRgHrBwczkAs0erQf/JRpgTIESpKvNj9/Gd0vxX905klLkb0I0SJVCKbdrl5c6FnqYKA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -14845,7 +14837,7 @@ packages:
       mlly: 1.2.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.8_@types+node@20.2.1
+      vite: 4.3.8_qfjot3hk66nrjcovmj332zpt7u
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14888,7 +14880,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.3.8_4oablbnzuoee4tfznruyytglaa:
+  /vite/4.3.8_@types+node@20.2.3:
     resolution: {integrity: sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -14913,41 +14905,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.2.1
-      esbuild: 0.17.12
-      postcss: 8.4.23
-      rollup: 3.21.0
-      sass: 1.62.1
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
-  /vite/4.3.8_@types+node@20.2.1:
-    resolution: {integrity: sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
       esbuild: 0.17.12
       postcss: 8.4.23
       rollup: 3.21.0
@@ -15055,7 +15013,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
       '@vitest/expect': 0.31.1
       '@vitest/runner': 0.31.1
       '@vitest/snapshot': 0.31.1
@@ -15075,8 +15033,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.8_@types+node@20.2.1
-      vite-node: 0.31.1_@types+node@20.2.1
+      vite: 4.3.8_@types+node@20.2.3
+      vite-node: 0.31.1_@types+node@20.2.3
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -15120,7 +15078,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 20.2.1
+      '@types/node': 20.2.3
       '@vitest/expect': 0.31.1
       '@vitest/runner': 0.31.1
       '@vitest/snapshot': 0.31.1
@@ -15140,8 +15098,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.8_4oablbnzuoee4tfznruyytglaa
-      vite-node: 0.31.1_4oablbnzuoee4tfznruyytglaa
+      vite: 4.3.8_qfjot3hk66nrjcovmj332zpt7u
+      vite-node: 0.31.1_qfjot3hk66nrjcovmj332zpt7u
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
