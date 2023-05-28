@@ -22,6 +22,10 @@ import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
     {
+      name: 'NumbersEntity',
+      fields: [{ name: 'integer', type: FieldType.Number, integer: true }],
+    },
+    {
       name: 'RichTextsEntity',
       fields: [{ name: 'anyNodes', type: FieldType.RichText }],
     },
@@ -56,6 +60,11 @@ const adminSchema = AdminSchema.createAndValidate({
     { name: 'noneSubject', pattern: '^(none|subject)$' },
   ],
 }).valueOrThrow();
+
+const NUMBERS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
+  info: { type: 'NumbersEntity', name: 'NumbersEntity', authKey: 'none' },
+  fields: {},
+};
 
 const STRINGS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
   info: { type: 'StringsEntity', name: 'StringsEntity', authKey: 'none' },
@@ -334,6 +343,12 @@ describe('validateTraverseNodeForSave', () => {
 });
 
 describe('Validate entity', () => {
+  test('Fail: integer with float value', () => {
+    expect(
+      validateEntity(copyEntity(NUMBERS_ENTITY_CREATE_DEFAULT, { fields: { integer: 1.2345 } }))
+    ).toMatchSnapshot();
+  });
+
   test('Pass: matchPattern matched string', () => {
     expect(
       validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'baz' } }))

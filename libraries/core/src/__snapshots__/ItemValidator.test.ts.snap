@@ -14,6 +14,20 @@ exports[`Validate entity > Fail: admin only value item in normal field 1`] = `
 ]
 `;
 
+exports[`Validate entity > Fail: integer with float value 1`] = `
+[
+  {
+    "message": "Value must be an integer",
+    "path": [
+      "entity",
+      "fields",
+      "integer",
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`Validate entity > Fail: matchPattern unmatched string 1`] = `
 [
   {

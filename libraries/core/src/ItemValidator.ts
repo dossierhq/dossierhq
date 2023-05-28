@@ -1,10 +1,15 @@
 import { assertExhaustive, assertIsDefined } from './Asserts.js';
 import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ItemTraverser.js';
-import type { ItemValuePath } from './ItemUtils.js';
-import { isRichTextTextNode, isStringItemField } from './ItemUtils.js';
+import {
+  isNumberItemField,
+  isRichTextTextNode,
+  isStringItemField,
+  type ItemValuePath,
+} from './ItemUtils.js';
 import type {
   AdminSchema,
+  NumberFieldSpecification,
   PublishedSchema,
   RichTextFieldSpecification,
   StringFieldSpecification,
@@ -176,7 +181,16 @@ export function validateTraverseNodeForSave(
     case ItemTraverseNodeType.field:
       break;
     case ItemTraverseNodeType.fieldItem:
-      if (isStringItemField(node.fieldSpec, node.value) && node.value) {
+      if (isNumberItemField(node.fieldSpec, node.value) && node.value !== null) {
+        const numberFieldSpec = node.fieldSpec as NumberFieldSpecification;
+        if (numberFieldSpec.integer && !Number.isInteger(node.value)) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: 'Value must be an integer',
+          };
+        }
+      } else if (isStringItemField(node.fieldSpec, node.value) && node.value) {
         const stringFieldSpec = node.fieldSpec as StringFieldSpecification;
         if (stringFieldSpec.matchPattern) {
           const regexp = adminSchema.getPatternRegExp(stringFieldSpec.matchPattern);
