@@ -562,6 +562,31 @@ describe('ChangeFieldIntegerAction', () => {
       true
     );
   });
+
+  test('make existing integer field into float', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            { name: 'Foo', fields: [{ name: 'bar', type: FieldType.Number, integer: true }] },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeFieldInteger(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        false
+      )
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].integer).toBe(false);
+    expect((schemaUpdate?.entityTypes?.[0].fields[0] as NumberFieldSpecification).integer).toBe(
+      false
+    );
+  });
 });
 
 describe('ChangeTypeNameField', () => {

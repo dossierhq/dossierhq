@@ -10,7 +10,7 @@ import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEd
 interface Props {
   fieldSelector: SchemaFieldSelector;
   integer: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 

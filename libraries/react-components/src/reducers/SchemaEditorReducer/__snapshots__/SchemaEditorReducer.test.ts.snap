@@ -1371,6 +1371,63 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
 }
 `;
 
+exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "Number",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldIntegerAction > make existing integer field into float 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "name": "bar",
+          "required": false,
+          "type": "Number",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`ChangeFieldIntegerAction > make new integer field in existing entity type 1`] = `
 {
   "activeSelector": null,

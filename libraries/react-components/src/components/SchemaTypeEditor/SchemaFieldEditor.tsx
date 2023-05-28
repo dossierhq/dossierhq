@@ -64,10 +64,6 @@ export function SchemaFieldEditor({
   const canChangeType = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new';
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
-  const canChangeNumberVariant =
-    fieldDraft.status === 'new' ||
-    (fieldDraft.existingFieldSpec?.type === FieldType.Number &&
-      fieldDraft.existingFieldSpec.integer); // allow integer -> float, but not float -> integer
   const canChangeAdminOnly = fieldDraft.status === 'new'; //TODO too restrictive
 
   const handleDropDownItemClick = useCallback(
@@ -352,7 +348,6 @@ export function SchemaFieldEditor({
                   <NumberVariantSelector
                     fieldSelector={fieldSelector}
                     integer={!!fieldDraft.integer}
-                    disabled={!canChangeNumberVariant}
                     dispatchSchemaEditorState={dispatchSchemaEditorState}
                   />
                 </Field.Control>
