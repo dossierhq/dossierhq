@@ -1,5 +1,5 @@
 import { FullscreenContainer } from '@dossierhq/design';
-import { Voyager } from 'graphql-voyager';
+import { Voyager, voyagerIntrospectionQuery } from 'graphql-voyager';
 import Head from 'next/head';
 import { NavBar } from '../NavBar/NavBar';
 
@@ -13,17 +13,19 @@ export default function VoyagerPage(): JSX.Element {
         <FullscreenContainer.Row fullWidth>
           <NavBar current="voyager" />
         </FullscreenContainer.Row>
-        <Voyager introspection={introspectionProvider} />
+        <Voyager introspection={introspection} />
       </FullscreenContainer>
     </>
   );
 }
 
-async function introspectionProvider(query: string) {
+const introspection = introspectionProvider();
+
+async function introspectionProvider() {
   const response = await fetch(window.location.origin + '/api/graphql', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: query }),
+    body: JSON.stringify({ query: voyagerIntrospectionQuery }),
   });
   const json = await response.json();
   return json;
