@@ -258,3 +258,28 @@ exports[`mergeWith() > use existing list value if not specified on field update 
   "valueTypes": [],
 }
 `;
+
+exports[`mergeWith() > use existing required value if not specified on field update 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "field",
+          "required": true,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "valueTypes": [],
+}
+`;

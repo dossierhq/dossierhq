@@ -38,6 +38,22 @@ describe('mergeWith()', () => {
     expect(result.spec.entityTypes[0].fields[0].list).toBe(true);
   });
 
+  test('use existing required value if not specified on field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean, required: true }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.entityTypes[0].fields[0].required).toBe(true);
+  });
+
   test('empty->entity with pattern', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
