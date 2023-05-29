@@ -165,6 +165,42 @@ describe('mergeWith()', () => {
 
     expect(result.spec).toMatchSnapshot();
   });
+
+  test('Error: changing type of field', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Foo.field: Can’t change type of field. Requested String but is Boolean'
+    );
+  });
+
+  test('Error: changing list of field', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: true }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [
+          { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: false }] },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Foo.field: Can’t change the value of list. Requested false but is true'
+    );
+  });
 });
 
 describe('validate()', () => {

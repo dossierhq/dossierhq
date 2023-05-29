@@ -626,18 +626,24 @@ export class AdminSchema {
     // Merge entity types
     if (update.entityTypes) {
       for (const entitySpecUpdate of update.entityTypes) {
+        const existingIndex = schemaSpec.entityTypes.findIndex(
+          (it) => it.name === entitySpecUpdate.name
+        );
+        const existingEntitySpec =
+          existingIndex >= 0 ? schemaSpec.entityTypes[existingIndex] : null;
+        const collectFieldsResult = collectFieldSpecsFromUpdates(
+          entitySpecUpdate.fields,
+          existingEntitySpec
+        );
+        if (collectFieldsResult.isError()) return collectFieldsResult;
         const entitySpec: AdminEntityTypeSpecification = {
           name: entitySpecUpdate.name,
           adminOnly: entitySpecUpdate.adminOnly ?? false,
           authKeyPattern: entitySpecUpdate.authKeyPattern ?? null,
           nameField: entitySpecUpdate.nameField ?? null,
-          fields: entitySpecUpdate.fields.map(normalizeFieldSpecUpdate),
+          fields: collectFieldsResult.value,
         };
-        const existingIndex = schemaSpec.entityTypes.findIndex(
-          (it) => it.name === entitySpecUpdate.name
-        );
         if (existingIndex >= 0) {
-          //TODO merge entity type
           schemaSpec.entityTypes[existingIndex] = entitySpec;
         } else {
           schemaSpec.entityTypes.push(entitySpec);
@@ -656,14 +662,21 @@ export class AdminSchema {
     // Merge value types
     if (update.valueTypes) {
       for (const valueSpecUpdate of update.valueTypes) {
+        const existingIndex = schemaSpec.valueTypes.findIndex(
+          (it) => it.name === valueSpecUpdate.name
+        );
+        const existingValueSpec = existingIndex >= 0 ? schemaSpec.valueTypes[existingIndex] : null;
+        const collectFieldsResult = collectFieldSpecsFromUpdates(
+          valueSpecUpdate.fields,
+          existingValueSpec
+        );
+        if (collectFieldsResult.isError()) return collectFieldsResult;
         const valueSpec = {
           name: valueSpecUpdate.name,
           adminOnly: valueSpecUpdate.adminOnly ?? false,
-          fields: valueSpecUpdate.fields.map(normalizeFieldSpecUpdate),
+          fields: collectFieldsResult.value,
         };
-        const existingIndex = schemaSpec.valueTypes.findIndex((it) => it.name === valueSpec.name);
         if (existingIndex >= 0) {
-          //TODO merge value type
           schemaSpec.valueTypes[existingIndex] = valueSpec;
         } else {
           schemaSpec.valueTypes.push(valueSpec);
@@ -713,7 +726,6 @@ export class AdminSchema {
     schemaSpec.patterns.sort((a, b) => a.name.localeCompare(b.name));
     schemaSpec.indexes.sort((a, b) => a.name.localeCompare(b.name));
 
-    // TODO normalize
     return ok(new AdminSchema(schemaSpec));
   }
 
@@ -791,31 +803,63 @@ export class AdminSchema {
   }
 }
 
+function collectFieldSpecsFromUpdates(
+  fieldUpdates: AdminFieldSpecificationUpdate[],
+  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null
+): Result<AdminFieldSpecification[], typeof ErrorType.BadRequest> {
+  const fields: AdminFieldSpecification[] = [];
+  for (const fieldUpdate of fieldUpdates) {
+    const fieldResult = normalizeFieldSpecUpdate(fieldUpdate, existingTypeSpec);
+    if (fieldResult.isError()) return fieldResult;
+    fields.push(fieldResult.value);
+  }
+  return ok(fields);
+}
+
 function normalizeFieldSpecUpdate(
-  fieldSpec: AdminFieldSpecificationUpdate
-): AdminFieldSpecification {
+  fieldSpec: AdminFieldSpecificationUpdate,
+  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null
+): Result<AdminFieldSpecification, typeof ErrorType.BadRequest> {
   const { name, type } = fieldSpec;
   const list = fieldSpec.list ?? false;
   const required = fieldSpec.required ?? false;
   const adminOnly = fieldSpec.adminOnly ?? false;
+
+  if (existingTypeSpec) {
+    const existingFieldSpec = existingTypeSpec.fields.find((it) => it.name === fieldSpec.name);
+    if (existingFieldSpec) {
+      const typeName = existingTypeSpec.name;
+      if (existingFieldSpec.type !== type) {
+        return notOk.BadRequest(
+          `${typeName}.${name}: Can’t change type of field. Requested ${type} but is ${existingFieldSpec.type}`
+        );
+      }
+      if (existingFieldSpec.list !== list) {
+        return notOk.BadRequest(
+          `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`
+        );
+      }
+    }
+  }
+
   switch (type) {
     case FieldType.Boolean:
-      return { name, type, list, required, adminOnly };
+      return ok({ name, type, list, required, adminOnly });
     case FieldType.Entity:
-      return {
+      return ok({
         name,
         type,
         list,
         required,
         adminOnly,
         entityTypes: sortAndRemoveDuplicates(fieldSpec.entityTypes),
-      };
+      });
     case FieldType.Location:
-      return { name, type, list, required, adminOnly };
+      return ok({ name, type, list, required, adminOnly });
     case FieldType.Number:
-      return { name, type, list, required, adminOnly, integer: fieldSpec.integer ?? false };
+      return ok({ name, type, list, required, adminOnly, integer: fieldSpec.integer ?? false });
     case FieldType.RichText:
-      return {
+      return ok({
         name,
         type,
         list,
@@ -825,11 +869,11 @@ function normalizeFieldSpecUpdate(
         entityTypes: sortAndRemoveDuplicates(fieldSpec.entityTypes),
         linkEntityTypes: sortAndRemoveDuplicates(fieldSpec.linkEntityTypes),
         valueTypes: sortAndRemoveDuplicates(fieldSpec.valueTypes),
-      };
+      });
     case FieldType.String: {
       const values = [...(fieldSpec.values ?? [])].sort((a, b) => a.value.localeCompare(b.value));
       removeDuplicatesFromSorted(values, (it) => it.value);
-      return {
+      return ok({
         name,
         type,
         list,
@@ -839,17 +883,17 @@ function normalizeFieldSpecUpdate(
         matchPattern: fieldSpec.matchPattern ?? null,
         values,
         index: fieldSpec.index ?? null,
-      };
+      });
     }
     case FieldType.ValueItem:
-      return {
+      return ok({
         name,
         type,
         list,
         required,
         adminOnly,
         valueTypes: sortAndRemoveDuplicates(fieldSpec.valueTypes),
-      };
+      });
     default:
       assertExhaustive(type);
   }
