@@ -809,36 +809,35 @@ function collectFieldSpecsFromUpdates(
 ): Result<AdminFieldSpecification[], typeof ErrorType.BadRequest> {
   const fields: AdminFieldSpecification[] = [];
   for (const fieldUpdate of fieldUpdates) {
-    const fieldResult = normalizeFieldSpecUpdate(fieldUpdate, existingTypeSpec);
+    const fieldResult = mergeAndNormalizeUpdatedFieldSpec(fieldUpdate, existingTypeSpec);
     if (fieldResult.isError()) return fieldResult;
     fields.push(fieldResult.value);
   }
   return ok(fields);
 }
 
-function normalizeFieldSpecUpdate(
-  fieldSpec: AdminFieldSpecificationUpdate,
+function mergeAndNormalizeUpdatedFieldSpec(
+  fieldSpecUpdate: AdminFieldSpecificationUpdate,
   existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null
 ): Result<AdminFieldSpecification, typeof ErrorType.BadRequest> {
-  const { name, type } = fieldSpec;
-  const list = fieldSpec.list ?? false;
-  const required = fieldSpec.required ?? false;
-  const adminOnly = fieldSpec.adminOnly ?? false;
+  const existingFieldSpec = existingTypeSpec?.fields.find((it) => it.name === fieldSpecUpdate.name);
 
-  if (existingTypeSpec) {
-    const existingFieldSpec = existingTypeSpec.fields.find((it) => it.name === fieldSpec.name);
-    if (existingFieldSpec) {
-      const typeName = existingTypeSpec.name;
-      if (existingFieldSpec.type !== type) {
-        return notOk.BadRequest(
-          `${typeName}.${name}: Can’t change type of field. Requested ${type} but is ${existingFieldSpec.type}`
-        );
-      }
-      if (existingFieldSpec.list !== list) {
-        return notOk.BadRequest(
-          `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`
-        );
-      }
+  const { name, type } = fieldSpecUpdate;
+  const list = valueOrExistingOrDefault(fieldSpecUpdate.list, existingFieldSpec?.list, false);
+  const required = fieldSpecUpdate.required ?? false;
+  const adminOnly = fieldSpecUpdate.adminOnly ?? false;
+
+  if (existingTypeSpec && existingFieldSpec) {
+    const typeName = existingTypeSpec.name;
+    if (existingFieldSpec.type !== type) {
+      return notOk.BadRequest(
+        `${typeName}.${name}: Can’t change type of field. Requested ${type} but is ${existingFieldSpec.type}`
+      );
+    }
+    if (existingFieldSpec.list !== list) {
+      return notOk.BadRequest(
+        `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`
+      );
     }
   }
 
@@ -852,12 +851,19 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        entityTypes: sortAndRemoveDuplicates(fieldSpec.entityTypes),
+        entityTypes: sortAndRemoveDuplicates(fieldSpecUpdate.entityTypes),
       });
     case FieldType.Location:
       return ok({ name, type, list, required, adminOnly });
     case FieldType.Number:
-      return ok({ name, type, list, required, adminOnly, integer: fieldSpec.integer ?? false });
+      return ok({
+        name,
+        type,
+        list,
+        required,
+        adminOnly,
+        integer: fieldSpecUpdate.integer ?? false,
+      });
     case FieldType.RichText:
       return ok({
         name,
@@ -865,13 +871,15 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        richTextNodes: sortAndRemoveDuplicates(fieldSpec.richTextNodes),
-        entityTypes: sortAndRemoveDuplicates(fieldSpec.entityTypes),
-        linkEntityTypes: sortAndRemoveDuplicates(fieldSpec.linkEntityTypes),
-        valueTypes: sortAndRemoveDuplicates(fieldSpec.valueTypes),
+        richTextNodes: sortAndRemoveDuplicates(fieldSpecUpdate.richTextNodes),
+        entityTypes: sortAndRemoveDuplicates(fieldSpecUpdate.entityTypes),
+        linkEntityTypes: sortAndRemoveDuplicates(fieldSpecUpdate.linkEntityTypes),
+        valueTypes: sortAndRemoveDuplicates(fieldSpecUpdate.valueTypes),
       });
     case FieldType.String: {
-      const values = [...(fieldSpec.values ?? [])].sort((a, b) => a.value.localeCompare(b.value));
+      const values = [...(fieldSpecUpdate.values ?? [])].sort((a, b) =>
+        a.value.localeCompare(b.value)
+      );
       removeDuplicatesFromSorted(values, (it) => it.value);
       return ok({
         name,
@@ -879,10 +887,10 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        multiline: fieldSpec.multiline ?? false,
-        matchPattern: fieldSpec.matchPattern ?? null,
+        multiline: fieldSpecUpdate.multiline ?? false,
+        matchPattern: fieldSpecUpdate.matchPattern ?? null,
         values,
-        index: fieldSpec.index ?? null,
+        index: fieldSpecUpdate.index ?? null,
       });
     }
     case FieldType.ValueItem:
@@ -892,11 +900,21 @@ function normalizeFieldSpecUpdate(
         list,
         required,
         adminOnly,
-        valueTypes: sortAndRemoveDuplicates(fieldSpec.valueTypes),
+        valueTypes: sortAndRemoveDuplicates(fieldSpecUpdate.valueTypes),
       });
     default:
       assertExhaustive(type);
   }
+}
+
+function valueOrExistingOrDefault<T>(
+  update: T | undefined,
+  existing: T | undefined,
+  defaultValue: T
+): T {
+  if (update !== undefined) return update;
+  if (existing !== undefined) return existing;
+  return defaultValue;
 }
 
 function sortAndRemoveDuplicates(values: string[] | undefined) {

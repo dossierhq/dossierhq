@@ -22,6 +22,22 @@ describe('mergeWith()', () => {
     });
   });
 
+  test('use existing list value if not specified on field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: true }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.entityTypes[0].fields[0].list).toBe(true);
+  });
+
   test('empty->entity with pattern', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
