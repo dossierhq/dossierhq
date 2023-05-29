@@ -808,11 +808,24 @@ function collectFieldSpecsFromUpdates(
   existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null
 ): Result<AdminFieldSpecification[], typeof ErrorType.BadRequest> {
   const fields: AdminFieldSpecification[] = [];
+  const usedFieldNames = new Set<string>();
   for (const fieldUpdate of fieldUpdates) {
     const fieldResult = mergeAndNormalizeUpdatedFieldSpec(fieldUpdate, existingTypeSpec);
     if (fieldResult.isError()) return fieldResult;
     fields.push(fieldResult.value);
+
+    usedFieldNames.add(fieldUpdate.name);
   }
+
+  // Add existing fields that are not updated
+  if (existingTypeSpec) {
+    for (const fieldSpec of existingTypeSpec.fields) {
+      if (!usedFieldNames.has(fieldSpec.name)) {
+        fields.push(fieldSpec);
+      }
+    }
+  }
+
   return ok(fields);
 }
 

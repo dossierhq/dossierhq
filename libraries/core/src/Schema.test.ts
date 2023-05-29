@@ -22,6 +22,35 @@ describe('mergeWith()', () => {
     });
   });
 
+  test('fields not updated are kept', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            { name: 'string', type: FieldType.String },
+            { name: 'boolean', type: FieldType.Boolean },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [
+              { name: 'string', type: FieldType.String, required: true },
+              { name: 'number', type: FieldType.Number },
+            ],
+          },
+        ],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+  });
+
   test('use existing list value if not specified on field update', () => {
     const result = AdminSchema.createAndValidate({
       entityTypes: [
@@ -147,26 +176,6 @@ describe('mergeWith()', () => {
 
     expect(result.spec).toMatchSnapshot();
     expect(result.getPattern('aPattern')?.pattern).toBe('^pattern$');
-  });
-
-  test('unused index is removed', () => {
-    const result = AdminSchema.createAndValidate({
-      entityTypes: [
-        {
-          name: 'Foo',
-          fields: [{ name: 'string', type: FieldType.String, index: 'anIndex' }],
-        },
-      ],
-      indexes: [{ name: 'anIndex', type: 'unique' }],
-    })
-      .valueOrThrow()
-      .mergeWith({
-        entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
-      })
-      .valueOrThrow();
-
-    expect(result.spec).toMatchSnapshot();
-    expect(result.spec.indexes.length).toBe(0);
   });
 
   test('field with index', () => {

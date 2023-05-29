@@ -174,13 +174,40 @@ exports[`mergeWith() > field with matchPattern 1`] = `
 }
 `;
 
-exports[`mergeWith() > unused index is removed 1`] = `
+exports[`mergeWith() > fields not updated are kept 1`] = `
 {
   "entityTypes": [
     {
       "adminOnly": false,
       "authKeyPattern": null,
-      "fields": [],
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "string",
+          "required": true,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "integer": false,
+          "list": false,
+          "name": "number",
+          "required": false,
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "boolean",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
       "name": "Foo",
       "nameField": null,
     },
