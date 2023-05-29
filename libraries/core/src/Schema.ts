@@ -847,6 +847,11 @@ function mergeAndNormalizeUpdatedFieldSpec(
         `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`
       );
     }
+    if (existingFieldSpec.adminOnly !== adminOnly) {
+      return notOk.BadRequest(
+        `${typeName}.${name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingFieldSpec.adminOnly}`
+      );
+    }
   }
 
   switch (type) {
@@ -885,10 +890,28 @@ function mergeAndNormalizeUpdatedFieldSpec(
         valueTypes: sortAndRemoveDuplicates(fieldSpecUpdate.valueTypes),
       });
     case FieldType.String: {
+      const existingStringFieldSpec = existingFieldSpec as
+        | AdminFieldSpecification<StringFieldSpecification>
+        | undefined;
       const values = [...(fieldSpecUpdate.values ?? [])].sort((a, b) =>
         a.value.localeCompare(b.value)
       );
       removeDuplicatesFromSorted(values, (it) => it.value);
+
+      const index = valueOrExistingOrDefault(
+        fieldSpecUpdate.index,
+        existingStringFieldSpec?.index,
+        null
+      );
+
+      if (existingStringFieldSpec) {
+        if (existingStringFieldSpec.index !== index) {
+          return notOk.BadRequest(
+            `${existingTypeSpec?.name}.${name}: Can’t change the value of index. Requested ${index} but is ${existingStringFieldSpec.index}`
+          );
+        }
+      }
+
       return ok({
         name,
         type,
@@ -898,7 +921,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
         multiline: fieldSpecUpdate.multiline ?? false,
         matchPattern: fieldSpecUpdate.matchPattern ?? null,
         values,
-        index: fieldSpecUpdate.index ?? null,
+        index,
       });
     }
     case FieldType.ValueItem:

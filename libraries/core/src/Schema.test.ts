@@ -70,6 +70,24 @@ describe('mergeWith()', () => {
     expect(result.spec.entityTypes[0].fields[0].adminOnly).toBe(true);
   });
 
+  test('use existing index value if not specified on String field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
+      ],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).index).toBe('anIndex');
+  });
+
   test('empty->entity with pattern', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
@@ -247,6 +265,48 @@ describe('mergeWith()', () => {
       result,
       ErrorType.BadRequest,
       'Foo.field: Can’t change the value of list. Requested false but is true'
+    );
+  });
+
+  test('Error: changing adminOnly of field', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, adminOnly: true }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [
+          { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, adminOnly: false }] },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Foo.field: Can’t change the value of adminOnly. Requested false but is true'
+    );
+  });
+
+  test('Error: changing index of String field', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
+      ],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [
+          { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'otherIndex' }] },
+        ],
+        indexes: [{ name: 'otherIndex', type: 'unique' }],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Foo.field: Can’t change the value of index. Requested otherIndex but is anIndex'
     );
   });
 });

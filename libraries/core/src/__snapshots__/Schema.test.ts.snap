@@ -255,6 +255,40 @@ exports[`mergeWith() > use existing adminOnly value if not specified on field up
 }
 `;
 
+exports[`mergeWith() > use existing index value if not specified on String field update 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [],
+}
+`;
+
 exports[`mergeWith() > use existing list value if not specified on field update 1`] = `
 {
   "entityTypes": [
