@@ -829,7 +829,11 @@ function mergeAndNormalizeUpdatedFieldSpec(
     existingFieldSpec?.required,
     false
   );
-  const adminOnly = fieldSpecUpdate.adminOnly ?? false;
+  const adminOnly = valueOrExistingOrDefault(
+    fieldSpecUpdate.adminOnly,
+    existingFieldSpec?.adminOnly,
+    false
+  );
 
   if (existingTypeSpec && existingFieldSpec) {
     const typeName = existingTypeSpec.name;

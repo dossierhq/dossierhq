@@ -54,6 +54,22 @@ describe('mergeWith()', () => {
     expect(result.spec.entityTypes[0].fields[0].required).toBe(true);
   });
 
+  test('use existing adminOnly value if not specified on field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: true }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.entityTypes[0].fields[0].adminOnly).toBe(true);
+  });
+
   test('empty->entity with pattern', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })

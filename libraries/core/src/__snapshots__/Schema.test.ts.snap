@@ -230,6 +230,31 @@ exports[`mergeWith() > update pattern 1`] = `
 }
 `;
 
+exports[`mergeWith() > use existing adminOnly value if not specified on field update 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": true,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "valueTypes": [],
+}
+`;
+
 exports[`mergeWith() > use existing list value if not specified on field update 1`] = `
 {
   "entityTypes": [
