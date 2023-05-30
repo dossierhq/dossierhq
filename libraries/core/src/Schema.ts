@@ -870,45 +870,115 @@ function mergeAndNormalizeUpdatedFieldSpec(
   switch (type) {
     case FieldType.Boolean:
       return ok({ name, type, list, required, adminOnly });
-    case FieldType.Entity:
+    case FieldType.Entity: {
+      const existingEntityFieldSpec = existingFieldSpec as
+        | AdminFieldSpecification<EntityFieldSpecification>
+        | undefined;
+      const entityTypes = sortAndRemoveDuplicates(
+        valueOrExistingOrDefault(
+          fieldSpecUpdate.entityTypes,
+          existingEntityFieldSpec?.entityTypes,
+          []
+        )
+      );
       return ok({
         name,
         type,
         list,
         required,
         adminOnly,
-        entityTypes: sortAndRemoveDuplicates(fieldSpecUpdate.entityTypes),
+        entityTypes,
       });
+    }
     case FieldType.Location:
       return ok({ name, type, list, required, adminOnly });
-    case FieldType.Number:
+    case FieldType.Number: {
+      const existingNumberFieldSpec = existingFieldSpec as
+        | AdminFieldSpecification<NumberFieldSpecification>
+        | undefined;
+      const integer = valueOrExistingOrDefault(
+        fieldSpecUpdate.integer,
+        existingNumberFieldSpec?.integer,
+        false
+      );
       return ok({
         name,
         type,
         list,
         required,
         adminOnly,
-        integer: fieldSpecUpdate.integer ?? false,
+        integer,
       });
-    case FieldType.RichText:
+    }
+    case FieldType.RichText: {
+      const existingRichTextFieldSpec = existingFieldSpec as
+        | AdminFieldSpecification<RichTextFieldSpecification>
+        | undefined;
+
+      const richTextNodes = sortAndRemoveDuplicates(
+        valueOrExistingOrDefault(
+          fieldSpecUpdate.richTextNodes,
+          existingRichTextFieldSpec?.richTextNodes,
+          []
+        )
+      );
+
+      const entityTypes = sortAndRemoveDuplicates(
+        valueOrExistingOrDefault(
+          fieldSpecUpdate.entityTypes,
+          existingRichTextFieldSpec?.entityTypes,
+          []
+        )
+      );
+
+      const linkEntityTypes = sortAndRemoveDuplicates(
+        valueOrExistingOrDefault(
+          fieldSpecUpdate.linkEntityTypes,
+          existingRichTextFieldSpec?.linkEntityTypes,
+          []
+        )
+      );
+
+      const valueTypes = sortAndRemoveDuplicates(
+        valueOrExistingOrDefault(
+          fieldSpecUpdate.valueTypes,
+          existingRichTextFieldSpec?.valueTypes,
+          []
+        )
+      );
+
       return ok({
         name,
         type,
         list,
         required,
         adminOnly,
-        richTextNodes: sortAndRemoveDuplicates(fieldSpecUpdate.richTextNodes),
-        entityTypes: sortAndRemoveDuplicates(fieldSpecUpdate.entityTypes),
-        linkEntityTypes: sortAndRemoveDuplicates(fieldSpecUpdate.linkEntityTypes),
-        valueTypes: sortAndRemoveDuplicates(fieldSpecUpdate.valueTypes),
+        richTextNodes,
+        entityTypes,
+        linkEntityTypes,
+        valueTypes,
       });
+    }
     case FieldType.String: {
       const existingStringFieldSpec = existingFieldSpec as
         | AdminFieldSpecification<StringFieldSpecification>
         | undefined;
-      const values = [...(fieldSpecUpdate.values ?? [])].sort((a, b) =>
-        a.value.localeCompare(b.value)
+
+      const multiline = valueOrExistingOrDefault(
+        fieldSpecUpdate.multiline,
+        existingStringFieldSpec?.multiline,
+        false
       );
+
+      const matchPattern = valueOrExistingOrDefault(
+        fieldSpecUpdate.matchPattern,
+        existingStringFieldSpec?.matchPattern,
+        null
+      );
+
+      const values = [
+        ...valueOrExistingOrDefault(fieldSpecUpdate.values, existingStringFieldSpec?.values, []),
+      ].sort((a, b) => a.value.localeCompare(b.value));
       removeDuplicatesFromSorted(values, (it) => it.value);
 
       const index = valueOrExistingOrDefault(
@@ -931,21 +1001,32 @@ function mergeAndNormalizeUpdatedFieldSpec(
         list,
         required,
         adminOnly,
-        multiline: fieldSpecUpdate.multiline ?? false,
-        matchPattern: fieldSpecUpdate.matchPattern ?? null,
+        multiline,
+        matchPattern,
         values,
         index,
       });
     }
-    case FieldType.ValueItem:
+    case FieldType.ValueItem: {
+      const existingValueItemFieldSpec = existingFieldSpec as
+        | AdminFieldSpecification<ValueItemFieldSpecification>
+        | undefined;
+      const valueTypes = sortAndRemoveDuplicates(
+        valueOrExistingOrDefault(
+          fieldSpecUpdate.valueTypes,
+          existingValueItemFieldSpec?.valueTypes,
+          []
+        )
+      );
       return ok({
         name,
         type,
         list,
         required,
         adminOnly,
-        valueTypes: sortAndRemoveDuplicates(fieldSpecUpdate.valueTypes),
+        valueTypes,
       });
+    }
     default:
       assertExhaustive(type);
   }
@@ -961,8 +1042,7 @@ function valueOrExistingOrDefault<T>(
   return defaultValue;
 }
 
-function sortAndRemoveDuplicates(values: string[] | undefined) {
-  if (!values) return [];
+function sortAndRemoveDuplicates(values: string[]) {
   if (values.length <= 1) {
     return values;
   }

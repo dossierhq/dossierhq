@@ -121,6 +121,9 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
 
 export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
   entityTypes: [
-    { name: 'ChangeValidations', fields: [{ name: 'matchPattern', type: FieldType.String }] },
+    {
+      name: 'ChangeValidations',
+      fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: null }],
+    },
   ],
 };
