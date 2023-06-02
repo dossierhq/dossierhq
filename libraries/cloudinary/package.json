@@ -39,7 +39,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.51.0",
     "@types/react": "~18.2.7",
     "eslint": "~8.41.0",
     "prettier": "2.8.8",

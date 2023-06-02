@@ -39,7 +39,7 @@
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.51.0",
     "@storybook/addon-actions": "~7.0.18",
     "@storybook/addon-essentials": "~7.0.18",
     "@storybook/addon-links": "~7.0.18",
