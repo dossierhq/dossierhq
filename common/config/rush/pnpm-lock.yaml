@@ -379,7 +379,7 @@ importers:
       '@vitejs/plugin-react': ~4.0.0
       better-sqlite3: ~8.4.0
       body-parser: ~1.20.2
-      concurrently: ~8.0.1
+      concurrently: ~8.1.0
       dotenv: ~16.0.3
       express: ~4.18.2
       express-jwt: ~8.4.1
@@ -419,7 +419,7 @@ importers:
       '@types/react': 18.2.7
       '@types/react-dom': 18.2.4
       '@vitejs/plugin-react': 4.0.0_vite@4.3.9
-      concurrently: 8.0.1
+      concurrently: 8.1.0
       nodemon: 2.0.22
       ts-node: 10.9.1_typescript@5.0.4
       typescript: 5.0.4
@@ -1309,7 +1309,7 @@ importers:
       bulma: ~0.9.4
       bun-types: ~0.6.3
       cloudinary: ~1.37.0
-      concurrently: ~8.0.1
+      concurrently: ~8.1.0
       dotenv: ~16.0.3
       eslint: ~8.41.0
       eslint-config-next: ~13.4.2
@@ -1437,7 +1437,7 @@ importers:
       base-64: 1.0.0
       bulma: 0.9.4
       bun-types: 0.6.3
-      concurrently: 8.0.1
+      concurrently: 8.1.0
       eslint-config-next: 13.4.2_opaykosi7ysrbskpnffskmbrki
       eslint-plugin-import: 2.27.5_eslint@8.41.0
       eslint-plugin-storybook: 0.6.12_opaykosi7ysrbskpnffskmbrki
@@ -8259,8 +8259,8 @@ packages:
       well-known-symbols: 2.0.0
     dev: true
 
-  /concurrently/8.0.1:
-    resolution: {integrity: sha512-Sh8bGQMEL0TAmAm2meAXMjcASHZa7V0xXQVDBLknCPa9TPtkY9yYs+0cnGGgfdkW0SV1Mlg+hVGfXcoI8d3MJA==}
+  /concurrently/8.1.0:
+    resolution: {integrity: sha512-0AB6eOAtaW/r/kX2lCdolaWtT191ICeuJjEJvI9hT3zbPFuZ/iZaJwMRKwbuwADome7OKxk73L7od+fsveZ7tA==}
     engines: {node: ^14.13.0 || >=16.0.0}
     hasBin: true
     dependencies:
