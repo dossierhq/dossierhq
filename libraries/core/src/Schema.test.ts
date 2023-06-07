@@ -426,6 +426,34 @@ describe('mergeWith()', () => {
     expect(result.spec).toMatchSnapshot();
   });
 
+  test('Error: changing adminOnly of entity type', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
+    })
+      .valueOrThrow()
+      .mergeWith({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Foo: Can’t change the value of adminOnly. Requested false but is true'
+    );
+  });
+
+  test('Error: changing adminOnly of value type', () => {
+    const result = AdminSchema.createAndValidate({
+      valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
+    })
+      .valueOrThrow()
+      .mergeWith({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Foo: Can’t change the value of adminOnly. Requested false but is true'
+    );
+  });
+
   test('Error: changing type of field', () => {
     const result = AdminSchema.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],

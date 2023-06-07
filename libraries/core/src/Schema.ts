@@ -636,6 +636,31 @@ export class AdminSchema {
         );
         const existingEntitySpec =
           existingIndex >= 0 ? schemaSpec.entityTypes[existingIndex] : null;
+
+        const adminOnly = valueOrExistingOrDefault(
+          entitySpecUpdate.adminOnly,
+          existingEntitySpec?.adminOnly,
+          false
+        );
+        const authKeyPattern = valueOrExistingOrDefault(
+          entitySpecUpdate.authKeyPattern,
+          existingEntitySpec?.authKeyPattern,
+          null
+        );
+        const nameField = valueOrExistingOrDefault(
+          entitySpecUpdate.nameField,
+          existingEntitySpec?.nameField,
+          null
+        );
+
+        if (existingEntitySpec) {
+          if (existingEntitySpec.adminOnly !== adminOnly) {
+            return notOk.BadRequest(
+              `${existingEntitySpec.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingEntitySpec.adminOnly}`
+            );
+          }
+        }
+
         const collectFieldsResult = collectFieldSpecsFromUpdates(
           entitySpecUpdate.fields,
           existingEntitySpec
@@ -643,21 +668,9 @@ export class AdminSchema {
         if (collectFieldsResult.isError()) return collectFieldsResult;
         const entitySpec: AdminEntityTypeSpecification = {
           name: entitySpecUpdate.name,
-          adminOnly: valueOrExistingOrDefault(
-            entitySpecUpdate.adminOnly,
-            existingEntitySpec?.adminOnly,
-            false
-          ),
-          authKeyPattern: valueOrExistingOrDefault(
-            entitySpecUpdate.authKeyPattern,
-            existingEntitySpec?.authKeyPattern,
-            null
-          ),
-          nameField: valueOrExistingOrDefault(
-            entitySpecUpdate.nameField,
-            existingEntitySpec?.nameField,
-            null
-          ),
+          adminOnly,
+          authKeyPattern,
+          nameField,
           fields: collectFieldsResult.value,
         };
         if (existingIndex >= 0) {
@@ -683,6 +696,21 @@ export class AdminSchema {
           (it) => it.name === valueSpecUpdate.name
         );
         const existingValueSpec = existingIndex >= 0 ? schemaSpec.valueTypes[existingIndex] : null;
+
+        const adminOnly = valueOrExistingOrDefault(
+          valueSpecUpdate.adminOnly,
+          existingValueSpec?.adminOnly,
+          false
+        );
+
+        if (existingValueSpec) {
+          if (existingValueSpec.adminOnly !== adminOnly) {
+            return notOk.BadRequest(
+              `${valueSpecUpdate.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingValueSpec.adminOnly}`
+            );
+          }
+        }
+
         const collectFieldsResult = collectFieldSpecsFromUpdates(
           valueSpecUpdate.fields,
           existingValueSpec
@@ -690,11 +718,7 @@ export class AdminSchema {
         if (collectFieldsResult.isError()) return collectFieldsResult;
         const valueSpec = {
           name: valueSpecUpdate.name,
-          adminOnly: valueOrExistingOrDefault(
-            valueSpecUpdate.adminOnly,
-            existingValueSpec?.adminOnly,
-            false
-          ),
+          adminOnly,
           fields: collectFieldsResult.value,
         };
         if (existingIndex >= 0) {
