@@ -1,0 +1,130 @@
+{
+  "id": "7a6b51d9-60aa-4b4e-9afb-70e8a5e50470",
+  "info": {
+    "name": "May summary",
+    "type": "BlogPost",
+    "authKey": "none",
+    "status": "published",
+    "valid": true
+  },
+  "fields": {
+    "title": "May summary",
+    "slug": "may-summary",
+    "publishedDate": "2023-06-07T12:12Z",
+    "updatedDate": null,
+    "authors": [
+      {
+        "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
+      }
+    ],
+    "hero": {
+      "type": "CloudinaryImage",
+      "publicId": "Blog/uvrypqwk1uatnx7ymc4r",
+      "width": 3575,
+      "height": 2680,
+      "alt": "Canola field"
+    },
+    "description": "During May we improved the consistency and robustness of schema update, while also allowing more schema changes in the web editor.",
+    "body": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "During May the schema has been the main focus.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "It's now possible to specify specific values that are valid for String field. This enables a user to select among the valid values instead of typing them in.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "In the web schema editor you can now change most of the properties of fields. Previously, the editor was overly restrictive in order to prevent changes that leads to invalid existing entities. We can now enable those changes thanks to the validation changes introduced during April.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "On the API side the schema is now fully normalized, so that you can always expect a consistent result after updating the schema. Schema updates are now more robust by preventing changing the type of existing fields and preventing removing existing fields. Those restrictions were previously only in the web editor but now applies to the API as well. In addition you can now do partial updates of fields, so if you don't include a property of an existing field in an update, it will keep it's previous value.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Thanks all for now!",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
