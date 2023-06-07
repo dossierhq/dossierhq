@@ -47,6 +47,7 @@ export interface SchemaTypeDraft {
 export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
   kind: 'entity';
   authKeyPattern: string | null;
+  existingAuthKeyPattern: string | null;
   nameField: string | null;
   existingNameField: string | null;
 }
@@ -177,6 +178,7 @@ function resolveTypeStatus(
   if (state.status === 'new') return state.status;
   if (state.kind === 'entity') {
     if (state.nameField !== state.existingNameField) return 'changed';
+    if (state.authKeyPattern !== state.existingAuthKeyPattern) return 'changed';
   }
   //TODO check field order
   for (const field of state.fields) {
@@ -460,6 +462,7 @@ class AddTypeAction implements SchemaEditorStateAction {
           ...typeDraft,
           kind: 'entity',
           authKeyPattern: null,
+          existingAuthKeyPattern: null,
           nameField: null,
           existingNameField: null,
         },
@@ -1082,6 +1085,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     const entityTypes = this.schema.spec.entityTypes.map((entityTypeSpec) => ({
       ...this.convertType('entity', entityTypeSpec),
       authKeyPattern: entityTypeSpec.authKeyPattern,
+      existingAuthKeyPattern: entityTypeSpec.authKeyPattern,
       nameField: entityTypeSpec.nameField,
       existingNameField: entityTypeSpec.nameField,
     }));

@@ -1119,6 +1119,23 @@ describe('ChangeTypeAuthKeyPatternAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('change pattern for existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
+          patterns: [{ name: 'aPattern', pattern: '^this is a pattern$' }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ChangeTypeAuthKeyPattern({ kind: 'entity', typeName: 'Foo' }, null)
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    expect(state.entityTypes[0].status).toBe('changed');
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('RenameFieldAction', () => {

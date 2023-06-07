@@ -9,6 +9,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -91,6 +92,7 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -355,6 +357,7 @@ exports[`AddTypeAction > add entity type to empty schema 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -397,6 +400,7 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -407,6 +411,7 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -449,6 +454,7 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -459,6 +465,7 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -635,6 +642,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -695,6 +703,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -756,6 +765,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -817,6 +827,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -882,6 +893,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -950,6 +962,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1024,6 +1037,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1102,6 +1116,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1291,6 +1306,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1380,6 +1396,7 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] =
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1437,6 +1454,7 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1497,6 +1515,7 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1585,6 +1604,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1659,6 +1679,7 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1722,6 +1743,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1782,6 +1804,7 @@ exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1845,6 +1868,7 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1905,6 +1929,7 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -1962,6 +1987,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2121,6 +2147,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2178,6 +2205,7 @@ exports[`ChangeFieldValues > set values on existing string field 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2255,6 +2283,7 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2336,6 +2365,7 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2433,6 +2463,7 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
     {
       "adminOnly": true,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -2463,6 +2494,56 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 2`] = `
 }
 `;
 
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingAuthKeyPattern": "aPattern",
+      "existingNameField": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^this is a pattern$",
+      },
+      "name": "aPattern",
+      "pattern": "^this is a pattern$",
+      "status": "",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`] = `
 {
   "activeSelector": {
@@ -2475,6 +2556,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
     {
       "adminOnly": false,
       "authKeyPattern": "my-pattern",
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -2530,6 +2612,7 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2590,6 +2673,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": "title",
       "fields": [
         {
@@ -2672,6 +2756,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": "title",
       "fields": [
         {
@@ -2719,6 +2804,7 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2757,6 +2843,7 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -2810,6 +2897,7 @@ exports[`RenameFieldAction > add and rename field 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2892,6 +2980,7 @@ exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -2955,6 +3044,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -3020,6 +3110,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -3089,6 +3180,7 @@ exports[`RenameTypeAction > add and rename type 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -3190,6 +3282,7 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -3236,6 +3329,7 @@ exports[`SetActiveSelectorAction > set to type 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -3264,6 +3358,7 @@ exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -3313,6 +3408,7 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -3436,6 +3532,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
     {
       "adminOnly": false,
       "authKeyPattern": "patternOne",
+      "existingAuthKeyPattern": "patternOne",
       "existingNameField": null,
       "fields": [],
       "kind": "entity",
@@ -3494,6 +3591,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -3584,6 +3682,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": "title",
       "fields": [
         {
@@ -3663,6 +3762,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -3808,6 +3908,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -3912,6 +4013,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {
@@ -4080,6 +4182,7 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
     {
       "adminOnly": false,
       "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
       "existingNameField": null,
       "fields": [
         {

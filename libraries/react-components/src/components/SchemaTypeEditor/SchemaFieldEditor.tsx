@@ -63,8 +63,8 @@ export function SchemaFieldEditor({
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new';
-  const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
-  const canChangeAdminOnly = fieldDraft.status === 'new'; //TODO too restrictive
+  const canDeleteOrRenameField = fieldDraft.status === 'new';
+  const canChangeAdminOnly = fieldDraft.status === 'new';
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {

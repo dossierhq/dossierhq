@@ -29,8 +29,7 @@ export function SchemaTypeEditor({
   dispatchSchemaEditorState,
   onAddOrRenameField,
 }: Props) {
-  const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
-  const canChangeAuthKeyPattern = typeSelector.kind === 'entity' && typeDraft.status === 'new';
+  const canChangeAdminOnly = typeDraft.status === 'new';
 
   const potentialNameFields =
     typeDraft.kind === 'entity'
@@ -79,7 +78,6 @@ export function SchemaTypeEditor({
           </Field.LabelColumn>
           <Field.BodyColumn>
             <PatternSelector
-              readOnly={!canChangeAuthKeyPattern}
               value={typeDraft.authKeyPattern}
               schemaEditorState={schemaEditorState}
               onChange={(value) =>

@@ -234,7 +234,7 @@ function TypeEditorRows({
   onAddOrRenameType: (selector: SchemaTypeSelector) => void;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
-  const canDeleteOrRenameType = typeDraft.status === 'new'; //TODO too restrictive
+  const canDeleteOrRenameType = typeDraft.status === 'new';
 
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
