@@ -99,12 +99,24 @@ describe('mergeWith()', () => {
     expect(result.spec.entityTypes[0].fields[0].adminOnly).toBe(true);
   });
 
-  test('use existing index value if not specified on String field update', () => {
+  test('use existing index, multiline, matchPattern values if not specified on String field update', () => {
     const result = AdminSchema.createAndValidate({
       entityTypes: [
-        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
+        {
+          name: 'Foo',
+          fields: [
+            {
+              name: 'field',
+              type: FieldType.String,
+              index: 'anIndex',
+              multiline: true,
+              matchPattern: 'aPattern',
+            },
+          ],
+        },
       ],
       indexes: [{ name: 'anIndex', type: 'unique' }],
+      patterns: [{ name: 'aPattern', pattern: '.*' }],
     })
       .valueOrThrow()
       .mergeWith({
@@ -115,6 +127,143 @@ describe('mergeWith()', () => {
     expect(result.spec).toMatchSnapshot();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((result.spec.entityTypes[0].fields[0] as any).index).toBe('anIndex');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).multiline).toBe(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).matchPattern).toBe('aPattern');
+  });
+
+  test('use existing values value if not specified on String field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [{ name: 'field', type: FieldType.String, values: [{ value: 'hello' }] }],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).values).toEqual([{ value: 'hello' }]);
+  });
+
+  test('use existing entityTypes value if not specified on Entity field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).entityTypes).toEqual(['Foo']);
+  });
+
+  test('use existing integer value if not specified on Number field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Number, integer: true }] },
+      ],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Number }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).integer).toBe(true);
+  });
+
+  test('use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            {
+              name: 'field',
+              type: FieldType.RichText,
+              entityTypes: ['Foo'],
+              linkEntityTypes: ['Foo'],
+              valueTypes: ['Bar'],
+              richTextNodes: [
+                RichTextNodeType.root,
+                RichTextNodeType.paragraph,
+                RichTextNodeType.text,
+                RichTextNodeType.linebreak,
+                RichTextNodeType.entity,
+                RichTextNodeType.entityLink,
+                RichTextNodeType.valueItem,
+              ],
+            },
+          ],
+        },
+      ],
+      valueTypes: [{ name: 'Bar', fields: [] }],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.RichText }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).entityTypes).toEqual(['Foo']);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).linkEntityTypes).toEqual(['Foo']);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).valueTypes).toEqual(['Bar']);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).richTextNodes).toEqual([
+      RichTextNodeType.entity,
+      RichTextNodeType.entityLink,
+      RichTextNodeType.linebreak,
+      RichTextNodeType.paragraph,
+      RichTextNodeType.root,
+      RichTextNodeType.text,
+      RichTextNodeType.valueItem,
+    ]);
+  });
+
+  test('use existing valueTypes value if not specified on ValueItem field update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            {
+              name: 'field',
+              type: FieldType.ValueItem,
+              valueTypes: ['Bar'],
+            },
+          ],
+        },
+      ],
+      valueTypes: [{ name: 'Bar', fields: [] }],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.ValueItem }] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((result.spec.entityTypes[0].fields[0] as any).valueTypes).toEqual(['Bar']);
   });
 
   test('empty->entity with pattern', () => {
