@@ -304,7 +304,7 @@ export class AdminSchema {
   }
 
   validate(): Result<void, typeof ErrorType.BadRequest> {
-    const usedNames = new Set<string>();
+    const usedTypeNames = new Set<string>();
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
       const isValueType = this.spec.valueTypes.includes(typeSpec);
 
@@ -313,10 +313,10 @@ export class AdminSchema {
           `${typeSpec.name}: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123`
         );
       }
-      if (usedNames.has(typeSpec.name)) {
+      if (usedTypeNames.has(typeSpec.name)) {
         return notOk.BadRequest(`${typeSpec.name}: Duplicate type name`);
       }
-      usedNames.add(typeSpec.name);
+      usedTypeNames.add(typeSpec.name);
 
       if (!isValueType) {
         const authKeyPattern = (typeSpec as AdminEntityTypeSpecification).authKeyPattern;
@@ -341,6 +341,7 @@ export class AdminSchema {
         }
       }
 
+      const usedFieldNames = new Set<string>();
       for (const fieldSpec of typeSpec.fields) {
         if (!CAMEL_CASE_PATTERN.test(fieldSpec.name)) {
           return notOk.BadRequest(
@@ -352,6 +353,10 @@ export class AdminSchema {
             `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`
           );
         }
+        if (usedFieldNames.has(fieldSpec.name)) {
+          return notOk.BadRequest(`${typeSpec.name}.${fieldSpec.name}: Duplicate field name`);
+        }
+        usedFieldNames.add(fieldSpec.name);
 
         if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(

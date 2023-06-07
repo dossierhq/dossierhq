@@ -725,6 +725,43 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Duplicate field names', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            nameField: null,
+            authKeyPattern: null,
+            fields: [
+              {
+                name: 'field',
+                type: FieldType.Number,
+                adminOnly: false,
+                list: false,
+                required: false,
+                integer: true,
+              },
+              {
+                name: 'field',
+                type: FieldType.Boolean,
+                adminOnly: false,
+                list: false,
+                required: false,
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        indexes: [],
+        patterns: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.field: Duplicate field name'
+    );
+  });
+
   test('Error: Boolean (i.e. non-String) with multiline', () => {
     expectErrorResult(
       new AdminSchema({
