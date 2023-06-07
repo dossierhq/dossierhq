@@ -22,6 +22,42 @@ describe('mergeWith()', () => {
     });
   });
 
+  test('use existing adminOnly, authKeyPattern value if not specified on entity type update', () => {
+    const result = AdminSchema.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: true,
+          authKeyPattern: 'aPattern',
+          nameField: 'title',
+          fields: [{ name: 'title', type: FieldType.String }],
+        },
+      ],
+      patterns: [{ name: 'aPattern', pattern: '.*' }],
+    })
+      .valueOrThrow()
+      .mergeWith({
+        entityTypes: [{ name: 'Foo', fields: [] }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.entityTypes[0].adminOnly).toBe(true);
+    expect(result.spec.entityTypes[0].authKeyPattern).toBe('aPattern');
+    expect(result.spec.entityTypes[0].nameField).toBe('title');
+  });
+
+  test('use existing adminOnly value if not specified on value type update', () => {
+    const result = AdminSchema.createAndValidate({
+      valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
+    })
+      .valueOrThrow()
+      .mergeWith({ valueTypes: [{ name: 'Foo', fields: [] }] })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+    expect(result.spec.valueTypes[0].adminOnly).toBe(true);
+  });
+
   test('fields not updated are kept', () => {
     const result = AdminSchema.createAndValidate({
       entityTypes: [

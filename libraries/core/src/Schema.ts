@@ -643,9 +643,21 @@ export class AdminSchema {
         if (collectFieldsResult.isError()) return collectFieldsResult;
         const entitySpec: AdminEntityTypeSpecification = {
           name: entitySpecUpdate.name,
-          adminOnly: entitySpecUpdate.adminOnly ?? false,
-          authKeyPattern: entitySpecUpdate.authKeyPattern ?? null,
-          nameField: entitySpecUpdate.nameField ?? null,
+          adminOnly: valueOrExistingOrDefault(
+            entitySpecUpdate.adminOnly,
+            existingEntitySpec?.adminOnly,
+            false
+          ),
+          authKeyPattern: valueOrExistingOrDefault(
+            entitySpecUpdate.authKeyPattern,
+            existingEntitySpec?.authKeyPattern,
+            null
+          ),
+          nameField: valueOrExistingOrDefault(
+            entitySpecUpdate.nameField,
+            existingEntitySpec?.nameField,
+            null
+          ),
           fields: collectFieldsResult.value,
         };
         if (existingIndex >= 0) {
@@ -678,7 +690,11 @@ export class AdminSchema {
         if (collectFieldsResult.isError()) return collectFieldsResult;
         const valueSpec = {
           name: valueSpecUpdate.name,
-          adminOnly: valueSpecUpdate.adminOnly ?? false,
+          adminOnly: valueOrExistingOrDefault(
+            valueSpecUpdate.adminOnly,
+            existingValueSpec?.adminOnly,
+            false
+          ),
           fields: collectFieldsResult.value,
         };
         if (existingIndex >= 0) {

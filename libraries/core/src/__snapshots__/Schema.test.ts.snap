@@ -282,6 +282,55 @@ exports[`mergeWith() > use existing adminOnly value if not specified on field up
 }
 `;
 
+exports[`mergeWith() > use existing adminOnly value if not specified on value type update 1`] = `
+{
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "valueTypes": [
+    {
+      "adminOnly": true,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+}
+`;
+
+exports[`mergeWith() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": true,
+      "authKeyPattern": "aPattern",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": "title",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "name": "aPattern",
+      "pattern": ".*",
+    },
+  ],
+  "valueTypes": [],
+}
+`;
+
 exports[`mergeWith() > use existing entityTypes value if not specified on Entity field update 1`] = `
 {
   "entityTypes": [
