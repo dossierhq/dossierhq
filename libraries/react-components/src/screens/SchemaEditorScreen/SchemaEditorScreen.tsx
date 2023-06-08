@@ -36,6 +36,7 @@ import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog.js';
 import { AddOrRenameIndexDialog } from './AddOrRenameIndexDialog.js';
 import { AddOrRenamePatternDialog } from './AddOrRenamePatternDialog.js';
 import { AddOrRenameTypeDialog } from './AddOrRenameTypeDialog.js';
+import { EditPatternDialog } from './EditPatternDialog.js';
 import { SaveSchemaDialog } from './SaveSchemaDialog.js';
 import { SchemaMenu } from './SchemaMenu.js';
 import { TypeDraftStatusTag } from './TypeDraftStatusTag.js';
@@ -69,6 +70,9 @@ export function SchemaEditorScreen({
   const [addOrRenamePatternSelector, setAddOrRenamePatternSelector] = useState<
     SchemaPatternSelector | 'add' | null
   >(null);
+  const [editPatternSelector, setEditPatternSelector] = useState<SchemaPatternSelector | null>(
+    null
+  );
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const hasChanges = schemaEditorState.status === 'changed';
 
@@ -85,6 +89,7 @@ export function SchemaEditorScreen({
     () => setAddOrRenamePatternSelector(null),
     []
   );
+  const handleCloseEditPatternDialog = useCallback(() => setEditPatternSelector(null), []);
   const handleCloseSchemaDialog = useCallback(() => setShowSaveDialog(false), []);
 
   useEffect(() => {
@@ -178,9 +183,9 @@ export function SchemaEditorScreen({
                 <PatternEditorRows
                   key={patternDraft.name}
                   patternDraft={patternDraft}
-                  schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
                   onAddOrRenamePattern={setAddOrRenamePatternSelector}
+                  onEditPattern={setEditPatternSelector}
                 />
               ))}
             </>
@@ -211,6 +216,12 @@ export function SchemaEditorScreen({
         schemaEditorState={schemaEditorState}
         dispatchSchemaEditorState={dispatchSchemaEditorState}
         onClose={handleCloseAddOrRenamePatternDialog}
+      />
+      <EditPatternDialog
+        selector={editPatternSelector}
+        schemaEditorState={schemaEditorState}
+        dispatchSchemaEditorState={dispatchSchemaEditorState}
+        onClose={handleCloseEditPatternDialog}
       />
       <SaveSchemaDialog
         show={showSaveDialog}
@@ -371,14 +382,14 @@ function IndexEditorRows({
 
 function PatternEditorRows({
   patternDraft,
-  schemaEditorState,
   dispatchSchemaEditorState,
   onAddOrRenamePattern,
+  onEditPattern,
 }: {
   patternDraft: SchemaPatternDraft;
-  schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onAddOrRenamePattern: (selector: SchemaPatternSelector) => void;
+  onEditPattern: (selector: SchemaPatternSelector) => void;
 }) {
   const patternSelector = useMemo(
     () => ({ kind: 'pattern', name: patternDraft.name } as const),
@@ -406,6 +417,10 @@ function PatternEditorRows({
     },
     [dispatchSchemaEditorState, onAddOrRenamePattern, patternSelector]
   );
+
+  const handleEditPattern = useCallback(() => {
+    onEditPattern(patternSelector);
+  }, [onEditPattern, patternSelector]);
 
   const dropDownItems = [
     { id: 'rename', title: 'Rename pattern' },
@@ -445,12 +460,7 @@ function PatternEditorRows({
         data-pattern-name={patternDraft.name}
         onClick={handleClick}
       >
-        <SchemaPatternEditor
-          selector={patternSelector}
-          patternDraft={patternDraft}
-          schemaEditorState={schemaEditorState}
-          dispatchSchemaEditorState={dispatchSchemaEditorState}
-        />
+        <SchemaPatternEditor patternDraft={patternDraft} onEditPattern={handleEditPattern} />
       </FullscreenContainer.Row>
     </>
   );

@@ -1,4 +1,4 @@
-import type { ChangeEventHandler, KeyboardEventHandler } from 'react';
+import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
@@ -20,7 +20,7 @@ export interface InputProps {
   value?: string | number;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
-  onClick?: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+  onClick?: MouseEventHandler<HTMLInputElement>;
 }
 
 export function Input({
