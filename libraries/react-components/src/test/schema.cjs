@@ -44,23 +44,18 @@ const schemaSpecification = {
           name: 'bodyBar',
           type: 'RichText',
           entityTypes: ['Bar'],
-          richTextNodes: ['root', 'paragraph', 'text', 'entity'],
+          richTextNodes: ['root', 'paragraph', 'text', 'linebreak', 'entity'],
         },
         {
           name: 'bodyNested',
           type: 'RichText',
           valueTypes: ['NestedValueItem'],
-          richTextNodes: ['root', 'paragraph', 'text', 'valueItem'],
-        },
-        {
-          name: 'bodyItalicOnly',
-          type: 'RichText',
-          //TODO support limiting formatting
+          richTextNodes: ['root', 'paragraph', 'text', 'linebreak', 'valueItem'],
         },
         {
           name: 'bodyNoInline',
           type: 'RichText',
-          richTextNodes: ['root', 'paragraph', 'text'],
+          richTextNodes: ['root', 'paragraph', 'text', 'linebreak'],
         },
       ],
     },
