@@ -2860,6 +2860,70 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
 }
 `;
 
+exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingAuthKeyPattern": "patternA",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPattern 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+}
+`;
+
 exports[`DeleteTypeAction > delete newly added entity type 1`] = `
 {
   "activeSelector": null,

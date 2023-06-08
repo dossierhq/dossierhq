@@ -940,6 +940,46 @@ class DeleteFieldAction extends TypeAction {
   }
 }
 
+class DeletePatternAction implements SchemaEditorStateAction {
+  selector: SchemaPatternSelector;
+
+  constructor(selector: SchemaPatternSelector) {
+    this.selector = selector;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    let newState = {
+      ...state,
+      patterns: state.patterns.filter((it) => it.name !== this.selector.name),
+    };
+
+    if (isEqual(newState.activeSelector, this.selector)) {
+      newState.activeSelector = null;
+    }
+
+    // Remove references to pattern in entity types
+    newState = reduceEntityTypes(newState, (typeDraft) => {
+      if (typeDraft.authKeyPattern === this.selector.name) {
+        return { ...typeDraft, authKeyPattern: null };
+      }
+      return typeDraft;
+    });
+
+    // Remove references to pattern in fields
+    newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
+      if (fieldDraft.matchPattern?.includes(this.selector.name)) {
+        return {
+          ...fieldDraft,
+          matchPattern: null,
+        };
+      }
+      return fieldDraft;
+    });
+
+    return withResolvedSchemaStatus(newState);
+  }
+}
+
 class DeleteTypeAction implements SchemaEditorStateAction {
   selector: SchemaTypeSelector;
 
@@ -1327,6 +1367,7 @@ export const SchemaEditorActions = {
   ChangeTypeAuthKeyPattern: ChangeTypeAuthKeyPatternAction,
   ChangeTypeNameField: ChangeTypeNameFieldAction,
   DeleteField: DeleteFieldAction,
+  DeletePattern: DeletePatternAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
   RenamePattern: RenamePatternAction,

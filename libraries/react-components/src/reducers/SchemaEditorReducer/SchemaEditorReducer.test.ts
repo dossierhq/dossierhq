@@ -1066,6 +1066,45 @@ describe('DeleteFieldAction', () => {
   });
 });
 
+describe('DeletePatternAction', () => {
+  test('delete pattern used as authKeyPattern and matchPattern', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              authKeyPattern: 'patternA',
+              fields: [{ name: 'fieldA', type: FieldType.String, matchPattern: 'patternA' }],
+            },
+          ],
+          patterns: [{ name: 'patternA', pattern: '^patternA$' }],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.SetActiveSelector(
+        { kind: 'pattern', name: 'patternA' },
+        false,
+        false
+      ),
+      new SchemaEditorActions.DeletePattern({ kind: 'pattern', name: 'patternA' })
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].authKeyPattern).toBe(null);
+    expect(state.entityTypes[0].status).toBe('changed');
+
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe(null);
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+
+    expect(state.patterns.length).toBe(0);
+
+    expect(state.activeSelector).toBe(null);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('DeleteTypeAction', () => {
   test('delete newly added entity type', () => {
     const state = reduceSchemaEditorStateActions(
