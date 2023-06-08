@@ -1066,6 +1066,21 @@ class RenameFieldAction extends FieldAction {
 
     return newTypeDraft;
   }
+
+  override reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const newState = super.reduce(state);
+
+    if (newState === state) {
+      return state;
+    }
+
+    return {
+      ...newState,
+      activeSelector: { kind: this.kind, typeName: this.typeName, fieldName: this.newFieldName },
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
+    };
+  }
 }
 
 class RenamePatternAction implements SchemaEditorStateAction {

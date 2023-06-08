@@ -3052,9 +3052,13 @@ exports[`DeleteTypeAction > delete newly added value type referenced by another 
 
 exports[`RenameFieldAction > add and rename field 1`] = `
 {
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
+  "activeSelector": {
+    "fieldName": "baz",
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3135,9 +3139,13 @@ exports[`RenameFieldAction > add and rename field 2`] = `
 
 exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
 {
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
+  "activeSelector": {
+    "fieldName": "baz",
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [
     {
       "adminOnly": false,
