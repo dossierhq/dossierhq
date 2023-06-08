@@ -20,6 +20,7 @@ export interface InputProps {
   value?: string | number;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  onClick?: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 }
 
 export function Input({
@@ -35,6 +36,7 @@ export function Input({
   value,
   onChange,
   onKeyDown,
+  onClick,
 }: InputProps): JSX.Element {
   const className = toClassName('control', iconLeft && 'has-icons-left');
   return (
@@ -43,10 +45,11 @@ export function Input({
         className={toClassName(
           'input',
           toColorClassName(color),
-          textStyle && toTextStyleClassName(textStyle)
+          textStyle && toTextStyleClassName(textStyle),
+          onClick && 'is-clickable'
         )}
         type={type ?? 'text'}
-        {...{ min, max, step, placeholder, readOnly, value, onChange, onKeyDown }}
+        {...{ min, max, step, placeholder, readOnly, value, onChange, onKeyDown, onClick }}
       />
       {iconLeft ? <Icon className="is-left" icon={iconLeft} /> : null}
     </div>

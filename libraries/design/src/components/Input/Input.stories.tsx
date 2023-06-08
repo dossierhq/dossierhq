@@ -22,3 +22,16 @@ export const LeftIcon: Story = { args: { iconLeft: 'map' } };
 export const Number: Story = { args: { type: 'number', min: 0, max: 100, step: 1 } };
 
 export const CodeTextStyle: Story = { args: { textStyle: 'code1' } };
+
+export const ClickToEdit: Story = {
+  args: {
+    value: 'Initial value',
+    readOnly: true,
+    onClick: (event) => {
+      const newValue = window.prompt('Enter value', event.currentTarget.value);
+      if (newValue !== null) {
+        event.currentTarget.value = newValue ?? '';
+      }
+    },
+  },
+};
