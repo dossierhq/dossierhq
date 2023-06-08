@@ -289,13 +289,7 @@ export class AdminSchema {
       indexes: [],
     };
     const empty = new AdminSchema(emptySpec);
-    const mergeResult = empty.mergeWith(update);
-    if (mergeResult.isError()) return mergeResult;
-
-    const validateResult = mergeResult.value.validate();
-    if (validateResult.isError()) return validateResult;
-
-    return mergeResult;
+    return empty.updateAndValidate(update);
   }
 
   constructor(spec: AdminSchemaSpecification) {
@@ -618,7 +612,7 @@ export class AdminSchema {
     return this.spec.indexes.find((it) => it.name === name) ?? null;
   }
 
-  mergeWith(
+  updateAndValidate(
     update: AdminSchemaSpecificationUpdate
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
@@ -771,7 +765,12 @@ export class AdminSchema {
     schemaSpec.patterns.sort((a, b) => a.name.localeCompare(b.name));
     schemaSpec.indexes.sort((a, b) => a.name.localeCompare(b.name));
 
-    return ok(new AdminSchema(schemaSpec));
+    // Validate
+    const updatedSchema = new AdminSchema(schemaSpec);
+    const validateResult = updatedSchema.validate();
+    if (validateResult.isError()) return validateResult;
+
+    return ok(updatedSchema);
   }
 
   toPublishedSchema(): PublishedSchema {

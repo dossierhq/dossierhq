@@ -12,7 +12,7 @@ describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
-        .mergeWith({})
+        .updateAndValidate({})
         .valueOrThrow().spec
     ).toEqual({
       entityTypes: [],
@@ -36,7 +36,7 @@ describe('mergeWith()', () => {
       patterns: [{ name: 'aPattern', pattern: '.*' }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [] }],
       })
       .valueOrThrow();
@@ -52,7 +52,7 @@ describe('mergeWith()', () => {
       valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
-      .mergeWith({ valueTypes: [{ name: 'Foo', fields: [] }] })
+      .updateAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] })
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
     expect(result.spec.valueTypes[0].adminOnly).toBe(true);
@@ -71,7 +71,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           {
             name: 'Foo',
@@ -94,7 +94,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
       })
       .valueOrThrow();
@@ -110,7 +110,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
       })
       .valueOrThrow();
@@ -126,7 +126,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
       })
       .valueOrThrow();
@@ -155,7 +155,7 @@ describe('mergeWith()', () => {
       patterns: [{ name: 'aPattern', pattern: '.*' }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
       })
       .valueOrThrow();
@@ -179,7 +179,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
       })
       .valueOrThrow();
@@ -196,7 +196,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity }] }],
       })
       .valueOrThrow();
@@ -213,7 +213,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Number }] }],
       })
       .valueOrThrow();
@@ -251,7 +251,7 @@ describe('mergeWith()', () => {
       valueTypes: [{ name: 'Bar', fields: [] }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.RichText }] }],
       })
       .valueOrThrow();
@@ -292,7 +292,7 @@ describe('mergeWith()', () => {
       valueTypes: [{ name: 'Bar', fields: [] }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.ValueItem }] }],
       })
       .valueOrThrow();
@@ -305,7 +305,7 @@ describe('mergeWith()', () => {
   test('empty->entity with pattern', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
-        .mergeWith({
+        .updateAndValidate({
           entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
           patterns: [{ name: 'aPattern', pattern: '^hello$' }],
         })
@@ -319,7 +319,7 @@ describe('mergeWith()', () => {
       patterns: [{ name: 'aPattern', pattern: '^old-pattern$' }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         patterns: [{ name: 'aPattern', pattern: '^new-pattern$' }],
       })
       .valueOrThrow();
@@ -335,7 +335,7 @@ describe('mergeWith()', () => {
       patterns: [{ name: 'aPattern', pattern: '^pattern$' }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
       })
       .valueOrThrow();
@@ -347,7 +347,7 @@ describe('mergeWith()', () => {
   test('field with matchPattern', () => {
     const result = AdminSchema.createAndValidate({})
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           {
             name: 'Foo',
@@ -366,26 +366,26 @@ describe('mergeWith()', () => {
   test('field with index', () => {
     const result = AdminSchema.createAndValidate({})
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           {
             name: 'Foo',
             adminOnly: false,
-            fields: [{ name: 'title', type: FieldType.String, index: 'unique-index' }],
+            fields: [{ name: 'title', type: FieldType.String, index: 'uniqueIndex' }],
           },
         ],
-        indexes: [{ name: 'unique-index', type: 'unique' }],
+        indexes: [{ name: 'uniqueIndex', type: 'unique' }],
       })
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    expect(result.getIndex('unique-index')).toEqual({ name: 'unique-index', type: 'unique' });
+    expect(result.getIndex('uniqueIndex')).toEqual({ name: 'uniqueIndex', type: 'unique' });
   });
 
   test('duplicate values', () => {
     const result = AdminSchema.createAndValidate({})
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           {
             name: 'Entity',
@@ -409,6 +409,9 @@ describe('mergeWith()', () => {
                   RichTextNodeType.root,
                   RichTextNodeType.paragraph,
                   RichTextNodeType.linebreak,
+                  RichTextNodeType.entity,
+                  RichTextNodeType.entityLink,
+                  RichTextNodeType.valueItem,
                 ],
               },
               {
@@ -431,7 +434,7 @@ describe('mergeWith()', () => {
       entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
-      .mergeWith({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
+      .updateAndValidate({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
 
     expectErrorResult(
       result,
@@ -445,7 +448,7 @@ describe('mergeWith()', () => {
       valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
-      .mergeWith({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
+      .updateAndValidate({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
 
     expectErrorResult(
       result,
@@ -459,7 +462,7 @@ describe('mergeWith()', () => {
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
       });
 
@@ -477,7 +480,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: false }] },
         ],
@@ -497,7 +500,7 @@ describe('mergeWith()', () => {
       ],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, adminOnly: false }] },
         ],
@@ -518,7 +521,7 @@ describe('mergeWith()', () => {
       indexes: [{ name: 'anIndex', type: 'unique' }],
     })
       .valueOrThrow()
-      .mergeWith({
+      .updateAndValidate({
         entityTypes: [
           { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'otherIndex' }] },
         ],

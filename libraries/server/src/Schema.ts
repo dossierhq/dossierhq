@@ -93,7 +93,7 @@ export async function updateSchemaSpecification(
     if (previousSpecificationResult.isError()) return previousSpecificationResult;
 
     const oldSchema = new AdminSchema(previousSpecificationResult.value);
-    const mergeResult = oldSchema.mergeWith(schemaSpec);
+    const mergeResult = oldSchema.updateAndValidate(schemaSpec);
     if (mergeResult.isError()) return mergeResult;
     const newSchema = mergeResult.value;
 

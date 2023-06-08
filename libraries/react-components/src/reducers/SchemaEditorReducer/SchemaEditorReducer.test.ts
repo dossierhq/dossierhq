@@ -1555,7 +1555,7 @@ describe('SchemaEditorReducer scenarios', () => {
     );
 
     const newAdminSchema = initialSchema
-      .mergeWith(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
+      .updateAndValidate(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
       .valueOrThrow();
 
     const afterSaveState = reduceSchemaEditorState(

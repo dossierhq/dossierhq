@@ -7,7 +7,7 @@ function build(
   nextUpdate: AdminSchemaSpecificationUpdate
 ) {
   const previous = AdminSchema.createAndValidate(previousUpdate).valueOrThrow();
-  const next = previous.mergeWith(nextUpdate).valueOrThrow();
+  const next = previous.updateAndValidate(nextUpdate).valueOrThrow();
   return { previous, next };
 }
 

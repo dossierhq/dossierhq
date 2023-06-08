@@ -47,10 +47,13 @@ exports[`mergeWith() > duplicate values 1`] = `
           "name": "richText",
           "required": false,
           "richTextNodes": [
+            "entity",
+            "entityLink",
             "linebreak",
             "paragraph",
             "root",
             "text",
+            "valueItem",
           ],
           "type": "RichText",
           "valueTypes": [
@@ -115,7 +118,7 @@ exports[`mergeWith() > field with index 1`] = `
       "fields": [
         {
           "adminOnly": false,
-          "index": "unique-index",
+          "index": "uniqueIndex",
           "list": false,
           "matchPattern": null,
           "multiline": false,
@@ -131,7 +134,7 @@ exports[`mergeWith() > field with index 1`] = `
   ],
   "indexes": [
     {
-      "name": "unique-index",
+      "name": "uniqueIndex",
       "type": "unique",
     },
   ],
