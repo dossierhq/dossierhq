@@ -3098,9 +3098,12 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
 
 exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPattern 1`] = `
 {
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "patternC",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [
     {
       "adminOnly": false,

@@ -1056,6 +1056,9 @@ class RenamePatternAction implements SchemaEditorStateAction {
         }
         return it;
       }),
+      activeSelector: { kind: 'pattern', name: this.name },
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
     };
 
     // Sort patterns
