@@ -33,7 +33,7 @@ type DialogStatus = (typeof DialogStatus)[keyof typeof DialogStatus];
 //TODO use from core?
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 
-const NAME_DEFAULT_HELP_TEXT = 'The name of the pattern, such as my-pattern';
+const NAME_DEFAULT_HELP_TEXT = 'The name of the pattern, such as myPattern';
 const NAME_STATUS_HELP_TEST: Record<string, string> = {
   [DialogStatus.invalidFormat]:
     'The name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123',
@@ -62,7 +62,7 @@ export function AddOrRenamePatternDialog({
         if (selector === 'add') {
           dispatchSchemaEditorState(new SchemaEditorActions.AddPattern(name));
         } else {
-          // TODO dispatchSchemaEditorState(new SchemaEditorActions.RenameType(selector, name));
+          dispatchSchemaEditorState(new SchemaEditorActions.RenamePattern(selector, name));
         }
       }
       onClose();

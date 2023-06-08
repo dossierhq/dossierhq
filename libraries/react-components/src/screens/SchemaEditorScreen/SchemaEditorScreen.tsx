@@ -168,7 +168,7 @@ export function SchemaEditorScreen({
                 />
               ))}
               {schemaEditorState.indexes.map((indexDraft) => (
-                <PatternIndexRows
+                <IndexEditorRows
                   key={indexDraft.name}
                   indexDraft={indexDraft}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
@@ -180,6 +180,7 @@ export function SchemaEditorScreen({
                   patternDraft={patternDraft}
                   schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  onAddOrRenamePattern={setAddOrRenamePatternSelector}
                 />
               ))}
             </>
@@ -322,7 +323,7 @@ function TypeEditorRows({
   );
 }
 
-function PatternIndexRows({
+function IndexEditorRows({
   indexDraft,
   dispatchSchemaEditorState,
 }: {
@@ -372,13 +373,13 @@ function PatternEditorRows({
   patternDraft,
   schemaEditorState,
   dispatchSchemaEditorState,
+  onAddOrRenamePattern,
 }: {
   patternDraft: SchemaPatternDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onAddOrRenamePattern: (selector: SchemaPatternSelector) => void;
 }) {
-  const _canDeleteOrRename = patternDraft.status === 'new'; //TODO too restrictive
-
   const patternSelector = useMemo(
     () => ({ kind: 'pattern', name: patternDraft.name } as const),
     [patternDraft.name]
@@ -392,26 +393,24 @@ function PatternEditorRows({
     [dispatchSchemaEditorState, patternSelector]
   );
 
-  // const handleDropdownItemClick = useCallback(
-  //   ({ id }: { id: string }) => {
-  //     switch (id) {
-  //       case 'delete':
-  //         dispatchSchemaEditorState(new SchemaEditorActions.DeleteType(patternSelector));
-  //         break;
-  //       case 'rename':
-  //         onAddOrRenameType(patternSelector);
-  //         break;
-  //     }
-  //   },
-  //   [dispatchSchemaEditorState, onAddOrRenameType, patternSelector]
-  // );
+  const handleDropdownItemClick = useCallback(
+    ({ id }: { id: string }) => {
+      switch (id) {
+        case 'delete':
+          dispatchSchemaEditorState(new SchemaEditorActions.DeletePattern(patternSelector));
+          break;
+        case 'rename':
+          onAddOrRenamePattern(patternSelector);
+          break;
+      }
+    },
+    [dispatchSchemaEditorState, onAddOrRenamePattern, patternSelector]
+  );
 
-  // const dropDownItems = canDeleteOrRename
-  //   ? [
-  //       { id: 'rename', title: 'Rename type' },
-  //       { id: 'delete', title: 'Delete type' },
-  //     ]
-  //   : [];
+  const dropDownItems = [
+    { id: 'rename', title: 'Rename pattern' },
+    { id: 'delete', title: 'Delete pattern' },
+  ];
 
   return (
     <>
@@ -422,21 +421,19 @@ function PatternEditorRows({
               <Text textStyle="headline4">{patternDraft.name}</Text>
             </Level.Item>
           </Level.Left>
-          {/* {patternDraft.status !== '' ? (
-            <Level.Right>
-              <Level.Item>
-                {dropDownItems.length > 0 ? (
-                  <ButtonDropdown
-                    items={dropDownItems}
-                    left
-                    renderItem={(item) => item.title}
-                    onItemClick={handleDropdownItemClick}
-                  />
-                ) : null}
-                <TypeDraftStatusTag status={patternDraft.status} />
-              </Level.Item>
-            </Level.Right>
-          ) : null} */}
+          <Level.Right>
+            <Level.Item>
+              {dropDownItems.length > 0 ? (
+                <ButtonDropdown
+                  items={dropDownItems}
+                  left
+                  renderItem={(item) => item.title}
+                  onItemClick={handleDropdownItemClick}
+                />
+              ) : null}
+              {patternDraft.status ? <TypeDraftStatusTag status={patternDraft.status} /> : null}
+            </Level.Item>
+          </Level.Right>
         </Level>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row
