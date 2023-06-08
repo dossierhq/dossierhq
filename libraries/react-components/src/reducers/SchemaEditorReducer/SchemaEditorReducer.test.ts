@@ -1123,6 +1123,49 @@ describe('DeleteTypeAction', () => {
     expect(state.status).toBe(''); // should be reset
   });
 
+  test('delete newly added entity type referenced by another type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Existing',
+              fields: [
+                { name: 'entity', type: FieldType.Entity },
+                { name: 'richText', type: FieldType.RichText },
+              ],
+            },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddType('entity', 'Foo'),
+      new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
+        { kind: 'entity', typeName: 'Existing', fieldName: 'entity' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
+        { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
+        { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].entityTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[1].linkEntityTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[1].entityTypes).toEqual([]);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
+
+    expect(state.status).toBe(''); // should be reset
+  });
+
   test('delete newly added value type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
@@ -1134,6 +1177,43 @@ describe('DeleteTypeAction', () => {
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
+    expect(state.status).toBe(''); // should be reset
+  });
+
+  test('delete newly added value type referenced by another type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Existing',
+              fields: [
+                { name: 'richText', type: FieldType.RichText },
+                { name: 'valueItem', type: 'ValueItem' },
+              ],
+            },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.AddType('value', 'Foo'),
+      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+        { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+        { kind: 'entity', typeName: 'Existing', fieldName: 'valueItem' },
+        ['Foo']
+      ),
+      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].valueTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[1].valueTypes).toEqual([]);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
     expect(state.status).toBe(''); // should be reset

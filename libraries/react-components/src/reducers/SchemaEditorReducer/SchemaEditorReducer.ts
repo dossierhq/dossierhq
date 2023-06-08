@@ -999,9 +999,40 @@ class DeleteTypeAction implements SchemaEditorStateAction {
       activeSelector = null;
     }
 
-    const newState = { ...state, activeSelector, entityTypes, valueTypes };
-    newState.status = resolveSchemaStatus(newState);
-    return newState;
+    let newState = { ...state, activeSelector, entityTypes, valueTypes };
+
+    // Remove references to type in fields
+    newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
+      if (this.selector.kind === 'entity') {
+        if (
+          fieldDraft.entityTypes?.includes(this.selector.typeName) ||
+          fieldDraft.linkEntityTypes?.includes(this.selector.typeName)
+        ) {
+          const newFieldDraft = { ...fieldDraft };
+          if (newFieldDraft.entityTypes) {
+            newFieldDraft.entityTypes = newFieldDraft.entityTypes.filter(
+              (it) => it !== this.selector.typeName
+            );
+          }
+          if (newFieldDraft.linkEntityTypes) {
+            newFieldDraft.linkEntityTypes = newFieldDraft.linkEntityTypes.filter(
+              (it) => it !== this.selector.typeName
+            );
+          }
+          return newFieldDraft;
+        }
+      } else {
+        if (fieldDraft.valueTypes?.includes(this.selector.typeName)) {
+          return {
+            ...fieldDraft,
+            valueTypes: fieldDraft.valueTypes.filter((it) => it !== this.selector.typeName),
+          };
+        }
+      }
+      return fieldDraft;
+    });
+
+    return withResolvedSchemaStatus(newState);
   }
 }
 

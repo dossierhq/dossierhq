@@ -2938,12 +2938,110 @@ exports[`DeleteTypeAction > delete newly added entity type 1`] = `
 }
 `;
 
+exports[`DeleteTypeAction > delete newly added entity type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "status": "",
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "",
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Existing",
+      "nameField": null,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
 exports[`DeleteTypeAction > delete newly added value type 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+  "valueTypes": [],
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added value type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "existingAuthKeyPattern": null,
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "",
+          "type": "RichText",
+          "valueTypes": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "",
+          "type": "ValueItem",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Existing",
+      "nameField": null,
+      "status": "",
+    },
+  ],
   "indexes": [],
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
