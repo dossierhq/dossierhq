@@ -172,6 +172,12 @@ function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['statu
   return '';
 }
 
+function withResolvedSchemaStatus(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+  const newStatus = resolveSchemaStatus(state);
+  if (newStatus === state.status) return state;
+  return { ...state, status: newStatus };
+}
+
 function resolveTypeStatus(
   state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>
 ): SchemaTypeDraft['status'] {
@@ -187,9 +193,9 @@ function resolveTypeStatus(
   return '';
 }
 
-function withResolvedTypeStatus(
-  state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>
-): Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft> {
+function withResolvedTypeStatus<T extends SchemaEntityTypeDraft | SchemaValueTypeDraft>(
+  state: Readonly<T>
+): Readonly<T> {
   const newStatus = resolveTypeStatus(state);
   if (newStatus === state.status) return state;
   return { ...state, status: newStatus };
@@ -265,6 +271,14 @@ function resolvePatternStatus(state: Readonly<SchemaPatternDraft>): SchemaPatter
     return 'changed';
   }
   return '';
+}
+
+function withResolvedPatternStatus(
+  state: Readonly<SchemaPatternDraft>
+): Readonly<SchemaPatternDraft> {
+  const newStatus = resolvePatternStatus(state);
+  if (newStatus === state.status) return state;
+  return { ...state, status: newStatus };
 }
 
 // ACTION HELPERS
@@ -360,6 +374,27 @@ abstract class PatternAction implements SchemaEditorStateAction {
   abstract reducePattern(draft: Readonly<SchemaPatternDraft>): Readonly<SchemaPatternDraft>;
 }
 
+function reduceEntityTypes(
+  state: Readonly<SchemaEditorState>,
+  reduceType: (entityTypeDraft: Readonly<SchemaEntityTypeDraft>) => Readonly<SchemaEntityTypeDraft>
+): Readonly<SchemaEditorState> {
+  let changedEntityTypes = false;
+  const newEntityTypes = state.entityTypes.map((typeDraft) => {
+    const newTypeDraft = reduceType(typeDraft);
+    if (newTypeDraft !== typeDraft) {
+      changedEntityTypes = true;
+      return withResolvedTypeStatus(newTypeDraft);
+    }
+    return newTypeDraft;
+  });
+
+  if (!changedEntityTypes) {
+    return state;
+  }
+
+  return withResolvedSchemaStatus({ ...state, entityTypes: newEntityTypes });
+}
+
 function reduceFieldsOfAllTypes(
   state: Readonly<SchemaEditorState>,
   reduceField: (fieldDraft: Readonly<SchemaFieldDraft>) => Readonly<SchemaFieldDraft>
@@ -372,13 +407,13 @@ function reduceFieldsOfAllTypes(
       const newFieldDraft = reduceField(fieldDraft);
       if (newFieldDraft !== fieldDraft) {
         changedFields = true;
+        return withResolvedFieldStatus(newFieldDraft);
       }
       return newFieldDraft;
     });
     if (changedFields) {
-      const newTypeDraft: T = { ...typeDraft, fields: newFields };
-      newTypeDraft.status = resolveTypeStatus(typeDraft);
-      return newTypeDraft;
+      const newTypeDraft: Readonly<T> = { ...typeDraft, fields: newFields };
+      return withResolvedTypeStatus(newTypeDraft);
     }
     return typeDraft;
   }
@@ -962,6 +997,53 @@ class RenameFieldAction extends FieldAction {
   }
 }
 
+class RenamePatternAction implements SchemaEditorStateAction {
+  selector: SchemaPatternSelector;
+  name: string;
+
+  constructor(selector: SchemaPatternSelector, name: string) {
+    this.selector = selector;
+    this.name = name;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    // Rename pattern
+    let newState: SchemaEditorState = {
+      ...state,
+      patterns: state.patterns.map((it) => {
+        if (it.name === this.selector.name) {
+          return withResolvedPatternStatus({ ...it, name: this.name });
+        }
+        return it;
+      }),
+    };
+
+    // Sort patterns
+    newState.patterns.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Rename references to pattern in entity types
+    newState = reduceEntityTypes(newState, (typeDraft) => {
+      if (typeDraft.authKeyPattern === this.selector.name) {
+        return { ...typeDraft, authKeyPattern: this.name };
+      }
+      return typeDraft;
+    });
+
+    // Rename references to pattern in fields
+    newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
+      if (fieldDraft.matchPattern?.includes(this.selector.name)) {
+        return {
+          ...fieldDraft,
+          matchPattern: this.name,
+        };
+      }
+      return fieldDraft;
+    });
+
+    return newState;
+  }
+}
+
 class RenameTypeAction extends TypeAction {
   name: string;
 
@@ -1247,6 +1329,7 @@ export const SchemaEditorActions = {
   DeleteField: DeleteFieldAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
+  RenamePattern: RenamePatternAction,
   RenameType: RenameTypeAction,
   SetActiveSelector: SetActiveSelectorAction,
   SetNextUpdateSchemaSpecificationIsDueToSave: SetNextUpdateSchemaSpecificationIsDueToSaveAction,

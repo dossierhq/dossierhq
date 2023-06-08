@@ -3032,6 +3032,117 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
 }
 `;
 
+exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": "patternC",
+      "existingAuthKeyPattern": "patternA",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "patternC",
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "patternB",
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "patternB",
+        "pattern": "^patternB$",
+      },
+      "name": "patternB",
+      "pattern": "^patternB$",
+      "status": "",
+    },
+    {
+      "existingPatternSpec": {
+        "name": "patternA",
+        "pattern": "^patternA$",
+      },
+      "name": "patternC",
+      "pattern": "^patternA$",
+      "status": "changed",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPattern 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": "patternC",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "patternC",
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "patternB",
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "patternC",
+      "pattern": "^patternA$",
+    },
+  ],
+}
+`;
+
 exports[`RenameTypeAction > add and rename entity type with fields referring to itself 1`] = `
 {
   "activeSelector": {

@@ -1179,6 +1179,45 @@ describe('RenameFieldAction', () => {
   });
 });
 
+describe('RenamePatternAction', () => {
+  test('rename pattern used as authKeyPattern and matchPattern', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              authKeyPattern: 'patternA',
+              fields: [
+                { name: 'fieldA', type: FieldType.String, matchPattern: 'patternA' },
+                { name: 'fieldB', type: FieldType.String, matchPattern: 'patternB' },
+              ],
+            },
+          ],
+          patterns: [
+            { name: 'patternA', pattern: '^patternA$' },
+            { name: 'patternB', pattern: '^patternB$' },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.RenamePattern({ kind: 'pattern', name: 'patternA' }, 'patternC')
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].authKeyPattern).toBe('patternC');
+    expect(state.entityTypes[0].status).toBe('changed');
+
+    expect(state.entityTypes[0].fields[0].matchPattern).toBe('patternC');
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+
+    expect(state.patterns[1].name).toBe('patternC');
+    expect(state.patterns[1].status).toBe('changed');
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('RenameTypeAction', () => {
   test('add and rename type', () => {
     const state = reduceSchemaEditorStateActions(
