@@ -32,7 +32,7 @@
     "@cloudinary/url-gen": "~1.10.1",
     "@dossierhq/design": "workspace:*",
     "react": "~18.2.0",
-    "tslib": "~2.5.2"
+    "tslib": "~2.5.3"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -40,8 +40,8 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@rushstack/heft": "0.50.6",
-    "@types/react": "~18.2.8",
-    "eslint": "~8.41.0",
+    "@types/react": "~18.2.9",
+    "eslint": "~8.42.0",
     "prettier": "2.8.8",
     "typescript": "~5.1.3"
   }
