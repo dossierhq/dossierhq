@@ -41,7 +41,6 @@ export default async function Layout({ children }: Props) {
               {chapter.fields.items.map((item, index) => {
                 if (isPublishedArticleTocItem(item)) {
                   return (
-                    // @ts-ignore TODO Typescript async components are not supported yet
                     <ArticleItem
                       key={item.article.id}
                       item={item}
@@ -81,7 +80,6 @@ function ChapterItem({
       {item.items.map((item, index) => {
         if (isPublishedArticleTocItem(item)) {
           return (
-            // @ts-ignore TODO Typescript async components are not supported yet
             <ArticleItem key={item.article.id} item={item} publishedClient={publishedClient} />
           );
         } else {

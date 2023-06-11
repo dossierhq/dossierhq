@@ -49,16 +49,14 @@ export function ServerRichTextRenderer({
   isGlossaryPage,
   headingOffset,
   theme,
-}: Props): JSX.Element {
+}: Props) {
   const context: RenderContext = {
     publishedClient,
     theme: theme ?? LexicalTheme,
     isGlossaryPage: !!isGlossaryPage,
     headingOffset: headingOffset ?? 0,
   };
-  const rendered = renderNode(context, richText.root, null);
-  //TODO server side components can be async, but the current typescript types don't allow that
-  return rendered as unknown as JSX.Element;
+  return renderNode(context, richText.root, null);
 }
 
 async function renderNode(context: RenderContext, node: RichTextNode, key: Key | null) {
