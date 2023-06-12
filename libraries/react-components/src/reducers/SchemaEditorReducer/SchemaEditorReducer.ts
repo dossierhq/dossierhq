@@ -1225,6 +1225,10 @@ class ReorderFieldsAction extends TypeAction {
   override reduceType(
     typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    if (this.fieldToMove === this.targetField) {
+      return typeDraft;
+    }
+
     const fields = [...typeDraft.fields];
     const fieldToMoveIndex = fields.findIndex((it) => it.name === this.fieldToMove);
     const [fieldToMove] = fields.splice(fieldToMoveIndex, 1);

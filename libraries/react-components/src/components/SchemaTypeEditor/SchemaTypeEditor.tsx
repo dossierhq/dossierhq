@@ -1,5 +1,5 @@
 import { FieldType } from '@dossierhq/core';
-import { Button, Checkbox, Field } from '@dossierhq/design';
+import { Button, Checkbox, Field, GridList, GridListItem, useDragAndDrop } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import type {
   SchemaEditorState,
@@ -37,6 +37,23 @@ export function SchemaTypeEditor({
           .filter((it) => it.type === FieldType.String && !it.list)
           .map((it) => it.name)
       : [];
+
+  const { dragAndDropHooks: fieldsDragAndDropHooks } = useDragAndDrop({
+    getItems: (keys) => [...keys].map((key) => ({ 'text/plain': String(key) })),
+    onReorder: (event) => {
+      if (event.target.dropPosition === 'on') {
+        return;
+      }
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.ReorderFields(
+          typeSelector,
+          String([...event.keys][0]),
+          event.target.dropPosition,
+          String(event.target.key)
+        )
+      );
+    },
+  });
 
   return (
     <>
@@ -95,16 +112,27 @@ export function SchemaTypeEditor({
           <Button onClick={() => onAddOrRenameField(typeSelector)}>Add field</Button>
         </Field.BodyColumn>
       </Field>
-      {typeDraft.fields.map((fieldDraft) => (
-        <SchemaFieldEditor
-          key={fieldDraft.name}
-          fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
-          fieldDraft={fieldDraft}
-          schemaEditorState={schemaEditorState}
-          dispatchSchemaEditorState={dispatchSchemaEditorState}
-          onAddOrRenameField={onAddOrRenameField}
-        />
-      ))}
+      <GridList
+        aria-label={`Fields for ${typeDraft.name}`}
+        dragAndDropHooks={fieldsDragAndDropHooks}
+      >
+        {typeDraft.fields.map((fieldDraft) => (
+          <GridListItem
+            key={fieldDraft.name}
+            id={fieldDraft.name}
+            textValue={fieldDraft.name}
+            marginVertical={1}
+          >
+            <SchemaFieldEditor
+              fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
+              fieldDraft={fieldDraft}
+              schemaEditorState={schemaEditorState}
+              dispatchSchemaEditorState={dispatchSchemaEditorState}
+              onAddOrRenameField={onAddOrRenameField}
+            />
+          </GridListItem>
+        ))}
+      </GridList>
     </>
   );
 }

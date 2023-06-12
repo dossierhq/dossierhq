@@ -4,7 +4,8 @@
     "name": "Limitations",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true
   },
   "fields": {
     "title": "Limitations",
@@ -96,62 +97,6 @@
                     "format": 1,
                     "mode": "normal",
                     "style": "",
-                    "text": "Schema migration",
-                    "type": "text",
-                    "version": 1
-                  },
-                  {
-                    "detail": 0,
-                    "format": 0,
-                    "mode": "normal",
-                    "style": "",
-                    "text": " – currently plenty of changes to the schema are disabled in the schema editor, e.g. renaming fields or types or changing their settings. Need to do this with care so we don't risk corrupting the data",
-                    "type": "text",
-                    "version": 1
-                  }
-                ]
-              },
-              {
-                "direction": "ltr",
-                "format": "",
-                "indent": 0,
-                "type": "listitem",
-                "version": 1,
-                "value": 2,
-                "children": [
-                  {
-                    "detail": 0,
-                    "format": 1,
-                    "mode": "normal",
-                    "style": "",
-                    "text": "Reordering of type fields",
-                    "type": "text",
-                    "version": 1
-                  },
-                  {
-                    "detail": 0,
-                    "format": 0,
-                    "mode": "normal",
-                    "style": "",
-                    "text": " in schema editor UI",
-                    "type": "text",
-                    "version": 1
-                  }
-                ]
-              },
-              {
-                "direction": "ltr",
-                "format": "",
-                "indent": 0,
-                "type": "listitem",
-                "version": 1,
-                "value": 3,
-                "children": [
-                  {
-                    "detail": 0,
-                    "format": 1,
-                    "mode": "normal",
-                    "style": "",
                     "text": "Deleting entities",
                     "type": "text",
                     "version": 1
@@ -173,7 +118,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 4,
+                "value": 2,
                 "children": [
                   {
                     "detail": 0,
@@ -201,7 +146,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 5,
+                "value": 3,
                 "children": [
                   {
                     "detail": 0,
@@ -229,7 +174,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 6,
+                "value": 4,
                 "children": [
                   {
                     "detail": 0,
@@ -257,7 +202,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 7,
+                "value": 5,
                 "children": [
                   {
                     "detail": 0,
@@ -294,7 +239,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 8,
+                "value": 6,
                 "children": [
                   {
                     "detail": 0,
@@ -322,7 +267,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 9,
+                "value": 7,
                 "children": [
                   {
                     "detail": 0,
@@ -359,7 +304,7 @@
                 "indent": 0,
                 "type": "listitem",
                 "version": 1,
-                "value": 10,
+                "value": 8,
                 "children": [
                   {
                     "detail": 0,

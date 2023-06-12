@@ -1,5 +1,5 @@
 import { FieldType, RichTextNodeType } from '@dossierhq/core';
-import { Card, Checkbox, Field, Input, SelectDisplay } from '@dossierhq/design';
+import { Card, Checkbox, Field, GridListDragHandle, Input, SelectDisplay } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch } from 'react';
 import { useCallback } from 'react';
 import type {
@@ -126,7 +126,10 @@ export function SchemaFieldEditor({
   return (
     <Card>
       <Card.Header>
-        <Card.HeaderTitle>{fieldDraft.name}</Card.HeaderTitle>
+        <Card.HeaderTitle>
+          <GridListDragHandle />
+          {fieldDraft.name}
+        </Card.HeaderTitle>
         {dropDownItems.length > 0 ? (
           <Card.HeaderDropdown
             items={dropDownItems}
