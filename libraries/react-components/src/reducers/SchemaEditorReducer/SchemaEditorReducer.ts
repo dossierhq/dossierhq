@@ -1,15 +1,17 @@
-import type {
-  AdminEntityTypeSpecification,
-  AdminEntityTypeSpecificationUpdate,
-  AdminFieldSpecification,
-  AdminSchema,
-  AdminSchemaSpecificationUpdate,
-  AdminValueTypeSpecification,
-  AdminValueTypeSpecificationUpdate,
-  SchemaIndexSpecification,
-  SchemaPatternSpecification,
+import {
+  FieldType,
+  RichTextNodeType,
+  assertIsDefined,
+  type AdminEntityTypeSpecification,
+  type AdminEntityTypeSpecificationUpdate,
+  type AdminFieldSpecification,
+  type AdminSchema,
+  type AdminSchemaSpecificationUpdate,
+  type AdminValueTypeSpecification,
+  type AdminValueTypeSpecificationUpdate,
+  type SchemaIndexSpecification,
+  type SchemaPatternSpecification,
 } from '@dossierhq/core';
-import { FieldType, RichTextNodeType, assertIsDefined } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
 export type SchemaSelector =
@@ -42,6 +44,7 @@ export interface SchemaTypeDraft {
   status: 'new' | '' | 'changed';
   adminOnly: boolean;
   fields: readonly SchemaFieldDraft[];
+  existingFieldOrder: string[];
 }
 
 export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
@@ -186,9 +189,11 @@ function resolveTypeStatus(
     if (state.nameField !== state.existingNameField) return 'changed';
     if (state.authKeyPattern !== state.existingAuthKeyPattern) return 'changed';
   }
-  //TODO check field order
   for (const field of state.fields) {
     if (field.status !== '') return 'changed';
+  }
+  for (let i = 0; i < state.existingFieldOrder.length; i++) {
+    if (state.existingFieldOrder[i] !== state.fields[i].name) return 'changed';
   }
   return '';
 }
@@ -500,15 +505,18 @@ class AddTypeAction implements SchemaEditorStateAction {
           existingAuthKeyPattern: null,
           nameField: null,
           existingNameField: null,
+          existingFieldOrder: [],
         },
       ];
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
-      newState.valueTypes = [...newState.valueTypes, { ...typeDraft, kind: 'value' }];
+      newState.valueTypes = [
+        ...newState.valueTypes,
+        { ...typeDraft, kind: 'value', existingFieldOrder: [] },
+      ];
       newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
-    newState.status = resolveSchemaStatus(newState);
-    return newState;
+    return withResolvedSchemaStatus(newState);
   }
 }
 
@@ -1197,6 +1205,39 @@ class RenameTypeAction extends TypeAction {
   }
 }
 
+class ReorderFieldsAction extends TypeAction {
+  fieldToMove: string;
+  position: 'after' | 'before';
+  targetField: string;
+
+  constructor(
+    selector: SchemaTypeSelector,
+    fieldToMove: string,
+    position: 'after' | 'before',
+    targetField: string
+  ) {
+    super(selector);
+    this.fieldToMove = fieldToMove;
+    this.position = position;
+    this.targetField = targetField;
+  }
+
+  override reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    const fields = [...typeDraft.fields];
+    const fieldToMoveIndex = fields.findIndex((it) => it.name === this.fieldToMove);
+    const [fieldToMove] = fields.splice(fieldToMoveIndex, 1);
+    const targetFieldIndex = fields.findIndex((it) => it.name === this.targetField);
+    if (this.position === 'after') {
+      fields.splice(targetFieldIndex + 1, 0, fieldToMove);
+    } else {
+      fields.splice(targetFieldIndex, 0, fieldToMove);
+    }
+    return { ...typeDraft, fields };
+  }
+}
+
 class SetActiveSelectorAction implements SchemaEditorStateAction {
   selector: SchemaSelector | null;
   increaseMenuScrollSignal: boolean;
@@ -1337,6 +1378,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         }
         return fieldDraft;
       }),
+      existingFieldOrder: typeSpec.fields.map((fieldSpec) => fieldSpec.name),
     };
   }
 }
@@ -1421,6 +1463,7 @@ export const SchemaEditorActions = {
   RenameField: RenameFieldAction,
   RenamePattern: RenamePatternAction,
   RenameType: RenameTypeAction,
+  ReorderFields: ReorderFieldsAction,
   SetActiveSelector: SetActiveSelectorAction,
   SetNextUpdateSchemaSpecificationIsDueToSave: SetNextUpdateSchemaSpecificationIsDueToSaveAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,

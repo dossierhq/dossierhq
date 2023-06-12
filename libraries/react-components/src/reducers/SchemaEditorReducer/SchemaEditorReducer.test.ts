@@ -1435,6 +1435,77 @@ describe('RenameTypeAction', () => {
   });
 });
 
+describe('ReorderFieldsAction', () => {
+  test('three fields, move first to middle', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [
+                { name: 'fieldA', type: FieldType.Boolean },
+                { name: 'fieldB', type: FieldType.Boolean },
+                { name: 'fieldC', type: FieldType.Boolean },
+              ],
+            },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ReorderFields(
+        { kind: 'entity', typeName: 'Foo' },
+        'fieldA',
+        'after',
+        'fieldB'
+      )
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].status).toBe('changed');
+    expect(state.entityTypes[0].fields.map((it) => it.name)).toEqual([
+      'fieldB',
+      'fieldA',
+      'fieldC',
+    ]);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('two fields, move last to first', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [
+                { name: 'fieldA', type: FieldType.Boolean },
+                { name: 'fieldB', type: FieldType.Boolean },
+              ],
+            },
+          ],
+        }).valueOrThrow()
+      ),
+      new SchemaEditorActions.ReorderFields(
+        { kind: 'entity', typeName: 'Foo' },
+        'fieldB',
+        'before',
+        'fieldA'
+      )
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].status).toBe('changed');
+    expect(state.entityTypes[0].fields.map((it) => it.name)).toEqual(['fieldB', 'fieldA']);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('SetActiveSelectorAction', () => {
   test('set to type', () => {
     const state = reduceSchemaEditorStateActions(
