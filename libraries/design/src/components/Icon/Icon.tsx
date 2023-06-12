@@ -20,6 +20,7 @@ export const ICON_NAMES = [
   'delete',
   'download',
   'first',
+  'grip',
   'heading',
   'italic',
   'last',

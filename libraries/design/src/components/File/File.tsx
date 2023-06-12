@@ -1,5 +1,4 @@
 import type { ChangeEventHandler } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { IconAsset } from '../Icon/Icon.js';
 

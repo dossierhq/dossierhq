@@ -424,3 +424,19 @@ tr.is-sticky-row :is(td, th),
   transform: rotate(45deg);
   border-width: 0 2px 2px 0;
 }
+
+.react-aria-DropIndicator[data-drop-target] {
+  outline: 1px solid $link;
+}
+
+@supports not selector(:has(.foo)) {
+  .react-aria-DropIndicator {
+    /* Undo gap in browsers that don't support :has */
+    margin-bottom: -2px;
+  }
+}
+
+.react-aria-Button.blank {
+  background: none;
+  border: none;
+}

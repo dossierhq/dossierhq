@@ -14,8 +14,8 @@ export { DropdownDisplay } from './components/DropdownDisplay/DropdownDisplay.js
 export { DropdownSelector } from './components/DropdownSelector/DropdownSelector.js';
 export type { DropdownSelectorProps } from './components/DropdownSelector/DropdownSelector.js';
 export {
-  initializeMultipleSelectorState,
   MultipleSelectorStateActions,
+  initializeMultipleSelectorState,
   reduceMultipleSelectorState,
 } from './components/DropdownSelector/MultipleSelectorReducer.js';
 export type {
@@ -29,6 +29,12 @@ export { EmptyStateMessage } from './components/EmptyStateMessage/EmptyStateMess
 export { Field } from './components/Field/Field.js';
 export { File } from './components/File/File.js';
 export { FullscreenContainer } from './components/FullscreenContainer/FullscreenContainer.js';
+export {
+  GridList,
+  GridListDragHandle,
+  GridListItem,
+  useDragAndDrop,
+} from './components/GridList/GridList.js';
 export { HoverRevealContainer } from './components/HoverRevealContainer/HoverRevealContainer.js';
 export { HoverRevealStack } from './components/HoverRevealStack/HoverRevealStack.js';
 export { Icon } from './components/Icon/Icon.js';

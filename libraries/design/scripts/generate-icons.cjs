@@ -22,6 +22,7 @@ const iconSources = {
   delete: solidSvgIcons.faCircleXmark,
   download: solidSvgIcons.faDownload,
   first: solidSvgIcons.faFastBackward,
+  grip: solidSvgIcons.faGrip,
   heading: solidSvgIcons.faHeading,
   italic: solidSvgIcons.faItalic,
   last: solidSvgIcons.faFastForward,
