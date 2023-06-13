@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/graphql
 
-This log was last generated on Tue, 13 Jun 2023 20:53:31 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 21:42:08 GMT and should not be manually modified.
+
+## 0.2.19
+Tue, 13 Jun 2023 21:42:08 GMT
+
+_Version update only_
 
 ## 0.2.18
 Tue, 13 Jun 2023 20:53:31 GMT

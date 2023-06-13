@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/pg
 
-This log was last generated on Tue, 13 Jun 2023 20:53:31 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 21:42:08 GMT and should not be manually modified.
+
+## 0.2.19
+Tue, 13 Jun 2023 21:42:08 GMT
+
+### Updates
+
+-  Revert to pg@8.10.0 to avoid Next.js bug
 
 ## 0.2.18
 Tue, 13 Jun 2023 20:53:31 GMT
