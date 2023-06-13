@@ -1342,9 +1342,11 @@ importers:
       postgrator: ~7.1.1
       prettier: 2.8.8
       react: ~18.2.0
+      react-aria-components: ~1.0.0-alpha.4
       react-dom: ~18.2.0
       react-leaflet: ~4.2.1
       react-router-dom: ~6.12.1
+      react-stately: ~3.23.0
       rollup-plugin-visualizer: ~5.9.2
       sass: ~1.63.3
       sass-loader: ~13.3.2
@@ -1401,6 +1403,7 @@ importers:
       pg: 8.11.0
       postgrator: 7.1.1
       react: 18.2.0
+      react-aria-components: 1.0.0-alpha.4_biqbaboplfbrettd7655fr4n2y
       react-dom: 18.2.0_react@18.2.0
       react-leaflet: 4.2.1_p7e52lah55xmyywv7f3e7owrmy
       react-router-dom: 6.12.1_biqbaboplfbrettd7655fr4n2y
@@ -1450,6 +1453,7 @@ importers:
       mini-svg-data-uri: 1.4.4
       nodemon: 2.0.22
       prettier: 2.8.8
+      react-stately: 3.23.0_react@18.2.0
       rollup-plugin-visualizer: 5.9.2
       sass: 1.63.3
       sass-loader: 13.3.2_sass@1.63.3
