@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": " Revert to pg@8.10.0 to avoid Next.js bug",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

@@ -45,7 +45,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
-    "pg": "~8.11.0",
+    "pg": "~8.10.0",
     "tslib": "~2.5.3"
   },
   "devDependencies": {

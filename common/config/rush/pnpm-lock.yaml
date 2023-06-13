@@ -203,7 +203,7 @@ importers:
       better-sqlite3: ~8.4.0
       dotenv: ~16.1.4
       eslint: ~8.42.0
-      pg: ~8.11.0
+      pg: ~8.10.0
       prettier: 2.8.8
       sqlite3: 5.1.4
       tslib: ~2.5.3
@@ -222,7 +222,7 @@ importers:
       benchpress: link:../../libraries/benchpress
       better-sqlite3: 8.4.0
       dotenv: 16.1.4
-      pg: 8.11.0
+      pg: 8.10.0
       sqlite3: 5.1.4
       tslib: 2.5.3
     devDependencies:
@@ -859,7 +859,7 @@ importers:
       '@types/uuid': ~9.0.2
       dotenv: ~16.1.4
       eslint: ~8.42.0
-      pg: ~8.11.0
+      pg: ~8.10.0
       prettier: 2.8.8
       tslib: ~2.5.3
       typescript: ~5.1.3
@@ -869,7 +869,7 @@ importers:
       '@dossierhq/core': link:../core
       '@dossierhq/database-adapter': link:../database-adapter
       '@dossierhq/postgres-core': link:../postgres-core
-      pg: 8.11.0
+      pg: 8.10.0
       tslib: 2.5.3
     devDependencies:
       '@dossierhq/core-vitest': link:../core-vitest
@@ -917,10 +917,10 @@ importers:
 
   ../../libraries/postgres-tools:
     specifiers:
-      pg: ~8.11.0
+      pg: ~8.10.0
       postgrator: ~7.1.1
     dependencies:
-      pg: 8.11.0
+      pg: 8.10.0
       postgrator: 7.1.1
 
   ../../libraries/react-components:
@@ -1338,7 +1338,7 @@ importers:
       mini-svg-data-uri: ~1.4.4
       next: ~13.4.5
       nodemon: ~2.0.22
-      pg: ~8.11.0
+      pg: ~8.10.0
       postgrator: ~7.1.1
       prettier: 2.8.8
       react: ~18.2.0
@@ -1400,7 +1400,7 @@ importers:
       lexical: 0.10.0
       lodash: 4.17.21
       next: 13.4.5_cpvzbyutg2okhbbkipcbqd7uwi
-      pg: 8.11.0
+      pg: 8.10.0
       postgrator: 7.1.1
       react: 18.2.0
       react-aria-components: 1.0.0-alpha.4_biqbaboplfbrettd7655fr4n2y
@@ -1467,11 +1467,11 @@ importers:
   ../../tools/generic-tools:
     specifiers:
       dotenv: ~16.1.4
-      pg: ~8.11.0
+      pg: ~8.10.0
       tslib: ~2.5.3
     dependencies:
       dotenv: 16.1.4
-      pg: 8.11.0
+      pg: 8.10.0
       tslib: 2.5.3
 
 packages:
@@ -13505,12 +13505,6 @@ packages:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
     dev: true
 
-  /pg-cloudflare/1.1.0:
-    resolution: {integrity: sha512-tGM8/s6frwuAIyRcJ6nWcIvd3+3NmUKIs6OjviIm1HPPFEt5MzQDOTBQyhPWg/m0kCl95M6gA1JaIXtS8KovOA==}
-    requiresBuild: true
-    dev: false
-    optional: true
-
   /pg-connection-string/2.6.0:
     resolution: {integrity: sha512-x14ibktcwlHKoHxx9X3uTVW9zIGR41ZB6QNhHb21OPNdCCO3NaRnpJuwKIQSR4u+Yqjx4HCvy7Hh7VSy1U4dGg==}
     dev: false
@@ -13524,12 +13518,12 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pg-pool/3.6.0_pg@8.11.0:
+  /pg-pool/3.6.0_pg@8.10.0:
     resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
     peerDependencies:
       pg: '>=8.0'
     dependencies:
-      pg: 8.11.0
+      pg: 8.10.0
     dev: false
 
   /pg-protocol/1.6.0:
@@ -13559,8 +13553,8 @@ packages:
       postgres-range: 1.1.3
     dev: true
 
-  /pg/8.11.0:
-    resolution: {integrity: sha512-meLUVPn2TWgJyLmy7el3fQQVwft4gU5NGyvV0XbD41iU9Jbg8lCH4zexhIkihDzVHJStlt6r088G6/fWeNjhXA==}
+  /pg/8.10.0:
+    resolution: {integrity: sha512-ke7o7qSTMb47iwzOSaZMfeR7xToFdkE71ifIipOAAaLIM0DYzfOAXlgFFmYUIE2BcJtvnVlGCID84ZzCegE8CQ==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       pg-native: '>=3.0.1'
@@ -13571,12 +13565,10 @@ packages:
       buffer-writer: 2.0.0
       packet-reader: 1.0.0
       pg-connection-string: 2.6.0
-      pg-pool: 3.6.0_pg@8.11.0
+      pg-pool: 3.6.0_pg@8.10.0
       pg-protocol: 1.6.0
       pg-types: 2.2.0
       pgpass: 1.0.4
-    optionalDependencies:
-      pg-cloudflare: 1.1.0
     dev: false
 
   /pgpass/1.0.4:
