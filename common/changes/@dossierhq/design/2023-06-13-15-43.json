@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Add GridList component. Enable onClick on Input.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}

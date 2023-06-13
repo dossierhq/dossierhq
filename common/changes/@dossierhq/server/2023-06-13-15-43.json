@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Actually validate schema definition after update.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

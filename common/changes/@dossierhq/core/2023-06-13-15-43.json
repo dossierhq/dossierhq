@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Normalize schema. Prevent changing adminOnly of types. Prevent changing field types, removing fields in schema. Prevent duplicate field names in schema. Enable partial update of schema. Validate integer on number fields. Break: Replace AdminSchema.mergeWith() with .updateAndValidate().",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}
