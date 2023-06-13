@@ -592,6 +592,41 @@ describe('validate()', () => {
     );
   });
 
+  test('Entity field referencing an adminOnly entity type from an adminOnly field', () => {
+    expectOkResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            nameField: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.Entity,
+                list: false,
+                adminOnly: true,
+                required: false,
+                entityTypes: ['AdminOnly'],
+              },
+            ],
+          },
+          {
+            name: 'AdminOnly',
+            adminOnly: true,
+            authKeyPattern: null,
+            nameField: null,
+            fields: [],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate()
+    );
+  });
+
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new AdminSchema({
@@ -1555,7 +1590,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but Foo isn’t'
+      'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly'
     );
   });
 
@@ -1595,7 +1630,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but Foo isn’t'
+      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly'
     );
   });
 
@@ -1628,7 +1663,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced value type in valueTypes (Bar) is adminOnly, but Foo isn’t'
+      'Foo.bar: Referenced value type in valueTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly'
     );
   });
 

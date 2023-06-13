@@ -378,9 +378,9 @@ export class AdminSchema {
                 `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
               );
             }
-            if (referencedEntityType.adminOnly && !typeSpec.adminOnly) {
+            if (referencedEntityType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is adminOnly, but ${typeSpec.name} isn’t`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`
               );
             }
           }
@@ -398,9 +398,9 @@ export class AdminSchema {
                 `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes ${referencedTypeName} doesn’t exist`
               );
             }
-            if (referencedEntityType.adminOnly && !typeSpec.adminOnly) {
+            if (referencedEntityType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is adminOnly, but ${typeSpec.name} isn’t`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`
               );
             }
           }
@@ -418,9 +418,9 @@ export class AdminSchema {
                 `${typeSpec.name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`
               );
             }
-            if (referencedValueType.adminOnly && !typeSpec.adminOnly) {
+            if (referencedValueType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced value type in valueTypes (${referencedTypeName}) is adminOnly, but ${typeSpec.name} isn’t`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced value type in valueTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`
               );
             }
           }
