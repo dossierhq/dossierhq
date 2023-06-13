@@ -33,7 +33,7 @@ CREATE TABLE entities (
     updated_at TEXT NOT NULL,
     updated_seq INTEGER NOT NULL,
     latest_entity_versions_id INTEGER,
-    published_entity_versions_id INTEGER, valid INTEGER NOT NULL DEFAULT TRUE, revalidate INTEGER NOT NULL DEFAULT FALSE,
+    published_entity_versions_id INTEGER, valid INTEGER NOT NULL DEFAULT TRUE, revalidate INTEGER NOT NULL DEFAULT FALSE, dirty INTEGER NOT NULL DEFAULT 0,
     CONSTRAINT entities_uuid UNIQUE (uuid),
     CONSTRAINT entities_name UNIQUE (name),
     CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
@@ -139,3 +139,16 @@ CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name
 CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq);
 CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid);
 CREATE INDEX entities_revalidate ON entities(revalidate);
+CREATE INDEX entities_dirty ON entities(dirty);
+CREATE TABLE entity_latest_value_types (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    value_type TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
+  );
+CREATE TABLE entity_published_value_types (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    value_type TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
+  );

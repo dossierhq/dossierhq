@@ -54,6 +54,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   fullTextSearchText: string;
   locations: Location[];
   referenceIds: DatabaseResolvedEntityReference[];
+  valueTypes: string[];
   fieldsData: Record<string, unknown>;
 }
 
@@ -122,6 +123,7 @@ export interface DatabaseAdminEntityPublishUpdateEntityArg
   status: AdminEntityStatus;
   fullTextSearchText: string;
   locations: Location[];
+  valueTypes: string[];
 }
 
 export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } & (
@@ -198,6 +200,7 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   fieldValues: Record<string, unknown>;
   fullTextSearchText: string;
   referenceIds: DatabaseResolvedEntityReference[];
+  valueTypes: string[];
   locations: Location[];
 }
 

@@ -64,6 +64,7 @@ export interface EncodeAdminEntityResult {
   data: Record<string, unknown>;
   referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
+  valueTypes: string[];
   fullTextSearchText: string;
   uniqueIndexValues: Map<string, UniqueIndexValue[]>;
 }
@@ -352,6 +353,7 @@ export async function encodeAdminEntity(
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
+  const valueTypesCollector = createValueTypesCollector();
   const uniqueIndexCollector = createUniqueIndexCollector(schema);
 
   // TODO move all validation to this setup from the encoding
@@ -366,6 +368,7 @@ export async function encodeAdminEntity(
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
+    valueTypesCollector.collect(node);
     uniqueIndexCollector.collect(node);
   }
 
@@ -375,6 +378,7 @@ export async function encodeAdminEntity(
     data: {},
     referenceIds: [],
     locations: locationsCollector.result,
+    valueTypes: valueTypesCollector.result,
     fullTextSearchText: ftsCollector.result,
     uniqueIndexValues: uniqueIndexCollector.result,
   };
@@ -656,6 +660,23 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
     },
     get result(): Location[] {
       return locations;
+    },
+  };
+}
+
+export function createValueTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+  const result: string[] = [];
+  return {
+    collect: (node: ItemTraverseNode<TSchema>) => {
+      switch (node.type) {
+        case ItemTraverseNodeType.fieldItem:
+          if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
+            result.push(node.value.type);
+          }
+      }
+    },
+    get result(): string[] {
+      return result;
     },
   };
 }

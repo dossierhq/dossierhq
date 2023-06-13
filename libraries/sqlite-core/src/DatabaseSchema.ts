@@ -16,8 +16,8 @@ export interface EntitiesTable {
   resolved_auth_key: string;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
   never_published: number; // boolean
+  dirty: number; // bit field 0x1 = validate_latest, 0x2 = validate_published, 0x4 = index_latest, 0x8 = index_published
   valid: number; // boolean
-  revalidate: number; // boolean
   created_at: string;
   updated_at: string;
   updated_seq: number;
@@ -35,6 +35,18 @@ export interface EntityPublishedReferencesTable {
   id: number;
   from_entities_id: number;
   to_entities_id: number;
+}
+
+export interface EntityLatestValueTypesTable {
+  id: number;
+  entities_id: number;
+  value_type: string;
+}
+
+export interface EntityPublishedValueTypesTable {
+  id: number;
+  entities_id: number;
+  value_type: string;
 }
 
 export interface EntityPublishingEventsTable {

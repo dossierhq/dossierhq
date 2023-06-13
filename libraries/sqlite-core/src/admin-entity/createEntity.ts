@@ -12,7 +12,7 @@ import { queryOne, queryRun } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
+import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
 
 export async function adminCreateEntity(
   database: Database,
@@ -71,14 +71,16 @@ export async function adminCreateEntity(
     return updateLatestDraftIdResult;
   }
 
-  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
-    database,
-    context,
-    { entityInternalId: entityId },
-    entity.referenceIds,
-    entity.locations,
-    { skipDelete: true }
-  );
+  const updateReferencesIndexResult =
+    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
+      database,
+      context,
+      { entityInternalId: entityId },
+      entity.referenceIds,
+      entity.locations,
+      entity.valueTypes,
+      { skipDelete: true }
+    );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });

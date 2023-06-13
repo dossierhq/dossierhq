@@ -172,9 +172,7 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
 
   const createResult = await adminClient.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, {
-      fields: {
-        any: adminLocationsValueItem,
-      },
+      fields: { any: adminLocationsValueItem },
     }),
     { publish: true }
   );

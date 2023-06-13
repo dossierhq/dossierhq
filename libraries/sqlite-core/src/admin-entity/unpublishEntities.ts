@@ -100,6 +100,17 @@ export async function adminEntityUnpublishEntities(
   );
   if (removeLocationsIndexResult.isError()) return removeLocationsIndexResult;
 
+  const removeValueTypesIndexResult = await queryRun(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
+      sql`DELETE FROM entity_published_value_types WHERE entities_id IN ${addValueList(
+        references.map(({ entityInternalId }) => entityInternalId as number)
+      )}`;
+    })
+  );
+  if (removeValueTypesIndexResult.isError()) return removeValueTypesIndexResult;
+
   const ftsResult = await queryRun(
     database,
     context,

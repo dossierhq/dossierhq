@@ -208,6 +208,24 @@ const VERSION_11: SchemaVersionDefinition[] = [
   'CREATE INDEX entities_revalidate ON entities(revalidate)',
 ];
 
+const VERSION_12: SchemaVersionDefinition[] = [
+  'ALTER TABLE entities ADD COLUMN dirty INTEGER NOT NULL DEFAULT 0',
+  'CREATE INDEX entities_dirty ON entities(dirty)',
+  'UPDATE entities SET dirty = 1 WHERE revalidate',
+  `CREATE TABLE entity_latest_value_types (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    value_type TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
+  )`,
+  `CREATE TABLE entity_published_value_types (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    value_type TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
+  )`,
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -221,6 +239,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_9,
   VERSION_10,
   VERSION_11,
+  VERSION_12,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

@@ -105,7 +105,8 @@ export async function adminUpdateEntity(
       updatedEntity
     );
     if (encodeResult.isError()) return encodeResult;
-    const { data, name, referenceIds, locations, fullTextSearchText } = encodeResult.value;
+    const { data, name, referenceIds, locations, valueTypes, fullTextSearchText } =
+      encodeResult.value;
 
     const updateResult = await databaseAdapter.adminEntityUpdateEntity(
       context,
@@ -120,6 +121,7 @@ export async function adminUpdateEntity(
         fieldValues: data,
         fullTextSearchText,
         referenceIds,
+        valueTypes,
         locations,
       }
     );

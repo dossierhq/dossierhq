@@ -88,6 +88,7 @@ describe('Admin adminCreateEntity', () => {
                 "resolvedAuthKey": "none",
               },
               "type": "TitleOnly",
+              "valueTypes": [],
             },
           ],
           [

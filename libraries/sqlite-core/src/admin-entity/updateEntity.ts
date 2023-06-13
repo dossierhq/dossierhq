@@ -15,7 +15,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
+import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,
@@ -146,7 +146,7 @@ export async function adminEntityUpdateEntity(
              updated_seq = ?3,
              status = ?4,
              valid = TRUE,
-             revalidate = FALSE
+             dirty = dirty & (~(1|4))
            WHERE id = ?5`,
     values: [
       versionsId,
@@ -171,14 +171,16 @@ export async function adminEntityUpdateEntity(
   if (ftsResult.isError()) return ftsResult;
 
   // Update latest indexes
-  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
-    database,
-    context,
-    entity,
-    entity.referenceIds,
-    entity.locations,
-    { skipDelete: false }
-  );
+  const updateReferencesIndexResult =
+    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
+      database,
+      context,
+      entity,
+      entity.referenceIds,
+      entity.locations,
+      entity.valueTypes,
+      { skipDelete: false }
+    );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ name: newName, updatedAt: now });

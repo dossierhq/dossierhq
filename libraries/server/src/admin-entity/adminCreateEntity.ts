@@ -79,6 +79,7 @@ export async function adminCreateEntity(
       fullTextSearchText: encodeEntityResult.fullTextSearchText,
       referenceIds: encodeEntityResult.referenceIds,
       locations: encodeEntityResult.locations,
+      valueTypes: encodeEntityResult.valueTypes,
       fieldsData: encodeEntityResult.data,
     });
     if (createResult.isError()) return createResult;

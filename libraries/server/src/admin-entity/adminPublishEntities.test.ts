@@ -84,6 +84,7 @@ describe('Admin adminPublishEntities', () => {
               "fullTextSearchText": "Title",
               "locations": [],
               "status": "published",
+              "valueTypes": [],
             },
           ],
           [

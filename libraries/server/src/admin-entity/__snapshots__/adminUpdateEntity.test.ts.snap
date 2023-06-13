@@ -42,6 +42,7 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
         "subjectInternalId": 123,
       },
       "status": "draft",
+      "valueTypes": [],
       "version": 1,
     },
   ],

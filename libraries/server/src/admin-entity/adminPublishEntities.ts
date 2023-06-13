@@ -29,6 +29,7 @@ import {
   createLocationsCollector,
   createReferencesCollector,
   createUniqueIndexCollector,
+  createValueTypesCollector,
   decodeAdminEntityFields,
 } from '../EntityCodec.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
@@ -43,6 +44,7 @@ interface VersionInfoToBePublished {
   fullTextSearchText: string;
   references: EntityReference[];
   locations: Location[];
+  valueTypes: string[];
   uniqueIndexValues: Map<string, UniqueIndexValue[]>;
 }
 
@@ -214,7 +216,7 @@ async function collectVersionsInfo(
       if (verifyFieldsResult.isError()) {
         return verifyFieldsResult;
       }
-      const { fullTextSearchText, references, locations, uniqueIndexValues } =
+      const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =
         verifyFieldsResult.value;
 
       versionsInfo.push({
@@ -225,6 +227,7 @@ async function collectVersionsInfo(
         fullTextSearchText,
         references,
         locations,
+        valueTypes,
         uniqueIndexValues,
         status: versionIsLatest ? AdminEntityStatus.published : AdminEntityStatus.modified,
       });
@@ -250,6 +253,7 @@ function verifyFieldValuesAndCollectInformation(
     fullTextSearchText: string;
     references: EntityReference[];
     locations: Location[];
+    valueTypes: string[];
     uniqueIndexValues: Map<string, UniqueIndexValue[]>;
   },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -262,6 +266,7 @@ function verifyFieldValuesAndCollectInformation(
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
   const locationsCollector = createLocationsCollector();
+  const valueTypesCollector = createValueTypesCollector();
   const uniqueIndexCollector = createUniqueIndexCollector(publishedSchema);
 
   for (const node of traverseEntity(publishedSchema, [`entity(${reference.id})`], entity)) {
@@ -275,12 +280,14 @@ function verifyFieldValuesAndCollectInformation(
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
+    valueTypesCollector.collect(node);
     uniqueIndexCollector.collect(node);
   }
   return ok({
     fullTextSearchText: ftsCollector.result,
     references: referencesCollector.result,
     locations: locationsCollector.result,
+    valueTypes: valueTypesCollector.result,
     uniqueIndexValues: uniqueIndexCollector.result,
   });
 }
@@ -297,12 +304,18 @@ async function publishEntitiesAndCollectResult(
     if (versionInfo.effect === 'none') {
       updatedAt = versionInfo.updatedAt;
     } else {
-      const { entityVersionInternalId, fullTextSearchText, locations, entityInternalId } =
-        versionInfo;
+      const {
+        entityVersionInternalId,
+        fullTextSearchText,
+        locations,
+        valueTypes,
+        entityInternalId,
+      } = versionInfo;
       const updateResult = await databaseAdapter.adminEntityPublishUpdateEntity(context, {
         entityVersionInternalId,
         fullTextSearchText,
         locations,
+        valueTypes,
         status,
         entityInternalId,
       });

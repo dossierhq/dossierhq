@@ -22,8 +22,9 @@ type EntityRow = Pick<
 > &
   Pick<EntityVersionsTable, 'version' | 'fields'>;
 
+// dirty & 1 (validate_latest) = 1, 3, 5, 7, 9, 11, 13, 15
 const QUERY =
-  'WITH entities_cte AS (SELECT id FROM entities WHERE revalidate LIMIT 1) ' +
+  'WITH entities_cte AS (SELECT id FROM entities WHERE dirty IN (1, 3, 5, 7, 9, 11, 13, 15) LIMIT 1) ' +
   'SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields ' +
   'FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id';
 
