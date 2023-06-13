@@ -1,10 +1,17 @@
-import type {
-  FieldSpecification,
-  PublishValidationIssue,
-  SaveValidationIssue,
+import {
+  groupValidationIssuesByTopLevelPath,
+  type FieldSpecification,
+  type PublishValidationIssue,
+  type SaveValidationIssue,
 } from '@dossierhq/core';
-import { groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
-import { Column, Text } from '@dossierhq/design';
+import {
+  Column,
+  GridList,
+  GridListDragHandle,
+  GridListItem,
+  Text,
+  useDragAndDrop,
+} from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 
@@ -43,25 +50,71 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
     [validationIssues]
   );
 
-  const itemsAndNew = value ? [...value, null] : [null];
+  const { dragAndDropHooks: fieldsDragAndDropHooks } = useDragAndDrop({
+    getItems: (keys) =>
+      [...keys].map((key) => ({ 'application/json': JSON.stringify(value?.[key as number]) })),
+    onReorder: (event) => {
+      if (!value || event.target.dropPosition === 'on') {
+        return;
+      }
+      const moveIndex = [...event.keys][0] as number;
+      let targetIndex = event.target.key as number;
+      if (moveIndex === targetIndex) {
+        return;
+      }
+
+      const newValue = [...value];
+      const [itemToMove] = newValue.splice(moveIndex, 1);
+      if (targetIndex > moveIndex) {
+        targetIndex--;
+      }
+
+      if (event.target.dropPosition === 'after') {
+        newValue.splice(targetIndex + 1, 0, itemToMove);
+      } else {
+        newValue.splice(targetIndex, 0, itemToMove);
+      }
+      onChange(newValue);
+    },
+  });
 
   return (
-    <Column gap={2} overflowY="auto">
-      {itemsAndNew.map((it, index) => {
-        return (
-          <div key={index} className="nested-value-item-indentation">
-            <Editor
-              value={it}
-              fieldSpec={fieldSpec}
-              adminOnly={adminOnly}
-              validationIssues={indexValidationIssues.get(index) ?? noErrors}
-              onChange={(newItemValue) => handleItemChange(newItemValue, index)}
-            />
-          </div>
-        );
-      })}
+    <Column overflowY="auto">
+      {value !== null ? (
+        <GridList aria-label={`List of values`} dragAndDropHooks={fieldsDragAndDropHooks}>
+          {value.map((it, index) => {
+            return (
+              <GridListItem
+                key={index}
+                id={index}
+                className="nested-value-item-indentation"
+                marginVertical={1}
+                textValue={`Value ${index + 1}`}
+              >
+                <GridListDragHandle />
+                <Editor
+                  value={it}
+                  fieldSpec={fieldSpec}
+                  adminOnly={adminOnly}
+                  validationIssues={indexValidationIssues.get(index) ?? noErrors}
+                  onChange={(newItemValue) => handleItemChange(newItemValue, index)}
+                />
+              </GridListItem>
+            );
+          })}
+        </GridList>
+      ) : null}
+      <div className="nested-value-item-indentation">
+        <Editor
+          value={null}
+          fieldSpec={fieldSpec}
+          adminOnly={adminOnly}
+          validationIssues={noErrors}
+          onChange={(newItemValue) => handleItemChange(newItemValue, value ? value.length : 0)}
+        />
+      </div>
       {rootValidationIssues.map((error, index) => (
-        <Text key={index} textStyle="body2" color="danger">
+        <Text key={index} textStyle="body2" color="danger" marginTop={1}>
           {error.message}
         </Text>
       ))}
