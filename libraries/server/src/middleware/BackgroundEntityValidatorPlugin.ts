@@ -19,7 +19,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   private logger: Logger;
   private handle: NodeJS.Timeout | null = null;
   private lastOperationTimestamp = 0;
-  private revalidate = false;
+  private validate = false;
   private batchCount = 0;
 
   constructor(server: Server, logger: Logger) {
@@ -33,7 +33,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
 
   start() {
     this.logger.info('BackgroundEntityValidatorPlugin: starting');
-    this.revalidate = true;
+    this.validate = true;
     this.batchCount = 0;
     if (this.handle) {
       clearTimeout(this.handle);
@@ -70,10 +70,10 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
         ReturnType<AdminClient['updateSchemaSpecification']>
       >;
       if (payload.effect === 'updated') {
-        this.revalidate = true;
+        this.validate = true;
         if (!this.handle) {
           this.logger.info(
-            'BackgroundEntityValidatorPlugin: starting revalidation after schema update'
+            'BackgroundEntityValidatorPlugin: starting validation after schema update'
           );
           this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
         }
@@ -98,31 +98,30 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
       return;
     }
 
-    if (this.revalidate) {
+    if (this.validate) {
       const result = await this.server.revalidateNextEntity();
-      this.batchCount++;
+      if (result.isOk() && result.value) {
+        this.batchCount++;
+      }
 
       if (this.batchCount % 200 === 0) {
-        this.logger.info(
-          'BackgroundEntityValidatorPlugin: revalidated %d entities',
-          this.batchCount
-        );
+        this.logger.info('BackgroundEntityValidatorPlugin: validated %d entities', this.batchCount);
       }
 
       if (result.isOk()) {
         if (result.value) {
           if (!result.value.valid) {
             this.logger.warn(
-              'BackgroundEntityValidatorPlugin: revalidated entity: %s, but it was invalid',
+              'BackgroundEntityValidatorPlugin: validated entity: %s, but it was invalid',
               result.value.id
             );
           }
         } else {
           this.logger.info(
-            'BackgroundEntityValidatorPlugin: no more entities to revalidate, validated %d entities',
+            'BackgroundEntityValidatorPlugin: no more entities to validate, validated %d entities',
             this.batchCount
           );
-          this.revalidate = false;
+          this.validate = false;
           this.batchCount = 0;
         }
       } else {
@@ -134,7 +133,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
       }
     }
 
-    if (this.revalidate) {
+    if (this.validate) {
       this.handle = setTimeout(this.tick, TIME_SINCE_LAST_REVALIDATION_MS);
     }
   }
