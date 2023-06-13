@@ -102,6 +102,17 @@ export async function adminEntityUnpublishEntities(
   );
   if (removeLocationIndexResult.isError()) return removeLocationIndexResult;
 
+  const removeValueTypesIndexResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildPostgresSqlQuery(({ sql, addValue }) => {
+      sql`DELETE FROM entity_published_value_types WHERE entities_id = ANY(${addValue(
+        references.map(({ entityInternalId }) => entityInternalId)
+      )})`;
+    })
+  );
+  if (removeValueTypesIndexResult.isError()) return removeValueTypesIndexResult;
+
   return ok(
     references.map((reference) => {
       const row = result.value.find((it) => it.id === reference.entityInternalId);

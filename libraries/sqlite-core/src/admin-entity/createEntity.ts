@@ -29,9 +29,7 @@ export async function adminCreateEntity(
     randomNameGenerator,
     entity
   );
-  if (createEntityRowResult.isError()) {
-    return createEntityRowResult;
-  }
+  if (createEntityRowResult.isError()) return createEntityRowResult;
 
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 

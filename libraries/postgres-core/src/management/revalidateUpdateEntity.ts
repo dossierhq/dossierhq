@@ -14,8 +14,6 @@ export async function managementRevalidateUpdateEntity(
   valid: boolean
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { query, sql } = createPostgresSqlQuery();
-  sql`UPDATE entities SET valid = ${valid}, revalidate = FALSE WHERE id = ${
-    reference.entityInternalId as number
-  }`;
+  sql`UPDATE entities SET valid = ${valid}, dirty = dirty & (~1) WHERE id = ${reference.entityInternalId}`;
   return await queryNone(databaseAdapter, context, query);
 }

@@ -8,12 +8,13 @@ import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 
-export async function updateEntityLatestReferencesAndLocationsIndexes(
+export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
   referenceIds: DatabaseResolvedEntityReference[],
   locations: Location[],
+  valueTypes: string[],
   { skipDelete }: { skipDelete: boolean }
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (!skipDelete) {
@@ -36,6 +37,16 @@ export async function updateEntityLatestReferencesAndLocationsIndexes(
       )
     );
     if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
+
+    const removeExistingValueTypesResult = await queryNone(
+      database,
+      context,
+      buildPostgresSqlQuery(
+        ({ sql }) =>
+          sql`DELETE FROM entity_latest_value_types WHERE entities_id = ${entity.entityInternalId}`
+      )
+    );
+    if (removeExistingValueTypesResult.isError()) return removeExistingValueTypesResult;
   }
 
   if (referenceIds.length > 0) {
@@ -66,6 +77,21 @@ export async function updateEntityLatestReferencesAndLocationsIndexes(
       })
     );
     if (insertLocationsResult.isError()) return insertLocationsResult;
+  }
+
+  if (valueTypes.length > 0) {
+    const insertValueTypesResult = await queryNone(
+      database,
+      context,
+      buildPostgresSqlQuery(({ sql, addValue }) => {
+        sql`INSERT INTO entity_latest_value_types (entities_id, value_type) VALUES`;
+        const entitiesId = addValue(entity.entityInternalId);
+        for (const valueType of valueTypes) {
+          sql`(${entitiesId}, ${valueType})`;
+        }
+      })
+    );
+    if (insertValueTypesResult.isError()) return insertValueTypesResult;
   }
 
   return ok(undefined);

@@ -226,6 +226,12 @@ const VERSION_12: SchemaVersionDefinition[] = [
   )`,
 ];
 
+const _VERSION_13: SchemaVersionDefinition[] = [
+  'DROP INDEX entities_revalidate',
+  'ALTER TABLE entities DROP COLUMN revalidate',
+  'UPDATE entities SET dirty = 4 | 8',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,

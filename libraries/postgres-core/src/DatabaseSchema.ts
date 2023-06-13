@@ -41,8 +41,8 @@ export interface EntitiesTable {
   archived: boolean; // TODO remove and rely on status instead
   published_entity_versions_id: number | null;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
+  dirty: number; // bit field 0x1 = validate_latest, 0x2 = validate_published, 0x4 = index_latest, 0x8 = index_published
   valid: boolean;
-  revalidate: boolean;
   auth_key: string;
   resolved_auth_key: string;
 }
@@ -51,6 +51,18 @@ export interface EntityPublishedReferencesTable {
   id: number;
   from_entities_id: number;
   to_entities_id: number;
+}
+
+export interface EntityLatestValueTypesTable {
+  id: number;
+  entities_id: number;
+  value_type: string;
+}
+
+export interface EntityPublishedValueTypesTable {
+  id: number;
+  entities_id: number;
+  value_type: string;
 }
 
 export interface EntityVersionsTable {

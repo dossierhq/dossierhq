@@ -16,9 +16,9 @@ export async function managementMarkEntitiesForRevalidation(
   const { sql, query } = createPostgresSqlQuery();
   if (valueTypes.length > 0) {
     //TODO be more specific when we have a value type -> entity index
-    sql`UPDATE entities SET revalidate = TRUE WHERE NOT revalidate`;
+    sql`UPDATE entities SET dirty = dirty | 1 WHERE dirty & 1 = 0`;
   } else {
-    sql`UPDATE entities SET revalidate = TRUE WHERE NOT revalidate AND type = ANY(${entityTypes})`;
+    sql`UPDATE entities SET dirty = dirty | 1 WHERE dirty & 1 = 0 AND type = ANY(${entityTypes})`;
   }
   const result = await queryRun(databaseAdapter, context, query);
   if (result.isError()) return result;

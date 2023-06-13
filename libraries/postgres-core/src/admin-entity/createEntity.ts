@@ -1,7 +1,7 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
-  createPostgresSqlQuery,
   DEFAULT,
+  createPostgresSqlQuery,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
@@ -15,7 +15,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
+import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
 
 export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -32,9 +32,7 @@ export async function adminCreateEntity(
     randomNameGenerator,
     entity
   );
-  if (createEntityRowResult.isError()) {
-    return createEntityRowResult;
-  }
+  if (createEntityRowResult.isError()) return createEntityRowResult;
 
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 
@@ -59,14 +57,16 @@ export async function adminCreateEntity(
     return updateLatestDraftIdResult;
   }
 
-  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
-    databaseAdapter,
-    context,
-    { entityInternalId: entityId },
-    entity.referenceIds,
-    entity.locations,
-    { skipDelete: true }
-  );
+  const updateReferencesIndexResult =
+    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
+      databaseAdapter,
+      context,
+      { entityInternalId: entityId },
+      entity.referenceIds,
+      entity.locations,
+      entity.valueTypes,
+      { skipDelete: true }
+    );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });

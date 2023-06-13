@@ -13,7 +13,7 @@ import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { updateEntityLatestReferencesAndLocationsIndexes } from './updateEntityLatestReferencesAndLocationsIndexes.js';
+import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -152,7 +152,7 @@ export async function adminEntityUpdateEntity(
       updated = nextval('entities_updated_seq'),
       status = $3,
       valid = TRUE,
-      revalidate = FALSE
+      dirty = dirty & (~(1|4))
     WHERE id = $4
     RETURNING updated_at`,
       values: [versionsId, entity.fullTextSearchText, entity.status, entity.entityInternalId],
@@ -161,14 +161,16 @@ export async function adminEntityUpdateEntity(
   if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;
 
-  const updateReferencesIndexResult = await updateEntityLatestReferencesAndLocationsIndexes(
-    databaseAdapter,
-    context,
-    entity,
-    entity.referenceIds,
-    entity.locations,
-    { skipDelete: false }
-  );
+  const updateReferencesIndexResult =
+    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
+      databaseAdapter,
+      context,
+      entity,
+      entity.referenceIds,
+      entity.locations,
+      entity.valueTypes,
+      { skipDelete: false }
+    );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ name: newName, updatedAt });

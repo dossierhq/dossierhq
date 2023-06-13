@@ -121,6 +121,32 @@ export async function adminEntityPublishUpdateEntity(
     if (insertResult.isError()) return insertResult;
   }
 
+  // Update value types index: Clear existing
+  const clearValueTypesResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildPostgresSqlQuery(({ sql }) => {
+      sql`DELETE FROM entity_published_value_types WHERE entities_id = ${entityInternalId}`;
+    })
+  );
+  if (clearValueTypesResult.isError()) return clearValueTypesResult;
+
+  // Update value types index: Insert new
+  if (values.valueTypes.length > 0) {
+    const insertResult = await queryNone(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql, addValue }) => {
+        sql`INSERT INTO entity_published_value_types (entities_id, value_type) VALUES`;
+        const entitiesId = addValue(entityInternalId);
+        for (const valueType of values.valueTypes) {
+          sql`(${entitiesId}, ${valueType})`;
+        }
+      })
+    );
+    if (insertResult.isError()) return insertResult;
+  }
+
   const { updated_at: updatedAt } = updateResult.value;
   return ok({ updatedAt });
 }
