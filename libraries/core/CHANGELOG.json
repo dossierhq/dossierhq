@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.2.18",
+      "tag": "@dossierhq/core_v0.2.18",
+      "date": "Tue, 13 Jun 2023 20:53:31 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Enable schemas where adminOnly fields refer to adminOnly types"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.17",
       "tag": "@dossierhq/core_v0.2.17",
       "date": "Tue, 13 Jun 2023 15:58:39 GMT",

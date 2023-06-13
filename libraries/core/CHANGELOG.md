@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Tue, 13 Jun 2023 15:58:39 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 20:53:31 GMT and should not be manually modified.
+
+## 0.2.18
+Tue, 13 Jun 2023 20:53:31 GMT
+
+### Updates
+
+- Enable schemas where adminOnly fields refer to adminOnly types
 
 ## 0.2.17
 Tue, 13 Jun 2023 15:58:39 GMT
