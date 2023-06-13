@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.2.17",
+      "tag": "@dossierhq/core_v0.2.17",
+      "date": "Tue, 13 Jun 2023 15:58:39 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Normalize schema. Prevent changing adminOnly of types. Prevent changing field types, removing fields in schema. Prevent duplicate field names in schema. Enable partial update of schema. Validate integer on number fields. Break: Replace AdminSchema.mergeWith() with .updateAndValidate()."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.16",
       "tag": "@dossierhq/core_v0.2.16",
       "date": "Tue, 09 May 2023 22:47:11 GMT",

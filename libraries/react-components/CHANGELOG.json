@@ -2,6 +2,18 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.2.17",
+      "tag": "@dossierhq/react-components_v0.2.17",
+      "date": "Tue, 13 Jun 2023 15:58:39 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Enable making more changes to existing fields. Validate regexp pattern. Enable reordering fields in schema editor. Enable reorder items in entity editor."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.16",
       "tag": "@dossierhq/react-components_v0.2.16",
       "date": "Tue, 09 May 2023 22:47:11 GMT",
