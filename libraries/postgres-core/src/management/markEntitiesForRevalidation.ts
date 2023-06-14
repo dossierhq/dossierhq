@@ -13,15 +13,28 @@ export async function managementMarkEntitiesForRevalidation(
   entityTypes: string[],
   valueTypes: string[]
 ): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic> {
-  const { sql, query } = createPostgresSqlQuery();
-  if (valueTypes.length > 0) {
-    //TODO be more specific when we have a value type -> entity index
-    sql`UPDATE entities SET dirty = dirty | 1 WHERE dirty & 1 = 0`;
-  } else {
-    sql`UPDATE entities SET dirty = dirty | 1 WHERE dirty & 1 = 0 AND type = ANY(${entityTypes})`;
-  }
-  const result = await queryRun(databaseAdapter, context, query);
-  if (result.isError()) return result;
+  let count = 0;
 
-  return ok({ count: result.value });
+  if (entityTypes.length > 0) {
+    const { sql, query } = createPostgresSqlQuery();
+
+    sql`UPDATE entities SET dirty = dirty | 1 WHERE type = ANY(${entityTypes}) AND dirty & 1 = 0`;
+
+    const result = await queryRun(databaseAdapter, context, query);
+    if (result.isError()) return result;
+    count += result.value;
+  }
+
+  if (valueTypes.length > 0) {
+    const { sql, query } = createPostgresSqlQuery();
+
+    sql`UPDATE entities SET dirty = dirty | 1 FROM entity_latest_value_types elvt
+    WHERE elvt.value_type = ANY(${valueTypes}) AND elvt.entities_id = entities.id AND entities.dirty & 1 = 0`;
+
+    const result = await queryRun(databaseAdapter, context, query);
+    if (result.isError()) return result;
+    count += result.value;
+  }
+
+  return ok({ count });
 }

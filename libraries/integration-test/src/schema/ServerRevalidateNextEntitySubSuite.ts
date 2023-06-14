@@ -1,13 +1,18 @@
+import type { EntityReference } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
+import { assertEquals, assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
+import {
+  createEntityWithInvalidValueItem,
+  createInvalidEntity,
+} from '../shared-entity/InvalidEntityUtils.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const ServerRevalidateNextEntitySubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   serverRevalidateNextEntity_all,
   serverRevalidateNextEntity_changingValidationsWithInvalidEntity,
+  serverRevalidateNextEntity_changingValidationsWithInvalidValueItem,
 ];
 
 async function serverRevalidateNextEntity_all({ server }: SchemaTestContext) {
@@ -32,8 +37,30 @@ async function serverRevalidateNextEntity_changingValidationsWithInvalidEntity({
     })
   ).valueOrThrow();
 
-  // revalidate all entities
-  let entityValidationResult: Awaited<ReturnType<Server['revalidateNextEntity']>> | null = null;
+  const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
+  assertEquals(validations, [{ id: entity.id, valid: false }]);
+}
+
+async function serverRevalidateNextEntity_changingValidationsWithInvalidValueItem({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  const entity = (
+    await createEntityWithInvalidValueItem(server, adminClient, {
+      skipRevalidateAllEntities: true,
+    })
+  ).valueOrThrow();
+
+  const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
+  assertEquals(validations, [{ id: entity.id, valid: false }]);
+}
+
+async function validateAllEntitiesAndCaptureResultsForEntity(
+  server: Server,
+  reference: EntityReference
+) {
+  const result: { id: string; valid: boolean }[] = [];
 
   let done = false;
   while (!done) {
@@ -43,12 +70,10 @@ async function serverRevalidateNextEntity_changingValidationsWithInvalidEntity({
       done = true;
     }
 
-    if (validationResult.value && validationResult.value.id === entity.id) {
-      entityValidationResult = validationResult;
+    if (validationResult.value && validationResult.value.id === reference.id) {
+      result.push(validationResult.value);
     }
   }
 
-  // check that the entity was marked as invalid
-  assertTruthy(entityValidationResult);
-  assertResultValue(entityValidationResult, { id: entity.id, valid: false });
+  return result;
 }

@@ -12,17 +12,32 @@ export async function managementMarkEntitiesForRevalidation(
   entityTypes: string[],
   valueTypes: string[]
 ): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic> {
-  const { sql, query, addValueList } = createSqliteSqlQuery();
-  if (valueTypes.length > 0) {
-    //TODO be more specific when we have a value type -> entity index
-    sql`UPDATE entities SET dirty = dirty | 1 WHERE dirty IN (0, 2, 4, 6, 8, 10 , 12, 14)`;
-  } else {
-    sql`UPDATE entities SET dirty = dirty | 1 WHERE dirty IN (0, 2, 4, 6, 8, 10 , 12, 14) AND type IN ${addValueList(
-      entityTypes
-    )}`;
-  }
-  const result = await queryRun(database, context, query);
-  if (result.isError()) return result;
+  let count = 0;
 
-  return ok({ count: result.value });
+  if (entityTypes.length > 0) {
+    const { sql, query, addValueList } = createSqliteSqlQuery();
+
+    sql`UPDATE entities SET dirty = dirty | 1 WHERE type IN ${addValueList(
+      entityTypes
+    )} AND dirty & 1 = 0`;
+
+    const result = await queryRun(database, context, query);
+    if (result.isError()) return result;
+    count += result.value;
+  }
+
+  if (valueTypes.length > 0) {
+    const { sql, query, addValueList } = createSqliteSqlQuery();
+
+    sql`UPDATE entities SET dirty = dirty | 1 FROM entity_latest_value_types elvt
+    WHERE elvt.value_type IN ${addValueList(
+      valueTypes
+    )} AND elvt.entities_id = entities.id AND entities.dirty & 1 = 0`;
+
+    const result = await queryRun(database, context, query);
+    if (result.isError()) return result;
+    count += result.value;
+  }
+
+  return ok({ count });
 }

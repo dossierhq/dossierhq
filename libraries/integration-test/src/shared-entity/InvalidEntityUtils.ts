@@ -2,17 +2,20 @@ import {
   copyEntity,
   ok,
   type AdminClient,
+  type AdminEntity,
+  type AdminEntityCreate,
   type AdminSchemaSpecificationUpdate,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import {
+  ChangeValidationsValueItemWithoutValidationsUpdate,
   ChangeValidationsWithoutValidationsUpdate,
   IntegrationTestSchema,
 } from '../IntegrationTestSchema.js';
-import type { AdminChangeValidations } from '../SchemaTypes.js';
-import { CHANGE_VALIDATIONS_CREATE } from './Fixtures.js';
+import type { AdminChangeValidations, AdminValueItems } from '../SchemaTypes.js';
+import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 
 interface Options {
   skipRevalidateAllEntities?: boolean;
@@ -22,25 +25,49 @@ export async function createInvalidEntity(
   server: Server,
   adminClient: AdminClient,
   options?: Options
+) {
+  return doCreateInvalidEntity<AdminChangeValidations>(
+    server,
+    adminClient,
+    ChangeValidationsWithoutValidationsUpdate,
+    copyEntity(CHANGE_VALIDATIONS_CREATE, { fields: { matchPattern: 'no match' } }),
+    options
+  );
+}
+
+export async function createEntityWithInvalidValueItem(
+  server: Server,
+  adminClient: AdminClient,
+  options?: Options
+) {
+  return doCreateInvalidEntity<AdminValueItems>(
+    server,
+    adminClient,
+    ChangeValidationsValueItemWithoutValidationsUpdate,
+    copyEntity(VALUE_ITEMS_CREATE, {
+      fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'no match' } },
+    }),
+    options
+  );
+}
+
+async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object> = AdminEntity>(
+  server: Server,
+  adminClient: AdminClient,
+  schemaUpdate: AdminSchemaSpecificationUpdate,
+  entity: AdminEntityCreate<TEntity>,
+  options?: Options
 ): PromiseResult<
-  AdminChangeValidations,
+  TEntity,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.Conflict
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return await withTemporarySchemaChange(
-    server,
-    adminClient,
-    ChangeValidationsWithoutValidationsUpdate,
-    options,
-    async () => {
-      const result = await adminClient.createEntity<AdminChangeValidations>(
-        copyEntity(CHANGE_VALIDATIONS_CREATE, { fields: { matchPattern: 'no match' } })
-      );
-      return result.isOk() ? ok(result.value.entity) : result;
-    }
-  );
+  return await withTemporarySchemaChange(server, adminClient, schemaUpdate, options, async () => {
+    const result = await adminClient.createEntity<TEntity>(entity);
+    return result.isOk() ? ok(result.value.entity) : result;
+  });
 }
 
 async function withTemporarySchemaChange<TOk, TError extends ErrorType>(

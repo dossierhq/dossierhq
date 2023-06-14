@@ -101,6 +101,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   valueTypes: [
     { name: 'AdminOnlyValue', adminOnly: true, fields: [] },
     {
+      name: 'ChangeValidationsValueItem',
+      fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' }],
+    },
+    {
       name: 'LocationsValue',
       fields: [
         { name: 'location', type: FieldType.Location },
@@ -123,6 +127,15 @@ export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecification
   entityTypes: [
     {
       name: 'ChangeValidations',
+      fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: null }],
+    },
+  ],
+};
+
+export const ChangeValidationsValueItemWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
+  valueTypes: [
+    {
+      name: 'ChangeValidationsValueItem',
       fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: null }],
     },
   ],

@@ -219,7 +219,11 @@ export function assertIsAdminValueItems(
   }
 }
 
-export type AppAdminValueItem = AdminAdminOnlyValue | AdminLocationsValue | AdminReferencesValue;
+export type AppAdminValueItem =
+  | AdminAdminOnlyValue
+  | AdminChangeValidationsValueItem
+  | AdminLocationsValue
+  | AdminReferencesValue;
 
 export type AdminAdminOnlyValueFields = Record<never, never>;
 
@@ -236,6 +240,29 @@ export function assertIsAdminAdminOnlyValue(
 ): asserts valueItem is AdminAdminOnlyValue {
   if (valueItem.type !== 'AdminOnlyValue') {
     throw new Error('Expected type = AdminOnlyValue (but was ' + valueItem.type + ')');
+  }
+}
+
+export interface AdminChangeValidationsValueItemFields {
+  matchPattern: string | null;
+}
+
+export type AdminChangeValidationsValueItem = ValueItem<
+  'ChangeValidationsValueItem',
+  AdminChangeValidationsValueItemFields
+>;
+
+export function isAdminChangeValidationsValueItem(
+  valueItem: ValueItem<string, object> | AdminChangeValidationsValueItem
+): valueItem is AdminChangeValidationsValueItem {
+  return valueItem.type === 'ChangeValidationsValueItem';
+}
+
+export function assertIsAdminChangeValidationsValueItem(
+  valueItem: ValueItem<string, object> | AdminChangeValidationsValueItem
+): asserts valueItem is AdminChangeValidationsValueItem {
+  if (valueItem.type !== 'ChangeValidationsValueItem') {
+    throw new Error('Expected type = ChangeValidationsValueItem (but was ' + valueItem.type + ')');
   }
 }
 
@@ -504,7 +531,33 @@ export function assertIsPublishedValueItems(
   }
 }
 
-export type AppPublishedValueItem = PublishedLocationsValue | PublishedReferencesValue;
+export type AppPublishedValueItem =
+  | PublishedChangeValidationsValueItem
+  | PublishedLocationsValue
+  | PublishedReferencesValue;
+
+export interface PublishedChangeValidationsValueItemFields {
+  matchPattern: string | null;
+}
+
+export type PublishedChangeValidationsValueItem = ValueItem<
+  'ChangeValidationsValueItem',
+  PublishedChangeValidationsValueItemFields
+>;
+
+export function isPublishedChangeValidationsValueItem(
+  valueItem: ValueItem<string, object> | PublishedChangeValidationsValueItem
+): valueItem is PublishedChangeValidationsValueItem {
+  return valueItem.type === 'ChangeValidationsValueItem';
+}
+
+export function assertIsPublishedChangeValidationsValueItem(
+  valueItem: ValueItem<string, object> | PublishedChangeValidationsValueItem
+): asserts valueItem is PublishedChangeValidationsValueItem {
+  if (valueItem.type !== 'ChangeValidationsValueItem') {
+    throw new Error('Expected type = ChangeValidationsValueItem (but was ' + valueItem.type + ')');
+  }
+}
 
 export interface PublishedLocationsValueFields {
   location: Location | null;
