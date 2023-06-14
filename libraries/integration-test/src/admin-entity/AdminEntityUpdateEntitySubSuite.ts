@@ -4,8 +4,10 @@ import type { UnboundTestFunction } from '../Builder.js';
 import {
   assertIsAdminChangeValidations,
   assertIsAdminReferences,
+  assertIsAdminValueItems,
   type AdminChangeValidations,
   type AdminReferences,
+  type AdminValueItems,
 } from '../SchemaTypes.js';
 import {
   adminToPublishedEntity,
@@ -15,7 +17,10 @@ import {
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
-import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
+import {
+  createEntityWithInvalidValueItem,
+  createInvalidEntity,
+} from '../shared-entity/InvalidEntityUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
@@ -33,6 +38,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_fixInvalidEntity,
+  updateEntity_fixInvalidValueItem,
   updateEntity_withMultilineField,
   updateEntity_withTwoReferences,
   updateEntity_withMultipleLocations,
@@ -375,6 +381,36 @@ async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext)
 
   const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
   assertIsAdminChangeValidations(getEntity);
+  assertEquals(getEntity, expectedEntity);
+}
+
+async function updateEntity_fixInvalidValueItem({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  const entity = (await createEntityWithInvalidValueItem(server, adminClient)).valueOrThrow();
+
+  const updateResult = await adminClient.updateEntity<AdminValueItems>({
+    id: entity.id,
+    fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'foo' } },
+  });
+  const {
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.valueOrThrow();
+
+  const expectedEntity = copyEntity(entity, {
+    info: { updatedAt, version: 1, valid: true },
+    fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'foo' } },
+  });
+
+  assertResultValue(updateResult, {
+    effect: 'updated',
+    entity: expectedEntity,
+  });
+
+  const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
+  assertIsAdminValueItems(getEntity);
   assertEquals(getEntity, expectedEntity);
 }
 
