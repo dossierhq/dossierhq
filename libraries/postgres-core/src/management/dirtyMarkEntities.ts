@@ -1,18 +1,18 @@
 import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   createPostgresSqlQuery,
-  type DatabaseMarkEntitiesForRevalidationPayload,
+  type DatabaseManagementMarkEntitiesDirtyPayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryRun } from '../QueryFunctions.js';
 
-export async function managementMarkEntitiesForRevalidation(
+export async function managementDirtyMarkEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   entityTypes: string[],
   valueTypes: string[]
-): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic> {
+): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let count = 0;
 
   if (entityTypes.length > 0) {

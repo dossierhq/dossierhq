@@ -144,7 +144,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "BackgroundEntityValidatorPlugin",
+                "text": "BackgroundEntityProcessorPlugin",
                 "type": "text",
                 "version": 1
               },

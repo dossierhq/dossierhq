@@ -9,16 +9,16 @@ import {
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
-export const ServerRevalidateNextEntitySubSuite: UnboundTestFunction<SchemaTestContext>[] = [
-  serverRevalidateNextEntity_all,
-  serverRevalidateNextEntity_changingValidationsWithInvalidEntity,
-  serverRevalidateNextEntity_changingValidationsWithInvalidValueItem,
+export const ServerProcessNextDirtyEntitySubSuite: UnboundTestFunction<SchemaTestContext>[] = [
+  serverProcessNextDirtyEntity_all,
+  serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity,
+  serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem,
 ];
 
-async function serverRevalidateNextEntity_all({ server }: SchemaTestContext) {
+async function serverProcessNextDirtyEntity_all({ server }: SchemaTestContext) {
   let done = false;
   while (!done) {
-    const result = await server.revalidateNextEntity();
+    const result = await server.processNextDirtyEntity();
     assertOkResult(result);
     if (!result.value) {
       done = true;
@@ -26,14 +26,14 @@ async function serverRevalidateNextEntity_all({ server }: SchemaTestContext) {
   }
 }
 
-async function serverRevalidateNextEntity_changingValidationsWithInvalidEntity({
+async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
   const entity = (
     await createInvalidEntity(server, adminClient, {
-      skipRevalidateAllEntities: true,
+      skipProcessDirtyEntities: true,
     })
   ).valueOrThrow();
 
@@ -41,14 +41,14 @@ async function serverRevalidateNextEntity_changingValidationsWithInvalidEntity({
   assertEquals(validations, [{ id: entity.id, valid: false }]);
 }
 
-async function serverRevalidateNextEntity_changingValidationsWithInvalidValueItem({
+async function serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
   const entity = (
     await createEntityWithInvalidValueItem(server, adminClient, {
-      skipRevalidateAllEntities: true,
+      skipProcessDirtyEntities: true,
     })
   ).valueOrThrow();
 
@@ -64,14 +64,14 @@ async function validateAllEntitiesAndCaptureResultsForEntity(
 
   let done = false;
   while (!done) {
-    const validationResult = await server.revalidateNextEntity();
-    assertOkResult(validationResult);
-    if (!validationResult.value) {
+    const processResult = await server.processNextDirtyEntity();
+    assertOkResult(processResult);
+    if (!processResult.value) {
       done = true;
     }
 
-    if (validationResult.value && validationResult.value.id === reference.id) {
-      result.push(validationResult.value);
+    if (processResult.value && processResult.value.id === reference.id) {
+      result.push(processResult.value);
     }
   }
 

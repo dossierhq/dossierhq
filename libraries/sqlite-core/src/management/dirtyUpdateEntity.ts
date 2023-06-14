@@ -6,7 +6,7 @@ import {
 } from '@dossierhq/database-adapter';
 import { queryRun, type Database } from '../QueryFunctions.js';
 
-export async function managementRevalidateUpdateEntity(
+export async function managementDirtyUpdateEntity(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,

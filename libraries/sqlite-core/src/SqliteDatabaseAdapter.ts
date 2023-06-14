@@ -53,10 +53,10 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
-import { managementMarkEntitiesForRevalidation } from './management/markEntitiesForRevalidation.js';
+import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
+import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
+import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
 import { managementOptimize } from './management/optimize.js';
-import { managementRevalidateGetNextEntity } from './management/revalidateGetNextEntity.js';
-import { managementRevalidateUpdateEntity } from './management/revalidateUpdateEntity.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -209,13 +209,10 @@ function createOuterAdapter(
     advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
     authCreateSession: (...args) => authCreateSession(database, ...args),
     disconnect: database.adapter.disconnect,
-    managementMarkEntitiesForRevalidation: (...args) =>
-      managementMarkEntitiesForRevalidation(database, ...args),
+    managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(database, ...args),
     managementOptimize: (...args) => managementOptimize(database, ...args),
-    managementRevalidateGetNextEntity: (...args) =>
-      managementRevalidateGetNextEntity(database, ...args),
-    managementRevalidateUpdateEntity: (...args) =>
-      managementRevalidateUpdateEntity(database, ...args),
+    managementDirtyGetNextEntity: (...args) => managementDirtyGetNextEntity(database, ...args),
+    managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(database, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(database, ...args),
     publishedEntitySampleEntities: (...args) => publishedEntitySampleEntities(database, ...args),

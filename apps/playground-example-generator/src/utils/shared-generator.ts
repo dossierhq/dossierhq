@@ -90,8 +90,8 @@ export async function createAdapterAndServer<
 export async function optimizeAndCloseDatabase(server: Server) {
   let keepOnGoing = true;
   while (keepOnGoing) {
-    const revalidated = (await server.revalidateNextEntity()).valueOrThrow();
-    if (!revalidated) {
+    const processed = (await server.processNextDirtyEntity()).valueOrThrow();
+    if (!processed) {
       keepOnGoing = false;
     }
   }

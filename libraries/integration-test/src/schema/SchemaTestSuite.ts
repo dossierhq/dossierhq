@@ -4,7 +4,7 @@ import { assertOkResult } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
-import { ServerRevalidateNextEntitySubSuite } from './ServerRevalidateNextEntitySubSuite.js';
+import { ServerProcessNextDirtyEntitySubSuite } from './ServerProcessNextDirtyEntitySubSuite.js';
 
 export interface SchemaTestContext {
   server: Server;
@@ -16,7 +16,7 @@ export function createSchemaTestSuite<TCleanup>(
   return buildSuite(
     initializer,
     getSchemaSpecification_normal,
-    ...ServerRevalidateNextEntitySubSuite
+    ...ServerProcessNextDirtyEntitySubSuite
   );
 }
 

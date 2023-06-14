@@ -1,6 +1,6 @@
 import { AdminSchema, ok, type AdminSchemaSpecificationUpdate, FieldType } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import { calculateSchemaChangeRevalidation } from './calculateSchemaChangeRevalidation.js';
+import { calculateSchemaChangeEntityValidation } from './calculateSchemaChangeEntityValidation.js';
 
 function build(
   previousUpdate: AdminSchemaSpecificationUpdate,
@@ -11,30 +11,30 @@ function build(
   return { previous, next };
 }
 
-describe('calculateSchemaChangeRevalidation unchanged', () => {
+describe('calculateSchemaChangeEntityValidation unchanged', () => {
   test('no change: empty -> empty', () => {
     const { previous, next } = build({}, {});
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: [] })
     );
   });
 
   test('no change: one entity type unchanged', () => {
     const { previous, next } = build({ entityTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: [] })
     );
   });
 
   test('no change: one value type, unchanged', () => {
     const { previous, next } = build({ valueTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: [] })
     );
   });
 });
 
-describe('calculateSchemaChangeRevalidation authKeyPattern', () => {
+describe('calculateSchemaChangeEntityValidation authKeyPattern', () => {
   test('change: authKeyPattern added', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OneType', fields: [] }] },
@@ -43,7 +43,7 @@ describe('calculateSchemaChangeRevalidation authKeyPattern', () => {
         patterns: [{ name: 'pattern', pattern: 'added-pattern' }],
       }
     );
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: ['OneType'], valueTypes: [] })
     );
   });
@@ -56,7 +56,7 @@ describe('calculateSchemaChangeRevalidation authKeyPattern', () => {
       },
       { patterns: [{ name: 'pattern', pattern: 'new-pattern' }] }
     );
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: ['OneType'], valueTypes: [] })
     );
   });
@@ -69,7 +69,7 @@ describe('calculateSchemaChangeRevalidation authKeyPattern', () => {
       },
       { entityTypes: [{ name: 'OneType', fields: [] }] }
     );
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: [] })
     );
   });
@@ -85,13 +85,13 @@ describe('calculateSchemaChangeRevalidation authKeyPattern', () => {
         patterns: [{ name: 'nextPatternName', pattern: 'the-pattern' }],
       }
     );
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: [] })
     );
   });
 });
 
-describe('calculateSchemaChangeRevalidation field.matchPattern', () => {
+describe('calculateSchemaChangeEntityValidation field.matchPattern', () => {
   test('change: matchPattern pattern change entity type', () => {
     const { previous, next } = build(
       {
@@ -105,7 +105,7 @@ describe('calculateSchemaChangeRevalidation field.matchPattern', () => {
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] }
     );
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: ['OneType'], valueTypes: [] })
     );
   });
@@ -123,7 +123,7 @@ describe('calculateSchemaChangeRevalidation field.matchPattern', () => {
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] }
     );
-    expect(calculateSchemaChangeRevalidation(previous, next)).toEqual(
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: ['OneType'] })
     );
   });

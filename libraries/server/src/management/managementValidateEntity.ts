@@ -12,13 +12,13 @@ import {
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
 import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
 
-export async function managementRevalidateEntity(
+export async function managementValidateEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext
 ): PromiseResult<{ id: string; valid: boolean } | null, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
-    const entityResult = await databaseAdapter.managementRevalidateGetNextEntity(context);
+    const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context);
     if (entityResult.isError()) {
       if (entityResult.error === ErrorType.NotFound) {
         return ok(null);
@@ -35,7 +35,7 @@ export async function managementRevalidateEntity(
 
     const valid = validationResult.isOk();
 
-    const updateResult = await databaseAdapter.managementRevalidateUpdateEntity(
+    const updateResult = await databaseAdapter.managementDirtyUpdateEntity(
       context,
       entityResult.value,
       valid

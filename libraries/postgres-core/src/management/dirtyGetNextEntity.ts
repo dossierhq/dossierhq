@@ -9,7 +9,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
-export async function managementRevalidateGetNextEntity(
+export async function managementDirtyGetNextEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext
 ): PromiseResult<
@@ -39,7 +39,7 @@ export async function managementRevalidateGetNextEntity(
   >(databaseAdapter, context, query);
   if (result.isError()) return result;
   if (!result.value) {
-    return notOk.NotFound('No entity needing revalidation');
+    return notOk.NotFound('No more dirty entities');
   }
 
   const {

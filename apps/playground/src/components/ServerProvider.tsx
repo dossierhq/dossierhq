@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk } from '@dossierhq/core';
-import { BackgroundEntityValidatorPlugin, type Server } from '@dossierhq/server';
+import { BackgroundEntityProcessorPlugin, type Server } from '@dossierhq/server';
 import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
 import { useContext, useEffect, useState } from 'react';
@@ -56,9 +56,9 @@ async function initializeServer(
     });
     if (serverResult.isError()) return serverResult;
 
-    const validatorPlugin = new BackgroundEntityValidatorPlugin(serverResult.value, SERVER_LOGGER);
-    serverResult.value.addPlugin(validatorPlugin);
-    validatorPlugin.start();
+    const processorPlugin = new BackgroundEntityProcessorPlugin(serverResult.value, SERVER_LOGGER);
+    serverResult.value.addPlugin(processorPlugin);
+    processorPlugin.start();
 
     return serverResult;
   } catch (error) {

@@ -1,7 +1,7 @@
 import { createConsoleLogger, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/server';
 import {
-  BackgroundEntityValidatorPlugin,
+  BackgroundEntityProcessorPlugin,
   NoneAndSubjectAuthorizationAdapter,
   createServer,
 } from '@dossierhq/server';
@@ -17,9 +17,9 @@ export async function createBlogServer(databaseAdapter: DatabaseAdapter) {
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
-  const backgroundEntityValidator = new BackgroundEntityValidatorPlugin(server, logger);
-  server.addPlugin(backgroundEntityValidator);
-  backgroundEntityValidator.start();
+  const plugin = new BackgroundEntityProcessorPlugin(server, logger);
+  server.addPlugin(plugin);
+  plugin.start();
 
   return ok({ server });
 }

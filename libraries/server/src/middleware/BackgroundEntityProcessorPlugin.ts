@@ -12,14 +12,14 @@ import type { SessionContext } from '../Context.js';
 import type { Server, ServerPlugin } from '../Server.js';
 
 const TIME_SINCE_LAST_OPERATION_MS = 1000 * 2;
-const TIME_SINCE_LAST_REVALIDATION_MS = 5;
+const TIME_SINCE_LAST_PROCESSING_MS = 5;
 
-export class BackgroundEntityValidatorPlugin implements ServerPlugin {
+export class BackgroundEntityProcessorPlugin implements ServerPlugin {
   private server: Server;
   private logger: Logger;
   private handle: NodeJS.Timeout | null = null;
   private lastOperationTimestamp = 0;
-  private validate = false;
+  private processing = false;
   private batchCount = 0;
 
   constructor(server: Server, logger: Logger) {
@@ -32,8 +32,8 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   }
 
   start() {
-    this.logger.info('BackgroundEntityValidatorPlugin: starting');
-    this.validate = true;
+    this.logger.info('BackgroundEntityProcessorPlugin: starting');
+    this.processing = true;
     this.batchCount = 0;
     if (this.handle) {
       clearTimeout(this.handle);
@@ -42,7 +42,7 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
   }
 
   onServerShutdown() {
-    this.logger.info('BackgroundEntityValidatorPlugin: stopping');
+    this.logger.info('BackgroundEntityProcessorPlugin: stopping');
     if (this.handle) {
       clearTimeout(this.handle);
       this.handle = null;
@@ -70,10 +70,10 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
         ReturnType<AdminClient['updateSchemaSpecification']>
       >;
       if (payload.effect === 'updated') {
-        this.validate = true;
+        this.processing = true;
         if (!this.handle) {
           this.logger.info(
-            'BackgroundEntityValidatorPlugin: starting validation after schema update'
+            'BackgroundEntityProcessorPlugin: starting validation after schema update'
           );
           this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
         }
@@ -98,43 +98,43 @@ export class BackgroundEntityValidatorPlugin implements ServerPlugin {
       return;
     }
 
-    if (this.validate) {
-      const result = await this.server.revalidateNextEntity();
+    if (this.processing) {
+      const result = await this.server.processNextDirtyEntity();
       if (result.isOk() && result.value) {
         this.batchCount++;
       }
 
       if (this.batchCount % 200 === 0) {
-        this.logger.info('BackgroundEntityValidatorPlugin: validated %d entities', this.batchCount);
+        this.logger.info('BackgroundEntityProcessorPlugin: validated %d entities', this.batchCount);
       }
 
       if (result.isOk()) {
         if (result.value) {
           if (!result.value.valid) {
             this.logger.warn(
-              'BackgroundEntityValidatorPlugin: validated entity: %s, but it was invalid',
+              'BackgroundEntityProcessorPlugin: validated entity: %s, but it was invalid',
               result.value.id
             );
           }
         } else {
           this.logger.info(
-            'BackgroundEntityValidatorPlugin: no more entities to validate, validated %d entities',
+            'BackgroundEntityProcessorPlugin: no more entities to validate, validated %d entities',
             this.batchCount
           );
-          this.validate = false;
+          this.processing = false;
           this.batchCount = 0;
         }
       } else {
         this.logger.error(
-          'BackgroundEntityValidatorPlugin: failed validating %s: %s',
+          'BackgroundEntityProcessorPlugin: failed validating %s: %s',
           result.error,
           result.message
         );
       }
     }
 
-    if (this.validate) {
-      this.handle = setTimeout(this.tick, TIME_SINCE_LAST_REVALIDATION_MS);
+    if (this.processing) {
+      this.handle = setTimeout(this.tick, TIME_SINCE_LAST_PROCESSING_MS);
     }
   }
 }

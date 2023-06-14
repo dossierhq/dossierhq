@@ -9,7 +9,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 
-export function calculateSchemaChangeRevalidation(
+export function calculateSchemaChangeEntityValidation(
   previous: AdminSchema,
   next: AdminSchema
 ): Result<
@@ -28,10 +28,10 @@ export function calculateSchemaChangeRevalidation(
         return notOk.BadRequest(`Type ${previousType.name} was removed`);
       }
 
-      const revalidateResult = hasTypeChanged(isEntityType, previous, previousType, next, nextType);
-      if (revalidateResult.isError()) return revalidateResult;
+      const validationResult = hasTypeChanged(isEntityType, previous, previousType, next, nextType);
+      if (validationResult.isError()) return validationResult;
 
-      if (revalidateResult.value) {
+      if (validationResult.value) {
         if (isEntityType) {
           entityTypes.push(previousType.name);
         } else {
@@ -52,13 +52,13 @@ function hasTypeChanged(
   nextType: AdminEntityTypeSpecification | AdminValueTypeSpecification
 ): Result<boolean, typeof ErrorType.Generic> {
   if (!isFieldValueEqual(previousType.fields, nextType.fields)) {
-    // TODO not all field changes require revalidation
+    // TODO not all field changes require validation
     return ok(true);
   }
 
   // authKeyPattern
   if (isEntityType) {
-    const patternResult = revalidateDueToPatternChange(
+    const patternResult = validateDueToPatternChange(
       previous,
       (previousType as AdminEntityTypeSpecification).authKeyPattern,
       next,
@@ -75,7 +75,7 @@ function hasTypeChanged(
     if (!nextFieldSpec) continue;
 
     if ('matchPattern' in previousFieldSpec) {
-      const patternResult = revalidateDueToPatternChange(
+      const patternResult = validateDueToPatternChange(
         previous,
         previousFieldSpec.matchPattern,
         next,
@@ -91,7 +91,7 @@ function hasTypeChanged(
   return ok(false);
 }
 
-function revalidateDueToPatternChange(
+function validateDueToPatternChange(
   previous: AdminSchema,
   previousPatternName: string | null,
   next: AdminSchema,

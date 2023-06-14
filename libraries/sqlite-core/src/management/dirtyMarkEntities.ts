@@ -1,17 +1,17 @@
 import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   createSqliteSqlQuery,
-  type DatabaseMarkEntitiesForRevalidationPayload,
+  type DatabaseManagementMarkEntitiesDirtyPayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import { queryRun, type Database } from '../QueryFunctions.js';
 
-export async function managementMarkEntitiesForRevalidation(
+export async function managementDirtyMarkEntities(
   database: Database,
   context: TransactionContext,
   entityTypes: string[],
   valueTypes: string[]
-): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic> {
+): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let count = 0;
 
   if (entityTypes.length > 0) {

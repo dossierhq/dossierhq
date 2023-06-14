@@ -28,7 +28,7 @@ const QUERY =
   'SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields ' +
   'FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id';
 
-export async function managementRevalidateGetNextEntity(
+export async function managementDirtyGetNextEntity(
   database: Database,
   context: TransactionContext
 ): PromiseResult<
@@ -38,7 +38,7 @@ export async function managementRevalidateGetNextEntity(
   const result = await queryNoneOrOne<EntityRow>(database, context, QUERY);
   if (result.isError()) return result;
   if (!result.value) {
-    return notOk.NotFound('No entity needing revalidation');
+    return notOk.NotFound('No more dirty entities');
   }
 
   const {

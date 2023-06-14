@@ -18,7 +18,7 @@ import type { AdminChangeValidations, AdminValueItems } from '../SchemaTypes.js'
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 
 interface Options {
-  skipRevalidateAllEntities?: boolean;
+  skipProcessDirtyEntities?: boolean;
 }
 
 export async function createInvalidEntity(
@@ -88,12 +88,12 @@ async function withTemporarySchemaChange<TOk, TError extends ErrorType>(
   if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
   // validate
-  if (options.skipRevalidateAllEntities !== true) {
+  if (options.skipProcessDirtyEntities !== true) {
     let done = false;
     while (!done) {
-      const validationResult = await server.revalidateNextEntity();
-      if (validationResult.isError()) return validationResult;
-      if (!validationResult.value) {
+      const processResult = await server.processNextDirtyEntity();
+      if (processResult.isError()) return processResult;
+      if (!processResult.value) {
         done = true;
       }
     }

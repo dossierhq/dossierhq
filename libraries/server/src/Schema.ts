@@ -10,7 +10,7 @@ import {
   type SchemaSpecificationUpdatePayload,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
-import { calculateSchemaChangeRevalidation } from './schema/calculateSchemaChangeRevalidation.js';
+import { calculateSchemaChangeEntityValidation } from './schema/calculateSchemaChangeEntityValidation.js';
 
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
@@ -101,29 +101,29 @@ export async function updateSchemaSpecification(
       return ok({ effect: 'none', schemaSpecification: newSchema.spec });
     }
 
-    const revalidateCalculationResult = calculateSchemaChangeRevalidation(oldSchema, newSchema);
-    if (revalidateCalculationResult.isError()) return revalidateCalculationResult;
+    const validationCalculationResult = calculateSchemaChangeEntityValidation(oldSchema, newSchema);
+    if (validationCalculationResult.isError()) return validationCalculationResult;
 
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) return updateResult;
 
     if (
-      revalidateCalculationResult.value.entityTypes.length > 0 ||
-      revalidateCalculationResult.value.valueTypes.length > 0
+      validationCalculationResult.value.entityTypes.length > 0 ||
+      validationCalculationResult.value.valueTypes.length > 0
     ) {
       logger.info(
-        'Marking entities with for revalidation (entity types=%s, value types=%s)',
-        revalidateCalculationResult.value.entityTypes.join(','),
-        revalidateCalculationResult.value.valueTypes.join(',')
+        'Marking entities with for validation (entity types=%s, value types=%s)',
+        validationCalculationResult.value.entityTypes.join(','),
+        validationCalculationResult.value.valueTypes.join(',')
       );
-      const revalidationResult = await databaseAdapter.managementMarkEntitiesForRevalidation(
+      const markDirtyResult = await databaseAdapter.managementDirtyMarkEntities(
         context,
-        revalidateCalculationResult.value.entityTypes,
-        revalidateCalculationResult.value.valueTypes
+        validationCalculationResult.value.entityTypes,
+        validationCalculationResult.value.valueTypes
       );
-      if (revalidationResult.isError()) return revalidationResult;
+      if (markDirtyResult.isError()) return markDirtyResult;
 
-      logger.info('Marked %d entities for revalidation', revalidationResult.value.count);
+      logger.info('Marked %d entities for validation', markDirtyResult.value.count);
     }
 
     logger.info(

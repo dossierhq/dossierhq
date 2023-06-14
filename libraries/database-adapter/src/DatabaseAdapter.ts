@@ -232,7 +232,7 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
-export interface DatabaseMarkEntitiesForRevalidationPayload {
+export interface DatabaseManagementMarkEntitiesDirtyPayload {
   count: number;
 }
 
@@ -481,28 +481,28 @@ export interface DatabaseAdapter<
     identifier: string
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
 
-  managementMarkEntitiesForRevalidation(
-    context: TransactionContext,
-    entityTypes: string[],
-    valueTypes: string[]
-  ): PromiseResult<DatabaseMarkEntitiesForRevalidationPayload, typeof ErrorType.Generic>;
-
-  managementOptimize(
-    context: TransactionContext,
-    options: TOptimizationOptions
-  ): PromiseResult<void, typeof ErrorType.Generic>;
-
-  managementRevalidateGetNextEntity(
+  managementDirtyGetNextEntity(
     context: TransactionContext
   ): PromiseResult<
     DatabaseAdminEntityWithResolvedReferencePayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
-  managementRevalidateUpdateEntity(
+  managementDirtyMarkEntities(
+    context: TransactionContext,
+    entityTypes: string[],
+    valueTypes: string[]
+  ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic>;
+
+  managementDirtyUpdateEntity(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
     valid: boolean
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  managementOptimize(
+    context: TransactionContext,
+    options: TOptimizationOptions
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   publishedEntityGetOne(

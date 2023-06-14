@@ -7,7 +7,7 @@ import {
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 
-export async function managementRevalidateUpdateEntity(
+export async function managementDirtyUpdateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
