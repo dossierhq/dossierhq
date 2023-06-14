@@ -656,6 +656,7 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
           if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
             locations.push(node.value);
           }
+          break;
       }
     },
     get result(): Location[] {
@@ -665,18 +666,26 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
 }
 
 export function createValueTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
-  const result: string[] = [];
+  const result = new Set<string>();
   return {
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
         case ItemTraverseNodeType.fieldItem:
           if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
-            result.push(node.value.type);
+            result.add(node.value.type);
           }
+          break;
+        case ItemTraverseNodeType.richTextNode: {
+          const richTextNode = node.node;
+          if (isRichTextValueItemNode(richTextNode)) {
+            result.add(richTextNode.data.type);
+          }
+          break;
+        }
       }
     },
     get result(): string[] {
-      return result;
+      return [...result];
     },
   };
 }

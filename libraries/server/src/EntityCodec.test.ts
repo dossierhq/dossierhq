@@ -16,6 +16,7 @@ import {
   createFullTextSearchCollector,
   createLocationsCollector,
   createRequestedReferencesCollector,
+  createValueTypesCollector,
 } from './EntityCodec.js';
 
 const schemaSpec: AdminSchemaSpecificationUpdate = {
@@ -32,6 +33,8 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
         { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityCodecBar'] },
         { name: 'bars', type: FieldType.Entity, list: true, entityTypes: ['EntityCodecBar'] },
         { name: 'reference', type: FieldType.Entity },
+        { name: 'valueItem', type: FieldType.ValueItem },
+        { name: 'valueItems', type: FieldType.ValueItem, list: true },
         { name: 'valueOne', type: FieldType.ValueItem },
         { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
         { name: 'richTexts', type: FieldType.RichText, list: true },
@@ -58,6 +61,11 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
         { name: 'child', type: FieldType.ValueItem, valueTypes: ['EntityCodecValueOne'] },
       ],
     },
+    {
+      name: 'EntityCodecValueTwo',
+      adminOnly: false,
+      fields: [],
+    },
   ],
 };
 
@@ -67,17 +75,20 @@ function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
+  const valueTypesCollector = createValueTypesCollector();
 
   for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
+    valueTypesCollector.collect(node);
   }
 
   return {
     requestedReferences: referencesCollector.result,
     locations: locationsCollector.result,
     fullTextSearchText: ftsCollector.result,
+    valueTypes: valueTypesCollector.result,
   };
 }
 
@@ -89,6 +100,7 @@ describe('collectDataFromEntity', () => {
           "fullTextSearchText": "",
           "locations": [],
           "requestedReferences": [],
+          "valueTypes": [],
         }
       `);
   });
@@ -104,6 +116,7 @@ describe('collectDataFromEntity', () => {
         "fullTextSearchText": "",
         "locations": [],
         "requestedReferences": [],
+        "valueTypes": [],
       }
     `);
   });
@@ -122,6 +135,7 @@ describe('collectDataFromEntity', () => {
         "fullTextSearchText": "Hello string world one two three",
         "locations": [],
         "requestedReferences": [],
+        "valueTypes": [],
       }
     `);
   });
@@ -144,6 +158,9 @@ describe('collectDataFromEntity', () => {
         "fullTextSearchText": "one two three four",
         "locations": [],
         "requestedReferences": [],
+        "valueTypes": [
+          "EntityCodecValueOne",
+        ],
       }
     `);
   });
@@ -168,6 +185,9 @@ describe('collectDataFromEntity', () => {
         "fullTextSearchText": "one one one two Header text two",
         "locations": [],
         "requestedReferences": [],
+        "valueTypes": [
+          "EntityCodecValueOne",
+        ],
       }
     `);
   });
@@ -202,6 +222,7 @@ describe('collectDataFromEntity', () => {
           },
         ],
         "requestedReferences": [],
+        "valueTypes": [],
       }
     `);
   });
@@ -234,6 +255,9 @@ describe('collectDataFromEntity', () => {
           },
         ],
         "requestedReferences": [],
+        "valueTypes": [
+          "EntityCodecValueOne",
+        ],
       }
     `);
   });
@@ -296,6 +320,7 @@ describe('collectDataFromEntity', () => {
             ],
           },
         ],
+        "valueTypes": [],
       }
     `);
   });
@@ -324,6 +349,9 @@ describe('collectDataFromEntity', () => {
               "bar1Id",
             ],
           },
+        ],
+        "valueTypes": [
+          "EntityCodecValueOne",
         ],
       }
     `);
@@ -379,6 +407,53 @@ describe('collectDataFromEntity', () => {
               "bar3Id",
             ],
           },
+        ],
+        "valueTypes": [
+          "EntityCodecValueOne",
+        ],
+      }
+    `);
+  });
+
+  test('value items value types', () => {
+    expect(
+      collectDataFromEntity(schema, {
+        info: { type: 'EntityCodecFoo' },
+        fields: {
+          valueItem: { type: 'EntityCodecValueOne' },
+          valueItems: [{ type: 'EntityCodecValueOne' }, { type: 'EntityCodecValueTwo' }],
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      {
+        "fullTextSearchText": "",
+        "locations": [],
+        "requestedReferences": [],
+        "valueTypes": [
+          "EntityCodecValueOne",
+          "EntityCodecValueTwo",
+        ],
+      }
+    `);
+  });
+
+  test('rich text value type', () => {
+    expect(
+      collectDataFromEntity(schema, {
+        info: { type: 'EntityCodecFoo' },
+        fields: {
+          richText: createRichTextRootNode([
+            createRichTextValueItemNode({ type: 'EntityCodecValueOne' }),
+          ]),
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      {
+        "fullTextSearchText": "",
+        "locations": [],
+        "requestedReferences": [],
+        "valueTypes": [
+          "EntityCodecValueOne",
         ],
       }
     `);
