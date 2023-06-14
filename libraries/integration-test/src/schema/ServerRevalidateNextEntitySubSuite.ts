@@ -26,9 +26,11 @@ async function serverRevalidateNextEntity_changingValidationsWithInvalidEntity({
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const entity = await createInvalidEntity(server, adminClient, {
-    skipRevalidateAllEntities: true,
-  });
+  const entity = (
+    await createInvalidEntity(server, adminClient, {
+      skipRevalidateAllEntities: true,
+    })
+  ).valueOrThrow();
 
   // revalidate all entities
   let entityValidationResult: Awaited<ReturnType<Server['revalidateNextEntity']>> | null = null;

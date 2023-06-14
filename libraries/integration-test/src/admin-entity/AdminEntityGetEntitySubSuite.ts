@@ -75,7 +75,7 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
 
 async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const entity = await createInvalidEntity(server, adminClient);
+  const entity = (await createInvalidEntity(server, adminClient)).valueOrThrow();
 
   const result = await adminClient.getEntity({ id: entity.id });
   assertOkResult(result);

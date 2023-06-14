@@ -591,7 +591,7 @@ async function searchEntities_statusAll({ server }: AdminEntityTestContext) {
 
 async function searchEntities_invalidOnly({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const entity = await createInvalidEntity(server, adminClient);
+  const entity = (await createInvalidEntity(server, adminClient)).valueOrThrow();
 
   const matches = await countSearchResultWithEntity(
     adminClient,

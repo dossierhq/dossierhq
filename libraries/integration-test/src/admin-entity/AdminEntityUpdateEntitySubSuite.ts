@@ -1,8 +1,12 @@
 import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminReferences } from '../SchemaTypes.js';
-import { assertIsAdminReferences } from '../SchemaTypes.js';
+import {
+  assertIsAdminChangeValidations,
+  assertIsAdminReferences,
+  type AdminChangeValidations,
+  type AdminReferences,
+} from '../SchemaTypes.js';
 import {
   adminToPublishedEntity,
   LOCATIONS_CREATE,
@@ -341,9 +345,9 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminE
 async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const entity = await createInvalidEntity(server, adminClient);
+  const entity = (await createInvalidEntity(server, adminClient)).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await adminClient.updateEntity<AdminChangeValidations>({
     id: entity.id,
     fields: { matchPattern: 'foo' },
   });
@@ -369,8 +373,9 @@ async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext)
     entity: expectedEntity,
   });
 
-  const getResult = await adminClient.getEntity({ id: entity.id });
-  assertResultValue(getResult, expectedEntity);
+  const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
+  assertIsAdminChangeValidations(getEntity);
+  assertEquals(getEntity, expectedEntity);
 }
 
 async function updateEntity_withMultilineField({ server }: AdminEntityTestContext) {
