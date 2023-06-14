@@ -1,6 +1,6 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
-  DatabaseAdminEntityWithResolvedReferencePayload,
+  DatabaseManagementGetNextDirtyEntityPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
@@ -18,21 +18,21 @@ type EntityRow = Pick<
   | 'created_at'
   | 'updated_at'
   | 'status'
+  | 'dirty'
   | 'valid'
 > &
   Pick<EntityVersionsTable, 'version' | 'fields'>;
 
-// dirty & 1 (validate_latest) = 1, 3, 5, 7, 9, 11, 13, 15
 const QUERY =
-  'WITH entities_cte AS (SELECT id FROM entities WHERE dirty IN (1, 3, 5, 7, 9, 11, 13, 15) LIMIT 1) ' +
-  'SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields ' +
+  'WITH entities_cte AS (SELECT id FROM entities WHERE dirty != 0 LIMIT 1) ' +
+  'SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.valid, ev.version, ev.fields ' +
   'FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id';
 
 export async function managementDirtyGetNextEntity(
   database: Database,
   context: TransactionContext
 ): PromiseResult<
-  DatabaseAdminEntityWithResolvedReferencePayload,
+  DatabaseManagementGetNextDirtyEntityPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<EntityRow>(database, context, QUERY);
@@ -50,6 +50,7 @@ export async function managementDirtyGetNextEntity(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
+    dirty,
     valid,
     created_at: createdAt,
     updated_at: updatedAt,
@@ -69,5 +70,9 @@ export async function managementDirtyGetNextEntity(
     createdAt: new Date(createdAt),
     updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
+    dirtyValidateLatest: !!(dirty & 1),
+    dirtyValidatePublished: !!(dirty & 2),
+    dirtyIndexLatest: !!(dirty & 4),
+    dirtyIndexPublished: !!(dirty & 8),
   });
 }

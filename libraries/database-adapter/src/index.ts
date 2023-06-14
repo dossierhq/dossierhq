@@ -25,6 +25,7 @@ export type {
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
+  DatabaseManagementGetNextDirtyEntityPayload,
   DatabaseManagementMarkEntitiesDirtyPayload,
   DatabaseOptimizationOptions,
   DatabasePagingInfo,

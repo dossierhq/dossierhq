@@ -12,7 +12,7 @@ import {
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
 import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
 
-export async function managementValidateEntity(
+export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext
@@ -27,13 +27,17 @@ export async function managementValidateEntity(
       }
     }
 
-    const entity = decodeAdminEntity(adminSchema, entityResult.value);
-    const validationResult = await validateEntity(adminSchema, databaseAdapter, context, entity);
-    if (validationResult.isError() && validationResult.isErrorType(ErrorType.Generic)) {
-      return validationResult;
-    }
+    let valid = entityResult.value.valid;
 
-    const valid = validationResult.isOk();
+    if (entityResult.value.dirtyValidateLatest) {
+      const entity = decodeAdminEntity(adminSchema, entityResult.value);
+      const validationResult = await validateEntity(adminSchema, databaseAdapter, context, entity);
+      if (validationResult.isError() && validationResult.isErrorType(ErrorType.Generic)) {
+        return validationResult;
+      }
+
+      valid = validationResult.isOk();
+    }
 
     const updateResult = await databaseAdapter.managementDirtyUpdateEntity(
       context,
@@ -42,7 +46,7 @@ export async function managementValidateEntity(
     );
     if (updateResult.isError()) return updateResult;
 
-    return ok({ id: entity.id, valid });
+    return ok({ id: entityResult.value.id, valid });
   });
 }
 

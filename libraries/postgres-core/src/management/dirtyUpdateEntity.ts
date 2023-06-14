@@ -14,6 +14,6 @@ export async function managementDirtyUpdateEntity(
   valid: boolean
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { query, sql } = createPostgresSqlQuery();
-  sql`UPDATE entities SET valid = ${valid}, dirty = dirty & (~1) WHERE id = ${reference.entityInternalId}`;
+  sql`UPDATE entities SET valid = ${valid}, dirty = 0 WHERE id = ${reference.entityInternalId}`;
   return await queryNone(databaseAdapter, context, query);
 }

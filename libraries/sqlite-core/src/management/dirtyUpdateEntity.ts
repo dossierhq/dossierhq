@@ -13,8 +13,7 @@ export async function managementDirtyUpdateEntity(
   valid: boolean
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { query, sql } = createSqliteSqlQuery();
-  // dirty = reset validate_latest flag
-  sql`UPDATE entities SET valid = ${valid ? 1 : 0}, dirty = dirty & (~1) WHERE id = ${
+  sql`UPDATE entities SET valid = ${valid ? 1 : 0}, dirty = 0 WHERE id = ${
     reference.entityInternalId as number
   }`;
   const result = await queryRun(database, context, query);

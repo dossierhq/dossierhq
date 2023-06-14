@@ -232,6 +232,14 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
+export interface DatabaseManagementGetNextDirtyEntityPayload
+  extends DatabaseAdminEntityWithResolvedReferencePayload {
+  dirtyValidateLatest: boolean;
+  dirtyValidatePublished: boolean;
+  dirtyIndexLatest: boolean;
+  dirtyIndexPublished: boolean;
+}
+
 export interface DatabaseManagementMarkEntitiesDirtyPayload {
   count: number;
 }
@@ -484,7 +492,7 @@ export interface DatabaseAdapter<
   managementDirtyGetNextEntity(
     context: TransactionContext
   ): PromiseResult<
-    DatabaseAdminEntityWithResolvedReferencePayload,
+    DatabaseManagementGetNextDirtyEntityPayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 

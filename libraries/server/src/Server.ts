@@ -27,7 +27,7 @@ import { InternalContextImpl, SessionContextImpl } from './Context.js';
 import { getSchemaSpecification } from './Schema.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
-import { managementValidateEntity } from './management/managementValidateEntity.js';
+import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';
@@ -220,7 +220,7 @@ export async function createServer<
 
     processNextDirtyEntity() {
       const managementContext = serverImpl.createInternalContext(null);
-      return managementValidateEntity(
+      return managementDirtyProcessNextEntity(
         serverImpl.getAdminSchema(),
         databaseAdapter,
         managementContext

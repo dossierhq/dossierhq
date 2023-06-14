@@ -1,7 +1,7 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   createPostgresSqlQuery,
-  type DatabaseAdminEntityWithResolvedReferencePayload,
+  type DatabaseManagementGetNextDirtyEntityPayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
@@ -13,12 +13,12 @@ export async function managementDirtyGetNextEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext
 ): PromiseResult<
-  DatabaseAdminEntityWithResolvedReferencePayload,
+  DatabaseManagementGetNextDirtyEntityPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data`;
-  sql`FROM entities e, entity_versions ev WHERE e.dirty & 1 != 0 AND e.latest_draft_entity_versions_id = ev.id`;
+  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.valid, ev.version, ev.data`;
+  sql`FROM entities e, entity_versions ev WHERE e.dirty != 0 AND e.latest_draft_entity_versions_id = ev.id`;
   sql`LIMIT 1`;
 
   const result = await queryNoneOrOne<
@@ -33,6 +33,7 @@ export async function managementDirtyGetNextEntity(
       | 'created_at'
       | 'updated_at'
       | 'status'
+      | 'dirty'
       | 'valid'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
@@ -51,6 +52,7 @@ export async function managementDirtyGetNextEntity(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
+    dirty,
     valid,
     created_at: createdAt,
     updated_at: updatedAt,
@@ -70,5 +72,9 @@ export async function managementDirtyGetNextEntity(
     createdAt,
     updatedAt,
     fieldValues,
+    dirtyValidateLatest: !!(dirty & 1),
+    dirtyValidatePublished: !!(dirty & 2),
+    dirtyIndexLatest: !!(dirty & 4),
+    dirtyIndexPublished: !!(dirty & 8),
   });
 }
