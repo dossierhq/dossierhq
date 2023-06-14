@@ -1,29 +1,40 @@
-import type { ErrorType, Location, PromiseResult } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
-import type {
-  DatabaseResolvedEntityReference,
-  TransactionContext,
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  buildPostgresSqlQuery,
+  type DatabaseEntityIndexesArg,
+  type DatabaseResolvedEntityReference,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 
-export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
+export async function updateLatestEntityIndexes(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
-  entity: DatabaseResolvedEntityReference,
-  referenceIds: DatabaseResolvedEntityReference[],
-  locations: Location[],
-  valueTypes: string[],
+  reference: DatabaseResolvedEntityReference,
+  entityIndexes: DatabaseEntityIndexesArg,
   { skipDelete }: { skipDelete: boolean }
 ): PromiseResult<void, typeof ErrorType.Generic> {
+  const entityId = reference.entityInternalId;
+  const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
+
+  // FTS
+  const ftsResult = await queryNone(
+    database,
+    context,
+    buildPostgresSqlQuery(({ sql }) => {
+      sql`UPDATE entities SET latest_fts = to_tsvector(${fullTextSearchText}) WHERE id = ${entityId}`;
+    })
+  );
+  if (ftsResult.isError()) return ftsResult;
+
+  // Remove existing indexes
   if (!skipDelete) {
     const removeExistingReferencesResult = await queryNone(
       database,
       context,
       buildPostgresSqlQuery(
-        ({ sql }) =>
-          sql`DELETE FROM entity_latest_references WHERE from_entities_id = ${entity.entityInternalId}`
+        ({ sql }) => sql`DELETE FROM entity_latest_references WHERE from_entities_id = ${entityId}`
       )
     );
     if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
@@ -32,8 +43,7 @@ export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
       database,
       context,
       buildPostgresSqlQuery(
-        ({ sql }) =>
-          sql`DELETE FROM entity_latest_locations WHERE entities_id = ${entity.entityInternalId}`
+        ({ sql }) => sql`DELETE FROM entity_latest_locations WHERE entities_id = ${entityId}`
       )
     );
     if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
@@ -42,12 +52,13 @@ export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
       database,
       context,
       buildPostgresSqlQuery(
-        ({ sql }) =>
-          sql`DELETE FROM entity_latest_value_types WHERE entities_id = ${entity.entityInternalId}`
+        ({ sql }) => sql`DELETE FROM entity_latest_value_types WHERE entities_id = ${entityId}`
       )
     );
     if (removeExistingValueTypesResult.isError()) return removeExistingValueTypesResult;
   }
+
+  // Update indexes
 
   if (referenceIds.length > 0) {
     const insertReferencesResult = await queryNone(
@@ -55,7 +66,7 @@ export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
       context,
       buildPostgresSqlQuery(({ sql, addValue }) => {
         sql`INSERT INTO entity_latest_references (from_entities_id, to_entities_id) VALUES`;
-        const fromEntitiesId = addValue(entity.entityInternalId);
+        const fromEntitiesId = addValue(entityId);
         for (const referenceId of referenceIds) {
           sql`(${fromEntitiesId}, ${referenceId.entityInternalId})`;
         }
@@ -70,7 +81,7 @@ export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
       context,
       buildPostgresSqlQuery(({ sql, addValue }) => {
         sql`INSERT INTO entity_latest_locations (entities_id, location) VALUES`;
-        const entitiesId = addValue(entity.entityInternalId);
+        const entitiesId = addValue(entityId);
         for (const location of locations) {
           sql`(${entitiesId}, ST_SetSRID(ST_Point(${location.lng}, ${location.lat}), 4326))`;
         }
@@ -85,7 +96,7 @@ export async function updateEntityLatestReferencesLocationsAndValueTypesIndexes(
       context,
       buildPostgresSqlQuery(({ sql, addValue }) => {
         sql`INSERT INTO entity_latest_value_types (entities_id, value_type) VALUES`;
-        const entitiesId = addValue(entity.entityInternalId);
+        const entitiesId = addValue(entityId);
         for (const valueType of valueTypes) {
           sql`(${entitiesId}, ${valueType})`;
         }

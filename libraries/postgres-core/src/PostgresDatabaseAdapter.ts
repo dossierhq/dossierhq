@@ -44,6 +44,8 @@ import { authCreateSession } from './auth/createSession.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
+import { managementDirtyUpdateLatestIndexes } from './management/dirtyUpdateLatestIndexes.js';
+import { managementDirtyUpdatePublishedIndexes } from './management/dirtyUpdatePublishedIndexes.js';
 import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
@@ -132,6 +134,10 @@ export function createPostgresDatabaseAdapterAdapter(
       managementDirtyGetNextEntity(databaseAdapter, ...args),
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(databaseAdapter, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(databaseAdapter, ...args),
+    managementDirtyUpdateLatestIndexes: (...args) =>
+      managementDirtyUpdateLatestIndexes(databaseAdapter, ...args),
+    managementDirtyUpdatePublishedIndexes: (...args) =>
+      managementDirtyUpdatePublishedIndexes(databaseAdapter, ...args),
     managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),

@@ -244,6 +244,13 @@ export interface DatabaseManagementMarkEntitiesDirtyPayload {
   count: number;
 }
 
+export interface DatabaseEntityIndexesArg {
+  fullTextSearchText: string;
+  referenceIds: DatabaseResolvedEntityReference[];
+  locations: Location[];
+  valueTypes: string[];
+}
+
 export interface DatabasePublishedEntityPayload {
   id: string;
   name: string;
@@ -506,6 +513,18 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
     valid: boolean
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  managementDirtyUpdateLatestIndexes(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    entityIndexes: DatabaseEntityIndexesArg
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  managementDirtyUpdatePublishedIndexes(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    entityIndexes: DatabaseEntityIndexesArg
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   managementOptimize(

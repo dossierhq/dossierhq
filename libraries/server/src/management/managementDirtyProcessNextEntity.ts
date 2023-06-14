@@ -10,7 +10,11 @@ import {
   type PromiseResult,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
-import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
+import {
+  decodeAdminEntity,
+  encodeAdminEntity,
+  type EncodeAdminEntityResult,
+} from '../EntityCodec.js';
 
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
@@ -27,9 +31,15 @@ export async function managementDirtyProcessNextEntity(
       }
     }
 
+    const {
+      dirtyValidateLatest,
+      dirtyValidatePublished: _todo1,
+      dirtyIndexLatest,
+      dirtyIndexPublished: _todo2,
+    } = entityResult.value;
     let valid = entityResult.value.valid;
 
-    if (entityResult.value.dirtyValidateLatest) {
+    if (dirtyValidateLatest || dirtyIndexLatest) {
       const entity = decodeAdminEntity(adminSchema, entityResult.value);
       const validationResult = await validateEntity(adminSchema, databaseAdapter, context, entity);
       if (validationResult.isError() && validationResult.isErrorType(ErrorType.Generic)) {
@@ -37,6 +47,15 @@ export async function managementDirtyProcessNextEntity(
       }
 
       valid = validationResult.isOk();
+
+      if (dirtyIndexLatest && validationResult.isOk()) {
+        const updateLatestResult = await databaseAdapter.managementDirtyUpdateLatestIndexes(
+          context,
+          entityResult.value,
+          validationResult.value
+        );
+        if (updateLatestResult.isError()) return updateLatestResult;
+      }
     }
 
     const updateResult = await databaseAdapter.managementDirtyUpdateEntity(
@@ -55,7 +74,7 @@ async function validateEntity(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entity: AdminEntity
-): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const validationIssue = validateEntityInfo(adminSchema, [], entity);
   if (validationIssue) return notOk.BadRequest('Invalid entity info');
 
@@ -66,15 +85,12 @@ async function validateEntity(
   if (normalizedResult.isError()) return normalizedResult;
   const normalizedEntity = copyEntity(entity, { fields: normalizedResult.value });
 
-  // TODO a bit unnecessary to encode since we don't use the result, but it is running all validations
-  const encodeResult = await encodeAdminEntity(
+  // TODO a bit unnecessary to encode when not updating indexes since we don't use the result, but it is running all validations
+  return await encodeAdminEntity(
     adminSchema,
     databaseAdapter,
     context,
     entitySpec,
     normalizedEntity
   );
-  if (encodeResult.isError()) return encodeResult;
-
-  return ok(undefined);
 }

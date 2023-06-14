@@ -1,9 +1,8 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import {
-  buildSqliteSqlQuery,
-  type DatabaseAdminEntityCreateEntityArg,
-  type DatabaseAdminEntityCreatePayload,
-  type TransactionContext,
+import type {
+  DatabaseAdminEntityCreateEntityArg,
+  DatabaseAdminEntityCreatePayload,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema.js';
@@ -12,7 +11,7 @@ import { queryOne, queryRun } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
+import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminCreateEntity(
   database: Database,
@@ -32,16 +31,6 @@ export async function adminCreateEntity(
   if (createEntityRowResult.isError()) return createEntityRowResult;
 
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
-
-  const ftsResult = await queryRun(
-    database,
-    context,
-    buildSqliteSqlQuery(
-      ({ sql }) =>
-        sql`INSERT INTO entities_latest_fts (rowid, content) VALUES (${entityId}, ${entity.fullTextSearchText})`
-    )
-  );
-  if (ftsResult.isError()) return ftsResult;
 
   const createEntityVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     database,
@@ -69,16 +58,13 @@ export async function adminCreateEntity(
     return updateLatestDraftIdResult;
   }
 
-  const updateReferencesIndexResult =
-    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
-      database,
-      context,
-      { entityInternalId: entityId },
-      entity.referenceIds,
-      entity.locations,
-      entity.valueTypes,
-      { skipDelete: true }
-    );
+  const updateReferencesIndexResult = await updateLatestEntityIndexes(
+    database,
+    context,
+    { entityInternalId: entityId },
+    entity,
+    { skipDelete: true }
+  );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });

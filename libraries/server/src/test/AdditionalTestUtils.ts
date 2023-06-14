@@ -136,6 +136,8 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     managementDirtyGetNextEntity: vi.fn(),
     managementDirtyMarkEntities: vi.fn(),
     managementDirtyUpdateEntity: vi.fn(),
+    managementDirtyUpdateLatestIndexes: vi.fn(),
+    managementDirtyUpdatePublishedIndexes: vi.fn(),
     managementOptimize: vi.fn(),
     publishedEntityGetOne: vi.fn(),
     publishedEntityGetEntities: vi.fn(),

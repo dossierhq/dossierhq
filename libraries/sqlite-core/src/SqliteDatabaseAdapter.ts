@@ -56,6 +56,8 @@ import { authCreateSession } from './auth/createSession.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
+import { managementDirtyUpdateLatestIndexes } from './management/dirtyUpdateLatestIndexes.js';
+import { managementDirtyUpdatePublishedIndexes } from './management/dirtyUpdatePublishedIndexes.js';
 import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
@@ -213,6 +215,10 @@ function createOuterAdapter(
     managementOptimize: (...args) => managementOptimize(database, ...args),
     managementDirtyGetNextEntity: (...args) => managementDirtyGetNextEntity(database, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(database, ...args),
+    managementDirtyUpdateLatestIndexes: (...args) =>
+      managementDirtyUpdateLatestIndexes(database, ...args),
+    managementDirtyUpdatePublishedIndexes: (...args) =>
+      managementDirtyUpdatePublishedIndexes(database, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(database, ...args),
     publishedEntitySampleEntities: (...args) => publishedEntitySampleEntities(database, ...args),

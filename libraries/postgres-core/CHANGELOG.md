@@ -411,6 +411,6 @@ Sun, 13 Feb 2022 21:58:15 GMT
 - Support reverse order
 - Use new status column
 - Support authKeys
-- Upgrade dependencies. Support all server actions. Fix boken nested transactions.
+- Upgrade dependencies. Support all server actions. Fix broken nested transactions.
 - Support sample entities.
 

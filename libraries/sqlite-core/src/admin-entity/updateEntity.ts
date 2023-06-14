@@ -6,7 +6,6 @@ import type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
@@ -15,7 +14,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
+import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,
@@ -158,29 +157,14 @@ export async function adminEntityUpdateEntity(
   });
   if (updateEntityResult.isError()) return updateEntityResult;
 
-  const ftsResult = await queryRun(
+  // Update latest indexes
+  const updateReferencesIndexResult = await updateLatestEntityIndexes(
     database,
     context,
-    buildSqliteSqlQuery(
-      ({ sql }) =>
-        sql`UPDATE entities_latest_fts SET content = ${entity.fullTextSearchText} WHERE rowid = ${
-          entity.entityInternalId as number
-        }`
-    )
+    entity,
+    entity,
+    { skipDelete: false }
   );
-  if (ftsResult.isError()) return ftsResult;
-
-  // Update latest indexes
-  const updateReferencesIndexResult =
-    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
-      database,
-      context,
-      entity,
-      entity.referenceIds,
-      entity.locations,
-      entity.valueTypes,
-      { skipDelete: false }
-    );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ name: newName, updatedAt: now });

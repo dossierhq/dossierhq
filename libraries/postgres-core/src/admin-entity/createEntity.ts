@@ -15,7 +15,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { updateEntityLatestReferencesLocationsAndValueTypesIndexes } from './updateEntityLatestReferencesLocationsAndValueTypesIndexes.js';
+import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -57,16 +57,13 @@ export async function adminCreateEntity(
     return updateLatestDraftIdResult;
   }
 
-  const updateReferencesIndexResult =
-    await updateEntityLatestReferencesLocationsAndValueTypesIndexes(
-      databaseAdapter,
-      context,
-      { entityInternalId: entityId },
-      entity.referenceIds,
-      entity.locations,
-      entity.valueTypes,
-      { skipDelete: true }
-    );
+  const updateReferencesIndexResult = await updateLatestEntityIndexes(
+    databaseAdapter,
+    context,
+    { entityInternalId: entityId },
+    entity,
+    { skipDelete: true }
+  );
   if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
@@ -87,9 +84,7 @@ async function createEntityRow(
       sql`INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, latest_fts, status)`;
       sql`VALUES (${entity.id ?? DEFAULT}, ${name}, ${entity.type}, ${
         entity.resolvedAuthKey.authKey
-      }, ${entity.resolvedAuthKey.resolvedAuthKey}, to_tsvector(${
-        entity.fullTextSearchText
-      }), 'draft')`;
+      }, ${entity.resolvedAuthKey.resolvedAuthKey}, to_tsvector(''), 'draft')`;
       sql`RETURNING id, uuid, created_at, updated_at`;
       const createResult = await queryOne<
         Pick<EntitiesTable, 'id' | 'uuid' | 'created_at' | 'updated_at'>,
