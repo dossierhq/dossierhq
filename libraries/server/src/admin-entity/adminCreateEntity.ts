@@ -76,14 +76,18 @@ export async function adminCreateEntity(
       name: encodeEntityResult.name,
       creator: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
-      fullTextSearchText: encodeEntityResult.fullTextSearchText,
-      referenceIds: encodeEntityResult.referenceIds,
-      locations: encodeEntityResult.locations,
-      valueTypes: encodeEntityResult.valueTypes,
       fieldsData: encodeEntityResult.data,
     });
     if (createResult.isError()) return createResult;
     const { id, name, createdAt, updatedAt } = createResult.value;
+
+    const updateEntityIndexesResult = await databaseAdapter.adminEntityIndexesUpdateLatest(
+      context,
+      { entityInternalId: createResult.value.entityInternalId },
+      encodeEntityResult.entityIndexes,
+      true
+    );
+    if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
     let effect: AdminEntityCreatePayload['effect'] = 'created';
     const result: AdminEntity = {

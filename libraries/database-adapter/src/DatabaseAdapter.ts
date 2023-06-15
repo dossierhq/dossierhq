@@ -51,10 +51,6 @@ export interface DatabaseAdminEntityCreateEntityArg {
   name: string;
   creator: Session;
   resolvedAuthKey: ResolvedAuthKey;
-  fullTextSearchText: string;
-  locations: Location[];
-  referenceIds: DatabaseResolvedEntityReference[];
-  valueTypes: string[];
   fieldsData: Record<string, unknown>;
 }
 
@@ -198,10 +194,6 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   status: AdminEntityStatus;
   session: Session;
   fieldValues: Record<string, unknown>;
-  fullTextSearchText: string;
-  referenceIds: DatabaseResolvedEntityReference[];
-  valueTypes: string[];
-  locations: Location[];
 }
 
 export interface DatabaseEntityUpdateEntityPayload {
@@ -346,6 +338,13 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference
   ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], typeof ErrorType.Generic>;
+
+  adminEntityIndexesUpdateLatest(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    entityIndexes: DatabaseEntityIndexesArg,
+    create: boolean
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityPublishGetVersionInfo(
     context: TransactionContext,
@@ -513,12 +512,6 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
     valid: boolean
-  ): PromiseResult<void, typeof ErrorType.Generic>;
-
-  managementDirtyUpdateLatestIndexes(
-    context: TransactionContext,
-    reference: DatabaseResolvedEntityReference,
-    entityIndexes: DatabaseEntityIndexesArg
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   managementDirtyUpdatePublishedIndexes(

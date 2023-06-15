@@ -7,12 +7,12 @@ import {
 } from '@dossierhq/database-adapter';
 import { queryRun, type Database } from '../QueryFunctions.js';
 
-export async function updateLatestEntityIndexes(
+export async function adminEntityIndexesUpdateLatest(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
   entityIndexes: DatabaseEntityIndexesArg,
-  { skipDelete }: { skipDelete: boolean }
+  create: boolean
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId as number;
   const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
@@ -22,7 +22,7 @@ export async function updateLatestEntityIndexes(
     database,
     context,
     buildSqliteSqlQuery(({ sql }) => {
-      if (skipDelete) {
+      if (create) {
         sql`INSERT INTO entities_latest_fts (rowid, content) VALUES (${entityId}, ${fullTextSearchText})`;
       } else {
         sql`UPDATE entities_latest_fts SET content = ${fullTextSearchText} WHERE rowid = ${entityId}`;
@@ -32,7 +32,7 @@ export async function updateLatestEntityIndexes(
   if (ftsResult.isError()) return ftsResult;
 
   // Remove existing indexes
-  if (!skipDelete) {
+  if (!create) {
     const removeExistingReferencesResult = await queryRun(
       database,
       context,

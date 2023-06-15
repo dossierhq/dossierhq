@@ -15,7 +15,6 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -44,27 +43,14 @@ export async function adminCreateEntity(
       values: [entityId, getSessionSubjectInternalId(entity.creator), entity.fieldsData],
     }
   );
-  if (createEntityVersionResult.isError()) {
-    return createEntityVersionResult;
-  }
+  if (createEntityVersionResult.isError()) return createEntityVersionResult;
   const { id: versionsId } = createEntityVersionResult.value;
 
   const updateLatestDraftIdResult = await queryNone(databaseAdapter, context, {
     text: 'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
     values: [versionsId, entityId],
   });
-  if (updateLatestDraftIdResult.isError()) {
-    return updateLatestDraftIdResult;
-  }
-
-  const updateReferencesIndexResult = await updateLatestEntityIndexes(
-    databaseAdapter,
-    context,
-    { entityInternalId: entityId },
-    entity,
-    { skipDelete: true }
-  );
-  if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
+  if (updateLatestDraftIdResult.isError()) return updateLatestDraftIdResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
 }

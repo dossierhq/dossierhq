@@ -29,6 +29,7 @@ import {
 } from './admin-entity/getPublishingHistory.js';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
+import { adminEntityIndexesUpdateLatest } from './admin-entity/indexesUpdateLatest.js';
 import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
@@ -56,7 +57,6 @@ import { authCreateSession } from './auth/createSession.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
-import { managementDirtyUpdateLatestIndexes } from './management/dirtyUpdateLatestIndexes.js';
 import { managementDirtyUpdatePublishedIndexes } from './management/dirtyUpdatePublishedIndexes.js';
 import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
@@ -179,6 +179,7 @@ function createOuterAdapter(
       adminEntityHistoryGetEntityInfo(database, ...args),
     adminEntityHistoryGetVersionsInfo: (...args) =>
       adminEntityHistoryGetVersionsInfo(database, ...args),
+    adminEntityIndexesUpdateLatest: (...args) => adminEntityIndexesUpdateLatest(database, ...args),
     adminEntityPublishUpdatePublishedReferencesIndex: (...args) =>
       adminEntityPublishUpdatePublishedReferencesIndex(database, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
@@ -215,8 +216,6 @@ function createOuterAdapter(
     managementOptimize: (...args) => managementOptimize(database, ...args),
     managementDirtyGetNextEntity: (...args) => managementDirtyGetNextEntity(database, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(database, ...args),
-    managementDirtyUpdateLatestIndexes: (...args) =>
-      managementDirtyUpdateLatestIndexes(database, ...args),
     managementDirtyUpdatePublishedIndexes: (...args) =>
       managementDirtyUpdatePublishedIndexes(database, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),

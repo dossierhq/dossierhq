@@ -13,7 +13,6 @@ import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -129,9 +128,7 @@ export async function adminEntityUpdateEntity(
             return notOk.GenericUnexpectedException(context, error);
           }
         );
-        if (updateNameResult.isError()) {
-          return updateNameResult;
-        }
+        if (updateNameResult.isError()) return updateNameResult;
 
         return ok(name);
       }
@@ -159,15 +156,6 @@ export async function adminEntityUpdateEntity(
   );
   if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;
-
-  const updateReferencesIndexResult = await updateLatestEntityIndexes(
-    databaseAdapter,
-    context,
-    entity,
-    entity,
-    { skipDelete: false }
-  );
-  if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ name: newName, updatedAt });
 }

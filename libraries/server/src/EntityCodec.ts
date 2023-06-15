@@ -50,6 +50,7 @@ import {
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
+  DatabaseEntityIndexesArg,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
@@ -62,10 +63,7 @@ export interface EncodeAdminEntityResult {
   type: string;
   name: string;
   data: Record<string, unknown>;
-  referenceIds: DatabaseResolvedEntityReference[];
-  locations: Location[];
-  valueTypes: string[];
-  fullTextSearchText: string;
+  entityIndexes: DatabaseEntityIndexesArg;
   uniqueIndexValues: Map<string, UniqueIndexValue[]>;
 }
 
@@ -376,10 +374,12 @@ export async function encodeAdminEntity(
     type: entity.info.type,
     name: entity.info.name,
     data: {},
-    referenceIds: [],
-    locations: locationsCollector.result,
-    valueTypes: valueTypesCollector.result,
-    fullTextSearchText: ftsCollector.result,
+    entityIndexes: {
+      referenceIds: [],
+      locations: locationsCollector.result,
+      valueTypes: valueTypesCollector.result,
+      fullTextSearchText: ftsCollector.result,
+    },
     uniqueIndexValues: uniqueIndexCollector.result,
   };
   for (const fieldSpec of entitySpec.fields) {
@@ -403,7 +403,7 @@ export async function encodeAdminEntity(
     referencesCollector.result
   );
   if (resolveResult.isError()) return resolveResult;
-  result.referenceIds.push(...resolveResult.value);
+  result.entityIndexes.referenceIds.push(...resolveResult.value);
 
   return ok(result);
 }

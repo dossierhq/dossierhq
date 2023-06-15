@@ -8,12 +8,12 @@ import {
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
 
-export async function updateLatestEntityIndexes(
+export async function adminEntityIndexesUpdateLatest(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
   entityIndexes: DatabaseEntityIndexesArg,
-  { skipDelete }: { skipDelete: boolean }
+  create: boolean
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId;
   const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
@@ -29,7 +29,7 @@ export async function updateLatestEntityIndexes(
   if (ftsResult.isError()) return ftsResult;
 
   // Remove existing indexes
-  if (!skipDelete) {
+  if (!create) {
     const removeExistingReferencesResult = await queryNone(
       database,
       context,

@@ -14,7 +14,6 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,
@@ -156,16 +155,6 @@ export async function adminEntityUpdateEntity(
     ],
   });
   if (updateEntityResult.isError()) return updateEntityResult;
-
-  // Update latest indexes
-  const updateReferencesIndexResult = await updateLatestEntityIndexes(
-    database,
-    context,
-    entity,
-    entity,
-    { skipDelete: false }
-  );
-  if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
 
   return ok({ name: newName, updatedAt: now });
 }

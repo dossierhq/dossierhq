@@ -17,6 +17,7 @@ import {
 } from './admin-entity/getPublishingHistory.js';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
+import { adminEntityIndexesUpdateLatest } from './admin-entity/indexesUpdateLatest.js';
 import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
@@ -44,7 +45,6 @@ import { authCreateSession } from './auth/createSession.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
-import { managementDirtyUpdateLatestIndexes } from './management/dirtyUpdateLatestIndexes.js';
 import { managementDirtyUpdatePublishedIndexes } from './management/dirtyUpdatePublishedIndexes.js';
 import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
@@ -95,6 +95,8 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityHistoryGetEntityInfo(databaseAdapter, ...args),
     adminEntityHistoryGetVersionsInfo: (...args) =>
       adminEntityHistoryGetVersionsInfo(databaseAdapter, ...args),
+    adminEntityIndexesUpdateLatest: (...args) =>
+      adminEntityIndexesUpdateLatest(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
@@ -134,8 +136,6 @@ export function createPostgresDatabaseAdapterAdapter(
       managementDirtyGetNextEntity(databaseAdapter, ...args),
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(databaseAdapter, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(databaseAdapter, ...args),
-    managementDirtyUpdateLatestIndexes: (...args) =>
-      managementDirtyUpdateLatestIndexes(databaseAdapter, ...args),
     managementDirtyUpdatePublishedIndexes: (...args) =>
       managementDirtyUpdatePublishedIndexes(databaseAdapter, ...args),
     managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),

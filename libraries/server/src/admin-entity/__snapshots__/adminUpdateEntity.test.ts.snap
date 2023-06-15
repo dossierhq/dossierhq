@@ -19,6 +19,19 @@ exports[`Admin adminUpdateEntity > Error: No change to invalid entity 1`] = `
 exports[`Admin adminUpdateEntity > Minimal 1`] = `
 [
   [
+    "adminEntityIndexesUpdateLatest",
+    {
+      "entityInternalId": "internal-123",
+    },
+    {
+      "fullTextSearchText": "Updated title",
+      "locations": [],
+      "referenceIds": [],
+      "valueTypes": [],
+    },
+    false,
+  ],
+  [
     "adminEntityUniqueIndexGetValues",
     {
       "entityInternalId": "internal-123",
@@ -33,16 +46,12 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
       "fieldValues": {
         "title": "Updated title",
       },
-      "fullTextSearchText": "Updated title",
-      "locations": [],
       "name": "Updated name",
-      "referenceIds": [],
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
       },
       "status": "draft",
-      "valueTypes": [],
       "version": 1,
     },
   ],

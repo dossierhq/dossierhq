@@ -11,7 +11,6 @@ import { queryOne, queryRun } from '../QueryFunctions.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { updateLatestEntityIndexes } from './updateLatestEntityIndexes.js';
 
 export async function adminCreateEntity(
   database: Database,
@@ -45,27 +44,14 @@ export async function adminCreateEntity(
       ],
     }
   );
-  if (createEntityVersionResult.isError()) {
-    return createEntityVersionResult;
-  }
+  if (createEntityVersionResult.isError()) return createEntityVersionResult;
   const { id: versionsId } = createEntityVersionResult.value;
 
   const updateLatestDraftIdResult = await queryRun(database, context, {
     text: 'UPDATE entities SET latest_entity_versions_id = ?1 WHERE id = ?2',
     values: [versionsId, entityId],
   });
-  if (updateLatestDraftIdResult.isError()) {
-    return updateLatestDraftIdResult;
-  }
-
-  const updateReferencesIndexResult = await updateLatestEntityIndexes(
-    database,
-    context,
-    { entityInternalId: entityId },
-    entity,
-    { skipDelete: true }
-  );
-  if (updateReferencesIndexResult.isError()) return updateReferencesIndexResult;
+  if (updateLatestDraftIdResult.isError()) return updateLatestDraftIdResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
 }

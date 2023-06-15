@@ -9,12 +9,12 @@ import {
   type AdminSchema,
   type PromiseResult,
 } from '@dossierhq/core';
-import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
-import {
-  decodeAdminEntity,
-  encodeAdminEntity,
-  type EncodeAdminEntityResult,
-} from '../EntityCodec.js';
+import type {
+  DatabaseAdapter,
+  DatabaseEntityIndexesArg,
+  TransactionContext,
+} from '@dossierhq/database-adapter';
+import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
 
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
@@ -49,10 +49,11 @@ export async function managementDirtyProcessNextEntity(
       valid = validationResult.isOk();
 
       if (dirtyIndexLatest && validationResult.isOk()) {
-        const updateLatestResult = await databaseAdapter.managementDirtyUpdateLatestIndexes(
+        const updateLatestResult = await databaseAdapter.adminEntityIndexesUpdateLatest(
           context,
           entityResult.value,
-          validationResult.value
+          validationResult.value,
+          false
         );
         if (updateLatestResult.isError()) return updateLatestResult;
       }
@@ -74,7 +75,7 @@ async function validateEntity(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entity: AdminEntity
-): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<DatabaseEntityIndexesArg, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const validationIssue = validateEntityInfo(adminSchema, [], entity);
   if (validationIssue) return notOk.BadRequest('Invalid entity info');
 
@@ -86,11 +87,14 @@ async function validateEntity(
   const normalizedEntity = copyEntity(entity, { fields: normalizedResult.value });
 
   // TODO a bit unnecessary to encode when not updating indexes since we don't use the result, but it is running all validations
-  return await encodeAdminEntity(
+  const encodeResult = await encodeAdminEntity(
     adminSchema,
     databaseAdapter,
     context,
     entitySpec,
     normalizedEntity
   );
+  if (encodeResult.isError()) return encodeResult;
+
+  return ok(encodeResult.value.entityIndexes);
 }

@@ -31,6 +31,9 @@ describe('Admin adminCreateEntity', () => {
         })
       )
     );
+    databaseAdapter.adminEntityIndexesUpdateLatest.mockReturnValueOnce(
+      Promise.resolve(ok(undefined))
+    );
 
     const result = await adminCreateEntity(
       adminTestSchema,
@@ -78,18 +81,27 @@ describe('Admin adminCreateEntity', () => {
               "fieldsData": {
                 "title": "Title",
               },
-              "fullTextSearchText": "Title",
               "id": null,
-              "locations": [],
               "name": "TitleOnly name",
-              "referenceIds": [],
               "resolvedAuthKey": {
                 "authKey": "none",
                 "resolvedAuthKey": "none",
               },
               "type": "TitleOnly",
+            },
+          ],
+          [
+            "adminEntityIndexesUpdateLatest",
+            {
+              "entityInternalId": 123,
+            },
+            {
+              "fullTextSearchText": "Title",
+              "locations": [],
+              "referenceIds": [],
               "valueTypes": [],
             },
+            true,
           ],
           [
             "withRootTransaction",

@@ -20,6 +20,7 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityGetReferenceEntitiesInfo: MockedFunction<
     DatabaseAdapter['adminEntityGetReferenceEntitiesInfo']
   >;
+  adminEntityIndexesUpdateLatest: MockedFunction<DatabaseAdapter['adminEntityIndexesUpdateLatest']>;
   adminEntityPublishGetVersionInfo: MockedFunction<
     DatabaseAdapter['adminEntityPublishGetVersionInfo']
   >;
@@ -103,30 +104,31 @@ export function createMockSessionContext({
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
     adminEntityArchivingGetEntityInfo: vi.fn(),
-    adminEntityUpdateStatus: vi.fn(),
     adminEntityCreate: vi.fn(),
-    adminEntityGetOne: vi.fn(),
-    adminEntityGetMultiple: vi.fn(),
     adminEntityGetEntityName: vi.fn(),
+    adminEntityGetMultiple: vi.fn(),
+    adminEntityGetOne: vi.fn(),
     adminEntityGetReferenceEntitiesInfo: vi.fn(),
     adminEntityHistoryGetEntityInfo: vi.fn(),
     adminEntityHistoryGetVersionsInfo: vi.fn(),
-    adminEntityPublishUpdatePublishedReferencesIndex: vi.fn(),
+    adminEntityIndexesUpdateLatest: vi.fn(),
     adminEntityPublishGetVersionInfo: vi.fn(),
     adminEntityPublishingCreateEvents: vi.fn(),
     adminEntityPublishingHistoryGetEntityInfo: vi.fn(),
     adminEntityPublishingHistoryGetEvents: vi.fn(),
     adminEntityPublishUpdateEntity: vi.fn(),
+    adminEntityPublishUpdatePublishedReferencesIndex: vi.fn(),
     adminEntitySampleEntities: vi.fn(),
     adminEntitySearchEntities: vi.fn(),
     adminEntitySearchTotalCount: vi.fn(),
     adminEntityUniqueIndexGetValues: vi.fn(),
     adminEntityUniqueIndexUpdateValues: vi.fn(),
+    adminEntityUnpublishEntities: vi.fn(),
+    adminEntityUnpublishGetEntitiesInfo: vi.fn(),
+    adminEntityUnpublishGetPublishedReferencedEntities: vi.fn(),
     adminEntityUpdateEntity: vi.fn(),
     adminEntityUpdateGetEntityInfo: vi.fn(),
-    adminEntityUnpublishGetEntitiesInfo: vi.fn(),
-    adminEntityUnpublishEntities: vi.fn(),
-    adminEntityUnpublishGetPublishedReferencedEntities: vi.fn(),
+    adminEntityUpdateStatus: vi.fn(),
     advisoryLockAcquire: vi.fn(),
     advisoryLockDeleteExpired: vi.fn(),
     advisoryLockRelease: vi.fn(),
@@ -136,11 +138,10 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     managementDirtyGetNextEntity: vi.fn(),
     managementDirtyMarkEntities: vi.fn(),
     managementDirtyUpdateEntity: vi.fn(),
-    managementDirtyUpdateLatestIndexes: vi.fn(),
     managementDirtyUpdatePublishedIndexes: vi.fn(),
     managementOptimize: vi.fn(),
-    publishedEntityGetOne: vi.fn(),
     publishedEntityGetEntities: vi.fn(),
+    publishedEntityGetOne: vi.fn(),
     publishedEntitySampleEntities: vi.fn(),
     publishedEntitySearchEntities: vi.fn(),
     publishedEntitySearchTotalCount: vi.fn(),

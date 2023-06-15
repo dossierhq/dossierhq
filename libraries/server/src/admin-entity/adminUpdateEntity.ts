@@ -86,9 +86,7 @@ export async function adminUpdateEntity(
             version: updatedEntity.info.version,
           }
         );
-        if (publishResult.isError()) {
-          return publishResult;
-        }
+        if (publishResult.isError()) return publishResult;
         payload.effect = 'published';
         updatedEntity.info.status = publishResult.value.status;
         updatedEntity.info.updatedAt = publishResult.value.updatedAt;
@@ -105,8 +103,7 @@ export async function adminUpdateEntity(
       updatedEntity
     );
     if (encodeResult.isError()) return encodeResult;
-    const { data, name, referenceIds, locations, valueTypes, fullTextSearchText } =
-      encodeResult.value;
+    const { data, name } = encodeResult.value;
 
     const updateResult = await databaseAdapter.adminEntityUpdateEntity(
       context,
@@ -119,10 +116,6 @@ export async function adminUpdateEntity(
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,
         fieldValues: data,
-        fullTextSearchText,
-        referenceIds,
-        valueTypes,
-        locations,
       }
     );
     if (updateResult.isError()) return updateResult;
@@ -130,6 +123,14 @@ export async function adminUpdateEntity(
     let effect: AdminEntityUpdatePayload['effect'] = 'updated';
     updatedEntity.info.name = updateResult.value.name;
     updatedEntity.info.updatedAt = updateResult.value.updatedAt;
+
+    const updateEntityIndexesResult = await databaseAdapter.adminEntityIndexesUpdateLatest(
+      context,
+      { entityInternalId },
+      encodeResult.value.entityIndexes,
+      false
+    );
+    if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
     const uniqueIndexResult = await updateUniqueIndexesForEntity(
       databaseAdapter,
