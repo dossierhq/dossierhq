@@ -19,9 +19,9 @@ import type {
 } from '@dossierhq/database-adapter';
 import { decodeAdminEntity, decodeAdminEntityFields, encodeAdminEntity } from '../EntityCodec.js';
 import {
-  ensureReferencedEntitiesArePublishedAndCollectInfo,
-  verifyFieldValuesAndCollectInformation,
-} from '../admin-entity/adminPublishEntities.js';
+  validatePublishedFieldValuesAndCollectInfo,
+  validateReferencedEntitiesArePublishedAndCollectInfo,
+} from '../EntityValidator.js';
 
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
@@ -167,28 +167,27 @@ async function validatePublishedEntity(
 
   const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, fieldValues);
 
-  const verifyFieldsResult = verifyFieldValuesAndCollectInformation(
+  const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,
     adminSchema.toPublishedSchema(),
-    reference,
+    ['entity'],
     type,
     entityFields
   );
-  if (verifyFieldsResult.isError()) return verifyFieldsResult;
+  if (validateFieldsResult.isError()) return validateFieldsResult;
 
-  const ensureReferencePublishedResult = await ensureReferencedEntitiesArePublishedAndCollectInfo(
-    databaseAdapter,
-    context,
-    [{ entity: reference, references: verifyFieldsResult.value.references }]
-  );
-  if (ensureReferencePublishedResult.isError()) return ensureReferencePublishedResult;
-  const referenceIds = ensureReferencePublishedResult.value.get(reference.id);
+  const validateReferencedEntitiesResult =
+    await validateReferencedEntitiesArePublishedAndCollectInfo(databaseAdapter, context, [
+      { entity: reference, references: validateFieldsResult.value.references },
+    ]);
+  if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
+  const referenceIds = validateReferencedEntitiesResult.value.get(reference.id);
   assertIsDefined(referenceIds);
 
   return ok({
-    fullTextSearchText: verifyFieldsResult.value.fullTextSearchText,
-    locations: verifyFieldsResult.value.locations,
-    valueTypes: verifyFieldsResult.value.valueTypes,
+    fullTextSearchText: validateFieldsResult.value.fullTextSearchText,
+    locations: validateFieldsResult.value.locations,
+    valueTypes: validateFieldsResult.value.valueTypes,
     referenceIds,
   });
 }
