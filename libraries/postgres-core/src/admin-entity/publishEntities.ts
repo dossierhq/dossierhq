@@ -4,13 +4,11 @@ import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntityUpdateStatusPayload,
-  DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityPublishGetVersionInfo(
@@ -77,7 +75,7 @@ export async function adminEntityPublishUpdateEntity(
   context: TransactionContext,
   values: DatabaseAdminEntityPublishUpdateEntityArg
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
-  const { entityVersionInternalId, fullTextSearchText, status, entityInternalId } = values;
+  const { entityVersionInternalId, status, entityInternalId } = values;
 
   const updateResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
     text: `UPDATE entities
@@ -85,100 +83,15 @@ export async function adminEntityPublishUpdateEntity(
             never_published = FALSE,
             archived = FALSE,
             published_entity_versions_id = $1,
-            published_fts = to_tsvector($2),
             updated_at = NOW(),
             updated = nextval('entities_updated_seq'),
-            status = $3
-          WHERE id = $4
+            status = $2
+          WHERE id = $3
           RETURNING updated_at`,
-    values: [entityVersionInternalId, fullTextSearchText, status, entityInternalId],
+    values: [entityVersionInternalId, status, entityInternalId],
   });
   if (updateResult.isError()) return updateResult;
 
-  // Update locations index: Clear existing
-  const clearLocationsResult = await queryNone(
-    databaseAdapter,
-    context,
-    buildPostgresSqlQuery(({ sql }) => {
-      sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityInternalId}`;
-    })
-  );
-  if (clearLocationsResult.isError()) return clearLocationsResult;
-
-  // Update locations index: Insert new
-  if (values.locations.length > 0) {
-    const insertResult = await queryNone(
-      databaseAdapter,
-      context,
-      buildPostgresSqlQuery(({ sql, addValue }) => {
-        sql`INSERT INTO entity_published_locations (entities_id, location) VALUES`;
-        const entitiesId = addValue(entityInternalId);
-        for (const location of values.locations) {
-          sql`(${entitiesId}, ST_SetSRID(ST_Point(${location.lng}, ${location.lat}), 4326))`;
-        }
-      })
-    );
-    if (insertResult.isError()) return insertResult;
-  }
-
-  // Update value types index: Clear existing
-  const clearValueTypesResult = await queryNone(
-    databaseAdapter,
-    context,
-    buildPostgresSqlQuery(({ sql }) => {
-      sql`DELETE FROM entity_published_value_types WHERE entities_id = ${entityInternalId}`;
-    })
-  );
-  if (clearValueTypesResult.isError()) return clearValueTypesResult;
-
-  // Update value types index: Insert new
-  if (values.valueTypes.length > 0) {
-    const insertResult = await queryNone(
-      databaseAdapter,
-      context,
-      buildPostgresSqlQuery(({ sql, addValue }) => {
-        sql`INSERT INTO entity_published_value_types (entities_id, value_type) VALUES`;
-        const entitiesId = addValue(entityInternalId);
-        for (const valueType of values.valueTypes) {
-          sql`(${entitiesId}, ${valueType})`;
-        }
-      })
-    );
-    if (insertResult.isError()) return insertResult;
-  }
-
   const { updated_at: updatedAt } = updateResult.value;
   return ok({ updatedAt });
-}
-
-export async function adminEntityPublishUpdatePublishedReferencesIndex(
-  database: PostgresDatabaseAdapter,
-  context: TransactionContext,
-  fromReference: DatabaseResolvedEntityReference,
-  toReferences: DatabaseResolvedEntityReference[]
-): PromiseResult<void, typeof ErrorType.Generic> {
-  // Step 1: Clear existing references
-  const clearResult = await queryNone(database, context, {
-    text: 'DELETE FROM entity_published_references WHERE from_entities_id = $1',
-    values: [fromReference.entityInternalId as number],
-  });
-  if (clearResult.isError()) return clearResult;
-
-  if (toReferences.length === 0) {
-    return ok(undefined);
-  }
-
-  // Step 2: Insert new references
-  const insertResult = await queryNone(
-    database,
-    context,
-    buildPostgresSqlQuery(({ sql, addValue }) => {
-      sql`INSERT INTO entity_published_references (from_entities_id, to_entities_id) VALUES`;
-      const fromValue = addValue(fromReference.entityInternalId as number);
-      for (const toReference of toReferences) {
-        sql`(${fromValue}, ${toReference.entityInternalId as number})`;
-      }
-    })
-  );
-  return insertResult;
 }

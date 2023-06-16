@@ -1,13 +1,11 @@
-import type { EntityVersionReference, PromiseResult } from '@dossierhq/core';
-import { ErrorType, notOk, ok } from '@dossierhq/core';
+import type { EntityVersionReference, ErrorType, PromiseResult } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntityUpdateStatusPayload,
-  DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
@@ -104,126 +102,5 @@ export async function adminEntityPublishUpdateEntity(
   });
   if (updateResult.isError()) return updateResult;
 
-  // FTS virtual tables don't support upsert
-  // FTS upsert 1/2) Try to insert
-  const ftsInsertResult = await queryRun(
-    database,
-    context,
-    buildSqliteSqlQuery(
-      ({ sql }) =>
-        sql`INSERT INTO entities_published_fts (rowid, content)
-          VALUES (${entityInternalId as number}, ${values.fullTextSearchText})`
-    ),
-    (error) => {
-      if (database.adapter.isFtsVirtualTableConstraintFailed(error)) {
-        return notOk.Conflict('Document already exists');
-      }
-      return notOk.GenericUnexpectedException(context, error);
-    }
-  );
-
-  // FTS upsert 2/2) Update when insert failed
-  if (ftsInsertResult.isError()) {
-    if (ftsInsertResult.isErrorType(ErrorType.Generic)) return ftsInsertResult;
-
-    const ftsUpdateResult = await queryRun(
-      database,
-      context,
-      buildSqliteSqlQuery(
-        ({ sql }) =>
-          sql`UPDATE entities_published_fts
-            SET content = ${values.fullTextSearchText}
-            WHERE rowid = ${entityInternalId as number}`
-      )
-    );
-    if (ftsUpdateResult.isError()) return ftsUpdateResult;
-  }
-
-  // Update locations index: Clear existing
-  const clearLocationsResult = await queryRun(
-    database,
-    context,
-    buildSqliteSqlQuery(({ sql }) => {
-      sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityInternalId as number}`;
-    })
-  );
-  if (clearLocationsResult.isError()) return clearLocationsResult;
-
-  // Update locations index: Insert new
-  if (values.locations.length > 0) {
-    const insertResult = await queryRun(
-      database,
-      context,
-      buildSqliteSqlQuery(({ sql, addValue }) => {
-        sql`INSERT INTO entity_published_locations (entities_id, lat, lng) VALUES`;
-        const entitiesId = addValue(entityInternalId as number);
-        for (const location of values.locations) {
-          sql`(${entitiesId}, ${location.lat}, ${location.lng})`;
-        }
-      })
-    );
-    if (insertResult.isError()) return insertResult;
-  }
-
-  // Update value types index: Clear existing
-  const clearValueTypesResult = await queryRun(
-    database,
-    context,
-    buildSqliteSqlQuery(({ sql }) => {
-      sql`DELETE FROM entity_published_value_types WHERE entities_id = ${
-        entityInternalId as number
-      }`;
-    })
-  );
-  if (clearValueTypesResult.isError()) return clearValueTypesResult;
-
-  // Update value types index: Insert new
-  if (values.valueTypes.length > 0) {
-    const insertResult = await queryRun(
-      database,
-      context,
-      buildSqliteSqlQuery(({ sql, addValue }) => {
-        sql`INSERT INTO entity_published_value_types (entities_id, value_type) VALUES`;
-        const entitiesId = addValue(entityInternalId as number);
-        for (const valueType of values.valueTypes) {
-          sql`(${entitiesId}, ${valueType})`;
-        }
-      })
-    );
-    if (insertResult.isError()) return insertResult;
-  }
-
   return ok({ updatedAt: now });
-}
-
-export async function adminEntityPublishUpdatePublishedReferencesIndex(
-  database: Database,
-  context: TransactionContext,
-  fromReference: DatabaseResolvedEntityReference,
-  toReferences: DatabaseResolvedEntityReference[]
-): PromiseResult<void, typeof ErrorType.Generic> {
-  // Step 1: Clear existing references
-  const clearResult = await queryRun(database, context, {
-    text: 'DELETE FROM entity_published_references WHERE from_entities_id = ?1',
-    values: [fromReference.entityInternalId as number],
-  });
-  if (clearResult.isError()) return clearResult;
-
-  if (toReferences.length === 0) {
-    return ok(undefined);
-  }
-
-  // Step 2: Insert new references
-  const insertResult = await queryRun(
-    database,
-    context,
-    buildSqliteSqlQuery(({ sql, addValue }) => {
-      sql`INSERT INTO entity_published_references (from_entities_id, to_entities_id) VALUES`;
-      const fromValue = addValue(fromReference.entityInternalId as number);
-      for (const toReference of toReferences) {
-        sql`(${fromValue}, ${toReference.entityInternalId as number})`;
-      }
-    })
-  );
-  return insertResult.isOk() ? ok(undefined) : insertResult;
 }

@@ -18,10 +18,10 @@ import {
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import { adminEntityIndexesUpdateLatest } from './admin-entity/indexesUpdateLatest.js';
+import { adminEntityIndexesUpdatePublished } from './admin-entity/indexesUpdatePublished.js';
 import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
-  adminEntityPublishUpdatePublishedReferencesIndex,
 } from './admin-entity/publishEntities.js';
 import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
@@ -45,7 +45,6 @@ import { authCreateSession } from './auth/createSession.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
-import { managementDirtyUpdatePublishedIndexes } from './management/dirtyUpdatePublishedIndexes.js';
 import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
@@ -97,6 +96,8 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityHistoryGetVersionsInfo(databaseAdapter, ...args),
     adminEntityIndexesUpdateLatest: (...args) =>
       adminEntityIndexesUpdateLatest(databaseAdapter, ...args),
+    adminEntityIndexesUpdatePublished: (...args) =>
+      adminEntityIndexesUpdatePublished(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
@@ -107,8 +108,6 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishingHistoryGetEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
-    adminEntityPublishUpdatePublishedReferencesIndex: (...args) =>
-      adminEntityPublishUpdatePublishedReferencesIndex(databaseAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(databaseAdapter, ...args),
@@ -136,8 +135,6 @@ export function createPostgresDatabaseAdapterAdapter(
       managementDirtyGetNextEntity(databaseAdapter, ...args),
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(databaseAdapter, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(databaseAdapter, ...args),
-    managementDirtyUpdatePublishedIndexes: (...args) =>
-      managementDirtyUpdatePublishedIndexes(databaseAdapter, ...args),
     managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),

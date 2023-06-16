@@ -21,6 +21,9 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
     DatabaseAdapter['adminEntityGetReferenceEntitiesInfo']
   >;
   adminEntityIndexesUpdateLatest: MockedFunction<DatabaseAdapter['adminEntityIndexesUpdateLatest']>;
+  adminEntityIndexesUpdatePublished: MockedFunction<
+    DatabaseAdapter['adminEntityIndexesUpdatePublished']
+  >;
   adminEntityPublishGetVersionInfo: MockedFunction<
     DatabaseAdapter['adminEntityPublishGetVersionInfo']
   >;
@@ -28,9 +31,6 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
     DatabaseAdapter['adminEntityPublishingCreateEvents']
   >;
   adminEntityPublishUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityPublishUpdateEntity']>;
-  adminEntityPublishUpdatePublishedReferencesIndex: MockedFunction<
-    DatabaseAdapter['adminEntityPublishUpdatePublishedReferencesIndex']
-  >;
   adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
   adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
   adminEntitySearchTotalCount: MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
@@ -112,12 +112,12 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntityHistoryGetEntityInfo: vi.fn(),
     adminEntityHistoryGetVersionsInfo: vi.fn(),
     adminEntityIndexesUpdateLatest: vi.fn(),
+    adminEntityIndexesUpdatePublished: vi.fn(),
     adminEntityPublishGetVersionInfo: vi.fn(),
     adminEntityPublishingCreateEvents: vi.fn(),
     adminEntityPublishingHistoryGetEntityInfo: vi.fn(),
     adminEntityPublishingHistoryGetEvents: vi.fn(),
     adminEntityPublishUpdateEntity: vi.fn(),
-    adminEntityPublishUpdatePublishedReferencesIndex: vi.fn(),
     adminEntitySampleEntities: vi.fn(),
     adminEntitySearchEntities: vi.fn(),
     adminEntitySearchTotalCount: vi.fn(),
@@ -138,7 +138,6 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     managementDirtyGetNextEntity: vi.fn(),
     managementDirtyMarkEntities: vi.fn(),
     managementDirtyUpdateEntity: vi.fn(),
-    managementDirtyUpdatePublishedIndexes: vi.fn(),
     managementOptimize: vi.fn(),
     publishedEntityGetEntities: vi.fn(),
     publishedEntityGetOne: vi.fn(),

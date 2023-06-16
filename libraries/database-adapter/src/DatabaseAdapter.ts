@@ -117,9 +117,6 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
 export interface DatabaseAdminEntityPublishUpdateEntityArg
   extends DatabaseResolvedEntityVersionReference {
   status: AdminEntityStatus;
-  fullTextSearchText: string;
-  locations: Location[];
-  valueTypes: string[];
 }
 
 export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } & (
@@ -346,6 +343,12 @@ export interface DatabaseAdapter<
     create: boolean
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
+  adminEntityIndexesUpdatePublished(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    entityIndexes: DatabaseEntityIndexesArg
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
   adminEntityPublishGetVersionInfo(
     context: TransactionContext,
     reference: EntityVersionReference
@@ -358,12 +361,6 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     values: DatabaseAdminEntityPublishUpdateEntityArg
   ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
-
-  adminEntityPublishUpdatePublishedReferencesIndex(
-    context: TransactionContext,
-    fromReference: DatabaseResolvedEntityReference,
-    toReferences: DatabaseResolvedEntityReference[]
-  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityPublishingCreateEvents(
     context: TransactionContext,
@@ -512,12 +509,6 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
     valid: boolean
-  ): PromiseResult<void, typeof ErrorType.Generic>;
-
-  managementDirtyUpdatePublishedIndexes(
-    context: TransactionContext,
-    reference: DatabaseResolvedEntityReference,
-    entityIndexes: DatabaseEntityIndexesArg
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   managementOptimize(

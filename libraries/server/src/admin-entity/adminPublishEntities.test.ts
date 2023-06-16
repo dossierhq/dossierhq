@@ -39,10 +39,8 @@ describe('Admin adminPublishEntities', () => {
     );
     databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(ok({ updatedAt: now }));
     databaseAdapter.adminEntityGetReferenceEntitiesInfo.mockResolvedValueOnce(ok([]));
-    databaseAdapter.adminEntityPublishUpdatePublishedReferencesIndex.mockResolvedValueOnce(
-      ok(undefined)
-    );
     databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(ok(undefined));
+    databaseAdapter.adminEntityIndexesUpdatePublished.mockResolvedValueOnce(ok(undefined));
     databaseAdapter.adminEntityUniqueIndexGetValues.mockResolvedValueOnce(ok([]));
 
     const result = await adminPublishEntities(
@@ -70,6 +68,18 @@ describe('Admin adminPublishEntities', () => {
             [],
           ],
           [
+            "adminEntityIndexesUpdatePublished",
+            {
+              "entityInternalId": 999,
+            },
+            {
+              "fullTextSearchText": "Title",
+              "locations": [],
+              "referenceIds": [],
+              "valueTypes": [],
+            },
+          ],
+          [
             "adminEntityPublishGetVersionInfo",
             {
               "id": "123",
@@ -81,18 +91,8 @@ describe('Admin adminPublishEntities', () => {
             {
               "entityInternalId": 999,
               "entityVersionInternalId": 888,
-              "fullTextSearchText": "Title",
-              "locations": [],
               "status": "published",
-              "valueTypes": [],
             },
-          ],
-          [
-            "adminEntityPublishUpdatePublishedReferencesIndex",
-            {
-              "entityInternalId": 999,
-            },
-            [],
           ],
           [
             "adminEntityPublishingCreateEvents",

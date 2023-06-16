@@ -1,5 +1,7 @@
 import {
+  AdminEntityStatus,
   ErrorType,
+  assertIsDefined,
   copyEntity,
   normalizeEntityFields,
   notOk,
@@ -7,6 +9,7 @@ import {
   validateEntityInfo,
   type AdminEntity,
   type AdminSchema,
+  type EntityReference,
   type PromiseResult,
 } from '@dossierhq/core';
 import type {
@@ -14,7 +17,11 @@ import type {
   DatabaseEntityIndexesArg,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
+import { decodeAdminEntity, decodeAdminEntityFields, encodeAdminEntity } from '../EntityCodec.js';
+import {
+  ensureReferencedEntitiesArePublishedAndCollectInfo,
+  verifyFieldValuesAndCollectInformation,
+} from '../admin-entity/adminPublishEntities.js';
 
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
@@ -31,17 +38,23 @@ export async function managementDirtyProcessNextEntity(
       }
     }
 
+    const reference = { id: entityResult.value.id };
     const {
       dirtyValidateLatest,
       dirtyValidatePublished: _todo1,
       dirtyIndexLatest,
-      dirtyIndexPublished: _todo2,
+      dirtyIndexPublished,
     } = entityResult.value;
     let valid = entityResult.value.valid;
 
     if (dirtyValidateLatest || dirtyIndexLatest) {
       const entity = decodeAdminEntity(adminSchema, entityResult.value);
-      const validationResult = await validateEntity(adminSchema, databaseAdapter, context, entity);
+      const validationResult = await validateAdminEntity(
+        adminSchema,
+        databaseAdapter,
+        context,
+        entity
+      );
       if (validationResult.isError() && validationResult.isErrorType(ErrorType.Generic)) {
         return validationResult;
       }
@@ -59,6 +72,46 @@ export async function managementDirtyProcessNextEntity(
       }
     }
 
+    if (
+      dirtyIndexPublished &&
+      ([AdminEntityStatus.published, AdminEntityStatus.modified] as string[]).includes(
+        entityResult.value.status
+      )
+    ) {
+      let fieldValues = entityResult.value.fieldValues;
+      if (entityResult.value.status === AdminEntityStatus.modified) {
+        // Fetch the correct version since it's not the latest version that's published
+        const publishedEntityResult = await databaseAdapter.publishedEntityGetOne(
+          context,
+          reference
+        );
+        if (publishedEntityResult.isError()) {
+          return notOk.Generic(publishedEntityResult.message); // convert NotFound to Generic
+        }
+        fieldValues = publishedEntityResult.value.fieldValues;
+      }
+      const validationResult = await validatePublishedEntity(
+        adminSchema,
+        databaseAdapter,
+        context,
+        reference,
+        entityResult.value.type,
+        fieldValues
+      );
+      if (validationResult.isError() && validationResult.isErrorType(ErrorType.Generic)) {
+        return validationResult;
+      }
+
+      if (dirtyIndexPublished && validationResult.isOk()) {
+        const updatePublishedResult = await databaseAdapter.adminEntityIndexesUpdatePublished(
+          context,
+          entityResult.value,
+          validationResult.value
+        );
+        if (updatePublishedResult.isError()) return updatePublishedResult;
+      }
+    }
+
     const updateResult = await databaseAdapter.managementDirtyUpdateEntity(
       context,
       entityResult.value,
@@ -70,7 +123,7 @@ export async function managementDirtyProcessNextEntity(
   });
 }
 
-async function validateEntity(
+async function validateAdminEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
@@ -97,4 +150,45 @@ async function validateEntity(
   if (encodeResult.isError()) return encodeResult;
 
   return ok(encodeResult.value.entityIndexes);
+}
+
+async function validatePublishedEntity(
+  adminSchema: AdminSchema,
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
+  reference: EntityReference,
+  type: string,
+  fieldValues: Record<string, unknown>
+): PromiseResult<DatabaseEntityIndexesArg, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const entitySpec = adminSchema.getEntityTypeSpecification(type);
+  if (!entitySpec) return notOk.Generic(`No entity spec for type ${type}`);
+
+  if (entitySpec.adminOnly) return notOk.Generic(`Entity type is admin only`);
+
+  const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, fieldValues);
+
+  const verifyFieldsResult = verifyFieldValuesAndCollectInformation(
+    adminSchema,
+    adminSchema.toPublishedSchema(),
+    reference,
+    type,
+    entityFields
+  );
+  if (verifyFieldsResult.isError()) return verifyFieldsResult;
+
+  const ensureReferencePublishedResult = await ensureReferencedEntitiesArePublishedAndCollectInfo(
+    databaseAdapter,
+    context,
+    [{ entity: reference, references: verifyFieldsResult.value.references }]
+  );
+  if (ensureReferencePublishedResult.isError()) return ensureReferencePublishedResult;
+  const referenceIds = ensureReferencePublishedResult.value.get(reference.id);
+  assertIsDefined(referenceIds);
+
+  return ok({
+    fullTextSearchText: verifyFieldsResult.value.fullTextSearchText,
+    locations: verifyFieldsResult.value.locations,
+    valueTypes: verifyFieldsResult.value.valueTypes,
+    referenceIds,
+  });
 }

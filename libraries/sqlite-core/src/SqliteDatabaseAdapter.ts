@@ -30,10 +30,10 @@ import {
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import { adminEntityIndexesUpdateLatest } from './admin-entity/indexesUpdateLatest.js';
+import { adminEntityIndexesUpdatePublished } from './admin-entity/indexesUpdatePublished.js';
 import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
-  adminEntityPublishUpdatePublishedReferencesIndex,
 } from './admin-entity/publishEntities.js';
 import { adminEntitySampleEntities } from './admin-entity/sampleEntities.js';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities.js';
@@ -57,7 +57,6 @@ import { authCreateSession } from './auth/createSession.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
-import { managementDirtyUpdatePublishedIndexes } from './management/dirtyUpdatePublishedIndexes.js';
 import { managementOptimize } from './management/optimize.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
@@ -180,8 +179,8 @@ function createOuterAdapter(
     adminEntityHistoryGetVersionsInfo: (...args) =>
       adminEntityHistoryGetVersionsInfo(database, ...args),
     adminEntityIndexesUpdateLatest: (...args) => adminEntityIndexesUpdateLatest(database, ...args),
-    adminEntityPublishUpdatePublishedReferencesIndex: (...args) =>
-      adminEntityPublishUpdatePublishedReferencesIndex(database, ...args),
+    adminEntityIndexesUpdatePublished: (...args) =>
+      adminEntityIndexesUpdatePublished(database, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(database, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
@@ -216,8 +215,6 @@ function createOuterAdapter(
     managementOptimize: (...args) => managementOptimize(database, ...args),
     managementDirtyGetNextEntity: (...args) => managementDirtyGetNextEntity(database, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(database, ...args),
-    managementDirtyUpdatePublishedIndexes: (...args) =>
-      managementDirtyUpdatePublishedIndexes(database, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(database, ...args),
     publishedEntitySampleEntities: (...args) => publishedEntitySampleEntities(database, ...args),
