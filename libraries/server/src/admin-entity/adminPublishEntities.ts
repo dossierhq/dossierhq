@@ -28,15 +28,15 @@ import type {
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import type { UniqueIndexValue } from '../EntityCodec.js';
+import { decodeAdminEntityFields } from '../EntityCodec.js';
 import {
   createFullTextSearchCollector,
   createLocationsCollector,
   createReferencesCollector,
   createUniqueIndexCollector,
   createValueTypesCollector,
-  decodeAdminEntityFields,
-} from '../EntityCodec.js';
+  type UniqueIndexValue,
+} from '../EntityCollectors.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 

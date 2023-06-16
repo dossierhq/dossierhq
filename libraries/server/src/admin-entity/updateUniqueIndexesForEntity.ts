@@ -7,7 +7,7 @@ import type {
   DatabaseResolvedEntityReference,
 } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
-import type { UniqueIndexValue } from '../EntityCodec.js';
+import type { UniqueIndexValue } from '../EntityCollectors.js';
 
 export async function updateUniqueIndexesForEntity(
   databaseAdapter: DatabaseAdapter,

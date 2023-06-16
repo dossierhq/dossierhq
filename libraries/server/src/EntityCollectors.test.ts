@@ -17,7 +17,7 @@ import {
   createLocationsCollector,
   createRequestedReferencesCollector,
   createValueTypesCollector,
-} from './EntityCodec.js';
+} from './EntityCollectors.js';
 
 const schemaSpec: AdminSchemaSpecificationUpdate = {
   entityTypes: [
