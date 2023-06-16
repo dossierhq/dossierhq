@@ -15,7 +15,9 @@ import { describe, expect, test } from 'vitest';
 import {
   createFullTextSearchCollector,
   createLocationsCollector,
+  createReferencesCollector,
   createRequestedReferencesCollector,
+  createUniqueIndexCollector,
   createValueTypesCollector,
 } from './EntityCollectors.js';
 
@@ -26,6 +28,8 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
       adminOnly: false,
       authKeyPattern: null,
       fields: [
+        { name: 'slug', type: FieldType.String, index: 'slug' },
+        { name: 'slugs', type: FieldType.String, list: true, index: 'slug' },
         { name: 'string', type: FieldType.String },
         { name: 'strings', type: FieldType.String, list: true },
         { name: 'location', type: FieldType.Location },
@@ -67,27 +71,34 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
       fields: [],
     },
   ],
+  indexes: [{ name: 'slug', type: 'unique' }],
 };
 
 const schema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
 
 function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
   const ftsCollector = createFullTextSearchCollector();
-  const referencesCollector = createRequestedReferencesCollector();
+  const referencesCollector = createReferencesCollector();
+  const requestedReferencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
+  const uniqueIndexCollector = createUniqueIndexCollector(adminSchema.toPublishedSchema());
   const valueTypesCollector = createValueTypesCollector();
 
   for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
     ftsCollector.collect(node);
     referencesCollector.collect(node);
+    requestedReferencesCollector.collect(node);
     locationsCollector.collect(node);
+    uniqueIndexCollector.collect(node);
     valueTypesCollector.collect(node);
   }
 
   return {
-    requestedReferences: referencesCollector.result,
+    references: referencesCollector.result,
+    requestedReferences: requestedReferencesCollector.result,
     locations: locationsCollector.result,
     fullTextSearchText: ftsCollector.result,
+    uniqueIndex: uniqueIndexCollector.result,
     valueTypes: valueTypesCollector.result,
   };
 }
@@ -99,7 +110,9 @@ describe('collectDataFromEntity', () => {
         {
           "fullTextSearchText": "",
           "locations": [],
+          "references": [],
           "requestedReferences": [],
+          "uniqueIndex": Map {},
           "valueTypes": [],
         }
       `);
@@ -115,7 +128,9 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "",
         "locations": [],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [],
       }
     `);
@@ -134,7 +149,9 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "Hello string world one two three",
         "locations": [],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [],
       }
     `);
@@ -157,7 +174,9 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "one two three four",
         "locations": [],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
         ],
@@ -184,7 +203,9 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "one one one two Header text two",
         "locations": [],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
         ],
@@ -221,7 +242,9 @@ describe('collectDataFromEntity', () => {
             "lng": 6,
           },
         ],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [],
       }
     `);
@@ -254,7 +277,9 @@ describe('collectDataFromEntity', () => {
             "lng": 4,
           },
         ],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
         ],
@@ -276,6 +301,20 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "",
         "locations": [],
+        "references": [
+          {
+            "id": "barId1",
+          },
+          {
+            "id": "barId2",
+          },
+          {
+            "id": "barId3",
+          },
+          {
+            "id": "unspecifiedId1",
+          },
+        ],
         "requestedReferences": [
           {
             "entityTypes": [
@@ -320,6 +359,7 @@ describe('collectDataFromEntity', () => {
             ],
           },
         ],
+        "uniqueIndex": Map {},
         "valueTypes": [],
       }
     `);
@@ -337,6 +377,11 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "",
         "locations": [],
+        "references": [
+          {
+            "id": "bar1Id",
+          },
+        ],
         "requestedReferences": [
           {
             "entityTypes": [
@@ -350,6 +395,7 @@ describe('collectDataFromEntity', () => {
             ],
           },
         ],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
         ],
@@ -373,6 +419,17 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "bar",
         "locations": [],
+        "references": [
+          {
+            "id": "barId1",
+          },
+          {
+            "id": "barId2",
+          },
+          {
+            "id": "bar3Id",
+          },
+        ],
         "requestedReferences": [
           {
             "entityTypes": [
@@ -408,6 +465,7 @@ describe('collectDataFromEntity', () => {
             ],
           },
         ],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
         ],
@@ -428,7 +486,9 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "",
         "locations": [],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
           "EntityCodecValueTwo",
@@ -451,10 +511,53 @@ describe('collectDataFromEntity', () => {
       {
         "fullTextSearchText": "",
         "locations": [],
+        "references": [],
         "requestedReferences": [],
+        "uniqueIndex": Map {},
         "valueTypes": [
           "EntityCodecValueOne",
         ],
+      }
+    `);
+  });
+
+  test('unique index values', () => {
+    expect(
+      collectDataFromEntity(schema, {
+        info: { type: 'EntityCodecFoo' },
+        fields: {
+          slug: 'foo',
+          slugs: ['foo', 'bar'],
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      {
+        "fullTextSearchText": "foo foo bar",
+        "locations": [],
+        "references": [],
+        "requestedReferences": [],
+        "uniqueIndex": Map {
+          "slug" => [
+            {
+              "path": [
+                "entity",
+                "fields",
+                "slug",
+              ],
+              "value": "foo",
+            },
+            {
+              "path": [
+                "entity",
+                "fields",
+                "slugs",
+                1,
+              ],
+              "value": "bar",
+            },
+          ],
+        },
+        "valueTypes": [],
       }
     `);
   });
