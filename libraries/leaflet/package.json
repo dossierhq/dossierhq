@@ -47,7 +47,7 @@
     "@types/leaflet": "~1.9.3",
     "@types/leaflet.locatecontrol": "~0.74.1",
     "@types/react": "~18.2.11",
-    "eslint": "~8.42.0",
+    "eslint": "~8.43.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.8.8",
     "svgo": "~3.0.2",
