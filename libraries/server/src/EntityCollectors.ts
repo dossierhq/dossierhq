@@ -27,6 +27,8 @@ export interface UniqueIndexValue {
   value: string;
 }
 
+export type UniqueIndexValueCollection = Map<string, UniqueIndexValue[]>;
+
 export interface RequestedReference {
   prefix: string;
   uuids: string[];
@@ -130,7 +132,7 @@ export function createRequestedReferencesCollector<
 export function createUniqueIndexCollector<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema
 ) {
-  const uniqueIndexValues = new Map<string, UniqueIndexValue[]>();
+  const uniqueIndexValues: UniqueIndexValueCollection = new Map();
   return {
     collect: (node: ItemTraverseNode<TSchema>) => {
       switch (node.type) {
@@ -155,7 +157,7 @@ export function createUniqueIndexCollector<TSchema extends AdminSchema | Publish
         }
       }
     },
-    get result(): Map<string, UniqueIndexValue[]> {
+    get result(): UniqueIndexValueCollection {
       return uniqueIndexValues;
     },
   };

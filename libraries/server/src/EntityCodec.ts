@@ -49,7 +49,7 @@ import {
   createUniqueIndexCollector,
   createValueTypesCollector,
   type RequestedReference,
-  type UniqueIndexValue,
+  type UniqueIndexValueCollection,
 } from './EntityCollectors.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import { transformRichText } from './utils/RichTextTransformer.js';
@@ -59,7 +59,7 @@ export interface EncodeAdminEntityResult {
   name: string;
   data: Record<string, unknown>;
   entityIndexes: DatabaseEntityIndexesArg;
-  uniqueIndexValues: Map<string, UniqueIndexValue[]>;
+  uniqueIndexValues: UniqueIndexValueCollection;
 }
 
 /** `optimized` is the original way of encoding/decoding values, using type adapters and saving less

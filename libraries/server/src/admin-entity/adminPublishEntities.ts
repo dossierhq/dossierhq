@@ -20,7 +20,7 @@ import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { decodeAdminEntityFields } from '../EntityCodec.js';
-import { type UniqueIndexValue } from '../EntityCollectors.js';
+import { type UniqueIndexValueCollection } from '../EntityCollectors.js';
 import {
   validatePublishedFieldValuesAndCollectInfo,
   validateReferencedEntitiesArePublishedAndCollectInfo,
@@ -38,7 +38,7 @@ interface VersionInfoToBePublished {
   references: EntityReference[];
   locations: Location[];
   valueTypes: string[];
-  uniqueIndexValues: Map<string, UniqueIndexValue[]>;
+  uniqueIndexValues: UniqueIndexValueCollection;
 }
 
 interface VersionInfoAlreadyPublished {

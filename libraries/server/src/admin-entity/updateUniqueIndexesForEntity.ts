@@ -1,21 +1,20 @@
-import type { PromiseResult } from '@dossierhq/core';
-import { ErrorType, notOk, ok, visitorPathToString } from '@dossierhq/core';
+import { ErrorType, notOk, ok, visitorPathToString, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityUniqueIndexReference,
   DatabaseAdminEntityUniqueIndexValue,
   DatabaseResolvedEntityReference,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { SessionContext } from '../Context.js';
-import type { UniqueIndexValue } from '../EntityCollectors.js';
+import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
 
 export async function updateUniqueIndexesForEntity(
   databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
+  context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
   isCreation: boolean,
-  latestUniqueIndexValues: Map<string, UniqueIndexValue[]> | null,
-  publishedUniqueIndexValues: Map<string, UniqueIndexValue[]> | null
+  latestUniqueIndexValues: UniqueIndexValueCollection | null,
+  publishedUniqueIndexValues: UniqueIndexValueCollection | null
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const existingResult = isCreation
     ? ok([])
@@ -91,8 +90,8 @@ export async function updateUniqueIndexesForEntity(
 
 function calculateTargetValues(
   existingValues: DatabaseAdminEntityUniqueIndexValue[],
-  latestUniqueIndexValues: Map<string, UniqueIndexValue[]> | null,
-  publishedUniqueIndexValues: Map<string, UniqueIndexValue[]> | null
+  latestUniqueIndexValues: UniqueIndexValueCollection | null,
+  publishedUniqueIndexValues: UniqueIndexValueCollection | null
 ) {
   const targetValues: Map<string, Map<string, { latest: boolean; published: boolean }>> = new Map();
   const getIndexValues = (indexName: string) => {

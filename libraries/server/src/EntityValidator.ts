@@ -9,11 +9,11 @@ import {
   type EntityLike,
   type EntityReference,
   type ErrorType,
+  type ItemValuePath,
   type Location,
   type PromiseResult,
   type PublishedSchema,
   type Result,
-  type ItemValuePath,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -26,7 +26,7 @@ import {
   createReferencesCollector,
   createUniqueIndexCollector,
   createValueTypesCollector,
-  type UniqueIndexValue,
+  type UniqueIndexValueCollection,
 } from './EntityCollectors.js';
 
 export function validatePublishedFieldValuesAndCollectInfo(
@@ -41,7 +41,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
     references: EntityReference[];
     locations: Location[];
     valueTypes: string[];
-    uniqueIndexValues: Map<string, UniqueIndexValue[]>;
+    uniqueIndexValues: UniqueIndexValueCollection;
   },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
