@@ -21,7 +21,7 @@ importers:
       '@types/react-dom': ~18.2.4
       '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ~5.59.9
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       eslint: ~8.42.0
       eslint-config-next: ~13.4.5
       leaflet: ~1.9.4
@@ -59,7 +59,7 @@ importers:
       '@types/react-dom': 18.2.4
       '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 5.59.9_tizxnkcvjrb4cldxgwq5h3lj5u
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       eslint: 8.42.0
       eslint-config-next: 13.4.5_tizxnkcvjrb4cldxgwq5h3lj5u
       prettier: 2.8.8
@@ -149,7 +149,7 @@ importers:
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.2
       cloudinary: ~1.37.1
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       eslint: ~8.42.0
       prettier: 2.8.8
       sqlite3: 5.1.4
@@ -163,7 +163,7 @@ importers:
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 8.0.2
       cloudinary: 1.37.1
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       sqlite3: 5.1.4
       tslib: 2.5.3
       uuid: 9.0.0
@@ -201,7 +201,7 @@ importers:
       '@types/sqlite3': ~3.1.8
       benchpress: workspace:*
       better-sqlite3: ~8.4.0
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       eslint: ~8.42.0
       pg: ~8.10.0
       prettier: 2.8.8
@@ -221,7 +221,7 @@ importers:
       '@faker-js/faker': 8.0.2
       benchpress: link:../../libraries/benchpress
       better-sqlite3: 8.4.0
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       pg: 8.10.0
       sqlite3: 5.1.4
       tslib: 2.5.3
@@ -380,7 +380,7 @@ importers:
       better-sqlite3: ~8.4.0
       body-parser: ~1.20.2
       concurrently: ~8.2.0
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       express: ~4.18.2
       express-jwt: ~8.4.1
       jwks-rsa: ~3.0.1
@@ -403,7 +403,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
       better-sqlite3: 8.4.0
       body-parser: 1.20.2
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       express: 4.18.2
       express-jwt: 8.4.1
       jwks-rsa: 3.0.1
@@ -857,7 +857,7 @@ importers:
       '@rushstack/heft': 0.50.6
       '@types/pg': ~8.10.2
       '@types/uuid': ~9.0.2
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       eslint: ~8.42.0
       pg: ~8.10.0
       prettier: 2.8.8
@@ -881,7 +881,7 @@ importers:
       '@rushstack/heft': 0.50.6
       '@types/pg': 8.10.2
       '@types/uuid': 9.0.2
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       eslint: 8.42.0
       prettier: 2.8.8
       typescript: 5.1.3
@@ -1314,7 +1314,7 @@ importers:
       bun-types: ~0.6.8
       cloudinary: ~1.37.1
       concurrently: ~8.2.0
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       eslint: ~8.42.0
       eslint-config-next: ~13.4.5
       eslint-plugin-import: ~2.27.5
@@ -1383,7 +1383,7 @@ importers:
       better-sqlite3: 8.4.0
       body-parser: 1.20.2
       cloudinary: 1.37.1
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       eslint: 8.42.0
       eslint-plugin-react: 7.32.2_eslint@8.42.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.42.0
@@ -1466,11 +1466,11 @@ importers:
 
   ../../tools/generic-tools:
     specifiers:
-      dotenv: ~16.1.4
+      dotenv: ~16.3.0
       pg: ~8.10.0
       tslib: ~2.5.3
     dependencies:
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       pg: 8.10.0
       tslib: 2.5.3
 
@@ -9801,8 +9801,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /dotenv/16.1.4:
-    resolution: {integrity: sha512-m55RtE8AsPeJBpOIFKihEmqUcoVncQIwo7x9U8ZwLEZw9ZpXboz2c+rvog+jUaJvVrZ5kBOeYQBX5+8Aa/OZQw==}
+  /dotenv/16.3.0:
+    resolution: {integrity: sha512-tHB+hmf8MRCkT3VVivGiG8kq9HiGTmQ3FzOKgztfpJQH1IWuZTOvKSJmHNnQPowecAmkCJhLrxdPhOr06LLqIQ==}
     engines: {node: '>=12'}
 
   /dset/3.1.2:
@@ -12226,7 +12226,7 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       app-root-dir: 1.0.2
-      dotenv: 16.1.4
+      dotenv: 16.3.0
       dotenv-expand: 10.0.0
     dev: true
 
