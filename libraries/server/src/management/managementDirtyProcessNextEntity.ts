@@ -15,6 +15,7 @@ import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
   DatabaseEntityIndexesArg,
+  DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { decodeAdminEntity, decodeAdminEntityFields, encodeAdminEntity } from '../EntityCodec.js';
@@ -24,6 +25,11 @@ import {
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
 import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
+
+interface EntityValidity {
+  validAdmin: boolean;
+  validPublished: boolean | null;
+}
 
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
@@ -55,8 +61,11 @@ export async function managementDirtyProcessNextEntity(
       status === AdminEntityStatus.published || status === AdminEntityStatus.modified;
 
     // Reuse existing validation results if we won't be validating
-    let validAdmin = entityResult.value.valid;
-    let validPublished = validAdmin; // TODO get from db
+    const entityValidity: EntityValidity = {
+      validAdmin: entityResult.value.valid,
+      //TODO get from db
+      validPublished: entityIsPublished ? entityResult.value.valid : null,
+    };
 
     // Unique index values are updated separately, so keep them for later
     let latestUniqueIndexValues: UniqueIndexValueCollection | null = null;
@@ -72,11 +81,11 @@ export async function managementDirtyProcessNextEntity(
         entityResult.value
       );
       if (validationLatestResult.isOk()) {
-        validAdmin = true;
+        entityValidity.validAdmin = true;
         latestUniqueIndexValues = validationLatestResult.value.uniqueIndexValues;
       } else {
         if (validationLatestResult.isErrorType(ErrorType.BadRequest)) {
-          validAdmin = false;
+          entityValidity.validAdmin = false;
         } else {
           return notOk.Generic(validationLatestResult.message);
         }
@@ -119,11 +128,11 @@ export async function managementDirtyProcessNextEntity(
         fieldValues
       );
       if (validationPublishedResult.isOk()) {
-        validPublished = true;
+        entityValidity.validPublished = true;
         publishedUniqueIndexValues = validationPublishedResult.value.uniqueIndexValues;
       } else {
         if (validationPublishedResult.error === ErrorType.BadRequest) {
-          validPublished = false;
+          entityValidity.validPublished = false;
         } else {
           return notOk.Generic(validationPublishedResult.message);
         }
@@ -141,55 +150,25 @@ export async function managementDirtyProcessNextEntity(
     }
 
     // Update unique indexes (even since validating/indexing is normally the same amount of work)
-    if (latestUniqueIndexValues !== null || publishedUniqueIndexValues !== null) {
-      const uniqueValuesUpdateResult = await updateUniqueIndexesForEntity(
-        databaseAdapter,
-        context,
-        resolvedReference,
-        false,
-        latestUniqueIndexValues,
-        publishedUniqueIndexValues
-      );
-      if (uniqueValuesUpdateResult.isError()) {
-        if (uniqueValuesUpdateResult.isErrorType(ErrorType.BadRequest)) {
-          if (latestUniqueIndexValues !== null) {
-            validAdmin = false;
-          }
-          if (publishedUniqueIndexValues !== null && latestUniqueIndexValues === null) {
-            validPublished = false;
-          } else if (publishedUniqueIndexValues !== null && latestUniqueIndexValues !== null) {
-            const uniqueValuesPublishedUpdateResult = await updateUniqueIndexesForEntity(
-              databaseAdapter,
-              context,
-              resolvedReference,
-              false,
-              null,
-              publishedUniqueIndexValues
-            );
-            if (uniqueValuesPublishedUpdateResult.isError()) {
-              if (uniqueValuesPublishedUpdateResult.isErrorType(ErrorType.BadRequest)) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                validPublished = false;
-              } else {
-                return notOk.Generic(uniqueValuesPublishedUpdateResult.message);
-              }
-            }
-          }
-        } else {
-          return notOk.Generic(uniqueValuesUpdateResult.message);
-        }
-      }
-    }
+    const uniqueIndexValuesResult = await validateAndUpdateUniqueIndexValues(
+      databaseAdapter,
+      context,
+      resolvedReference,
+      latestUniqueIndexValues,
+      publishedUniqueIndexValues,
+      entityValidity
+    );
+    if (uniqueIndexValuesResult.isError()) return uniqueIndexValuesResult;
 
     // Update entity, reset dirty flags
     const updateResult = await databaseAdapter.managementDirtyUpdateEntity(
       context,
       entityResult.value,
-      validAdmin
+      entityValidity.validAdmin
     );
     if (updateResult.isError()) return updateResult;
 
-    return ok({ id: entityResult.value.id, valid: validAdmin });
+    return ok({ id: entityResult.value.id, valid: entityValidity.validAdmin });
   });
 }
 
@@ -273,4 +252,73 @@ async function validatePublishedEntity(
     },
     uniqueIndexValues: validateFieldsResult.value.uniqueIndexValues,
   });
+}
+
+async function validateAndUpdateUniqueIndexValues(
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
+  reference: DatabaseResolvedEntityReference,
+  latestUniqueIndexValues: UniqueIndexValueCollection | null,
+  publishedUniqueIndexValues: UniqueIndexValueCollection | null,
+  entityValidity: EntityValidity
+): PromiseResult<void, typeof ErrorType.Generic> {
+  if (latestUniqueIndexValues === null && publishedUniqueIndexValues === null) {
+    return ok(undefined);
+  }
+
+  const bothResult = await updateUniqueIndexesForEntity(
+    databaseAdapter,
+    context,
+    reference,
+    false,
+    latestUniqueIndexValues,
+    publishedUniqueIndexValues
+  );
+  if (bothResult.isOk()) return ok(undefined);
+  if (bothResult.isErrorType(ErrorType.Generic)) return bothResult;
+
+  // If only one of (latest|published) is non-null, we know where the problem is
+  if (latestUniqueIndexValues !== null && publishedUniqueIndexValues === null) {
+    entityValidity.validAdmin = false;
+  } else if (latestUniqueIndexValues === null && publishedUniqueIndexValues !== null) {
+    entityValidity.validPublished = false;
+  } else if (latestUniqueIndexValues !== null && publishedUniqueIndexValues !== null) {
+    // Since it failed when updating both, we don't know where the problem is
+    // Try updating only latest, then only published, to see if we can find out
+
+    // Check latest only
+    const latestResult = await updateUniqueIndexesForEntity(
+      databaseAdapter,
+      context,
+      reference,
+      false,
+      latestUniqueIndexValues,
+      null // skip publishedUniqueIndexValues
+    );
+    if (latestResult.isError()) {
+      if (latestResult.isErrorType(ErrorType.BadRequest)) {
+        entityValidity.validAdmin = false;
+      } else {
+        return notOk.Generic(latestResult.message);
+      }
+    }
+
+    // Check published only
+    const publishedResult = await updateUniqueIndexesForEntity(
+      databaseAdapter,
+      context,
+      reference,
+      false,
+      null, // skip latestUniqueIndexValues
+      publishedUniqueIndexValues
+    );
+    if (publishedResult.isError()) {
+      if (publishedResult.isErrorType(ErrorType.BadRequest)) {
+        entityValidity.validPublished = false;
+      } else {
+        return notOk.Generic(publishedResult.message);
+      }
+    }
+  }
+  return ok(undefined);
 }
