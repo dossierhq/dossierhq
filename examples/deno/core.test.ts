@@ -11,6 +11,7 @@ Deno.test("copyEntity()", () => {
       authKey: "none",
       status: AdminEntityStatus.draft,
       valid: true,
+      validPublished: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     },
