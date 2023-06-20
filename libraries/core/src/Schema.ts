@@ -274,9 +274,66 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   [FieldType.ValueItem]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
 };
 
-export class AdminSchema {
-  readonly spec: AdminSchemaSpecification;
-  private cachedPatternRegExps: Record<string, RegExp>;
+class BaseSchema<T extends AdminSchemaSpecification | PublishedSchemaSpecification> {
+  readonly spec: T;
+  private cachedPatternRegExps: Record<string, RegExp> = {};
+
+  constructor(spec: T) {
+    this.spec = spec;
+  }
+
+  getEntityTypeCount(): number {
+    return this.spec.entityTypes.length;
+  }
+
+  getEntityTypeSpecification(type: string): T['entityTypes'][number] | null {
+    return this.spec.entityTypes.find((it) => it.name === type) ?? null;
+  }
+
+  getEntityFieldSpecification(
+    entitySpec: T['entityTypes'][number],
+    fieldName: string
+  ): T['entityTypes'][number]['fields'][number] | null {
+    return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
+  }
+
+  getValueTypeCount(): number {
+    return this.spec.valueTypes.length;
+  }
+
+  getValueTypeSpecification(type: string): T['valueTypes'][number] | null {
+    return this.spec.valueTypes.find((it) => it.name === type) ?? null;
+  }
+
+  getValueFieldSpecification(
+    valueSpec: AdminValueTypeSpecification,
+    fieldName: string
+  ): AdminFieldSpecification | null {
+    return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
+  }
+
+  getPattern(name: string): SchemaPatternSpecification | null {
+    return this.spec.patterns.find((it) => it.name === name) ?? null;
+  }
+
+  getPatternRegExp(name: string): RegExp | null {
+    let regexp = this.cachedPatternRegExps[name];
+    if (regexp) return regexp;
+
+    const pattern = this.getPattern(name);
+    if (!pattern) return null;
+
+    regexp = new RegExp(pattern.pattern);
+    this.cachedPatternRegExps[name] = regexp;
+    return regexp;
+  }
+
+  getIndex(name: string): SchemaIndexSpecification | null {
+    return this.spec.indexes.find((it) => it.name === name) ?? null;
+  }
+}
+
+export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
   private cachedPublishedSchema: PublishedSchema | null = null;
 
   static createAndValidate(
@@ -293,8 +350,7 @@ export class AdminSchema {
   }
 
   constructor(spec: AdminSchemaSpecification) {
-    this.spec = spec;
-    this.cachedPatternRegExps = {};
+    super(spec);
   }
 
   validate(): Result<void, typeof ErrorType.BadRequest> {
@@ -560,56 +616,6 @@ export class AdminSchema {
     }
 
     return ok(undefined);
-  }
-
-  getEntityTypeCount(): number {
-    return this.spec.entityTypes.length;
-  }
-
-  getEntityTypeSpecification(type: string): AdminEntityTypeSpecification | null {
-    return this.spec.entityTypes.find((it) => it.name === type) ?? null;
-  }
-
-  getEntityFieldSpecification(
-    entitySpec: AdminEntityTypeSpecification,
-    fieldName: string
-  ): AdminFieldSpecification | null {
-    return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
-  }
-
-  getValueTypeCount(): number {
-    return this.spec.valueTypes.length;
-  }
-
-  getValueTypeSpecification(type: string): AdminValueTypeSpecification | null {
-    return this.spec.valueTypes.find((it) => it.name === type) ?? null;
-  }
-
-  getValueFieldSpecification(
-    valueSpec: AdminValueTypeSpecification,
-    fieldName: string
-  ): AdminFieldSpecification | null {
-    return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
-  }
-
-  getPattern(name: string): SchemaPatternSpecification | null {
-    return this.spec.patterns.find((it) => it.name === name) ?? null;
-  }
-
-  getPatternRegExp(name: string): RegExp | null {
-    let regexp = this.cachedPatternRegExps[name];
-    if (regexp) return regexp;
-
-    const pattern = this.getPattern(name);
-    if (!pattern) return null;
-
-    regexp = new RegExp(pattern.pattern);
-    this.cachedPatternRegExps[name] = regexp;
-    return regexp;
-  }
-
-  getIndex(name: string): SchemaIndexSpecification | null {
-    return this.spec.indexes.find((it) => it.name === name) ?? null;
   }
 
   updateAndValidate(
@@ -1103,44 +1109,8 @@ function removeDuplicatesFromSorted<T>(values: T[], predicate: (value: T) => unk
   }
 }
 
-export class PublishedSchema {
-  readonly spec: PublishedSchemaSpecification;
-
+export class PublishedSchema extends BaseSchema<PublishedSchemaSpecification> {
   constructor(spec: PublishedSchemaSpecification) {
-    this.spec = spec;
-  }
-
-  getEntityTypeCount(): number {
-    return this.spec.entityTypes.length;
-  }
-
-  getEntityTypeSpecification(type: string): PublishedEntityTypeSpecification | null {
-    return this.spec.entityTypes.find((it) => it.name === type) ?? null;
-  }
-
-  getEntityFieldSpecification(
-    entitySpec: PublishedEntityTypeSpecification,
-    fieldName: string
-  ): PublishedFieldSpecification | null {
-    return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
-  }
-
-  getValueTypeCount(): number {
-    return this.spec.valueTypes.length;
-  }
-
-  getValueTypeSpecification(type: string): PublishedValueTypeSpecification | null {
-    return this.spec.valueTypes.find((it) => it.name === type) ?? null;
-  }
-
-  getValueFieldSpecification(
-    valueSpec: PublishedValueTypeSpecification,
-    fieldName: string
-  ): PublishedFieldSpecification | null {
-    return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
-  }
-
-  getIndex(name: string): SchemaIndexSpecification | null {
-    return this.spec.indexes.find((it) => it.name === name) ?? null;
+    super(spec);
   }
 }
