@@ -34,12 +34,12 @@ export type SearchAdminEntitiesItem = Pick<
   | 'updated_at'
   | 'updated_seq'
   | 'status'
-  | 'valid'
+  | 'invalid'
 > &
   Pick<EntityVersionsTable, 'version' | 'fields'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'
+  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'
 > &
   Pick<EntityVersionsTable, 'fields'>;
 
@@ -397,9 +397,9 @@ function addEntityQuerySelectColumn(
     sql`DISTINCT`;
   }
   if (published) {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.valid, e.latest_entity_versions_id FROM entities e`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e`;
   }
   if (query?.linksTo) {
     if (published) {
@@ -469,9 +469,9 @@ function addQueryFilters(
   // Filter: valid
   if (!published && query && 'valid' in query) {
     if (query.valid === true) {
-      sql`AND e.valid`;
+      sql`AND e.invalid = 0`;
     } else if (query.valid === false) {
-      sql`AND NOT e.valid`;
+      sql`AND e.invalid != 0`;
     }
   }
 

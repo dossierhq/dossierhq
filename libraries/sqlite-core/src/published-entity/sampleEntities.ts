@@ -9,6 +9,7 @@ import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import { samplePublishedEntitiesQuery } from '../search/QueryGenerator.js';
+import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntitySampleEntities(
   database: Database,
@@ -42,11 +43,8 @@ export async function publishedEntitySampleEntities(
 
   return ok(
     entitiesValues.map((it) => ({
+      ...resolvePublishedEntityInfo(it),
       id: it.uuid,
-      type: it.type,
-      name: it.name,
-      createdAt: new Date(it.created_at),
-      authKey: it.auth_key,
       fieldValues: JSON.parse(it.fields),
     }))
   );

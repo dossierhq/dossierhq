@@ -133,7 +133,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: Admin
   } = upsertResult.value;
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { version: 1, updatedAt, status: AdminEntityStatus.published },
+    info: { version: 1, updatedAt, status: AdminEntityStatus.published, validPublished: true },
     fields: { title: 'Updated title' },
   });
 

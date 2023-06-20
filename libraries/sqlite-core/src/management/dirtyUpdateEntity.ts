@@ -10,10 +10,12 @@ export async function managementDirtyUpdateEntity(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
-  valid: boolean
+  valid: boolean,
+  validPublished: boolean | null
 ): PromiseResult<void, typeof ErrorType.Generic> {
+  const invalid = (valid === false ? 1 : 0) | (validPublished === false ? 2 : 0);
   const { query, sql } = createSqliteSqlQuery();
-  sql`UPDATE entities SET valid = ${valid ? 1 : 0}, dirty = 0 WHERE id = ${
+  sql`UPDATE entities SET invalid = ${invalid}, dirty = 0 WHERE id = ${
     reference.entityInternalId as number
   }`;
   const result = await queryRun(database, context, query);

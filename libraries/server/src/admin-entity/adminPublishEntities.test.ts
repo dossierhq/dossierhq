@@ -32,6 +32,7 @@ describe('Admin adminPublishEntities', () => {
           authKey: 'none',
           resolvedAuthKey: 'none',
           status: AdminEntityStatus.draft,
+          validPublished: null,
           updatedAt: new Date('2021-08-17T07:51:25.56Z'),
           fieldValues: { title: 'Title' },
         })

@@ -33,12 +33,12 @@ export type SearchAdminEntitiesItem = Pick<
   | 'updated_at'
   | 'updated'
   | 'status'
-  | 'valid'
+  | 'invalid'
 > &
   Pick<EntityVersionsTable, 'version' | 'data'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'
+  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'
 > &
   Pick<EntityVersionsTable, 'data'>;
 
@@ -376,9 +376,9 @@ function addEntityQuerySelectColumn(
   }
   // TODO could skip some columns depending on sample/search and sort order
   if (published) {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.valid, ev.version, ev.data
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
   FROM entities e, entity_versions ev`;
   }
   if (query?.linksTo) {
@@ -436,11 +436,12 @@ function addQueryFilters(
   }
 
   // Filter: valid
+  // TODO support valid filter for published entities
   if (!published && query && 'valid' in query) {
     if (query.valid === true) {
-      sql`AND e.valid`;
+      sql`AND e.invalid = 0`;
     } else if (query.valid === false) {
-      sql`AND NOT e.valid`;
+      sql`AND e.invalid != 0`;
     }
   }
 

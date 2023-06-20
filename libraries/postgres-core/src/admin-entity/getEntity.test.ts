@@ -40,6 +40,7 @@ describe('adminGetEntity', () => {
       version: 2,
       status: AdminEntityStatus.modified,
       valid: true,
+      validPublished: true,
       authKey: 'authKey-123',
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
@@ -49,7 +50,7 @@ describe('adminGetEntity', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data FROM entities e, entity_versions ev WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id",
+          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data FROM entities e, entity_versions ev WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id",
           "123",
         ],
       ]
@@ -91,6 +92,7 @@ describe('adminGetEntity', () => {
       version: 5,
       status: AdminEntityStatus.modified,
       valid: true,
+      validPublished: true,
       authKey: 'authKey-123',
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
@@ -100,7 +102,7 @@ describe('adminGetEntity', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data
+          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data
           FROM entities e, entity_versions ev
           WHERE e.uuid = $1
           AND e.id = ev.entities_id

@@ -62,7 +62,7 @@ async function publishEntities_minimal({ server }: AdminEntityTestContext) {
   ]);
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { status: AdminEntityStatus.published, updatedAt },
+    info: { status: AdminEntityStatus.published, updatedAt, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id });
@@ -95,7 +95,7 @@ async function publishEntities_authKeySubject({ server }: AdminEntityTestContext
   ]);
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { status: AdminEntityStatus.published, updatedAt },
+    info: { status: AdminEntityStatus.published, updatedAt, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id });
@@ -126,7 +126,7 @@ async function publishEntities_oldVersion({ server }: AdminEntityTestContext) {
   ]);
 
   const expectedEntity = copyEntity(updateResult.value.entity, {
-    info: { status: AdminEntityStatus.modified, updatedAt },
+    info: { status: AdminEntityStatus.modified, updatedAt, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id });
@@ -174,7 +174,7 @@ async function publishEntities_twoEntitiesReferencingEachOther({ server }: Admin
   ]);
 
   const expected1Entity = copyEntity(update1Result.value.entity, {
-    info: { status: AdminEntityStatus.published, updatedAt: updatedAt1 },
+    info: { status: AdminEntityStatus.published, updatedAt: updatedAt1, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id: id1 });

@@ -207,6 +207,7 @@ async function updateEntity_updateAndPublishEntity({ server }: AdminEntityTestCo
       updatedAt,
       version: 1,
       status: AdminEntityStatus.published,
+      validPublished: true,
     },
     fields: {
       title: 'Updated title',
@@ -249,6 +250,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
       updatedAt,
       version: 1,
       status: AdminEntityStatus.published,
+      validPublished: true,
     },
     fields: {
       title: 'Updated title',
@@ -318,6 +320,7 @@ async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntit
     info: {
       updatedAt,
       status: AdminEntityStatus.published,
+      validPublished: true,
     },
   });
 

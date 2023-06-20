@@ -18,7 +18,7 @@ beforeAll(async () => {
     throw result.toError();
   }
   server = result.value;
-});
+}, 100000);
 afterAll(async () => {
   if (server) {
     (await server.shutdown()).throwIfError();

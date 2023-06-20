@@ -17,7 +17,7 @@ export interface EntitiesTable {
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
   never_published: number; // boolean
   dirty: number; // bit field 0x1 = validate_latest, 0x2 = validate_published, 0x4 = index_latest, 0x8 = index_published
-  valid: number; // boolean
+  invalid: number; // bit field 0x1 = latest, 0x2 = published
   created_at: string;
   updated_at: string;
   updated_seq: number;

@@ -13,6 +13,7 @@ import { createPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
+import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntityGetOne(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -23,7 +24,7 @@ export async function publishedEntityGetOne(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.data`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.data`;
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
@@ -34,7 +35,7 @@ export async function publishedEntityGetOne(
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,
-      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
+      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
     > &
       Pick<EntityVersionsTable, 'data'>
   >(databaseAdapter, context, query);
@@ -42,14 +43,11 @@ export async function publishedEntityGetOne(
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
-  const {
-    uuid: id,
-    type,
-    name,
-    auth_key: authKey,
-    resolved_auth_key: resolvedAuthKey,
-    created_at: createdAt,
-    data: fieldValues,
-  } = result.value;
-  return ok({ id, type, name, authKey, resolvedAuthKey, createdAt, fieldValues });
+  const { uuid: id, resolved_auth_key: resolvedAuthKey, data: fieldValues } = result.value;
+  return ok({
+    ...resolvePublishedEntityInfo(result.value),
+    id,
+    resolvedAuthKey,
+    fieldValues,
+  });
 }

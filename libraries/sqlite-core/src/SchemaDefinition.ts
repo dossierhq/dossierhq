@@ -226,10 +226,13 @@ const VERSION_12: SchemaVersionDefinition[] = [
   )`,
 ];
 
-const _VERSION_13: SchemaVersionDefinition[] = [
+const VERSION_13: SchemaVersionDefinition[] = [
   'DROP INDEX entities_revalidate',
   'ALTER TABLE entities DROP COLUMN revalidate',
-  'UPDATE entities SET dirty = 4 | 8',
+  'ALTER TABLE entities ADD COLUMN invalid INTEGER NOT NULL DEFAULT 0',
+  'UPDATE entities SET invalid = 1 WHERE NOT valid',
+  'ALTER TABLE entities DROP COLUMN valid',
+  'UPDATE entities SET dirty = 1 | 2 | 4 | 8',
 ];
 
 const VERSIONS: SchemaVersionDefinition[][] = [
@@ -246,6 +249,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_10,
   VERSION_11,
   VERSION_12,
+  VERSION_13,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

@@ -9,7 +9,7 @@ import type {
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne, queryOne } from '../QueryFunctions.js';
-import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { resolveEntityStatus, resolveEntityValidity } from '../utils/CodecUtils.js';
 
 export async function adminEntityPublishGetVersionInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -27,20 +27,19 @@ export async function adminEntityPublishGetVersionInfo(
         | 'auth_key'
         | 'resolved_auth_key'
         | 'status'
+        | 'invalid'
         | 'updated_at'
         | 'published_entity_versions_id'
         | 'latest_draft_entity_versions_id'
       >
   >(databaseAdapter, context, {
-    text: `SELECT ev.id, ev.entities_id, ev.data, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_draft_entity_versions_id
+    text: `SELECT ev.id, ev.entities_id, ev.data, e.type, e.auth_key, e.resolved_auth_key, e.status, e.invalid, e.updated_at, e.published_entity_versions_id, e.latest_draft_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id AND ev.version = $2`,
     values: [reference.id, reference.version],
   });
 
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
   if (!result.value) {
     return notOk.NotFound('No such entity or version');
   }
@@ -52,9 +51,11 @@ export async function adminEntityPublishGetVersionInfo(
     type,
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
-    status,
     updated_at: updatedAt,
   } = result.value;
+
+  const status = resolveEntityStatus(result.value.status);
+  const validity = resolveEntityValidity(result.value.invalid, status);
 
   return ok({
     entityInternalId,
@@ -64,7 +65,8 @@ export async function adminEntityPublishGetVersionInfo(
     authKey,
     resolvedAuthKey,
     type,
-    status: resolveEntityStatus(status),
+    status,
+    validPublished: validity.validPublished,
     updatedAt,
     fieldValues,
   });
@@ -85,7 +87,9 @@ export async function adminEntityPublishUpdateEntity(
             published_entity_versions_id = $1,
             updated_at = NOW(),
             updated = nextval('entities_updated_seq'),
-            status = $2
+            status = $2,
+            invalid = invalid & ~2,
+            dirty = dirty & (~(2|8))
           WHERE id = $3
           RETURNING updated_at`,
     values: [entityVersionInternalId, status, entityInternalId],

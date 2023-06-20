@@ -10,7 +10,7 @@ import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { UniqueConstraints } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
-import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
@@ -33,11 +33,11 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'created_at'
       | 'updated_at'
       | 'status'
-      | 'valid'
+      | 'invalid'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.data
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -51,29 +51,14 @@ export async function adminEntityUpdateGetEntityInfo(
 
   const {
     id: entityInternalId,
-    type,
-    name,
-    auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
-    status,
-    valid,
-    version,
-    created_at: createdAt,
-    updated_at: updatedAt,
     data: fieldValues,
   } = result.value;
 
   return ok({
+    ...resolveAdminEntityInfo(result.value),
     entityInternalId,
-    type,
-    name,
-    authKey,
     resolvedAuthKey,
-    status: resolveEntityStatus(status),
-    valid,
-    version,
-    createdAt,
-    updatedAt,
     fieldValues,
   });
 }
@@ -147,7 +132,7 @@ export async function adminEntityUpdateEntity(
       updated_at = NOW(),
       updated = nextval('entities_updated_seq'),
       status = $2,
-      valid = TRUE,
+      invalid = invalid & ~1,
       dirty = dirty & (~(1|4))
     WHERE id = $3
     RETURNING updated_at`,

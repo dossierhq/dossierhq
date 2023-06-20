@@ -38,7 +38,7 @@ async function unpublishEntities_minimal({ server }: AdminEntityTestContext) {
   ]);
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { status: AdminEntityStatus.withdrawn, updatedAt },
+    info: { status: AdminEntityStatus.withdrawn, updatedAt, validPublished: null },
   });
 
   const getResult = await adminClient.getEntity({ id });

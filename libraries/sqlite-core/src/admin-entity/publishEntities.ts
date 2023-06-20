@@ -9,7 +9,7 @@ import type {
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
-import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { resolveEntityStatus, resolveEntityValidity } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityPublishGetVersionInfo(
@@ -31,17 +31,16 @@ export async function adminEntityPublishGetVersionInfo(
         | 'updated_at'
         | 'published_entity_versions_id'
         | 'latest_entity_versions_id'
+        | 'invalid'
       >
   >(database, context, {
-    text: `SELECT ev.id, ev.entities_id, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id
+    text: `SELECT ev.id, ev.entities_id, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id, e.invalid
          FROM entity_versions ev, entities e
          WHERE e.uuid = ?1 AND e.id = ev.entities_id AND ev.version = ?2`,
     values: [reference.id, reference.version],
   });
 
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
   if (!result.value) {
     return notOk.NotFound('No such entity or version');
   }
@@ -53,9 +52,12 @@ export async function adminEntityPublishGetVersionInfo(
     type,
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
-    status,
     updated_at: updatedAt,
+    invalid,
   } = result.value;
+
+  const status = resolveEntityStatus(result.value.status);
+  const validity = resolveEntityValidity(invalid, status);
 
   return ok({
     entityInternalId,
@@ -65,7 +67,8 @@ export async function adminEntityPublishGetVersionInfo(
     authKey,
     resolvedAuthKey,
     type,
-    status: resolveEntityStatus(status),
+    status,
+    validPublished: validity.validPublished,
     updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
   });
@@ -90,7 +93,9 @@ export async function adminEntityPublishUpdateEntity(
              published_entity_versions_id = ?1,
              updated_at = ?2,
              updated_seq = ?3,
-             status = ?4
+             status = ?4,
+             invalid = invalid & ~2,
+             dirty = dirty & (~(2|8))
            WHERE id = ?5`,
     values: [
       entityVersionInternalId as number,

@@ -35,6 +35,7 @@ export interface PublishedEntityInfo<
   type: TType;
   name: string;
   authKey: TAuthKey;
+  valid: boolean;
   createdAt: Date;
 }
 
@@ -161,6 +162,7 @@ export interface AdminEntityInfo<TType extends string = string, TAuthKey extends
    * It is not connected to the requested version so if you get an old version of the entity, the
    * validation state refers to the latest version. */
   valid: boolean;
+  validPublished: boolean | null;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -70,7 +70,9 @@ export async function adminEntityUnpublishEntities(
         published_fts = NULL,
         updated_at = NOW(),
         updated = nextval('entities_updated_seq'),
-        status = $1
+        status = $1,
+        invalid = invalid & ~2,
+        dirty = dirty & (~(2|8))
       WHERE id = ANY($2)
       RETURNING id, updated_at`,
       values: [status, references.map((it) => it.entityInternalId)],

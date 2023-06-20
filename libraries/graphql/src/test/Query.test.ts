@@ -64,6 +64,7 @@ query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) 
         name
         authKey
         createdAt
+        valid
       }
       fields {
         title
@@ -895,7 +896,7 @@ describe('publishedEntity()', () => {
         publishedEntity: {
           __typename: 'PublishedQueryFoo',
           id,
-          info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
+          info: { name, authKey: 'none', createdAt: createdAt.toISOString(), valid: true },
           fields: {
             title: 'Slug title',
             summary: 'Slug summary',
@@ -946,7 +947,7 @@ describe('publishedEntity()', () => {
         publishedEntity: {
           __typename: 'PublishedQueryFoo',
           id,
-          info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
+          info: { name, authKey: 'none', createdAt: createdAt.toISOString(), valid: true },
           fields: {
             title: 'Howdy title',
             slug: null,

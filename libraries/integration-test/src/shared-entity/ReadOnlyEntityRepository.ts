@@ -63,6 +63,7 @@ export class ReadOnlyEntityRepository {
         type: it.info.type,
         name: it.info.name,
         authKey: it.info.authKey,
+        valid: it.info.validPublished ?? false,
         createdAt: it.info.createdAt,
       },
       fields: it.fields,

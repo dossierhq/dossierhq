@@ -73,10 +73,15 @@ export async function initializeIntegrationTestServer(): PromiseResult<
     authorizationAdapter: createTestAuthorizationAdapter(),
     logger: createMockLogger(),
   });
-  if (serverResult.isError()) {
-    return serverResult;
-  }
+  if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
+
+  let done = false;
+  while (!done) {
+    const processResult = await server.processNextDirtyEntity();
+    if (processResult.isError()) return processResult;
+    done = processResult.value === null;
+  }
 
   const client = server.createAdminClient(() =>
     server.createSession({

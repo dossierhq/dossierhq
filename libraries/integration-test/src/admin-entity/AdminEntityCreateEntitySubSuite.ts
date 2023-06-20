@@ -210,6 +210,7 @@ async function createEntity_publishMinimal({ server }: AdminEntityTestContext) {
       status: AdminEntityStatus.published,
       createdAt,
       updatedAt,
+      validPublished: true,
     },
   });
 
@@ -246,6 +247,7 @@ async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTes
       authKey: 'subject',
       createdAt,
       updatedAt,
+      validPublished: true,
     },
   });
 

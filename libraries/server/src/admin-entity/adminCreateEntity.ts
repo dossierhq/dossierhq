@@ -97,6 +97,7 @@ export async function adminCreateEntity(
         name,
         status: AdminEntityStatus.draft,
         valid: true,
+        validPublished: null,
         version: 0,
         createdAt,
         updatedAt,
@@ -128,6 +129,7 @@ export async function adminCreateEntity(
       effect = 'createdAndPublished';
       result.info.status = publishResult.value.status;
       result.info.updatedAt = publishResult.value.updatedAt;
+      result.info.validPublished = true;
     }
 
     return ok({ effect, entity: result });

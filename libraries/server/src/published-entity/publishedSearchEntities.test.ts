@@ -119,6 +119,7 @@ describe('publishedSearchEntities', () => {
                   "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "type": "TitleOnly",
+                  "valid": true,
                 },
               },
             },
@@ -216,6 +217,7 @@ describe('publishedSearchEntities', () => {
                   "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "type": "TitleOnly",
+                  "valid": true,
                 },
               },
             },
@@ -315,6 +317,7 @@ function createDatabaseEntity(id = 1): DatabasePublishedEntitySearchPayloadEntit
     name: 'TitleOnly name',
     type: 'TitleOnly',
     authKey: 'none',
+    validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),
     fieldValues: { title: 'Title' },
   };

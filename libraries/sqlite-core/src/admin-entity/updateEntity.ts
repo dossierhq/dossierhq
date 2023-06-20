@@ -10,7 +10,7 @@ import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
-import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
@@ -34,11 +34,11 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'created_at'
       | 'updated_at'
       | 'status'
-      | 'valid'
+      | 'invalid'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -51,29 +51,14 @@ export async function adminEntityUpdateGetEntityInfo(
 
   const {
     id: entityInternalId,
-    type,
-    name,
-    auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
-    status,
-    valid,
-    version,
-    created_at: createdAt,
-    updated_at: updatedAt,
     fields: fieldValues,
   } = result.value;
 
   return ok({
+    ...resolveAdminEntityInfo(result.value),
     entityInternalId,
-    type,
-    name,
-    authKey,
     resolvedAuthKey,
-    status: resolveEntityStatus(status),
-    valid: !!valid,
-    version,
-    createdAt: new Date(createdAt),
-    updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
   });
 }
@@ -143,7 +128,7 @@ export async function adminEntityUpdateEntity(
              updated_at = ?2,
              updated_seq = ?3,
              status = ?4,
-             valid = TRUE,
+             invalid = invalid & ~1,
              dirty = dirty & (~(1|4))
            WHERE id = ?5`,
     values: [

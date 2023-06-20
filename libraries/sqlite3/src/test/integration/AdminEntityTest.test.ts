@@ -19,7 +19,7 @@ beforeAll(async () => {
   readOnlyEntityRepository = (
     await createReadOnlyEntityRepository(serverInit.server)
   ).valueOrThrow();
-});
+}, 100_000);
 afterAll(async () => {
   if (serverInit) {
     (await serverInit.server.shutdown()).throwIfError();

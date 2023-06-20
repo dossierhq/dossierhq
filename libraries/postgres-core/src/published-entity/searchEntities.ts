@@ -6,15 +6,16 @@ import type {
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
+  DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,
   ResolvedAuthKey,
-  DatabasePagingInfo,
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
+import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -58,11 +59,8 @@ export async function publishedEntitySearchEntities(
   return ok({
     hasMore,
     entities: entitiesValues.map((it) => ({
+      ...resolvePublishedEntityInfo(it),
       id: it.uuid,
-      type: it.type,
-      name: it.name,
-      createdAt: it.created_at,
-      authKey: it.auth_key,
       fieldValues: it.data,
       cursor: cursorExtractor(it),
     })),

@@ -17,6 +17,7 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     name: `Title#${id}`,
     auth_key: 'none',
     created_at: '2021-08-17T07:51:25.56Z',
+    invalid: 0,
     fields: JSON.stringify({ title: 'Title' }),
   };
 }
@@ -38,7 +39,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
           "none",
           26,
@@ -74,6 +75,7 @@ describe('publishedEntitySearchEntities', () => {
               "id": "uuid-1",
               "name": "Title#1",
               "type": "TitleOnly",
+              "validPublished": true,
             },
           ],
           "hasMore": false,
@@ -83,7 +85,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
           "none",
           26,
@@ -119,6 +121,7 @@ describe('publishedEntitySearchEntities', () => {
               "id": "uuid-2",
               "name": "Title#2",
               "type": "TitleOnly",
+              "validPublished": true,
             },
           ],
           "hasMore": false,
@@ -128,7 +131,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
           "none",
           1,
@@ -165,6 +168,7 @@ describe('publishedEntitySearchEntities', () => {
               "id": "uuid-2",
               "name": "Title#2",
               "type": "TitleOnly",
+              "validPublished": true,
             },
           ],
           "hasMore": false,
@@ -174,7 +178,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
+          "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
           "none",
           1,

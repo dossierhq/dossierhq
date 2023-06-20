@@ -73,7 +73,7 @@ export async function adminEntityUnpublishEntities(
       );
       sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${now.toISOString()}, updated_seq = ${
         updatedSeqResult.value
-      }, status = ${status} WHERE id IN ${ids} RETURNING id`;
+      }, status = ${status}, invalid = invalid & ~2, dirty = dirty & (~(2|8)) WHERE id IN ${ids} RETURNING id`;
     })
   );
   if (result.isError()) return result;

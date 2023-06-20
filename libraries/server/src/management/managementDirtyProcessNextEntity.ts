@@ -164,7 +164,8 @@ export async function managementDirtyProcessNextEntity(
     const updateResult = await databaseAdapter.managementDirtyUpdateEntity(
       context,
       entityResult.value,
-      entityValidity.validAdmin
+      entityValidity.validAdmin,
+      entityValidity.validPublished
     );
     if (updateResult.isError()) return updateResult;
 

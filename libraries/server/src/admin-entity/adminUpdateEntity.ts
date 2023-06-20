@@ -90,6 +90,7 @@ export async function adminUpdateEntity(
         payload.effect = 'published';
         updatedEntity.info.status = publishResult.value.status;
         updatedEntity.info.updatedAt = publishResult.value.updatedAt;
+        updatedEntity.info.validPublished = true;
       }
 
       return ok(payload);
@@ -159,6 +160,7 @@ export async function adminUpdateEntity(
       effect = 'updatedAndPublished';
       updatedEntity.info.status = publishResult.value.status;
       updatedEntity.info.updatedAt = publishResult.value.updatedAt;
+      updatedEntity.info.validPublished = true;
     }
 
     return ok({ effect, entity: updatedEntity });

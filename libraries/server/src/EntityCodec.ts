@@ -84,6 +84,7 @@ export function decodePublishedEntity(
       name: values.name,
       authKey: values.authKey,
       createdAt: values.createdAt,
+      valid: values.validPublished,
     },
     fields: {},
   };
@@ -192,6 +193,7 @@ export function decodeAdminEntity(
       authKey: values.authKey,
       status: values.status,
       valid: values.valid,
+      validPublished: values.validPublished,
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
@@ -266,6 +268,7 @@ export function resolveUpdateEntity(
       authKey: entityInfo.authKey,
       status,
       valid: true,
+      validPublished: entityInfo.validPublished,
       createdAt: entityInfo.createdAt,
       updatedAt: entityInfo.updatedAt,
     },

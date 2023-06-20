@@ -10,7 +10,7 @@ import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import { searchAdminEntitiesQuery } from '../search/QueryGenerator.js';
-import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 
 export async function adminEntitySearchEntities(
   database: Database,
@@ -50,15 +50,8 @@ export async function adminEntitySearchEntities(
   return ok({
     hasMore,
     entities: entitiesValues.map((it) => ({
+      ...resolveAdminEntityInfo(it),
       id: it.uuid,
-      type: it.type,
-      name: it.name,
-      version: it.version,
-      createdAt: new Date(it.created_at),
-      updatedAt: new Date(it.updated_at),
-      authKey: it.auth_key,
-      status: resolveEntityStatus(it.status),
-      valid: !!it.valid,
       fieldValues: JSON.parse(it.fields),
       cursor: cursorExtractor(it),
     })),

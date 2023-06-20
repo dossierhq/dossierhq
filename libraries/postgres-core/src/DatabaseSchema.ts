@@ -42,7 +42,7 @@ export interface EntitiesTable {
   published_entity_versions_id: number | null;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
   dirty: number; // bit field 0x1 = validate_latest, 0x2 = validate_published, 0x4 = index_latest, 0x8 = index_published
-  valid: boolean;
+  invalid: number; // bit field 0x1 = latest, 0x2 = published
   auth_key: string;
   resolved_auth_key: string;
 }

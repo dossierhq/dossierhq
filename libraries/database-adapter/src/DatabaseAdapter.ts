@@ -69,6 +69,7 @@ export interface DatabaseAdminEntityPayload {
   authKey: string;
   status: AdminEntityStatus;
   valid: boolean;
+  validPublished: boolean | null;
   createdAt: Date;
   updatedAt: Date;
   fieldValues: Record<string, unknown>;
@@ -111,6 +112,7 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   resolvedAuthKey: string;
   status: AdminEntityStatus;
   updatedAt: Date;
+  validPublished: boolean | null;
   fieldValues: Record<string, unknown>;
 }
 
@@ -178,6 +180,7 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   resolvedAuthKey: string;
   status: AdminEntityStatus;
   valid: boolean;
+  validPublished: boolean | null;
   version: number;
   createdAt: Date;
   updatedAt: Date;
@@ -246,6 +249,7 @@ export interface DatabasePublishedEntityPayload {
   type: string;
   authKey: string;
   createdAt: Date;
+  validPublished: boolean;
   fieldValues: Record<string, unknown>;
 }
 
@@ -508,7 +512,8 @@ export interface DatabaseAdapter<
   managementDirtyUpdateEntity(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
-    valid: boolean
+    valid: boolean,
+    validPublished: boolean | null
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   managementOptimize(

@@ -28,6 +28,7 @@ describe('Admin adminGetEntity', () => {
           version: 1,
           status: AdminEntityStatus.modified,
           valid: true,
+          validPublished: true,
           createdAt: now,
           updatedAt: now,
           fieldValues: { title: 'Title' },
@@ -57,6 +58,7 @@ describe('Admin adminGetEntity', () => {
         updatedAt: now,
         status: AdminEntityStatus.modified,
         valid: true,
+        validPublished: true,
       },
       fields: {
         title: 'Title',

@@ -207,6 +207,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           name: { type: new GraphQLNonNull(GraphQLString) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
+          valid: { type: new GraphQLNonNull(GraphQLBoolean) },
         },
       })
     );
@@ -460,6 +461,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           authKey: { type: new GraphQLNonNull(GraphQLString) },
           status: { type: new GraphQLNonNull(this.getOutputType('AdminEntityStatus')) },
           valid: { type: new GraphQLNonNull(GraphQLBoolean) },
+          validPublished: { type: GraphQLBoolean },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },

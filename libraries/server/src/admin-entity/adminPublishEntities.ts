@@ -45,6 +45,7 @@ interface VersionInfoAlreadyPublished {
   effect: 'none';
   uuid: string;
   status: AdminEntityStatus;
+  validPublished: boolean;
   updatedAt: Date;
 }
 
@@ -185,6 +186,7 @@ async function collectVersionsInfo(
       resolvedAuthKey,
       type,
       status,
+      validPublished,
       updatedAt,
       fieldValues,
     } = versionInfoResult.value;
@@ -203,7 +205,13 @@ async function collectVersionsInfo(
     if (entitySpec.adminOnly) {
       adminOnlyEntityIds.push(reference.id);
     } else if (versionIsPublished) {
-      versionsInfo.push({ effect: 'none', uuid: reference.id, status, updatedAt });
+      versionsInfo.push({
+        effect: 'none',
+        uuid: reference.id,
+        status,
+        updatedAt,
+        validPublished: validPublished ?? true,
+      });
     } else {
       const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, fieldValues);
       const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(

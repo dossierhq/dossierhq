@@ -80,6 +80,7 @@ const STRINGS_ENTITY_DEFAULT: AdminEntity = {
     version: 0,
     status: 'draft',
     valid: true,
+    validPublished: null,
     createdAt: new Date('2023-04-04T19:26:16.546Z'),
     updatedAt: new Date('2023-04-04T19:26:16.546Z'),
   },

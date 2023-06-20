@@ -69,9 +69,8 @@ CREATE TABLE public.entities (
     status public.entity_status NOT NULL,
     auth_key character varying(255) NOT NULL,
     resolved_auth_key character varying(255) NOT NULL,
-    valid boolean DEFAULT true NOT NULL,
-    revalidate boolean DEFAULT false NOT NULL,
-    dirty smallint DEFAULT 0 NOT NULL
+    dirty smallint DEFAULT 0 NOT NULL,
+    invalid smallint DEFAULT 0 NOT NULL
 );
 
 CREATE SEQUENCE public.entities_id_seq

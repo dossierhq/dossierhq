@@ -14,7 +14,7 @@ import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
-import { resolveEntityStatus } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 
 export async function adminGetEntity(
   database: Database,
@@ -32,31 +32,12 @@ export async function adminGetEntity(
     return result;
   }
 
-  const {
-    uuid: id,
-    type,
-    name,
-    version,
-    auth_key: authKey,
-    resolved_auth_key: resolvedAuthKey,
-    status,
-    valid,
-    created_at: createdAt,
-    updated_at: updatedAt,
-    fields: fieldValues,
-  } = result.value;
+  const { uuid: id, resolved_auth_key: resolvedAuthKey, fields: fieldValues } = result.value;
 
   return ok({
+    ...resolveAdminEntityInfo(result.value),
     id,
-    type,
-    name,
-    version,
-    authKey,
     resolvedAuthKey,
-    status: resolveEntityStatus(status),
-    valid: !!valid,
-    createdAt: new Date(createdAt),
-    updatedAt: new Date(updatedAt),
     fieldValues: JSON.parse(fieldValues),
   });
 }
@@ -67,7 +48,7 @@ async function getEntityWithLatestVersion(
   reference: EntityReference | UniqueIndexReference
 ) {
   const { sql, query } = createSqliteSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.fields`;
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
@@ -86,7 +67,7 @@ async function getEntityWithLatestVersion(
       | 'created_at'
       | 'updated_at'
       | 'status'
-      | 'valid'
+      | 'invalid'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
   >(database, context, query);
@@ -113,11 +94,11 @@ async function getEntityWithVersion(
       | 'created_at'
       | 'updated_at'
       | 'status'
-      | 'valid'
+      | 'invalid'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.valid, ev.version, ev.fields
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.fields
     FROM entities e, entity_versions ev
     WHERE e.uuid = ?1
     AND e.id = ev.entities_id

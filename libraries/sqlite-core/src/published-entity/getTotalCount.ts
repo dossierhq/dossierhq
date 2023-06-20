@@ -13,13 +13,9 @@ export async function publishedEntitySearchTotalCount(
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalPublishedEntitiesQuery(schema, resolvedAuthKeys, query);
-  if (sqlQuery.isError()) {
-    return sqlQuery;
-  }
+  if (sqlQuery.isError()) return sqlQuery;
 
   const result = await queryOne<{ count: number }>(database, context, sqlQuery.value);
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
   return ok(result.value.count);
 }
