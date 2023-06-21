@@ -17,9 +17,9 @@ export async function managementDirtyMarkEntities(
   if (entityTypes.length > 0) {
     const { sql, query, addValueList } = createSqliteSqlQuery();
 
-    sql`UPDATE entities SET dirty = dirty | 1 WHERE type IN ${addValueList(
+    sql`UPDATE entities SET dirty = dirty | 1|2 WHERE type IN ${addValueList(
       entityTypes
-    )} AND dirty & 1 = 0`;
+    )} AND (dirty & (1|2)) != (1|2)`;
 
     const result = await queryRun(database, context, query);
     if (result.isError()) return result;
@@ -29,10 +29,10 @@ export async function managementDirtyMarkEntities(
   if (valueTypes.length > 0) {
     const { sql, query, addValueList } = createSqliteSqlQuery();
 
-    sql`UPDATE entities SET dirty = dirty | 1 FROM entity_latest_value_types elvt
+    sql`UPDATE entities SET dirty = dirty | 1|2 FROM entity_latest_value_types elvt
     WHERE elvt.value_type IN ${addValueList(
       valueTypes
-    )} AND elvt.entities_id = entities.id AND entities.dirty & 1 = 0`;
+    )} AND elvt.entities_id = entities.id AND (entities.dirty & (1|2)) != (1|2)`;
 
     const result = await queryRun(database, context, query);
     if (result.isError()) return result;

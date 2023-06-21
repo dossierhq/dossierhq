@@ -38,7 +38,7 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity
   ).valueOrThrow();
 
   const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
-  assertEquals(validations, [{ id: entity.id, valid: false }]);
+  assertEquals(validations, [{ id: entity.id, valid: false, validPublished: null }]);
 }
 
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem({
@@ -53,14 +53,14 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidValueI
   ).valueOrThrow();
 
   const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
-  assertEquals(validations, [{ id: entity.id, valid: false }]);
+  assertEquals(validations, [{ id: entity.id, valid: false, validPublished: null }]);
 }
 
 async function validateAllEntitiesAndCaptureResultsForEntity(
   server: Server,
   reference: EntityReference
 ) {
-  const result: { id: string; valid: boolean }[] = [];
+  const result: { id: string; valid: boolean; validPublished: boolean | null }[] = [];
 
   let done = false;
   while (!done) {

@@ -18,6 +18,7 @@ import type { AdminChangeValidations, AdminValueItems } from '../SchemaTypes.js'
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 
 interface Options {
+  publish?: boolean;
   skipProcessDirtyEntities?: boolean;
 }
 
@@ -65,7 +66,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
   | typeof ErrorType.Generic
 > {
   return await withTemporarySchemaChange(server, adminClient, schemaUpdate, options, async () => {
-    const result = await adminClient.createEntity<TEntity>(entity);
+    const result = await adminClient.createEntity<TEntity>(entity, { publish: options?.publish });
     return result.isOk() ? ok(result.value.entity) : result;
   });
 }

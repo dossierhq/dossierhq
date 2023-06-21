@@ -4,6 +4,7 @@ import {
   ok,
   traverseEntity,
   validateTraverseNodeForPublish,
+  validateTraverseNodeForSave,
   visitorPathToString,
   type AdminSchema,
   type EntityLike,
@@ -12,8 +13,10 @@ import {
   type ItemValuePath,
   type Location,
   type PromiseResult,
+  type PublishValidationIssue,
   type PublishedSchema,
   type Result,
+  type SaveValidationIssue,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -57,7 +60,12 @@ export function validatePublishedFieldValuesAndCollectInfo(
   const uniqueIndexCollector = createUniqueIndexCollector(publishedSchema);
 
   for (const node of traverseEntity(publishedSchema, path, entity)) {
-    const validationIssue = validateTraverseNodeForPublish(adminSchema, node);
+    // validate for publish uses admin schema since it provides better error messages for adminOnly
+    let validationIssue: SaveValidationIssue | PublishValidationIssue | null =
+      validateTraverseNodeForPublish(adminSchema, node);
+    if (!validationIssue) {
+      validationIssue = validateTraverseNodeForSave(publishedSchema, node);
+    }
     if (validationIssue) {
       return notOk.BadRequest(
         `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`

@@ -46,7 +46,7 @@ export interface Server<
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   processNextDirtyEntity(): PromiseResult<
-    { id: string; valid: boolean } | null,
+    { id: string; valid: boolean; validPublished: boolean | null } | null,
     typeof ErrorType.Generic
   >;
 

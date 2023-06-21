@@ -35,7 +35,10 @@ export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext
-): PromiseResult<{ id: string; valid: boolean } | null, typeof ErrorType.Generic> {
+): PromiseResult<
+  { id: string; valid: boolean; validPublished: boolean | null } | null,
+  typeof ErrorType.Generic
+> {
   return context.withTransaction(async (context) => {
     // Fetch info about next dirty entity
     const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context);
@@ -169,7 +172,11 @@ export async function managementDirtyProcessNextEntity(
     );
     if (updateResult.isError()) return updateResult;
 
-    return ok({ id: entityResult.value.id, valid: entityValidity.validAdmin });
+    return ok({
+      id: entityResult.value.id,
+      valid: entityValidity.validAdmin,
+      validPublished: entityValidity.validPublished,
+    });
   });
 }
 

@@ -7,7 +7,13 @@ import {
   createRichTextValueItemNode,
   ErrorType,
 } from '@dossierhq/core';
-import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import {
+  assertEquals,
+  assertErrorResult,
+  assertOkResult,
+  assertResultValue,
+  assertSame,
+} from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminLocationsValue, AdminTitleOnly } from '../SchemaTypes.js';
 import {
@@ -31,6 +37,7 @@ import {
   publishedClientForSecondaryPrincipal,
 } from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
+import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 
 export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
@@ -40,6 +47,7 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_valueItemAdminOnlyFieldIsExcluded,
   getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded,
   getEntity_usingUniqueIndex,
+  getEntity_invalidEntity,
   getEntity_errorInvalidId,
   getEntity_errorInvalidUniqueIndexValue,
   getEntity_errorUniqueIndexValueFromAdminOnlyField,
@@ -256,6 +264,17 @@ async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEnti
       copyEntity(createResult.value.entity, { info: { status: 'published' } })
     )
   );
+}
+
+async function getEntity_invalidEntity({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const entity = (await createInvalidEntity(server, adminClient, { publish: true })).valueOrThrow();
+
+  const result = await publishedClient.getEntity({ id: entity.id });
+  assertOkResult(result);
+  assertSame(result.value.info.valid, false);
 }
 
 async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {

@@ -18,7 +18,7 @@ export async function managementDirtyMarkEntities(
   if (entityTypes.length > 0) {
     const { sql, query } = createPostgresSqlQuery();
 
-    sql`UPDATE entities SET dirty = dirty | 1 WHERE type = ANY(${entityTypes}) AND dirty & 1 = 0`;
+    sql`UPDATE entities SET dirty = dirty | 1|2 WHERE type = ANY(${entityTypes}) AND (dirty & (1|2)) != (1|2)`;
 
     const result = await queryRun(databaseAdapter, context, query);
     if (result.isError()) return result;
@@ -28,8 +28,8 @@ export async function managementDirtyMarkEntities(
   if (valueTypes.length > 0) {
     const { sql, query } = createPostgresSqlQuery();
 
-    sql`UPDATE entities SET dirty = dirty | 1 FROM entity_latest_value_types elvt
-    WHERE elvt.value_type = ANY(${valueTypes}) AND elvt.entities_id = entities.id AND entities.dirty & 1 = 0`;
+    sql`UPDATE entities SET dirty = dirty | 1|2 FROM entity_latest_value_types elvt
+    WHERE elvt.value_type = ANY(${valueTypes}) AND elvt.entities_id = entities.id AND (entities.dirty & (1|2)) != (1|2)`;
 
     const result = await queryRun(databaseAdapter, context, query);
     if (result.isError()) return result;
