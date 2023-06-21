@@ -1,6 +1,11 @@
 import type { AdminClient } from './AdminClient.js';
-import type { ErrorResult, PromiseResult } from './ErrorResult.js';
-import { createErrorResult, ErrorType, notOk } from './ErrorResult.js';
+import {
+  ErrorType,
+  createErrorResult,
+  notOk,
+  type ErrorResult,
+  type PromiseResult,
+} from './ErrorResult.js';
 import { NoOpLogger } from './Logger.js';
 import type { AdvisoryLockOptions, AdvisoryLockPayload } from './Types.js';
 
@@ -13,7 +18,7 @@ type AdvisoryLockHelperStatus =
   | { active: true; renewError: null }
   | {
       active: false;
-      renewError: ErrorResult<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
+      renewError: ErrorResult<unknown, typeof ErrorType.Generic>;
     };
 
 export async function withAdvisoryLock<TOk, TError extends ErrorType>(
@@ -21,10 +26,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
   name: string,
   options: AdvisoryLockHelperOptions,
   callback: (status: AdvisoryLockHelperStatus) => PromiseResult<TOk, TError>
-): PromiseResult<
-  TOk,
-  TError | typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
-> {
+): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   // Acquire lock
   const { acquireInterval, renewInterval, ...acquireOptions } = options;
   const acquireResult = await acquireLockWithRetry(
@@ -33,7 +35,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
     acquireOptions,
     acquireInterval
   );
-  if (acquireResult.isError()) return acquireResult;
+  if (acquireResult.isError()) return notOk.Generic(acquireResult.message); // BadRequest -> Generic
   const { handle } = acquireResult.value;
 
   const status: AdvisoryLockHelperStatus = { active: true, renewError: null };
@@ -44,7 +46,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
       try {
         const renewResult = await adminClient.renewAdvisoryLock(name, handle);
         if (renewResult.isError()) {
-          setStatusError(status, renewResult);
+          setStatusError(status, notOk.Generic(renewResult.message)); // NotFound -> Generic
         }
       } catch (error) {
         setStatusError(status, notOk.GenericUnexpectedException({ logger: NoOpLogger }, error));
