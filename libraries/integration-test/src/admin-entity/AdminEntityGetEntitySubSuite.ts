@@ -76,7 +76,7 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
 
 async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const entity = (
+  const { entity } = (
     await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 
@@ -88,7 +88,7 @@ async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
 
 async function getEntity_invalidPublishedEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const entity = (
+  const { entity } = (
     await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
 

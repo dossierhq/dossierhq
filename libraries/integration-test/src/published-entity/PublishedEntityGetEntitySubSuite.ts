@@ -270,7 +270,7 @@ async function getEntity_invalidEntity({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const entity = (
+  const { entity } = (
     await createInvalidEntity(server, adminClient, { matchPattern: 'no match' }, { publish: true })
   ).valueOrThrow();
 

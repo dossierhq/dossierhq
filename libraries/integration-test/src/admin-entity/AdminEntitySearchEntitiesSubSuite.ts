@@ -591,7 +591,7 @@ async function searchEntities_statusAll({ server }: AdminEntityTestContext) {
 
 async function searchEntities_invalidOnly({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const entity = (
+  const { entity } = (
     await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 

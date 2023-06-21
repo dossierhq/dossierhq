@@ -1,5 +1,3 @@
-import type { EntityReference } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
 import { assertEquals, assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
@@ -32,16 +30,10 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const entity = (
-    await createInvalidEntity(
-      server,
-      adminClient,
-      { matchPattern: 'no match' },
-      { skipProcessDirtyEntities: true }
-    )
+  const { entity, validations } = (
+    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 
-  const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
   assertEquals(validations, [{ id: entity.id, valid: false, validPublished: null }]);
 }
 
@@ -50,16 +42,10 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublis
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const entity = (
-    await createInvalidEntity(
-      server,
-      adminClient,
-      { required: null },
-      { publish: true, skipProcessDirtyEntities: true }
-    )
+  const { entity, validations } = (
+    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
 
-  const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
   assertEquals(validations, [{ id: entity.id, valid: true, validPublished: false }]);
 }
 
@@ -68,34 +54,9 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidValueI
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const entity = (
-    await createEntityWithInvalidValueItem(server, adminClient, {
-      skipProcessDirtyEntities: true,
-    })
+  const { entity, validations } = (
+    await createEntityWithInvalidValueItem(server, adminClient)
   ).valueOrThrow();
 
-  const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
   assertEquals(validations, [{ id: entity.id, valid: false, validPublished: null }]);
-}
-
-async function validateAllEntitiesAndCaptureResultsForEntity(
-  server: Server,
-  reference: EntityReference
-) {
-  const result: { id: string; valid: boolean; validPublished: boolean | null }[] = [];
-
-  let done = false;
-  while (!done) {
-    const processResult = await server.processNextDirtyEntity();
-    assertOkResult(processResult);
-    if (!processResult.value) {
-      done = true;
-    }
-
-    if (processResult.value && processResult.value.id === reference.id) {
-      result.push(processResult.value);
-    }
-  }
-
-  return result;
 }
