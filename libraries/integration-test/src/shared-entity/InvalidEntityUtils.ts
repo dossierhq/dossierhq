@@ -1,11 +1,12 @@
 import {
+  ErrorType,
   copyEntity,
   ok,
+  withAdvisoryLock,
   type AdminClient,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminSchemaSpecificationUpdate,
-  type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
@@ -79,27 +80,39 @@ async function withTemporarySchemaChange<TOk, TError extends ErrorType>(
   options: Options = {},
   worker: () => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  // remove validations from the schema
-  const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);
-  if (removeValidationsResult.isError()) return removeValidationsResult;
+  return await withAdvisoryLock(
+    adminClient,
+    'schema-update',
+    { leaseDuration: 2000, acquireInterval: 1000, renewInterval: 1000 },
+    async (): PromiseResult<
+      TOk,
+      TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
+    > => {
+      // remove validations from the schema
+      const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);
+      if (removeValidationsResult.isError()) return removeValidationsResult;
 
-  const result = await worker();
+      const workerResult = await worker();
 
-  // restore validations to the schema
-  const restoreSchemaResult = await adminClient.updateSchemaSpecification(IntegrationTestSchema);
-  if (restoreSchemaResult.isError()) return restoreSchemaResult;
+      // restore validations to the schema
+      const restoreSchemaResult = await adminClient.updateSchemaSpecification(
+        IntegrationTestSchema
+      );
+      if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
-  // validate
-  if (options.skipProcessDirtyEntities !== true) {
-    let done = false;
-    while (!done) {
-      const processResult = await server.processNextDirtyEntity();
-      if (processResult.isError()) return processResult;
-      if (!processResult.value) {
-        done = true;
+      // validate
+      if (options.skipProcessDirtyEntities !== true) {
+        let done = false;
+        while (!done) {
+          const processResult = await server.processNextDirtyEntity();
+          if (processResult.isError()) return processResult;
+          if (!processResult.value) {
+            done = true;
+          }
+        }
       }
-    }
-  }
 
-  return result;
+      return workerResult;
+    }
+  );
 }
