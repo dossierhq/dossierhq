@@ -22,6 +22,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
   getEntity_getLatestVersion,
   getEntity_usingUniqueIndex,
   getEntity_invalidEntity,
+  getEntity_invalidPublishedEntity,
   getEntity_errorInvalidId,
   getEntity_errorInvalidVersion,
   getEntity_errorInvalidUniqueIndexValue,
@@ -75,11 +76,26 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
 
 async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const entity = (await createInvalidEntity(server, adminClient)).valueOrThrow();
+  const entity = (
+    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
+  ).valueOrThrow();
 
   const result = await adminClient.getEntity({ id: entity.id });
   assertOkResult(result);
   assertSame(result.value.info.valid, false);
+  assertSame(result.value.info.validPublished, null); // not published
+}
+
+async function getEntity_invalidPublishedEntity({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const entity = (
+    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
+  ).valueOrThrow();
+
+  const result = await adminClient.getEntity({ id: entity.id });
+  assertOkResult(result);
+  assertSame(result.value.info.valid, true);
+  assertSame(result.value.info.validPublished, false);
 }
 
 async function getEntity_errorInvalidId({ server }: AdminEntityTestContext) {

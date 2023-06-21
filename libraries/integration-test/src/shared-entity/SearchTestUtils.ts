@@ -207,7 +207,7 @@ export async function countSearchResultStatuses(
       if (edge.node.isOk()) {
         const entity = edge.node.value;
         result[entity.info.status] += 1;
-        if (entity.info.valid) {
+        if (entity.info.valid && entity.info.validPublished !== false) {
           result.valid += 1;
         } else {
           result.invalid += 1;

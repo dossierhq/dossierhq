@@ -16,7 +16,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'ChangeValidations',
-      fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' }],
+      fields: [
+        { name: 'required', type: FieldType.String, required: true },
+        { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
+      ],
     },
     {
       name: 'References',
@@ -127,7 +130,10 @@ export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecification
   entityTypes: [
     {
       name: 'ChangeValidations',
-      fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: null }],
+      fields: [
+        { name: 'required', type: FieldType.String, required: false },
+        { name: 'matchPattern', type: FieldType.String, matchPattern: null },
+      ],
     },
   ],
 };

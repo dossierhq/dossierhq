@@ -12,6 +12,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 export const ServerProcessNextDirtyEntitySubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   serverProcessNextDirtyEntity_all,
   serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity,
+  serverProcessNextDirtyEntity_changingValidationsWithInvalidPublishedEntity,
   serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem,
 ];
 
@@ -32,13 +33,34 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity
   const adminClient = adminClientForMainPrincipal(server);
 
   const entity = (
-    await createInvalidEntity(server, adminClient, {
-      skipProcessDirtyEntities: true,
-    })
+    await createInvalidEntity(
+      server,
+      adminClient,
+      { matchPattern: 'no match' },
+      { skipProcessDirtyEntities: true }
+    )
   ).valueOrThrow();
 
   const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
   assertEquals(validations, [{ id: entity.id, valid: false, validPublished: null }]);
+}
+
+async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublishedEntity({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  const entity = (
+    await createInvalidEntity(
+      server,
+      adminClient,
+      { required: null },
+      { publish: true, skipProcessDirtyEntities: true }
+    )
+  ).valueOrThrow();
+
+  const validations = await validateAllEntitiesAndCaptureResultsForEntity(server, entity);
+  assertEquals(validations, [{ id: entity.id, valid: true, validPublished: false }]);
 }
 
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem({

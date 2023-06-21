@@ -33,6 +33,7 @@ export type AppAdminEntity =
   | AdminValueItems;
 
 export interface AdminChangeValidationsFields {
+  required: string | null;
   matchPattern: string | null;
 }
 
@@ -332,6 +333,7 @@ export type AppPublishedEntity =
   | PublishedValueItems;
 
 export interface PublishedChangeValidationsFields {
+  required: string;
   matchPattern: string | null;
 }
 

@@ -25,13 +25,14 @@ interface Options {
 export async function createInvalidEntity(
   server: Server,
   adminClient: AdminClient,
+  fields: Partial<AdminChangeValidations['fields']>,
   options?: Options
 ) {
   return doCreateInvalidEntity<AdminChangeValidations>(
     server,
     adminClient,
     ChangeValidationsWithoutValidationsUpdate,
-    copyEntity(CHANGE_VALIDATIONS_CREATE, { fields: { matchPattern: 'no match' } }),
+    copyEntity(CHANGE_VALIDATIONS_CREATE, { fields }),
     options
   );
 }

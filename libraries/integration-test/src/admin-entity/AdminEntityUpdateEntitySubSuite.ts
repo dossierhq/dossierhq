@@ -354,7 +354,9 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminE
 async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const entity = (await createInvalidEntity(server, adminClient)).valueOrThrow();
+  const entity = (
+    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
+  ).valueOrThrow();
 
   const updateResult = await adminClient.updateEntity<AdminChangeValidations>({
     id: entity.id,
