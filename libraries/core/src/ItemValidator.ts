@@ -172,9 +172,9 @@ function validateName(path: ItemValuePath, name: string): SaveValidationIssue | 
   return null;
 }
 
-export function validateTraverseNodeForSave(
-  adminSchema: AdminSchema,
-  node: ItemTraverseNode<AdminSchema>
+export function validateTraverseNodeForSave<TSchema extends AdminSchema | PublishedSchema>(
+  schema: TSchema,
+  node: ItemTraverseNode<TSchema>
 ): SaveValidationIssue | null {
   const nodeType = node.type;
   switch (nodeType) {
@@ -193,7 +193,7 @@ export function validateTraverseNodeForSave(
       } else if (isStringItemField(node.fieldSpec, node.value) && node.value) {
         const stringFieldSpec = node.fieldSpec as StringFieldSpecification;
         if (stringFieldSpec.matchPattern) {
-          const regexp = adminSchema.getPatternRegExp(stringFieldSpec.matchPattern);
+          const regexp = schema.getPatternRegExp(stringFieldSpec.matchPattern);
           assertIsDefined(regexp);
           if (!regexp.test(node.value)) {
             return {
