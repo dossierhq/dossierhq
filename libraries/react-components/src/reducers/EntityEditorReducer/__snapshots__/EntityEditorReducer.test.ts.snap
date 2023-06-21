@@ -79,6 +79,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -197,6 +198,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -262,6 +264,7 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -380,6 +383,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -498,6 +502,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -616,6 +621,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -748,6 +754,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -882,6 +889,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1000,6 +1008,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1118,6 +1127,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1236,6 +1246,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1354,6 +1365,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1486,6 +1498,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1620,6 +1633,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1754,6 +1768,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -1888,6 +1903,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2035,6 +2051,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2169,6 +2186,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2303,6 +2321,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2437,6 +2456,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2640,6 +2660,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2774,6 +2795,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -2911,6 +2933,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -3101,6 +3124,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -3230,6 +3254,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -3407,6 +3432,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -3598,6 +3624,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -3831,6 +3858,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -3957,6 +3985,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
       "foo": /\\^foo\\$/,
     },
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -4085,6 +4114,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -4203,6 +4233,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -4321,6 +4352,7 @@ exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -4439,6 +4471,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -4573,6 +4606,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
@@ -4719,6 +4753,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
   "schema": AdminSchema {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
       "spec": {
         "entityTypes": [
           {
