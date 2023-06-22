@@ -5,6 +5,7 @@ import {
   copyEntity,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
+  createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
@@ -64,6 +65,15 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
         fields: { normal: false },
       })
     ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('booleans-published-invalid'),
+        info: { name: 'Booleans published invalid' },
+        fields: { required: null },
+      }),
+      { publish: true }
+    ),
   ];
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
@@ -115,6 +125,27 @@ async function createEntitiesEntities(
         },
       })
     ),
+
+    adminClient.createEntity(
+      copyEntity(minimal, {
+        id: id('entities-invalid'),
+        info: { name: 'Entities invalid' },
+        fields: {
+          stringsEntity: booleansEntities.at(-1),
+          stringsEntityList: booleansEntities.slice(0, 2),
+          stringsAndLocationsEntity: numbersEntities.at(-1),
+          stringsAndLocationsEntityList: numbersEntities.slice(0, 2),
+        },
+      })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('entities-published-invalid'),
+        info: { name: 'Entities published invalid' },
+      }),
+      { publish: true }
+    ),
   ];
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
@@ -148,6 +179,15 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
         info: { name: 'Locations filled' },
         fields: { normal: malmo, list: [malmo, london] },
       })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('locations-published-invalid'),
+        info: { name: 'Locations published invalid' },
+        fields: { required: null, requiredList: null },
+      }),
+      { publish: true }
     ),
   ];
 
@@ -183,6 +223,23 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
           integer: 7,
           list: [8.9, 0.1],
         },
+      })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('numbers-published-invalid'),
+        info: { name: 'Numbers published invalid' },
+        fields: { required: null, requiredList: null, requiredIntegerList: null },
+      }),
+      { publish: true }
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimal, {
+        id: id('numbers-invalid'),
+        info: { name: 'Numbers invalid' },
+        fields: { integer: 1.234, requiredIntegerList: [1.23, 4.56] },
       })
     ),
   ];
@@ -331,6 +388,43 @@ async function createRichTextsEntities(
         },
       })
     ),
+
+    adminClient.createEntity(
+      copyEntity(minimal, {
+        id: id('rich-texts-invalid'),
+        info: { name: 'RichTexts invalid' },
+        fields: {
+          minimal: createRichTextRootNode([
+            createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
+          ]),
+          stringsEntity: createRichTextRootNode([
+            createRichTextEntityNode(numbersEntities[0]),
+            createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
+          ]),
+          numbersEntityLink: createRichTextRootNode([
+            createRichTextEntityLinkNode(stringsEntities[0], [
+              createRichTextTextNode('Link to string entity'),
+            ]),
+            createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
+          ]),
+          nestedValueItem: createRichTextRootNode([
+            createRichTextValueItemNode<AdminCloudinaryImage>(cloudinaryImageValueItems[0]),
+            createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
+          ]),
+        },
+      })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('rich-texts-published-invalid'),
+        info: { name: 'RichTexts published invalid' },
+        fields: {
+          required: null,
+        },
+      }),
+      { publish: true }
+    ),
   ];
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
@@ -381,9 +475,26 @@ async function createStringsEntities(adminClient: AppAdminClient) {
         id: id('strings-invalid'),
         info: { name: 'Strings invalid' },
         fields: {
+          normal: 'Multi\nline',
           matchPattern: 'invalid string',
+          values: 'invalid' as 'foo',
+          valuesList: ['invalid' as 'foo', 'values' as 'foo'],
+          requiredListMatchPattern: ['invalid string'],
         },
       })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('strings-published-invalid'),
+        info: { name: 'Strings published invalid' },
+        fields: {
+          required: null,
+          requiredList: null,
+          requiredListMatchPattern: null,
+        },
+      }),
+      { publish: true }
     ),
   ];
 
@@ -449,6 +560,32 @@ async function createValueItemsEntities(
           cloudinaryImage: faker.helpers.arrayElement(cloudinaryImageValueItems),
         },
       })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimal, {
+        id: id('value-items-invalid'),
+        info: { name: 'ValueItems invalid' },
+        fields: {
+          cloudinaryImage: {
+            type: 'NestedValueItem',
+            text: 'First',
+            child: null,
+          } as unknown as AdminCloudinaryImage,
+        },
+      })
+    ),
+
+    adminClient.createEntity(
+      copyEntity(minimalPublish, {
+        id: id('value-items-published-invalid'),
+        info: { name: 'ValueItems published invalid' },
+        fields: {
+          required: null,
+          requiredList: null,
+        },
+      }),
+      { publish: true }
     ),
   ];
 

@@ -1,9 +1,16 @@
-import type {
-  AdminEntityTypeSpecificationUpdate,
-  AdminSchemaSpecificationUpdate,
-  AdminStringFieldSpecificationUpdate,
+import {
+  FieldType,
+  RichTextNodeType,
+  type AdminBooleanFieldSpecificationUpdate,
+  type AdminEntityFieldSpecificationUpdate,
+  type AdminEntityTypeSpecificationUpdate,
+  type AdminLocationFieldSpecificationUpdate,
+  type AdminNumberFieldSpecificationUpdate,
+  type AdminRichTextFieldSpecificationUpdate,
+  type AdminSchemaSpecificationUpdate,
+  type AdminStringFieldSpecificationUpdate,
+  type AdminValueItemFieldSpecificationUpdate,
 } from '@dossierhq/core';
-import { FieldType, RichTextNodeType } from '@dossierhq/core';
 
 export const SCHEMA = {
   entityTypes: [
@@ -126,7 +133,7 @@ export const SCHEMA = {
       nameField: 'title',
       fields: [
         { name: 'title', type: FieldType.String },
-        { name: 'normal', type: FieldType.String },
+        { name: 'normal', type: FieldType.String, multiline: false },
         { name: 'required', type: FieldType.String, required: true },
         { name: 'multiline', type: FieldType.String, multiline: true },
         { name: 'index', type: FieldType.String, index: 'slug' },
@@ -211,9 +218,58 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
   ...SCHEMA,
   entityTypes: SCHEMA.entityTypes.map((entityType) => {
     switch (entityType.name) {
+      case 'BooleansEntity':
+        return copyEntityType(entityType, (entityType) => {
+          booleanFieldSpec(entityType, 'required').required = false;
+        });
+      case 'EntitiesEntity':
+        return copyEntityType(entityType, (entityType) => {
+          entityFieldSpec(entityType, 'required').required = false;
+          entityFieldSpec(entityType, 'stringsEntity').entityTypes = [];
+          entityFieldSpec(entityType, 'stringsEntityList').entityTypes = [];
+          entityFieldSpec(entityType, 'stringsAndLocationsEntity').entityTypes = [];
+          entityFieldSpec(entityType, 'stringsAndLocationsEntityList').entityTypes = [];
+        });
+      case 'LocationsEntity':
+        return copyEntityType(entityType, (entityType) => {
+          locationFieldSpec(entityType, 'required').required = false;
+          locationFieldSpec(entityType, 'requiredList').required = false;
+        });
+      case 'NumbersEntity':
+        return copyEntityType(entityType, (entityType) => {
+          numberFieldSpec(entityType, 'required').required = false;
+          numberFieldSpec(entityType, 'integer').integer = false;
+          numberFieldSpec(entityType, 'requiredList').required = false;
+          numberFieldSpec(entityType, 'requiredIntegerList').required = false;
+          numberFieldSpec(entityType, 'requiredIntegerList').integer = false;
+        });
+      case 'RichTextsEntity':
+        return copyEntityType(entityType, (entityType) => {
+          richTextFieldSpec(entityType, 'required').required = false;
+          richTextFieldSpec(entityType, 'minimal').richTextNodes = [];
+          richTextFieldSpec(entityType, 'stringsEntity').richTextNodes = [];
+          richTextFieldSpec(entityType, 'stringsEntity').entityTypes = [];
+          richTextFieldSpec(entityType, 'numbersEntityLink').richTextNodes = [];
+          richTextFieldSpec(entityType, 'numbersEntityLink').linkEntityTypes = [];
+          richTextFieldSpec(entityType, 'nestedValueItem').richTextNodes = [];
+          richTextFieldSpec(entityType, 'nestedValueItem').valueTypes = [];
+        });
       case 'StringsEntity':
         return copyEntityType(entityType, (entityType) => {
+          stringFieldSpec(entityType, 'required').required = false;
+          stringFieldSpec(entityType, 'normal').multiline = true;
           stringFieldSpec(entityType, 'matchPattern').matchPattern = null;
+          stringFieldSpec(entityType, 'values').values = [];
+          stringFieldSpec(entityType, 'valuesList').values = [];
+          stringFieldSpec(entityType, 'requiredList').required = false;
+          stringFieldSpec(entityType, 'requiredListMatchPattern').required = false;
+          stringFieldSpec(entityType, 'requiredListMatchPattern').matchPattern = null;
+        });
+      case 'ValueItemsEntity':
+        return copyEntityType(entityType, (entityType) => {
+          valueItemFieldSpec(entityType, 'required').required = false;
+          valueItemFieldSpec(entityType, 'requiredList').required = false;
+          valueItemFieldSpec(entityType, 'cloudinaryImage').valueTypes = [];
         });
       default:
         return entityType;
@@ -233,7 +289,62 @@ function copyEntityType(
 function fieldSpec(entityType: AdminEntityTypeSpecificationUpdate, name: string) {
   const field = entityType.fields.find((field) => field.name === name);
   if (!field) {
-    throw new Error(`Field ${name} not found`);
+    throw new Error(`Field ${entityType.name}.${name} not found`);
+  }
+  return field;
+}
+
+function booleanFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminBooleanFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.Boolean) {
+    throw new Error(`Field ${entityType.name}.${name} is not boolean (${field.type})`);
+  }
+  return field;
+}
+
+function entityFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminEntityFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.Entity) {
+    throw new Error(`Field ${entityType.name}.${name} is not entity (${field.type})`);
+  }
+  return field;
+}
+
+function locationFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminLocationFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.Location) {
+    throw new Error(`Field ${entityType.name}.${name} is not location (${field.type})`);
+  }
+  return field;
+}
+
+function numberFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminNumberFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.Number) {
+    throw new Error(`Field ${entityType.name}.${name} is not number (${field.type})`);
+  }
+  return field;
+}
+
+function richTextFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminRichTextFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.RichText) {
+    throw new Error(`Field ${entityType.name}.${name} is not rich text (${field.type})`);
   }
   return field;
 }
@@ -244,7 +355,18 @@ function stringFieldSpec(
 ): AdminStringFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.String) {
-    throw new Error(`Field ${name} is not a string`);
+    throw new Error(`Field ${entityType.name}.${name} is not string (${field.type})`);
+  }
+  return field;
+}
+
+function valueItemFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string
+): AdminValueItemFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.ValueItem) {
+    throw new Error(`Field ${entityType.name}.${name} is not value item (${field.type})`);
   }
   return field;
 }

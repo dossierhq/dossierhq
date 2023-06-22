@@ -15,6 +15,8 @@ export async function managementDirtyMarkEntities(
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let count = 0;
 
+  //TODO support marking for indexing
+
   if (entityTypes.length > 0) {
     const { sql, query } = createPostgresSqlQuery();
 
