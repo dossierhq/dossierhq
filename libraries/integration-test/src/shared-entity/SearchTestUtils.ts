@@ -1,24 +1,20 @@
 import type {
-  AdminClient,
-  AdminEntity,
   AdminSearchQuery,
   Connection,
   Edge,
   ErrorType,
   OkResult,
   PromiseResult,
-  PublishedClient,
-  PublishedEntity,
   PublishedSearchQuery,
   Result,
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminQueryOrder,
+  PublishedQueryOrder,
   assertIsDefined,
   getAllPagesForConnection,
   ok,
-  PublishedQueryOrder,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -27,14 +23,21 @@ import {
   assertSame,
   assertTruthy,
 } from '../Asserts.js';
+import type {
+  AppAdminClient,
+  AppAdminEntity,
+  AppPublishedClient,
+  AppPublishedEntity,
+} from '../SchemaTypes.js';
 
-const adminOrderCompare: Record<AdminQueryOrder, (a: AdminEntity, b: AdminEntity) => number> = {
-  [AdminQueryOrder.createdAt]: (a, b) => a.info.createdAt.getTime() - b.info.createdAt.getTime(),
-  [AdminQueryOrder.updatedAt]: (a, b) => a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
-  [AdminQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
-};
+const adminOrderCompare: Record<AdminQueryOrder, (a: AppAdminEntity, b: AppAdminEntity) => number> =
+  {
+    [AdminQueryOrder.createdAt]: (a, b) => a.info.createdAt.getTime() - b.info.createdAt.getTime(),
+    [AdminQueryOrder.updatedAt]: (a, b) => a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
+    [AdminQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
+  };
 
-const adminOrderExtract: Record<AdminQueryOrder, (it: AdminEntity) => unknown> = {
+const adminOrderExtract: Record<AdminQueryOrder, (it: AppAdminEntity) => unknown> = {
   [AdminQueryOrder.createdAt]: (it) => it.info.createdAt,
   [AdminQueryOrder.updatedAt]: (it) => it.info.updatedAt,
   [AdminQueryOrder.name]: (it) => it.info.name,
@@ -42,7 +45,7 @@ const adminOrderExtract: Record<AdminQueryOrder, (it: AdminEntity) => unknown> =
 
 const publishedOrderCompare: Record<
   PublishedQueryOrder,
-  (a: PublishedEntity, b: PublishedEntity) => number
+  (a: AppPublishedEntity, b: AppPublishedEntity) => number
 > = {
   [PublishedQueryOrder.createdAt]: (a, b) =>
     a.info.createdAt.getTime() - b.info.createdAt.getTime(),
@@ -50,8 +53,8 @@ const publishedOrderCompare: Record<
 };
 
 export function assertAdminEntityConnectionToMatchSlice(
-  allEntities: AdminEntity[],
-  connectionResult: Result<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType>,
+  allEntities: AppAdminEntity[],
+  connectionResult: Result<Connection<Edge<AppAdminEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
   order?: AdminQueryOrder,
@@ -76,8 +79,8 @@ export function assertAdminEntityConnectionToMatchSlice(
 }
 
 export function assertPublishedEntityConnectionToMatchSlice(
-  allEntities: PublishedEntity[],
-  connectionResult: Result<Connection<Edge<PublishedEntity, ErrorType>> | null, ErrorType>,
+  allEntities: AppPublishedEntity[],
+  connectionResult: Result<Connection<Edge<AppPublishedEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
   order?: PublishedQueryOrder,
@@ -99,7 +102,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   assertEquals(actualIds, expectedIds);
 }
 
-export function assertSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(
+export function assertSearchResultEntities<TItem extends AppAdminEntity | AppPublishedEntity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -121,8 +124,8 @@ export function assertSearchResultEntities<TItem extends AdminEntity | Published
   }
 }
 
-export function assertPageInfoEquals(
-  connectionResult: Result<Connection<Edge<PublishedEntity, ErrorType>> | null, ErrorType>,
+export function assertPageInfoEquals<TEntity extends AppAdminEntity | AppPublishedEntity>(
+  connectionResult: Result<Connection<Edge<TEntity, ErrorType>> | null, ErrorType>,
   { hasNextPage, hasPreviousPage }: { hasNextPage: boolean; hasPreviousPage: boolean }
 ) {
   assertOkResult(connectionResult);
@@ -138,7 +141,7 @@ export function assertPageInfoEquals(
 }
 
 export async function countSearchResultWithEntity(
-  client: AdminClient,
+  client: AppAdminClient,
   query: AdminSearchQuery,
   entityId: string
 ): PromiseResult<
@@ -146,7 +149,7 @@ export async function countSearchResultWithEntity(
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 >;
 export async function countSearchResultWithEntity(
-  client: PublishedClient,
+  client: AppPublishedClient,
   query: PublishedSearchQuery,
   entityId: string
 ): PromiseResult<
@@ -154,7 +157,7 @@ export async function countSearchResultWithEntity(
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 >;
 export async function countSearchResultWithEntity(
-  client: AdminClient | PublishedClient,
+  client: AppAdminClient | AppPublishedClient,
   query: AdminSearchQuery | PublishedSearchQuery,
   entityId: string
 ): PromiseResult<
@@ -163,13 +166,14 @@ export async function countSearchResultWithEntity(
 > {
   let matchCount = 0;
 
-  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
+  for await (const pageResult of getAllPagesForConnection<
+    Edge<AppAdminEntity | AppPublishedEntity, ErrorType>,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+  >({ first: 50 }, (currentPaging) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client.searchEntities(query as any, currentPaging)
   )) {
-    if (pageResult.isError()) {
-      return pageResult;
-    }
+    if (pageResult.isError()) return pageResult;
     for (const edge of pageResult.value.edges) {
       if (edge.node.isOk() && edge.node.value.id === entityId) {
         matchCount += 1;
@@ -181,8 +185,8 @@ export async function countSearchResultWithEntity(
 }
 
 export async function countSearchResultStatuses(
-  client: AdminClient,
-  query: AdminSearchQuery
+  client: AppAdminClient,
+  query: Parameters<AppAdminClient['searchEntities']>[0]
 ): PromiseResult<
   Record<AdminEntityStatus | 'valid' | 'invalid', number>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

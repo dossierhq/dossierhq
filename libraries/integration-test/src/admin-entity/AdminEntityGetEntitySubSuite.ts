@@ -7,7 +7,7 @@ import {
   assertSame,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminTitleOnly } from '../SchemaTypes.js';
+import type { AdminTitleOnly, AppAdminUniqueIndexes } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
@@ -122,7 +122,10 @@ async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext)
 
 async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const result = await client.getEntity({ index: 'unknown-index', value: 'unknown-value' });
+  const result = await client.getEntity({
+    index: 'unknown-index' as AppAdminUniqueIndexes,
+    value: 'unknown-value',
+  });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 

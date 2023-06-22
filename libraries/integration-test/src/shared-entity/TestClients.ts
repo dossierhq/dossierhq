@@ -1,5 +1,6 @@
-import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
+import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import type { Server, SessionContext } from '@dossierhq/server';
+import type { AppAdminClient, AppPublishedClient } from '../SchemaTypes.js';
 
 const mainPrincipal = {
   provider: 'test',
@@ -25,7 +26,7 @@ export async function sessionForMainPrincipal(
   return result.map((it) => it.context);
 }
 
-export function adminClientForMainPrincipal(server: Server): AdminClient {
+export function adminClientForMainPrincipal(server: Server): AppAdminClient {
   const sessionResult = server.createSession({
     ...mainPrincipal,
     logger: null,
@@ -34,7 +35,7 @@ export function adminClientForMainPrincipal(server: Server): AdminClient {
   return server.createAdminClient(() => sessionResult);
 }
 
-export function adminClientForSecondaryPrincipal(server: Server): AdminClient {
+export function adminClientForSecondaryPrincipal(server: Server): AppAdminClient {
   const sessionResult = server.createSession({
     ...secondaryPrincipal,
     logger: null,
@@ -43,7 +44,7 @@ export function adminClientForSecondaryPrincipal(server: Server): AdminClient {
   return server.createAdminClient(() => sessionResult);
 }
 
-export function publishedClientForMainPrincipal(server: Server): PublishedClient {
+export function publishedClientForMainPrincipal(server: Server): AppPublishedClient {
   const sessionResult = server.createSession({
     ...mainPrincipal,
     logger: null,
@@ -52,7 +53,7 @@ export function publishedClientForMainPrincipal(server: Server): PublishedClient
   return server.createPublishedClient(() => sessionResult);
 }
 
-export function publishedClientForSecondaryPrincipal(server: Server): PublishedClient {
+export function publishedClientForSecondaryPrincipal(server: Server): AppPublishedClient {
   const sessionResult = server.createSession({
     ...secondaryPrincipal,
     logger: null,

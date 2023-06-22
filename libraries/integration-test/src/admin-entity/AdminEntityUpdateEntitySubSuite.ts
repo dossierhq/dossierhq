@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity, ErrorType, type AdminEntityUpdate } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
@@ -7,6 +7,7 @@ import {
   assertIsAdminValueItems,
   type AdminChangeValidations,
   type AdminReferences,
+  type AdminTitleOnly,
   type AdminValueItems,
 } from '../SchemaTypes.js';
 import {
@@ -88,7 +89,7 @@ async function updateEntity_minimal({ server }: AdminEntityTestContext) {
 
 async function updateEntity_noChange({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -300,7 +301,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
 
 async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -335,7 +336,9 @@ async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntit
 
 async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
+    publish: true,
+  });
   assertOkResult(createResult);
   const {
     entity: {
@@ -676,7 +679,10 @@ async function updateEntity_errorInvalidField({ server }: AdminEntityTestContext
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await client.updateEntity({ id, fields: { invalid: 'hello' } });
+  const updateResult = await client.updateEntity({
+    id,
+    fields: { invalid: 'hello' },
+  } as AdminEntityUpdate<AdminTitleOnly>);
   assertErrorResult(updateResult, ErrorType.BadRequest, 'Unsupported field names: invalid');
 
   const getResult = await client.getEntity({ id });

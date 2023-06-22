@@ -8,8 +8,9 @@ import type {
 } from '@dossierhq/core';
 import { AdminEntityStatus } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
+import type { AppAdminEntity, AppPublishedEntity } from '../SchemaTypes.js';
 
-export function countEntityStatuses(entities: AdminEntity[]): Record<AdminEntityStatus, number> {
+export function countEntityStatuses(entities: AppAdminEntity[]): Record<AdminEntityStatus, number> {
   const result = {
     [AdminEntityStatus.draft]: 0,
     [AdminEntityStatus.published]: 0,
@@ -26,9 +27,9 @@ export function countEntityStatuses(entities: AdminEntity[]): Record<AdminEntity
 }
 
 export function assertSampledEntities<
-  TEntity extends AdminEntity | PublishedEntity | EntityReference
+  TEntity extends AppAdminEntity | AppPublishedEntity | EntityReference
 >(
-  actualResult: Result<EntitySamplingPayload<AdminEntity | PublishedEntity>, ErrorType>,
+  actualResult: Result<EntitySamplingPayload<AppAdminEntity | AppPublishedEntity>, ErrorType>,
   expectedSeed: number,
   expectedEntities: TEntity[]
 ) {
@@ -45,7 +46,7 @@ export function assertSampledEntities<
 }
 
 export function assertSampledEntitiesArePartOfExpected<
-  TEntity extends AdminEntity | PublishedEntity
+  TEntity extends AdminEntity<string, object> | PublishedEntity<string, object>
 >(actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>, expectedEntities: TEntity[]) {
   assertOkResult(actualResult);
   assertTruthy(actualResult.value.items.length > 0);

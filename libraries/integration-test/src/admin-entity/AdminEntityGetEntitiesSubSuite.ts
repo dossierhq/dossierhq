@@ -1,7 +1,8 @@
-import type { AdminEntity, ErrorType } from '@dossierhq/core';
+import type { ErrorType } from '@dossierhq/core';
 import { copyEntity, notOk, ok } from '@dossierhq/core';
 import { assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AppAdminEntity } from '../SchemaTypes.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
@@ -32,8 +33,8 @@ async function getEntities_minimal({ server }: AdminEntityTestContext) {
 
   const getResult = await client.getEntities([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
-    ok<AdminEntity, typeof ErrorType.Generic>(create1Result.value.entity),
-    ok<AdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
+    ok<AppAdminEntity, typeof ErrorType.Generic>(create1Result.value.entity),
+    ok<AppAdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
 }
 
@@ -55,7 +56,9 @@ async function getEntities_getLatestVersion({ server }: AdminEntityTestContext) 
 
   const result = await adminClient.getEntities([{ id }]);
   assertOkResult(result);
-  assertResultValue(result, [ok<AdminEntity, typeof ErrorType.Generic>(updateResult.value.entity)]);
+  assertResultValue(result, [
+    ok<AppAdminEntity, typeof ErrorType.Generic>(updateResult.value.entity),
+  ]);
 }
 
 async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEntityTestContext) {
@@ -78,7 +81,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEnt
   const getResult = await adminClientMain.getEntities([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
-    ok<AdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
+    ok<AppAdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
 }
 
@@ -96,6 +99,6 @@ async function getEntities_oneMissingOneExisting({ server }: AdminEntityTestCont
   ]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    ok<AdminEntity, typeof ErrorType.Generic>(createResult.value.entity),
+    ok<AppAdminEntity, typeof ErrorType.Generic>(createResult.value.entity),
   ]);
 }

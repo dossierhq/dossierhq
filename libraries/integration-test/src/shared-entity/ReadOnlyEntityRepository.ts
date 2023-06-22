@@ -1,11 +1,4 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  AdminEntityUpsert,
-  ErrorType,
-  PromiseResult,
-  PublishedEntity,
-} from '@dossierhq/core';
+import type { AdminEntityUpsert, ErrorType, PromiseResult } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   assertExhaustive,
@@ -16,27 +9,33 @@ import {
 import type { Server } from '@dossierhq/server';
 import { v5 as uuidv5 } from 'uuid';
 import { assertOkResult, assertSame } from '../Asserts.js';
+import {
+  assertIsAdminReadOnly,
+  type AdminReadOnly,
+  type AppAdminClient,
+  type PublishedReadOnly,
+} from '../SchemaTypes.js';
 import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from './TestClients.js';
 
 const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
 const ADVISORY_LOCK_NAME = 'integration-test-read-only-entities';
 
-const READONLY_UPSERT: AdminEntityUpsert = {
+const READONLY_UPSERT: AdminEntityUpsert<AdminReadOnly> = {
   id: 'REPLACE',
   info: { type: 'ReadOnly', name: `ReadOnly`, authKey: 'none' },
   fields: { message: 'Hello' },
 };
 
 export class ReadOnlyEntityRepository {
-  private readonly mainEntities: AdminEntity[];
-  private readonly secondaryEntities: AdminEntity[];
-  constructor(main: AdminEntity[], secondary: AdminEntity[]) {
+  private readonly mainEntities: AdminReadOnly[];
+  private readonly secondaryEntities: AdminReadOnly[];
+  constructor(main: AdminReadOnly[], secondary: AdminReadOnly[]) {
     this.mainEntities = main;
     this.secondaryEntities = secondary;
   }
 
-  getMainPrincipalAdminEntities(authKeys?: string[]): AdminEntity[] {
+  getMainPrincipalAdminEntities(authKeys?: string[]): AdminReadOnly[] {
     const checkAuthKeys = authKeys ?? ['none'];
 
     const entities = [
@@ -49,7 +48,7 @@ export class ReadOnlyEntityRepository {
     return entities;
   }
 
-  getMainPrincipalPublishedEntities(authKeys?: string[]): PublishedEntity[] {
+  getMainPrincipalPublishedEntities(authKeys?: string[]): PublishedReadOnly[] {
     const adminEntities = this.getMainPrincipalAdminEntities(authKeys);
     const publishedOnly = adminEntities.filter(
       (it) =>
@@ -57,7 +56,7 @@ export class ReadOnlyEntityRepository {
         it.info.status === AdminEntityStatus.modified
     );
     //TODO invalid since it always return the latest version
-    const publishedEntities: PublishedEntity[] = publishedOnly.map((it) => ({
+    const publishedEntities: PublishedReadOnly[] = publishedOnly.map((it) => ({
       id: it.id,
       info: {
         type: it.info.type,
@@ -66,7 +65,7 @@ export class ReadOnlyEntityRepository {
         valid: it.info.validPublished ?? false,
         createdAt: it.info.createdAt,
       },
-      fields: it.fields,
+      fields: it.fields as PublishedReadOnly['fields'],
     }));
     return publishedEntities;
   }
@@ -131,8 +130,8 @@ async function doCreateReadOnlyEntityRepository(
         }
       }
 
-      const mainEntities: AdminEntity[] = [];
-      const secondaryEntities: AdminEntity[] = [];
+      const mainEntities: AdminReadOnly[] = [];
+      const secondaryEntities: AdminReadOnly[] = [];
 
       for (const { principal, authKey, status, index } of entityConfigs) {
         if (!advisoryLock.active) {
@@ -151,12 +150,12 @@ async function doCreateReadOnlyEntityRepository(
 }
 
 async function createEntity(
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   id: string,
   authKey: string,
   status: AdminEntityStatus
 ): PromiseResult<
-  AdminEntity,
+  AdminReadOnly,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.NotFound
@@ -169,7 +168,8 @@ async function createEntity(
     getResult.value.info.authKey === authKey &&
     getResult.value.info.status === status
   ) {
-    return getResult;
+    assertIsAdminReadOnly(getResult.value);
+    return ok(getResult.value);
   }
 
   // Create/upsert entity
@@ -191,7 +191,7 @@ async function createEntity(
     case AdminEntityStatus.published:
       break;
     case AdminEntityStatus.modified: {
-      const updateResult = await adminClient.updateEntity({
+      const updateResult = await adminClient.updateEntity<AdminReadOnly>({
         id,
         fields: { message: 'Updated message' },
       });

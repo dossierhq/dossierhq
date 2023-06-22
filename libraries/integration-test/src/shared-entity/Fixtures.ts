@@ -1,5 +1,4 @@
 import type {
-  AdminEntity,
   AdminEntityCreate,
   AdminEntityUpsert,
   AdminFieldSpecification,
@@ -18,6 +17,8 @@ import type {
   AdminSubjectOnly,
   AdminTitleOnly,
   AdminValueItems,
+  AppAdminEntity,
+  AppPublishedEntity,
   PublishedTitleOnly,
 } from '../SchemaTypes.js';
 
@@ -226,10 +227,10 @@ export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = 
   fields: {},
 };
 
-export function adminToPublishedEntity<T extends AdminEntity<string, object> = AdminEntity>(
+export function adminToPublishedEntity<T extends AppAdminEntity>(
   schema: AdminSchema,
   entity: T
-): PublishedEntity {
+): AppPublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);
   const {
     id,
@@ -245,7 +246,7 @@ export function adminToPublishedEntity<T extends AdminEntity<string, object> = A
       valid: validPublished ?? false,
       createdAt,
     },
-    fields: fields as Record<string, unknown>,
+    fields: fields as unknown as Record<string, unknown>,
   };
   publishedEntity = deepMapEntity(schema, publishedEntity, {
     mapField: (fieldSpec, value) => {
@@ -253,7 +254,7 @@ export function adminToPublishedEntity<T extends AdminEntity<string, object> = A
       return value;
     },
   });
-  return publishedEntity;
+  return publishedEntity as unknown as AppPublishedEntity;
 }
 
 interface DeepMapMapper {

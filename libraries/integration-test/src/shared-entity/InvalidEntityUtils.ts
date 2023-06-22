@@ -3,7 +3,6 @@ import {
   notOk,
   ok,
   withAdvisoryLock,
-  type AdminClient,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminSchemaSpecificationUpdate,
@@ -17,7 +16,7 @@ import {
   ChangeValidationsWithoutValidationsUpdate,
   IntegrationTestSchema,
 } from '../IntegrationTestSchema.js';
-import type { AdminChangeValidations, AdminValueItems } from '../SchemaTypes.js';
+import type { AdminChangeValidations, AdminValueItems, AppAdminClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 
 interface Options {
@@ -26,7 +25,7 @@ interface Options {
 
 export async function createInvalidEntity(
   server: Server,
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   fields: Partial<AdminChangeValidations['fields']>,
   options?: Options
 ) {
@@ -41,7 +40,7 @@ export async function createInvalidEntity(
 
 export async function createEntityWithInvalidValueItem(
   server: Server,
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   options?: Options
 ) {
   return doCreateInvalidEntity<AdminValueItems>(
@@ -57,7 +56,7 @@ export async function createEntityWithInvalidValueItem(
 
 async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object> = AdminEntity>(
   server: Server,
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   entity: AdminEntityCreate<TEntity>,
   options?: Options
@@ -106,7 +105,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
 
 async function withTemporarySchemaChange(
   server: Server,
-  adminClient: AdminClient,
+  adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   onChangedSchema: () => Promise<void>,
   onProcessed: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void

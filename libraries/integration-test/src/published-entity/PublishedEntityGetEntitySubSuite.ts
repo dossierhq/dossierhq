@@ -15,7 +15,12 @@ import {
   assertSame,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminLocationsValue, AdminTitleOnly } from '../SchemaTypes.js';
+import type {
+  AdminLocationsValue,
+  AdminStringsFields,
+  AdminTitleOnly,
+  AppPublishedUniqueIndexes,
+} from '../SchemaTypes.js';
 import {
   assertIsPublishedLocationsValue,
   assertIsPublishedRichTexts,
@@ -31,13 +36,13 @@ import {
   TITLE_ONLY_PUBLISHED_ENTITY,
   VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
   publishedClientForSecondaryPrincipal,
 } from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
-import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 
 export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
@@ -165,7 +170,7 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
     unique: null,
     uniqueGenericIndex: null,
   });
-  assertEquals(entity.fields.stringAdminOnly, undefined);
+  assertEquals((entity.fields as AdminStringsFields).stringAdminOnly, undefined);
 }
 
 async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: PublishedEntityTestContext) {
@@ -288,7 +293,7 @@ async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) 
 async function getEntity_errorInvalidUniqueIndexValue({ server }: PublishedEntityTestContext) {
   const publishedClient = publishedClientForMainPrincipal(server);
   const result = await publishedClient.getEntity({
-    index: 'unknown-index',
+    index: 'unknown-index' as AppPublishedUniqueIndexes,
     value: 'unknown-value',
   });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');

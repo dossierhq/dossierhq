@@ -1,8 +1,9 @@
-import type { ErrorType, PublishedEntity } from '@dossierhq/core';
+import type { ErrorType } from '@dossierhq/core';
 import { copyEntity, notOk, ok } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { adminToPublishedEntity, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import type { AppPublishedEntity } from '../SchemaTypes.js';
+import { TITLE_ONLY_CREATE, adminToPublishedEntity } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
@@ -74,7 +75,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
   ]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
-    ok<PublishedEntity, typeof ErrorType.Generic>(
+    ok<AppPublishedEntity, typeof ErrorType.Generic>(
       adminToPublishedEntity(adminSchema, create2Result.value.entity)
     ),
   ]);
@@ -98,7 +99,7 @@ async function getEntities_oneMissingOneExisting({
   ]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    ok<PublishedEntity, typeof ErrorType.Generic>(
+    ok<AppPublishedEntity, typeof ErrorType.Generic>(
       adminToPublishedEntity(adminSchema, createResult.value.entity)
     ),
   ]);
