@@ -39,6 +39,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_errorAdminOnlyValueItem,
   publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode,
   publishEntities_errorPublishInvalidEntity,
+  publishEntities_errorPublishAlreadyPublishedInvalidEntity,
 ];
 
 async function publishEntities_minimal({ server }: AdminEntityTestContext) {
@@ -429,5 +430,21 @@ async function publishEntities_errorPublishInvalidEntity({ server }: AdminEntity
     publishResult,
     ErrorType.BadRequest,
     `entity(${entity.id}).fields.matchPattern: Value does not match pattern fooBarBaz`
+  );
+}
+
+async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const { entity } = (
+    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
+  ).valueOrThrow();
+
+  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 0 }]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    `entity(${entity.id}): Already published version is invalid`
   );
 }

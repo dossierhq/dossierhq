@@ -78,12 +78,23 @@ export async function adminPublishEntities(
     );
     if (versionsInfoResult.isError()) return versionsInfoResult;
     const versionsInfo = versionsInfoResult.value;
-
     const publishVersionsInfo = versionsInfo.filter(
       ({ effect }) => effect === 'published'
     ) as VersionInfoToBePublished[];
 
-    // Step 2: Publish entities
+    // Step 2: Ensure that already published versions are valid
+    const invalidAlreadyPublishedVersions = versionsInfo.filter(
+      (it) => it.effect === 'none' && it.validPublished === false
+    );
+    if (invalidAlreadyPublishedVersions.length > 0) {
+      return notOk.BadRequest(
+        `entity(${invalidAlreadyPublishedVersions
+          .map((it) => it.uuid)
+          .join(', ')}): Already published version is invalid`
+      );
+    }
+
+    // Step 3: Publish entities
     const publishEntityResult = await publishEntitiesAndCollectResult(
       databaseAdapter,
       context,
@@ -91,7 +102,7 @@ export async function adminPublishEntities(
     );
     if (publishEntityResult.isError()) return publishEntityResult;
 
-    // Step 3: Check if references are ok
+    // Step 4: Check if references are ok
     const validateReferencedEntitiesResult =
       await validateReferencedEntitiesArePublishedAndCollectInfo(
         databaseAdapter,
@@ -100,7 +111,7 @@ export async function adminPublishEntities(
       );
     if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
 
-    // Step 4: Create publish event
+    // Step 5: Create publish event
     const publishEventResult = await createPublishEvents(
       databaseAdapter,
       context,
@@ -108,7 +119,7 @@ export async function adminPublishEntities(
     );
     if (publishEventResult.isError()) return publishEventResult;
 
-    // Step 5: Update entity indexes
+    // Step 6: Update entity indexes
     for (const versionInfo of publishVersionsInfo) {
       const referenceIds: DatabaseResolvedEntityReference[] | undefined =
         validateReferencedEntitiesResult.value.get(versionInfo.uuid);
@@ -127,7 +138,7 @@ export async function adminPublishEntities(
       if (updateIndexResult.isError()) return updateIndexResult;
     }
 
-    // Step 6: Update unique value indexes
+    // Step 7: Update unique value indexes
     for (const versionInfo of publishVersionsInfo) {
       const updateUniqueValueIndexResult = await updateUniqueIndexesForEntity(
         databaseAdapter,
