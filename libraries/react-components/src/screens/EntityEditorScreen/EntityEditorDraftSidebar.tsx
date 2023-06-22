@@ -50,6 +50,10 @@ export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistor
           <Text textStyle="body2">{entity.id}</Text>
           <Row gap={2}>
             <StatusTag status={entity.info.status} />
+            {!entity.info.valid ? <Tag color="danger">Invalid</Tag> : null}
+            {entity.info.validPublished === false ? (
+              <Tag color="danger">Invalid published</Tag>
+            ) : null}
             <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
           </Row>
           <AdminEntityLinks entityReference={{ id: entity.id }} />
