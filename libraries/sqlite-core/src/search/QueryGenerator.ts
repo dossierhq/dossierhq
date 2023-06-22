@@ -365,6 +365,13 @@ function totalCountQuery(
       sql`entity_latest_references er_from, entities e_from`;
     }
   }
+  if (query?.valueTypes && query.valueTypes.length > 0) {
+    if (published) {
+      sql`entity_published_value_types evt`;
+    } else {
+      sql`entity_latest_value_types evt`;
+    }
+  }
   if (query?.boundingBox) {
     if (published) {
       sql`entity_published_locations el`;
@@ -415,6 +422,13 @@ function addEntityQuerySelectColumn(
       sql`entities e_from, entity_latest_references er_from`;
     }
   }
+  if (query?.valueTypes && query.valueTypes.length > 0) {
+    if (published) {
+      sql`entity_published_value_types evt`;
+    } else {
+      sql`entity_latest_value_types evt`;
+    }
+  }
   if (query?.boundingBox) {
     if (published) {
       sql`entity_published_locations el`;
@@ -461,6 +475,14 @@ function addQueryFilters(
     sql`AND e.type IN ${addValueList(entityTypesResult.value)}`;
   }
 
+  // Filter: valueTypes
+  const valueTypesResult = getFilterValueTypes(schema, query);
+  if (valueTypesResult.isError()) return valueTypesResult;
+
+  if (valueTypesResult.value.length > 0) {
+    sql`AND evt.value_type IN ${addValueList(valueTypesResult.value)} AND evt.entities_id = e.id`;
+  }
+
   // Filter: status
   if (!published && query && 'status' in query) {
     addFilterStatusSqlSegment(query, queryBuilder);
@@ -468,6 +490,7 @@ function addQueryFilters(
 
   // Filter: valid
   if (!published && query && 'valid' in query) {
+    // checks both valid and validPublished
     if (query.valid === true) {
       sql`AND e.invalid = 0`;
     } else if (query.valid === false) {
@@ -520,4 +543,19 @@ function getFilterEntityTypes(
     }
   }
   return ok(query.entityTypes);
+}
+
+function getFilterValueTypes(
+  schema: PublishedSchema | AdminSchema,
+  query: PublishedQuery | AdminQuery | undefined
+): Result<string[], typeof ErrorType.BadRequest> {
+  if (!query?.valueTypes || query.valueTypes.length === 0) {
+    return ok([]);
+  }
+  for (const valueType of query.valueTypes) {
+    if (schema.getValueTypeSpecification(valueType) === null) {
+      return notOk.BadRequest(`Can’t find value type in query: ${valueType}`);
+    }
+  }
+  return ok(query.valueTypes);
 }

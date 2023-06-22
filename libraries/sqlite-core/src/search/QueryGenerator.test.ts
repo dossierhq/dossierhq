@@ -23,6 +23,10 @@ const schema = AdminSchema.createAndValidate({
     { name: 'QueryGeneratorFoo', fields: [] },
     { name: 'QueryGeneratorBar', fields: [] },
   ],
+  valueTypes: [
+    { name: 'QueryGeneratorValueOne', fields: [] },
+    { name: 'QueryGeneratorValueTwo', fields: [] },
+  ],
 }).valueOrThrow();
 
 const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
@@ -427,6 +431,90 @@ describe('searchAdminEntitiesQuery()', () => {
               "QueryGeneratorBar",
               543,
               11,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query no value types, i.e. include all', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valueTypes: [] },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
+      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query one value type', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valueTypes: ['QueryGeneratorValueOne'] },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_value_types evt WHERE e.resolved_auth_key = ?1 AND evt.value_type IN (?2) AND evt.entities_id = e.id ORDER BY e.id LIMIT ?3)
+      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              "QueryGeneratorValueOne",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query two value types', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_value_types evt WHERE e.resolved_auth_key = ?1 AND evt.value_type IN (?2, ?3) AND evt.entities_id = e.id ORDER BY e.id LIMIT ?4)
+      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              "QueryGeneratorValueOne",
+              "QueryGeneratorValueTwo",
+              26,
             ],
           },
         },
@@ -1032,6 +1120,18 @@ describe('searchAdminEntitiesQuery()', () => {
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
+
+  test('Error: invalid value type in query', () => {
+    const databaseAdapter = createMockDatabase();
+    const result = searchAdminEntitiesQuery(
+      databaseAdapter,
+      schema,
+      { valueTypes: ['Invalid'] },
+      resolvePaging(undefined),
+      authKeysNone
+    );
+    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find value type in query: Invalid');
+  });
 });
 
 describe('searchPublishedEntitiesQuery()', () => {
@@ -1443,6 +1543,90 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
+  test('query no value type, i.e. include all', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchPublishedEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valueTypes: [] },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
+      SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query one value type', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchPublishedEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valueTypes: ['QueryGeneratorValueOne'] },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e, entity_published_value_types evt WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND evt.value_type IN (?2) AND evt.entities_id = e.id ORDER BY e.id LIMIT ?3)
+      SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              "QueryGeneratorValueOne",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('query two value types', () => {
+    const databaseAdapter = createMockDatabase();
+    expect(
+      searchPublishedEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
+        resolvePaging(undefined),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "cursorExtractor": [Function],
+          "sqlQuery": {
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e, entity_published_value_types evt WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND evt.value_type IN (?2, ?3) AND evt.entities_id = e.id ORDER BY e.id LIMIT ?4)
+      SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
+            "values": [
+              "none",
+              "QueryGeneratorValueOne",
+              "QueryGeneratorValueTwo",
+              26,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
   test('query linksFrom', () => {
     const databaseAdapter = createMockDatabase();
     expect(
@@ -1695,6 +1879,18 @@ describe('searchPublishedEntitiesQuery()', () => {
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
+
+  test('Error: invalid value type in query', () => {
+    const databaseAdapter = createMockDatabase();
+    const result = searchPublishedEntitiesQuery(
+      databaseAdapter,
+      schema,
+      { valueTypes: ['Invalid'] },
+      resolvePaging(undefined),
+      authKeysNone
+    );
+    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find value type in query: Invalid');
+  });
 });
 
 describe('sampleAdminEntitiesQuery()', () => {
@@ -1732,6 +1928,31 @@ describe('sampleAdminEntitiesQuery()', () => {
       }
     `);
   });
+
+  test('valueTypes', () => {
+    expect(
+      sampleAdminEntitiesQuery(
+        schema,
+        { valueTypes: ['QueryGeneratorValueOne'] },
+        5,
+        10,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_value_types evt WHERE e.resolved_auth_key = ?1 AND evt.value_type IN (?2) AND evt.entities_id = e.id ORDER BY e.uuid LIMIT ?3 OFFSET ?4)
+      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+          "values": [
+            "none",
+            "QueryGeneratorValueOne",
+            10,
+            5,
+          ],
+        },
+      }
+    `);
+  });
 });
 
 describe('samplePublishedEntitiesQuery()', () => {
@@ -1752,7 +1973,7 @@ describe('samplePublishedEntitiesQuery()', () => {
       `);
   });
 
-  test('entityType', () => {
+  test('entityTypes', () => {
     expect(
       samplePublishedEntitiesQuery(
         schema,
@@ -1769,6 +1990,31 @@ describe('samplePublishedEntitiesQuery()', () => {
           "values": [
             "none",
             "QueryGeneratorFoo",
+            10,
+            5,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('valueTypes', () => {
+    expect(
+      samplePublishedEntitiesQuery(
+        schema,
+        { valueTypes: ['QueryGeneratorValueOne'] },
+        5,
+        10,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e, entity_published_value_types evt WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND evt.value_type IN (?2) AND evt.entities_id = e.id ORDER BY e.uuid LIMIT ?3 OFFSET ?4)
+      SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
+          "values": [
+            "none",
+            "QueryGeneratorValueOne",
             10,
             5,
           ],
@@ -1834,6 +2080,55 @@ describe('totalAdminEntitiesQuery()', () => {
             "none",
             "QueryGeneratorFoo",
             "QueryGeneratorBar",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('no value types => all', () => {
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { valueTypes: [] }))
+      .toMatchInlineSnapshot(`
+        OkResult {
+          "value": {
+            "text": "SELECT COUNT(e.id) AS count FROM entities e WHERE e.resolved_auth_key = ?1",
+            "values": [
+              "none",
+            ],
+          },
+        }
+      `);
+  });
+
+  test('one value type', () => {
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_value_types evt WHERE e.resolved_auth_key = ?1 AND evt.value_type IN (?2) AND evt.entities_id = e.id",
+          "values": [
+            "none",
+            "QueryGeneratorValueOne",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('two value types', () => {
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, {
+        valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_value_types evt WHERE e.resolved_auth_key = ?1 AND evt.value_type IN (?2, ?3) AND evt.entities_id = e.id",
+          "values": [
+            "none",
+            "QueryGeneratorValueOne",
+            "QueryGeneratorValueTwo",
           ],
         },
       }
@@ -2113,6 +2408,55 @@ describe('totalPublishedEntitiesQuery()', () => {
             "none",
             "QueryGeneratorFoo",
             "QueryGeneratorBar",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('no value types => all', () => {
+    expect(totalPublishedEntitiesQuery(schema, authKeysNone, { valueTypes: [] }))
+      .toMatchInlineSnapshot(`
+        OkResult {
+          "value": {
+            "text": "SELECT COUNT(e.id) AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1",
+            "values": [
+              "none",
+            ],
+          },
+        }
+      `);
+  });
+
+  test('one value type', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_published_value_types evt WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND evt.value_type IN (?2) AND evt.entities_id = e.id",
+          "values": [
+            "none",
+            "QueryGeneratorValueOne",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('two value types', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
+        valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_published_value_types evt WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND evt.value_type IN (?2, ?3) AND evt.entities_id = e.id",
+          "values": [
+            "none",
+            "QueryGeneratorValueOne",
+            "QueryGeneratorValueTwo",
           ],
         },
       }

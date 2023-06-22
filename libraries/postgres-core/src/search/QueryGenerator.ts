@@ -353,6 +353,13 @@ function totalCountQuery(
     if (published) sql`entity_published_references er_from, entities e_from`;
     else sql`entity_latest_references er_from, entities e_from`;
   }
+  if (query?.valueTypes && query.valueTypes.length > 0) {
+    if (published) {
+      sql`entity_published_value_types evt`;
+    } else {
+      sql`entity_latest_value_types evt`;
+    }
+  }
   if (query?.boundingBox) {
     if (published) sql`entity_published_locations el`;
     else sql`entity_latest_locations el`;
@@ -388,6 +395,10 @@ function addEntityQuerySelectColumn(
   if (query?.linksFrom) {
     if (published) sql`entities e_from, entity_published_references er_from`;
     else sql`entities e_from, entity_latest_references er_from`;
+  }
+  if (query?.valueTypes && query.valueTypes.length > 0) {
+    if (published) sql`entity_published_value_types evt`;
+    else sql`entity_latest_value_types evt`;
   }
   if (query?.boundingBox) {
     if (published) sql`entity_published_locations el`;
@@ -428,6 +439,14 @@ function addQueryFilters(
   if (entityTypesResult.isError()) return entityTypesResult;
   if (entityTypesResult.value.length > 0) {
     sql`AND e.type = ANY(${entityTypesResult.value})`;
+  }
+
+  // Filter: valueTypes
+  const valueTypesResult = getFilterValueTypes(schema, query);
+  if (valueTypesResult.isError()) return valueTypesResult;
+
+  if (valueTypesResult.value.length > 0) {
+    sql`AND evt.value_type = ANY(${valueTypesResult.value}) AND evt.entities_id = e.id`;
   }
 
   // Filter: status
@@ -486,4 +505,19 @@ function getFilterEntityTypes(
     }
   }
   return ok(query.entityTypes);
+}
+
+function getFilterValueTypes(
+  schema: PublishedSchema | AdminSchema,
+  query: PublishedQuery | AdminQuery | undefined
+): Result<string[], typeof ErrorType.BadRequest> {
+  if (!query?.valueTypes || query.valueTypes.length === 0) {
+    return ok([]);
+  }
+  for (const valueType of query.valueTypes) {
+    if (schema.getValueTypeSpecification(valueType) === null) {
+      return notOk.BadRequest(`Can’t find value type in query: ${valueType}`);
+    }
+  }
+  return ok(query.valueTypes);
 }
