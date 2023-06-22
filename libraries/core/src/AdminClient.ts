@@ -1,5 +1,12 @@
-import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from './ErrorResult.js';
-import { ErrorType, notOk, ok } from './ErrorResult.js';
+import {
+  ErrorType,
+  notOk,
+  ok,
+  type ErrorFromResult,
+  type OkFromResult,
+  type PromiseResult,
+  type Result,
+} from './ErrorResult.js';
 import type {
   JsonAdminEntity,
   JsonAdminEntityCreatePayload,
@@ -62,15 +69,18 @@ import type {
   Paging,
   PublishingHistory,
   UniqueIndexReference,
+  ValueItem,
 } from './Types.js';
 
 export interface AdminClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
+  TAdminValueItem extends ValueItem<string, object> = ValueItem,
   TUniqueIndex extends string = string,
-  TExceptionClient extends AdminExceptionClient<TAdminEntity, TUniqueIndex> = AdminExceptionClient<
+  TExceptionClient extends AdminExceptionClient<
     TAdminEntity,
+    TAdminValueItem,
     TUniqueIndex
-  >
+  > = AdminExceptionClient<TAdminEntity, TAdminValueItem, TUniqueIndex>
 > {
   getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
@@ -105,7 +115,11 @@ export interface AdminClient<
   >;
 
   sampleEntities(
-    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
+    query?: AdminQuery<
+      TAdminEntity['info']['type'],
+      TAdminValueItem['type'],
+      TAdminEntity['info']['authKey']
+    >,
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<TAdminEntity>,
@@ -113,7 +127,11 @@ export interface AdminClient<
   >;
 
   searchEntities(
-    query?: AdminSearchQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
+    query?: AdminSearchQuery<
+      TAdminEntity['info']['type'],
+      TAdminValueItem['type'],
+      TAdminEntity['info']['authKey']
+    >,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<TAdminEntity, ErrorType>> | null,
@@ -121,7 +139,11 @@ export interface AdminClient<
   >;
 
   getTotalCount(
-    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>
+    query?: AdminQuery<
+      TAdminEntity['info']['type'],
+      TAdminValueItem['type'],
+      TAdminEntity['info']['authKey']
+    >
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -243,9 +265,10 @@ export interface AdminClient<
 
 export interface AdminExceptionClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
+  TAdminValueItem extends ValueItem<string, object> = ValueItem,
   TUniqueIndex extends string = string
 > {
-  client: Readonly<AdminClient<TAdminEntity, TUniqueIndex>>;
+  client: Readonly<AdminClient<TAdminEntity, TAdminValueItem, TUniqueIndex>>;
 
   getSchemaSpecification(): Promise<AdminSchemaSpecification>;
 
@@ -270,17 +293,29 @@ export interface AdminExceptionClient<
   >;
 
   sampleEntities(
-    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
+    query?: AdminQuery<
+      TAdminEntity['info']['type'],
+      TAdminValueItem['type'],
+      TAdminEntity['info']['authKey']
+    >,
     options?: EntitySamplingOptions
   ): Promise<EntitySamplingPayload<TAdminEntity>>;
 
   searchEntities(
-    query?: AdminSearchQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>,
+    query?: AdminSearchQuery<
+      TAdminEntity['info']['type'],
+      TAdminValueItem['type'],
+      TAdminEntity['info']['authKey']
+    >,
     paging?: Paging
   ): Promise<Connection<Edge<TAdminEntity, ErrorType>> | null>;
 
   getTotalCount(
-    query?: AdminQuery<TAdminEntity['info']['type'], TAdminEntity['info']['authKey']>
+    query?: AdminQuery<
+      TAdminEntity['info']['type'],
+      TAdminValueItem['type'],
+      TAdminEntity['info']['authKey']
+    >
   ): Promise<number>;
 
   createEntity<T extends AdminEntity<string, object> = TAdminEntity>(

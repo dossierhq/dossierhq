@@ -3,9 +3,9 @@
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -35,9 +35,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, EntityReference } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -67,9 +67,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -96,9 +96,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > Locations 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, Location } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -128,9 +128,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > Numbers 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -162,9 +162,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, RichText } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -194,9 +194,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > Strings 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -228,9 +228,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > Unique index 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'slug';
 
@@ -259,9 +259,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema > ValueItem (no fields) 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, ValueItem } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -304,9 +304,9 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > ValueTypes 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, ValueItem } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -372,9 +372,9 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > empty 1`] = `
 "import type { AdminClient, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -387,9 +387,9 @@ export type AppAdminValueItem = never;
 exports[`generateTypescriptForSchema published > Unique index 1`] = `
 "import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = 'slug';
 
@@ -418,9 +418,9 @@ export type AppPublishedValueItem = never;
 exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `
 "import type { PublishedClient, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -433,9 +433,9 @@ export type AppPublishedValueItem = never;
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
 "import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -462,9 +462,9 @@ export type AppPublishedValueItem = never;
 exports[`generateTypescriptForSchema published > empty 1`] = `
 "import type { PublishedClient, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -477,9 +477,9 @@ export type AppPublishedValueItem = never;
 exports[`generateTypescriptForSchema published > required fields 1`] = `
 "import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 

@@ -284,9 +284,14 @@ export const AdminQueryOrder = {
 } as const;
 export type AdminQueryOrder = keyof typeof AdminQueryOrder;
 
-export interface AdminQuery<TEntityType extends string = string, TAuthKey extends string = string> {
+export interface AdminQuery<
+  TEntityType extends string = string,
+  TValueType extends string = string,
+  TAuthKey extends string = string
+> {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
+  valueTypes?: TValueType[];
   status?: AdminEntityStatus[];
   valid?: boolean;
   linksTo?: EntityReference;
@@ -297,8 +302,9 @@ export interface AdminQuery<TEntityType extends string = string, TAuthKey extend
 
 export interface AdminSearchQuery<
   TEntityType extends string = string,
+  TValueType extends string = string,
   TAuthKey extends string = string
-> extends AdminQuery<TEntityType, TAuthKey> {
+> extends AdminQuery<TEntityType, TValueType, TAuthKey> {
   order?: AdminQueryOrder;
   reverse?: boolean;
 }
@@ -311,18 +317,23 @@ export type PublishedQueryOrder = (typeof PublishedQueryOrder)[keyof typeof Publ
 
 export interface PublishedQuery<
   TEntityType extends string = string,
+  TValueType extends string = string,
   TAuthKey extends string = string
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
+  valueTypes?: TValueType[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
   boundingBox?: BoundingBox;
   text?: string;
 }
 
-export interface PublishedSearchQuery<TEntityType extends string = string>
-  extends PublishedQuery<TEntityType> {
+export interface PublishedSearchQuery<
+  TEntityType extends string = string,
+  TValueType extends string = string,
+  TAuthKey extends string = string
+> extends PublishedQuery<TEntityType, TValueType, TAuthKey> {
   order?: PublishedQueryOrder;
   reverse?: boolean;
 }

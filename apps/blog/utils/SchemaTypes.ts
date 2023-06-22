@@ -12,11 +12,16 @@ import type {
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
+  AppAdminValueItem,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<
+  AppAdminEntity,
+  AppAdminValueItem,
+  AppAdminUniqueIndexes
+>;
 
 export type AppAdminUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
@@ -200,12 +205,14 @@ export function assertIsAdminTocItem(
 
 export type AppPublishedClient = PublishedClient<
   AppPublishedEntity,
+  AppPublishedValueItem,
   AppPublishedUniqueIndexes,
   AppPublishedExceptionClient
 >;
 
 export type AppPublishedExceptionClient = PublishedExceptionClient<
   AppPublishedEntity,
+  AppPublishedValueItem,
   AppPublishedUniqueIndexes
 >;
 

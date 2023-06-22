@@ -27,15 +27,18 @@ import type {
   PublishedQuery,
   PublishedSearchQuery,
   UniqueIndexReference,
+  ValueItem,
 } from './Types.js';
 
 export interface PublishedClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
+  TPublishedValueItem extends ValueItem<string, object> = ValueItem,
   TUniqueIndex extends string = string,
   TExceptionClient extends PublishedExceptionClient<
     TPublishedEntity,
+    TPublishedValueItem,
     TUniqueIndex
-  > = PublishedExceptionClient<TPublishedEntity, TUniqueIndex>
+  > = PublishedExceptionClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
@@ -63,7 +66,11 @@ export interface PublishedClient<
   >;
 
   sampleEntities(
-    query?: PublishedQuery<TPublishedEntity['info']['type']>,
+    query?: PublishedQuery<
+      TPublishedEntity['info']['type'],
+      TPublishedValueItem['type'],
+      TPublishedEntity['info']['authKey']
+    >,
     options?: EntitySamplingOptions
   ): PromiseResult<
     EntitySamplingPayload<TPublishedEntity>,
@@ -71,7 +78,11 @@ export interface PublishedClient<
   >;
 
   searchEntities(
-    query?: PublishedSearchQuery<TPublishedEntity['info']['type']>,
+    query?: PublishedSearchQuery<
+      TPublishedEntity['info']['type'],
+      TPublishedValueItem['type'],
+      TPublishedEntity['info']['authKey']
+    >,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<TPublishedEntity, ErrorType>> | null,
@@ -79,7 +90,11 @@ export interface PublishedClient<
   >;
 
   getTotalCount(
-    query?: PublishedQuery<TPublishedEntity['info']['type']>
+    query?: PublishedQuery<
+      TPublishedEntity['info']['type'],
+      TPublishedValueItem['type'],
+      TPublishedEntity['info']['authKey']
+    >
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -90,9 +105,10 @@ export interface PublishedClient<
 
 export interface PublishedExceptionClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
+  TPublishedValueItem extends ValueItem<string, object> = ValueItem,
   TUniqueIndex extends string = string
 > {
-  client: Readonly<PublishedClient<TPublishedEntity, TUniqueIndex>>;
+  client: Readonly<PublishedClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>>;
 
   getSchemaSpecification(): Promise<PublishedSchemaSpecification>;
 
@@ -113,16 +129,30 @@ export interface PublishedExceptionClient<
   >;
 
   sampleEntities(
-    query?: PublishedQuery<TPublishedEntity['info']['type']>,
+    query?: PublishedQuery<
+      TPublishedEntity['info']['type'],
+      TPublishedValueItem['type'],
+      TPublishedEntity['info']['authKey']
+    >,
     options?: EntitySamplingOptions
   ): Promise<EntitySamplingPayload<TPublishedEntity>>;
 
   searchEntities(
-    query?: PublishedSearchQuery<TPublishedEntity['info']['type']>,
+    query?: PublishedSearchQuery<
+      TPublishedEntity['info']['type'],
+      TPublishedValueItem['type'],
+      TPublishedEntity['info']['authKey']
+    >,
     paging?: Paging
   ): Promise<Connection<Edge<TPublishedEntity, ErrorType>> | null>;
 
-  getTotalCount(query?: PublishedQuery<TPublishedEntity['info']['type']>): Promise<number>;
+  getTotalCount(
+    query?: PublishedQuery<
+      TPublishedEntity['info']['type'],
+      TPublishedValueItem['type'],
+      TPublishedEntity['info']['authKey']
+    >
+  ): Promise<number>;
 }
 
 export const PublishedClientOperationName = {

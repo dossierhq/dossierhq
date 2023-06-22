@@ -1,15 +1,15 @@
-import type {
-  AdminEntityTypeSpecification,
-  AdminFieldSpecification,
-  AdminSchema,
-  AdminValueTypeSpecification,
-  PublishedEntityTypeSpecification,
-  PublishedFieldSpecification,
-  PublishedSchema,
-  PublishedValueTypeSpecification,
-  SchemaIndexSpecification,
+import {
+  FieldType,
+  type AdminEntityTypeSpecification,
+  type AdminFieldSpecification,
+  type AdminSchema,
+  type AdminValueTypeSpecification,
+  type PublishedEntityTypeSpecification,
+  type PublishedFieldSpecification,
+  type PublishedSchema,
+  type PublishedValueTypeSpecification,
+  type SchemaIndexSpecification,
 } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
 
 interface GeneratorContext {
   coreImports: Set<string>;
@@ -72,9 +72,9 @@ function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('AdminExceptionClient');
   return [
     '',
-    'export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
+    'export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
     '',
-    'export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminUniqueIndexes>;',
+    'export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;',
   ];
 }
 
@@ -83,9 +83,9 @@ function generatePublishedClientTypes(context: GeneratorContext) {
   context.coreImports.add('PublishedExceptionClient');
   return [
     '',
-    'export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
+    'export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
     '',
-    'export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedUniqueIndexes>;',
+    'export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;',
   ];
 }
 
