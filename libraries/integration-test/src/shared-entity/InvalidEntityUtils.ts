@@ -1,6 +1,7 @@
 import {
   copyEntity,
   notOk,
+  ok,
   withAdvisoryLock,
   type AdminClient,
   type AdminEntity,
@@ -9,7 +10,6 @@ import {
   type ErrorType,
   type PromiseResult,
   type Result,
-  ok,
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import {

@@ -7,7 +7,7 @@ import {
   createRichTextTextNode,
   ErrorType,
 } from '@dossierhq/core';
-import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminAdminOnlyValue } from '../SchemaTypes.js';
 import {
@@ -16,6 +16,7 @@ import {
   TITLE_ONLY_CREATE,
   VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
+import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
@@ -30,12 +31,14 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_publishAlreadyPublishedEntity,
   publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity,
   publishEntities_adminOnlyFieldWithAdminOnlyValueItem,
+  publishEntities_fixInvalidEntityByPublishing,
   publishEntities_errorInvalidId,
   publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
   publishEntities_errorWrongAuthKey,
-  publishEntities_errorAdminOnlyTypeItem,
+  publishEntities_errorAdminOnlyValueItem,
   publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode,
+  publishEntities_errorPublishInvalidEntity,
 ];
 
 async function publishEntities_minimal({ server }: AdminEntityTestContext) {
@@ -259,6 +262,28 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
   assertOkResult(publishResult);
 }
 
+async function publishEntities_fixInvalidEntityByPublishing({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const {
+    entity: { id: entityId },
+  } = (
+    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
+  ).valueOrThrow();
+
+  const entity = (await adminClient.getEntity({ id: entityId })).valueOrThrow();
+  assertSame(entity.info.valid, true);
+  assertSame(entity.info.validPublished, false);
+
+  const { entity: updatedEntity } = (
+    await adminClient.updateEntity({ id: entity.id, fields: { required: 'Required' } })
+  ).valueOrThrow();
+
+  const publishResult = await adminClient.publishEntities([
+    { id: entity.id, version: updatedEntity.info.version },
+  ]);
+  assertOkResult(publishResult);
+}
+
 async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {
   const publishResult = await adminClientForMainPrincipal(server).publishEntities([
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
@@ -325,7 +350,7 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
   );
 }
 
-async function publishEntities_errorAdminOnlyTypeItem({ server }: AdminEntityTestContext) {
+async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
   const createResult = await client.createEntity(
@@ -380,5 +405,29 @@ async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntity
     publishResult,
     ErrorType.BadRequest,
     `${richTextId}: References unpublished entities: ${titleOnlyId}`
+  );
+}
+
+async function publishEntities_errorPublishInvalidEntity({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const { entity } = (
+    await createInvalidEntity(server, adminClient, {
+      required: 'Required',
+      matchPattern: 'no match',
+    })
+  ).valueOrThrow();
+
+  // Even though the entity has been made valid in later version, the old version will still fail to publish
+  const { entity: updatedEntity } = (
+    await adminClient.updateEntity({ id: entity.id, fields: { matchPattern: 'foo' } })
+  ).valueOrThrow();
+  assertSame(updatedEntity.info.valid, true);
+  assertSame(updatedEntity.info.validPublished, null);
+
+  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 0 }]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    `entity(${entity.id}).fields.matchPattern: Value does not match pattern fooBarBaz`
   );
 }
