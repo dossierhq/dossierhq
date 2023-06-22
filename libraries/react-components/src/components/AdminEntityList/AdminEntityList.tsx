@@ -132,7 +132,7 @@ function EntityListRow({
       <Table.Cell>{entity.info.type}</Table.Cell>
       <Table.Cell narrow>
         <StatusTag status={entity.info.status} />
-        {!entity.info.valid ? (
+        {!entity.info.valid || entity.info.validPublished === false ? (
           <>
             {' '}
             <Tag color="danger">Invalid</Tag>
