@@ -436,7 +436,6 @@ function addQueryFilters(
   }
 
   // Filter: valid
-  // TODO support valid filter for published entities
   if (!published && query && 'valid' in query) {
     if (query.valid === true) {
       sql`AND e.invalid = 0`;

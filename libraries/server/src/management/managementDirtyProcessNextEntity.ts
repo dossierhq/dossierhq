@@ -66,8 +66,7 @@ export async function managementDirtyProcessNextEntity(
     // Reuse existing validation results if we won't be validating
     const entityValidity: EntityValidity = {
       validAdmin: entityResult.value.valid,
-      //TODO get from db
-      validPublished: entityIsPublished ? entityResult.value.valid : null,
+      validPublished: entityResult.value.validPublished,
     };
 
     // Unique index values are updated separately, so keep them for later
