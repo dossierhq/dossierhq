@@ -97,7 +97,7 @@ importers:
       react-router-dom: ~6.13.0
       rollup-plugin-visualizer: ~5.9.2
       sql.js: ~1.8.0
-      swr: ~2.1.5
+      swr: ~2.2.0
       ts-node: ~10.9.1
       typescript: ~5.1.3
       vite: ~4.3.9
@@ -119,7 +119,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.13.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
-      swr: 2.1.5_react@18.2.0
+      swr: 2.2.0_react@18.2.0
     devDependencies:
       '@dossierhq/eslint-config-react': link:../../stack/eslint-config-react
       '@graphiql/toolkit': 0.8.4_o35qcicmb5l325f3iva7blyxlm
@@ -964,7 +964,7 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       storybook: ~7.0.20
-      swr: ~2.1.5
+      swr: ~2.2.0
       tslib: ~2.5.3
       typescript: ~5.1.3
       uuid: ~9.0.0
@@ -986,7 +986,7 @@ importers:
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      swr: 2.1.5_react@18.2.0
+      swr: 2.2.0_react@18.2.0
       tslib: 2.5.3
     devDependencies:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
@@ -1355,7 +1355,7 @@ importers:
       sqlite3: 5.1.4
       storybook: ~7.0.20
       svgo: ~3.0.2
-      swr: ~2.1.5
+      swr: ~2.2.0
       ts-node: ~10.9.1
       tslib: ~2.5.3
       typescript: ~5.1.3
@@ -1409,7 +1409,7 @@ importers:
       react-router-dom: 6.13.0_biqbaboplfbrettd7655fr4n2y
       sql.js: 1.8.0
       sqlite3: 5.1.4
-      swr: 2.1.5_react@18.2.0
+      swr: 2.2.0_react@18.2.0
       tslib: 2.5.3
       typescript: 5.1.3
       uuid: 9.0.0
@@ -15341,8 +15341,8 @@ packages:
       picocolors: 1.0.0
     dev: true
 
-  /swr/2.1.5_react@18.2.0:
-    resolution: {integrity: sha512-/OhfZMcEpuz77KavXST5q6XE9nrOBOVcBLWjMT+oAE/kQHyE3PASrevXCtQDZ8aamntOfFkbVJp7Il9tNBQWrw==}
+  /swr/2.2.0_react@18.2.0:
+    resolution: {integrity: sha512-AjqHOv2lAhkuUdIiBu9xbuettzAzWXmCEcLONNKJRba87WAefz8Ca9d6ds/SzrPc235n1IxWYdhJ2zF3MNUaoQ==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
     dependencies:
