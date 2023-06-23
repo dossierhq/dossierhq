@@ -97,7 +97,7 @@
     "eslint-plugin-import": "~2.27.5",
     "eslint-plugin-storybook": "~0.6.12",
     "graphql-config": "~5.0.2",
-    "graphql-ws": "~5.13.1",
+    "graphql-ws": "~5.14.0",
     "mini-svg-data-uri": "~1.4.4",
     "nodemon": "~2.0.22",
     "prettier": "2.8.8",
