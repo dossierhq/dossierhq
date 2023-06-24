@@ -4,7 +4,12 @@ import {
 } from '@dossierhq/better-sqlite3';
 import { CLOUDINARY_IMAGE_VALUE_TYPE } from '@dossierhq/cloudinary';
 import { FieldType, notOk, ok, type Logger } from '@dossierhq/core';
-import { createServer, NoneAndSubjectAuthorizationAdapter, type Server } from '@dossierhq/server';
+import {
+  BackgroundEntityProcessorPlugin,
+  NoneAndSubjectAuthorizationAdapter,
+  createServer,
+  type Server,
+} from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { Request } from 'express-jwt';
 import type { AppAdminClient, AppPublishedClient } from '../src/SchemaTypes.js';
@@ -25,11 +30,21 @@ async function initializeDatabase(logger: Logger) {
 }
 
 async function initializeServer(logger: Logger, databaseAdapter: BetterSqlite3DatabaseAdapter) {
-  return await createServer({
+  const serverResult = await createServer({
     databaseAdapter,
     logger,
     authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
   });
+
+  if (serverResult.isOk()) {
+    const server = serverResult.value;
+
+    const processorPlugin = new BackgroundEntityProcessorPlugin(server, logger);
+    server.addPlugin(processorPlugin);
+    processorPlugin.start();
+  }
+
+  return serverResult;
 }
 
 async function createSessionForRequest(server: Server, req: Request) {
