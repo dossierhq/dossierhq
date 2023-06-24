@@ -8,12 +8,12 @@ import { usePublishedEntitySearchFilters } from '../../published/hooks/usePublis
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
-import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
 import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
+import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
 import {
+  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-  SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { PublishedEntitySearchToolbar } from '../PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 
@@ -83,8 +83,8 @@ function Content({
   );
 
   const {
-    entityTypeFilterState,
-    dispatchEntityTypeFilterState,
+    typeFilterState,
+    dispatchTypeFilterState,
     authKeyFilterState,
     dispatchAuthKeyFilterState,
   } = usePublishedEntitySearchFilters(searchEntityState, dispatchSearchEntityState);
@@ -114,10 +114,10 @@ function Content({
           {...{
             showMap,
             searchEntityState,
-            entityTypeFilterState,
+            typeFilterState,
             authKeyFilterState,
             dispatchSearchEntityState,
-            dispatchEntityTypeFilterState,
+            dispatchTypeFilterState,
             dispatchAuthKeyFilterState,
             onToggleMapClick: handleToggleShowMap,
           }}
@@ -144,10 +144,7 @@ function Content({
         >
           <FullscreenContainer.Row>
             <FullscreenContainer.Item paddingHorizontal={3}>
-              <EntityTypeTagSelector
-                state={entityTypeFilterState}
-                dispatch={dispatchEntityTypeFilterState}
-              />
+              <TypeTagSelector state={typeFilterState} dispatch={dispatchTypeFilterState} />
               <AuthKeyTagSelector
                 state={authKeyFilterState}
                 dispatch={dispatchAuthKeyFilterState}

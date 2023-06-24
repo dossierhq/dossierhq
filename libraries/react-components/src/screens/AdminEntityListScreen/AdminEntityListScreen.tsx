@@ -10,11 +10,11 @@ import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFil
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
-import { EntityTypeTagSelector } from '../../shared/components/EntityTypeTagSelector/EntityTypeTagSelector.js';
 import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
+import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
 import {
-  reduceSearchEntityState,
   SearchEntityStateActions,
+  reduceSearchEntityState,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import {
   initializeSearchEntityStateFromUrlQuery,
@@ -46,8 +46,8 @@ export function AdminEntityListScreen({
   );
 
   const {
-    entityTypeFilterState,
-    dispatchEntityTypeFilterState,
+    typeFilterState,
+    dispatchTypeFilterState,
     statusFilterState,
     dispatchStatusFilterState,
     authKeyFilterState,
@@ -97,8 +97,8 @@ export function AdminEntityListScreen({
               dispatchSearchEntityState,
               onToggleMapClick: handleToggleShowMap,
               onCreateEntity,
-              entityTypeFilterState,
-              dispatchEntityTypeFilterState,
+              typeFilterState,
+              dispatchTypeFilterState,
               statusFilterState,
               dispatchStatusFilterState,
               authKeyFilterState,
@@ -129,10 +129,7 @@ export function AdminEntityListScreen({
         >
           <FullscreenContainer.Row height={isEmpty ? '100%' : undefined} paddingHorizontal={2}>
             <FullscreenContainer.Item paddingHorizontal={3}>
-              <EntityTypeTagSelector
-                state={entityTypeFilterState}
-                dispatch={dispatchEntityTypeFilterState}
-              />
+              <TypeTagSelector state={typeFilterState} dispatch={dispatchTypeFilterState} />
               <StatusTagSelector state={statusFilterState} dispatch={dispatchStatusFilterState} />
               <AuthKeyTagSelector
                 state={authKeyFilterState}

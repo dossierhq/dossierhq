@@ -1,22 +1,19 @@
 import { Field, TagSelector } from '@dossierhq/design';
-import type {
-  EntityTypeSelectorDispatch,
-  EntityTypeSelectorState,
-} from '../EntityTypeSelector/EntityTypeSelector.js';
+import type { TypeSelectorDispatch, TypeSelectorState } from '../TypeSelector/TypeSelector.js';
 
 interface Props {
-  state: EntityTypeSelectorState;
-  dispatch: EntityTypeSelectorDispatch;
+  state: TypeSelectorState;
+  dispatch: TypeSelectorDispatch;
 }
 
-export function EntityTypeTagSelector({ state, dispatch }: Props) {
+export function TypeTagSelector({ state, dispatch }: Props) {
   if (state.selectedIds.length === 0) {
     return null;
   }
 
   return (
     <Field>
-      <Field.Label size="small">Show entity types</Field.Label>
+      <Field.Label size="small">Show types</Field.Label>
       <Field.Control>
         <TagSelector
           clearLabel="Clear"

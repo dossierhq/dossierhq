@@ -1,13 +1,23 @@
-import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
-import { initializeMultipleSelectorState } from '@dossierhq/design';
+import {
+  initializeMultipleSelectorState,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
+} from '@dossierhq/design';
 import isEqual from 'lodash/isEqual.js';
-import type { Dispatch } from 'react';
-import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  type Dispatch,
+} from 'react';
 import {
   initializeAuthKeySelectorState,
   reduceAuthKeySelectorState,
 } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
-import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
+import type { TypeItem } from '../../shared/components/TypeSelector/TypeSelector.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
@@ -21,8 +31,10 @@ export function usePublishedEntitySearchFilters(
 ) {
   const { authKeys } = useContext(PublishedDossierContext);
 
-  const [entityTypeFilterState, dispatchEntityTypeFilterState] =
-    useSearchStateToEntitySelectorAdapter(searchEntityState, dispatchSearchEntityState);
+  const [typeFilterState, dispatchTypeFilterState] = useSearchStateToTypeSelectorAdapter(
+    searchEntityState,
+    dispatchSearchEntityState
+  );
 
   const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
     reduceAuthKeySelectorState,
@@ -42,41 +54,69 @@ export function usePublishedEntitySearchFilters(
 
   //
   return {
-    entityTypeFilterState,
-    dispatchEntityTypeFilterState,
+    typeFilterState,
+    dispatchTypeFilterState,
     authKeyFilterState,
     dispatchAuthKeyFilterState,
   };
 }
 
-function useSearchStateToEntitySelectorAdapter(
+function useSearchStateToTypeSelectorAdapter(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
-): [MultipleSelectorState<EntityTypeItem>, Dispatch<MultipleSelectorStateAction<EntityTypeItem>>] {
-  const [items, setItems] = useState<EntityTypeItem[]>(
-    () => searchEntityState.query.entityTypes?.map((it) => ({ id: it, name: it })) ?? []
-  );
+): [MultipleSelectorState<TypeItem>, Dispatch<MultipleSelectorStateAction<TypeItem>>] {
+  const [items, setItems] = useState<TypeItem[]>(() => [
+    ...(searchEntityState.query.entityTypes?.map(
+      (it): TypeItem => ({ id: it, name: it, kind: 'entity' })
+    ) ?? []),
+    ...(searchEntityState.query.valueTypes?.map(
+      (it): TypeItem => ({ id: it, name: it, kind: 'value' })
+    ) ?? []),
+  ]);
 
-  const entityTypeFilterState = useMemo(
+  const typeFilterState = useMemo(
     () =>
-      initializeMultipleSelectorState({ items, selectedIds: searchEntityState.query.entityTypes }),
-    [items, searchEntityState.query.entityTypes]
+      initializeMultipleSelectorState({
+        items,
+        selectedIds: [
+          ...(searchEntityState.query.entityTypes ?? []),
+          ...(searchEntityState.query.valueTypes ?? []),
+        ],
+      }),
+    [items, searchEntityState.query.entityTypes, searchEntityState.query.valueTypes]
   );
 
-  const dispatchEntityTypeFilterState = useCallback(
-    (action: MultipleSelectorStateAction<EntityTypeItem>) => {
-      const newState = action.reduce(entityTypeFilterState);
-      if (!isEqual(newState.items, entityTypeFilterState.items)) {
+  const dispatchTypeFilterState = useCallback(
+    (action: MultipleSelectorStateAction<TypeItem>) => {
+      const newState = action.reduce(typeFilterState);
+      if (!isEqual(newState.items, typeFilterState.items)) {
         let newItems = newState.items;
         if (searchEntityState.restrictEntityTypes.length > 0) {
-          newItems = newItems.filter((it) => searchEntityState.restrictEntityTypes.includes(it.id));
+          newItems = newItems.filter(
+            (it) => it.kind === 'value' || searchEntityState.restrictEntityTypes.includes(it.id)
+          );
         }
         setItems((oldItems) => (isEqual(newItems, oldItems) ? oldItems : newItems));
       }
-      if (!isEqual(newState.selectedIds, searchEntityState.query.entityTypes)) {
+
+      const selectedEntityTypeIds: string[] = [];
+      const selectedValueTypeIds: string[] = [];
+      for (const id of newState.selectedIds) {
+        const item = newState.items.find((it) => it.id === id);
+        if (item?.kind === 'entity') {
+          selectedEntityTypeIds.push(id);
+        } else if (item?.kind === 'value') {
+          selectedValueTypeIds.push(id);
+        }
+      }
+
+      if (
+        !isEqual(selectedEntityTypeIds, searchEntityState.query.entityTypes) ||
+        !isEqual(selectedValueTypeIds, searchEntityState.query.valueTypes)
+      ) {
         dispatchSearchEntityState(
           new SearchEntityStateActions.SetQuery(
-            { entityTypes: newState.selectedIds },
+            { entityTypes: selectedEntityTypeIds, valueTypes: selectedValueTypeIds },
             { partial: true, resetPagingIfModifying: true }
           )
         );
@@ -84,18 +124,20 @@ function useSearchStateToEntitySelectorAdapter(
     },
     [
       dispatchSearchEntityState,
-      entityTypeFilterState,
+      typeFilterState,
       searchEntityState.query.entityTypes,
+      searchEntityState.query.valueTypes,
       searchEntityState.restrictEntityTypes,
     ]
   );
 
   // useDebugLogChangedValues('useSearchStateToEntitySelectorAdapter changed values', {
   //   dispatchSearchEntityState,
-  //   entityTypeFilterState,
+  //   typeFilterState,
   //   entityTypes: searchEntityState.query.entityTypes,
+  //   valueTypes: searchEntityState.query.valueTypes,
   //   restrictEntityTypes: searchEntityState.restrictEntityTypes,
   // });
 
-  return [entityTypeFilterState, dispatchEntityTypeFilterState];
+  return [typeFilterState, dispatchTypeFilterState];
 }

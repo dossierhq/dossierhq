@@ -5,9 +5,12 @@ import { useContext } from 'react';
 import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
 import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
-import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
-import { EntityTypeSelector } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
 import { SearchEntitySearchInput } from '../../shared/components/SearchEntitySearchInput/SearchEntitySearchInput.js';
+import {
+  TypeSelector,
+  type TypeSelectorState,
+  type TypeSelectorDispatch,
+} from '../../shared/components/TypeSelector/TypeSelector.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
@@ -16,10 +19,10 @@ import type {
 interface Props {
   showMap: boolean;
   searchEntityState: SearchEntityState;
-  entityTypeFilterState: MultipleSelectorState<EntityTypeItem>;
+  typeFilterState: TypeSelectorState;
   authKeyFilterState: MultipleSelectorState<AuthKeyItem>;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  dispatchEntityTypeFilterState: Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
+  dispatchTypeFilterState: TypeSelectorDispatch;
   dispatchAuthKeyFilterState: Dispatch<MultipleSelectorStateAction<AuthKeyItem>>;
   onToggleMapClick: MouseEventHandler<HTMLButtonElement>;
 }
@@ -27,10 +30,10 @@ interface Props {
 export function PublishedEntitySearchToolbar({
   showMap,
   searchEntityState,
-  entityTypeFilterState,
+  typeFilterState,
   authKeyFilterState,
   dispatchSearchEntityState,
-  dispatchEntityTypeFilterState,
+  dispatchTypeFilterState,
   dispatchAuthKeyFilterState,
   onToggleMapClick,
 }: Props) {
@@ -38,13 +41,9 @@ export function PublishedEntitySearchToolbar({
   return (
     <>
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
-      <EntityTypeSelector
-        schema={schema}
-        state={entityTypeFilterState}
-        dispatch={dispatchEntityTypeFilterState}
-      >
-        Entity type
-      </EntityTypeSelector>
+      <TypeSelector schema={schema} state={typeFilterState} dispatch={dispatchTypeFilterState}>
+        Type
+      </TypeSelector>
       <AuthKeySelector
         state={authKeyFilterState}
         authKeys={authKeys}

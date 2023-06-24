@@ -1,29 +1,33 @@
-import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
-import { IconButton } from '@dossierhq/design';
-import type { Dispatch, MouseEventHandler } from 'react';
-import { useContext } from 'react';
+import {
+  IconButton,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
+} from '@dossierhq/design';
+import { useContext, type Dispatch, type MouseEventHandler } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
 import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
-import type { EntityTypeItem } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
-import { EntityTypeSelector } from '../../shared/components/EntityTypeSelector/EntityTypeSelector.js';
 import { SearchEntitySearchInput } from '../../shared/components/SearchEntitySearchInput/SearchEntitySearchInput.js';
+import {
+  TypeSelector,
+  type TypeItem,
+  type TypeSelectorDispatch,
+} from '../../shared/components/TypeSelector/TypeSelector.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
-import type { StatusItem } from '../StatusSelector/StatusSelector.js';
-import { StatusSelector } from '../StatusSelector/StatusSelector.js';
+import { StatusSelector, type StatusItem } from '../StatusSelector/StatusSelector.js';
 
 interface Props {
   showMap: boolean;
   searchEntityState: SearchEntityState;
-  entityTypeFilterState: MultipleSelectorState<EntityTypeItem>;
+  typeFilterState: MultipleSelectorState<TypeItem>;
   statusFilterState: MultipleSelectorState<StatusItem>;
   authKeyFilterState: MultipleSelectorState<AuthKeyItem>;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  dispatchEntityTypeFilterState: Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
+  dispatchTypeFilterState: TypeSelectorDispatch;
   dispatchStatusFilterState: Dispatch<MultipleSelectorStateAction<StatusItem>>;
   dispatchAuthKeyFilterState: Dispatch<MultipleSelectorStateAction<AuthKeyItem>>;
   onToggleMapClick: MouseEventHandler<HTMLButtonElement>;
@@ -33,11 +37,11 @@ interface Props {
 export function AdminEntitySearchToolbar({
   showMap,
   searchEntityState,
-  entityTypeFilterState,
+  typeFilterState,
   statusFilterState,
   authKeyFilterState,
   dispatchSearchEntityState,
-  dispatchEntityTypeFilterState,
+  dispatchTypeFilterState,
   dispatchStatusFilterState,
   dispatchAuthKeyFilterState,
   onToggleMapClick,
@@ -47,13 +51,9 @@ export function AdminEntitySearchToolbar({
   return (
     <>
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
-      <EntityTypeSelector
-        schema={schema}
-        state={entityTypeFilterState}
-        dispatch={dispatchEntityTypeFilterState}
-      >
-        Entity type
-      </EntityTypeSelector>
+      <TypeSelector schema={schema} state={typeFilterState} dispatch={dispatchTypeFilterState}>
+        Type
+      </TypeSelector>
       <StatusSelector state={statusFilterState} dispatch={dispatchStatusFilterState}>
         Status
       </StatusSelector>
