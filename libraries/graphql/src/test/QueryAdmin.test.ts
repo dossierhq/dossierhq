@@ -6,13 +6,13 @@ import type {
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
+  FieldType,
   assertOkResult,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
-  FieldType,
   getAllPagesForConnection,
   notOk,
   ok,
@@ -1484,6 +1484,46 @@ describe('searchAdminEntities()', () => {
     expect(result.data?.adminSearchEntities.totalCount).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeSubject.length
     );
+  });
+
+  test('Filter based on valueTypes and linksTo', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(1);
+    const [fooEntity] = fooEntities;
+
+    const source = `query QueryWithValueTypesAndLinksTo($id: ID!) {
+      adminSearchEntities(query: { linksTo: {id: $id }, valueTypes: [QueryAdminStringedBar] }) {
+        edges {
+          node {
+            id
+          }
+        }
+        totalCount
+      }
+    }`;
+
+    const resultBefore = await graphql({
+      schema,
+      source,
+      contextValue: createContext(),
+      variableValues: { id: barId },
+    });
+    expect(resultBefore).toEqual({ data: { adminSearchEntities: null } });
+
+    const updateResult = await server.adminClient.updateEntity({
+      id: fooEntity.id,
+      fields: { stringedBar: { type: 'QueryAdminStringedBar', text: null, bar: null } },
+    });
+    assertOkResult(updateResult);
+
+    const resultAfterUpdate = await graphql({
+      schema,
+      source,
+      contextValue: createContext(),
+      variableValues: { id: barId },
+    });
+    expect(resultAfterUpdate).toEqual({
+      data: { adminSearchEntities: { edges: [{ node: { id: fooEntity.id } }], totalCount: 1 } },
+    });
   });
 
   test('Filter based on linksTo, one reference', async () => {
