@@ -1,4 +1,3 @@
-import type { BoundingBox } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminQueryOrder,
@@ -10,10 +9,11 @@ import {
   createRichTextTextNode,
   createRichTextValueItemNode,
   getAllNodesForConnection,
+  type BoundingBox,
 } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminLocationsValue, AdminReferencesValue } from '../SchemaTypes.js';
+import type { AdminLocationsValue, AdminReferencesValue, AdminValueItems } from '../SchemaTypes.js';
 import {
   CHANGE_VALIDATIONS_CREATE,
   LOCATIONS_CREATE,
@@ -21,6 +21,7 @@ import {
   RICH_TEXTS_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
+  VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import {
@@ -65,6 +66,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_statusAll,
   searchEntities_invalidOnly,
   searchEntities_validOnly,
+  searchEntities_valueTypes,
   searchEntities_linksToOneReference,
   searchEntities_linksToOneReferenceFromRichText,
   searchEntities_linksToOneReferenceFromLinkRichText,
@@ -633,6 +635,32 @@ async function searchEntities_validOnly({ server }: AdminEntityTestContext) {
 
   assertEquals(invalid, 0);
   assertTruthy(valid > 0);
+}
+
+async function searchEntities_valueTypes({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const { entity } = (await adminClient.createEntity(VALUE_ITEMS_CREATE)).valueOrThrow();
+
+  const matchesBeforeValueItem = await countSearchResultWithEntity(
+    adminClient,
+    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    entity.id
+  );
+  assertResultValue(matchesBeforeValueItem, 0);
+
+  (
+    await adminClient.updateEntity<AdminValueItems>({
+      id: entity.id,
+      fields: { any: { type: 'ReferencesValue', reference: null } },
+    })
+  ).throwIfError();
+
+  const matchesAfterValueItem = await countSearchResultWithEntity(
+    adminClient,
+    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    entity.id
+  );
+  assertResultValue(matchesAfterValueItem, 1);
 }
 
 async function searchEntities_linksToOneReference({ server }: AdminEntityTestContext) {

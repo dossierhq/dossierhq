@@ -1,12 +1,14 @@
 import { copyEntity, PublishedQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import type { AdminValueItems } from '../SchemaTypes.js';
 import {
   adminToPublishedEntity,
   LOCATIONS_CREATE,
   REFERENCES_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
+  VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
 import { boundingBoxCenter, randomBoundingBox } from '../shared-entity/LocationTestUtils.js';
 import {
@@ -39,6 +41,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_orderNameReversed,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
+  searchEntities_valueTypes,
   searchEntities_linksToOneReference,
   searchEntities_linksToNoReferences,
   searchEntities_linksToTwoReferencesFromOneEntity,
@@ -400,6 +403,38 @@ async function searchEntities_authKeyNoneAndSubject({
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
+}
+
+async function searchEntities_valueTypes({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const { entity } = (
+    await adminClient.createEntity(VALUE_ITEMS_CREATE, { publish: true })
+  ).valueOrThrow();
+
+  const matchesBeforeValueItem = await countSearchResultWithEntity(
+    publishedClient,
+    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    entity.id
+  );
+  assertResultValue(matchesBeforeValueItem, 0);
+
+  (
+    await adminClient.updateEntity<AdminValueItems>(
+      {
+        id: entity.id,
+        fields: { any: { type: 'ReferencesValue', reference: null } },
+      },
+      { publish: true }
+    )
+  ).throwIfError();
+
+  const matchesAfterValueItem = await countSearchResultWithEntity(
+    publishedClient,
+    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    entity.id
+  );
+  assertResultValue(matchesAfterValueItem, 1);
 }
 
 async function searchEntities_linksToOneReference({

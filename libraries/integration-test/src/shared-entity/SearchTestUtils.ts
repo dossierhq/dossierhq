@@ -1,13 +1,3 @@
-import type {
-  AdminSearchQuery,
-  Connection,
-  Edge,
-  ErrorType,
-  OkResult,
-  PromiseResult,
-  PublishedSearchQuery,
-  Result,
-} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminQueryOrder,
@@ -15,6 +5,12 @@ import {
   assertIsDefined,
   getAllPagesForConnection,
   ok,
+  type Connection,
+  type Edge,
+  type ErrorType,
+  type OkResult,
+  type PromiseResult,
+  type Result,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -142,7 +138,7 @@ export function assertPageInfoEquals<TEntity extends AppAdminEntity | AppPublish
 
 export async function countSearchResultWithEntity(
   client: AppAdminClient,
-  query: AdminSearchQuery,
+  query: Parameters<AppAdminClient['searchEntities']>[0],
   entityId: string
 ): PromiseResult<
   number,
@@ -150,7 +146,7 @@ export async function countSearchResultWithEntity(
 >;
 export async function countSearchResultWithEntity(
   client: AppPublishedClient,
-  query: PublishedSearchQuery,
+  query: Parameters<AppPublishedClient['searchEntities']>[0],
   entityId: string
 ): PromiseResult<
   number,
@@ -158,7 +154,9 @@ export async function countSearchResultWithEntity(
 >;
 export async function countSearchResultWithEntity(
   client: AppAdminClient | AppPublishedClient,
-  query: AdminSearchQuery | PublishedSearchQuery,
+  query:
+    | Parameters<AppAdminClient['searchEntities']>[0]
+    | Parameters<AppPublishedClient['searchEntities']>[0],
   entityId: string
 ): PromiseResult<
   number,
