@@ -2,6 +2,18 @@
   "name": "@dossierhq/postgres-tools",
   "entries": [
     {
+      "version": "0.3.0",
+      "tag": "@dossierhq/postgres-tools_v0.3.0",
+      "date": "Sat, 24 Jun 2023 22:27:41 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add dirty column and start indexing value types used in entities. Mark all entities as dirty."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.19",
       "tag": "@dossierhq/postgres-tools_v0.2.19",
       "date": "Tue, 13 Jun 2023 21:42:08 GMT",

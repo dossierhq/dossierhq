@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/better-sqlite3
 
-This log was last generated on Tue, 13 Jun 2023 21:42:08 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Jun 2023 22:27:41 GMT and should not be manually modified.
+
+## 0.3.0
+Sat, 24 Jun 2023 22:27:41 GMT
+
+### Updates
+
+- Add dirty and invalid columns. Support value types indexing
 
 ## 0.2.19
 Tue, 13 Jun 2023 21:42:08 GMT
