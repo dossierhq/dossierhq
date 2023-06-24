@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/postgres-tools",
-  "version": "0.2.19",
+  "version": "0.3.0",
   "description": "Tools for managing a Postgres database for Dossier.",
   "keywords": [
     "dossier",
