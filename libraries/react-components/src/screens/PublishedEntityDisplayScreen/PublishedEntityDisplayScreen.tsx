@@ -5,25 +5,31 @@ import {
   findAscendantHTMLElement,
   FullscreenContainer,
   Level,
+  Tag,
   Text,
   toFlexItemClassName,
   useWindowEventListener,
 } from '@dossierhq/design';
-import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+  type Dispatch,
+  type MouseEvent,
+} from 'react';
 import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayStateContext } from '../../contexts/EntityDisplayStateContext.js';
 import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
-import type {
-  EntityDisplayState,
-  EntityDisplayStateAction,
-} from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import {
   EntityDisplayActions,
   reduceEntityDisplayState,
+  type EntityDisplayState,
+  type EntityDisplayStateAction,
 } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import {
   initializeEntityDisplayStateFromUrlQuery,
@@ -183,6 +189,11 @@ function EntityRows({
         data-entityid={entityId}
         onClick={handleClick}
       >
+        {!entity.info.valid ? (
+          <div>
+            <Tag color="danger">Invalid</Tag>
+          </div>
+        ) : null}
         <PublishedEntityLinks
           entityReference={{ id: entityId }}
           onItemClick={handleLinkedItemClick}
