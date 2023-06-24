@@ -1,11 +1,15 @@
-import type {
-  GraphQLEnumValueConfigMap,
-  GraphQLInputType,
-  GraphQLInterfaceType,
-  GraphQLNamedType,
-  GraphQLOutputType,
+import {
+  GraphQLEnumType,
+  isEnumType,
+  isInputType,
+  isInterfaceType,
+  isOutputType,
+  type GraphQLEnumValueConfigMap,
+  type GraphQLInputType,
+  type GraphQLInterfaceType,
+  type GraphQLNamedType,
+  type GraphQLOutputType,
 } from 'graphql';
-import { GraphQLEnumType, isEnumType, isInputType, isInterfaceType, isOutputType } from 'graphql';
 import { toAdminTypeName, toAdminValueInputTypeName, toEnumName } from './NameGenerator.js';
 
 export class TypeRepository {
@@ -16,7 +20,7 @@ export class TypeRepository {
   }
 
   addType(type: GraphQLNamedType): void {
-    if (this.#types.find((x) => x.name === type.name)) {
+    if (this.#types.find((it) => it.name === type.name)) {
       throw new Error(`Type with name ${type.name} already exists`);
     }
     this.#types.push(type);

@@ -313,6 +313,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedEntityType'))),
       },
+      ...(publishedSchema.getValueTypeCount() > 0
+        ? {
+            valueTypes: {
+              type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedValueType'))),
+            },
+          }
+        : {}),
       linksTo: { type: this.getInputType('EntityReferenceInput') },
       linksFrom: { type: this.getInputType('EntityReferenceInput') },
       boundingBox: { type: this.getInputType('BoundingBoxInput') },
@@ -623,6 +630,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
       },
+      ...(adminSchema.getValueTypeCount() > 0
+        ? {
+            valueTypes: {
+              type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminValueType'))),
+            },
+          }
+        : {}),
       status: { type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityStatus'))) },
       valid: { type: GraphQLBoolean },
       linksTo: { type: this.getInputType('EntityReferenceInput') },
