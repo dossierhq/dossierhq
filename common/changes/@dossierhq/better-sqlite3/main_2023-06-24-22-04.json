@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/better-sqlite3",
+      "comment": "Add dirty and invalid columns. Support value types indexing",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/better-sqlite3"
+}

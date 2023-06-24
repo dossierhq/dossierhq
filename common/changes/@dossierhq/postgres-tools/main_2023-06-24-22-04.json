@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-tools",
+      "comment": "Add dirty column and start indexing value types used in entities. Mark all entities as dirty.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-tools"
+}

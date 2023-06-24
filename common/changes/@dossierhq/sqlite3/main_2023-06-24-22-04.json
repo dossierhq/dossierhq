@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite3",
+      "comment": "Updated database schema for dirty, invalid entities, as well as value type indexing",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite3"
+}
