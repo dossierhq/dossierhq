@@ -167,22 +167,34 @@ type PublishedClientOperationName = keyof typeof PublishedClientOperationName;
 
 type MethodParameters<
   TName extends keyof PublishedClient,
-  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  TClient extends PublishedClient<
+    PublishedEntity<string, object>,
+    ValueItem<string, object>
+  > = PublishedClient
 > = Parameters<TClient[TName]>;
 type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
 type MethodReturnTypeWithoutPromise<
   TName extends keyof PublishedClient,
-  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  TClient extends PublishedClient<
+    PublishedEntity<string, object>,
+    ValueItem<string, object>
+  > = PublishedClient
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
 type MethodReturnTypeOk<
   TName extends keyof PublishedClient,
-  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  TClient extends PublishedClient<
+    PublishedEntity<string, object>,
+    ValueItem<string, object>
+  > = PublishedClient
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
   TName extends keyof PublishedClient,
-  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  TClient extends PublishedClient<
+    PublishedEntity<string, object>,
+    ValueItem<string, object>
+  > = PublishedClient
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface PublishedClientOperationArguments {
@@ -400,7 +412,10 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
 
 export function createBasePublishedClient<
   TContext extends ClientContext,
-  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  TClient extends PublishedClient<
+    PublishedEntity<string, object>,
+    ValueItem<string, object>
+  > = PublishedClient
 >(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: PublishedClientMiddleware<TContext>[];
@@ -409,7 +424,7 @@ export function createBasePublishedClient<
 }
 
 export async function executePublishedClientOperationFromJson(
-  publishedClient: PublishedClient<PublishedEntity<string, object>>,
+  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
   operationName: PublishedClientOperationName | string,
   operationArgs: PublishedClientJsonOperationArgs
 ): PromiseResult<unknown, ErrorType> {
@@ -452,7 +467,10 @@ export async function executePublishedClientOperationFromJson(
 
 export function convertJsonPublishedClientResult<
   TName extends PublishedClientOperationName,
-  TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+  TClient extends PublishedClient<
+    PublishedEntity<string, object>,
+    ValueItem<string, object>
+  > = PublishedClient
 >(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>

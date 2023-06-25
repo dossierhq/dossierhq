@@ -377,7 +377,7 @@ type AdminClientOperationName = keyof typeof AdminClientOperationName;
 
 type MethodParameters<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient
 > = Parameters<TClient[TName]>;
 type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
   MethodReturnTypeOk<TName>,
@@ -385,17 +385,17 @@ type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
 >;
 type MethodReturnTypeWithoutPromise<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
 type MethodReturnTypeOk<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface AdminClientOperationArguments {
@@ -911,7 +911,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
 export function createBaseAdminClient<
   TContext extends ClientContext,
-  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient
 >(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: AdminClientMiddleware<TContext>[];
@@ -920,7 +920,7 @@ export function createBaseAdminClient<
 }
 
 export async function executeAdminClientOperationFromJson(
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   operationName: AdminClientOperationName | string,
   operationArgs: AdminClientJsonOperationArgs
 ): PromiseResult<unknown, ErrorType> {
@@ -1028,7 +1028,7 @@ export async function executeAdminClientOperationFromJson(
 
 export function convertJsonAdminClientResult<
   TName extends AdminClientOperationName,
-  TClient extends AdminClient<AdminEntity<string, object>> = AdminClient
+  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient
 >(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>
