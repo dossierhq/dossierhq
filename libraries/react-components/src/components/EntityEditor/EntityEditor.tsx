@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity } from '@dossierhq/core';
+import type { AdminClient, AdminEntity, ValueItem } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
 import { Button, Field, Input, NotificationContext, Row, Text } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
