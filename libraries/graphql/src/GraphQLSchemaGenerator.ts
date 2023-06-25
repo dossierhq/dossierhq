@@ -82,11 +82,12 @@ import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
   adminClient: Result<
-    AdminClient<AdminEntity> | AdminClient<AdminEntity<string, object>>,
+    AdminClient<AdminEntity> | AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
   publishedClient: Result<
-    PublishedClient<PublishedEntity> | PublishedClient<PublishedEntity<string, object>>,
+    | PublishedClient<PublishedEntity>
+    | PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
 }
