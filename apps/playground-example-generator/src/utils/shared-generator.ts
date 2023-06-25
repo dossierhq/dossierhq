@@ -4,6 +4,7 @@ import type {
   AdminEntity,
   AdminSchemaSpecificationUpdate,
   ClientContext,
+  ValueItem,
 } from '@dossierhq/core';
 import { LoggingClientMiddleware, NoOpLogger, createConsoleLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
@@ -32,7 +33,7 @@ export async function createNewDatabase(databasePath: string) {
 }
 
 export async function createAdapterAndServer<
-  TAdminClient extends AdminClient<AdminEntity<string, object>>
+  TAdminClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>>
 >(
   database: Sqlite.Database,
   schema: AdminSchemaSpecificationUpdate
