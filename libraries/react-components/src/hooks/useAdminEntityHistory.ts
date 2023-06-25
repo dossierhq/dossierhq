@@ -5,6 +5,7 @@ import type {
   EntityReference,
   ErrorResult,
   ErrorType,
+  ValueItem,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -21,7 +22,7 @@ type FetcherError = ErrorResult<
 >;
 
 export function useAdminEntityHistory(
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   reference: EntityReference | undefined
 ): {
   entityHistory: FetcherData | undefined;
@@ -42,7 +43,7 @@ export function useAdminEntityHistory(
 }
 
 async function fetchEntityHistory(
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   reference: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await adminClient.getEntityHistory(reference);

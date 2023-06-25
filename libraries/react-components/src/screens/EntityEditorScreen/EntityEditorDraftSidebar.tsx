@@ -1,4 +1,10 @@
-import type { AdminClient, AdminEntity, EntityReference, PublishingEvent } from '@dossierhq/core';
+import type {
+  AdminClient,
+  AdminEntity,
+  EntityReference,
+  PublishingEvent,
+  ValueItem,
+} from '@dossierhq/core';
 import { assertIsDefined } from '@dossierhq/core';
 import { Button, DateDisplay, Row, TabContainer, Tag, Text } from '@dossierhq/design';
 import { useContext, useState } from 'react';
@@ -87,7 +93,7 @@ function ActivityList({
   activityFilter,
   reference,
 }: {
-  adminClient: AdminClient<AdminEntity<string, object>>;
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>;
   activityFilter: ActivityFilter;
   reference: EntityReference;
 }) {

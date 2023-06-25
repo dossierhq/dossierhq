@@ -22,7 +22,7 @@ export interface PublishedDossierContextAdapter {
 
 export interface PublishedDossierContextValue {
   adapter: PublishedDossierContextAdapter;
-  publishedClient: PublishedClient<PublishedEntity<string, object>>;
+  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>;
   logger: Logger;
   schema: PublishedSchema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

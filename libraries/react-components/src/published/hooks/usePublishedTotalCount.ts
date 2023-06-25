@@ -4,6 +4,7 @@ import type {
   PublishedClient,
   PublishedEntity,
   PublishedQuery,
+  ValueItem,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -19,7 +20,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function usePublishedTotalCount(
-  publishedClient: PublishedClient<PublishedEntity<string, object>>,
+  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
   query: PublishedQuery | undefined
 ): {
   totalCount: FetcherData | undefined;
@@ -41,7 +42,7 @@ export function usePublishedTotalCount(
 }
 
 async function fetchTotalCount(
-  publishedClient: PublishedClient<PublishedEntity<string, object>>,
+  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
   query: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await publishedClient.getTotalCount(query);

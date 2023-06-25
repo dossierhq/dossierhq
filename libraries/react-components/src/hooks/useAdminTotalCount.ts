@@ -1,4 +1,11 @@
-import type { AdminClient, AdminEntity, AdminQuery, ErrorResult, ErrorType } from '@dossierhq/core';
+import type {
+  AdminClient,
+  AdminEntity,
+  AdminQuery,
+  ErrorResult,
+  ErrorType,
+  ValueItem,
+} from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
@@ -13,7 +20,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function useAdminTotalCount(
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   query: AdminQuery | undefined
 ): {
   totalCount: FetcherData | undefined;
@@ -35,7 +42,7 @@ export function useAdminTotalCount(
 }
 
 async function fetchTotalCount(
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   query: FetcherKey[1]
 ): Promise<FetcherData> {
   const result = await adminClient.getTotalCount(query);

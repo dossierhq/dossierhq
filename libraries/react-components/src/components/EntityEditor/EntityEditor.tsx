@@ -133,7 +133,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
 async function submitEntity(
   draftState: EntityEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
   showNotification: (notification: NotificationInfo) => void,
   publish: boolean

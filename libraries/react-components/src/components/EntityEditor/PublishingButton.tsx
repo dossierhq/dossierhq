@@ -4,6 +4,7 @@ import type {
   AdminEntityTypeSpecification,
   ErrorType,
   Result,
+  ValueItem,
 } from '@dossierhq/core';
 import { AdminEntityStatus } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
@@ -135,7 +136,7 @@ function createPublishActions(
 async function executeAction(
   action: PublishingActionId,
   entity: AdminEntity,
-  adminClient: AdminClient<AdminEntity<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   showNotification: (notification: NotificationInfo) => void
 ) {
   const reference = { id: entity.id };

@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, ErrorResult, ErrorType } from '@dossierhq/core';
+import type { AdminClient, AdminEntity, ErrorResult, ErrorType, ValueItem } from '@dossierhq/core';
 import { AdminSchema } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -8,7 +8,9 @@ type FetcherKey = string;
 type FetcherData = AdminSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
-export function useAdminSchema(adminClient: AdminClient<AdminEntity<string, object>>): {
+export function useAdminSchema(
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>
+): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
 } {
@@ -24,7 +26,7 @@ export function useAdminSchema(adminClient: AdminClient<AdminEntity<string, obje
 }
 
 async function fetchSchema(
-  adminClient: AdminClient<AdminEntity<string, object>>
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>
 ): Promise<FetcherData> {
   const result = await adminClient.getSchemaSpecification();
   if (result.isError()) {
