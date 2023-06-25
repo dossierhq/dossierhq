@@ -12,6 +12,7 @@ import type {
   PublishedEntity,
   PublishedSchema,
   Result,
+  ValueItem,
 } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, assertIsDefined, notOk, ok } from '@dossierhq/core';
 import type {
@@ -58,13 +59,21 @@ export interface Server<
     databasePerformance: DatabasePerformanceCallbacks | null;
   }): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
-  createAdminClient<TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
+  createAdminClient<
+    TClient extends AdminClient<
+      AdminEntity<string, object>,
+      ValueItem<string, object>
+    > = AdminClient
+  >(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[]
   ): TClient;
 
   createPublishedClient<
-    TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+    TClient extends PublishedClient<
+      PublishedEntity<string, object>,
+      ValueItem<string, object>
+    > = PublishedClient
   >(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: PublishedClientMiddleware<SessionContext>[]
@@ -258,7 +267,12 @@ export async function createServer<
       return ok({ principalEffect, context: contextResult.value });
     },
 
-    createAdminClient: <TClient extends AdminClient<AdminEntity<string, object>> = AdminClient>(
+    createAdminClient: <
+      TClient extends AdminClient<
+        AdminEntity<string, object>,
+        ValueItem<string, object>
+      > = AdminClient
+    >(
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: AdminClientMiddleware<SessionContext>[]
     ) =>
@@ -271,7 +285,10 @@ export async function createServer<
       }) as TClient,
 
     createPublishedClient: <
-      TClient extends PublishedClient<PublishedEntity<string, object>> = PublishedClient
+      TClient extends PublishedClient<
+        PublishedEntity<string, object>,
+        ValueItem<string, object>
+      > = PublishedClient
     >(
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: PublishedClientMiddleware<SessionContext>[]
