@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Change typing to allow app clients in more places.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

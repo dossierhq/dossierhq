@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Change typing to allow app clients in more places.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
