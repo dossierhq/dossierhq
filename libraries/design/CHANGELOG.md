@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/design
 
-This log was last generated on Sat, 24 Jun 2023 22:27:41 GMT and should not be manually modified.
+This log was last generated on Sun, 25 Jun 2023 20:14:23 GMT and should not be manually modified.
+
+## 0.3.1
+Sun, 25 Jun 2023 20:14:23 GMT
+
+_Version update only_
 
 ## 0.3.0
 Sat, 24 Jun 2023 22:27:41 GMT

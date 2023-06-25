@@ -2,6 +2,12 @@
   "name": "@dossierhq/leaflet",
   "entries": [
     {
+      "version": "0.3.1",
+      "tag": "@dossierhq/leaflet_v0.3.1",
+      "date": "Sun, 25 Jun 2023 20:14:23 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.3.0",
       "tag": "@dossierhq/leaflet_v0.3.0",
       "date": "Sat, 24 Jun 2023 22:27:41 GMT",
