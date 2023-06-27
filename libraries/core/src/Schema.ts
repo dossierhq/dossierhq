@@ -65,6 +65,7 @@ export const RichTextNodeType = {
   listitem: 'listitem',
   paragraph: 'paragraph',
   root: 'root',
+  tab: 'tab',
   text: 'text',
   valueItem: 'valueItem',
 } as const;

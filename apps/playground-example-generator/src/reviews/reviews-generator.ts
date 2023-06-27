@@ -2,7 +2,7 @@ import type { EntityReference, Location } from '@dossierhq/core';
 import {
   createRichTextParagraphNode,
   createRichTextRootNode,
-  createRichTextTextAndLineBreakNodes,
+  createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
@@ -119,7 +119,7 @@ async function createPersonalNote(
                 `This is a personal note about ${placeOfBusiness.fields.name} that only ${userName} can see.`
               ),
             ]),
-            createRichTextParagraphNode(createRichTextTextAndLineBreakNodes(faker.lorem.text())),
+            createRichTextParagraphNode(createRichTextTextAndWhitespaceNodes(faker.lorem.text())),
           ]),
         },
       },

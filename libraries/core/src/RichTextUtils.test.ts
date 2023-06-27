@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import {
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
-  createRichTextTextAndLineBreakNodes,
+  createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,
   richTextTextNodeHasFormat,
 } from './RichTextUtils.js';
@@ -69,9 +69,9 @@ describe('createRichTextTextNode', () => {
   });
 });
 
-describe('createRichTextTextAndLineBreakNodes', () => {
+describe('createRichTextTextAndWhitespaceNodes', () => {
   test('format: bold, one line break', () => {
-    expect(createRichTextTextAndLineBreakNodes('hello\nworld', { format: ['bold'] }))
+    expect(createRichTextTextAndWhitespaceNodes('hello\nworld', { format: ['bold'] }))
       .toMatchInlineSnapshot(`
       [
         {
@@ -101,7 +101,7 @@ describe('createRichTextTextAndLineBreakNodes', () => {
   });
 
   test('format: italic, starting and ending line breaks', () => {
-    expect(createRichTextTextAndLineBreakNodes('\nhello\n', { format: ['italic'] }))
+    expect(createRichTextTextAndWhitespaceNodes('\nhello\n', { format: ['italic'] }))
       .toMatchInlineSnapshot(`
       [
         {
@@ -126,7 +126,7 @@ describe('createRichTextTextAndLineBreakNodes', () => {
   });
 
   test('format: bold, one line break (rn)', () => {
-    expect(createRichTextTextAndLineBreakNodes('hello\r\nworld', { format: ['bold'] }))
+    expect(createRichTextTextAndWhitespaceNodes('hello\r\nworld', { format: ['bold'] }))
       .toMatchInlineSnapshot(`
       [
         {
@@ -156,8 +156,33 @@ describe('createRichTextTextAndLineBreakNodes', () => {
   });
 
   test('text with carriage return without line feed', () => {
-    expect(createRichTextTextAndLineBreakNodes('hello\r')).toMatchInlineSnapshot(`
+    expect(createRichTextTextAndWhitespaceNodes('hello\r')).toMatchInlineSnapshot(`
       [
+        {
+          "detail": 0,
+          "format": 0,
+          "mode": "normal",
+          "style": "",
+          "text": "hello",
+          "type": "text",
+          "version": 1,
+        },
+      ]
+    `);
+  });
+
+  test('text with tab', () => {
+    expect(createRichTextTextAndWhitespaceNodes('\thello')).toMatchInlineSnapshot(`
+      [
+        {
+          "detail": 2,
+          "format": 0,
+          "mode": "normal",
+          "style": "",
+          "text": "	",
+          "type": "tab",
+          "version": 1,
+        },
         {
           "detail": 0,
           "format": 0,

@@ -1,6 +1,10 @@
 import { RichTextNodeType } from './Schema.js';
-import type { HeadingTagType, TextFormatType } from './third-party/Lexical.js';
-import { TEXT_TYPE_TO_FORMAT } from './third-party/Lexical.js';
+import {
+  IS_UNMERGEABLE,
+  TEXT_TYPE_TO_FORMAT,
+  type HeadingTagType,
+  type TextFormatType,
+} from './third-party/Lexical.js';
 import type {
   EntityReference,
   RichText,
@@ -12,6 +16,7 @@ import type {
   RichTextListNode,
   RichTextNode,
   RichTextParagraphNode,
+  RichTextTabNode,
   RichTextTextNode,
   RichTextValueItemNode,
   ValueItem,
@@ -85,19 +90,33 @@ export function createRichTextLineBreakNode(): RichTextLineBreakNode {
   return { type: RichTextNodeType.linebreak, version: 1 };
 }
 
-export function createRichTextTextAndLineBreakNodes(
+export function createRichTextTabNode(): RichTextTabNode {
+  return {
+    detail: IS_UNMERGEABLE,
+    format: 0,
+    mode: 'normal',
+    style: '',
+    text: '\t',
+    type: RichTextNodeType.tab,
+    version: 1,
+  };
+}
+
+export function createRichTextTextAndWhitespaceNodes(
   text: string,
   options?: { format?: TextFormatType[] }
-): (RichTextTextNode | RichTextLineBreakNode)[] {
-  if (!(text.includes('\n') || text.includes('\r'))) {
+): (RichTextTextNode | RichTextLineBreakNode | RichTextTabNode)[] {
+  if (!(text.includes('\n') || text.includes('\r') || text.includes('\t'))) {
     return [createRichTextTextNode(text, options)];
   }
-  const linesOrNewline = text.replace(/\r[^\n]|\r$/g, '').split(/(\r?\n)/);
+  const linesOrNewline = text.replace(/\r[^\n]|\r$/g, '').split(/(\r?\n|\t)/);
   return linesOrNewline
     .filter((it) => it.length > 0)
     .map((it) => {
       if (it === '\r\n' || it === '\n') {
         return createRichTextLineBreakNode();
+      } else if (it === '\t') {
+        return createRichTextTabNode();
       }
       return createRichTextTextNode(it, options);
     });

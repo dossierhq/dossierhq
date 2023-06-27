@@ -28,6 +28,7 @@ import type {
   RichTextNode,
   RichTextParagraphNode,
   RichTextRootNode,
+  RichTextTabNode,
   RichTextTextNode,
   RichTextValueItemNode,
   ValueItem,
@@ -216,6 +217,12 @@ export function isRichTextLineBreakNode(
   node: RichTextNode
 ): node is WithRichTextType<RichTextLineBreakNode, 'linebreak'> {
   return node.type === RichTextNodeType.linebreak;
+}
+
+export function isRichTextTabNode(
+  node: RichTextNode
+): node is WithRichTextType<RichTextTabNode, 'tab'> {
+  return node.type === RichTextNodeType.tab;
 }
 
 export function isRichTextElementNode(node: RichTextNode): node is RichTextElementNode {

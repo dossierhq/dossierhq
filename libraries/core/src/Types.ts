@@ -13,6 +13,7 @@ import type {
   SerializedListNode,
   SerializedParagraphNode,
   SerializedRootNode,
+  SerializedTabNode,
   SerializedTextNode,
   Spread,
 } from './third-party/Lexical.js';
@@ -67,6 +68,8 @@ export type RichTextElementNode = SerializedElementNode;
 export type RichTextTextNode = SerializedTextNode;
 
 export type RichTextLineBreakNode = SerializedLineBreakNode;
+
+export type RichTextTabNode = SerializedTabNode;
 
 export type RichTextRootNode = SerializedRootNode;
 

@@ -52,8 +52,15 @@ export type SerializedLineBreakNode = SerializedLexicalNode;
 
 export type SerializedParagraphNode = SerializedElementNode;
 
+export type SerializedTabNode = SerializedTextNode;
+
 // Copy from LexicalConstants. Would be good to ensure they are identical to Lexical's constants but
 // they are not exported and we don't want a runtime dependency on Lexical.
+
+// Text node details
+export const IS_DIRECTIONLESS = 1;
+export const IS_UNMERGEABLE = 1 << 1;
+
 const IS_BOLD = 1;
 const IS_ITALIC = 1 << 1;
 const IS_STRIKETHROUGH = 1 << 2;

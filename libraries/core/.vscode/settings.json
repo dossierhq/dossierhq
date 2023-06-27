@@ -12,6 +12,7 @@
     "testpass",
     "testuser",
     "unarchived",
+    "UNMERGEABLE",
     "Unpublish",
     "Upsert",
     "vitest"
