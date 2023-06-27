@@ -553,7 +553,21 @@ function LinkAndEntityLinkButton({
 
 function showLinkPrompt(editor: LexicalEditor) {
   const url = window.prompt('Enter the URL', 'https://');
-  if (url && url !== 'https://') {
-    editor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
+  const sanitizedUrl = sanitizeUrl(url);
+  if (sanitizedUrl) {
+    editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizedUrl);
   }
+}
+
+function sanitizeUrl(url: string | null) {
+  if (!url) return null;
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+      return urlObj.toString();
+    }
+  } catch (e) {
+    // ignore
+  }
+  return null;
 }

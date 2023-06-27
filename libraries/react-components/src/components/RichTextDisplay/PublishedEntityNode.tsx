@@ -93,10 +93,6 @@ export class PublishedEntityNode extends DecoratorBlockNode {
     return '\n';
   }
 
-  override isInline(): false {
-    return false;
-  }
-
   override decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
