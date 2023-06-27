@@ -88,6 +88,19 @@ export const SCHEMA = {
             RichTextNodeType.linebreak,
           ],
         },
+        {
+          name: 'code',
+          type: FieldType.RichText,
+          richTextNodes: [
+            RichTextNodeType.root,
+            RichTextNodeType.paragraph,
+            RichTextNodeType.text,
+            RichTextNodeType.linebreak,
+            RichTextNodeType.tab,
+            RichTextNodeType.code,
+            RichTextNodeType['code-highlight'],
+          ],
+        },
         { name: 'list', type: FieldType.RichText, list: true },
         { name: 'adminOnly', type: FieldType.RichText, adminOnly: true },
         {

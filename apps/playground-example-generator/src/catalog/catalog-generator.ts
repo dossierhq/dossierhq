@@ -1,6 +1,5 @@
 import 'dotenv/config';
 //
-import type { AdminEntityCreate } from '@dossierhq/core';
 import {
   copyEntity,
   createRichTextEntityLinkNode,
@@ -10,6 +9,8 @@ import {
   createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
+  type AdminEntityCreate,
+  type RichText,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
 import { v5 as uuidv5 } from 'uuid';
@@ -35,6 +36,192 @@ import type {
 import { SCHEMA, SCHEMA_WITHOUT_VALIDATIONS } from './schema.js';
 
 const UUID_NAMESPACE = 'fdf4e979-6f82-4d61-ab14-26c318cb6731';
+
+const CODE_BLOCK = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'if',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'keyword',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ' ',
+            type: 'code-highlight',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '(',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'true',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'boolean',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ')',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ' ',
+            type: 'code-highlight',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '{',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            type: 'linebreak',
+            version: 1,
+          },
+          {
+            detail: 2,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '\t',
+            type: 'tab',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'console',
+            type: 'code-highlight',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '.',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'log',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'function',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '(',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: "'Hello world'",
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'string',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ')',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ';',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+          {
+            type: 'linebreak',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '}',
+            type: 'code-highlight',
+            version: 1,
+            highlightType: 'punctuation',
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        type: 'code',
+        version: 1,
+        language: 'javascript',
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+} as unknown as RichText;
 
 function id(name: string) {
   return uuidv5(name, UUID_NAMESPACE);
@@ -305,6 +492,7 @@ async function createRichTextsEntities(
               createRichTextTextNode('World!', { format: ['bold'] }),
             ]),
           ]),
+          code: CODE_BLOCK,
           list: [
             createRichTextRootNode([
               createRichTextParagraphNode([createRichTextTextNode('First')]),

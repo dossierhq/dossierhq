@@ -135,6 +135,7 @@ export interface AdminRichTextsEntityFields {
   normal: RichText | null;
   required: RichText | null;
   minimal: RichText | null;
+  code: RichText | null;
   list: RichText[] | null;
   adminOnly: RichText | null;
   stringsEntity: RichText | null;
