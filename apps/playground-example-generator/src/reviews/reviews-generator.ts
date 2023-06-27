@@ -40,9 +40,9 @@ async function createPlaceOfBusiness(
   locationGenerator: Generator<Location, void>
 ) {
   const name = faker.company.name();
-  const line1 = faker.address.streetAddress();
-  const zip = faker.address.zipCode();
-  const city = faker.address.city();
+  const line1 = faker.location.streetAddress();
+  const zip = faker.location.zipCode();
+  const city = faker.location.city();
 
   const nextValue = locationGenerator.next();
   const location = !nextValue.done ? nextValue.value : null;

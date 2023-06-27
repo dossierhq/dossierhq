@@ -183,10 +183,10 @@ async function createPerson(
 function createPostalAddress() {
   return {
     type: 'PostalAddress',
-    address1: faker.address.streetAddress(),
-    address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
-    city: faker.address.city(),
-    zip: faker.address.zipCode(),
+    address1: faker.location.streetAddress(),
+    address2: randomNullUndefined(faker.location.secondaryAddress, 50, 0, 50),
+    city: faker.location.city(),
+    zip: faker.location.zipCode(),
   };
 }
 
