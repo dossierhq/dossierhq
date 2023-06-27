@@ -3,6 +3,7 @@
     "builtins",
     "dockest",
     "dossierhq",
+    "linebreak",
     "nextval",
     "postgres",
     "Randomizer",

@@ -124,7 +124,7 @@ export function assertIsAdminReferences(
 export interface AdminRichTextsFields {
   richText: RichText | null;
   richTextList: RichText[] | null;
-  richTextOnlyParagraphAndText: RichText | null;
+  richTextMinimal: RichText | null;
   richTextLimitedTypes: RichText | null;
 }
 
@@ -430,7 +430,7 @@ export function assertIsPublishedReferences(
 export interface PublishedRichTextsFields {
   richText: RichText | null;
   richTextList: RichText[] | null;
-  richTextOnlyParagraphAndText: RichText | null;
+  richTextMinimal: RichText | null;
   richTextLimitedTypes: RichText | null;
 }
 

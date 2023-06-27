@@ -11,7 +11,7 @@ import type {
   SchemaTypeDraft,
 } from './SchemaEditorReducer.js';
 import {
-  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
+  REQUIRED_NODES_PLACEHOLDER,
   SchemaEditorActions,
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
@@ -362,7 +362,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       )
     );
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
-      'root, paragraph, text, linebreak',
+      'root, paragraph, text, linebreak, tab',
       RichTextNodeType.entity,
     ]);
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -387,6 +387,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                     RichTextNodeType.paragraph,
                     RichTextNodeType.text,
                     RichTextNodeType.linebreak,
+                    RichTextNodeType.tab,
                     RichTextNodeType.heading,
                   ],
                 },
@@ -397,15 +398,11 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       ),
       new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'rt' },
-        [
-          ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name,
-          RichTextNodeType.heading,
-          RichTextNodeType.entity,
-        ]
+        [REQUIRED_NODES_PLACEHOLDER.name, RichTextNodeType.heading, RichTextNodeType.entity]
       )
     );
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
-      'root, paragraph, text, linebreak',
+      'root, paragraph, text, linebreak, tab',
       RichTextNodeType.entity,
       RichTextNodeType.heading,
     ]);
@@ -433,6 +430,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
                     RichTextNodeType.paragraph,
                     RichTextNodeType.text,
                     RichTextNodeType.linebreak,
+                    RichTextNodeType.tab,
                     RichTextNodeType.heading,
                     RichTextNodeType.entity,
                   ],
@@ -444,11 +442,11 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
       ),
       new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'rt' },
-        [ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name, RichTextNodeType.heading]
+        [REQUIRED_NODES_PLACEHOLDER.name, RichTextNodeType.heading]
       )
     );
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
-      'root, paragraph, text, linebreak',
+      'root, paragraph, text, linebreak, tab',
       RichTextNodeType.heading,
     ]);
     expect(state.entityTypes[0].fields[0].status).toBe('changed');
@@ -1644,6 +1642,7 @@ describe('UpdateSchemaSpecificationAction', () => {
                     RichTextNodeType.paragraph,
                     RichTextNodeType.text,
                     RichTextNodeType.linebreak,
+                    RichTextNodeType.tab,
                     RichTextNodeType.list,
                     RichTextNodeType.listitem,
                     RichTextNodeType.entity,
@@ -1657,7 +1656,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     );
 
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
-      'root, paragraph, text, linebreak',
+      'root, paragraph, text, linebreak, tab',
       RichTextNodeType.entity,
       'list, listitem',
     ]);

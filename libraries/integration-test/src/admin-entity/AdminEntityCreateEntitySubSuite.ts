@@ -861,16 +861,14 @@ async function createEntity_errorRichTextWithUnsupportedEntityNode({
     copyEntity(RICH_TEXTS_CREATE, {
       id,
       fields: {
-        richTextOnlyParagraphAndText: createRichTextRootNode([
-          createRichTextEntityNode({ id: referenceId }),
-        ]),
+        richTextMinimal: createRichTextRootNode([createRichTextEntityNode({ id: referenceId })]),
       },
     })
   );
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    `entity.fields.richTextOnlyParagraphAndText[0]: Rich text node type entity is not allowed in field (supported nodes: linebreak, paragraph, root, text)`
+    `entity.fields.richTextMinimal[0]: Rich text node type entity is not allowed in field (supported nodes: linebreak, paragraph, root, tab, text)`
   );
 
   const getResult = await client.getEntity({ id });

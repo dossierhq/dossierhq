@@ -149,7 +149,13 @@ export {
   createRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from './RichTextUtils.js';
-export { AdminSchema, FieldType, PublishedSchema, RichTextNodeType } from './Schema.js';
+export {
+  AdminSchema,
+  FieldType,
+  PublishedSchema,
+  REQUIRED_RICH_TEXT_NODES,
+  RichTextNodeType,
+} from './Schema.js';
 export type {
   AdminBooleanFieldSpecificationUpdate,
   AdminEntityFieldSpecificationUpdate,

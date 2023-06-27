@@ -1,4 +1,8 @@
-import { FieldType, RichTextNodeType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import {
+  FieldType,
+  REQUIRED_RICH_TEXT_NODES,
+  type AdminSchemaSpecificationUpdate,
+} from '@dossierhq/core';
 
 export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   entityTypes: [
@@ -36,14 +40,9 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'richText', type: FieldType.RichText },
         { name: 'richTextList', type: FieldType.RichText, list: true },
         {
-          name: 'richTextOnlyParagraphAndText',
+          name: 'richTextMinimal',
           type: FieldType.RichText,
-          richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-          ],
+          richTextNodes: REQUIRED_RICH_TEXT_NODES,
         },
         {
           name: 'richTextLimitedTypes',

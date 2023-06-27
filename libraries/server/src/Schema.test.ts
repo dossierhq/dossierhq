@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecification } from '@dossierhq/core';
-import { FieldType, ok } from '@dossierhq/core';
+import { FieldType, RichTextNodeType, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { getSchemaSpecification } from './Schema.js';
@@ -172,6 +172,76 @@ describe('AdminSchema getSchema', () => {
       indexes: [],
       patterns: [],
       valueTypes: [],
+    });
+  });
+
+  test('Version <=0.3.2 schema', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const context = createMockTransactionContext();
+
+    const schemaSpec: AdminSchemaSpecification = {
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: null,
+          fields: [
+            {
+              name: 'rt',
+              type: FieldType.RichText,
+              adminOnly: false,
+              list: false,
+              required: false,
+              // tab became required in 0.3.2
+              richTextNodes: [
+                RichTextNodeType.linebreak,
+                RichTextNodeType.root,
+                RichTextNodeType.text,
+              ],
+              entityTypes: [],
+              linkEntityTypes: [],
+              valueTypes: [],
+            },
+          ],
+        },
+      ],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    };
+    databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
+    const result = await getSchemaSpecification(databaseAdapter, context, false);
+    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: null,
+          fields: [
+            {
+              name: 'rt',
+              type: FieldType.RichText,
+              adminOnly: false,
+              list: false,
+              required: false,
+              richTextNodes: [
+                RichTextNodeType.linebreak,
+                RichTextNodeType.root,
+                RichTextNodeType.tab,
+                RichTextNodeType.text,
+              ],
+              entityTypes: [],
+              linkEntityTypes: [],
+              valueTypes: [],
+            },
+          ],
+        },
+      ],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
     });
   });
 });

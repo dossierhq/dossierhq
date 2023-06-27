@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
-import { RichTextNodeType } from '@dossierhq/core';
+import { REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from '@dossierhq/core';
 import { FieldType } from '@dossierhq/core';
 
 export const SCHEMA: AdminSchemaSpecificationUpdate = {
@@ -25,22 +25,14 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         {
           name: 'description',
           type: FieldType.RichText,
-          richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-          ],
+          richTextNodes: REQUIRED_RICH_TEXT_NODES,
         },
         {
           name: 'body',
           type: FieldType.RichText,
           required: true,
           richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
+            ...REQUIRED_RICH_TEXT_NODES,
             RichTextNodeType.entityLink,
             RichTextNodeType.valueItem,
           ],

@@ -47,6 +47,7 @@
             "paragraph",
             "text",
             "linebreak",
+            "tab",
             "list",
             "listitem",
             "code",
@@ -172,6 +173,7 @@
             "paragraph",
             "text",
             "linebreak",
+            "tab",
             "valueItem",
             "entityLink",
             "link"
@@ -242,6 +244,7 @@
             "paragraph",
             "text",
             "linebreak",
+            "tab",
             "entityLink"
           ],
           "entityTypes": [],

@@ -1,6 +1,7 @@
 import {
   AdminSchema,
   FieldType,
+  RichTextNodeType,
   isFieldValueEqual,
   ok,
   type AdminSchemaSpecification,
@@ -56,6 +57,15 @@ export async function getSchemaSpecification(
       if (fieldSpec.type === FieldType.String) {
         // Version 0.2.15: added values to string fields
         if (fieldSpec.values === undefined) fieldSpec.values = [];
+      } else if (fieldSpec.type === FieldType.RichText) {
+        // Version 0.3.2: added tab as required node
+        if (
+          fieldSpec.richTextNodes.length > 0 &&
+          !fieldSpec.richTextNodes.includes(RichTextNodeType.tab)
+        ) {
+          fieldSpec.richTextNodes.push('tab');
+          fieldSpec.richTextNodes.sort();
+        }
       }
     }
   }

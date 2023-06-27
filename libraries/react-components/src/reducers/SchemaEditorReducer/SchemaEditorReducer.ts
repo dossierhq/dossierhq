@@ -1,5 +1,6 @@
 import {
   FieldType,
+  REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
   assertIsDefined,
   type AdminEntityTypeSpecification,
@@ -120,12 +121,7 @@ interface NodePlaceholderConfig {
 }
 
 export const RichTextNodePlaceholders: NodePlaceholderConfig[] = [
-  [
-    RichTextNodeType.root,
-    RichTextNodeType.paragraph,
-    RichTextNodeType.text,
-    RichTextNodeType.linebreak,
-  ],
+  REQUIRED_RICH_TEXT_NODES,
   [RichTextNodeType.code, RichTextNodeType['code-highlight']],
   [RichTextNodeType.list, RichTextNodeType.listitem],
 ].map((nodes) => ({ name: nodes.join(', '), nodes }));
@@ -134,7 +130,7 @@ const RichTextNodesInPlaceholders = new Set(
   RichTextNodePlaceholders.flatMap((placeholder) => placeholder.nodes)
 );
 
-export const ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER = RichTextNodePlaceholders[0];
+export const REQUIRED_NODES_PLACEHOLDER = RichTextNodePlaceholders[0];
 
 export function initializeSchemaEditorState(): SchemaEditorState {
   return {
@@ -659,8 +655,8 @@ class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
   reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
     const value = [...this.richTextNodesWithPlaceholders];
 
-    if (value.length > 0 && !value.includes(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name)) {
-      value.push(ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name);
+    if (value.length > 0 && !value.includes(REQUIRED_NODES_PLACEHOLDER.name)) {
+      value.push(REQUIRED_NODES_PLACEHOLDER.name);
     }
 
     sortRichTextNodesWithPlaceholders(value);
@@ -1430,10 +1426,10 @@ export function sortRichTextNodesWithPlaceholders(richTextNodesWithPlaceholders:
   }
 
   richTextNodesWithPlaceholders.sort((a, b) => {
-    if (a === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name) {
+    if (a === REQUIRED_NODES_PLACEHOLDER.name) {
       return -1;
     }
-    if (b === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name) {
+    if (b === REQUIRED_NODES_PLACEHOLDER.name) {
       return 1;
     }
     return a.localeCompare(b);

@@ -6,7 +6,7 @@ import type {
   BooleanFieldSpecification,
   PublishedSchemaSpecification,
 } from './Schema.js';
-import { AdminSchema, FieldType, RichTextNodeType } from './Schema.js';
+import { AdminSchema, FieldType, REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from './Schema.js';
 
 describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
@@ -236,10 +236,7 @@ describe('mergeWith()', () => {
               linkEntityTypes: ['Foo'],
               valueTypes: ['Bar'],
               richTextNodes: [
-                RichTextNodeType.root,
-                RichTextNodeType.paragraph,
-                RichTextNodeType.text,
-                RichTextNodeType.linebreak,
+                ...REQUIRED_RICH_TEXT_NODES,
                 RichTextNodeType.entity,
                 RichTextNodeType.entityLink,
                 RichTextNodeType.valueItem,
@@ -270,6 +267,7 @@ describe('mergeWith()', () => {
       RichTextNodeType.linebreak,
       RichTextNodeType.paragraph,
       RichTextNodeType.root,
+      RichTextNodeType.tab,
       RichTextNodeType.text,
       RichTextNodeType.valueItem,
     ]);
@@ -404,11 +402,7 @@ describe('mergeWith()', () => {
                 linkEntityTypes: ['Entity', 'Entity'],
                 valueTypes: ['ValueType', 'ValueType'],
                 richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.text,
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.linebreak,
+                  ...REQUIRED_RICH_TEXT_NODES,
                   RichTextNodeType.entity,
                   RichTextNodeType.entityLink,
                   RichTextNodeType.valueItem,
@@ -1143,7 +1137,7 @@ describe('validate()', () => {
     );
   });
 
-  test('Error: richTextNodes without root, paragraph, text and linebreak', () => {
+  test('Error: richTextNodes without required nodes', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
@@ -1172,7 +1166,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include root, paragraph, text, linebreak'
+      'Foo.bar: richTextNodes must include root, paragraph, text, linebreak, tab'
     );
   });
 
@@ -1192,11 +1186,9 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                ],
+                richTextNodes: REQUIRED_RICH_TEXT_NODES.filter(
+                  (it) => it !== RichTextNodeType.paragraph
+                ),
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1229,11 +1221,9 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.linebreak,
-                ],
+                richTextNodes: REQUIRED_RICH_TEXT_NODES.filter(
+                  (it) => it !== RichTextNodeType.text
+                ),
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1266,11 +1256,9 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                ],
+                richTextNodes: REQUIRED_RICH_TEXT_NODES.filter(
+                  (it) => it !== RichTextNodeType.linebreak
+                ),
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1284,6 +1272,39 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: richTextNodes must include linebreak'
+    );
+  });
+
+  test('Error: richTextNodes without tab', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            authKeyPattern: null,
+            nameField: null,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                list: false,
+                required: false,
+                adminOnly: false,
+                richTextNodes: REQUIRED_RICH_TEXT_NODES.filter((it) => it !== RichTextNodeType.tab),
+                entityTypes: [],
+                linkEntityTypes: [],
+                valueTypes: [],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextNodes must include tab'
     );
   });
 
@@ -1303,13 +1324,7 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                  RichTextNodeType.list,
-                ],
+                richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.list],
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1342,13 +1357,7 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                  RichTextNodeType.listitem,
-                ],
+                richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.listitem],
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1381,13 +1390,7 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                  RichTextNodeType.code,
-                ],
+                richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.code],
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1420,13 +1423,7 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                  RichTextNodeType['code-highlight'],
-                ],
+                richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType['code-highlight']],
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: [],
@@ -1460,12 +1457,7 @@ describe('validate()', () => {
                 required: false,
                 adminOnly: false,
                 entityTypes: ['Foo'],
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                ],
+                richTextNodes: REQUIRED_RICH_TEXT_NODES,
                 linkEntityTypes: [],
                 valueTypes: [],
               },
@@ -1498,12 +1490,7 @@ describe('validate()', () => {
                 list: false,
                 required: false,
                 adminOnly: false,
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                ],
+                richTextNodes: REQUIRED_RICH_TEXT_NODES,
                 entityTypes: [],
                 valueTypes: [],
               },
@@ -1538,12 +1525,7 @@ describe('validate()', () => {
                 entityTypes: [],
                 linkEntityTypes: [],
                 valueTypes: ['Bar'],
-                richTextNodes: [
-                  RichTextNodeType.root,
-                  RichTextNodeType.paragraph,
-                  RichTextNodeType.text,
-                  RichTextNodeType.linebreak,
-                ],
+                richTextNodes: REQUIRED_RICH_TEXT_NODES,
               },
             ],
           },

@@ -226,11 +226,12 @@ export interface SchemaSpecificationUpdatePayload {
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 const PASCAL_CASE_PATTERN = /^[A-Z][a-zA-Z0-9_]*$/;
 
-const REQUIRED_RICH_TEXT_NODES = [
+export const REQUIRED_RICH_TEXT_NODES = [
   RichTextNodeType.root,
   RichTextNodeType.paragraph,
   RichTextNodeType.text,
   RichTextNodeType.linebreak,
+  RichTextNodeType.tab,
 ];
 
 const GROUPED_RICH_TEXT_NODE_TYPES: RichTextNodeType[][] = [

@@ -14,6 +14,7 @@ import {
   isRichTextListItemNode,
   isRichTextListNode,
   isRichTextParagraphNode,
+  isRichTextTabNode,
   isRichTextTextNode,
   isRichTextValueItemNode,
   normalizeEntityFields,
@@ -156,6 +157,8 @@ describe('isRichTextXxxNode', () => {
       const _type: 'text' = node.type;
     } else if (isRichTextLineBreakNode(node)) {
       const _type: 'linebreak' = node.type;
+    } else if (isRichTextTabNode(node)) {
+      const _type: 'tab' = node.type;
     } else if (isRichTextParagraphNode(node)) {
       const _type: 'paragraph' = node.type;
     } else if (isRichTextEntityNode(node)) {

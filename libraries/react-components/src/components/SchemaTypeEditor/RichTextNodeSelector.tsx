@@ -8,8 +8,8 @@ import {
 import type { Dispatch } from 'react';
 import { useEffect, useMemo, useReducer } from 'react';
 import {
+  REQUIRED_NODES_PLACEHOLDER,
   RichTextNodePlaceholders,
-  ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER,
   SchemaEditorActions,
   sortRichTextNodesWithPlaceholders,
   type SchemaEditorStateAction,
@@ -38,7 +38,7 @@ function useSynchronizeMultipleSelectorState(
 
     const result: { id: string; removable: boolean }[] = allNodes.map((it) => ({
       id: it,
-      removable: it === ROOT_PARAGRAPH_TEXT_NODES_PLACEHOLDER.name ? selectedIds.length <= 1 : true,
+      removable: it === REQUIRED_NODES_PLACEHOLDER.name ? selectedIds.length <= 1 : true,
     }));
     return result;
   }, [selectedIds.length]);

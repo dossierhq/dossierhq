@@ -1,5 +1,6 @@
 import {
   FieldType,
+  REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
   type AdminBooleanFieldSpecificationUpdate,
   type AdminEntityFieldSpecificationUpdate,
@@ -81,22 +82,13 @@ export const SCHEMA = {
         {
           name: 'minimal',
           type: FieldType.RichText,
-          richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-          ],
+          richTextNodes: REQUIRED_RICH_TEXT_NODES,
         },
         {
           name: 'code',
           type: FieldType.RichText,
           richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-            RichTextNodeType.tab,
+            ...REQUIRED_RICH_TEXT_NODES,
             RichTextNodeType.code,
             RichTextNodeType['code-highlight'],
           ],
@@ -106,37 +98,19 @@ export const SCHEMA = {
         {
           name: 'stringsEntity',
           type: FieldType.RichText,
-          richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-            RichTextNodeType.entity,
-          ],
+          richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.entity],
           entityTypes: ['StringsEntity'],
         },
         {
           name: 'numbersEntityLink',
           type: FieldType.RichText,
-          richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-            RichTextNodeType.entityLink,
-          ],
+          richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.entityLink],
           linkEntityTypes: ['NumbersEntity'],
         },
         {
           name: 'nestedValueItem',
           type: FieldType.RichText,
-          richTextNodes: [
-            RichTextNodeType.root,
-            RichTextNodeType.paragraph,
-            RichTextNodeType.text,
-            RichTextNodeType.linebreak,
-            RichTextNodeType.valueItem,
-          ],
+          richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.valueItem],
           valueTypes: ['NestedValueItem'],
         },
       ],
