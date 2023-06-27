@@ -1,4 +1,4 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/heft/typescript.schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/typescript.schema.json",
   "extends": "../node_modules/@dossierhq/heft-node-rig/profiles/library-react-esm/config/typescript.json"
 }

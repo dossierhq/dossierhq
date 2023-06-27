@@ -18,7 +18,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test",
-    "build:watch": "heft build --watch",
+    "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -39,7 +39,7 @@
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.56.0",
     "@storybook/addon-actions": "~7.0.23",
     "@storybook/addon-essentials": "~7.0.23",
     "@storybook/addon-links": "~7.0.23",

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean",
-    "build:watch": "heft build --watch",
+    "build:watch": "heft build-watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
@@ -46,7 +46,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.56.0",
     "@types/better-sqlite3": "~7.6.4",
     "@types/pg": "~8.10.2",
     "@types/sqlite3": "~3.1.8",

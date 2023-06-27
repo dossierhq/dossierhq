@@ -1,11 +1,20 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/heft/heft.schema.json",
-  "eventActions": [
-    {
-      "actionKind": "deleteGlobs",
-      "heftEvent": "clean",
-      "actionId": "defaultClean",
-      "globsToDelete": ["lib", "temp", "*.build.log", "*.build.error.log"]
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/heft.schema.json",
+  "phasesByName": {
+    "build": {
+      "cleanFiles": [
+        { "sourcePath": "lib" },
+        { "sourcePath": "temp" },
+        { "sourcePath": "*.build.log" },
+        { "sourcePath": "*.build.error.log" }
+      ],
+      "tasksByName": {
+        "typescript": {
+          "taskPlugin": {
+            "pluginPackage": "@rushstack/heft-typescript-plugin"
+          }
+        }
+      }
     }
-  ]
+  }
 }

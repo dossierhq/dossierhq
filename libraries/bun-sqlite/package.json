@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test",
-    "build:watch": "heft build --watch",
+    "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -29,7 +29,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.56.0",
     "bun-types": "~0.6.9",
     "eslint": "~8.43.0",
     "prettier": "2.8.8",

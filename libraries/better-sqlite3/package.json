@@ -24,7 +24,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json && sqlite3 databases/integration-test-admin-entity.sqlite .schema > docs/schema.sql",
-    "build:watch": "heft build --watch",
+    "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -49,7 +49,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.56.0",
     "@types/better-sqlite3": "~7.6.4",
     "better-sqlite3": "~8.4.0",
     "eslint": "~8.43.0",

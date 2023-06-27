@@ -2,7 +2,7 @@
  * Configures the TypeScript plugin for Heft.  This plugin also manages linting.
  */
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/heft/typescript.schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/typescript.schema.json",
 
   /**
    * Optionally specifies another JSON config file that this file extends from. This provides a way for standard
@@ -16,15 +16,14 @@
    */
   "additionalModuleKindsToEmit": [
     // {
-      /**
-       * (Required) Must be one of "commonjs", "amd", "umd", "system", "es2015", "esnext"
-       */
-      // "moduleKind": "commonjs",
-
-      /**
-       * (Required) The name of the folder where the output will be written.
-       */
-      // "outFolderName": "lib/cjs"
+    /**
+     * (Required) Must be one of "commonjs", "amd", "umd", "system", "es2015", "esnext"
+     */
+    // "moduleKind": "commonjs",
+    /**
+     * (Required) The name of the folder where the output will be written.
+     */
+    // "outFolderName": "lib/cjs"
     // }
   ],
 

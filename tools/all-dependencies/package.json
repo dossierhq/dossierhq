@@ -64,7 +64,8 @@
   "devDependencies": {
     "@graphiql/toolkit": "~0.8.4",
     "@playwright/test": "~1.35.1",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.56.0",
+    "@rushstack/heft-typescript-plugin": "~0.1.11",
     "@storybook/addon-actions": "~7.0.23",
     "@storybook/addon-docs": "~7.0.23",
     "@storybook/addon-essentials": "~7.0.23",

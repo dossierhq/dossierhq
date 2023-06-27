@@ -23,7 +23,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build cjs-package-json",
-    "build:watch": "heft build --watch",
+    "build:watch": "heft build-watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
     "db:dump-schema": "./scripts/db-dump-schema.sh",
@@ -55,7 +55,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.50.6",
+    "@rushstack/heft": "0.56.0",
     "@types/pg": "~8.10.2",
     "@types/uuid": "~9.0.2",
     "dotenv": "~16.3.1",
