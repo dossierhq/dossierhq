@@ -27,7 +27,7 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "dependencies": {
-    "tslib": "~2.5.3"
+    "tslib": "~2.6.0"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",

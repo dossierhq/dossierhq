@@ -41,7 +41,7 @@
   "dependencies": {
     "@dossierhq/core": "workspace:*",
     "graphql": "~16.7.1",
-    "tslib": "~2.5.3"
+    "tslib": "~2.6.0"
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",
