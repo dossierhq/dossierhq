@@ -35,6 +35,7 @@ export type AppAdminEntity =
 export interface AdminBooleansEntityFields {
   normal: boolean | null;
   required: boolean | null;
+  list: boolean[] | null;
 }
 
 export type AdminBooleansEntity = AdminEntity<'BooleansEntity', AdminBooleansEntityFields, string>;

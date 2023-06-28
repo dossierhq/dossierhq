@@ -249,7 +249,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
       copyEntity(minimalPublish, {
         id: id('booleans-filled'),
         info: { name: 'Booleans filled' },
-        fields: { normal: false },
+        fields: { normal: false, list: [true, false, true] },
       })
     ),
 

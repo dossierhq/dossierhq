@@ -20,6 +20,7 @@ export const SCHEMA = {
       fields: [
         { name: 'normal', type: FieldType.Boolean },
         { name: 'required', type: FieldType.Boolean, required: true },
+        { name: 'list', type: FieldType.Boolean, list: true },
       ],
     },
     {
