@@ -9,6 +9,7 @@ import {
   Column,
   Delete,
   HoverRevealContainer,
+  Tag,
   Text,
   toFlexItemClassName,
 } from '@dossierhq/design';
@@ -56,6 +57,12 @@ export function EntityTypeFieldEditor({ fieldSpec, value, validationIssues, onCh
           </HoverRevealContainer.Item>
           <HoverRevealContainer.Item forceVisible>
             <StatusTag status={entity.info.status} />
+            {!entity.info.valid || entity.info.validPublished === false ? (
+              <>
+                {' '}
+                <Tag color="danger">Invalid</Tag>
+              </>
+            ) : null}
           </HoverRevealContainer.Item>
           <HoverRevealContainer.Item paddingTop={1}>
             <Delete onClick={handleDeleteClick} />
@@ -110,6 +117,12 @@ export function EntityTypeFieldEditorWithoutClear({
       </Column.Item>
       <Column.Item>
         <StatusTag status={entity.info.status} />
+        {!entity.info.valid || entity.info.validPublished === false ? (
+          <>
+            {' '}
+            <Tag color="danger">Invalid</Tag>
+          </>
+        ) : null}
       </Column.Item>
     </Column>
   );
