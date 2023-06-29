@@ -10,18 +10,17 @@ import {
   GridList,
   GridListDragHandle,
   GridListItem,
-  Text,
   useDragAndDrop,
 } from '@dossierhq/design';
 import React, { useCallback, useMemo } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
+import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>
   extends FieldEditorProps<TFieldSpec, (TItem | null)[]> {
   AddButton: React.JSXElementConstructor<{
     fieldSpec: AdminFieldSpecification<TFieldSpec>;
-    value: (TItem | null)[] | null;
-    onChange: (value: (TItem | null)[] | null) => void;
+    onAddItem: (value: TItem | null) => void;
   }>;
   Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
@@ -37,6 +36,14 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   AddButton,
   Editor,
 }: Props<TFieldSpec, TItem>): JSX.Element {
+  const handleAddItem = useCallback(
+    (itemValue: TItem | null) => {
+      if (onChange) {
+        onChange(value ? [...value, itemValue] : [itemValue]);
+      }
+    },
+    [value, onChange]
+  );
   const handleItemChange = useCallback(
     (itemValue: TItem | null, index: number) => {
       if (onChange) {
@@ -112,12 +119,8 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
         </GridList>
       ) : null}
 
-      <AddButton fieldSpec={fieldSpec} value={value} onChange={onChange} />
-      {rootValidationIssues.map((error, index) => (
-        <Text key={index} textStyle="body2" color="danger" marginTop={1}>
-          {error.message}
-        </Text>
-      ))}
+      <AddButton fieldSpec={fieldSpec} onAddItem={handleAddItem} />
+      <ValidationIssuesDisplay validationIssues={rootValidationIssues} />
     </Column>
   );
 }

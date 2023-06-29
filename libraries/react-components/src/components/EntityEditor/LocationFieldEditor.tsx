@@ -61,16 +61,14 @@ export function LocationFieldEditor({ value, validationIssues, onChange }: Props
 }
 
 export function AddLocationListItemButton({
-  onChange,
-  value,
+  onAddItem,
 }: {
-  onChange: (value: (Location | null)[]) => void;
-  value: (Location | null)[] | null;
+  onAddItem: (value: Location | null) => void;
 }) {
   return (
     <Button
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-      onClick={() => onChange(value ? [...value, null] : [null])}
+      onClick={() => onAddItem(null)}
     >
       Add
     </Button>

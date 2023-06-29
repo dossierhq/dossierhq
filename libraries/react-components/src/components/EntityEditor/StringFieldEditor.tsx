@@ -70,12 +70,10 @@ function StringValueFieldEditor({ fieldSpec, value, validationIssues, onChange }
 
 export function AddStringListItemButton({
   fieldSpec,
-  onChange,
-  value,
+  onAddItem,
 }: {
   fieldSpec: AdminFieldSpecification<StringFieldSpecification>;
-  onChange: (value: (string | null)[]) => void;
-  value: (string | null)[] | null;
+  onAddItem: (value: string | null) => void;
 }) {
   if (fieldSpec.values.length > 0) {
     return (
@@ -83,7 +81,7 @@ export function AddStringListItemButton({
         className={toFlexItemClassName({ alignSelf: 'flex-start' })}
         items={fieldSpec.values.map((item) => ({ id: item.value }))}
         renderItem={(item) => item.id}
-        onItemClick={(item) => onChange(value ? [...value, item.id] : [item.id])}
+        onItemClick={(item) => onAddItem(item.id)}
       >
         Add
       </ButtonDropdown>
@@ -93,7 +91,7 @@ export function AddStringListItemButton({
   return (
     <Button
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-      onClick={() => onChange(value ? [...value, null] : [null])}
+      onClick={() => onAddItem(null)}
     >
       Add
     </Button>

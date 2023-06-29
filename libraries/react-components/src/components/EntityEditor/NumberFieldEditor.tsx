@@ -38,16 +38,14 @@ export function NumberFieldEditor({ fieldSpec, value, validationIssues, onChange
 }
 
 export function AddNumberListItemButton({
-  onChange,
-  value,
+  onAddItem,
 }: {
-  onChange: (value: (number | null)[]) => void;
-  value: (number | null)[] | null;
+  onAddItem: (value: number | null) => void;
 }) {
   return (
     <Button
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-      onClick={() => onChange(value ? [...value, null] : [null])}
+      onClick={() => onAddItem(null)}
     >
       Add
     </Button>

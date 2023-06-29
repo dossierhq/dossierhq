@@ -130,18 +130,12 @@ export function EntityTypeFieldEditorWithoutClear({
 
 export function AddEntityListItemButton({
   fieldSpec,
-  onChange,
-  value,
+  onAddItem,
 }: {
   fieldSpec: AdminFieldSpecification<EntityFieldSpecification>;
-  onChange: (value: (EntityReference | null)[]) => void;
-  value: (EntityReference | null)[] | null;
+  onAddItem: (value: EntityReference | null) => void;
 }) {
-  const handleEntitySelected = useCallback(
-    (entity: EntityReference) => onChange(value ? [...value, entity] : [entity]),
-    [onChange, value]
-  );
-  return <AddEntityButton fieldSpec={fieldSpec} onEntitySelected={handleEntitySelected} />;
+  return <AddEntityButton fieldSpec={fieldSpec} onEntitySelected={onAddItem} />;
 }
 
 function AddEntityButton({

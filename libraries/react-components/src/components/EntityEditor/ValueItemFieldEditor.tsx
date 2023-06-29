@@ -124,17 +124,12 @@ export function ValueItemFieldEditorWithoutClear({
 
 export function AddValueItemListItemButton({
   fieldSpec,
-  onChange,
-  value,
+  onAddItem,
 }: {
   fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>;
-  onChange: (value: (ValueItem | null)[]) => void;
-  value: (ValueItem | null)[] | null;
+  onAddItem: (value: ValueItem | null) => void;
 }) {
-  const handleValueTypeSelected = useCallback(
-    (type: string) => onChange(value ? [...value, { type }] : [{ type }]),
-    [onChange, value]
-  );
+  const handleValueTypeSelected = useCallback((type: string) => onAddItem({ type }), [onAddItem]);
   return <AddValueItemButton fieldSpec={fieldSpec} onValueTypeSelected={handleValueTypeSelected} />;
 }
 

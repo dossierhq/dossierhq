@@ -42,16 +42,14 @@ export function BooleanFieldEditor({ value, validationIssues, onChange }: Props)
 }
 
 export function AddBooleanListItemButton({
-  onChange,
-  value,
+  onAddItem,
 }: {
-  onChange: (value: (boolean | null)[]) => void;
-  value: (boolean | null)[] | null;
+  onAddItem: (value: boolean | null) => void;
 }) {
   return (
     <Button
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-      onClick={() => onChange(value ? [...value, null] : [null])}
+      onClick={() => onAddItem(null)}
     >
       Add
     </Button>
