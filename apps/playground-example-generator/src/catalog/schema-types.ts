@@ -174,6 +174,7 @@ export interface AdminStringsEntityFields {
   values: 'bar' | 'baz' | 'foo' | null;
   valuesList: Array<'bar' | 'baz' | 'foo'> | null;
   list: string[] | null;
+  multilineList: string[] | null;
   requiredList: string[] | null;
   requiredListMatchPattern: string[] | null;
 }
