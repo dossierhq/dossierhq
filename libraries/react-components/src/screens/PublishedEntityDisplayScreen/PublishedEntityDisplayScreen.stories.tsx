@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
+import { CatalogEntities } from '../../test/CatalogEntities.js';
 import type { PublishedEntityDisplayScreenProps } from './PublishedEntityDisplayScreen';
 import { PublishedEntityDisplayScreen } from './PublishedEntityDisplayScreen';
 
@@ -47,6 +48,6 @@ export const HeaderFooter: Story = {
 
 export const OpenStringPublishedMinimalUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams({ id: '3d496031-5346-5637-bded-3839baa64a80' }),
+    initialUrlSearchParams: new URLSearchParams({ id: CatalogEntities.Strings.publishedMinimal }),
   },
 };

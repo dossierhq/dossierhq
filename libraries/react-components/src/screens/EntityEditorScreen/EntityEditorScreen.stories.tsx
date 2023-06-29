@@ -2,6 +2,7 @@ import { NotificationContainer, Text } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useMemo, useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
+import { CatalogEntities } from '../../test/CatalogEntities.js';
 import type { EntityEditorScreenProps } from './EntityEditorScreen';
 import { EntityEditorScreen } from './EntityEditorScreen';
 
@@ -67,6 +68,62 @@ export const NewStringsEntityUrl: Story = {
 
 export const OpenStringPublishedMinimalUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams({ id: '3d496031-5346-5637-bded-3839baa64a80' }),
+    initialUrlSearchParams: new URLSearchParams({ id: CatalogEntities.Strings.publishedMinimal }),
+  },
+};
+
+export const OpenAllBooleansUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.Booleans).map((id) => ['id', id])
+    ),
+  },
+};
+
+export const OpenAllEntitiesUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.Entities).map((id) => ['id', id])
+    ),
+  },
+};
+
+export const OpenAllLocationsUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.Locations).map((id) => ['id', id])
+    ),
+  },
+};
+
+export const OpenAllNumbersUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.Numbers).map((id) => ['id', id])
+    ),
+  },
+};
+
+export const OpenAllRichTextsUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.RichTexts).map((id) => ['id', id])
+    ),
+  },
+};
+
+export const OpenAllStringsUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.Strings).map((id) => ['id', id])
+    ),
+  },
+};
+
+export const OpenAllValueItemsUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams(
+      Object.values(CatalogEntities.ValueItems).map((id) => ['id', id])
+    ),
   },
 };
