@@ -80,7 +80,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
 
   return (
     <Column overflowY="auto">
-      {value !== null ? (
+      {value && value.length > 0 ? (
         <GridList aria-label={`List of values`} dragAndDropHooks={fieldsDragAndDropHooks}>
           {value.map((it, index) => {
             return (

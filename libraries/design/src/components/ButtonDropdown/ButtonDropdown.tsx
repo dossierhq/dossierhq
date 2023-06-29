@@ -6,6 +6,7 @@ import type { IconName } from '../Icon/Icon.js';
 export interface ButtonDropdownProps<TItem extends DropdownItem = DropdownItem>
   extends Omit<DropdownProps<HTMLButtonElement, TItem>, 'renderTrigger'> {
   id?: string;
+  className?: string;
   iconLeft?: IconName;
   disabled?: boolean;
   sneaky?: boolean;
@@ -14,6 +15,7 @@ export interface ButtonDropdownProps<TItem extends DropdownItem = DropdownItem>
 
 export function ButtonDropdown<TItem extends DropdownItem>({
   id,
+  className,
   iconLeft,
   sneaky,
   disabled,
@@ -27,6 +29,7 @@ export function ButtonDropdown<TItem extends DropdownItem>({
       renderTrigger={(triggerRef, onOpenDropdown) => (
         <Button
           ref={triggerRef}
+          className={className}
           iconLeft={iconLeft}
           iconRight={sneaky ? undefined : args.up ? 'chevronUp' : 'chevronDown'}
           color={color}
