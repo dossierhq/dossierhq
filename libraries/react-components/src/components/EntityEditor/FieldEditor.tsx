@@ -25,7 +25,7 @@ import {
   type StringFieldSpecification,
   type ValueItemFieldSpecification,
 } from '@dossierhq/core';
-import { useContext } from 'react';
+import { useContext, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { AddEntityListItemButton, EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
@@ -43,6 +43,7 @@ export interface FieldEditorProps<
   fieldSpec: AdminFieldSpecification<TFieldSpec>;
   adminOnly: boolean;
   value: TValue | null;
+  dragHandle?: ReactNode;
   onChange: (value: TValue | null) => void;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
 }

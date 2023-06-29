@@ -105,12 +105,12 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
                 marginVertical={1}
                 textValue={`Value ${index + 1}`}
               >
-                <GridListDragHandle />
                 <Editor
                   value={it}
                   fieldSpec={fieldSpec}
                   adminOnly={adminOnly}
                   validationIssues={indexValidationIssues.get(index) ?? noErrors}
+                  dragHandle={<GridListDragHandle />}
                   onChange={(newItemValue) => handleItemChange(newItemValue, index)}
                 />
               </GridListItem>

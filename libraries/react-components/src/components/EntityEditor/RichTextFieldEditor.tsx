@@ -11,6 +11,7 @@ export function RichTextFieldEditor({
   adminOnly,
   value,
   validationIssues,
+  dragHandle,
   onChange,
 }: Props) {
   //TODO validation issues in value items in the rich text are shown both here and in the value item editor
@@ -21,6 +22,7 @@ export function RichTextFieldEditor({
   }, [validationIssues]);
   return (
     <>
+      {dragHandle}
       <RichTextEditor
         fieldSpec={fieldSpec}
         adminOnly={adminOnly}

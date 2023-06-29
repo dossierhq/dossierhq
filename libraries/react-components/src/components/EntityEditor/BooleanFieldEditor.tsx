@@ -13,7 +13,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<BooleanFieldSpecification, boolean>;
 
-export function BooleanFieldEditor({ value, validationIssues, onChange }: Props) {
+export function BooleanFieldEditor({ value, validationIssues, dragHandle, onChange }: Props) {
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       onChange(event.target.checked);
@@ -25,6 +25,7 @@ export function BooleanFieldEditor({ value, validationIssues, onChange }: Props)
   return (
     <HoverRevealContainer>
       <HoverRevealContainer.Item flexGrow={1} forceVisible>
+        {dragHandle}
         <Checkbox checked={!!value} onChange={handleChange}>
           {value === true ? 'True' : value === false ? 'False' : <i>Not set</i>}
         </Checkbox>

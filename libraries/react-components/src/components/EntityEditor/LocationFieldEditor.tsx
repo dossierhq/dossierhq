@@ -1,5 +1,12 @@
 import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
-import { Button, Delete, HoverRevealContainer, Text, toFlexItemClassName } from '@dossierhq/design';
+import {
+  Button,
+  Delete,
+  HoverRevealContainer,
+  Row,
+  Text,
+  toFlexItemClassName,
+} from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -9,7 +16,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<LocationFieldSpecification, Location>;
 
-export function LocationFieldEditor({ value, validationIssues, onChange }: Props) {
+export function LocationFieldEditor({ value, validationIssues, dragHandle, onChange }: Props) {
   const [showSelector, setShowSelector] = useState(false);
   const handleShowSelector = useCallback(() => setShowSelector(true), [setShowSelector]);
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -27,6 +34,11 @@ export function LocationFieldEditor({ value, validationIssues, onChange }: Props
     <>
       {value ? (
         <HoverRevealContainer gap={2}>
+          {dragHandle ? (
+            <HoverRevealContainer.Item forceVisible alignSelf="center">
+              {dragHandle}
+            </HoverRevealContainer.Item>
+          ) : null}
           <HoverRevealContainer.Item forceVisible flexGrow={1}>
             <Button onClick={handleShowSelector} iconLeft="location">
               {value.lat}, {value.lng}
@@ -36,6 +48,13 @@ export function LocationFieldEditor({ value, validationIssues, onChange }: Props
             <Delete onClick={handleDeleteClick} />
           </HoverRevealContainer.Item>
         </HoverRevealContainer>
+      ) : dragHandle ? (
+        <Row gap={2}>
+          {dragHandle}
+          <Button onClick={handleShowSelector} iconLeft="map">
+            Select location
+          </Button>
+        </Row>
       ) : (
         <Button onClick={handleShowSelector} iconLeft="map">
           Select location

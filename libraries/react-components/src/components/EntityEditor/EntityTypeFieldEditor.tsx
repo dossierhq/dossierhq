@@ -25,7 +25,13 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<EntityFieldSpecification, EntityReference>;
 
-export function EntityTypeFieldEditor({ fieldSpec, value, validationIssues, onChange }: Props) {
+export function EntityTypeFieldEditor({
+  fieldSpec,
+  value,
+  validationIssues,
+  dragHandle,
+  onChange,
+}: Props) {
   const { adminClient } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
@@ -47,6 +53,11 @@ export function EntityTypeFieldEditor({ fieldSpec, value, validationIssues, onCh
     <>
       {entity ? (
         <HoverRevealContainer gap={2}>
+          {dragHandle ? (
+            <HoverRevealContainer.Item forceVisible alignSelf="center">
+              {dragHandle}
+            </HoverRevealContainer.Item>
+          ) : null}
           <HoverRevealContainer.Item forceVisible flexGrow={1}>
             <Text textStyle="body2" marginBottom={0}>
               {entity.info.type}

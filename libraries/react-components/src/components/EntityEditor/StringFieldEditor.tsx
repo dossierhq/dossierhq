@@ -5,6 +5,7 @@ import {
   Delete,
   HoverRevealContainer,
   Input,
+  Row,
   TextArea,
   toFlexItemClassName,
 } from '@dossierhq/design';
@@ -15,7 +16,7 @@ import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 type Props = FieldEditorProps<StringFieldSpecification, string>;
 
 export function StringFieldEditor(props: Props) {
-  const { fieldSpec, value, validationIssues, onChange } = props;
+  const { fieldSpec, value, validationIssues, dragHandle, onChange } = props;
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -31,16 +32,28 @@ export function StringFieldEditor(props: Props) {
   return (
     <>
       {fieldSpec.multiline ? (
-        <TextArea value={value ?? ''} onChange={handleChange} />
+        <>
+          {dragHandle}
+          <TextArea value={value ?? ''} onChange={handleChange} />
+        </>
       ) : (
-        <Input value={value ?? ''} onChange={handleChange} />
+        <Row>
+          {dragHandle}
+          <Input value={value ?? ''} onChange={handleChange} />
+        </Row>
       )}
       <ValidationIssuesDisplay validationIssues={validationIssues} />
     </>
   );
 }
 
-function StringValueFieldEditor({ fieldSpec, value, validationIssues, onChange }: Props) {
+function StringValueFieldEditor({
+  fieldSpec,
+  value,
+  validationIssues,
+  dragHandle,
+  onChange,
+}: Props) {
   const handleItemClick = useCallback(
     (item: { id: string }) => {
       onChange(item.id);
@@ -51,6 +64,11 @@ function StringValueFieldEditor({ fieldSpec, value, validationIssues, onChange }
 
   return (
     <HoverRevealContainer>
+      {dragHandle ? (
+        <HoverRevealContainer.Item forceVisible alignSelf="center">
+          {dragHandle}
+        </HoverRevealContainer.Item>
+      ) : null}
       <HoverRevealContainer.Item flexGrow={1} forceVisible>
         <ButtonDropdown
           items={fieldSpec.values.map((item) => ({ id: item.value }))}

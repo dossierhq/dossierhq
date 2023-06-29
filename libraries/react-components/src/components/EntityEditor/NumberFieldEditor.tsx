@@ -1,12 +1,18 @@
 import type { NumberFieldSpecification } from '@dossierhq/core';
-import { Button, Input, Text, toFlexItemClassName } from '@dossierhq/design';
+import { Button, Input, Row, Text, toFlexItemClassName } from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<NumberFieldSpecification, number>;
 
-export function NumberFieldEditor({ fieldSpec, value, validationIssues, onChange }: Props) {
+export function NumberFieldEditor({
+  fieldSpec,
+  value,
+  validationIssues,
+  dragHandle,
+  onChange,
+}: Props) {
   const isInteger = fieldSpec.integer;
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,12 +28,15 @@ export function NumberFieldEditor({ fieldSpec, value, validationIssues, onChange
 
   return (
     <>
-      <Input
-        value={value ?? ''}
-        type="number"
-        step={isInteger ? 1 : 'any'}
-        onChange={handleChange}
-      />
+      <Row>
+        {dragHandle}
+        <Input
+          value={value ?? ''}
+          type="number"
+          step={isInteger ? 1 : 'any'}
+          onChange={handleChange}
+        />
+      </Row>
       {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}

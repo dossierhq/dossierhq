@@ -7,7 +7,7 @@ import type {
 } from '@dossierhq/core';
 import { FieldType, groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text, toFlexItemClassName } from '@dossierhq/design';
-import { Fragment, useCallback, useContext, useMemo } from 'react';
+import { Fragment, useCallback, useContext, useMemo, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import { FieldEditor, type FieldEditorProps } from './FieldEditor.js';
@@ -19,6 +19,7 @@ export function ValueItemFieldEditor({
   adminOnly,
   value,
   validationIssues,
+  dragHandle,
   onChange,
 }: Props) {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
@@ -46,6 +47,7 @@ export function ValueItemFieldEditor({
         value={value}
         adminOnly={adminOnly}
         validationIssues={validationIssues}
+        dragHandle={dragHandle}
         onChange={onChange}
       />
     </HoverRevealStack>
@@ -59,12 +61,14 @@ export function ValueItemFieldEditorWithoutClear({
   value,
   adminOnly,
   validationIssues,
+  dragHandle,
   onChange,
 }: {
   className?: string;
   value: ValueItem;
   adminOnly: boolean;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
+  dragHandle?: ReactNode;
   onChange: (value: ValueItem) => void;
 }) {
   const { root: rootValidationIssues, children: fieldValidationIssues } = useMemo(
@@ -86,6 +90,7 @@ export function ValueItemFieldEditorWithoutClear({
   return (
     <Column className={className} gap={1}>
       <Text textStyle="body2" marginBottom={0}>
+        {dragHandle}
         {type}
       </Text>
       {valueSpec.fields.map((valueFieldSpec) => {
