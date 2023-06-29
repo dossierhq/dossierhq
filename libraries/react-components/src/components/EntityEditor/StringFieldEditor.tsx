@@ -1,5 +1,13 @@
-import type { StringFieldSpecification } from '@dossierhq/core';
-import { Input, SelectDisplay, Text, TextArea } from '@dossierhq/design';
+import type { AdminFieldSpecification, StringFieldSpecification } from '@dossierhq/core';
+import {
+  Button,
+  ButtonDropdown,
+  Input,
+  SelectDisplay,
+  Text,
+  TextArea,
+  toFlexItemClassName,
+} from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
@@ -42,5 +50,37 @@ export function StringFieldEditor({ fieldSpec, value, validationIssues, onChange
         </Text>
       ))}
     </>
+  );
+}
+
+export function AddStringListItemButton({
+  fieldSpec,
+  onChange,
+  value,
+}: {
+  fieldSpec: AdminFieldSpecification<StringFieldSpecification>;
+  onChange: (value: (string | null)[]) => void;
+  value: (string | null)[] | null;
+}) {
+  if (fieldSpec.values.length > 0) {
+    return (
+      <ButtonDropdown
+        className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+        items={fieldSpec.values.map((item) => ({ id: item.value }))}
+        renderItem={(item) => item.id}
+        onItemClick={(item) => onChange(value ? [...value, item.id] : [item.id])}
+      >
+        Add
+      </ButtonDropdown>
+    );
+  }
+
+  return (
+    <Button
+      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+      onClick={() => onChange(value ? [...value, null] : [null])}
+    >
+      Add
+    </Button>
   );
 }

@@ -6,12 +6,11 @@ import type {
   ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import { FieldType, groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
-import { Column, Delete, HoverRevealStack, Text } from '@dossierhq/design';
+import { Column, Delete, HoverRevealStack, Text, toFlexItemClassName } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
-import type { FieldEditorProps } from './FieldEditor.js';
-import { FieldEditor } from './FieldEditor.js';
+import { FieldEditor, type FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ValueItemFieldSpecification, ValueItem>;
 
@@ -28,13 +27,7 @@ export function ValueItemFieldEditor({
   if (!value) {
     return (
       <>
-        <AdminTypePicker
-          showValueTypes
-          valueTypes={fieldSpec.valueTypes}
-          onTypeSelected={handleCreate}
-        >
-          Add value item
-        </AdminTypePicker>
+        <AddValueItemButton fieldSpec={fieldSpec} onValueTypeSelected={handleCreate} />
         {validationIssues.map((error, index) => (
           <Text key={index} textStyle="body2" marginTop={1} color="danger">
             {error.message}
@@ -126,6 +119,41 @@ export function ValueItemFieldEditorWithoutClear({
         </Text>
       ))}
     </Column>
+  );
+}
+
+export function AddValueItemListItemButton({
+  fieldSpec,
+  onChange,
+  value,
+}: {
+  fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>;
+  onChange: (value: (ValueItem | null)[]) => void;
+  value: (ValueItem | null)[] | null;
+}) {
+  const handleValueTypeSelected = useCallback(
+    (type: string) => onChange(value ? [...value, { type }] : [{ type }]),
+    [onChange, value]
+  );
+  return <AddValueItemButton fieldSpec={fieldSpec} onValueTypeSelected={handleValueTypeSelected} />;
+}
+
+function AddValueItemButton({
+  fieldSpec,
+  onValueTypeSelected,
+}: {
+  fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>;
+  onValueTypeSelected: (type: string) => void;
+}) {
+  return (
+    <AdminTypePicker
+      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+      showValueTypes
+      valueTypes={fieldSpec.valueTypes}
+      onTypeSelected={onValueTypeSelected}
+    >
+      Add value item
+    </AdminTypePicker>
   );
 }
 

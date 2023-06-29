@@ -6,6 +6,7 @@ import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
 import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
 
 export interface AdminTypePickerProps extends TypeSelectionFilter {
+  className?: string;
   iconLeft?: IconName;
   onTypeSelected?: (type: string) => void;
   children: React.ReactNode;
@@ -17,6 +18,7 @@ interface Item {
 }
 
 export function AdminTypePicker({
+  className,
   iconLeft,
   onTypeSelected,
   children,
@@ -31,6 +33,7 @@ export function AdminTypePicker({
 
   return (
     <ButtonDropdown
+      className={className}
       iconLeft={iconLeft}
       items={items}
       renderItem={(item) => item.name}

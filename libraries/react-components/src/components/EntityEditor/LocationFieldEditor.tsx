@@ -1,5 +1,5 @@
 import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
-import { Button, Delete, HoverRevealContainer, Text } from '@dossierhq/design';
+import { Button, Delete, HoverRevealContainer, Text, toFlexItemClassName } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -57,5 +57,22 @@ export function LocationFieldEditor({ value, validationIssues, onChange }: Props
         </Text>
       ))}
     </>
+  );
+}
+
+export function AddLocationListItemButton({
+  onChange,
+  value,
+}: {
+  onChange: (value: (Location | null)[]) => void;
+  value: (Location | null)[] | null;
+}) {
+  return (
+    <Button
+      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+      onClick={() => onChange(value ? [...value, null] : [null])}
+    >
+      Add
+    </Button>
   );
 }

@@ -1,16 +1,3 @@
-import type {
-  AdminFieldSpecification,
-  BooleanFieldSpecification,
-  EntityFieldSpecification,
-  FieldSpecification,
-  LocationFieldSpecification,
-  NumberFieldSpecification,
-  PublishValidationIssue,
-  RichTextFieldSpecification,
-  SaveValidationIssue,
-  StringFieldSpecification,
-  ValueItemFieldSpecification,
-} from '@dossierhq/core';
 import {
   isBooleanField,
   isBooleanListField,
@@ -26,17 +13,28 @@ import {
   isStringListField,
   isValueItemField,
   isValueItemListField,
+  type AdminFieldSpecification,
+  type BooleanFieldSpecification,
+  type EntityFieldSpecification,
+  type FieldSpecification,
+  type LocationFieldSpecification,
+  type NumberFieldSpecification,
+  type PublishValidationIssue,
+  type RichTextFieldSpecification,
+  type SaveValidationIssue,
+  type StringFieldSpecification,
+  type ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import { useContext } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { BooleanFieldEditor } from './BooleanFieldEditor.js';
-import { EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
+import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
+import { AddEntityListItemButton, EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
 import { FieldListWrapper } from './FieldListWrapper.js';
-import { LocationFieldEditor } from './LocationFieldEditor.js';
-import { NumberFieldEditor } from './NumberFieldEditor.js';
-import { RichTextFieldEditor } from './RichTextFieldEditor.js';
-import { StringFieldEditor } from './StringFieldEditor.js';
-import { ValueItemFieldEditor } from './ValueItemFieldEditor.js';
+import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldEditor.js';
+import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
+import { AddRichTextListItemButton, RichTextFieldEditor } from './RichTextFieldEditor.js';
+import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
+import { AddValueItemListItemButton, ValueItemFieldEditor } from './ValueItemFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
@@ -73,6 +71,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<BooleanFieldSpecification>}
         value={value}
+        AddButton={AddBooleanListItemButton}
         Editor={BooleanFieldEditor}
       />
     );
@@ -90,6 +89,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<EntityFieldSpecification>}
         value={value}
+        AddButton={AddEntityListItemButton}
         Editor={EntityTypeFieldEditor}
       />
     );
@@ -107,6 +107,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<LocationFieldSpecification>}
         value={value}
+        AddButton={AddLocationListItemButton}
         Editor={LocationFieldEditor}
       />
     );
@@ -124,6 +125,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<NumberFieldSpecification>}
         value={value}
+        AddButton={AddNumberListItemButton}
         Editor={NumberFieldEditor}
       />
     );
@@ -141,6 +143,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<RichTextFieldSpecification>}
         value={value}
+        AddButton={AddRichTextListItemButton}
         Editor={RichTextFieldEditor}
       />
     );
@@ -158,6 +161,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<StringFieldSpecification>}
         value={value}
+        AddButton={AddStringListItemButton}
         Editor={StringFieldEditor}
       />
     );
@@ -175,6 +179,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>}
         value={value}
+        AddButton={AddValueItemListItemButton}
         Editor={ValueItemFieldEditor}
       />
     );

@@ -1,5 +1,6 @@
 import {
   groupValidationIssuesByTopLevelPath,
+  type AdminFieldSpecification,
   type FieldSpecification,
   type PublishValidationIssue,
   type SaveValidationIssue,
@@ -16,7 +17,12 @@ import React, { useCallback, useMemo } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>
-  extends FieldEditorProps<TFieldSpec, TItem[]> {
+  extends FieldEditorProps<TFieldSpec, (TItem | null)[]> {
+  AddButton: React.JSXElementConstructor<{
+    fieldSpec: AdminFieldSpecification<TFieldSpec>;
+    value: (TItem | null)[] | null;
+    onChange: (value: (TItem | null)[] | null) => void;
+  }>;
   Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
 
@@ -28,6 +34,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   adminOnly,
   validationIssues,
   onChange,
+  AddButton,
   Editor,
 }: Props<TFieldSpec, TItem>): JSX.Element {
   const handleItemChange = useCallback(
@@ -104,15 +111,8 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
           })}
         </GridList>
       ) : null}
-      <div className="nested-value-item-indentation">
-        <Editor
-          value={null}
-          fieldSpec={fieldSpec}
-          adminOnly={adminOnly}
-          validationIssues={noErrors}
-          onChange={(newItemValue) => handleItemChange(newItemValue, value ? value.length : 0)}
-        />
-      </div>
+
+      <AddButton fieldSpec={fieldSpec} value={value} onChange={onChange} />
       {rootValidationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" color="danger" marginTop={1}>
           {error.message}

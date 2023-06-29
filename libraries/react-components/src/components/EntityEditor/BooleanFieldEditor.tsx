@@ -1,5 +1,12 @@
 import type { BooleanFieldSpecification } from '@dossierhq/core';
-import { Checkbox, Delete, HoverRevealContainer, Text } from '@dossierhq/design';
+import {
+  Button,
+  Checkbox,
+  Delete,
+  HoverRevealContainer,
+  Text,
+  toFlexItemClassName,
+} from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
@@ -31,5 +38,22 @@ export function BooleanFieldEditor({ value, validationIssues, onChange }: Props)
         <Delete onClick={handleClear} />
       </HoverRevealContainer.Item>
     </HoverRevealContainer>
+  );
+}
+
+export function AddBooleanListItemButton({
+  onChange,
+  value,
+}: {
+  onChange: (value: (boolean | null)[]) => void;
+  value: (boolean | null)[] | null;
+}) {
+  return (
+    <Button
+      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+      onClick={() => onChange(value ? [...value, null] : [null])}
+    >
+      Add
+    </Button>
   );
 }

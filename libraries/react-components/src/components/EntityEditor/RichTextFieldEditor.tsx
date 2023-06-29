@@ -1,5 +1,5 @@
 import type { RichText, RichTextFieldSpecification } from '@dossierhq/core';
-import { Text } from '@dossierhq/design';
+import { Button, Text, toFlexItemClassName } from '@dossierhq/design';
 import { useMemo } from 'react';
 import { RichTextEditor } from '../RichTextEditor/RichTextEditor.js';
 import type { FieldEditorProps } from './FieldEditor.js';
@@ -33,5 +33,22 @@ export function RichTextFieldEditor({
         </Text>
       ))}
     </>
+  );
+}
+
+export function AddRichTextListItemButton({
+  onChange,
+  value,
+}: {
+  onChange: (value: (RichText | null)[]) => void;
+  value: (RichText | null)[] | null;
+}) {
+  return (
+    <Button
+      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+      onClick={() => onChange(value ? [...value, null] : [null])}
+    >
+      Add
+    </Button>
   );
 }

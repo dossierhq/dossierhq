@@ -1,5 +1,5 @@
 import type { NumberFieldSpecification } from '@dossierhq/core';
-import { Input, Text } from '@dossierhq/design';
+import { Button, Input, Text, toFlexItemClassName } from '@dossierhq/design';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
@@ -34,5 +34,22 @@ export function NumberFieldEditor({ fieldSpec, value, validationIssues, onChange
         </Text>
       ))}
     </>
+  );
+}
+
+export function AddNumberListItemButton({
+  onChange,
+  value,
+}: {
+  onChange: (value: (number | null)[]) => void;
+  value: (number | null)[] | null;
+}) {
+  return (
+    <Button
+      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+      onClick={() => onChange(value ? [...value, null] : [null])}
+    >
+      Add
+    </Button>
   );
 }

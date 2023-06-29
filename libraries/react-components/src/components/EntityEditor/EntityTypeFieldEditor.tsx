@@ -1,5 +1,17 @@
-import type { AdminEntity, EntityFieldSpecification, EntityReference } from '@dossierhq/core';
-import { Button, Column, Delete, HoverRevealContainer, Text } from '@dossierhq/design';
+import type {
+  AdminEntity,
+  AdminFieldSpecification,
+  EntityFieldSpecification,
+  EntityReference,
+} from '@dossierhq/core';
+import {
+  Button,
+  Column,
+  Delete,
+  HoverRevealContainer,
+  Text,
+  toFlexItemClassName,
+} from '@dossierhq/design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -17,8 +29,6 @@ export function EntityTypeFieldEditor({ fieldSpec, value, validationIssues, onCh
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
 
-  const [showSelector, setShowSelector] = useState(false);
-
   const handleEntityClick = useCallback(
     (event: MouseEvent) => {
       event.preventDefault();
@@ -31,15 +41,6 @@ export function EntityTypeFieldEditor({ fieldSpec, value, validationIssues, onCh
     [dispatchEntityEditorState, value]
   );
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
-  const handleSelectClick = useCallback(() => setShowSelector(true), []);
-  const handleItemClick = useCallback(
-    (item: AdminEntity) => {
-      onChange({ id: item.id });
-      setShowSelector(false);
-    },
-    [onChange]
-  );
-  const handleDialogClose = useCallback(() => setShowSelector(false), []);
 
   return (
     <>
@@ -61,17 +62,8 @@ export function EntityTypeFieldEditor({ fieldSpec, value, validationIssues, onCh
           </HoverRevealContainer.Item>
         </HoverRevealContainer>
       ) : (
-        <Button onClick={handleSelectClick}>Select entity</Button>
+        <AddEntityButton fieldSpec={fieldSpec} onEntitySelected={onChange} />
       )}
-      {showSelector ? (
-        <AdminEntitySelectorDialog
-          show
-          title="Select entity"
-          entityTypes={fieldSpec.entityTypes}
-          onClose={handleDialogClose}
-          onItemClick={handleItemClick}
-        />
-      ) : null}
       {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}
@@ -120,5 +112,61 @@ export function EntityTypeFieldEditorWithoutClear({
         <StatusTag status={entity.info.status} />
       </Column.Item>
     </Column>
+  );
+}
+
+export function AddEntityListItemButton({
+  fieldSpec,
+  onChange,
+  value,
+}: {
+  fieldSpec: AdminFieldSpecification<EntityFieldSpecification>;
+  onChange: (value: (EntityReference | null)[]) => void;
+  value: (EntityReference | null)[] | null;
+}) {
+  const handleEntitySelected = useCallback(
+    (entity: EntityReference) => onChange(value ? [...value, entity] : [entity]),
+    [onChange, value]
+  );
+  return <AddEntityButton fieldSpec={fieldSpec} onEntitySelected={handleEntitySelected} />;
+}
+
+function AddEntityButton({
+  fieldSpec,
+  onEntitySelected,
+}: {
+  fieldSpec: AdminFieldSpecification<EntityFieldSpecification>;
+  onEntitySelected: (entity: EntityReference) => void;
+}) {
+  const [showSelector, setShowSelector] = useState(false);
+
+  const handleItemClick = useCallback(
+    (item: AdminEntity) => {
+      onEntitySelected({ id: item.id });
+      setShowSelector(false);
+    },
+    [onEntitySelected]
+  );
+  const handleDialogClose = useCallback(() => setShowSelector(false), []);
+
+  const handleSelectClick = useCallback(() => setShowSelector(true), []);
+  return (
+    <>
+      <Button
+        className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+        onClick={handleSelectClick}
+      >
+        Select entity
+      </Button>
+      {showSelector ? (
+        <AdminEntitySelectorDialog
+          show
+          title="Select entity"
+          entityTypes={fieldSpec.entityTypes}
+          onClose={handleDialogClose}
+          onItemClick={handleItemClick}
+        />
+      ) : null}
+    </>
   );
 }
