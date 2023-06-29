@@ -109,7 +109,7 @@ export const SlowInitialTextNoMatch: Story = {
   args: {
     adminClientMiddleware: [createSlowAdminMiddleware()],
     initialUrlSearchParams: new URLSearchParams({
-      query: '{"text":"there-are-no-matches-for-this"}',
+      query: '{"text":"xyz"}',
     }),
   },
 };

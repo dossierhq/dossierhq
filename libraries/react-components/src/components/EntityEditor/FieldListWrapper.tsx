@@ -12,17 +12,17 @@ import {
   GridListItem,
   useDragAndDrop,
 } from '@dossierhq/design';
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, type JSXElementConstructor } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>
   extends FieldEditorProps<TFieldSpec, (TItem | null)[]> {
-  AddButton: React.JSXElementConstructor<{
+  AddButton: JSXElementConstructor<{
     fieldSpec: AdminFieldSpecification<TFieldSpec>;
     onAddItem: (value: TItem | null) => void;
   }>;
-  Editor: React.JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
+  Editor: JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;
 }
 
 const noErrors: (PublishValidationIssue | SaveValidationIssue)[] = [];

@@ -12,9 +12,10 @@ const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@dossierhq
 const { createDatabase, createSqlite3Adapter } = require('@dossierhq/sqlite3');
 const { Database } = require('sqlite3');
 const bodyParser = require('body-parser');
-const schemaSpecification = require('../src/test/schema.cjs');
+const { copyFileSync } = require('node:fs');
 
-const SQLITE_DATABASE_PATH = 'data/arc.sqlite';
+const SOURCE_DATABASE_PATH = './node_modules/playground-example-generator/dist/catalog.sqlite';
+const SQLITE_DATABASE_PATH = 'data/catalog.sqlite';
 
 const logger = createConsoleLogger(console);
 let serverResultSingleton = null;
@@ -22,6 +23,10 @@ let serverResultSingleton = null;
 async function getServer() {
   if (!serverResultSingleton) {
     serverResultSingleton = (async () => {
+      console.log(
+        `Resetting database by copying ${SOURCE_DATABASE_PATH} to ${SQLITE_DATABASE_PATH}`
+      );
+      copyFileSync(SOURCE_DATABASE_PATH, SQLITE_DATABASE_PATH);
       const databaseResult = await createDatabase({ logger }, Database, {
         filename: SQLITE_DATABASE_PATH,
       });
@@ -29,7 +34,7 @@ async function getServer() {
 
       const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value, {
         migrate: true,
-        fts: { version: 'fts5' },
+        fts: { version: 'fts4' },
         journalMode: 'wal',
       });
       if (adapterResult.isError()) return adapterResult;
@@ -40,19 +45,6 @@ async function getServer() {
         authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
       });
 
-      if (serverResult.isOk()) {
-        const server = serverResult.value;
-        const sessionResult = server.createSession({
-          provider: 'sys',
-          identifier: 'schemaLoader',
-          defaultAuthKeys: ['none'],
-          logger: null,
-          databasePerformance: null,
-        });
-        const adminClient = server.createAdminClient(() => sessionResult);
-        const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
-        if (schemaResult.isError()) return schemaResult;
-      }
       return serverResult;
     })();
   }

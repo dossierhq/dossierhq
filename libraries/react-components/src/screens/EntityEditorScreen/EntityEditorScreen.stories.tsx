@@ -2,7 +2,6 @@ import { NotificationContainer, Text } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useMemo, useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
-import { foo1Id } from '../../test/EntityFixtures';
 import type { EntityEditorScreenProps } from './EntityEditorScreen';
 import { EntityEditorScreen } from './EntityEditorScreen';
 
@@ -60,12 +59,14 @@ export const HeaderFooter: Story = {
   },
 };
 
-export const NewFooUrl: Story = {
+export const NewStringsEntityUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams({ new: `Foo:${crypto.randomUUID()}` }),
+    initialUrlSearchParams: new URLSearchParams({ new: `StringsEntity:${crypto.randomUUID()}` }),
   },
 };
 
-export const OpenFoo1Url: Story = {
-  args: { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) },
+export const OpenStringPublishedMinimalUrl: Story = {
+  args: {
+    initialUrlSearchParams: new URLSearchParams({ id: '3d496031-5346-5637-bded-3839baa64a80' }),
+  },
 };

@@ -58,6 +58,7 @@
     "eslint-plugin-react": "~7.32.2",
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.6.12",
+    "playground-example-generator": "workspace:*",
     "prettier": "2.8.8",
     "storybook": "~7.0.24",
     "typescript": "~5.1.3",
