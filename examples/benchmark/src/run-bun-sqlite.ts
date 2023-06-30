@@ -16,7 +16,7 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
   const database = new Database(databasePath);
   const adapterResult = await createBunSqliteAdapter(context, database, {
     migrate: true,
-    fts: { version: 'fts4' }, // TODO is failing with fts5 (SQL logic error)
+    fts: { version: 'fts5' },
     journalMode: 'wal',
   });
   return adapterResult;

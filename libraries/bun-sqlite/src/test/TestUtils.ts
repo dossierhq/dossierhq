@@ -29,7 +29,7 @@ export async function initializeIntegrationTestServer(
     databaseAdapter: (
       await createBunSqliteAdapter({ logger: NoOpLogger }, database, {
         migrate: true,
-        fts: { version: 'fts4' },
+        fts: { version: 'fts5' },
         journalMode: 'wal',
       })
     ).valueOrThrow(),
