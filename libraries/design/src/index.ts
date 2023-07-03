@@ -9,6 +9,7 @@ export { Column } from './components/Column/Column.js';
 export { DateDisplay } from './components/DateDisplay/DateDisplay.js';
 export { Delete } from './components/Delete/Delete.js';
 export { Dialog } from './components/Dialog/Dialog.js';
+export { Dialog2 } from './components/Dialog2/Dialog2.js';
 export { Dropdown } from './components/Dropdown/Dropdown.js';
 export { DropdownDisplay } from './components/DropdownDisplay/DropdownDisplay.js';
 export { DropdownSelector } from './components/DropdownSelector/DropdownSelector.js';
