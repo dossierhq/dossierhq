@@ -1,6 +1,6 @@
 import type { AdminEntity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
-import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../../components/AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';
@@ -22,8 +22,8 @@ import {
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 
 export interface AdminEntityListScreenProps {
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onCreateEntity: (entityType: string) => void;

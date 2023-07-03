@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminSchema, Location } from '@dossierhq/core';
-import { isLocationItemField, ItemTraverseNodeType } from '@dossierhq/core';
+import { ItemTraverseNodeType, isLocationItemField } from '@dossierhq/core';
 import {
   Dialog,
   FullscreenContainer,
@@ -9,7 +9,7 @@ import {
   toSizeClassName,
 } from '@dossierhq/design';
 import { MapContainer } from '@dossierhq/leaflet';
-import React, {
+import {
   useCallback,
   useContext,
   useEffect,
@@ -17,6 +17,7 @@ import React, {
   useReducer,
   useRef,
   useState,
+  type ChangeEvent,
 } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext.js';
@@ -25,9 +26,9 @@ import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/En
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
+  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-  SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { EntityDraftMapMarker } from './EntityDraftMapMarker.js';
@@ -91,13 +92,13 @@ function Content({
   }, [value]);
 
   const handleLatChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>): void =>
+    (event: ChangeEvent<HTMLInputElement>): void =>
       dispatch({ type: 'lat', value: event.currentTarget.value }),
     []
   );
 
   const handleLngChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>): void =>
+    (event: ChangeEvent<HTMLInputElement>): void =>
       dispatch({ type: 'lng', value: event.currentTarget.value }),
     []
   );

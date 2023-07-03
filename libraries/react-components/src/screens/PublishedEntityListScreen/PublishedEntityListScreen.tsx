@@ -1,6 +1,6 @@
 import type { PublishedEntity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
-import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
 import { PublishedEntitySearchToolbar } from '../../components/PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
@@ -21,8 +21,8 @@ import {
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 
 export interface PublishedEntityListScreenProps {
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onOpenEntity: (entity: PublishedEntity) => void;

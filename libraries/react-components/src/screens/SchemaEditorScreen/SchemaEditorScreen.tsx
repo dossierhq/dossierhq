@@ -8,8 +8,8 @@ import {
   Text,
   useWindowEventListener,
 } from '@dossierhq/design';
-import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import type { Dispatch, MouseEvent, ReactNode } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaIndexEditor.js';
 import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
@@ -42,8 +42,8 @@ import { SchemaMenu } from './SchemaMenu.js';
 import { TypeDraftStatusTag } from './TypeDraftStatusTag.js';
 
 export interface SchemaEditorScreenProps {
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
   onEditorHasChangesChange: (hasChanges: boolean) => void;
 }
 

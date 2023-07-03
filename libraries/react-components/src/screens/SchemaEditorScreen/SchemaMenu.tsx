@@ -1,14 +1,14 @@
 import { ClassName, Menu } from '@dossierhq/design';
-import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback } from 'react';
+import type { Dispatch, MouseEvent, ReactNode } from 'react';
+import { useCallback } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
-  getElementIdForSelector,
   SchemaEditorActions,
+  getElementIdForSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 export function SchemaMenu({
@@ -110,7 +110,7 @@ function DraftItem({
   activeSelector: SchemaSelector | null;
   selector: SchemaSelector;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const handleClick = useCallback(
     (event: MouseEvent) => {

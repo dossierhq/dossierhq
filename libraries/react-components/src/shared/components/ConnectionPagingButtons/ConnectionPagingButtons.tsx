@@ -1,6 +1,6 @@
 import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
 import { IconButton } from '@dossierhq/design';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 interface Props {
   connection: Connection<Edge<unknown, ErrorType>> | null | undefined;

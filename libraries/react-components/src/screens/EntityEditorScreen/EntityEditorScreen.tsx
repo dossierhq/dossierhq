@@ -3,16 +3,16 @@ import {
   Button,
   Dialog2,
   EmptyStateMessage,
-  findAscendantHTMLElement,
   FullscreenContainer,
   Level,
   Row,
   Tag,
   Text,
+  findAscendantHTMLElement,
   useWindowEventListener,
 } from '@dossierhq/design';
-import type { Dispatch, MouseEvent } from 'react';
-import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import type { Dispatch, MouseEvent, ReactNode } from 'react';
+import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker.js';
@@ -38,8 +38,8 @@ import { EntityEditorDraftSidebar } from './EntityEditorDraftSidebar.js';
 import { EntityEditorMenu } from './EntityEditorMenu.js';
 
 export interface EntityEditorScreenProps {
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onEditorHasChangesChange: (hasChanges: boolean) => void;

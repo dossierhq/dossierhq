@@ -1,6 +1,6 @@
 import type { AdminClient, AdminEntity, Logger, ValueItem } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
-import React, { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import type {
   AdminDossierContextAdapter,
   AdminDossierContextValue,
@@ -14,7 +14,7 @@ interface Props {
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>;
   logger?: Logger;
   authKeys: DisplayAuthKey[];
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function AdminDossierProvider({

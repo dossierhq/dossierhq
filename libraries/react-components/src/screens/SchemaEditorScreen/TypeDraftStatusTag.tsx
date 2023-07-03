@@ -1,5 +1,4 @@
 import { Tag } from '@dossierhq/design';
-import React from 'react';
 
 export function TypeDraftStatusTag({ status }: { status: 'new' | 'changed' }) {
   const { color, text } = (

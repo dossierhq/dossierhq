@@ -1,8 +1,7 @@
 import type { Location, PublishedEntity } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
-import { MapContainer } from '@dossierhq/leaflet';
 import type { MarkerColor } from '@dossierhq/leaflet';
-import React from 'react';
+import { MapContainer } from '@dossierhq/leaflet';
 
 interface Props {
   color?: MarkerColor;

@@ -1,7 +1,6 @@
 import type { AdminEntity, Location } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import { MapContainer } from '@dossierhq/leaflet';
-import React from 'react';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
 interface Props {

@@ -1,6 +1,6 @@
 import type { IconName } from '@dossierhq/design';
 import { ButtonDropdown } from '@dossierhq/design';
-import React, { useContext } from 'react';
+import { useContext, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
 import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
@@ -9,7 +9,7 @@ export interface AdminTypePickerProps extends TypeSelectionFilter {
   className?: string;
   iconLeft?: IconName;
   onTypeSelected?: (type: string) => void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface Item {

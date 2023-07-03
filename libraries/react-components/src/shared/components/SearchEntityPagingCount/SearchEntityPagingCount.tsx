@@ -1,6 +1,6 @@
 import type { Paging } from '@dossierhq/core';
 import type { Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,

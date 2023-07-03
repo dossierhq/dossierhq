@@ -7,15 +7,15 @@ import {
   Text,
   toSizeClassName,
 } from '@dossierhq/design';
-import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
+  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-  SearchEntityStateActions,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface PublishedLocationDisplayDialogProps {
