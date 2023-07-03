@@ -5,10 +5,10 @@
     "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/esm/index.js",
     "@dossierhq/deno-postgres": "../../../libraries/deno-postgres/src/mod.ts",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
-    "@faker-js/faker": "npm:@faker-js/faker@~7.6.0",
+    "@faker-js/faker": "npm:@faker-js/faker@~8.0.2",
     "benchpress": "../node_modules/benchpress/lib/esm/index.js",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
-    "std/": "https://deno.land/std@0.180.0/",
-    "tslib": "npm:tslib@~2.5.0"
+    "std/": "https://deno.land/std@0.192.0/",
+    "tslib": "npm:tslib@~2.6.0"
   }
 }

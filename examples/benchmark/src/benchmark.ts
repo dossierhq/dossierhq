@@ -34,7 +34,7 @@ function cleanupEntity(entity: AdminEntityCreate) {
 
 function randomWeightedSelect<T>(values: T[], weights: number[]) {
   const weightSum = weights.reduce((sum, weight) => sum + weight, 0);
-  const originalRandom = faker.datatype.float({ max: weightSum });
+  const originalRandom = faker.number.float({ max: weightSum });
   let remainingRandom = originalRandom;
   for (let i = 0; i < weights.length; i += 1) {
     const weight = weights[i];
@@ -167,7 +167,7 @@ async function createPerson(
   );
   if (organizationResult.isError()) return organizationResult;
 
-  const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
+  const name = `${faker.person.firstName()} ${faker.person.lastName()}`;
   return ok(
     cleanupEntity({
       info: { authKey: 'none', type: 'Person', name },

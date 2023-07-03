@@ -73,7 +73,7 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
   - `npm run outdated` to get a list of outdated dependencies
   - `rush add --package typescript@latest --dev --make-consistent`
   - or `rush upgrade-interactive`
-- Upgrade Deno dependencies in the 4 `import-map.json` files
+- Upgrade Deno dependencies in the 3 `import-map.json` files
 - Run `(cd tools/generic-tools && npm run deno:reload-dependencies:all)`
 - Upgrade the postgres version in `./docker-compose.yml`
 

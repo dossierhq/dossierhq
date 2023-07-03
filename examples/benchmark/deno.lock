@@ -477,6 +477,7 @@
   "npm": {
     "specifiers": {
       "@faker-js/faker@~7.6.0": "@faker-js/faker@7.6.0",
+      "@faker-js/faker@~8.0.2": "@faker-js/faker@8.0.2",
       "@rushstack/heft@0.49.7": "@rushstack/heft@0.49.7",
       "@rushstack/heft@0.50.0": "@rushstack/heft@0.50.0",
       "@rushstack/heft@0.50.1": "@rushstack/heft@0.50.1",
@@ -498,6 +499,7 @@
       "sqlite3@~5.1.2": "sqlite3@5.1.6",
       "tslib@~2.4.0": "tslib@2.4.1",
       "tslib@~2.5.0": "tslib@2.5.0",
+      "tslib@~2.6.0": "tslib@2.6.0",
       "typescript@~4.9.5": "typescript@4.9.5",
       "typescript@~5.0.2": "typescript@5.0.2",
       "typescript@~5.0.4": "typescript@5.0.4"
@@ -570,6 +572,10 @@
       },
       "@faker-js/faker@7.6.0": {
         "integrity": "sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==",
+        "dependencies": {}
+      },
+      "@faker-js/faker@8.0.2": {
+        "integrity": "sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==",
         "dependencies": {}
       },
       "@humanwhocodes/config-array@0.11.8": {
@@ -2044,6 +2050,10 @@
       },
       "tslib@2.5.0": {
         "integrity": "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==",
+        "dependencies": {}
+      },
+      "tslib@2.6.0": {
+        "integrity": "sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==",
         "dependencies": {}
       },
       "tunnel-agent@0.6.0": {
