@@ -26,7 +26,7 @@ import {
 } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import { useContext } from 'react';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
 import { FieldDisplayListWrapper } from './FieldDisplayListWrapper.js';

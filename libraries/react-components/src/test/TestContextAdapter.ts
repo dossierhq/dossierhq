@@ -31,7 +31,7 @@ import type {
 import type {
   PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
-} from '../published/contexts/PublishedDossierContext.js';
+} from '../contexts/PublishedDossierContext.js';
 
 interface BackendContext {
   logger: Logger;

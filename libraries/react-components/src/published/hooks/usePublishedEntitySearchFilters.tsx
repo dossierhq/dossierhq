@@ -23,7 +23,7 @@ import type {
   SearchEntityStateAction,
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { PublishedDossierContext } from '../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 
 export function usePublishedEntitySearchFilters(
   searchEntityState: SearchEntityState,

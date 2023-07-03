@@ -7,7 +7,7 @@ import { Column, Text } from '@dossierhq/design';
 import type { MouseEvent } from 'react';
 import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';

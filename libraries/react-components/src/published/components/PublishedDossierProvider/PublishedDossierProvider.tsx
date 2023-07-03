@@ -5,8 +5,8 @@ import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import type {
   PublishedDossierContextAdapter,
   PublishedDossierContextValue,
-} from '../../contexts/PublishedDossierContext.js';
-import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
+} from '../../../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 
 interface Props {

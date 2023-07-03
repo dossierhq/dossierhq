@@ -10,7 +10,7 @@ import type {
 } from '../../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
-import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
 
 interface Props {
   searchEntityState: SearchEntityState;

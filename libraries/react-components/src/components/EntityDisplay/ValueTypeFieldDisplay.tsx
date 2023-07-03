@@ -6,7 +6,7 @@ import type {
 import { FieldType } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import { Fragment, useContext } from 'react';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 import { FieldDisplay } from './FieldDisplay.js';
 

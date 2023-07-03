@@ -8,8 +8,8 @@ import type {
   ValueItem,
 } from '@dossierhq/core';
 import { createContext } from 'react';
-import type { FieldDisplayProps } from '../../components/EntityDisplay/FieldDisplay.js';
-import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
+import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
+import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
 export interface RichTextValueItemDisplayProps {
   value: ValueItem;

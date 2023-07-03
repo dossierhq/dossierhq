@@ -4,7 +4,7 @@ import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlign
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { ValueTypeFieldDisplay } from '../EntityDisplay/ValueTypeFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 

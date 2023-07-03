@@ -1,7 +1,7 @@
 import { ClassName, Delete, HoverRevealContainer, Menu, Text } from '@dossierhq/design';
 import type { Dispatch, MouseEvent } from 'react';
 import { useCallback, useContext } from 'react';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import type {
   EntityDisplayState,

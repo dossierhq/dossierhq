@@ -3,7 +3,7 @@ import { Dialog2, FullscreenContainer, IconButton, Text, toSizeClassName } from 
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedEntitySearchFilters } from '../../published/hooks/usePublishedEntitySearchFilters.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';

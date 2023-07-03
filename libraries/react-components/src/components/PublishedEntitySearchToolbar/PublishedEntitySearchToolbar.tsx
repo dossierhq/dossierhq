@@ -2,7 +2,7 @@ import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossie
 import { IconButton } from '@dossierhq/design';
 import type { Dispatch, MouseEventHandler } from 'react';
 import { useContext } from 'react';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import type { AuthKeyItem } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
 import { AuthKeySelector } from '../../shared/components/AuthKeySelector/AuthKeySelector.js';
 import { SearchEntitySearchInput } from '../../shared/components/SearchEntitySearchInput/SearchEntitySearchInput.js';

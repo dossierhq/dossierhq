@@ -6,12 +6,12 @@ export type {
   AdminDossierContextAdapter,
   RichTextValueItemEditorProps,
 } from './contexts/AdminDossierContext.js';
-export { PublishedDossierProvider } from './published/components/PublishedDossierProvider/PublishedDossierProvider.js';
-export { PublishedDossierContext } from './published/contexts/PublishedDossierContext.js';
+export { PublishedDossierContext } from './contexts/PublishedDossierContext.js';
 export type {
   PublishedDossierContextAdapter,
   RichTextValueItemDisplayProps,
-} from './published/contexts/PublishedDossierContext.js';
+} from './contexts/PublishedDossierContext.js';
+export { PublishedDossierProvider } from './published/components/PublishedDossierProvider/PublishedDossierProvider.js';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen.js';
 export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen.js';
 export { PublishedEntityDisplayScreen } from './screens/PublishedEntityDisplayScreen/PublishedEntityDisplayScreen.js';

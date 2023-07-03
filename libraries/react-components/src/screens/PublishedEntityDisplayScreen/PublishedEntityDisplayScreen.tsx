@@ -25,7 +25,7 @@ import { EntityDisplay } from '../../components/EntityDisplay/EntityDisplay.js';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayStateContext } from '../../contexts/EntityDisplayStateContext.js';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
 import {
   EntityDisplayActions,

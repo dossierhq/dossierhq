@@ -9,7 +9,7 @@ import {
 } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
