@@ -1,7 +1,14 @@
 import type { AdminFieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
 import { RichTextNodeType, assertExhaustive } from '@dossierhq/core';
 import type { IconName } from '@dossierhq/design';
-import { ButtonDropdown, Icon, IconButton, Row, toSpacingClassName } from '@dossierhq/design';
+import {
+  ButtonDropdown,
+  Dialog2,
+  Icon,
+  IconButton,
+  Row,
+  toSpacingClassName,
+} from '@dossierhq/design';
 import {
   $createCodeNode,
   $isCodeNode,
@@ -448,16 +455,16 @@ function AddEntityDialog({
   const [editor] = useLexicalComposerContext();
 
   return (
-    <AdminEntitySelectorDialog
-      show
-      title="Select entity"
-      entityTypes={fieldSpec.entityTypes}
-      onClose={onClose}
-      onItemClick={(entity) => {
-        editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, { id: entity.id });
-        onClose();
-      }}
-    />
+    <Dialog2.Trigger defaultOpen={true} onOpenChange={onClose}>
+      <AdminEntitySelectorDialog
+        title="Select entity"
+        entityTypes={fieldSpec.entityTypes}
+        onItemClick={(entity) => {
+          editor.dispatchCommand(INSERT_ADMIN_ENTITY_COMMAND, { id: entity.id });
+          onClose();
+        }}
+      />
+    </Dialog2.Trigger>
   );
 }
 
@@ -499,10 +506,13 @@ function LinkAndEntityLinkButton({
   isEntityLink: boolean;
 }) {
   const [editor] = useLexicalComposerContext();
-  const [showEntitySelector, setShowEntitySelector] = useState(false);
-  const handleEntityDialogClose = useCallback(() => setShowEntitySelector(false), []);
-  const [showLinkDialog, setShowLinkDialog] = useState(false);
-  const handleLinkDialogClose = useCallback(() => setShowLinkDialog(false), []);
+  const [openDialog, setOpenDialog] = useState<'link' | 'entity' | null>(null);
+
+  const handleOpenChanged = useCallback((isOpen: boolean) => {
+    if (!isOpen) {
+      setOpenDialog(null);
+    }
+  }, []);
 
   const handleToggleButton = useCallback(() => {
     if (isLink) {
@@ -510,44 +520,39 @@ function LinkAndEntityLinkButton({
     } else if (isEntityLink) {
       editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, null);
     } else if (enableLinkNode && enableEntityLinkNode) {
-      setShowLinkDialog(true);
+      setOpenDialog('link');
     } else if (enableLinkNode) {
       showLinkPrompt(editor);
     } else if (enableEntityLinkNode) {
-      setShowEntitySelector(true);
+      setOpenDialog('entity');
     }
   }, [editor, enableEntityLinkNode, enableLinkNode, isEntityLink, isLink]);
 
   return (
-    <>
+    <Dialog2.Trigger isOpen={openDialog !== null} onOpenChange={handleOpenChanged}>
       <IconButton icon="link" toggled={isLink || isEntityLink} onClick={handleToggleButton} />
-      {showEntitySelector && (
+      {openDialog === 'entity' && (
         <AdminEntitySelectorDialog
-          show
           title="Select entity"
           entityTypes={fieldSpec.linkEntityTypes}
-          onClose={handleEntityDialogClose}
           onItemClick={(entity) => {
             editor.dispatchCommand(TOGGLE_ADMIN_ENTITY_LINK_COMMAND, { id: entity.id });
-            setShowEntitySelector(false);
+            setOpenDialog(null);
           }}
         />
       )}
-      {showLinkDialog && (
+      {openDialog === 'link' && (
         <CreateLinkDialog
-          show
-          onClose={handleLinkDialogClose}
           onCreateLink={() => {
-            setShowLinkDialog(false);
+            setOpenDialog(null);
             showLinkPrompt(editor);
           }}
           onCreateEntityLink={() => {
-            setShowEntitySelector(true);
-            setShowLinkDialog(false);
+            setOpenDialog('entity');
           }}
         />
       )}
-    </>
+    </Dialog2.Trigger>
   );
 }
 

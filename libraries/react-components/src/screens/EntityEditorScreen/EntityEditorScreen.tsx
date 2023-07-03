@@ -1,6 +1,7 @@
 import type { AdminEntity, EntityReference } from '@dossierhq/core';
 import {
   Button,
+  Dialog2,
   EmptyStateMessage,
   findAscendantHTMLElement,
   FullscreenContainer,
@@ -64,7 +65,6 @@ export function EntityEditorScreen({
   const [entityHistoryDialogReference, setEntityHistoryDialogReference] =
     useState<EntityReference | null>(null);
   const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
-  const handleEntitySelectorClose = useCallback(() => setShowEntitySelector(false), []);
   const handleOpenEntityClick = useCallback((entity: AdminEntity) => {
     dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entity.id })),
       setShowEntitySelector(false);
@@ -122,9 +122,16 @@ export function EntityEditorScreen({
               scrollToIdSignal={activeEntityMenuScrollSignal}
             >
               <Row gap={2}>
-                <Button iconLeft="search" onClick={handleShowEntitySelector}>
-                  Open
-                </Button>
+                <Dialog2.Trigger isOpen={showEntitySelector} onOpenChange={setShowEntitySelector}>
+                  <Button iconLeft="search" onClick={handleShowEntitySelector}>
+                    Open
+                  </Button>
+                  <AdminEntitySelectorDialog
+                    title="Select entity"
+                    onItemClick={handleOpenEntityClick}
+                    onCreateItemClick={handleCreateItemClick}
+                  />
+                </Dialog2.Trigger>
                 <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
                   Create
                 </AdminTypePicker>
@@ -162,13 +169,6 @@ export function EntityEditorScreen({
             </FullscreenContainer.ScrollableColumn>
           </FullscreenContainer.Columns>
           {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
-          <AdminEntitySelectorDialog
-            show={showEntitySelector}
-            title="Select entity"
-            onClose={handleEntitySelectorClose}
-            onItemClick={handleOpenEntityClick}
-            onCreateItemClick={handleCreateItemClick}
-          />
           <AdminEntityHistoryDialog
             show={entityHistoryDialogReference !== null}
             reference={entityHistoryDialogReference}

@@ -1,5 +1,5 @@
 import type { AdminEntity, EntityReference } from '@dossierhq/core';
-import { Dialog, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
+import { Dialog2, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
@@ -19,36 +19,33 @@ import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntit
 import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector.js';
 
 interface AdminEntitySelectorDialogProps {
-  show: boolean;
   title: string;
   entityTypes?: string[];
   linksFrom?: EntityReference;
   linksTo?: EntityReference;
-  onClose: () => void;
   onItemClick: (item: AdminEntity) => void;
   onCreateItemClick?: (type: string) => void;
 }
 
 export function AdminEntitySelectorDialog({
-  show,
   title,
   entityTypes,
   linksFrom,
   linksTo,
-  onClose,
   onItemClick,
   onCreateItemClick,
 }: AdminEntitySelectorDialogProps) {
   return (
-    <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
-      <FullscreenContainer card height="100%">
-        <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
-            <Text textStyle="headline5">{title}</Text>
-          </FullscreenContainer.Item>
-          <IconButton icon="close" color="white" onClick={onClose} />
-        </FullscreenContainer.Row>
-        {show ? (
+    <Dialog2 width="wide" height="fill">
+      {({ close }) => (
+        <FullscreenContainer card height="100%">
+          <FullscreenContainer.Row flexDirection="row" alignItems="center">
+            <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+              <Text textStyle="headline5">{title}</Text>
+            </FullscreenContainer.Item>
+            <IconButton icon="close" color="white" onClick={close} />
+          </FullscreenContainer.Row>
+
           <Content
             entityTypes={entityTypes}
             linksFrom={linksFrom}
@@ -56,9 +53,9 @@ export function AdminEntitySelectorDialog({
             onItemClick={onItemClick}
             onCreateItemClick={onCreateItemClick}
           />
-        ) : null}
-      </FullscreenContainer>
-    </Dialog>
+        </FullscreenContainer>
+      )}
+    </Dialog2>
   );
 }
 

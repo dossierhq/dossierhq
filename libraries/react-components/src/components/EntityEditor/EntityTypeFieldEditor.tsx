@@ -8,6 +8,7 @@ import {
   Button,
   Column,
   Delete,
+  Dialog2,
   HoverRevealContainer,
   Tag,
   Text,
@@ -165,11 +166,11 @@ function AddEntityButton({
     },
     [onEntitySelected]
   );
-  const handleDialogClose = useCallback(() => setShowSelector(false), []);
 
   const handleSelectClick = useCallback(() => setShowSelector(true), []);
+
   return (
-    <>
+    <Dialog2.Trigger isOpen={showSelector} onOpenChange={setShowSelector}>
       <Button
         className={toFlexItemClassName({ alignSelf: 'flex-start' })}
         onClick={handleSelectClick}
@@ -178,13 +179,11 @@ function AddEntityButton({
       </Button>
       {showSelector ? (
         <AdminEntitySelectorDialog
-          show
           title="Select entity"
           entityTypes={fieldSpec.entityTypes}
-          onClose={handleDialogClose}
           onItemClick={handleItemClick}
         />
       ) : null}
-    </>
+    </Dialog2.Trigger>
   );
 }
