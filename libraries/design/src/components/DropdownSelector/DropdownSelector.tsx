@@ -1,5 +1,5 @@
 import type { Dispatch, ReactNode } from 'react';
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
 import { Badge } from '../Badge/Badge.js';
@@ -21,7 +21,7 @@ export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   renderItem: (item: TItem) => ReactNode;
   state: MultipleSelectorState<TItem>;
   dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 interface DropdownSelectorItemProps<
@@ -31,7 +31,7 @@ interface DropdownSelectorItemProps<
   item: TItem;
   state: MultipleSelectorState<TItem>;
   dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function DropdownSelector<TItem extends MultipleSelectorItem>({

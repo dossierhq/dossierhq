@@ -1,9 +1,7 @@
 import type { CSSProperties, FunctionComponent, ReactNode } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
-import { toFlexItemClassName } from '../../utils/FlexboxUtils.js';
-import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
+import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
 import type { SpacingProps } from '../../utils/LayoutPropsUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 

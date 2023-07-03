@@ -1,4 +1,3 @@
-import React from 'react';
 import { Column } from '../Column/Column.js';
 import type { IconName } from '../Icon/Icon.js';
 import { Icon } from '../Icon/Icon.js';

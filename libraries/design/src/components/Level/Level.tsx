@@ -1,5 +1,4 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { PaddingProps } from '../../utils/LayoutPropsUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';

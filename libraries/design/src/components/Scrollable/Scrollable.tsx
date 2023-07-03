@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import { useIsClippedObserver } from '../../hooks/useIsClippedObserver.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface ScrollableProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   // defaults to 'vertical'
   direction?: 'vertical' | 'horizontal';
   // defaults to 'both'
@@ -12,7 +12,7 @@ export interface ScrollableProps {
   scrollToId?: string;
   scrollToIdSignal?: unknown;
   scrollToTopSignal?: unknown;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function Scrollable({

@@ -1,5 +1,5 @@
 import type { ReactNode, Ref } from 'react';
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
 import { DropdownDisplay } from '../DropdownDisplay/DropdownDisplay.js';
@@ -17,7 +17,7 @@ export interface DropdownProps<
   left?: boolean;
   up?: boolean;
   isContentItem?: (item: TItem) => boolean;
-  renderItem: (item: TItem) => React.ReactNode;
+  renderItem: (item: TItem) => ReactNode;
   renderTrigger: (ref: Ref<TTrigger>, onOpenDropDown: () => void) => ReactNode;
   onItemClick?: (item: TItem) => void;
 }
