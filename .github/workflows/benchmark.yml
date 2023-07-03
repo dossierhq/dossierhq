@@ -71,8 +71,6 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
-          if [[ `git status --porcelain` ]]; then
-            git commit -m "chore(benchmark): Record new benchmark results"
-            git push
-          fi
+          git add examples/benchmark/output/
+          git commit -m "chore(benchmark): Record new benchmark results"
+          git push
