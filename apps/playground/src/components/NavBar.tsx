@@ -1,8 +1,16 @@
-import { Icon, Navbar as DesignNavbar } from '@dossierhq/design';
-import type { ReactNode } from 'react';
-import { useContext, useState } from 'react';
+import { Navbar as DesignNavbar, Icon } from '@dossierhq/design';
+import {
+  useCallback,
+  useContext,
+  useState,
+  type MouseEvent,
+  type MouseEventHandler,
+  type ReactNode,
+} from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
 import { UserContext } from '../contexts/UserContext.js';
+import { useWarningOnExit } from '../hooks/useWarningOnExit.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 import logo from './logo.svg';
 
@@ -12,8 +20,20 @@ interface Props {
 
 export function NavBar({ current }: Props) {
   const { currentUserId, users } = useContext(UserContext);
+  const screenChangesMessage = useContext(ScreenChangesContext);
   const [active, setActive] = useState(false);
   const { serverName } = useParams();
+
+  const handleLinkClick = useCallback(
+    (event: MouseEvent) => {
+      if (screenChangesMessage && !window.confirm(screenChangesMessage)) {
+        event.preventDefault();
+      }
+    },
+    [screenChangesMessage]
+  );
+
+  useWarningOnExit(screenChangesMessage ?? '', !!screenChangesMessage);
 
   const currentUser = users.find((it) => it.id === currentUserId);
 
@@ -22,7 +42,10 @@ export function NavBar({ current }: Props) {
       <DesignNavbar.Brand>
         <DesignNavbar.Item active={current === 'home'}>
           {({ className }) => (
-            <Link to={serverName ? ROUTE.server.url(serverName) : ROUTE.index.url}>
+            <Link
+              to={serverName ? ROUTE.server.url(serverName) : ROUTE.index.url}
+              onClick={handleLinkClick}
+            >
               <img className={className} src={logo} alt="Dossier logo" width={136} height={36} />
             </Link>
           )}
@@ -34,16 +57,20 @@ export function NavBar({ current }: Props) {
           {serverName ? (
             <>
               <DesignNavbar.Item active={current === 'admin-entities'}>
-                {NavItemRender('Entities', ROUTE.adminEntities.url(serverName))}
+                {NavItemRender('Entities', ROUTE.adminEntities.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'published-entities'}>
-                {NavItemRender('Published entities', ROUTE.publishedEntities.url(serverName))}
+                {NavItemRender(
+                  'Published entities',
+                  ROUTE.publishedEntities.url(serverName),
+                  handleLinkClick
+                )}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'schema'}>
-                {NavItemRender('Schema', ROUTE.schema.url(serverName))}
+                {NavItemRender('Schema', ROUTE.schema.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'graphiql'}>
-                {NavItemRender('GraphiQL', ROUTE.graphiql.url(serverName))}
+                {NavItemRender('GraphiQL', ROUTE.graphiql.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
             </>
           ) : (
@@ -77,6 +104,7 @@ export function NavBar({ current }: Props) {
                   key={user.id}
                   active={user.id === currentUserId}
                   to={ROUTE.login.url(serverName, user.id)}
+                  onClick={handleLinkClick}
                 >
                   {user.name}
                 </NavigationItem>
@@ -92,16 +120,18 @@ export function NavBar({ current }: Props) {
 function NavigationItem({
   active,
   to,
+  onClick,
   children,
 }: {
   active?: boolean;
   to: string;
+  onClick: MouseEventHandler<HTMLAnchorElement>;
   children: ReactNode;
 }) {
   return (
     <DesignNavbar.Item active={active}>
       {({ className }: { className: string }) => (
-        <Link to={to} className={className}>
+        <Link to={to} className={className} onClick={onClick}>
           {children}
         </Link>
       )}
@@ -109,10 +139,10 @@ function NavigationItem({
   );
 }
 
-function NavItemRender(text: string, to: string) {
+function NavItemRender(text: string, to: string, onClick: MouseEventHandler<HTMLAnchorElement>) {
   const renderer = ({ className }: { className: string }) => {
     return (
-      <Link to={to} className={className}>
+      <Link to={to} className={className} onClick={onClick}>
         {text}
       </Link>
     );

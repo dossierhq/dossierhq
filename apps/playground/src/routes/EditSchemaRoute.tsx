@@ -1,20 +1,23 @@
 import { SchemaEditorScreen } from '@dossierhq/react-components';
 import { useState } from 'react';
 import { NavBar } from '../components/NavBar.js';
-import { useWarningOnExit } from '../hooks/useWarningOnExit.js';
+import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
 
 export function EditSchemaRoute() {
   const [hasChanges, setHasChanges] = useState(false);
 
-  useWarningOnExit(
-    'Changes to the schema will be lost, are you sure you want to leave the page?',
-    hasChanges
-  );
-
   return (
-    <SchemaEditorScreen
-      header={<NavBar current="schema" />}
-      onEditorHasChangesChange={setHasChanges}
-    />
+    <ScreenChangesContext.Provider
+      value={
+        hasChanges
+          ? 'Changes to the schema will be lost, are you sure you want to leave the page?'
+          : null
+      }
+    >
+      <SchemaEditorScreen
+        header={<NavBar current="schema" />}
+        onEditorHasChangesChange={setHasChanges}
+      />
+    </ScreenChangesContext.Provider>
   );
 }

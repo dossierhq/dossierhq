@@ -2,7 +2,7 @@ import { EntityEditorScreen } from '@dossierhq/react-components';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';
-import { useWarningOnExit } from '../hooks/useWarningOnExit.js';
+import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
 
 export function EditEntitiesRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,14 +13,16 @@ export function EditEntitiesRoute() {
     [setSearchParams]
   );
 
-  useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', hasChanges);
-
   return (
-    <EntityEditorScreen
-      header={<NavBar current="admin-entities" />}
-      urlSearchParams={searchParams}
-      onUrlSearchParamsChange={handleSearchParamsChange}
-      onEditorHasChangesChange={setHasChanges}
-    />
+    <ScreenChangesContext.Provider
+      value={hasChanges ? 'Changes will be lost, are you sure you want to leave the page?' : null}
+    >
+      <EntityEditorScreen
+        header={<NavBar current="admin-entities" />}
+        urlSearchParams={searchParams}
+        onUrlSearchParamsChange={handleSearchParamsChange}
+        onEditorHasChangesChange={setHasChanges}
+      />
+    </ScreenChangesContext.Provider>
   );
 }

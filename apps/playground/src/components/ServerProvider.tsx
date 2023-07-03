@@ -1,14 +1,16 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk } from '@dossierhq/core';
-import { BackgroundEntityProcessorPlugin, type Server } from '@dossierhq/server';
-import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import { notOk, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  BackgroundEntityProcessorPlugin,
+  NoneAndSubjectAuthorizationAdapter,
+  createServer,
+  type Server,
+} from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
 import { useContext, useEffect, useState } from 'react';
 import type { Database } from 'sql.js';
 import { SERVER_LOGGER } from '../config/LoggerConfig.js';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';
-import type { ServerContextValue } from '../contexts/ServerContext.js';
-import { ServerContext } from '../contexts/ServerContext.js';
+import { ServerContext, type ServerContextValue } from '../contexts/ServerContext.js';
 
 interface Props {
   children: React.ReactNode;
