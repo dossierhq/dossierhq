@@ -1,14 +1,14 @@
 import { useWindowEventListener } from '@dossierhq/design';
 import { useCallback } from 'react';
 
-export function useWarningOnExit(message: string, when = true) {
+export function useBeforeUnload(message: string | null) {
   const handleBeforeUnload = useCallback(
     (event: BeforeUnloadEvent) => {
-      if (when) {
+      if (message) {
         event.returnValue = message;
       }
     },
-    [when, message]
+    [message]
   );
 
   useWindowEventListener('beforeunload', handleBeforeUnload);

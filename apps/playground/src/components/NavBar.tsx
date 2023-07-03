@@ -10,7 +10,7 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
 import { UserContext } from '../contexts/UserContext.js';
-import { useWarningOnExit } from '../hooks/useWarningOnExit.js';
+import { useBeforeUnload } from '../hooks/useBeforeUnload.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 import logo from './logo.svg';
 
@@ -33,7 +33,7 @@ export function NavBar({ current }: Props) {
     [screenChangesMessage]
   );
 
-  useWarningOnExit(screenChangesMessage ?? '', !!screenChangesMessage);
+  useBeforeUnload(screenChangesMessage);
 
   const currentUser = users.find((it) => it.id === currentUserId);
 
