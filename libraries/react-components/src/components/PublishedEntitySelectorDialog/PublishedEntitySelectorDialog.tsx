@@ -1,5 +1,5 @@
 import type { EntityReference, PublishedEntity } from '@dossierhq/core';
-import { Dialog, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
+import { Dialog2, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
@@ -18,43 +18,39 @@ import {
 import { PublishedEntitySearchToolbar } from '../PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 
 interface PublishedEntitySelectorDialogProps {
-  show: boolean;
   title: string;
   entityTypes?: string[];
   linksFrom?: EntityReference;
   linksTo?: EntityReference;
-  onClose: () => void;
   onItemClick: (item: PublishedEntity) => void;
 }
 
 export function PublishedEntitySelectorDialog({
-  show,
   title,
   entityTypes,
   linksFrom,
   linksTo,
-  onClose,
   onItemClick,
 }: PublishedEntitySelectorDialogProps) {
   return (
-    <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
-      <FullscreenContainer card height="100%">
-        <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
-            <Text textStyle="headline5">{title}</Text>
-          </FullscreenContainer.Item>
-          <IconButton icon="close" color="white" onClick={onClose} />
-        </FullscreenContainer.Row>
-        {show ? (
+    <Dialog2 width="wide" height="fill">
+      {({ close }) => (
+        <FullscreenContainer card height="100%">
+          <FullscreenContainer.Row flexDirection="row" alignItems="center">
+            <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+              <Text textStyle="headline5">{title}</Text>
+            </FullscreenContainer.Item>
+            <IconButton icon="close" color="white" onClick={close} />
+          </FullscreenContainer.Row>
           <Content
             entityTypes={entityTypes}
             linksFrom={linksFrom}
             linksTo={linksTo}
             onItemClick={onItemClick}
           />
-        ) : null}
-      </FullscreenContainer>
-    </Dialog>
+        </FullscreenContainer>
+      )}
+    </Dialog2>
   );
 }
 

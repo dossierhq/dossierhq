@@ -1,5 +1,5 @@
 import type { EntityReference, PublishedEntity } from '@dossierhq/core';
-import { Button, Field } from '@dossierhq/design';
+import { Button, Dialog2, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { PublishedDossierContext } from '../../published/contexts/PublishedDossierContext.js';
@@ -14,13 +14,16 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
   const { publishedClient } = useContext(PublishedDossierContext);
 
   const [showDialog, setShowDialog] = useState<'linksTo' | 'linksFrom' | ''>('');
-  const handleCloseDialog = useCallback(() => setShowDialog(''), []);
+  const handleOpenChanged = useCallback((isOpen: boolean) => {
+    if (!isOpen) setShowDialog('');
+  }, []);
+
   const handleItemClick = useCallback(
     (item: PublishedEntity) => {
       onItemClick(item);
-      handleCloseDialog();
+      setShowDialog('');
     },
-    [handleCloseDialog, onItemClick]
+    [onItemClick]
   );
 
   const { totalCount: linksToTotal } = usePublishedTotalCount(publishedClient, {
@@ -35,30 +38,30 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
       <Field.Label>Entity links</Field.Label>
       <Field.Control>
         <Button.Group hasAddons>
-          <Button
-            disabled={!linksToTotal}
-            iconLeft="linkTo"
-            title={`${linksToTotal} ${
-              linksToTotal === 1 ? 'entity links' : 'entities link'
-            } to this entity`}
-            onClick={() => setShowDialog('linksTo')}
-          >{`${linksToTotal} incoming`}</Button>
-          <Button
-            disabled={!linksFromTotal}
-            iconLeft="linkFrom"
-            title={`This entity links to ${linksFromTotal} ${
-              linksFromTotal === 1 ? 'entity' : 'entities'
-            }`}
-            onClick={() => setShowDialog('linksFrom')}
-          >{`${linksFromTotal} outgoing`}</Button>
-          <PublishedEntitySelectorDialog
-            show={showDialog !== ''}
-            title={showDialog === 'linksTo' ? 'Incoming links' : 'Outgoing links'}
-            linksFrom={showDialog === 'linksFrom' ? entityReference : undefined}
-            linksTo={showDialog === 'linksTo' ? entityReference : undefined}
-            onClose={handleCloseDialog}
-            onItemClick={handleItemClick}
-          />
+          <Dialog2.Trigger isOpen={showDialog !== ''} onOpenChange={handleOpenChanged}>
+            <Button
+              disabled={!linksToTotal}
+              iconLeft="linkTo"
+              title={`${linksToTotal} ${
+                linksToTotal === 1 ? 'entity links' : 'entities link'
+              } to this entity`}
+              onClick={() => setShowDialog('linksTo')}
+            >{`${linksToTotal} incoming`}</Button>
+            <Button
+              disabled={!linksFromTotal}
+              iconLeft="linkFrom"
+              title={`This entity links to ${linksFromTotal} ${
+                linksFromTotal === 1 ? 'entity' : 'entities'
+              }`}
+              onClick={() => setShowDialog('linksFrom')}
+            >{`${linksFromTotal} outgoing`}</Button>
+            <PublishedEntitySelectorDialog
+              title={showDialog === 'linksTo' ? 'Incoming links' : 'Outgoing links'}
+              linksFrom={showDialog === 'linksFrom' ? entityReference : undefined}
+              linksTo={showDialog === 'linksTo' ? entityReference : undefined}
+              onItemClick={handleItemClick}
+            />
+          </Dialog2.Trigger>
         </Button.Group>
       </Field.Control>
     </Field>
