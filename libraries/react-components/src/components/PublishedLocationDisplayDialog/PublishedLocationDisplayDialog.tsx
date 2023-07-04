@@ -1,6 +1,6 @@
 import type { Location, PublishedEntity } from '@dossierhq/core';
 import {
-  Dialog,
+  Dialog2,
   FullscreenContainer,
   IconButton,
   Input,
@@ -8,8 +8,8 @@ import {
   toSizeClassName,
 } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
-import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
+import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import {
@@ -19,32 +19,30 @@ import {
 } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface PublishedLocationDisplayDialogProps {
-  show: boolean;
   title: string;
   value: Location;
-  onClose: () => void;
   onEntityClick?: (entity: PublishedEntity) => void;
 }
 
 export function PublishedLocationDisplayDialog({
-  show,
   title,
   value,
-  onClose,
   onEntityClick,
 }: PublishedLocationDisplayDialogProps) {
   return (
-    <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
-      <FullscreenContainer card height="100%">
-        <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
-            <Text textStyle="headline5">{title}</Text>
-          </FullscreenContainer.Item>
-          <IconButton icon="close" color="white" onClick={onClose} />
-        </FullscreenContainer.Row>
-        {show ? <Content value={value} onEntityClick={onEntityClick} /> : null}
-      </FullscreenContainer>
-    </Dialog>
+    <Dialog2 width="wide" height="fill">
+      {({ close }) => (
+        <FullscreenContainer card height="100%">
+          <FullscreenContainer.Row flexDirection="row" alignItems="center">
+            <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+              <Text textStyle="headline5">{title}</Text>
+            </FullscreenContainer.Item>
+            <IconButton icon="close" color="white" onClick={close} />
+          </FullscreenContainer.Row>
+          <Content value={value} onEntityClick={onEntityClick} />
+        </FullscreenContainer>
+      )}
+    </Dialog2>
   );
 }
 
