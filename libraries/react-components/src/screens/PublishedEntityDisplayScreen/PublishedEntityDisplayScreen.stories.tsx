@@ -46,7 +46,7 @@ export const HeaderFooter: Story = {
   },
 };
 
-export const OpenPublishedBooleans: Story = {
+export const OpenBooleans: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.Booleans.publishedMinimal,
@@ -55,7 +55,7 @@ export const OpenPublishedBooleans: Story = {
   },
 };
 
-export const OpenPublishedEntities: Story = {
+export const OpenEntities: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.Entities.publishedMinimal,
@@ -64,7 +64,7 @@ export const OpenPublishedEntities: Story = {
   },
 };
 
-export const OpenPublishedLocations: Story = {
+export const OpenLocations: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.Locations.publishedMinimal,
@@ -73,7 +73,7 @@ export const OpenPublishedLocations: Story = {
   },
 };
 
-export const OpenNumbersEntities: Story = {
+export const OpenNumbers: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.Numbers.publishedMinimal,
@@ -82,7 +82,7 @@ export const OpenNumbersEntities: Story = {
   },
 };
 
-export const OpenRichTextsEntities: Story = {
+export const OpenRichTexts: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.RichTexts.publishedMinimal,
@@ -91,7 +91,7 @@ export const OpenRichTextsEntities: Story = {
   },
 };
 
-export const OpenStringsEntities: Story = {
+export const OpenStrings: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.Strings.publishedMinimal,
@@ -100,7 +100,7 @@ export const OpenStringsEntities: Story = {
   },
 };
 
-export const OpenValueItemsEntities: Story = {
+export const OpenValueItems: Story = {
   args: {
     initialUrlSearchParams: urlFor([
       CatalogEntities.ValueItems.publishedMinimal,

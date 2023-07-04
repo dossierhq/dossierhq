@@ -34,6 +34,11 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
     if (!schemaIsLoaded || !urlSearchParams) return;
     const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
     actions.forEach((action) => dispatchEntityEditorState(action));
+    if (actions.length > 0) {
+      dispatchEntityEditorState(
+        new EntityEditorActions.SetActiveEntity(actions[0].selector.id, false, false)
+      );
+    }
   }, [schemaIsLoaded, dispatchEntityEditorState, urlSearchParams]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryAndEntityEditorState', { query, paging, sampling, sample, urlQuery });

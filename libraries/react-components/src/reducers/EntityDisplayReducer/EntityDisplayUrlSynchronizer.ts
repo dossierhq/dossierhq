@@ -33,6 +33,11 @@ export function useSynchronizeUrlQueryAndEntityDisplayState(
     if (!urlSearchParams) return;
     const entityIds = urlQueryToEntityIds(urlSearchParams);
     entityIds.forEach((id) => dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(id)));
+    if (entityIds.length > 0) {
+      dispatchEntityDisplayState(
+        new EntityDisplayActions.SetActiveEntity(entityIds[0], false, false)
+      );
+    }
   }, [dispatchEntityDisplayState, urlSearchParams]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryAndEntityDisplayState', { entityIds });
