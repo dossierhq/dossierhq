@@ -1,13 +1,14 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  EntityReference,
-  PublishingEvent,
-  ValueItem,
+import {
+  assertIsDefined,
+  type AdminClient,
+  type AdminEntity,
+  type EntityReference,
+  type PublishingEvent,
+  type ValueItem,
 } from '@dossierhq/core';
-import { assertIsDefined } from '@dossierhq/core';
-import { Button, DateDisplay, Row, TabContainer, Tag, Text } from '@dossierhq/design';
+import { Button, DateDisplay, Dialog2, Row, TabContainer, Tag, Text } from '@dossierhq/design';
 import { useContext, useState } from 'react';
+import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
@@ -18,7 +19,6 @@ import { AdminEntityLinks } from './AdminEntityLinks.js';
 
 interface Props {
   entityEditorState: EntityEditorState;
-  onShowEntityHistory: (reference: EntityReference) => void;
 }
 
 interface ActivityListEvent {
@@ -34,11 +34,12 @@ const ActivityFilter = {
 } as const;
 type ActivityFilter = (typeof ActivityFilter)[keyof typeof ActivityFilter];
 
-export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistory }: Props) {
+export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
   const { adminClient, authKeys } = useContext(AdminDossierContext);
   const { activeEntityId } = entityEditorState;
 
   const [activityFilter, setActivityFilter] = useState<ActivityFilter>(ActivityFilter.All);
+  const [historyIsOpen, setHistoryIsOpen] = useState(false);
 
   if (!activeEntityId) return null;
   const draftState = entityEditorState.drafts.find((it) => it.id === activeEntityId);
@@ -64,7 +65,10 @@ export function EntityEditorDraftSidebar({ entityEditorState, onShowEntityHistor
           </Row>
           <AdminEntityLinks entityReference={{ id: entity.id }} />
           {entity.info.version > 0 ? (
-            <Button onClick={() => onShowEntityHistory({ id: entity.id })}>Entity history</Button>
+            <Dialog2.Trigger isOpen={historyIsOpen} onOpenChange={setHistoryIsOpen}>
+              <Button onClick={() => setHistoryIsOpen(true)}>Entity history</Button>
+              <AdminEntityHistoryDialog reference={{ id: entity.id }} />
+            </Dialog2.Trigger>
           ) : null}
           <TabContainer small>
             {Object.keys(ActivityFilter).map((filter) => (

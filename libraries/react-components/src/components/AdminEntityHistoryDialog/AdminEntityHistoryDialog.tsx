@@ -2,7 +2,7 @@ import type { AdminEntity, AdminEntityTypeSpecification, EntityReference } from 
 import { isFieldValueEqual } from '@dossierhq/core';
 import {
   Card2,
-  Dialog,
+  Dialog2,
   FullscreenContainer,
   IconButton,
   SelectDisplay,
@@ -12,36 +12,32 @@ import { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
-import type { VersionItem } from './VersionSelectionReducer.js';
 import {
+  VersionSelectionAction,
   initializeVersionSelectionState,
   reduceVersionSelectionState,
-  VersionSelectionAction,
+  type VersionItem,
 } from './VersionSelectionReducer.js';
 
 interface AdminEntityHistoryDialogProps {
-  show: boolean;
   reference: EntityReference | null;
-  onClose: () => void;
 }
 
-export function AdminEntityHistoryDialog({
-  show,
-  reference,
-  onClose,
-}: AdminEntityHistoryDialogProps) {
+export function AdminEntityHistoryDialog({ reference }: AdminEntityHistoryDialogProps) {
   return (
-    <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
-      <FullscreenContainer card height="100%">
-        <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
-            <Text textStyle="headline5">Entity history</Text>
-          </FullscreenContainer.Item>
-          <IconButton icon="close" color="white" onClick={onClose} />
-        </FullscreenContainer.Row>
-        {show && reference ? <Content reference={reference} /> : null}
-      </FullscreenContainer>
-    </Dialog>
+    <Dialog2 width="wide" height="fill">
+      {({ close }) => (
+        <FullscreenContainer card height="100%">
+          <FullscreenContainer.Row flexDirection="row" alignItems="center">
+            <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+              <Text textStyle="headline5">Entity history</Text>
+            </FullscreenContainer.Item>
+            <IconButton icon="close" color="white" onClick={close} />
+          </FullscreenContainer.Row>
+          {reference ? <Content reference={reference} /> : null}
+        </FullscreenContainer>
+      )}
+    </Dialog2>
   );
 }
 
