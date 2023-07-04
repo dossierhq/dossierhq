@@ -1,0 +1,113 @@
+{
+  "id": "cfd92b31-0cb9-44a6-b7a9-cbe1feff36dd",
+  "info": {
+    "name": "June summary",
+    "type": "BlogPost",
+    "authKey": "none",
+    "status": "published",
+    "valid": true,
+    "validPublished": true
+  },
+  "fields": {
+    "title": "June summary",
+    "slug": "june-summary",
+    "publishedDate": "2023-07-04T13:48Z",
+    "updatedDate": null,
+    "authors": [
+      {
+        "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
+      }
+    ],
+    "hero": {
+      "type": "CloudinaryImage",
+      "publicId": "Blog/o1tlelepwhbizbh4eohz",
+      "width": 5472,
+      "height": 3648,
+      "alt": null
+    },
+    "description": "During June changes to the schema is more flexible and robust.",
+    "body": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The schema has continued to get some improvements during June. Updating the schema via the API is more robust now, and some additional modifications are supported by both the web interface and the API (like renaming and removing patterns, and reordering fields).",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "The validation functionality has been extended to published entities as well, so it's possible to detect when an entity becomes invalid due to a schema change. This includes functionality to index and validate entities when the schema changes.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "It is now possible to filter entities based on which value items they include, previously you could only filter on the entity type.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Using lists fields (e.g. a list of strings) have received several improvements as well. It is now possible to reorder them and adding items is more reliable.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
