@@ -1,7 +1,12 @@
-import type { AdminEntity, AdminSchema, Location } from '@dossierhq/core';
-import { ItemTraverseNodeType, isLocationItemField } from '@dossierhq/core';
 import {
-  Dialog,
+  ItemTraverseNodeType,
+  isLocationItemField,
+  type AdminEntity,
+  type AdminSchema,
+  type Location,
+} from '@dossierhq/core';
+import {
+  Dialog2,
   FullscreenContainer,
   IconButton,
   Input,
@@ -35,34 +40,32 @@ import { EntityDraftMapMarker } from './EntityDraftMapMarker.js';
 import { initializeLocationState, reduceLocation } from './LocationReducer.js';
 
 interface AdminLocationSelectorDialogProps {
-  show: boolean;
   title: string;
   value: Location | null;
   onChange: (location: Location | null) => void;
-  onClose: () => void;
   onItemClick?: (item: AdminEntity | EntityEditorDraftState) => void;
 }
 
 export function AdminLocationSelectorDialog({
-  show,
   title,
   value,
-  onClose,
   onChange,
   onItemClick,
 }: AdminLocationSelectorDialogProps) {
   return (
-    <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
-      <FullscreenContainer card height="100%">
-        <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
-            <Text textStyle="headline5">{title}</Text>
-          </FullscreenContainer.Item>
-          <IconButton icon="close" color="white" onClick={onClose} />
-        </FullscreenContainer.Row>
-        {show ? <Content value={value} onChange={onChange} onItemClick={onItemClick} /> : null}
-      </FullscreenContainer>
-    </Dialog>
+    <Dialog2 width="wide" height="fill">
+      {({ close }) => (
+        <FullscreenContainer card height="100%">
+          <FullscreenContainer.Row flexDirection="row" alignItems="center">
+            <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
+              <Text textStyle="headline5">{title}</Text>
+            </FullscreenContainer.Item>
+            <IconButton icon="close" color="white" onClick={close} />
+          </FullscreenContainer.Row>
+          <Content value={value} onChange={onChange} onItemClick={onItemClick} />
+        </FullscreenContainer>
+      )}
+    </Dialog2>
   );
 }
 

@@ -2,6 +2,7 @@ import type { AdminEntity, Location, LocationFieldSpecification } from '@dossier
 import {
   Button,
   Delete,
+  Dialog2,
   HoverRevealContainer,
   Row,
   Text,
@@ -20,7 +21,6 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
   const [showSelector, setShowSelector] = useState(false);
   const handleShowSelector = useCallback(() => setShowSelector(true), [setShowSelector]);
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
-  const handleClose = useCallback(() => setShowSelector(false), [setShowSelector]);
 
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const handleItemClick = useCallback(
@@ -31,7 +31,7 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
   );
 
   return (
-    <>
+    <Dialog2.Trigger isOpen={showSelector} onOpenChange={setShowSelector}>
       {value ? (
         <HoverRevealContainer gap={2}>
           {dragHandle ? (
@@ -60,22 +60,18 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
           Select location
         </Button>
       )}
-      {showSelector ? (
-        <AdminLocationSelectorDialog
-          show
-          title="Select location"
-          value={value}
-          onClose={handleClose}
-          onChange={onChange}
-          onItemClick={handleItemClick}
-        />
-      ) : null}
       {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
           {error.message}
         </Text>
       ))}
-    </>
+      <AdminLocationSelectorDialog
+        title="Select location"
+        value={value}
+        onChange={onChange}
+        onItemClick={handleItemClick}
+      />
+    </Dialog2.Trigger>
   );
 }
 
