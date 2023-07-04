@@ -46,8 +46,69 @@ export const HeaderFooter: Story = {
   },
 };
 
-export const OpenStringPublishedMinimalUrl: Story = {
+export const OpenPublishedBooleans: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams({ id: CatalogEntities.Strings.publishedMinimal }),
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.Booleans.publishedMinimal,
+      CatalogEntities.Booleans.publishedInvalid,
+    ]),
   },
 };
+
+export const OpenPublishedEntities: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.Entities.publishedMinimal,
+      CatalogEntities.Entities.publishedInvalid,
+    ]),
+  },
+};
+
+export const OpenPublishedLocations: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.Locations.publishedMinimal,
+      CatalogEntities.Locations.publishedInvalid,
+    ]),
+  },
+};
+
+export const OpenNumbersEntities: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.Numbers.publishedMinimal,
+      CatalogEntities.Numbers.publishedInvalid,
+    ]),
+  },
+};
+
+export const OpenRichTextsEntities: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.RichTexts.publishedMinimal,
+      CatalogEntities.RichTexts.publishedInvalid,
+    ]),
+  },
+};
+
+export const OpenStringsEntities: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.Strings.publishedMinimal,
+      CatalogEntities.Strings.publishedInvalid,
+    ]),
+  },
+};
+
+export const OpenValueItemsEntities: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.ValueItems.publishedMinimal,
+      CatalogEntities.ValueItems.publishedInvalid,
+    ]),
+  },
+};
+
+function urlFor(ids: string[]) {
+  return new URLSearchParams(ids.map((id) => ['id', id]));
+}

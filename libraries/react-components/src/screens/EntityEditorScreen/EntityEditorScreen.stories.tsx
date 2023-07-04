@@ -74,56 +74,46 @@ export const OpenStringPublishedMinimalUrl: Story = {
 
 export const OpenAllBooleansUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.Booleans).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Booleans)),
   },
 };
 
 export const OpenAllEntitiesUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.Entities).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Entities)),
   },
 };
 
 export const OpenAllLocationsUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.Locations).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Locations)),
   },
 };
 
 export const OpenAllNumbersUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.Numbers).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Numbers)),
   },
 };
 
 export const OpenAllRichTextsUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.RichTexts).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.RichTexts)),
   },
 };
 
 export const OpenAllStringsUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.Strings).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Strings)),
   },
 };
 
 export const OpenAllValueItemsUrl: Story = {
   args: {
-    initialUrlSearchParams: new URLSearchParams(
-      Object.values(CatalogEntities.ValueItems).map((id) => ['id', id])
-    ),
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.ValueItems)),
   },
 };
+
+function urlFor(ids: string[]) {
+  return new URLSearchParams(ids.map((id) => ['id', id]));
+}
