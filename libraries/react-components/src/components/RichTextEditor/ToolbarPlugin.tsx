@@ -478,17 +478,17 @@ function AddValueItemButton({
   const [editor] = useLexicalComposerContext();
 
   return (
-    <AdminTypePickerDialog
-      show
-      title="Select value type"
-      showValueTypes
-      valueTypes={fieldSpec.valueTypes}
-      onClose={onClose}
-      onItemClick={(type) => {
-        editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type });
-        onClose();
-      }}
-    />
+    <Dialog2.Trigger defaultOpen={true} onOpenChange={onClose}>
+      <AdminTypePickerDialog
+        title="Select value type"
+        showValueTypes
+        valueTypes={fieldSpec.valueTypes}
+        onItemClick={(type) => {
+          editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type });
+          onClose();
+        }}
+      />
+    </Dialog2.Trigger>
   );
 }
 
