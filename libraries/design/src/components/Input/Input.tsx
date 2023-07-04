@@ -8,6 +8,7 @@ import type { IconName } from '../Icon/Icon.js';
 import { Icon } from '../Icon/Icon.js';
 
 export interface InputProps {
+  className?: string;
   color?: Color;
   iconLeft?: IconName;
   placeholder?: string;
@@ -24,6 +25,7 @@ export interface InputProps {
 }
 
 export function Input({
+  className,
   color,
   iconLeft,
   placeholder,
@@ -38,9 +40,8 @@ export function Input({
   onKeyDown,
   onClick,
 }: InputProps): JSX.Element {
-  const className = toClassName('control', iconLeft && 'has-icons-left');
   return (
-    <div className={className}>
+    <div className={toClassName('control', iconLeft && 'has-icons-left', className)}>
       <input
         className={toClassName(
           'input',

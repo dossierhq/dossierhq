@@ -39,7 +39,11 @@ export function StringFieldEditor(props: Props) {
       ) : (
         <Row>
           {dragHandle}
-          <Input value={value ?? ''} onChange={handleChange} />
+          <Input
+            className={toFlexItemClassName({ flexGrow: 1 })}
+            value={value ?? ''}
+            onChange={handleChange}
+          />
         </Row>
       )}
       <ValidationIssuesDisplay validationIssues={validationIssues} />

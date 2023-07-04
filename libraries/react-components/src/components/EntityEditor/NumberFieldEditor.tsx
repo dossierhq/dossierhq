@@ -31,6 +31,7 @@ export function NumberFieldEditor({
       <Row>
         {dragHandle}
         <Input
+          className={toFlexItemClassName({ flexGrow: 1 })}
           value={value ?? ''}
           type="number"
           step={isInteger ? 1 : 'any'}
