@@ -59,10 +59,10 @@
     "@types/pg": "~8.10.2",
     "@types/uuid": "~9.0.2",
     "dotenv": "~16.3.1",
-    "eslint": "~8.43.0",
+    "eslint": "~8.44.0",
     "prettier": "2.8.8",
     "typescript": "~5.1.6",
     "uuid": "~9.0.0",
-    "vitest": "~0.32.2"
+    "vitest": "~0.32.4"
   }
 }
