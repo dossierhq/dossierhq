@@ -1,14 +1,14 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import type {
-  ColumnValue,
-  Context,
-  DatabaseAdapter,
-  SqliteDatabaseAdapter,
-  SqliteDatabaseOptimizationOptions,
-  SqliteDatabaseOptions,
-  UniqueConstraint,
+import {
+  createSqliteDatabaseAdapterAdapter,
+  type ColumnValue,
+  type Context,
+  type DatabaseAdapter,
+  type SqliteDatabaseAdapter,
+  type SqliteDatabaseOptimizationOptions,
+  type SqliteDatabaseOptions,
+  type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
-import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'bun:sqlite';
 
 export type BunSqliteDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
@@ -40,13 +40,11 @@ export async function createBunSqliteAdapter(
     isUniqueViolationOfConstraint,
 
     encodeCursor(value) {
-      // TODO this is a slow conversion. Using 'base64' is faster, but not correct atm.
-      return Buffer.from(value).toString('base64url');
+      return Buffer.from(value).toString('base64');
     },
 
     decodeCursor(value) {
-      // TODO this is a slow conversion. Using 'base64' is faster, but not correct atm.
-      return Buffer.from(value, 'base64url').toString('utf8');
+      return Buffer.from(value, 'base64').toString('utf8');
     },
 
     randomUUID: crypto.randomUUID,

@@ -243,7 +243,7 @@ importers:
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/server': workspace:*
-      bun-types: ~0.6.12
+      bun-types: ~0.6.13
       eslint: ~8.43.0
       prettier: 2.8.8
       typescript: ~5.1.6
@@ -253,7 +253,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
-      bun-types: 0.6.12
+      bun-types: 0.6.13
       eslint: 8.43.0
       prettier: 2.8.8
       typescript: 5.1.6
@@ -488,7 +488,7 @@ importers:
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
       '@rushstack/heft': 0.56.0
-      bun-types: ~0.6.12
+      bun-types: ~0.6.13
       eslint: ~8.43.0
       prettier: 2.8.8
       typescript: ~5.1.6
@@ -501,7 +501,7 @@ importers:
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
       '@rushstack/heft': 0.56.0
-      bun-types: 0.6.12
+      bun-types: 0.6.13
       eslint: 8.43.0
       prettier: 2.8.8
       typescript: 5.1.6
@@ -1316,7 +1316,7 @@ importers:
       better-sqlite3: ~8.4.0
       body-parser: ~1.20.2
       bulma: ~0.9.4
-      bun-types: ~0.6.12
+      bun-types: ~0.6.13
       cloudinary: ~1.37.3
       concurrently: ~8.2.0
       dotenv: ~16.3.1
@@ -1449,7 +1449,7 @@ importers:
       '@vitejs/plugin-react-swc': 3.3.2_vite@4.3.9
       base-64: 1.0.0
       bulma: 0.9.4
-      bun-types: 0.6.12
+      bun-types: 0.6.13
       concurrently: 8.2.0
       eslint-config-next: 13.4.7_knnjr7kq4rs2qtmvdkf5nzsniu
       eslint-plugin-import: 2.27.5_eslint@8.43.0
@@ -10329,8 +10329,8 @@ packages:
     resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
     dev: true
 
-  /bun-types/0.6.12:
-    resolution: {integrity: sha512-cICej22OR6uFNWMRgjKZR7X5w8WEsbM0lXhzftwCNvdsBDKNgLqLas5G2K0PuxLIxrUg859pP1i+FrngiotV1Q==}
+  /bun-types/0.6.13:
+    resolution: {integrity: sha512-7jx6Lh3YefVv/0ZYKDQeKpB0C1zCe2XRH0XYwRgbGkbhj6YlIm49uaahllP9hhj0UciT4ZOx6mCq8I4oKlNOJQ==}
     dev: true
 
   /busboy/1.6.0:
