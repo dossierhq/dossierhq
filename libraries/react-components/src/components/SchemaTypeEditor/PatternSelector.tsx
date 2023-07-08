@@ -25,7 +25,7 @@ export function PatternSelector({ readOnly, value, schemaEditorState, onChange }
 
   const handleItemClick = useCallback(
     (item: Item) => onChange(item.id === EMPTY_ID ? null : item.id),
-    [onChange]
+    [onChange],
   );
 
   if (readOnly) {

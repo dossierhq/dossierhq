@@ -166,7 +166,7 @@ function UploadButton({
   const uploadWidgetCallback = useCallback(
     (error: Error | undefined, result: CloudinaryUploadResult | undefined) =>
       handleUploadWidgetCallback(error, result, onChange),
-    [onChange]
+    [onChange],
   );
   const uploadWidget = useInitializeUploadWidget(cloudName, uploadPreset, uploadWidgetCallback);
 
@@ -180,7 +180,7 @@ function UploadButton({
 function handleUploadWidgetCallback(
   error: Error | undefined,
   result: CloudinaryUploadResult | undefined,
-  onChange: (value: AdminCloudinaryImage) => void
+  onChange: (value: AdminCloudinaryImage) => void,
 ) {
   if (result && result.event === 'success') {
     const asset = result.info;

@@ -5,7 +5,7 @@ type RichTextNodeTransformer = (node: Readonly<RichTextNode>) => Readonly<RichTe
 
 export function transformRichText<T extends Readonly<RichText> | RichText>(
   richText: T,
-  transformer: RichTextNodeTransformer
+  transformer: RichTextNodeTransformer,
 ): T {
   const newRoot = transformNode(richText.root, transformer);
   if (newRoot === richText.root) {
@@ -16,7 +16,7 @@ export function transformRichText<T extends Readonly<RichText> | RichText>(
 
 function transformNode(
   node: Readonly<RichTextNode>,
-  transformer: RichTextNodeTransformer
+  transformer: RichTextNodeTransformer,
 ): Readonly<RichTextNode> {
   const newNode = transformer(node);
   if (!isRichTextElementNode(newNode)) {

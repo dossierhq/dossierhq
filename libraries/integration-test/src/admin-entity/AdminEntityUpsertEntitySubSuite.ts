@@ -28,7 +28,7 @@ async function upsertEntity_minimalCreate({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
   const upsertResult = await client.upsertEntity<AdminTitleOnly>(
-    copyEntity(TITLE_ONLY_UPSERT, { id })
+    copyEntity(TITLE_ONLY_UPSERT, { id }),
   );
   assertOkResult(upsertResult);
   const {
@@ -66,7 +66,7 @@ async function upsertEntity_minimalUpdate({ server }: AdminEntityTestContext) {
   } = createResult.value;
 
   const upsertResult = await client.upsertEntity(
-    copyEntity(TITLE_ONLY_UPSERT, { id, fields: { title: 'Updated title' } })
+    copyEntity(TITLE_ONLY_UPSERT, { id, fields: { title: 'Updated title' } }),
   );
   assertOkResult(upsertResult);
   const {
@@ -110,7 +110,7 @@ async function upsertEntity_updateWithoutChange({ server }: AdminEntityTestConte
 async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -123,7 +123,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: Admin
       info: { authKey: 'subject' },
       fields: { title: 'Updated title' },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(upsertResult);
   const {
@@ -152,12 +152,12 @@ async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
   const client = adminClientForMainPrincipal(server);
   const id = uuidv4();
   const upsertResult = await client.upsertEntity(
-    copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: 'none' } })
+    copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: 'none' } }),
   );
   assertErrorResult(
     upsertResult,
     ErrorType.BadRequest,
-    "info.authKey: AuthKey 'none' does not match pattern 'subject' (^subject$)"
+    "info.authKey: AuthKey 'none' does not match pattern 'subject' (^subject$)",
   );
 
   const getResult = await client.getEntity({ id });
@@ -177,12 +177,12 @@ async function upsertEntity_errorUpdateTryingToChangeAuthKey({ server }: AdminEn
       id,
       info: { authKey: 'subject' },
       fields: {},
-    })
+    }),
   );
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none'
+    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none',
   );
 
   const getResult = await client.getEntity({ id });

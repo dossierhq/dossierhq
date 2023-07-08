@@ -65,7 +65,7 @@ async function getEntity_withSubjectAuthKey({ adminSchema, server }: PublishedEn
   const publishedClient = publishedClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
   const {
@@ -98,7 +98,7 @@ async function getEntity_archivedThenPublished({ server }: PublishedEntityTestCo
   assertIsPublishedTitleOnly(getResult.value);
   assertEquals(
     getResult.value,
-    copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } })
+    copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } }),
   );
 }
 
@@ -137,7 +137,7 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
       id,
       info: { name, createdAt },
       fields: { title: createResult.value.entity.fields.title ?? '--no title--' },
-    })
+    }),
   );
 }
 
@@ -152,7 +152,7 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
         stringAdminOnly: 'stringAdminOnly',
       },
     }),
-    { publish: true }
+    { publish: true },
   );
   const {
     entity: { id },
@@ -187,7 +187,7 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
     copyEntity(VALUE_ITEMS_CREATE, {
       fields: { any: adminLocationsValueItem },
     }),
-    { publish: true }
+    { publish: true },
   );
   const {
     entity: { id },
@@ -224,7 +224,7 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
         richText: createRichTextRootNode([createRichTextValueItemNode(adminLocationsValueItem)]),
       },
     }),
-    { publish: true }
+    { publish: true },
   );
   const {
     entity: { id },
@@ -252,7 +252,7 @@ async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEnti
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
 
@@ -266,8 +266,8 @@ async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEnti
     getResult.value,
     adminToPublishedEntity(
       adminSchema,
-      copyEntity(createResult.value.entity, { info: { status: 'published' } })
-    )
+      copyEntity(createResult.value.entity, { info: { status: 'published' } }),
+    ),
   );
 }
 
@@ -310,7 +310,7 @@ async function getEntity_errorUniqueIndexValueFromAdminOnlyField({
     copyEntity(STRINGS_CREATE, {
       fields: { uniqueAdminOnly: unique },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
 
@@ -323,7 +323,7 @@ async function getEntity_errorWrongAuthKey({ server }: PublishedEntityTestContex
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
     }),
-    { publish: true }
+    { publish: true },
   );
 
   assertOkResult(createResult);

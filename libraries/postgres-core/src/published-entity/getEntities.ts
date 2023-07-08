@@ -12,7 +12,7 @@ import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 export async function publishedEntityGetEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<
@@ -35,6 +35,6 @@ export async function publishedEntityGetEntities(
       id: row.uuid,
       resolvedAuthKey: row.resolved_auth_key,
       fieldValues: row.data,
-    }))
+    })),
   );
 }

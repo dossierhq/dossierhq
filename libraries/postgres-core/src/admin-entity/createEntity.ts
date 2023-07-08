@@ -20,7 +20,7 @@ export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
-  entity: DatabaseAdminEntityCreateEntityArg
+  entity: DatabaseAdminEntityCreateEntityArg,
 ): PromiseResult<
   DatabaseAdminEntityCreatePayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -29,7 +29,7 @@ export async function adminCreateEntity(
     databaseAdapter,
     context,
     randomNameGenerator,
-    entity
+    entity,
   );
   if (createEntityRowResult.isError()) return createEntityRowResult;
 
@@ -41,7 +41,7 @@ export async function adminCreateEntity(
     {
       text: 'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
       values: [entityId, getSessionSubjectInternalId(entity.creator), entity.fieldsData],
-    }
+    },
   );
   if (createEntityVersionResult.isError()) return createEntityVersionResult;
   const { id: versionsId } = createEntityVersionResult.value;
@@ -59,7 +59,7 @@ async function createEntityRow(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
-  entity: DatabaseAdminEntityCreateEntityArg
+  entity: DatabaseAdminEntityCreateEntityArg,
 ) {
   return await withUniqueNameAttempt(
     context,
@@ -97,6 +97,6 @@ async function createEntityRow(
         updated_at: updatedAt,
       } = createResult.value;
       return ok({ uuid, actualName: name, entityId, createdAt, updatedAt });
-    }
+    },
   );
 }

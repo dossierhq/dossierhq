@@ -32,7 +32,7 @@ export function EntityTypeFieldDisplay({ className, value }: Props) {
       // open entity asynchronously to not fight with the "click to activate entity" functionality
       setTimeout(() => dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(value.id)));
     },
-    [dispatchEntityDisplayState, value]
+    [dispatchEntityDisplayState, value],
   );
 
   return entity ? (

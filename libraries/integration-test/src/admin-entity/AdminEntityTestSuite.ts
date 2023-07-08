@@ -25,7 +25,7 @@ export interface AdminEntityTestContext {
 }
 
 export function createAdminEntityTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<AdminEntityTestContext, TCleanup>
+  initializer: TestFunctionInitializer<AdminEntityTestContext, TCleanup>,
 ): TestSuite {
   return buildSuite(
     initializer,
@@ -42,6 +42,6 @@ export function createAdminEntityTestSuite<TCleanup>(
     ...UnarchiveEntitySubSuite,
     ...UnpublishEntitiesSubSuite,
     ...UpdateEntitySubSuite,
-    ...UpsertEntitySubSuite
+    ...UpsertEntitySubSuite,
   );
 }

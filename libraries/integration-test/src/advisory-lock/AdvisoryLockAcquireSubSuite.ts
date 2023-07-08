@@ -22,17 +22,17 @@ async function acquireLock_errorConflictIfAlreadyAcquired({ server }: AdvisoryLo
   const adminClient = adminClientForMainPrincipal(server);
   const firstResult = await adminClient.acquireAdvisoryLock(
     'acquireLock_errorConflictIfAlreadyAcquired',
-    { leaseDuration: 500 }
+    { leaseDuration: 500 },
   );
   assertOkResult(firstResult);
 
   const secondResult = await adminClient.acquireAdvisoryLock(
     'acquireLock_errorConflictIfAlreadyAcquired',
-    { leaseDuration: 500 }
+    { leaseDuration: 500 },
   );
   assertErrorResult(
     secondResult,
     ErrorType.Conflict,
-    "Lock with name 'acquireLock_errorConflictIfAlreadyAcquired' already exists"
+    "Lock with name 'acquireLock_errorConflictIfAlreadyAcquired' already exists",
   );
 }

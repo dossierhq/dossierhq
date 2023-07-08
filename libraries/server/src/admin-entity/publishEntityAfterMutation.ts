@@ -19,7 +19,7 @@ export async function publishEntityAfterMutation(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityVersionReference
+  reference: EntityVersionReference,
 ): PromiseResult<
   AdminEntityPublishPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -30,7 +30,7 @@ export async function publishEntityAfterMutation(
     authorizationAdapter,
     databaseAdapter,
     context,
-    [reference]
+    [reference],
   );
   if (publishResult.isError()) {
     if (

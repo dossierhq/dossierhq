@@ -7,7 +7,7 @@ import { useWindowEventListener } from './useWindowEventListener.js';
 export function useWindowClick(
   ignoreRef: RefObject<HTMLElement>,
   onClick: () => void,
-  enabled?: boolean
+  enabled?: boolean,
 ): void {
   const listener = useCallback(
     (event: MouseEvent) => {
@@ -23,7 +23,7 @@ export function useWindowClick(
 
       onClick();
     },
-    [enabled, onClick, ignoreRef]
+    [enabled, onClick, ignoreRef],
   );
   useWindowEventListener('click', listener);
 }

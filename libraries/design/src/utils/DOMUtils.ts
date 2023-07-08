@@ -1,6 +1,6 @@
 export function findAscendantElement(
   node: Node,
-  predicate: (element: Element) => boolean
+  predicate: (element: Element) => boolean,
 ): Element | null {
   const startElement = isElementNode(node) ? node : node.parentElement;
   for (let element: Element | null = startElement; element; element = element.parentElement) {
@@ -17,11 +17,11 @@ function isElementNode(node: Node): node is Element {
 
 export function findAscendantHTMLElement(
   node: Node,
-  predicate: (element: HTMLElement) => boolean
+  predicate: (element: HTMLElement) => boolean,
 ): HTMLElement | null {
   const result = findAscendantElement(
     node,
-    (element) => element instanceof HTMLElement && predicate(element)
+    (element) => element instanceof HTMLElement && predicate(element),
   );
   return result instanceof HTMLElement ? result : null;
 }

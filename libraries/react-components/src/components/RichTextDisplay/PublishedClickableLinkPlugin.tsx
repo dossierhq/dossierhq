@@ -48,7 +48,7 @@ export function PublishedClickableLinkPlugin({ onClick }: Props): JSX.Element | 
         if (rootElement) {
           rootElement.addEventListener('click', handleClick);
         }
-      }
+      },
     );
   }, [editor, onClick]);
   return null;

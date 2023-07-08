@@ -36,14 +36,14 @@ export interface CreateSessionPayload {
 }
 
 export interface Server<
-  TDatabaseOptimizationOptions extends DatabaseOptimizationOptions = DatabaseOptimizationOptions
+  TDatabaseOptimizationOptions extends DatabaseOptimizationOptions = DatabaseOptimizationOptions,
 > {
   shutdown(): PromiseResult<void, typeof ErrorType.Generic>;
 
   addPlugin(plugin: ServerPlugin): void;
 
   optimizeDatabase(
-    options: TDatabaseOptimizationOptions
+    options: TDatabaseOptimizationOptions,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   processNextDirtyEntity(): PromiseResult<
@@ -63,30 +63,30 @@ export interface Server<
     TClient extends AdminClient<
       AdminEntity<string, object>,
       ValueItem<string, object>
-    > = AdminClient
+    > = AdminClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
-    middleware?: AdminClientMiddleware<SessionContext>[]
+    middleware?: AdminClientMiddleware<SessionContext>[],
   ): TClient;
 
   createPublishedClient<
     TClient extends PublishedClient<
       PublishedEntity<string, object>,
       ValueItem<string, object>
-    > = PublishedClient
+    > = PublishedClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
-    middleware?: PublishedClientMiddleware<SessionContext>[]
+    middleware?: PublishedClientMiddleware<SessionContext>[],
   ): TClient;
 }
 
 export interface ServerPlugin {
   onCreateAdminClient(
-    pipeline: AdminClientMiddleware<SessionContext>[]
+    pipeline: AdminClientMiddleware<SessionContext>[],
   ): AdminClientMiddleware<SessionContext>[];
 
   onCreatePublishedClient(
-    pipeline: PublishedClientMiddleware<SessionContext>[]
+    pipeline: PublishedClientMiddleware<SessionContext>[],
   ): PublishedClientMiddleware<SessionContext>[];
 
   onServerShutdown(): void;
@@ -162,7 +162,7 @@ export class ServerImpl {
     session: Readonly<Session>,
     defaultAuthKeys: readonly string[],
     logger: Logger | null,
-    databasePerformance: DatabasePerformanceCallbacks | null
+    databasePerformance: DatabasePerformanceCallbacks | null,
   ): Result<SessionContext, typeof ErrorType.BadRequest> {
     assertIsDefined(this.#databaseAdapter);
 
@@ -175,8 +175,8 @@ export class ServerImpl {
         defaultAuthKeys,
         this.#databaseAdapter,
         logger ?? this.#logger,
-        databasePerformance
-      )
+        databasePerformance,
+      ),
     );
   }
 
@@ -196,7 +196,7 @@ export class ServerImpl {
 }
 
 export async function createServer<
-  TDatabaseOptimizationOptions extends DatabaseOptimizationOptions
+  TDatabaseOptimizationOptions extends DatabaseOptimizationOptions,
 >({
   databaseAdapter,
   authorizationAdapter,
@@ -232,7 +232,7 @@ export async function createServer<
       return managementDirtyProcessNextEntity(
         serverImpl.getAdminSchema(),
         databaseAdapter,
-        managementContext
+        managementContext,
       );
     },
 
@@ -251,7 +251,7 @@ export async function createServer<
         databaseAdapter,
         authContext,
         provider,
-        identifier
+        identifier,
       );
       if (sessionResult.isError()) return sessionResult;
       const { principalEffect, session } = sessionResult.value;
@@ -260,7 +260,7 @@ export async function createServer<
         session,
         defaultAuthKeys ?? [],
         (sessionLogger ?? serverLogger) || null,
-        databasePerformance
+        databasePerformance,
       );
       if (contextResult.isError()) return contextResult;
 
@@ -271,10 +271,10 @@ export async function createServer<
       TClient extends AdminClient<
         AdminEntity<string, object>,
         ValueItem<string, object>
-      > = AdminClient
+      > = AdminClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
-      middleware?: AdminClientMiddleware<SessionContext>[]
+      middleware?: AdminClientMiddleware<SessionContext>[],
     ) =>
       createServerAdminClient({
         context,
@@ -288,10 +288,10 @@ export async function createServer<
       TClient extends PublishedClient<
         PublishedEntity<string, object>,
         ValueItem<string, object>
-      > = PublishedClient
+      > = PublishedClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
-      middleware?: PublishedClientMiddleware<SessionContext>[]
+      middleware?: PublishedClientMiddleware<SessionContext>[],
     ) =>
       createServerPublishedClient({
         context,

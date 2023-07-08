@@ -4,7 +4,7 @@ import { useDocumentEventListener } from './useDocumentEventListener.js';
 export function useKeyHandler(
   handleKeys: string[],
   listener: (event: KeyboardEvent) => void,
-  enabled?: boolean
+  enabled?: boolean,
 ): void {
   const mainListener = useCallback(
     (event: KeyboardEvent) => {
@@ -20,7 +20,7 @@ export function useKeyHandler(
         listener(event);
       }
     },
-    [handleKeys, listener, enabled]
+    [handleKeys, listener, enabled],
   );
 
   useDocumentEventListener('keydown', mainListener);

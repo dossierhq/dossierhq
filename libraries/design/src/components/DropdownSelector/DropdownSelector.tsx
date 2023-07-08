@@ -26,7 +26,7 @@ export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
 
 interface DropdownSelectorItemProps<
   TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
+  TId extends string = string,
 > {
   item: TItem;
   state: MultipleSelectorState<TItem>;

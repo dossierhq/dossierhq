@@ -13,7 +13,7 @@ describe('mergeWith()', () => {
     expect(
       new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
         .updateAndValidate({})
-        .valueOrThrow().spec
+        .valueOrThrow().spec,
     ).toEqual({
       entityTypes: [],
       valueTypes: [],
@@ -307,7 +307,7 @@ describe('mergeWith()', () => {
           entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
           patterns: [{ name: 'aPattern', pattern: '^hello$' }],
         })
-        .valueOrThrow().spec
+        .valueOrThrow().spec,
     ).toMatchSnapshot();
   });
 
@@ -433,7 +433,7 @@ describe('mergeWith()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Foo: Can’t change the value of adminOnly. Requested false but is true'
+      'Foo: Can’t change the value of adminOnly. Requested false but is true',
     );
   });
 
@@ -447,7 +447,7 @@ describe('mergeWith()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Foo: Can’t change the value of adminOnly. Requested false but is true'
+      'Foo: Can’t change the value of adminOnly. Requested false but is true',
     );
   });
 
@@ -463,7 +463,7 @@ describe('mergeWith()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Foo.field: Can’t change type of field. Requested String but is Boolean'
+      'Foo.field: Can’t change type of field. Requested String but is Boolean',
     );
   });
 
@@ -483,7 +483,7 @@ describe('mergeWith()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Foo.field: Can’t change the value of list. Requested false but is true'
+      'Foo.field: Can’t change the value of list. Requested false but is true',
     );
   });
 
@@ -503,7 +503,7 @@ describe('mergeWith()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Foo.field: Can’t change the value of adminOnly. Requested false but is true'
+      'Foo.field: Can’t change the value of adminOnly. Requested false but is true',
     );
   });
 
@@ -525,7 +525,7 @@ describe('mergeWith()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Foo.field: Can’t change the value of index. Requested otherIndex but is anIndex'
+      'Foo.field: Can’t change the value of index. Requested otherIndex but is anIndex',
     );
   });
 });
@@ -533,7 +533,7 @@ describe('mergeWith()', () => {
 describe('validate()', () => {
   test('Empty spec validates', () => {
     expectOkResult(
-      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }).validate()
+      new AdminSchema({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }).validate(),
     );
   });
 
@@ -582,7 +582,7 @@ describe('validate()', () => {
         ],
         patterns: [],
         indexes: [],
-      }).validate()
+      }).validate(),
     );
   });
 
@@ -617,7 +617,7 @@ describe('validate()', () => {
         valueTypes: [],
         patterns: [],
         indexes: [],
-      }).validate()
+      }).validate(),
     );
   });
 
@@ -646,7 +646,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Specified type Invalid doesn’t exist'
+      'Foo.bar: Specified type Invalid doesn’t exist',
     );
   });
 
@@ -661,7 +661,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'foo: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123'
+      'foo: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123',
     );
   });
 
@@ -674,7 +674,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'foo: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123'
+      'foo: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123',
     );
   });
 
@@ -690,7 +690,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo: Duplicate type name'
+      'Foo: Duplicate type name',
     );
   });
 
@@ -705,7 +705,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo: Duplicate type name'
+      'Foo: Duplicate type name',
     );
   });
 
@@ -726,7 +726,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo: Found no field matching nameField (missing)'
+      'Foo: Found no field matching nameField (missing)',
     );
   });
 
@@ -755,7 +755,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo: nameField (booleanField) should be a string (non-list)'
+      'Foo: nameField (booleanField) should be a string (non-list)',
     );
   });
 
@@ -786,7 +786,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.NotCamelCase: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123'
+      'Foo.NotCamelCase: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123',
     );
   });
 
@@ -817,7 +817,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.type: Invalid field name for a value type'
+      'Foo.type: Invalid field name for a value type',
     );
   });
 
@@ -854,7 +854,7 @@ describe('validate()', () => {
         patterns: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.field: Duplicate field name'
+      'Foo.field: Duplicate field name',
     );
   });
 
@@ -884,7 +884,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.boolean: Field with type Boolean shouldn’t specify multiline'
+      'Foo.boolean: Field with type Boolean shouldn’t specify multiline',
     );
   });
 
@@ -914,7 +914,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in entityTypes Invalid doesn’t exist'
+      'Foo.bar: Referenced entity type in entityTypes Invalid doesn’t exist',
     );
   });
 
@@ -947,7 +947,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in linkEntityTypes Invalid doesn’t exist'
+      'Foo.bar: Referenced entity type in linkEntityTypes Invalid doesn’t exist',
     );
   });
 
@@ -978,7 +978,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type Boolean shouldn’t specify entityTypes'
+      'Foo.bar: Field with type Boolean shouldn’t specify entityTypes',
     );
   });
 
@@ -1008,7 +1008,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Value type in valueTypes Invalid doesn’t exist'
+      'Foo.bar: Value type in valueTypes Invalid doesn’t exist',
     );
   });
 
@@ -1039,7 +1039,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type Boolean shouldn’t specify linkEntityTypes'
+      'Foo.bar: Field with type Boolean shouldn’t specify linkEntityTypes',
     );
   });
 
@@ -1070,7 +1070,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type Boolean shouldn’t specify valueTypes'
+      'Foo.bar: Field with type Boolean shouldn’t specify valueTypes',
     );
   });
 
@@ -1100,7 +1100,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Field with type Boolean shouldn’t specify richTextNodes'
+      'Foo.bar: Field with type Boolean shouldn’t specify richTextNodes',
     );
   });
 
@@ -1133,7 +1133,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes with type paragraph is duplicated'
+      'Foo.bar: richTextNodes with type paragraph is duplicated',
     );
   });
 
@@ -1166,7 +1166,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include root, paragraph, text, linebreak, tab'
+      'Foo.bar: richTextNodes must include root, paragraph, text, linebreak, tab',
     );
   });
 
@@ -1187,7 +1187,7 @@ describe('validate()', () => {
                 required: false,
                 adminOnly: false,
                 richTextNodes: REQUIRED_RICH_TEXT_NODES.filter(
-                  (it) => it !== RichTextNodeType.paragraph
+                  (it) => it !== RichTextNodeType.paragraph,
                 ),
                 entityTypes: [],
                 linkEntityTypes: [],
@@ -1201,7 +1201,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include paragraph'
+      'Foo.bar: richTextNodes must include paragraph',
     );
   });
 
@@ -1222,7 +1222,7 @@ describe('validate()', () => {
                 required: false,
                 adminOnly: false,
                 richTextNodes: REQUIRED_RICH_TEXT_NODES.filter(
-                  (it) => it !== RichTextNodeType.text
+                  (it) => it !== RichTextNodeType.text,
                 ),
                 entityTypes: [],
                 linkEntityTypes: [],
@@ -1236,7 +1236,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include text'
+      'Foo.bar: richTextNodes must include text',
     );
   });
 
@@ -1257,7 +1257,7 @@ describe('validate()', () => {
                 required: false,
                 adminOnly: false,
                 richTextNodes: REQUIRED_RICH_TEXT_NODES.filter(
-                  (it) => it !== RichTextNodeType.linebreak
+                  (it) => it !== RichTextNodeType.linebreak,
                 ),
                 entityTypes: [],
                 linkEntityTypes: [],
@@ -1271,7 +1271,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include linebreak'
+      'Foo.bar: richTextNodes must include linebreak',
     );
   });
 
@@ -1304,7 +1304,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes must include tab'
+      'Foo.bar: richTextNodes must include tab',
     );
   });
 
@@ -1337,7 +1337,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes includes list but must also include related listitem'
+      'Foo.bar: richTextNodes includes list but must also include related listitem',
     );
   });
 
@@ -1370,7 +1370,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes includes listitem but must also include related list'
+      'Foo.bar: richTextNodes includes listitem but must also include related list',
     );
   });
 
@@ -1403,7 +1403,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes includes code but must also include related code-highlight'
+      'Foo.bar: richTextNodes includes code but must also include related code-highlight',
     );
   });
 
@@ -1436,7 +1436,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: richTextNodes includes code-highlight but must also include related code'
+      'Foo.bar: richTextNodes includes code-highlight but must also include related code',
     );
   });
 
@@ -1469,7 +1469,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: entityTypes is specified for field, but richTextNodes is missing entity'
+      'Foo.bar: entityTypes is specified for field, but richTextNodes is missing entity',
     );
   });
 
@@ -1502,7 +1502,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: linkEntityTypes is specified for field, but richTextNodes is missing entityLink'
+      'Foo.bar: linkEntityTypes is specified for field, but richTextNodes is missing entityLink',
     );
   });
 
@@ -1535,7 +1535,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: valueTypes is specified for field, but richTextNodes is missing valueItem'
+      'Foo.bar: valueTypes is specified for field, but richTextNodes is missing valueItem',
     );
   });
 
@@ -1572,7 +1572,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly'
+      'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly',
     );
   });
 
@@ -1612,7 +1612,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly'
+      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly',
     );
   });
 
@@ -1645,7 +1645,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced value type in valueTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly'
+      'Foo.bar: Referenced value type in valueTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly',
     );
   });
 
@@ -1675,7 +1675,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.boolean: Field with type Boolean shouldn’t specify matchPattern'
+      'Foo.boolean: Field with type Boolean shouldn’t specify matchPattern',
     );
   });
 
@@ -1708,7 +1708,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.string: Unknown matchPattern (foo)'
+      'Foo.string: Unknown matchPattern (foo)',
     );
   });
 
@@ -1724,7 +1724,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'aPattern: Duplicate pattern name'
+      'aPattern: Duplicate pattern name',
     );
   });
 
@@ -1737,7 +1737,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'a-pattern: The pattern name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123'
+      'a-pattern: The pattern name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123',
     );
   });
 
@@ -1752,7 +1752,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo: Unknown authKeyPattern (missing)'
+      'Foo: Unknown authKeyPattern (missing)',
     );
   });
 
@@ -1765,7 +1765,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'aPattern: Invalid regex'
+      'aPattern: Invalid regex',
     );
   });
 
@@ -1795,7 +1795,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.boolean: Field with type Boolean shouldn’t specify values'
+      'Foo.boolean: Field with type Boolean shouldn’t specify values',
     );
   });
 
@@ -1828,7 +1828,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.string: Can’t specify both matchPattern and values'
+      'Foo.string: Can’t specify both matchPattern and values',
     );
   });
 
@@ -1858,7 +1858,7 @@ describe('validate()', () => {
         indexes: [{ name: 'anIndex', type: 'unique' }],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.boolean: Field with type Boolean shouldn’t specify index'
+      'Foo.boolean: Field with type Boolean shouldn’t specify index',
     );
   });
 
@@ -1891,7 +1891,7 @@ describe('validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.string: Unknown index (foo)'
+      'Foo.string: Unknown index (foo)',
     );
   });
 
@@ -1907,7 +1907,7 @@ describe('validate()', () => {
         ],
       }).validate(),
       ErrorType.BadRequest,
-      'anIndex: Duplicate index name'
+      'anIndex: Duplicate index name',
     );
   });
 
@@ -1920,7 +1920,7 @@ describe('validate()', () => {
         indexes: [{ name: 'an-index', type: 'unique' }],
       }).validate(),
       ErrorType.BadRequest,
-      'an-index: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123'
+      'an-index: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123',
     );
   });
 });
@@ -1947,7 +1947,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
       })
         .valueOrThrow()
-        .toPublishedSchema().spec
+        .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
       entityTypes: [
         {
@@ -1990,7 +1990,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         patterns: [{ name: 'aPattern', pattern: '^a-pattern$' }],
       })
         .valueOrThrow()
-        .toPublishedSchema().spec
+        .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
       entityTypes: [
         {
@@ -2028,7 +2028,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         indexes: [{ name: 'anIndex', type: 'unique' }],
       })
         .valueOrThrow()
-        .toPublishedSchema().spec
+        .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
       entityTypes: [
         {
@@ -2069,7 +2069,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         ],
       })
         .valueOrThrow()
-        .toPublishedSchema().spec
+        .toPublishedSchema().spec,
     ).toEqual({
       entityTypes: [],
       valueTypes: [],
@@ -2096,7 +2096,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         ],
       })
         .valueOrThrow()
-        .toPublishedSchema().spec
+        .toPublishedSchema().spec,
     ).toEqual({
       entityTypes: [{ name: 'Foo', authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],

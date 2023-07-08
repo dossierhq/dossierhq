@@ -45,7 +45,7 @@ async function releaseLock_errorInvalidHandle({ server }: AdvisoryLockTestContex
 
   const releaseResult = await adminClient.releaseAdvisoryLock(
     'releaseLock_errorInvalidHandle',
-    acquireResult.value.handle + 1
+    acquireResult.value.handle + 1,
   );
   assertErrorResult(releaseResult, ErrorType.NotFound, 'No such name or handle exists');
 }

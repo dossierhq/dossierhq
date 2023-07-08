@@ -43,7 +43,7 @@ type TestClientMiddleware<TContext extends ClientContext> = Middleware<
 async function executeTestPipeline<TContext extends ClientContext>(
   context: TContext,
   pipeline: TestClientMiddleware<TContext>[],
-  operation: OperationWithoutCallbacks<TestClientOperation<TestClientOperationName>>
+  operation: OperationWithoutCallbacks<TestClientOperation<TestClientOperationName>>,
 ) {
   return await executeOperationPipeline(context, pipeline, operation);
 }
@@ -63,7 +63,7 @@ describe('executeOperationPipeline()', () => {
           }
         },
       ],
-      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false },
     );
     expectResultValue(result, { item: 'hello' });
   });
@@ -91,7 +91,7 @@ describe('executeOperationPipeline()', () => {
           }
         },
       ],
-      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false },
     );
     expectResultValue(result, { item: '[[[hello]]]' });
   });
@@ -104,7 +104,7 @@ describe('executeOperationPipeline()', () => {
           throw new Error('Error message');
         },
       ],
-      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false },
     );
     expectErrorResult(result, ErrorType.Generic, 'Unexpected exception: Error: Error message');
   });
@@ -122,12 +122,12 @@ describe('executeOperationPipeline()', () => {
     const result = await executeTestPipeline(
       { logger: NoOpLogger },
       [async (_context, operation) => operation.resolve(await operation.next())],
-      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false },
     );
     expectErrorResult(
       result,
       ErrorType.Generic,
-      'The last middleware in the pipeline cannot call next()'
+      'The last middleware in the pipeline cannot call next()',
     );
   });
 });

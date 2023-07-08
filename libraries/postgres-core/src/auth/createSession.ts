@@ -14,7 +14,7 @@ export async function authCreateSession(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
   const firstGetResult = await getSubject(adapter, context, provider, identifier);
   if (firstGetResult.isError()) {
@@ -48,7 +48,7 @@ export async function authCreateSession(
 
 function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
-  { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>
+  { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>,
 ): OkResult<DatabaseAuthCreateSessionPayload, TError> {
   const session = createSession({ subjectInternalId: id, subjectId: uuid });
   return ok({ principalEffect, session });
@@ -58,7 +58,7 @@ async function getSubject(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<DatabaseAuthCreateSessionPayload | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
     text: `SELECT s.id, s.uuid FROM subjects s, principals p
@@ -78,7 +78,7 @@ async function createSubject(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<
   DatabaseAuthCreateSessionPayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -87,7 +87,7 @@ async function createSubject(
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
       adapter,
       context,
-      'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid'
+      'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid',
     );
     if (subjectsResult.isError()) {
       return subjectsResult;
@@ -104,13 +104,13 @@ async function createSubject(
         if (
           adapter.isUniqueViolationOfConstraint(
             error,
-            UniqueConstraints.principals_provider_identifier_key
+            UniqueConstraints.principals_provider_identifier_key,
           )
         ) {
           return notOk.Conflict('Principal already exist');
         }
         return notOk.GenericUnexpectedException(context, error);
-      }
+      },
     );
     if (principalsResult.isError()) {
       return principalsResult;

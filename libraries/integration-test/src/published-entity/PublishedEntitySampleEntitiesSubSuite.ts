@@ -81,14 +81,14 @@ async function sampleEntities_linksToOneReference({
 
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
 
   const sampleResult = await publishedClient.sampleEntities(
     { linksTo: { id: titleOnlyId } },
-    { seed: 505 }
+    { seed: 505 },
   );
   assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
@@ -124,14 +124,14 @@ async function sampleEntities_linksToTwoReferencesFromOneEntity({
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
 
   const sampleResult = await publishedClient.sampleEntities(
     { linksTo: { id: titleOnlyId } },
-    { seed: 765 }
+    { seed: 765 },
   );
   assertSampledEntities(sampleResult, 765, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
@@ -149,7 +149,7 @@ async function sampleEntities_linksFromOneReference({
 
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const {
@@ -158,7 +158,7 @@ async function sampleEntities_linksFromOneReference({
 
   const sampleResult = await publishedClient.sampleEntities(
     { linksFrom: { id: referenceId } },
-    { seed: 432 }
+    { seed: 432 },
   );
   assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
 }
@@ -192,7 +192,7 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const {
@@ -201,7 +201,7 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
 
   const sampleResult = await publishedClient.sampleEntities(
     { linksFrom: { id: referenceId } },
-    { seed: 555 }
+    { seed: 555 },
   );
   assertSampledEntities(sampleResult, 555, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
 }

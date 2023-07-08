@@ -31,12 +31,12 @@ export const Dialog2: Dialog2Component = ({ width, height, children }: Dialog2Pr
   const modalClassName = toClassName(
     'react-aria-Modal',
     widthClassNameMap[width ?? 'narrow'],
-    height && heightClassNameMap[height]
+    height && heightClassNameMap[height],
   );
   const dialogClassName = toClassName(
     'react-aria-Dialog',
     width === 'wide' && 'container',
-    height === 'fill' && 'is-height-100'
+    height === 'fill' && 'is-height-100',
   );
 
   return (

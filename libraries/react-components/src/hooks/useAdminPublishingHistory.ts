@@ -23,18 +23,18 @@ type FetcherError = ErrorResult<
 
 export function useAdminPublishingHistory(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  reference: EntityReference | undefined
+  reference: EntityReference | undefined,
 ): {
   publishingHistory: FetcherData | undefined;
   publishingHistoryError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, reference]: FetcherKey) => fetchPublishingHistory(adminClient, reference),
-    [adminClient]
+    [adminClient],
   );
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
     reference ? CACHE_KEYS.adminPublishingHistory(reference) : null,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('useAdminPublishingHistory changed values', { data, error });
@@ -44,7 +44,7 @@ export function useAdminPublishingHistory(
 
 async function fetchPublishingHistory(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  reference: FetcherKey[1]
+  reference: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getPublishingHistory(reference);
   if (result.isError()) {

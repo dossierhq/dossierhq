@@ -24,7 +24,7 @@ async function getServer() {
   if (!serverResultSingleton) {
     serverResultSingleton = (async () => {
       console.log(
-        `Resetting database by copying ${SOURCE_DATABASE_PATH} to ${SQLITE_DATABASE_PATH}`
+        `Resetting database by copying ${SOURCE_DATABASE_PATH} to ${SQLITE_DATABASE_PATH}`,
       );
       copyFileSync(SOURCE_DATABASE_PATH, SQLITE_DATABASE_PATH);
       const databaseResult = await createDatabase({ logger }, Database, {
@@ -85,7 +85,7 @@ const expressMiddleWare = (router) => {
       });
       const adminClient = server.createPublishedClient(
         () => sessionResult,
-        [LoggingClientMiddleware]
+        [LoggingClientMiddleware],
       );
       return await executePublishedClientOperationFromJson(adminClient, name, operation);
     });

@@ -11,7 +11,7 @@ import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 
 export async function managementDirtyGetNextEntity(
   databaseAdapter: PostgresDatabaseAdapter,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<
   DatabaseManagementGetNextDirtyEntityPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

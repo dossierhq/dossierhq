@@ -96,7 +96,7 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
   const blogPosts: PublishedBlogPost[] = [];
 
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.client.searchEntities({ entityTypes: ['BlogPost'] }, paging)
+    publishedClient.client.searchEntities({ entityTypes: ['BlogPost'] }, paging),
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {
@@ -127,7 +127,7 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
       const blogPostAuthors =
         blogPost.fields.authors?.map((reference) => authors[reference.id]) ?? [];
       return generateBlogEntry(hostname, publishedClient, blogPost, blogPostAuthors);
-    })
+    }),
   );
 }
 
@@ -135,11 +135,11 @@ async function generateBlogEntry(
   hostname: string,
   publishedClient: AppPublishedExceptionClient,
   blogPost: PublishedBlogPost,
-  authors: PublishedAuthor[]
+  authors: PublishedAuthor[],
 ) {
   const referencedEntities: Record<string, AppPublishedEntity> = {};
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.client.searchEntities({ linksFrom: { id: blogPost.id } }, paging)
+    publishedClient.client.searchEntities({ linksFrom: { id: blogPost.id } }, paging),
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {
@@ -155,7 +155,7 @@ async function generateBlogEntry(
     <>
       <FeedCloudinaryImage image={blogPost.fields.hero} aspectRatio="16/9" />
       <FeedRichTextRenderer richText={blogPost.fields.body} entities={referencedEntities} />
-    </>
+    </>,
   );
 
   const updated = new Date(blogPost.fields.updatedDate ?? blogPost.fields.publishedDate);
@@ -172,7 +172,7 @@ ${authors.map((author) => `    <author><name>${author.fields.name}</name></autho
 }
 
 function FeedCloudinaryImage(
-  props: { image: PublishedCloudinaryImage } & ({ height: 400 } | { aspectRatio: '16/9' })
+  props: { image: PublishedCloudinaryImage } & ({ height: 400 } | { aspectRatio: '16/9' }),
 ) {
   const { image } = props;
 

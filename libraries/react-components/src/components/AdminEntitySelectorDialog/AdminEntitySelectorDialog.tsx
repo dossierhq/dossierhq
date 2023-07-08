@@ -82,7 +82,7 @@ function Content({
       restrictLinksFrom: linksFrom,
       restrictLinksTo: linksTo,
     },
-    initializeSearchEntityState
+    initializeSearchEntityState,
   );
 
   const {
@@ -102,8 +102,8 @@ function Content({
       dispatchSearchEntityState(
         new SearchEntityStateActions.SetQuery(
           { boundingBox: undefined },
-          { partial: true, resetPagingIfModifying: true }
-        )
+          { partial: true, resetPagingIfModifying: true },
+        ),
       );
     }
     setShowMap(!showMap);

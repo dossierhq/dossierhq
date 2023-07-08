@@ -66,7 +66,7 @@ interface Edge<T> {
 export async function loadPublishedEntity<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  reference: EntityReference | UniqueIndexReference
+  reference: EntityReference | UniqueIndexReference,
 ): Promise<PublishedEntity> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const result = await publishedClient.getEntity(reference);
@@ -76,7 +76,7 @@ export async function loadPublishedEntity<TContext extends SessionGraphQLContext
 export async function loadPublishedEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  ids: string[]
+  ids: string[],
 ): Promise<Array<PublishedEntity | null>> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
@@ -96,7 +96,7 @@ export async function loadPublishedSampleEntities<TContext extends SessionGraphQ
   schema: PublishedSchema,
   context: TContext,
   query: PublishedQuery | undefined,
-  options: EntitySamplingOptions | undefined
+  options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<PublishedEntity>> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const result = await publishedClient.sampleEntities(query, options);
@@ -114,7 +114,7 @@ export async function loadPublishedSearchEntities<TContext extends SessionGraphQ
   schema: PublishedSchema,
   context: TContext,
   query: PublishedSearchQuery | undefined,
-  paging: Paging
+  paging: Paging,
 ): Promise<ConnectionWithTotalCount<Edge<PublishedEntity>, TContext> | null> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const result = await publishedClient.searchEntities(query, paging);
@@ -140,7 +140,7 @@ export async function loadPublishedSearchEntities<TContext extends SessionGraphQ
 }
 
 function buildTotalCount<TContext extends SessionGraphQLContext>(
-  query: PublishedQuery | undefined
+  query: PublishedQuery | undefined,
 ): FieldValueOrResolver<TContext, number> {
   return async (_args, context, _info) => {
     const publishedClient = context.publishedClient.valueOrThrow();
@@ -151,7 +151,7 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
 
 function buildResolversForPublishedEntity<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
-  entity: PublishedEntity
+  entity: PublishedEntity,
 ): PublishedEntity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
@@ -165,7 +165,7 @@ function buildResolversForPublishedEntity<TContext extends SessionGraphQLContext
 export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  reference: EntityReference | EntityVersionReference | UniqueIndexReference
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference,
 ): Promise<AdminEntity> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.getEntity(reference);
@@ -175,7 +175,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
 export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  ids: string[]
+  ids: string[],
 ): Promise<Array<AdminEntity | null>> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
@@ -190,7 +190,7 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
-  entity: AdminEntity
+  entity: AdminEntity,
 ): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
@@ -207,7 +207,7 @@ export async function loadAdminSampleEntities<TContext extends SessionGraphQLCon
   schema: AdminSchema,
   context: TContext,
   query: AdminQuery | undefined,
-  options: EntitySamplingOptions | undefined
+  options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<AdminEntity>> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.sampleEntities(query, options);
@@ -223,7 +223,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
   schema: AdminSchema,
   context: TContext,
   query: AdminSearchQuery | undefined,
-  paging: Paging
+  paging: Paging,
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.searchEntities(query, paging);
@@ -254,7 +254,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     | AdminValueTypeSpecification
     | PublishedValueTypeSpecification,
   item: ValueItem | PublishedEntity | AdminEntity,
-  isAdmin: boolean
+  isAdmin: boolean,
 ) {
   const fields = isItemValueItem(item) ? item : item.fields;
   for (const fieldSpec of spec.fields) {
@@ -295,7 +295,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 function extractEntityIdsForRichTextField(
   schema: AdminSchema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
-  value: RichText
+  value: RichText,
 ) {
   const referencesCollector = createReferencesCollector();
   for (const node of traverseItemField(schema, [fieldSpec.name], fieldSpec, value)) {
@@ -333,7 +333,7 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   schema: AdminSchema | PublishedSchema,
   valueItem: ValueItem,
-  isAdmin: boolean
+  isAdmin: boolean,
 ): ValueItem {
   const valueSpec = schema.getValueTypeSpecification(valueItem.type);
   if (!valueSpec) {
@@ -345,7 +345,7 @@ export function buildResolversForValue<TContext extends SessionGraphQLContext>(
 }
 
 function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
-  query: AdminQuery | undefined
+  query: AdminQuery | undefined,
 ): FieldValueOrResolver<TContext, number> {
   return async (_args, context, _info) => {
     const adminClient = context.adminClient.valueOrThrow();
@@ -356,7 +356,7 @@ function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
 
 export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): Promise<EntityHistory> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.getEntityHistory(reference);
@@ -365,7 +365,7 @@ export async function loadVersionHistory<TContext extends SessionGraphQLContext>
 
 export async function loadPublishingHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): Promise<PublishingHistory> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.getPublishingHistory(reference);

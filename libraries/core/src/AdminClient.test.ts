@@ -30,7 +30,7 @@ interface FooFields {
 type AdminFooEntity = AdminEntity<'FooType', FooFields>;
 
 function createForwardingMiddleware<TContext extends ClientContext>(
-  adminClient: AdminClient
+  adminClient: AdminClient,
 ): AdminClientMiddleware<TContext> {
   return async function (_context, operation) {
     const operationArgsJson = JSON.parse(JSON.stringify(operation.args));
@@ -38,7 +38,7 @@ function createForwardingMiddleware<TContext extends ClientContext>(
     const resultJson = await executeAdminClientOperationFromJson(
       adminClient,
       operation.name,
-      operationArgsJson
+      operationArgsJson,
     );
     // normally returned over HTTP
     const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));
@@ -48,14 +48,14 @@ function createForwardingMiddleware<TContext extends ClientContext>(
 
 function createJsonConvertingAdminClientsForOperation<
   TContext extends ClientContext,
-  TName extends (typeof AdminClientOperationName)[keyof typeof AdminClientOperationName]
+  TName extends (typeof AdminClientOperationName)[keyof typeof AdminClientOperationName],
 >(
   context: TContext,
   operationName: TName,
   operationHandlerMockImplementation: (
     context: TContext,
-    operation: AdminClientOperation<TName>
-  ) => Promise<void>
+    operation: AdminClientOperation<TName>,
+  ) => Promise<void>,
 ) {
   const operationHandlerMock = vi.fn<[TContext, AdminClientOperation<TName>], Promise<void>>();
   operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
@@ -96,7 +96,7 @@ function createDummyEntity(changes: {
       },
       fields: { title: 'Foo title' },
     },
-    changes
+    changes,
   );
 }
 
@@ -172,7 +172,7 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [name, _options] = operation.args;
         operation.resolve(ok({ name, handle: 123 }));
-      }
+      },
     );
 
     const result = await adminClient.acquireAdvisoryLock('lock-name', { leaseDuration: 100 });
@@ -221,9 +221,9 @@ describe('AdminClient forward operation over JSON', () => {
             status: AdminEntityStatus.archived,
             effect: 'archived',
             updatedAt: new Date('2021-08-17T08:51:25.56Z'),
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.archiveEntity({ id: '1234' });
@@ -277,9 +277,9 @@ describe('AdminClient forward operation over JSON', () => {
                 status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
               },
             }) as unknown as AdminEntity,
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.createEntity(
@@ -288,7 +288,7 @@ describe('AdminClient forward operation over JSON', () => {
         info: { name: 'Name', type: 'FooType', authKey: 'none' },
         fields: {},
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(result)) {
       expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
@@ -361,9 +361,9 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
-          ok(references.map(({ id }) => ok(createDummyEntity({ id }) as unknown as AdminEntity)))
+          ok(references.map(({ id }) => ok(createDummyEntity({ id }) as unknown as AdminEntity))),
         );
-      }
+      },
     );
 
     const result = await adminClient.getEntities([{ id: '1234' }, { id: '5678' }]);
@@ -462,10 +462,10 @@ describe('AdminClient forward operation over JSON', () => {
           ok(
             createDummyEntity({
               id: 'id' in reference ? reference.id : `${reference.index}/${reference.value}`,
-            }) as unknown as AdminEntity
-          )
+            }) as unknown as AdminEntity,
+          ),
         );
-      }
+      },
     );
 
     const result = await adminClient.getEntity({ id: '1234' });
@@ -538,9 +538,9 @@ describe('AdminClient forward operation over JSON', () => {
                 published: true,
               },
             ],
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.getEntityHistory({ id: '1234' });
@@ -606,9 +606,9 @@ describe('AdminClient forward operation over JSON', () => {
                 version: 0,
               },
             ],
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.getPublishingHistory({ id: '1234' });
@@ -663,7 +663,7 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.getSchemaSpecification,
       async (_context, operation) => {
         operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }));
-      }
+      },
     );
 
     const result = await adminClient.getSchemaSpecification();
@@ -707,7 +707,7 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [_query] = operation.args;
         operation.resolve(ok(123));
-      }
+      },
     );
 
     const result = await adminClient.getTotalCount({
@@ -760,10 +760,10 @@ describe('AdminClient forward operation over JSON', () => {
               status: AdminEntityStatus.published,
               effect: 'published',
               updatedAt: new Date('2021-08-17T08:51:25.56Z'),
-            }))
-          )
+            })),
+          ),
         );
-      }
+      },
     );
 
     const result = await adminClient.publishEntities([
@@ -828,7 +828,7 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [name, _handle] = operation.args;
         operation.resolve(ok({ name }));
-      }
+      },
     );
 
     const result = await adminClient.releaseAdvisoryLock('lock-name', 123);
@@ -867,7 +867,7 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [name, handle] = operation.args;
         operation.resolve(ok({ name, handle }));
-      }
+      },
     );
 
     const result = await adminClient.renewAdvisoryLock('lock-name', 123);
@@ -922,12 +922,12 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [_query, options] = operation.args;
         operation.resolve(ok({ seed: options?.seed ?? 1, totalCount: 1, items: [entity1] }));
-      }
+      },
     );
 
     const result = await adminClient.sampleEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
-      { seed: 1234, count: 10 }
+      { seed: 1234, count: 10 },
     );
     expectResultValue(result, { seed: 1234, totalCount: 1, items: [entity1] });
 
@@ -1008,14 +1008,14 @@ describe('AdminClient forward operation over JSON', () => {
                 node: ok(entity1),
               },
             ],
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.searchEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
-      { first: 100, after: 'cursor' }
+      { first: 100, after: 'cursor' },
     );
     expectResultValue(result, {
       pageInfo: {
@@ -1084,7 +1084,7 @@ describe('AdminClient forward operation over JSON', () => {
       async (_context, operation) => {
         const [_query, _paging] = operation.args;
         operation.resolve(ok(null));
-      }
+      },
     );
 
     const result = await adminClient.searchEntities();
@@ -1128,9 +1128,9 @@ describe('AdminClient forward operation over JSON', () => {
             status: AdminEntityStatus.withdrawn,
             effect: 'unarchived',
             updatedAt: new Date('2021-08-17T08:51:25.56Z'),
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.unarchiveEntity({ id: '1234' });
@@ -1182,10 +1182,10 @@ describe('AdminClient forward operation over JSON', () => {
               status: AdminEntityStatus.withdrawn,
               effect: 'unpublished',
               updatedAt: new Date('2021-08-17T08:51:25.56Z'),
-            }))
-          )
+            })),
+          ),
         );
-      }
+      },
     );
 
     const result = await adminClient.unpublishEntities([{ id: '1234' }, { id: '4321' }]);
@@ -1253,9 +1253,9 @@ describe('AdminClient forward operation over JSON', () => {
                 status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
               },
             }) as unknown as AdminEntity,
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.updateEntity(
@@ -1263,7 +1263,7 @@ describe('AdminClient forward operation over JSON', () => {
         id: '1234',
         fields: {},
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(result)) {
       expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
@@ -1333,9 +1333,9 @@ describe('AdminClient forward operation over JSON', () => {
           ok({
             effect: 'updated',
             schemaSpecification: { entityTypes: [], valueTypes: [], patterns: [], indexes: [] },
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.updateSchemaSpecification({ entityTypes: [], valueTypes: [] });
@@ -1395,9 +1395,9 @@ describe('AdminClient forward operation over JSON', () => {
                 status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
               },
             }) as unknown as AdminEntity,
-          })
+          }),
         );
-      }
+      },
     );
 
     const result = await adminClient.upsertEntity(
@@ -1406,7 +1406,7 @@ describe('AdminClient forward operation over JSON', () => {
         info: { name: 'Name', type: 'FooType', authKey: 'none' },
         fields: {},
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(result)) {
       expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);

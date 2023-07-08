@@ -10,7 +10,7 @@ export async function advisoryLockRelease(
   database: Database,
   context: TransactionContext,
   name: string,
-  handle: number
+  handle: number,
 ): PromiseResult<void, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
   const query = buildSqliteSqlQuery(({ sql }) => {
     sql`DELETE FROM advisory_locks WHERE name = ${name} AND handle = ${handle} RETURNING id`;

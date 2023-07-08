@@ -10,7 +10,7 @@ export default function SchemaEditorPage() {
 
   useWarningOnExit(
     'Changes to the schema will be lost, are you sure you want to leave the page?',
-    hasChanges
+    hasChanges,
   );
 
   return (

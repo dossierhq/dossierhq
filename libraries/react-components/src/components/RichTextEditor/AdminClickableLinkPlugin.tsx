@@ -55,7 +55,7 @@ export function AdminClickableLinkPlugin({ onEntityLinkClick }: Props): JSX.Elem
           rootElement.addEventListener('click', handleClick);
           //TODO auxclick
         }
-      }
+      },
     );
   }, [editor, onEntityLinkClick]);
   return null;

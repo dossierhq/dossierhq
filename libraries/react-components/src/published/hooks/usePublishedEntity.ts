@@ -15,18 +15,18 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.NotFound | typeof Erro
 
 export function usePublishedEntity<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
-  reference: EntityReference | undefined
+  reference: EntityReference | undefined,
 ): {
   entity: FetcherData<TPublishedEntity> | undefined;
   entityError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, reference]: FetcherKey) => fetchEntity(publishedClient, reference),
-    [publishedClient]
+    [publishedClient],
   );
   const { data, error } = useSWR<FetcherData<TPublishedEntity>, FetcherError, FetcherKey | null>(
     reference ? CACHE_KEYS.publishedEntity(reference) : null,
-    fetcher
+    fetcher,
   );
 
   return { entity: data, entityError: error };
@@ -34,7 +34,7 @@ export function usePublishedEntity<TPublishedEntity extends PublishedEntity<stri
 
 async function fetchEntity<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
-  reference: FetcherKey[1]
+  reference: FetcherKey[1],
 ): Promise<FetcherData<TPublishedEntity>> {
   const result = await publishedClient.getEntity(reference);
   if (result.isError()) {

@@ -73,7 +73,7 @@ export function ValueItemFieldEditorWithoutClear({
 }) {
   const { root: rootValidationIssues, children: fieldValidationIssues } = useMemo(
     () => groupValidationIssuesByTopLevelPath(validationIssues),
-    [validationIssues]
+    [validationIssues],
   );
 
   const { schema } = useContext(AdminDossierContext);
@@ -176,7 +176,7 @@ function ValueItemField({
       newValue[valueFieldSpec.name] = newFieldValue;
       onChange(newValue);
     },
-    [onChange, value, valueFieldSpec.name]
+    [onChange, value, valueFieldSpec.name],
   );
 
   return (

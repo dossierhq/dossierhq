@@ -42,7 +42,7 @@ export function AdminEntityListScreen({
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     { mode: 'admin', urlSearchParams },
-    initializeSearchEntityStateFromUrlQuery
+    initializeSearchEntityStateFromUrlQuery,
   );
 
   const {
@@ -62,8 +62,8 @@ export function AdminEntityListScreen({
       dispatchSearchEntityState(
         new SearchEntityStateActions.SetQuery(
           { boundingBox: undefined },
-          { partial: true, resetPagingIfModifying: true }
-        )
+          { partial: true, resetPagingIfModifying: true },
+        ),
       );
     }
     setShowMap(!showMap);
@@ -75,7 +75,7 @@ export function AdminEntityListScreen({
     urlSearchParams,
     onUrlSearchParamsChange,
     searchEntityState,
-    dispatchSearchEntityState
+    dispatchSearchEntityState,
   );
 
   // load search/total or sampling

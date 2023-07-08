@@ -38,7 +38,7 @@ import { AddValueItemListItemButton, ValueItemFieldEditor } from './ValueItemFie
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
-  TValue = unknown
+  TValue = unknown,
 > {
   fieldSpec: AdminFieldSpecification<TFieldSpec>;
   adminOnly: boolean;

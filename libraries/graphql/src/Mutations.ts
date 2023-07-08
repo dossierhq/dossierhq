@@ -24,7 +24,7 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   entity: AdminEntityCreate,
-  options: AdminEntityMutationOptions
+  options: AdminEntityMutationOptions,
 ): Promise<AdminEntityCreatePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.createEntity(entity, options);
@@ -39,7 +39,7 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   entity: AdminEntityUpdate,
-  options: AdminEntityMutationOptions
+  options: AdminEntityMutationOptions,
 ): Promise<AdminEntityUpdatePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.updateEntity(entity, options);
@@ -54,7 +54,7 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   entity: AdminEntityUpsert,
-  options: AdminEntityMutationOptions
+  options: AdminEntityMutationOptions,
 ): Promise<AdminEntityUpsertPayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.upsertEntity(entity, options);
@@ -67,7 +67,7 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  references: EntityVersionReference[]
+  references: EntityVersionReference[],
 ): Promise<AdminEntityPublishPayload[]> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.publishEntities(references);
@@ -76,7 +76,7 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
 
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): Promise<AdminEntityUnpublishPayload[]> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.unpublishEntities(references);
@@ -85,7 +85,7 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
 
 export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): Promise<AdminEntityArchivePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.archiveEntity(reference);
@@ -94,7 +94,7 @@ export async function archiveEntity<TContext extends SessionGraphQLContext>(
 
 export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): Promise<AdminEntityUnarchivePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.unarchiveEntity(reference);
@@ -104,7 +104,7 @@ export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
 export async function acquireAdvisoryLock<TContext extends SessionGraphQLContext>(
   context: TContext,
   name: string,
-  options: AdvisoryLockOptions
+  options: AdvisoryLockOptions,
 ): Promise<AdvisoryLockPayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.acquireAdvisoryLock(name, options);
@@ -114,7 +114,7 @@ export async function acquireAdvisoryLock<TContext extends SessionGraphQLContext
 export async function renewAdvisoryLock<TContext extends SessionGraphQLContext>(
   context: TContext,
   name: string,
-  handle: number
+  handle: number,
 ): Promise<AdvisoryLockPayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.renewAdvisoryLock(name, handle);
@@ -124,7 +124,7 @@ export async function renewAdvisoryLock<TContext extends SessionGraphQLContext>(
 export async function releaseAdvisoryLock<TContext extends SessionGraphQLContext>(
   context: TContext,
   name: string,
-  handle: number
+  handle: number,
 ): Promise<AdvisoryLockReleasePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.releaseAdvisoryLock(name, handle);

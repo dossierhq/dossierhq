@@ -17,7 +17,7 @@ import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   DatabaseEntityUpdateGetEntityInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -67,7 +67,7 @@ export async function adminEntityUpdateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
-  entity: DatabaseEntityUpdateEntityArg
+  entity: DatabaseEntityUpdateEntityArg,
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
@@ -80,7 +80,7 @@ export async function adminEntityUpdateEntity(
         entity.version,
         entity.fieldValues,
       ],
-    }
+    },
   );
   if (createVersionResult.isError()) {
     return createVersionResult;
@@ -105,18 +105,18 @@ export async function adminEntityUpdateEntity(
             if (
               databaseAdapter.isUniqueViolationOfConstraint(
                 error,
-                UniqueConstraints.entities_name_key
+                UniqueConstraints.entities_name_key,
               )
             ) {
               return notOk.Conflict(nameConflictErrorMessage);
             }
             return notOk.GenericUnexpectedException(context, error);
-          }
+          },
         );
         if (updateNameResult.isError()) return updateNameResult;
 
         return ok(name);
-      }
+      },
     );
 
     if (nameResult.isError()) return nameResult;
@@ -137,7 +137,7 @@ export async function adminEntityUpdateEntity(
     WHERE id = $3
     RETURNING updated_at`,
       values: [versionsId, entity.status, entity.entityInternalId],
-    }
+    },
   );
   if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;

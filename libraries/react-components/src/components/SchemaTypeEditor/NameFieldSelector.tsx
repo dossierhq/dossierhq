@@ -37,10 +37,10 @@ export function NameFieldSelector({
       dispatchSchemaEditorState(
         new SchemaEditorActions.ChangeTypeNameField(
           typeSelector,
-          item.id === EMPTY_ID ? null : item.id
-        )
+          item.id === EMPTY_ID ? null : item.id,
+        ),
       ),
-    [dispatchSchemaEditorState, typeSelector]
+    [dispatchSchemaEditorState, typeSelector],
   );
 
   return (

@@ -42,7 +42,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
         onChange(value ? [...value, itemValue] : [itemValue]);
       }
     },
-    [value, onChange]
+    [value, onChange],
   );
   const handleItemChange = useCallback(
     (itemValue: TItem | null, index: number) => {
@@ -56,12 +56,12 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
         onChange(newValue.length > 0 ? newValue : null);
       }
     },
-    [value, onChange]
+    [value, onChange],
   );
 
   const { root: rootValidationIssues, children: indexValidationIssues } = useMemo(
     () => groupValidationIssuesByTopLevelPath(validationIssues),
-    [validationIssues]
+    [validationIssues],
   );
 
   const { dragAndDropHooks: fieldsDragAndDropHooks } = useDragAndDrop({

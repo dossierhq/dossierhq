@@ -19,7 +19,7 @@ const logger = createConsoleLogger(console);
 
 export async function getSessionContextForRequest(
   server: Server,
-  _req: NextApiRequest
+  _req: NextApiRequest,
 ): PromiseResult<
   { adminClient: AdminClient; publishedClient: PublishedClient },
   typeof ErrorType.NotAuthenticated
@@ -34,7 +34,7 @@ export async function getSessionContextForRequest(
   });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
-      `Failed authentication: ${sessionResult.error}: ${sessionResult.message}`
+      `Failed authentication: ${sessionResult.error}: ${sessionResult.message}`,
     );
   }
   const { context } = sessionResult.value;

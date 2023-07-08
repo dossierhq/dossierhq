@@ -30,7 +30,7 @@ async function collectUrls(publishedClient: AppPublishedClient) {
 async function articleUrls(publishedClient: AppPublishedClient) {
   const result: string[] = [];
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.searchEntities({ entityTypes: ['Article'] }, paging)
+    publishedClient.searchEntities({ entityTypes: ['Article'] }, paging),
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {
@@ -48,7 +48,7 @@ async function articleUrls(publishedClient: AppPublishedClient) {
 async function blogUrls(publishedClient: AppPublishedClient) {
   const result: string[] = [];
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.searchEntities({ entityTypes: ['BlogPost'] }, paging)
+    publishedClient.searchEntities({ entityTypes: ['BlogPost'] }, paging),
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {

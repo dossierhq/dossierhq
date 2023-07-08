@@ -71,7 +71,7 @@ export type CodecMode = 'optimized' | 'json';
 
 export function decodePublishedEntity(
   schema: PublishedSchema,
-  values: DatabasePublishedEntityPayload
+  values: DatabasePublishedEntityPayload,
 ): PublishedEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -100,7 +100,7 @@ function decodeFieldItemOrList(
   schema: AdminSchema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   codecMode: CodecMode,
-  fieldValue: unknown
+  fieldValue: unknown,
 ) {
   if (fieldValue === null || fieldValue === undefined) {
     return null;
@@ -121,7 +121,7 @@ function decodeFieldItemOrList(
         decodedItems.push(
           codecMode === 'optimized'
             ? fieldAdapter.decodeData(encodedItem)
-            : fieldAdapter.decodeJson(encodedItem)
+            : fieldAdapter.decodeJson(encodedItem),
         );
       }
     }
@@ -142,7 +142,7 @@ function decodeValueItemField(
   schema: AdminSchema | PublishedSchema,
   _fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   codecMode: CodecMode,
-  encodedValue: ValueItem
+  encodedValue: ValueItem,
 ) {
   const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
   if (!valueSpec) {
@@ -161,7 +161,7 @@ function decodeValueItemField(
 function decodeRichTextField(
   schema: AdminSchema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
-  encodedValue: RichText
+  encodedValue: RichText,
 ): RichText {
   return transformRichText(encodedValue, (node) => {
     if (isRichTextValueItemNode(node)) {
@@ -177,7 +177,7 @@ function decodeRichTextField(
 
 export function decodeAdminEntity(
   schema: AdminSchema,
-  values: DatabaseAdminEntityPayload
+  values: DatabaseAdminEntityPayload,
 ): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -206,7 +206,7 @@ export function decodeAdminEntity(
 export function decodeAdminEntityFields(
   schema: AdminSchema | PublishedSchema,
   entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
-  fieldValues: Record<string, unknown>
+  fieldValues: Record<string, unknown>,
 ): AdminEntity['fields'] {
   const fields: AdminEntity['fields'] = {};
   for (const fieldSpec of entitySpec.fields) {
@@ -219,7 +219,7 @@ export function decodeAdminEntityFields(
 
 export function resolveCreateEntity(
   schema: AdminSchema,
-  entity: AdminEntityCreate
+  entity: AdminEntityCreate,
 ): Result<
   { createEntity: AdminEntityCreate; entitySpec: AdminEntityTypeSpecification },
   typeof ErrorType.BadRequest
@@ -249,7 +249,7 @@ export function resolveCreateEntity(
 export function resolveUpdateEntity(
   schema: AdminSchema,
   entity: AdminEntityUpdate,
-  entityInfo: DatabaseEntityUpdateGetEntityInfoPayload
+  entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
   { changed: boolean; entity: AdminEntity; entitySpec: AdminEntityTypeSpecification },
   typeof ErrorType.BadRequest
@@ -283,7 +283,7 @@ export function resolveUpdateEntity(
   const normalizedResult = normalizeEntityFields(
     schema,
     { ...entity, info: { type: result.info.type } },
-    { excludeOmitted: true }
+    { excludeOmitted: true },
   );
   if (normalizedResult.isError()) return normalizedResult;
   const normalizedFields = normalizedResult.value;
@@ -298,7 +298,7 @@ export function resolveUpdateEntity(
       schema,
       fieldSpec,
       'optimized',
-      entityInfo.fieldValues[fieldName] ?? null
+      entityInfo.fieldValues[fieldName] ?? null,
     );
 
     if (fieldName in normalizedFields) {
@@ -330,7 +330,7 @@ export async function encodeAdminEntity(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entitySpec: AdminEntityTypeSpecification,
-  entity: AdminEntity | AdminEntityCreate
+  entity: AdminEntity | AdminEntityCreate,
 ): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   // Collect values and validate entity fields
   const ftsCollector = createFullTextSearchCollector();
@@ -345,7 +345,7 @@ export async function encodeAdminEntity(
     const validationIssue = validateTraverseNodeForSave(schema, node);
     if (validationIssue) {
       return notOk.BadRequest(
-        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
+        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
       );
     }
     ftsCollector.collect(node);
@@ -385,7 +385,7 @@ export async function encodeAdminEntity(
   const resolveResult = await resolveRequestedEntityReferences(
     databaseAdapter,
     context,
-    referencesCollector.result
+    referencesCollector.result,
   );
   if (resolveResult.isError()) return resolveResult;
   result.entityIndexes.referenceIds.push(...resolveResult.value);
@@ -397,7 +397,7 @@ function encodeFieldItemOrList(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
   prefix: string,
-  data: unknown
+  data: unknown,
 ): Result<unknown, typeof ErrorType.BadRequest> {
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
   if (fieldSpec.list) {
@@ -412,7 +412,7 @@ function encodeFieldItemOrList(
           schema,
           fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
           prefix,
-          decodedItem
+          decodedItem,
         );
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeRichTextField(decodedItem);
@@ -432,7 +432,7 @@ function encodeFieldItemOrList(
       schema,
       fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
       prefix,
-      data
+      data,
     );
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(data);
@@ -444,7 +444,7 @@ function encodeValueItemField(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>,
   prefix: string,
-  data: ValueItem | null
+  data: ValueItem | null,
 ): Result<unknown, typeof ErrorType.BadRequest> {
   if (Array.isArray(data)) {
     return notOk.BadRequest(`${prefix}: expected single value, got list`);
@@ -474,7 +474,7 @@ function encodeValueItemField(
   valueSpec.fields.forEach((x) => unsupportedFields.delete(x.name));
   if (unsupportedFields.size > 0) {
     return notOk.BadRequest(
-      `${prefix}: Unsupported field names: ${[...unsupportedFields].join(', ')}`
+      `${prefix}: Unsupported field names: ${[...unsupportedFields].join(', ')}`,
     );
   }
 
@@ -489,7 +489,7 @@ function encodeValueItemField(
       schema,
       fieldSpec,
       `${prefix}.${fieldSpec.name}`,
-      fieldValue
+      fieldValue,
     );
     if (encodedField.isError()) {
       return encodedField;
@@ -501,7 +501,7 @@ function encodeValueItemField(
 }
 
 function encodeRichTextField(
-  data: RichText | null
+  data: RichText | null,
 ): Result<RichText | null, typeof ErrorType.BadRequest> {
   return ok(data);
 }
@@ -509,7 +509,7 @@ function encodeRichTextField(
 async function resolveRequestedEntityReferences(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  requestedReferences: RequestedReference[]
+  requestedReferences: RequestedReference[],
 ): PromiseResult<
   DatabaseResolvedEntityReference[],
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -523,7 +523,7 @@ async function resolveRequestedEntityReferences(
 
   const result = await databaseAdapter.adminEntityGetReferenceEntitiesInfo(
     context,
-    [...allUUIDs].map((id) => ({ id }))
+    [...allUUIDs].map((id) => ({ id })),
   );
   if (result.isError()) {
     return result;
@@ -540,13 +540,13 @@ async function resolveRequestedEntityReferences(
       if (request.isRichTextLink && request.linkEntityTypes && request.linkEntityTypes.length > 0) {
         if (request.linkEntityTypes.indexOf(item.type) < 0) {
           return notOk.BadRequest(
-            `${request.prefix}: Linked entity (${uuid}) has an invalid type ${item.type}`
+            `${request.prefix}: Linked entity (${uuid}) has an invalid type ${item.type}`,
           );
         }
       } else if (request.entityTypes && request.entityTypes.length > 0) {
         if (request.entityTypes.indexOf(item.type) < 0) {
           return notOk.BadRequest(
-            `${request.prefix}: Referenced entity (${uuid}) has an invalid type ${item.type}`
+            `${request.prefix}: Referenced entity (${uuid}) has an invalid type ${item.type}`,
           );
         }
       }

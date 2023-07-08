@@ -28,7 +28,7 @@ export const HoverRevealContainer: HoverRevealContainerComponent = ({
       className={toClassName(
         'hover-reveal-container',
         toFlexContainerClassName(props),
-        toSpacingClassName(props)
+        toSpacingClassName(props),
       )}
     >
       {children}
@@ -48,7 +48,7 @@ HoverRevealContainer.Item = ({
         'item',
         forceVisible && 'is-visible',
         toFlexItemClassName(props),
-        toSpacingClassName(props)
+        toSpacingClassName(props),
       )}
       style={style}
     >

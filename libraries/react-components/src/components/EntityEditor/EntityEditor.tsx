@@ -30,12 +30,12 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
       dispatchEntityEditorState(new EntityEditorActions.SetName(draftState.id, event.target.value)),
-    [dispatchEntityEditorState, draftState.id]
+    [dispatchEntityEditorState, draftState.id],
   );
   const handleAuthKeyChange = useCallback(
     (authKey: string) =>
       dispatchEntityEditorState(new EntityEditorActions.SetAuthKey(draftState.id, authKey)),
-    [dispatchEntityEditorState, draftState.id]
+    [dispatchEntityEditorState, draftState.id],
   );
   const handleSubmitClick = useCallback(() => {
     submitEntity(
@@ -44,7 +44,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
       adminClient,
       dispatchEntityEditorState,
       showNotification,
-      false
+      false,
     );
   }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
   const handleSubmitAndPublishClick = useCallback(() => {
@@ -54,7 +54,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
       adminClient,
       dispatchEntityEditorState,
       showNotification,
-      true
+      true,
     );
   }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
 
@@ -121,7 +121,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
           field={field}
           onValueChange={(value) =>
             dispatchEntityEditorState(
-              new EntityEditorActions.SetField(draftState.id, field.fieldSpec.name, value)
+              new EntityEditorActions.SetField(draftState.id, field.fieldSpec.name, value),
             )
           }
         />
@@ -136,11 +136,11 @@ async function submitEntity(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
   showNotification: (notification: NotificationInfo) => void,
-  publish: boolean
+  publish: boolean,
 ) {
   setSubmitLoading(true);
   dispatchEntityEditorState(
-    new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, true)
+    new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, true),
   );
 
   const isCreate = !draftState.entity;
@@ -171,7 +171,7 @@ async function submitEntity(
       : 'Failed updating entity';
     showNotification({ color: 'error', message });
     dispatchEntityEditorState(
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false)
+      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false),
     );
   }
 

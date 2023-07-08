@@ -5,7 +5,7 @@ import { assertErrorResult, assertOkResult, assertSame } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';
 
 export function createAuthTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<{ server: Server }, TCleanup>
+  initializer: TestFunctionInitializer<{ server: Server }, TCleanup>,
 ): TestSuite {
   return buildSuite(
     initializer,
@@ -13,7 +13,7 @@ export function createAuthTestSuite<TCleanup>(
     createSession_create_existing_identifier,
     createSession_error_missing_provider,
     createSession_error_create_missing_identifier,
-    createSession_error_invalid_default_auth_key
+    createSession_error_invalid_default_auth_key,
   );
 }
 
@@ -23,7 +23,7 @@ function randomIdentifier() {
 
 async function createSession(
   server: Server,
-  options?: { provider?: string; identifier?: string; defaultAuthKeys?: string[] }
+  options?: { provider?: string; identifier?: string; defaultAuthKeys?: string[] },
 ) {
   return await server.createSession({
     provider: options?.provider ?? 'test',
@@ -70,6 +70,6 @@ async function createSession_error_invalid_default_auth_key({ server }: { server
   assertErrorResult(
     result,
     ErrorType.BadRequest,
-    'Invalid authKey ( starting whitespace), can’t start with whitespace'
+    'Invalid authKey ( starting whitespace), can’t start with whitespace',
   );
 }

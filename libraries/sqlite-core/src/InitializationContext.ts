@@ -12,20 +12,20 @@ class InitializationContext extends TransactionContextImpl<InitializationContext
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     databasePerformance: DatabasePerformanceCallbacks | null,
-    transaction: Transaction | null
+    transaction: Transaction | null,
   ) {
     super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
-    transaction: Transaction
+    transaction: Transaction,
   ): InitializationContext {
     return new InitializationContext(
       databaseAdapter,
       this.logger,
       this.databasePerformance,
-      transaction
+      transaction,
     );
   }
 }
@@ -33,7 +33,7 @@ class InitializationContext extends TransactionContextImpl<InitializationContext
 export function createInitializationContext(
   databaseAdapter: DatabaseAdapter,
   logger: Logger,
-  databasePerformance: DatabasePerformanceCallbacks | null
+  databasePerformance: DatabasePerformanceCallbacks | null,
 ): TransactionContext {
   return new InitializationContext(databaseAdapter, logger, databasePerformance, null);
 }

@@ -27,7 +27,7 @@ export const Column: ColumnComponent = ({ className, style, children, ...props }
       className={toClassName(
         className,
         toFlexContainerClassName({ ...props, flexDirection: 'column' }),
-        toSpacingClassName(props)
+        toSpacingClassName(props),
       )}
       style={style}
     >

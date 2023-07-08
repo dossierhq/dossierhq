@@ -8,7 +8,7 @@ describe('generateTypescriptForSchema', () => {
       generateTypescriptForSchema({
         adminSchema: AdminSchema.createAndValidate({}).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -19,7 +19,7 @@ describe('generateTypescriptForSchema', () => {
           entityTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -38,7 +38,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -76,7 +76,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -97,7 +97,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -116,7 +116,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -148,7 +148,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -203,7 +203,7 @@ describe('generateTypescriptForSchema', () => {
           ],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -220,7 +220,7 @@ describe('generateTypescriptForSchema', () => {
           valueTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -237,7 +237,7 @@ describe('generateTypescriptForSchema', () => {
           indexes: [{ name: 'slug', type: 'unique' }],
         }).valueOrThrow(),
         publishedSchema: null,
-      })
+      }),
     ).toMatchSnapshot();
   });
 });
@@ -248,7 +248,7 @@ describe('generateTypescriptForSchema published', () => {
       generateTypescriptForSchema({
         adminSchema: null,
         publishedSchema: AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema(),
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -261,7 +261,7 @@ describe('generateTypescriptForSchema published', () => {
         })
           .valueOrThrow()
           .toPublishedSchema(),
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -279,7 +279,7 @@ describe('generateTypescriptForSchema published', () => {
         })
           .valueOrThrow()
           .toPublishedSchema(),
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -300,7 +300,7 @@ describe('generateTypescriptForSchema published', () => {
         })
           .valueOrThrow()
           .toPublishedSchema(),
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -319,7 +319,7 @@ describe('generateTypescriptForSchema published', () => {
         })
           .valueOrThrow()
           .toPublishedSchema(),
-      })
+      }),
     ).toMatchSnapshot();
   });
 });

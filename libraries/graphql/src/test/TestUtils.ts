@@ -25,14 +25,14 @@ export interface TestServerWithSession {
 
 export async function setUpServerWithSession(
   schemaSpecification: AdminSchemaSpecificationUpdate,
-  databasePath: string
+  databasePath: string,
 ): Promise<TestServerWithSession> {
   return await setUpRealServerWithSession(schemaSpecification, databasePath);
 }
 
 async function setUpRealServerWithSession(
   schemaSpecification: AdminSchemaSpecificationUpdate,
-  databasePath: string
+  databasePath: string,
 ): Promise<TestServerWithSession> {
   const serverContext = { logger: NoOpLogger };
   const databaseResult = await createDatabase(serverContext, Database, { filename: databasePath });

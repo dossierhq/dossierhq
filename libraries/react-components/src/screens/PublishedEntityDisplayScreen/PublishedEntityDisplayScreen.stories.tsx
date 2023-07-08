@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialUrlSearchParams, ...props }: StoryProps) {
   const [urlSearchParams, onUrlSearchParamsChange] = useState<URLSearchParams>(
-    initialUrlSearchParams ?? new URLSearchParams()
+    initialUrlSearchParams ?? new URLSearchParams(),
   );
 
   return (

@@ -33,7 +33,7 @@ const LINE_BREAK_REGEX = /[\r\n]/;
 export function validateEntityInfo(
   adminSchema: AdminSchema,
   path: ItemValuePath,
-  entity: AdminEntity
+  entity: AdminEntity,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
   const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity);
@@ -49,7 +49,7 @@ export function validateEntityInfo(
 export function validateEntityInfoForCreate(
   adminSchema: AdminSchema,
   path: ItemValuePath,
-  entity: AdminEntityCreate
+  entity: AdminEntityCreate,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
   const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity);
@@ -75,7 +75,7 @@ export function validateEntityInfoForCreate(
 export function validateEntityInfoForUpdate(
   path: ItemValuePath,
   existingEntity: { info: { type: string; authKey: string; version: number } },
-  entity: AdminEntityUpdate
+  entity: AdminEntityUpdate,
 ): SaveValidationIssue | null {
   if (entity.info?.type && entity.info.type !== existingEntity.info.type) {
     return {
@@ -113,7 +113,7 @@ export function validateEntityInfoForUpdate(
 function validateTypeAndAuthKey(
   adminSchema: AdminSchema,
   path: ItemValuePath,
-  entity: AdminEntityCreate | AdminEntity
+  entity: AdminEntityCreate | AdminEntity,
 ): SaveValidationIssue | null {
   // info.type
   const type = entity.info.type;
@@ -174,7 +174,7 @@ function validateName(path: ItemValuePath, name: string): SaveValidationIssue | 
 
 export function validateTraverseNodeForSave<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  node: ItemTraverseNode<TSchema>
+  node: ItemTraverseNode<TSchema>,
 ): SaveValidationIssue | null {
   const nodeType = node.type;
   switch (nodeType) {
@@ -227,7 +227,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
             message: `Rich text node type ${
               node.node.type
             } is not allowed in field (supported nodes: ${richTextFieldSpec.richTextNodes.join(
-              ', '
+              ', ',
             )})`,
           };
         }
@@ -254,7 +254,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
 
 export function validateTraverseNodeForPublish(
   adminSchema: AdminSchema,
-  node: ItemTraverseNode<PublishedSchema>
+  node: ItemTraverseNode<PublishedSchema>,
 ): PublishValidationIssue | null {
   switch (node.type) {
     case ItemTraverseNodeType.field:
@@ -286,9 +286,9 @@ export function validateTraverseNodeForPublish(
 }
 
 export function groupValidationIssuesByTopLevelPath<
-  TError extends SaveValidationIssue | PublishValidationIssue
+  TError extends SaveValidationIssue | PublishValidationIssue,
 >(
-  errors: TError[]
+  errors: TError[],
 ): {
   root: TError[];
   children: Map<number | string, TError[]>;

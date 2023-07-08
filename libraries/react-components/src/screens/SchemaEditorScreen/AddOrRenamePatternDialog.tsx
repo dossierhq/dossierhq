@@ -68,7 +68,7 @@ export function AddOrRenamePatternDialog({
       onClose();
       setStatus(DialogStatus.empty);
     },
-    [dispatchSchemaEditorState, name, onClose, selector]
+    [dispatchSchemaEditorState, name, onClose, selector],
   );
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export function AddOrRenamePatternDialog({
 function validateName(
   schemaEditorState: SchemaEditorState,
   selector: SchemaPatternSelector | 'add',
-  name: string
+  name: string,
 ): DialogStatus {
   if (!name) return DialogStatus.empty;
   if (!name.match(CAMEL_CASE_PATTERN)) {
@@ -138,7 +138,7 @@ function DialogContent({
         onEnterKeyPress();
       }
     },
-    [onEnterKeyPress]
+    [onEnterKeyPress],
   );
 
   const isRename = selector !== 'add';

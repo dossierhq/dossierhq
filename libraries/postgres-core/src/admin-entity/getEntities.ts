@@ -12,7 +12,7 @@ import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 export async function adminEntityGetMultiple(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<DatabaseAdminEntityGetOnePayload[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<
@@ -46,6 +46,6 @@ export async function adminEntityGetMultiple(
       id: row.uuid,
       resolvedAuthKey: row.resolved_auth_key,
       fieldValues: row.data,
-    }))
+    })),
   );
 }

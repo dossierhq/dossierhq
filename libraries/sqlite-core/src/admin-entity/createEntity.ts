@@ -16,7 +16,7 @@ export async function adminCreateEntity(
   database: Database,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
-  entity: DatabaseAdminEntityCreateEntityArg
+  entity: DatabaseAdminEntityCreateEntityArg,
 ): PromiseResult<
   DatabaseAdminEntityCreatePayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -25,7 +25,7 @@ export async function adminCreateEntity(
     database,
     context,
     randomNameGenerator,
-    entity
+    entity,
   );
   if (createEntityRowResult.isError()) return createEntityRowResult;
 
@@ -42,7 +42,7 @@ export async function adminCreateEntity(
         getSessionSubjectInternalId(entity.creator),
         JSON.stringify(entity.fieldsData),
       ],
-    }
+    },
   );
   if (createEntityVersionResult.isError()) return createEntityVersionResult;
   const { id: versionsId } = createEntityVersionResult.value;
@@ -60,7 +60,7 @@ async function createEntityRow(
   database: Database,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
-  entity: DatabaseAdminEntityCreateEntityArg
+  entity: DatabaseAdminEntityCreateEntityArg,
 ) {
   const uuid = entity.id ?? database.adapter.randomUUID();
   const now = new Date();
@@ -99,13 +99,13 @@ async function createEntityRow(
             return notOk.Conflict(`Entity with id (${entity.id}) already exist`);
           }
           return notOk.GenericUnexpectedException(context, error);
-        }
+        },
       );
       if (createResult.isError()) {
         return createResult;
       }
       const { id: entityId } = createResult.value;
       return ok({ uuid, actualName: name, entityId, createdAt: now, updatedAt: now });
-    }
+    },
   );
 }

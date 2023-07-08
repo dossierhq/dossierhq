@@ -18,7 +18,7 @@ import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 export async function adminEntityUpdateGetEntityInfo(
   database: Database,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   DatabaseEntityUpdateGetEntityInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -67,7 +67,7 @@ export async function adminEntityUpdateEntity(
   database: Database,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
-  entity: DatabaseEntityUpdateEntityArg
+  entity: DatabaseEntityUpdateEntityArg,
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
   const now = new Date();
 
@@ -105,14 +105,14 @@ export async function adminEntityUpdateEntity(
               return notOk.Conflict(nameConflictErrorMessage);
             }
             return notOk.GenericUnexpectedException(context, error);
-          }
+          },
         );
         if (updateNameResult.isError()) {
           return updateNameResult;
         }
 
         return ok(name);
-      }
+      },
     );
 
     if (nameResult.isError()) return nameResult;

@@ -18,7 +18,7 @@ export async function publishedEntitySampleEntities(
   query: PublishedQuery | undefined,
   offset: number,
   limit: number,
-  resolvedAuthKeys: ResolvedAuthKey[]
+  resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<
   DatabasePublishedEntityPayload[],
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -28,14 +28,14 @@ export async function publishedEntitySampleEntities(
     query,
     offset,
     limit,
-    resolvedAuthKeys
+    resolvedAuthKeys,
   );
   if (sqlQueryResult.isError()) return sqlQueryResult;
 
   const searchResult = await queryMany<SearchPublishedEntitiesItem>(
     database,
     context,
-    sqlQueryResult.value
+    sqlQueryResult.value,
   );
   if (searchResult.isError()) return searchResult;
 
@@ -46,6 +46,6 @@ export async function publishedEntitySampleEntities(
       ...resolvePublishedEntityInfo(it),
       id: it.uuid,
       fieldValues: JSON.parse(it.fields),
-    }))
+    })),
   );
 }

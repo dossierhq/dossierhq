@@ -49,8 +49,8 @@ export function SchemaTypeEditor({
           typeSelector,
           String([...event.keys][0]),
           event.target.dropPosition,
-          String(event.target.key)
-        )
+          String(event.target.key),
+        ),
       );
     },
   });
@@ -65,7 +65,7 @@ export function SchemaTypeEditor({
             disabled={!canChangeAdminOnly}
             onChange={(event) =>
               dispatchSchemaEditorState(
-                new SchemaEditorActions.ChangeTypeAdminOnly(typeSelector, event.target.checked)
+                new SchemaEditorActions.ChangeTypeAdminOnly(typeSelector, event.target.checked),
               )
             }
           >
@@ -99,7 +99,7 @@ export function SchemaTypeEditor({
               schemaEditorState={schemaEditorState}
               onChange={(value) =>
                 dispatchSchemaEditorState(
-                  new SchemaEditorActions.ChangeTypeAuthKeyPattern(typeSelector, value)
+                  new SchemaEditorActions.ChangeTypeAuthKeyPattern(typeSelector, value),
                 )
               }
             />

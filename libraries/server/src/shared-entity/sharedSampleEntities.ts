@@ -22,13 +22,13 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   query: TQuery | undefined,
   options: EntitySamplingOptions | undefined,
   getTotal: (
-    authKeys: ResolvedAuthKey[]
+    authKeys: ResolvedAuthKey[],
   ) => PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
   sampleEntities: (
     offset: number,
     limit: number,
-    authKeys: ResolvedAuthKey[]
-  ) => PromiseResult<TEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic>
+    authKeys: ResolvedAuthKey[],
+  ) => PromiseResult<TEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
 ): PromiseResult<
   EntitySamplingPayload<TEntity>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -41,7 +41,7 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    query?.authKeys
+    query?.authKeys,
   );
   if (authKeysResult.isError()) return authKeysResult;
 

@@ -84,10 +84,10 @@ export interface JsonPublishingEvent extends Omit<PublishingEvent, 'publishedAt'
 
 export function convertJsonConnection<
   TIn extends JsonEdge<unknown, ErrorType>,
-  TOut extends Edge<unknown, ErrorType>
+  TOut extends Edge<unknown, ErrorType>,
 >(
   jsonConnection: JsonConnection<TIn> | null,
-  edgeConverter: (edge: TIn) => TOut
+  edgeConverter: (edge: TIn) => TOut,
 ): Connection<TOut> | null {
   if (!jsonConnection) {
     return null;
@@ -97,7 +97,7 @@ export function convertJsonConnection<
 
 export function convertJsonEdge<TOkIn, TOkOut, TError extends ErrorType>(
   jsonEdge: JsonEdge<TOkIn, TError>,
-  nodeConverter: (node: TOkIn) => TOkOut
+  nodeConverter: (node: TOkIn) => TOkOut,
 ): Edge<TOkOut, TError> {
   const nodeJson = convertJsonResult(jsonEdge.node);
   const node: Result<TOkOut, TError> = nodeJson.isOk() ? nodeJson.map(nodeConverter) : nodeJson;
@@ -105,7 +105,7 @@ export function convertJsonEdge<TOkIn, TOkOut, TError extends ErrorType>(
 }
 
 export function convertJsonResult<TOk, TError extends ErrorType>(
-  jsonResult: JsonResult<TOk, TError>
+  jsonResult: JsonResult<TOk, TError>,
 ): Result<TOk, TError> {
   if ('value' in jsonResult) {
     return ok(jsonResult.value);
@@ -135,7 +135,7 @@ export function convertJsonPublishedEntity(entity: JsonPublishedEntity): Publish
 }
 
 export function convertJsonPublishingResult<TEffect>(
-  publishingResult: JsonPublishingResult<TEffect>
+  publishingResult: JsonPublishingResult<TEffect>,
 ): AdminEntityPublishingPayload<TEffect> {
   return {
     ...publishingResult,
@@ -154,7 +154,7 @@ export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): Enti
 }
 
 export function convertJsonPublishingHistory(
-  publishingHistory: JsonPublishingHistory
+  publishingHistory: JsonPublishingHistory,
 ): PublishingHistory {
   return {
     ...publishingHistory,

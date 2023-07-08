@@ -18,7 +18,7 @@ export function PublishedLoadContextProvider({
 }: Props): JSX.Element | null {
   const publishedClient = useMemo(
     () => createBackendPublishedClient(publishedClientMiddleware),
-    [publishedClientMiddleware]
+    [publishedClientMiddleware],
   );
   const adapter = useMemo(() => new TestContextAdapter(), []);
 

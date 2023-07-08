@@ -42,10 +42,10 @@ export function TypeSelector({ schema, ...props }: Props): JSX.Element {
     if (schema) {
       const items = [
         ...schema.spec.entityTypes.map(
-          (it): TypeItem => ({ id: it.name, name: it.name, kind: 'entity' })
+          (it): TypeItem => ({ id: it.name, name: it.name, kind: 'entity' }),
         ),
         ...schema.spec.valueTypes.map(
-          (it): TypeItem => ({ id: it.name, name: it.name, kind: 'value' })
+          (it): TypeItem => ({ id: it.name, name: it.name, kind: 'value' }),
         ),
       ];
       dispatch(new MultipleSelectorStateActions.UpdateItems(items));

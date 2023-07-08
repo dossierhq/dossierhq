@@ -11,12 +11,12 @@ export interface SchemaTestContext {
 }
 
 export function createSchemaTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<SchemaTestContext, TCleanup>
+  initializer: TestFunctionInitializer<SchemaTestContext, TCleanup>,
 ): TestSuite {
   return buildSuite(
     initializer,
     getSchemaSpecification_normal,
-    ...ServerProcessNextDirtyEntitySubSuite
+    ...ServerProcessNextDirtyEntitySubSuite,
   );
 }
 

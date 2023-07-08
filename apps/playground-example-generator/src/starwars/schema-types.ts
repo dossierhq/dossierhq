@@ -50,7 +50,7 @@ export function isAdminFilm(entity: AdminEntity<string, object>): entity is Admi
 }
 
 export function assertIsAdminFilm(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminFilm {
   if (entity.info.type !== 'Film') {
     throw new Error('Expected info.type = Film (but was ' + entity.info.type + ')');
@@ -76,7 +76,7 @@ export function isAdminPerson(entity: AdminEntity<string, object>): entity is Ad
 }
 
 export function assertIsAdminPerson(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminPerson {
   if (entity.info.type !== 'Person') {
     throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');
@@ -102,7 +102,7 @@ export function isAdminPlanet(entity: AdminEntity<string, object>): entity is Ad
 }
 
 export function assertIsAdminPlanet(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminPlanet {
   if (entity.info.type !== 'Planet') {
     throw new Error('Expected info.type = Planet (but was ' + entity.info.type + ')');
@@ -130,7 +130,7 @@ export function isAdminSpecies(entity: AdminEntity<string, object>): entity is A
 }
 
 export function assertIsAdminSpecies(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminSpecies {
   if (entity.info.type !== 'Species') {
     throw new Error('Expected info.type = Species (but was ' + entity.info.type + ')');
@@ -151,7 +151,7 @@ export function isAdminStarship(entity: AdminEntity<string, object>): entity is 
 }
 
 export function assertIsAdminStarship(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminStarship {
   if (entity.info.type !== 'Starship') {
     throw new Error('Expected info.type = Starship (but was ' + entity.info.type + ')');
@@ -178,7 +178,7 @@ export function isAdminTransport(entity: AdminEntity<string, object>): entity is
 }
 
 export function assertIsAdminTransport(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminTransport {
   if (entity.info.type !== 'Transport') {
     throw new Error('Expected info.type = Transport (but was ' + entity.info.type + ')');
@@ -197,7 +197,7 @@ export function isAdminVehicle(entity: AdminEntity<string, object>): entity is A
 }
 
 export function assertIsAdminVehicle(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminVehicle {
   if (entity.info.type !== 'Vehicle') {
     throw new Error('Expected info.type = Vehicle (but was ' + entity.info.type + ')');

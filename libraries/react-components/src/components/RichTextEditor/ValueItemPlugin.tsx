@@ -18,7 +18,7 @@ export function ValueItemPlugin(): null {
         $insertNodeToNearestRoot(valueItemNode);
         return true;
       },
-      COMMAND_PRIORITY_EDITOR
+      COMMAND_PRIORITY_EDITOR,
     );
   }, [editor]);
 

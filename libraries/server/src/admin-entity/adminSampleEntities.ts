@@ -20,13 +20,13 @@ export async function adminSampleEntities(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminQuery | undefined,
-  options: EntitySamplingOptions | undefined
+  options: EntitySamplingOptions | undefined,
 ): PromiseResult<
   EntitySamplingPayload<AdminEntity>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   function getTotal(
-    authKeys: ResolvedAuthKey[]
+    authKeys: ResolvedAuthKey[],
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
     return databaseAdapter.adminEntitySearchTotalCount(schema, context, query, authKeys);
   }
@@ -34,7 +34,7 @@ export async function adminSampleEntities(
   async function sampleEntities(
     offset: number,
     limit: number,
-    authKeys: ResolvedAuthKey[]
+    authKeys: ResolvedAuthKey[],
   ): PromiseResult<AdminEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
     const sampleResult = await databaseAdapter.adminEntitySampleEntities(
       schema,
@@ -42,7 +42,7 @@ export async function adminSampleEntities(
       query,
       offset,
       limit,
-      authKeys
+      authKeys,
     );
     if (sampleResult.isError()) return sampleResult;
 
@@ -56,6 +56,6 @@ export async function adminSampleEntities(
     query,
     options,
     getTotal,
-    sampleEntities
+    sampleEntities,
   );
 }

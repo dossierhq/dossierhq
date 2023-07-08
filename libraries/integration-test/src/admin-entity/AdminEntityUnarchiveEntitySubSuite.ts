@@ -54,7 +54,7 @@ async function unarchiveEntity_errorWrongAuthKey({ server }: AdminEntityTestCont
   const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
-    })
+    }),
   );
 
   assertOkResult(createResult);

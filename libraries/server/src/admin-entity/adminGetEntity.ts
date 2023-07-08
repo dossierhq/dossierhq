@@ -19,7 +19,7 @@ export async function adminGetEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference | EntityVersionReference | UniqueIndexReference
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference,
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.BadRequest

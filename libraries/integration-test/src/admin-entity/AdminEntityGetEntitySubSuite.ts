@@ -32,7 +32,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
 async function getEntity_withSubjectAuthKey({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity<AdminTitleOnly>(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -65,7 +65,7 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity(
-    copyEntity(STRINGS_CREATE, { fields: { unique } })
+    copyEntity(STRINGS_CREATE, { fields: { unique } }),
   );
   assertOkResult(createResult);
 
@@ -133,7 +133,7 @@ async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
   const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
-    })
+    }),
   );
 
   assertOkResult(createResult);

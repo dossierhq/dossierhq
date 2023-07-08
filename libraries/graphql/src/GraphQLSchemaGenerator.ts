@@ -93,7 +93,7 @@ export interface SessionGraphQLContext {
 }
 
 function fieldConfigWithArgs<TSource, TContext, TArgs>(
-  config: GraphQLFieldConfig<TSource, TContext, TArgs>
+  config: GraphQLFieldConfig<TSource, TContext, TArgs>,
 ): GraphQLFieldConfig<TSource, TContext> {
   return config as GraphQLFieldConfig<TSource, TContext>;
 }
@@ -122,7 +122,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
         },
-      })
+      }),
     );
 
     // PageInfo
@@ -135,7 +135,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           startCursor: { type: new GraphQLNonNull(GraphQLString) },
           endCursor: { type: new GraphQLNonNull(GraphQLString) },
         },
-      })
+      }),
     );
 
     const containsEntityTypes =
@@ -152,7 +152,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
         },
-      })
+      }),
     );
 
     // BoundingBoxInput
@@ -165,7 +165,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           minLng: { type: new GraphQLNonNull(GraphQLFloat) },
           maxLng: { type: new GraphQLNonNull(GraphQLFloat) },
         },
-      })
+      }),
     );
   }
 
@@ -183,7 +183,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLEnumType({
         name: 'PublishedEntityType',
         values: entityTypeEnumValues,
-      })
+      }),
     );
 
     if (publishedSchema.getValueTypeCount() > 0) {
@@ -196,7 +196,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLEnumType({
           name: 'PublishedValueType',
           values: valueTypeEnumValues,
-        })
+        }),
       );
     }
 
@@ -210,7 +210,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
           valid: { type: new GraphQLNonNull(GraphQLBoolean) },
         },
-      })
+      }),
     );
 
     // PublishedEntity
@@ -222,7 +222,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           info: { type: new GraphQLNonNull(this.getOutputType('PublishedEntityInfo')) },
         },
-      })
+      }),
     );
 
     if (publishedSchema.getValueTypeCount() > 0) {
@@ -233,7 +233,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           fields: {
             type: { type: new GraphQLNonNull(this.getEnumType('PublishedValueType')) },
           },
-        })
+        }),
       );
     }
 
@@ -245,7 +245,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           root: { type: new GraphQLNonNull(GraphQLJSONObject) },
           entities: { type: new GraphQLList(this.getInterface('PublishedEntity')) },
         },
-      })
+      }),
     );
 
     // PublishedUniqueIndex
@@ -261,7 +261,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLEnumType({
           name: 'PublishedUniqueIndex',
           values: uniqueIndexEnumValues,
-        })
+        }),
       );
     }
 
@@ -273,7 +273,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           node: { type: this.getOutputType('PublishedEntity') },
           cursor: { type: new GraphQLNonNull(GraphQLString) },
         },
-      })
+      }),
     );
 
     // PublishedEntityConnection
@@ -285,7 +285,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           edges: { type: new GraphQLList(this.getOutputType('PublishedEntityEdge')) },
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
         },
-      })
+      }),
     );
 
     // PublishedEntitySamplingPayload
@@ -297,7 +297,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
           items: { type: new GraphQLList(this.getOutputType('PublishedEntity')) },
         },
-      })
+      }),
     );
 
     // PublishedQueryOrder
@@ -305,7 +305,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLEnumType({
         name: 'PublishedQueryOrder',
         values: { createdAt: {}, name: {} },
-      })
+      }),
     );
 
     // PublishedQueryInput
@@ -331,7 +331,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLInputObjectType({
         name: 'PublishedQueryInput',
         fields: sharedQueryInputFields,
-      })
+      }),
     );
 
     // PublishedSearchQueryInput
@@ -343,7 +343,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           order: { type: this.getEnumType('PublishedQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
-      })
+      }),
     );
   }
 
@@ -365,7 +365,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             this.addTypeSpecificationOutputFields(entitySpec, fields, false);
             return fields;
           },
-        })
+        }),
       );
     }
 
@@ -385,7 +385,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           }
           return fields;
         },
-      })
+      }),
     );
   }
 
@@ -409,7 +409,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           this.addTypeSpecificationOutputFields(valueSpec, fields, false);
           return fields;
         },
-      })
+      }),
     );
   }
 
@@ -427,7 +427,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLEnumType({
         name: 'AdminEntityType',
         values: entityTypeEnumValues,
-      })
+      }),
     );
 
     if (adminSchema.getValueTypeCount() > 0) {
@@ -440,7 +440,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLEnumType({
           name: 'AdminValueType',
           values: valueTypeEnumValues,
-        })
+        }),
       );
     }
 
@@ -455,7 +455,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           withdrawn: {},
           archived: {},
         },
-      })
+      }),
     );
 
     // AdminEntityInfo
@@ -473,7 +473,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // AdminEntityCreateInfo
@@ -486,7 +486,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           version: { type: GraphQLInt },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
         },
-      })
+      }),
     );
 
     // AdminEntityCreateEffect
@@ -498,7 +498,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           createdAndPublished: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntityUpdateInfo
@@ -511,7 +511,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           version: { type: GraphQLInt },
           authKey: { type: GraphQLString },
         },
-      })
+      }),
     );
 
     // AdminEntityUpdateEffect
@@ -524,7 +524,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           published: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntityUpsertInfo
@@ -536,7 +536,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           name: { type: new GraphQLNonNull(GraphQLString) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
         },
-      })
+      }),
     );
 
     // AdminEntityUpsertEffect
@@ -551,7 +551,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           published: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntity
@@ -562,7 +562,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
         },
-      })
+      }),
     );
 
     // AdminUniqueIndex
@@ -578,7 +578,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLEnumType({
           name: 'AdminUniqueIndex',
           values: uniqueIndexEnumValues,
-        })
+        }),
       );
     }
 
@@ -590,7 +590,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           node: { type: this.getOutputType('AdminEntity') },
           cursor: { type: new GraphQLNonNull(GraphQLString) },
         },
-      })
+      }),
     );
 
     // AdminEntityConnection
@@ -602,7 +602,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           edges: { type: new GraphQLList(this.getOutputType('AdminEntityEdge')) },
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
         },
-      })
+      }),
     );
 
     // AdminEntitySamplingPayload
@@ -614,7 +614,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
           items: { type: new GraphQLList(this.getOutputType('AdminEntity')) },
         },
-      })
+      }),
     );
 
     // AdminQueryOrder
@@ -622,7 +622,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLEnumType({
         name: 'AdminQueryOrder',
         values: { createdAt: {}, updatedAt: {}, name: {} },
-      })
+      }),
     );
 
     // AdminQueryInput
@@ -650,7 +650,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLInputObjectType({
         name: 'AdminQueryInput',
         fields: sharedQueryInputFields,
-      })
+      }),
     );
 
     // AdminSearchQueryInput
@@ -662,7 +662,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           order: { type: this.getEnumType('AdminQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
-      })
+      }),
     );
 
     // EntityVersionReferenceInput
@@ -673,7 +673,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           id: { type: new GraphQLNonNull(GraphQLID) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
         },
-      })
+      }),
     );
 
     if (this.adminSchema && this.adminSchema.getValueTypeCount() > 0) {
@@ -684,7 +684,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           fields: {
             type: { type: new GraphQLNonNull(this.getEnumType('AdminValueType')) },
           },
-        })
+        }),
       );
     }
 
@@ -696,7 +696,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           root: { type: new GraphQLNonNull(GraphQLJSONObject) },
           entities: { type: new GraphQLList(this.getInterface('AdminEntity')) },
         },
-      })
+      }),
     );
 
     // AdminRichTextInput
@@ -706,7 +706,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           root: { type: new GraphQLNonNull(GraphQLJSONObject) },
         },
-      })
+      }),
     );
 
     // EntityVersionInfo
@@ -719,7 +719,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // EntityHistory
@@ -732,7 +732,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             type: new GraphQLNonNull(new GraphQLList(this.getOutputType('EntityVersionInfo'))),
           },
         },
-      })
+      }),
     );
 
     // PublishingEvent
@@ -744,7 +744,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           publishedBy: { type: new GraphQLNonNull(GraphQLID) },
           publishedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // PublishingHistory
@@ -757,7 +757,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             type: new GraphQLNonNull(new GraphQLList(this.getOutputType('PublishingEvent'))),
           },
         },
-      })
+      }),
     );
 
     // AdminEntityPublishEffect
@@ -768,7 +768,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           published: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntityPublishPayload
@@ -781,7 +781,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityPublishEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // AdminEntityUnpublishEffect
@@ -792,7 +792,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           unpublished: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntityUnpublishPayload
@@ -805,7 +805,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUnpublishEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // AdminEntityArchiveEffect
@@ -816,7 +816,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           archived: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntityArchivePayload
@@ -829,7 +829,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityArchiveEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // AdminEntityUnarchiveEffect
@@ -840,7 +840,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           unarchived: {},
           none: {},
         },
-      })
+      }),
     );
 
     // AdminEntityUnarchivePayload
@@ -853,7 +853,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUnarchiveEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
-      })
+      }),
     );
 
     // AdvisoryLockPayload
@@ -864,7 +864,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           name: { type: new GraphQLNonNull(GraphQLString) },
           handle: { type: new GraphQLNonNull(GraphQLInt) },
         },
-      })
+      }),
     );
 
     // AdvisoryLockReleasePayload
@@ -874,7 +874,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           name: { type: new GraphQLNonNull(GraphQLString) },
         },
-      })
+      }),
     );
   }
 
@@ -897,7 +897,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             this.addTypeSpecificationOutputFields(entitySpec, fields, true);
             return fields;
           },
-        })
+        }),
       );
     }
 
@@ -917,7 +917,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           }
           return fields;
         },
-      })
+      }),
     );
 
     // AdminFooFieldsInput
@@ -932,7 +932,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             this.addTypeSpecificationInputFields(entitySpec, fields);
             return fields;
           },
-        })
+        }),
       );
     }
 
@@ -950,7 +950,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           }
           return fields;
         },
-      })
+      }),
     );
 
     // AdminFooCreatePayload
@@ -966,7 +966,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           };
           return fields;
         },
-      })
+      }),
     );
 
     // AdminFooUpdateInput
@@ -983,7 +983,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           }
           return fields;
         },
-      })
+      }),
     );
 
     // AdminFooUpdatePayload
@@ -999,7 +999,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           };
           return fields;
         },
-      })
+      }),
     );
 
     // AdminFooUpsertInput
@@ -1016,7 +1016,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           }
           return fields;
         },
-      })
+      }),
     );
 
     // AdminFooUpsertPayload
@@ -1032,7 +1032,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           };
           return fields;
         },
-      })
+      }),
     );
   }
 
@@ -1056,7 +1056,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           this.addTypeSpecificationOutputFields(valueSpec, fields, true);
           return fields;
         },
-      })
+      }),
     );
 
     this.addType(
@@ -1069,7 +1069,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           this.addTypeSpecificationInputFields(valueSpec, fields);
           return fields;
         },
-      })
+      }),
     );
   }
 
@@ -1080,7 +1080,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       | AdminEntityTypeSpecification
       | AdminValueTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
-    isAdmin: boolean
+    isAdmin: boolean,
   ): void {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
@@ -1123,7 +1123,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   addTypeSpecificationInputFields(
     typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
-    fields: GraphQLInputFieldConfigMap
+    fields: GraphQLInputFieldConfigMap,
   ): void {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
@@ -1166,7 +1166,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldNode<TSource>(
-    publishedSchema: PublishedSchema
+    publishedSchema: PublishedSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getInterface('Node'),
@@ -1180,7 +1180,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldNodes<TSource>(
-    publishedSchema: PublishedSchema
+    publishedSchema: PublishedSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('Node')),
@@ -1194,7 +1194,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldPublishedEntity<TSource>(
-    publishedSchema: PublishedSchema
+    publishedSchema: PublishedSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     if (publishedSchema.spec.indexes.length === 0) {
       return fieldConfigWithArgs<TSource, TContext, { id: string }>({
@@ -1234,7 +1234,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminEntity<TSource>(
-    adminSchema: AdminSchema
+    adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     if (adminSchema.spec.indexes.length === 0) {
       return fieldConfigWithArgs<TSource, TContext, { id: string; version?: number | null }>({
@@ -1285,7 +1285,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminEntities<TSource>(
-    adminSchema: AdminSchema
+    adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('AdminEntity')),
@@ -1299,7 +1299,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminSampleEntities<TSource>(
-    adminSchema: AdminSchema
+    adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1325,7 +1325,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminSearchEntities<TSource>(
-    adminSchema: AdminSchema
+    adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1355,7 +1355,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldPublishedSampleEntities<TSource>(
-    publishedSchema: PublishedSchema
+    publishedSchema: PublishedSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1381,7 +1381,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldPublishedSearchEntities<TSource>(
-    publishedSchema: PublishedSchema
+    publishedSchema: PublishedSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1446,10 +1446,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
               nodes: this.buildQueryFieldNodes(this.publishedSchema),
               publishedEntity: this.buildQueryFieldPublishedEntity(this.publishedSchema),
               publishedSampleEntities: this.buildQueryFieldPublishedSampleEntities(
-                this.publishedSchema
+                this.publishedSchema,
               ),
               publishedSearchEntities: this.buildQueryFieldPublishedSearchEntities(
-                this.publishedSchema
+                this.publishedSchema,
               ),
             }
           : {}),
@@ -1469,7 +1469,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationCreateEntity<TSource>(
     adminSchema: AdminSchema,
-    entityName: string
+    entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1488,7 +1488,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         if (entity.info.type && entity.info.type !== entityName) {
           throw notOk
             .BadRequest(
-              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`
+              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`,
             )
             .toError();
         }
@@ -1503,7 +1503,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationUpdateEntity<TSource>(
     adminSchema: AdminSchema,
-    entityName: string
+    entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1522,7 +1522,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         if (entity.info?.type && entity.info.type !== entityName) {
           throw notOk
             .BadRequest(
-              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`
+              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`,
             )
             .toError();
         }
@@ -1536,7 +1536,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationUpsertEntity<TSource>(
     adminSchema: AdminSchema,
-    entityName: string
+    entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1555,7 +1555,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         if (entity.info?.type && entity.info.type !== entityName) {
           throw notOk
             .BadRequest(
-              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`
+              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`,
             )
             .toError();
         }
@@ -1613,13 +1613,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   resolveJsonInputFields(
     adminSchema: AdminSchema,
     entity: AdminEntityCreate | AdminEntityUpdate,
-    entityTypeName: string
+    entityTypeName: string,
   ): void {
     const visitItem = (
       item: AdminEntityCreate | AdminEntityUpdate | ValueItem,
       typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
       prefix: string,
-      isEntity: boolean
+      isEntity: boolean,
     ) => {
       const isValueItem = isItemValueItem(item);
       const fields = isValueItem ? item : item.fields ?? {};
@@ -1646,7 +1646,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         const fieldSpec = isEntity
           ? adminSchema.getEntityFieldSpecification(
               typeSpec as AdminEntityTypeSpecification,
-              fieldName
+              fieldName,
             )
           : adminSchema.getValueFieldSpecification(typeSpec, fieldName);
 
@@ -1685,7 +1685,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       return JSON.parse(fieldValue);
     } catch (error) {
       throw new Error(
-        `${fieldPrefix}: Failed parsing JSON: ${error instanceof Error ? error.message : error}`
+        `${fieldPrefix}: Failed parsing JSON: ${error instanceof Error ? error.message : error}`,
       );
     }
   }
@@ -1696,7 +1696,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       args: {
         references: {
           type: new GraphQLNonNull(
-            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityVersionReferenceInput')))
+            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityVersionReferenceInput'))),
           ),
         },
       },
@@ -1713,7 +1713,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       args: {
         references: {
           type: new GraphQLNonNull(
-            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityReferenceInput')))
+            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityReferenceInput'))),
           ),
         },
       },
@@ -1766,15 +1766,15 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     for (const entitySpec of adminSchema.spec.entityTypes) {
       fields[`create${entitySpec.name}Entity`] = this.buildMutationCreateEntity(
         adminSchema,
-        entitySpec.name
+        entitySpec.name,
       );
       fields[`update${entitySpec.name}Entity`] = this.buildMutationUpdateEntity(
         adminSchema,
-        entitySpec.name
+        entitySpec.name,
       );
       fields[`upsert${entitySpec.name}Entity`] = this.buildMutationUpsertEntity(
         adminSchema,
-        entitySpec.name
+        entitySpec.name,
       );
     }
 

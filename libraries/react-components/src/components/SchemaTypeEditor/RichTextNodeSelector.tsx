@@ -27,7 +27,7 @@ const RichTextNodesNotInPlaceholders: string[] = [
 function useSynchronizeMultipleSelectorState(
   fieldSelector: SchemaFieldSelector,
   selectedIds: string[],
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>,
 ) {
   const items = useMemo(() => {
     const allNodes = [
@@ -46,12 +46,12 @@ function useSynchronizeMultipleSelectorState(
   const [state, dispatch] = useReducer(
     reduceMultipleSelectorState,
     { items, selectedIds },
-    initializeMultipleSelectorState
+    initializeMultipleSelectorState,
   );
 
   useEffect(() => {
     dispatchSchemaEditorState(
-      new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(fieldSelector, state.selectedIds)
+      new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(fieldSelector, state.selectedIds),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
@@ -81,7 +81,7 @@ export function RichTextNodeSelector({
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
     richTextNodes,
-    dispatchSchemaEditorState
+    dispatchSchemaEditorState,
   );
   return (
     <TagInputSelector

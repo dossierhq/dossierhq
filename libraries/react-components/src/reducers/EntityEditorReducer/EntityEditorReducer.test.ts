@@ -101,9 +101,9 @@ describe('AddDraftAction', () => {
       new EntityEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot();
   });
@@ -120,7 +120,7 @@ describe('AddDraftAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -140,7 +140,7 @@ describe('AddDraftAction', () => {
           foo: null,
         },
       }),
-      new EntityEditorActions.AddDraft({ id })
+      new EntityEditorActions.AddDraft({ id }),
     );
     expect(state).toMatchSnapshot();
     expect(state.activeEntityMenuScrollSignal).toBe(2);
@@ -161,11 +161,11 @@ describe('DeleteDraftAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetName(id, 'Changed name'),
-      new EntityEditorActions.DeleteDraft(id)
+      new EntityEditorActions.DeleteDraft(id),
     );
     expect(state).toMatchSnapshot();
     expect(state.status).toBe('');
@@ -184,7 +184,7 @@ describe('SetActiveEntityAction', () => {
             { name: 'Foo', fields: [] },
             { name: 'Bar', fields: [] },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({
         id: '619725d7-e583-4544-8bb0-23fc3c2870c0',
@@ -194,7 +194,7 @@ describe('SetActiveEntityAction', () => {
         id: '9516465b-935a-4cc7-8b97-ccaca81bbe9a',
         newType: 'Bar',
       }),
-      new EntityEditorActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true)
+      new EntityEditorActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true),
     );
     expect(state).toMatchSnapshot();
     expect(state.activeEntityId).toBe('619725d7-e583-4544-8bb0-23fc3c2870c0');
@@ -214,10 +214,10 @@ describe('SetNameAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetName(id, 'New name')
+      new EntityEditorActions.SetName(id, 'New name'),
     );
     expect(state).toMatchSnapshot();
 
@@ -241,11 +241,11 @@ describe('SetNameAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetName(id, 'New name'),
-      new EntityEditorActions.SetName(id, '')
+      new EntityEditorActions.SetName(id, ''),
     );
     expect(state).toMatchSnapshot();
 
@@ -270,10 +270,10 @@ describe('SetFieldAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetField(id, 'title', 'New title')
+      new EntityEditorActions.SetField(id, 'title', 'New title'),
     );
     expect(state).toMatchSnapshot();
   });
@@ -291,11 +291,11 @@ describe('SetFieldAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
       new EntityEditorActions.SetName(id, 'New name'),
-      new EntityEditorActions.SetField(id, 'title', 'New title')
+      new EntityEditorActions.SetField(id, 'title', 'New title'),
     );
     expect(state).toMatchSnapshot();
   });
@@ -313,10 +313,10 @@ describe('SetFieldAction', () => {
             },
           ],
           patterns: [{ name: 'foo', pattern: '^foo$' }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetField(id, 'string', 'not-foo')
+      new EntityEditorActions.SetField(id, 'string', 'not-foo'),
     );
     expect(state).toMatchSnapshot();
   });
@@ -335,10 +335,10 @@ describe('SetAuthKeyAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetAuthKey(id, 'subject')
+      new EntityEditorActions.SetAuthKey(id, 'subject'),
     );
     expect(state).toMatchSnapshot();
     expect(state.drafts.find((it) => it.id === id)?.draft?.authKey).toEqual('subject');
@@ -359,7 +359,7 @@ describe('UpdateEntityAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -378,7 +378,7 @@ describe('UpdateEntityAction', () => {
         fields: {
           title: 'Foo title',
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
 
@@ -402,7 +402,7 @@ describe('UpdateEntityAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -421,7 +421,7 @@ describe('UpdateEntityAction', () => {
         fields: {
           title: 'Foo title',
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
 
@@ -436,8 +436,8 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceEntityEditorState(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
-      )
+        AdminSchema.createAndValidate({}).valueOrThrow(),
+      ),
     );
     expect(state).toMatchSnapshot();
   });
@@ -463,8 +463,8 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
     expect(state).toMatchSnapshot();
     expect(state.pendingSchemaActions).toBeNull();
@@ -487,7 +487,7 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           title: "Foo's title",
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
     // Linked since the title field matches the name
@@ -506,9 +506,9 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot();
 
@@ -520,12 +520,12 @@ describe('EntityEditorReducer scenarios', () => {
 
     expect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!)
+      getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true)
+      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
     );
     expect(state).toMatchSnapshot();
 
@@ -547,7 +547,7 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           title: null,
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
   });
@@ -564,9 +564,9 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot();
 
@@ -578,18 +578,18 @@ describe('EntityEditorReducer scenarios', () => {
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'title', 'Foo title')
+      new EntityEditorActions.SetField(id, 'title', 'Foo title'),
     );
     expect(state).toMatchSnapshot();
 
     expect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!)
+      getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true)
+      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
     );
     expect(state).toMatchSnapshot();
 
@@ -611,7 +611,7 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           title: 'Foo title',
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
   });
@@ -629,7 +629,7 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
@@ -648,24 +648,24 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           title: 'Foo title',
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'title', 'New title')
+      new EntityEditorActions.SetField(id, 'title', 'New title'),
     );
     expect(state).toMatchSnapshot();
 
     expect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      getEntityUpdateFromDraftState(state.drafts.find((it) => it.id === id)!)
+      getEntityUpdateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true)
+      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
     );
     expect(state).toMatchSnapshot();
 
@@ -687,7 +687,7 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           title: 'New title',
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot();
   });
@@ -721,10 +721,10 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id }),
-      new EntityEditorActions.UpdateEntity(entity)
+      new EntityEditorActions.UpdateEntity(entity),
     );
     expect(state).toMatchSnapshot();
 
@@ -737,8 +737,8 @@ describe('EntityEditorReducer scenarios', () => {
             updatedAt: new Date('2022-05-01T07:51:25.56Z'),
             validPublished: true,
           },
-        })
-      )
+        }),
+      ),
     );
     expect(state).toMatchSnapshot();
 
@@ -761,7 +761,7 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'foo', type: FieldType.Entity }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new EntityEditorActions.AddDraft({ id: firstId }),
       new EntityEditorActions.UpdateEntity({
@@ -780,7 +780,7 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           foo: { id: secondId },
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot('1 Initial');
     expect(state.activeEntityMenuScrollSignal).toBe(1);
@@ -809,7 +809,7 @@ describe('EntityEditorReducer scenarios', () => {
         fields: {
           foo: null,
         },
-      })
+      }),
     );
     expect(state).toMatchSnapshot('3 After UpdateEntity');
     expect(state.activeEntityMenuScrollSignal).toBe(2);
@@ -837,9 +837,9 @@ describe('EntityEditorReducer scenarios', () => {
               fields: [{ name: 'required', type: FieldType.String, required: true }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot('1 Initial');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
@@ -849,7 +849,7 @@ describe('EntityEditorReducer scenarios', () => {
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'adminOnly', { type: 'RequiredString', required: null })
+      new EntityEditorActions.SetField(id, 'adminOnly', { type: 'RequiredString', required: null }),
     );
     expect(state).toMatchSnapshot('2 Setting adminOnly field to empty value item');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
@@ -859,7 +859,7 @@ describe('EntityEditorReducer scenarios', () => {
 
     state = reduceEntityEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'normal', { type: 'RequiredString', required: null })
+      new EntityEditorActions.SetField(id, 'normal', { type: 'RequiredString', required: null }),
     );
     expect(state).toMatchSnapshot('3 Setting normal field to empty value item');
     expect(state.drafts[0].hasSaveErrors).toBe(false);

@@ -51,7 +51,7 @@ interface CardComponent extends FunctionComponent<CardProps> {
   HeaderTitle: FunctionComponent<CardHeaderTitleProps>;
   HeaderDropdown: <TItem extends DropdownItem>(
     props: CardHeaderDropDownProps<TItem>,
-    context?: unknown
+    context?: unknown,
   ) => JSX.Element;
   HeaderIconButton: FunctionComponent<CardHeaderIconButtonProps>;
   Content: FunctionComponent<CardContentProps>;

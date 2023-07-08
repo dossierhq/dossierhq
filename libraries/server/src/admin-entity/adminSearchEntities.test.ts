@@ -18,10 +18,10 @@ describe('Admin adminSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: true, entities: [] }))
+      Promise.resolve(ok({ hasMore: true, entities: [] })),
     );
 
     const result = await adminSearchEntities(
@@ -30,7 +30,7 @@ describe('Admin adminSearchEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      undefined,
     );
 
     expectResultValue(result, null);
@@ -82,15 +82,15 @@ describe('Admin adminSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntitySearchEntities.mockReturnValueOnce(
       Promise.resolve(
         ok({
           hasMore: false,
           entities: [createDatabaseEntity()],
-        })
-      )
+        }),
+      ),
     );
 
     const result = await adminSearchEntities(
@@ -99,7 +99,7 @@ describe('Admin adminSearchEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      undefined,
     );
 
     expect(result.valueOrThrow()).toMatchInlineSnapshot(`
@@ -185,14 +185,14 @@ describe('Admin adminSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: false, entities: [createDatabaseEntity(2)] }))
+      Promise.resolve(ok({ hasMore: false, entities: [createDatabaseEntity(2)] })),
     );
     // check if hasPreviousPage
     databaseAdapter.adminEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: true, entities: [] }))
+      Promise.resolve(ok({ hasMore: true, entities: [] })),
     );
 
     const result = await adminSearchEntities(
@@ -201,7 +201,7 @@ describe('Admin adminSearchEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { after: 'cursor-1' }
+      { after: 'cursor-1' },
     );
 
     expect(result.valueOrThrow()).toMatchInlineSnapshot(`

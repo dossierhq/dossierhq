@@ -242,7 +242,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
         id: id('booleans-published-minimal'),
         info: { name: 'Booleans published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -250,7 +250,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
         id: id('booleans-filled'),
         info: { name: 'Booleans filled' },
         fields: { normal: false, list: [true, false, true] },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -259,7 +259,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
         info: { name: 'Booleans published invalid' },
         fields: { required: null },
       }),
-      { publish: true }
+      { publish: true },
     ),
   ];
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
@@ -277,7 +277,7 @@ async function createEntitiesEntities(
     locationsEntities: AdminLocationsEntity[];
     numbersEntities: AdminNumbersEntity[];
     stringsEntities: AdminStringsEntity[];
-  }
+  },
 ) {
   const minimal: AdminEntityCreate<AdminEntitiesEntity> = {
     info: { type: 'EntitiesEntity', authKey: 'none', name: 'Entities minimal' },
@@ -295,7 +295,7 @@ async function createEntitiesEntities(
         id: id('entities-published-minimal'),
         info: { name: 'Entities published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -310,7 +310,7 @@ async function createEntitiesEntities(
           stringsAndLocationsEntity: locationsEntities.at(-1),
           stringsAndLocationsEntityList: [locationsEntities[0], ...stringsEntities.slice(0, 2)],
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -323,7 +323,7 @@ async function createEntitiesEntities(
           stringsAndLocationsEntity: numbersEntities.at(-1),
           stringsAndLocationsEntityList: numbersEntities.slice(0, 2),
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -331,7 +331,7 @@ async function createEntitiesEntities(
         id: id('entities-published-invalid'),
         info: { name: 'Entities published invalid' },
       }),
-      { publish: true }
+      { publish: true },
     ),
   ];
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
@@ -357,7 +357,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
         id: id('locations-published-minimal'),
         info: { name: 'Locations published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -365,7 +365,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
         id: id('locations-filled'),
         info: { name: 'Locations filled' },
         fields: { normal: malmo, list: [malmo, london] },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -374,7 +374,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
         info: { name: 'Locations published invalid' },
         fields: { required: null, requiredList: null },
       }),
-      { publish: true }
+      { publish: true },
     ),
   ];
 
@@ -398,7 +398,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
         id: id('numbers-published-minimal'),
         info: { name: 'Numbers published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -410,7 +410,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
           integer: 7,
           list: [8.9, 0.1],
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -419,7 +419,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
         info: { name: 'Numbers published invalid' },
         fields: { required: null, requiredList: null, requiredIntegerList: null },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -427,7 +427,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
         id: id('numbers-invalid'),
         info: { name: 'Numbers invalid' },
         fields: { integer: 1.234, requiredIntegerList: [1.23, 4.56] },
-      })
+      }),
     ),
   ];
 
@@ -446,7 +446,7 @@ async function createRichTextsEntities(
     numbersEntities: AdminNumbersEntity[];
     stringsEntities: AdminStringsEntity[];
     cloudinaryImageValueItems: AdminCloudinaryImage[];
-  }
+  },
 ) {
   const minimal: AdminEntityCreate<AdminRichTextsEntity> = {
     info: { type: 'RichTextsEntity', authKey: 'none', name: 'RichTexts minimal' },
@@ -471,7 +471,7 @@ async function createRichTextsEntities(
         id: id('rich-texts-published-minimal'),
         info: { name: 'RichTexts published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -527,7 +527,7 @@ async function createRichTextsEntities(
             ]),
           ]),
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -553,14 +553,14 @@ async function createRichTextsEntities(
           adminOnly: createRichTextRootNode([
             createRichTextParagraphNode([
               createRichTextTextNode(
-                'Since this field is admin only it can contain references to unpublished entities'
+                'Since this field is admin only it can contain references to unpublished entities',
               ),
             ]),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             createRichTextEntityNode(numbersEntities.find((it) => it.info.status === 'draft')!),
             createRichTextParagraphNode([
               createRichTextTextNode(
-                'We can also add value items with empty required fields, but not with invalid fields:'
+                'We can also add value items with empty required fields, but not with invalid fields:',
               ),
             ]),
             createRichTextValueItemNode<AdminStringsValueItem>({
@@ -574,7 +574,7 @@ async function createRichTextsEntities(
             }),
           ]),
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -600,7 +600,7 @@ async function createRichTextsEntities(
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -611,7 +611,7 @@ async function createRichTextsEntities(
           required: null,
         },
       }),
-      { publish: true }
+      { publish: true },
     ),
   ];
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
@@ -638,7 +638,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
         id: id('strings-published-minimal'),
         info: { name: 'Strings published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -656,7 +656,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
           valuesList: ['foo', 'bar', 'baz'],
           list: ['uno', 'dos', 'tres'],
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -670,7 +670,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
           valuesList: ['invalid' as 'foo', 'values' as 'foo'],
           requiredListMatchPattern: ['invalid string'],
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -683,7 +683,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
           requiredListMatchPattern: null,
         },
       }),
-      { publish: true }
+      { publish: true },
     ),
   ];
 
@@ -700,7 +700,7 @@ async function createValueItemsEntities(
     numbersEntities: AdminNumbersEntity[];
     stringsEntities: AdminStringsEntity[];
     cloudinaryImageValueItems: AdminCloudinaryImage[];
-  }
+  },
 ) {
   const minimal: AdminEntityCreate<AdminValueItemsEntity> = {
     info: { type: 'ValueItemsEntity', authKey: 'none', name: 'ValueItems minimal' },
@@ -724,7 +724,7 @@ async function createValueItemsEntities(
         id: id('value-items-published-minimal'),
         info: { name: 'ValueItems published minimal' },
       }),
-      { publish: true }
+      { publish: true },
     ),
 
     adminClient.createEntity(
@@ -748,7 +748,7 @@ async function createValueItemsEntities(
           },
           cloudinaryImage: faker.helpers.arrayElement(cloudinaryImageValueItems),
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -762,7 +762,7 @@ async function createValueItemsEntities(
             child: null,
           } as unknown as AdminCloudinaryImage,
         },
-      })
+      }),
     ),
 
     adminClient.createEntity(
@@ -774,7 +774,7 @@ async function createValueItemsEntities(
           requiredList: null,
         },
       }),
-      { publish: true }
+      { publish: true },
     ),
   ];
 
@@ -799,7 +799,7 @@ async function main() {
   const database = await createNewDatabase('dist/catalog.sqlite');
   const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(
     database,
-    SCHEMA_WITHOUT_VALIDATIONS
+    SCHEMA_WITHOUT_VALIDATIONS,
   );
 
   const cloudinaryImageValueItems = await createCloudinaryImageValueItems();

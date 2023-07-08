@@ -44,7 +44,7 @@ function MenuItem({
   const { id, status } = draftState;
   const handleItemClick = useCallback(
     () => dispatchEntityEditorState(new EntityEditorActions.SetActiveEntity(id, false, true)),
-    [dispatchEntityEditorState, id]
+    [dispatchEntityEditorState, id],
   );
 
   const handleDeleteClick = useCallback(
@@ -57,7 +57,7 @@ function MenuItem({
       }
       dispatchEntityEditorState(new EntityEditorActions.DeleteDraft(id));
     },
-    [dispatchEntityEditorState, id, status]
+    [dispatchEntityEditorState, id, status],
   );
 
   if (!draftState.draft) return null;

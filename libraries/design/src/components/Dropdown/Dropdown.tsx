@@ -10,7 +10,7 @@ export interface DropdownItem {
 
 export interface DropdownProps<
   TTrigger extends HTMLElement,
-  TItem extends DropdownItem = DropdownItem
+  TItem extends DropdownItem = DropdownItem,
 > {
   items: TItem[];
   activeItemIds?: string[];

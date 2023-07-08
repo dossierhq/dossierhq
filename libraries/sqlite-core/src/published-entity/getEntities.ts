@@ -13,12 +13,12 @@ import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 export async function publishedEntityGetEntities(
   database: Database,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
   const { addValueList, query, sql } = createSqliteSqlQuery();
   sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.fields`;
   sql`FROM entities e, entity_versions ev WHERE e.uuid IN ${addValueList(
-    references.map((it) => it.id)
+    references.map((it) => it.id),
   )}`;
   sql`AND e.published_entity_versions_id = ev.id`;
 
@@ -37,6 +37,6 @@ export async function publishedEntityGetEntities(
       id: row.uuid,
       resolvedAuthKey: row.resolved_auth_key,
       fieldValues: JSON.parse(row.fields),
-    }))
+    })),
   );
 }

@@ -54,11 +54,11 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
 }: PublishedEntityTestContext) {
   const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true }
+    { publish: true },
   );
   const create2Result = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(create1Result);
   assertOkResult(create2Result);
@@ -76,7 +76,7 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<AppPublishedEntity, typeof ErrorType.Generic>(
-      adminToPublishedEntity(adminSchema, create2Result.value.entity)
+      adminToPublishedEntity(adminSchema, create2Result.value.entity),
     ),
   ]);
 }
@@ -100,7 +100,7 @@ async function getEntities_oneMissingOneExisting({
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
     ok<AppPublishedEntity, typeof ErrorType.Generic>(
-      adminToPublishedEntity(adminSchema, createResult.value.entity)
+      adminToPublishedEntity(adminSchema, createResult.value.entity),
     ),
   ]);
 }

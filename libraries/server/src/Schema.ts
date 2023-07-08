@@ -16,7 +16,7 @@ import { calculateSchemaChangeEntityValidation } from './schema/calculateSchemaC
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  initialLoad: boolean
+  initialLoad: boolean,
 ): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
   const { logger } = context;
   if (initialLoad) logger.info('Loading schema');
@@ -76,7 +76,7 @@ export async function getSchemaSpecification(
       specification.entityTypes.length,
       specification.valueTypes.length,
       specification.patterns.length,
-      specification.indexes.length
+      specification.indexes.length,
     );
   }
   return ok(specification);
@@ -85,7 +85,7 @@ export async function getSchemaSpecification(
 export async function updateSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  schemaSpec: AdminSchemaSpecificationUpdate
+  schemaSpec: AdminSchemaSpecificationUpdate,
 ): PromiseResult<
   SchemaSpecificationUpdatePayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -98,7 +98,7 @@ export async function updateSchemaSpecification(
     const previousSpecificationResult = await getSchemaSpecification(
       databaseAdapter,
       context,
-      false
+      false,
     );
     if (previousSpecificationResult.isError()) return previousSpecificationResult;
 
@@ -124,12 +124,12 @@ export async function updateSchemaSpecification(
       logger.info(
         'Marking entities with for validation (entity types=%s, value types=%s)',
         validationCalculationResult.value.entityTypes.join(','),
-        validationCalculationResult.value.valueTypes.join(',')
+        validationCalculationResult.value.valueTypes.join(','),
       );
       const markDirtyResult = await databaseAdapter.managementDirtyMarkEntities(
         context,
         validationCalculationResult.value.entityTypes,
-        validationCalculationResult.value.valueTypes
+        validationCalculationResult.value.valueTypes,
       );
       if (markDirtyResult.isError()) return markDirtyResult;
 
@@ -141,7 +141,7 @@ export async function updateSchemaSpecification(
       newSchema.spec.entityTypes.length,
       newSchema.spec.valueTypes.length,
       newSchema.spec.patterns.length,
-      newSchema.spec.indexes.length
+      newSchema.spec.indexes.length,
     );
 
     return ok({ effect: 'updated', schemaSpecification: newSchema.spec });

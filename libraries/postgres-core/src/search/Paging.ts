@@ -14,7 +14,7 @@ function getCursor(
   databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
   paging: DatabasePagingInfo,
-  key: 'after' | 'before'
+  key: 'after' | 'before',
 ): Result<unknown, typeof ErrorType.BadRequest> {
   const cursor = paging[key];
   if (cursor) {
@@ -26,7 +26,7 @@ function getCursor(
 export function resolvePagingCursors<TCursor>(
   databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
-  paging: DatabasePagingInfo
+  paging: DatabasePagingInfo,
 ): Result<ResolvedPagingCursors<TCursor>, typeof ErrorType.BadRequest> {
   const after = getCursor(databaseAdapter, cursorType, paging, 'after');
   const before = getCursor(databaseAdapter, cursorType, paging, 'before');

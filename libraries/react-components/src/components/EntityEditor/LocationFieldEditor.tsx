@@ -27,7 +27,7 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
     (item: AdminEntity | EntityEditorDraftState) => {
       dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: item.id }));
     },
-    [dispatchEntityEditorState]
+    [dispatchEntityEditorState],
   );
 
   return (

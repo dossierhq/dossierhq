@@ -12,7 +12,7 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   childContextFactory: (transaction: Transaction) => TransactionContext,
-  callback: (context: TransactionContext) => PromiseResult<TOk, TError>
+  callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');
@@ -40,7 +40,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   transaction: Transaction,
-  callback: () => PromiseResult<TOk, TError>
+  callback: () => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   //TODO need mutex to ensure not called from other "contexts" in the same transaction?
   const pgTransaction = transaction as PostgresTransaction;
@@ -65,7 +65,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
       await databaseAdapter.query(
         pgTransaction,
         `ROLLBACK TO SAVEPOINT ${savePointName}`,
-        undefined
+        undefined,
       );
     }
   } catch (error) {

@@ -23,7 +23,7 @@ export async function publishedEntitySearchEntities(
   context: TransactionContext,
   query: PublishedSearchQuery | undefined,
   paging: DatabasePagingInfo,
-  resolvedAuthKeys: ResolvedAuthKey[]
+  resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<
   DatabasePublishedEntitySearchPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -33,7 +33,7 @@ export async function publishedEntitySearchEntities(
     schema,
     query,
     paging,
-    resolvedAuthKeys
+    resolvedAuthKeys,
   );
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
@@ -41,7 +41,7 @@ export async function publishedEntitySearchEntities(
   const searchResult = await queryMany<SearchPublishedEntitiesItem>(
     databaseAdapter,
     context,
-    sqlQuery
+    sqlQuery,
   );
   if (searchResult.isError()) return searchResult;
 

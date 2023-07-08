@@ -21,7 +21,7 @@ import { useAdminTotalCount } from './useAdminTotalCount.js';
 
 export function useAdminLoadEntitySearch(
   searchEntityState: SearchEntityState,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
   const { adminClient } = useContext(AdminDossierContext);
 
@@ -32,7 +32,7 @@ export function useAdminLoadEntitySearch(
   const { connection, connectionError } = useAdminSearchEntities(
     adminClient,
     searchQuery,
-    searchEntityState.paging
+    searchEntityState.paging,
   );
   const { totalCount } = useAdminTotalCount(adminClient, searchQuery);
 
@@ -41,15 +41,15 @@ export function useAdminLoadEntitySearch(
   const { entitySamples, entitySamplesError } = useAdminSampleEntities(
     adminClient,
     sampleQuery,
-    searchEntityState.sampling
+    searchEntityState.sampling,
   );
 
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSearchResult(
         connection as Connection<Edge<AdminEntity, ErrorType>> | null,
-        connectionError
-      )
+        connectionError,
+      ),
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 
@@ -61,8 +61,8 @@ export function useAdminLoadEntitySearch(
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSampleResult(
         entitySamples as EntitySamplingPayload<AdminEntity>,
-        entitySamplesError
-      )
+        entitySamplesError,
+      ),
     );
   }, [entitySamples, entitySamplesError, dispatchSearchEntityState]);
 }

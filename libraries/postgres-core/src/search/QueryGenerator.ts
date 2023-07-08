@@ -54,7 +54,7 @@ export function searchPublishedEntitiesQuery(
   schema: PublishedSchema,
   query: PublishedSearchQuery | undefined,
   paging: DatabasePagingInfo,
-  authKeys: ResolvedAuthKey[]
+  authKeys: ResolvedAuthKey[],
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, typeof ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, true);
 }
@@ -64,25 +64,25 @@ export function searchAdminEntitiesQuery(
   schema: AdminSchema,
   query: AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
-  authKeys: ResolvedAuthKey[]
+  authKeys: ResolvedAuthKey[],
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, typeof ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, false);
 }
 
 function sharedSearchEntitiesQuery<
-  TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
+  TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem,
 >(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema | PublishedSchema,
   query: PublishedSearchQuery | AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
-  published: boolean
+  published: boolean,
 ): Result<SharedEntitiesQuery<TItem>, typeof ErrorType.BadRequest> {
   const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
     databaseAdapter,
     query?.order,
-    published
+    published,
   );
 
   const cursorsResult = resolvePagingCursors(databaseAdapter, cursorType, paging);
@@ -109,7 +109,7 @@ function sharedSearchEntitiesQuery<
       cursorName,
       operator,
       paging.afterInclusive,
-      resolvedCursors.after as string
+      resolvedCursors.after as string,
     );
   }
   if (resolvedCursors.before !== null) {
@@ -120,7 +120,7 @@ function sharedSearchEntitiesQuery<
       cursorName,
       operator,
       paging.beforeInclusive,
-      resolvedCursors.before as string
+      resolvedCursors.before as string,
     );
   }
 
@@ -144,7 +144,7 @@ function sharedSearchEntitiesQuery<
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
   databaseAdapter: PostgresDatabaseAdapter,
   order: PublishedQueryOrder | AdminQueryOrder | undefined,
-  published: boolean
+  published: boolean,
 ): {
   cursorName: CursorName;
   cursorType: CursorNativeType;
@@ -196,7 +196,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           toOpaqueCursor(
             databaseAdapter,
             cursorType,
-            (item as SearchAdminEntitiesItem)[cursorName]
+            (item as SearchAdminEntitiesItem)[cursorName],
           ),
       };
     }
@@ -235,7 +235,7 @@ function addCursorNameOperatorAndValue(
   cursorName: CursorName,
   operator: '>' | '<',
   orEqual: boolean,
-  value: string
+  value: string,
 ) {
   const { sql } = queryBuilder;
 
@@ -271,7 +271,7 @@ export function sampleAdminEntitiesQuery(
   query: AdminQuery | undefined,
   offset: number,
   limit: number,
-  authKeys: ResolvedAuthKey[]
+  authKeys: ResolvedAuthKey[],
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return sampleEntitiesQuery(schema, query, offset, limit, authKeys, false);
 }
@@ -281,7 +281,7 @@ export function samplePublishedEntitiesQuery(
   query: PublishedQuery | undefined,
   offset: number,
   limit: number,
-  authKeys: ResolvedAuthKey[]
+  authKeys: ResolvedAuthKey[],
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return sampleEntitiesQuery(schema, query, offset, limit, authKeys, true);
 }
@@ -292,7 +292,7 @@ function sampleEntitiesQuery(
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
-  published: boolean
+  published: boolean,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   const queryBuilder = createPostgresSqlQuery();
   const { sql } = queryBuilder;
@@ -314,7 +314,7 @@ function sampleEntitiesQuery(
 export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   authKeys: ResolvedAuthKey[],
-  query: AdminQuery | undefined
+  query: AdminQuery | undefined,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, false);
 }
@@ -322,7 +322,7 @@ export function totalAdminEntitiesQuery(
 export function totalPublishedEntitiesQuery(
   schema: PublishedSchema,
   authKeys: ResolvedAuthKey[],
-  query: PublishedQuery | undefined
+  query: PublishedQuery | undefined,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, true);
 }
@@ -331,7 +331,7 @@ function totalCountQuery(
   schema: AdminSchema | PublishedSchema,
   authKeys: ResolvedAuthKey[],
   query: AdminQuery | PublishedQuery | undefined,
-  published: boolean
+  published: boolean,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   const queryBuilder = createPostgresSqlQuery();
   const { sql } = queryBuilder;
@@ -376,7 +376,7 @@ function totalCountQuery(
 function addEntityQuerySelectColumn(
   { sql }: PostgresQueryBuilder,
   query: PublishedQuery | AdminQuery | undefined,
-  published: boolean
+  published: boolean,
 ) {
   if (query?.boundingBox) {
     sql`DISTINCT`;
@@ -412,7 +412,7 @@ function addQueryFilters(
   query: PublishedQuery | AdminQuery | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean,
-  linkToEntityVersion: boolean
+  linkToEntityVersion: boolean,
 ): Result<void, typeof ErrorType.BadRequest> {
   const { sql } = queryBuilder;
   if (linkToEntityVersion) {
@@ -494,7 +494,7 @@ function addQueryFilters(
 
 function getFilterEntityTypes(
   schema: PublishedSchema | AdminSchema,
-  query: PublishedQuery | AdminQuery | undefined
+  query: PublishedQuery | AdminQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
@@ -509,7 +509,7 @@ function getFilterEntityTypes(
 
 function getFilterValueTypes(
   schema: PublishedSchema | AdminSchema,
-  query: PublishedQuery | AdminQuery | undefined
+  query: PublishedQuery | AdminQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.valueTypes || query.valueTypes.length === 0) {
     return ok([]);

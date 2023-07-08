@@ -64,10 +64,10 @@ async function getEntities_getLatestVersion({ server }: AdminEntityTestContext) 
 async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEntityTestContext) {
   const adminClientMain = adminClientForMainPrincipal(server);
   const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   const create2Result = await adminClientMain.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(create1Result);
   assertOkResult(create2Result);

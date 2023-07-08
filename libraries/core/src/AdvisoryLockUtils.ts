@@ -25,7 +25,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   name: string,
   options: AdvisoryLockHelperOptions,
-  callback: (status: AdvisoryLockHelperStatus) => PromiseResult<TOk, TError>
+  callback: (status: AdvisoryLockHelperStatus) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   // Acquire lock
   const { acquireInterval, renewInterval, ...acquireOptions } = options;
@@ -33,7 +33,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
     adminClient,
     name,
     acquireOptions,
-    acquireInterval
+    acquireInterval,
   );
   if (acquireResult.isError()) return notOk.Generic(acquireResult.message); // BadRequest -> Generic
   const { handle } = acquireResult.value;
@@ -72,7 +72,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
 
 function setStatusError(
   status: AdvisoryLockHelperStatus,
-  renewError: AdvisoryLockHelperStatus['renewError']
+  renewError: AdvisoryLockHelperStatus['renewError'],
 ) {
   status.active = false;
   status.renewError = renewError;
@@ -82,7 +82,7 @@ async function acquireLockWithRetry(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   name: string,
   options: AdvisoryLockOptions,
-  acquireInterval: number
+  acquireInterval: number,
 ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   // eslint-disable-next-line no-constant-condition
   while (true) {

@@ -11,5 +11,5 @@ registerTestSuite(
     after: async (serverInit) => {
       await serverInit.server.shutdown();
     },
-  })
+  }),
 );

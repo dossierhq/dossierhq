@@ -47,20 +47,20 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     databasePerformance: DatabasePerformanceCallbacks | null,
-    transaction: Transaction | null
+    transaction: Transaction | null,
   ) {
     super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
-    transaction: Transaction
+    transaction: Transaction,
   ): TransactionContext {
     return new DummyContextImpl(
       databaseAdapter,
       this.logger,
       this.databasePerformance,
-      transaction
+      transaction,
     );
   }
 }
@@ -128,7 +128,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
 
   mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));
   mockAdapter.decodeCursor.mockImplementation((value) =>
-    Buffer.from(value, 'base64').toString('utf8')
+    Buffer.from(value, 'base64').toString('utf8'),
   );
   mockAdapter.randomUUID.mockImplementation(randomUUID);
 
@@ -136,7 +136,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
 }
 
 export function getRunAndQueryCalls(
-  adapter: MockedSqliteDatabaseAdapter
+  adapter: MockedSqliteDatabaseAdapter,
 ): [string, ...ColumnValue[]][] {
   return adapter.allQueries;
 }
@@ -147,7 +147,7 @@ export function createTestAdminSchema(): AdminSchema {
 
 export function resolvePaging(
   paging: Paging | undefined,
-  inclusive?: { afterInclusive?: boolean; beforeInclusive?: boolean }
+  inclusive?: { afterInclusive?: boolean; beforeInclusive?: boolean },
 ): DatabasePagingInfo {
   const pagingInfo = getPagingInfo(paging).valueOrThrow();
   return {

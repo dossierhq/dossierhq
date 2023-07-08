@@ -14,7 +14,7 @@ export function $createPublishedEntityNode(reference: EntityReference): Publishe
 }
 
 export function $isPublishedEntityNode(
-  node: LexicalNode | undefined | null
+  node: LexicalNode | undefined | null,
 ): node is PublishedEntityNode {
   return node instanceof PublishedEntityNode;
 }

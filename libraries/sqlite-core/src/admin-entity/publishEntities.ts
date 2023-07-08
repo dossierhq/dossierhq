@@ -15,7 +15,7 @@ import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 export async function adminEntityPublishGetVersionInfo(
   database: Database,
   context: TransactionContext,
-  reference: EntityVersionReference
+  reference: EntityVersionReference,
 ): PromiseResult<
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -77,7 +77,7 @@ export async function adminEntityPublishGetVersionInfo(
 export async function adminEntityPublishUpdateEntity(
   database: Database,
   context: TransactionContext,
-  values: DatabaseAdminEntityPublishUpdateEntityArg
+  values: DatabaseAdminEntityPublishUpdateEntityArg,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 

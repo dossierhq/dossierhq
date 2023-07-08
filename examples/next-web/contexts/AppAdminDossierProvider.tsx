@@ -45,7 +45,7 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
       adapter: new AdminContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    [cachingMiddleware]
+    [cachingMiddleware],
   );
 
   const { adminClient } = args;
@@ -60,7 +60,7 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
 }
 
 function createBackendAdminClient(
-  cachingMiddleware: AdminClientMiddleware<BackendContext>
+  cachingMiddleware: AdminClientMiddleware<BackendContext>,
 ): AdminClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({
@@ -71,7 +71,7 @@ function createBackendAdminClient(
 
 async function terminatingAdminMiddleware(
   context: BackendContext,
-  operation: AdminClientOperation
+  operation: AdminClientOperation,
 ): Promise<void> {
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {

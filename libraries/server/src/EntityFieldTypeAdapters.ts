@@ -13,7 +13,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(
     fieldSpec: AdminFieldSpecification,
     prefix: string,
-    decodedData: TDecoded
+    decodedData: TDecoded,
   ): Result<TEncoded, typeof ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
   decodeJson(json: unknown): TDecoded;
@@ -24,7 +24,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
     typeof data === 'boolean'
       ? ok(data)
       : notOk.BadRequest(
-          `${prefix}: expected boolean, got ${Array.isArray(data) ? 'list' : typeof data}`
+          `${prefix}: expected boolean, got ${Array.isArray(data) ? 'list' : typeof data}`,
         ),
   decodeData: (x) => x,
   decodeJson: (json) => json as boolean,
@@ -79,7 +79,7 @@ const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], 
     typeof data === 'number'
       ? ok(data)
       : notOk.BadRequest(
-          `${prefix}: expected number, got ${Array.isArray(data) ? 'list' : typeof data}`
+          `${prefix}: expected number, got ${Array.isArray(data) ? 'list' : typeof data}`,
         ),
   decodeData: (it) => it,
   decodeJson: (json) => json as number,
@@ -89,7 +89,7 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], 
   encodeData: (fieldSpec: AdminFieldSpecification, prefix: string, data) => {
     if (typeof data !== 'string') {
       return notOk.BadRequest(
-        `${prefix}: expected string, got ${Array.isArray(data) ? 'list' : typeof data}`
+        `${prefix}: expected string, got ${Array.isArray(data) ? 'list' : typeof data}`,
       );
     }
     if (fieldSpec.type === FieldType.String && !fieldSpec.multiline && data.includes('\n')) {
@@ -128,7 +128,7 @@ export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
 }
 
 export function getAdapterForType(
-  fieldType: (typeof FieldType)[keyof typeof FieldType]
+  fieldType: (typeof FieldType)[keyof typeof FieldType],
 ): FieldTypeAdapter {
   const result = adapters[fieldType];
   if (!result) {

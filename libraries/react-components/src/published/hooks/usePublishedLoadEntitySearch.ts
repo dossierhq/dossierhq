@@ -21,7 +21,7 @@ import { usePublishedTotalCount } from './usePublishedTotalCount.js';
 
 export function usePublishedLoadEntitySearch(
   searchEntityState: SearchEntityState,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
   const { publishedClient } = useContext(PublishedDossierContext);
 
@@ -32,7 +32,7 @@ export function usePublishedLoadEntitySearch(
   const { connection, connectionError } = usePublishedSearchEntities(
     publishedClient,
     searchQuery,
-    searchEntityState.paging
+    searchEntityState.paging,
   );
   const { totalCount } = usePublishedTotalCount(publishedClient, searchQuery);
 
@@ -41,15 +41,15 @@ export function usePublishedLoadEntitySearch(
   const { entitySamples, entitySamplesError } = usePublishedSampleEntities(
     publishedClient,
     sampleQuery,
-    searchEntityState.sampling
+    searchEntityState.sampling,
   );
 
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSearchResult(
         connection as Connection<Edge<PublishedEntity, ErrorType>> | null,
-        connectionError
-      )
+        connectionError,
+      ),
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 
@@ -61,8 +61,8 @@ export function usePublishedLoadEntitySearch(
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSampleResult(
         entitySamples as EntitySamplingPayload<PublishedEntity>,
-        entitySamplesError
-      )
+        entitySamplesError,
+      ),
     );
   }, [entitySamples, entitySamplesError, dispatchSearchEntityState]);
 }

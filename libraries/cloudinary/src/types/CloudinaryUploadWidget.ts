@@ -5,7 +5,7 @@ declare global {
     cloudinary: {
       createUploadWidget(
         options: UploadWidgetOptions,
-        callback: CloudinaryUploadWidgetCallback
+        callback: CloudinaryUploadWidgetCallback,
       ): UploadWidget;
     };
   }
@@ -69,7 +69,7 @@ export interface CloudinaryAsset {
 
 export type CloudinaryUploadWidgetCallback = (
   error: Error | undefined,
-  result: CloudinaryUploadResult | undefined
+  result: CloudinaryUploadResult | undefined,
 ) => void;
 
 export interface UploadWidget {

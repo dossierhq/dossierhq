@@ -44,7 +44,7 @@ HoverRevealStack.Item = ({
         left && 'is-justify-content-flex-start',
         top && 'is-align-items-flex-start',
         right && 'is-justify-content-flex-end',
-        bottom && 'is-align-items-flex-end'
+        bottom && 'is-align-items-flex-end',
       )}
       style={style}
     >

@@ -41,7 +41,7 @@ export class ReadOnlyEntityRepository {
     const entities = [
       ...this.mainEntities.filter((it) => checkAuthKeys.includes(it.info.authKey)),
       ...this.secondaryEntities.filter(
-        (it) => it.info.authKey === 'none' && checkAuthKeys.includes(it.info.authKey)
+        (it) => it.info.authKey === 'none' && checkAuthKeys.includes(it.info.authKey),
       ),
     ];
 
@@ -53,7 +53,7 @@ export class ReadOnlyEntityRepository {
     const publishedOnly = adminEntities.filter(
       (it) =>
         it.info.status === AdminEntityStatus.published ||
-        it.info.status === AdminEntityStatus.modified
+        it.info.status === AdminEntityStatus.modified,
     );
     //TODO invalid since it always return the latest version
     const publishedEntities: PublishedReadOnly[] = publishedOnly.map((it) => ({
@@ -82,7 +82,7 @@ const createEntitiesPromises: Record<
 
 export async function createReadOnlyEntityRepository(
   server: Server,
-  databaseName?: string
+  databaseName?: string,
 ): PromiseResult<
   ReadOnlyEntityRepository,
   typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -100,7 +100,7 @@ export async function createReadOnlyEntityRepository(
 }
 
 async function doCreateReadOnlyEntityRepository(
-  server: Server
+  server: Server,
 ): PromiseResult<
   ReadOnlyEntityRepository,
   typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -145,7 +145,7 @@ async function doCreateReadOnlyEntityRepository(
       }
 
       return ok(new ReadOnlyEntityRepository(mainEntities, secondaryEntities));
-    }
+    },
   );
 }
 
@@ -153,7 +153,7 @@ async function createEntity(
   adminClient: AppAdminClient,
   id: string,
   authKey: string,
-  status: AdminEntityStatus
+  status: AdminEntityStatus,
 ): PromiseResult<
   AdminReadOnly,
   | typeof ErrorType.BadRequest
@@ -180,7 +180,7 @@ async function createEntity(
         status === AdminEntityStatus.withdrawn ||
         status === AdminEntityStatus.modified ||
         status === AdminEntityStatus.published,
-    }
+    },
   );
   if (upsertResult.isError()) return upsertResult;
   let { entity } = upsertResult.value;

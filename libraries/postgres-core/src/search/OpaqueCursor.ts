@@ -7,7 +7,7 @@ export type CursorNativeType = 'int' | 'string';
 export function toOpaqueCursor(
   databaseAdapter: PostgresDatabaseAdapter,
   type: CursorNativeType,
-  value: unknown
+  value: unknown,
 ): string {
   switch (type) {
     case 'int':
@@ -22,7 +22,7 @@ export function toOpaqueCursor(
 export function fromOpaqueCursor(
   databaseAdapter: PostgresDatabaseAdapter,
   type: CursorNativeType,
-  cursor: string
+  cursor: string,
 ): Result<unknown, typeof ErrorType.BadRequest> {
   switch (type) {
     case 'int': {

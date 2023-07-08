@@ -31,7 +31,7 @@ export function Text({
         toTextStyleClassName(textStyle),
         className,
         toTextColorClassName(color),
-        toSpacingClassName(props)
+        toSpacingClassName(props),
       )}
       id={id}
       style={style}

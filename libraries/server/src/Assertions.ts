@@ -2,7 +2,7 @@ import type { ErrorType, Result } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 
 export function ensureRequired(
-  parameters: Record<string, unknown>
+  parameters: Record<string, unknown>,
 ): Result<true, typeof ErrorType.BadRequest> {
   const missing: string[] = [];
   for (const [parameter, value] of Object.entries(parameters)) {

@@ -55,7 +55,7 @@ export function EntityEditorScreen({
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
     urlSearchParams,
-    initializeEditorEntityStateFromUrlQuery
+    initializeEditorEntityStateFromUrlQuery,
   );
   const { drafts, activeEntityId, activeEntityMenuScrollSignal, activeEntityEditorScrollSignal } =
     entityEditorState;
@@ -68,14 +68,14 @@ export function EntityEditorScreen({
   }, []);
   const handleCreateItemClick = useCallback((type: string) => {
     dispatchEntityEditorState(
-      new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type })
+      new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type }),
     ),
       setShowEntitySelector(false);
   }, []);
 
   const onCreateEntity = useCallback((type: string) => {
     dispatchEntityEditorState(
-      new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type })
+      new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type }),
     );
   }, []);
 
@@ -89,7 +89,7 @@ export function EntityEditorScreen({
     urlSearchParams,
     onUrlSearchParamsChange,
     entityEditorState,
-    dispatchEntityEditorState
+    dispatchEntityEditorState,
   );
 
   useEffect(() => {
@@ -184,9 +184,9 @@ function EntityRows({
   const handleClick = useCallback(
     (_event: MouseEvent) =>
       dispatchEntityEditorState(
-        new EntityEditorActions.SetActiveEntity(draftState.id, true, false)
+        new EntityEditorActions.SetActiveEntity(draftState.id, true, false),
       ),
-    [dispatchEntityEditorState, draftState.id]
+    [dispatchEntityEditorState, draftState.id],
   );
 
   if (!draftState.draft) {
@@ -235,7 +235,7 @@ function EntityRows({
 
 function useFocusedEntity(
   entityEditorState: EntityEditorState,
-  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
+  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
 ) {
   const { activeEntityEditorScrollSignal } = entityEditorState;
 
@@ -244,7 +244,7 @@ function useFocusedEntity(
       if (event.target instanceof HTMLElement) {
         const selectorElement = findAscendantHTMLElement(
           event.target,
-          (el) => !!el.dataset.entityid
+          (el) => !!el.dataset.entityid,
         );
         const entityId = selectorElement?.dataset.entityid;
 
@@ -253,7 +253,7 @@ function useFocusedEntity(
         }
       }
     },
-    [dispatchEntityEditorState]
+    [dispatchEntityEditorState],
   );
   useWindowEventListener('focusin', listener);
 

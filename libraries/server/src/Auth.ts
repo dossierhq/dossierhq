@@ -14,7 +14,7 @@ export async function authCreateSession(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<
   DatabaseAuthCreateSessionPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -45,7 +45,7 @@ function verifyAuthKeyFormat(authKey: string): Result<void, typeof ErrorType.Bad
 }
 
 export function verifyAuthKeysFormat(
-  authKeys: Readonly<string[]>
+  authKeys: Readonly<string[]>,
 ): Result<void, typeof ErrorType.BadRequest> {
   for (const authKey of authKeys) {
     const result = verifyAuthKeyFormat(authKey);
@@ -57,7 +57,7 @@ export function verifyAuthKeysFormat(
 export async function authResolveAuthorizationKey(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  authKey: string
+  authKey: string,
 ): PromiseResult<
   ResolvedAuthKey,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -71,7 +71,7 @@ export async function authResolveAuthorizationKey(
   const resolvedAuthKey = resolvedResult.value.find((it) => it.authKey === authKey);
   if (!resolvedAuthKey) {
     return notOk.Generic(
-      `Authorization adapter didn't return a key when resolving authKey (${authKey})`
+      `Authorization adapter didn't return a key when resolving authKey (${authKey})`,
     );
   }
   return ok(resolvedAuthKey);
@@ -80,7 +80,7 @@ export async function authResolveAuthorizationKey(
 export async function authResolveAuthorizationKeys(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  requestedAuthKeys: string[] | undefined
+  requestedAuthKeys: string[] | undefined,
 ): PromiseResult<
   ResolvedAuthKey[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -100,7 +100,7 @@ export async function authResolveAuthorizationKeys(
 export async function authVerifyAuthorizationKey(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  actualAuthKey: ResolvedAuthKey
+  actualAuthKey: ResolvedAuthKey,
 ): PromiseResult<
   void,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

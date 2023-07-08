@@ -43,7 +43,7 @@ export function getMarkerIcon(color: MarkerColor | undefined) {
 
 export function expandBoundingBoxForMarkers(
   boundingBox: BoundingBox,
-  zoomMetrics: ZoomMetrics
+  zoomMetrics: ZoomMetrics,
 ): BoundingBox {
   const { maxLeft, maxRight, maxTop, maxBottom } = markerIconStats;
   const result = {

@@ -33,7 +33,7 @@ const adminSchema = AdminSchema.createAndValidate({
 const publishedSchema = adminSchema.toPublishedSchema();
 
 function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
-  generator: Generator<ItemTraverseNode<TSchema>>
+  generator: Generator<ItemTraverseNode<TSchema>>,
 ) {
   const result = [];
   for (const node of generator) {
@@ -59,7 +59,7 @@ function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
 describe('traverseEntity', () => {
   test('Empty Foo entity', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], { info: { type: 'Foo' }, fields: {} })
+      traverseEntity(adminSchema, ['entity'], { info: { type: 'Foo' }, fields: {} }),
     );
     expect(nodes).toMatchSnapshot();
   });
@@ -69,7 +69,7 @@ describe('traverseEntity', () => {
       traverseEntity(adminSchema, ['entity'], {
         info: { type: 'Foo' },
         fields: { stringList: ['string1', 'string2'] },
-      })
+      }),
     );
     expect(nodes).toMatchSnapshot();
   });
@@ -83,7 +83,7 @@ describe('traverseEntity', () => {
           stringList: ['string2.1', 'string2.2'],
           twoStrings: { type: 'TwoStrings', string1: 'two-1', string2: 'two-2' },
         },
-      })
+      }),
     );
     expect(nodes).toMatchSnapshot();
   });
@@ -97,7 +97,7 @@ describe('traverseEntity', () => {
             createRichTextValueItemNode({ type: 'TwoStrings', string1: 'two-1', string2: 'two-2' }),
           ]),
         },
-      })
+      }),
     );
     expect(nodes).toMatchSnapshot();
   });
@@ -107,7 +107,7 @@ describe('traverseEntity', () => {
       traverseEntity(publishedSchema, ['entity'], {
         info: { type: 'Foo' },
         fields: { adminOnlyString: 'Hello admin only' },
-      })
+      }),
     );
     expect(nodes).toMatchSnapshot();
   });
@@ -116,7 +116,7 @@ describe('traverseEntity', () => {
 describe('traverseValueItem', () => {
   test('Empty TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
-      traverseValueItem(adminSchema, ['valueItem'], { type: 'TwoStrings' })
+      traverseValueItem(adminSchema, ['valueItem'], { type: 'TwoStrings' }),
     );
     expect(nodes).toMatchSnapshot();
   });

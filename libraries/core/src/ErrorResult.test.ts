@@ -9,12 +9,12 @@ describe('createErrorResultFromError()', () => {
     const logger = createMockLogger();
     const actual: Result<unknown, typeof ErrorType.Generic> = createErrorResultFromError(
       { logger },
-      new Error('Generic error message')
+      new Error('Generic error message'),
     );
     expectErrorResult(
       actual,
       ErrorType.Generic,
-      'Unexpected exception: Error: Generic error message'
+      'Unexpected exception: Error: Generic error message',
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot(`
       [
@@ -35,7 +35,7 @@ describe('createErrorResultFromError()', () => {
     expectErrorResult(
       actual,
       ErrorType.Generic,
-      'Unexpected exception: Error: Generic error message'
+      'Unexpected exception: Error: Generic error message',
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot(`
       [
@@ -51,7 +51,7 @@ describe('createErrorResultFromError()', () => {
     const logger = createMockLogger();
     const actual: Result<unknown, ErrorType> = createErrorResultFromError(
       { logger },
-      notOk.Conflict('Conflict error message').toError()
+      notOk.Conflict('Conflict error message').toError(),
     );
     expectErrorResult(actual, ErrorType.Conflict, 'Conflict error message');
     expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
@@ -73,12 +73,12 @@ describe('createErrorResultFromError()', () => {
       createErrorResultFromError(
         { logger },
         notOk.BadRequest('Bad request error message').toError(),
-        [ErrorType.Conflict]
+        [ErrorType.Conflict],
       );
     expectErrorResult(
       actual,
       ErrorType.Generic,
-      'Unexpected error: BadRequest: Bad request error message'
+      'Unexpected error: BadRequest: Bad request error message',
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
   });
@@ -105,7 +105,7 @@ describe('OkResult', () => {
   test('map(number => string)', () => {
     const result: Result<number, typeof ErrorType.Conflict> = ok(123);
     const mappedResult: Result<string, typeof ErrorType.Conflict> = result.map((value) =>
-      String(value)
+      String(value),
     );
     if (expectOkResult(mappedResult)) {
       expect(mappedResult.value).toBe('123');
@@ -117,7 +117,7 @@ describe('OkResult', () => {
     const mappedResult: Result<{ baz: string }, typeof ErrorType.Conflict> = result.map(
       ({ foo }) => ({
         baz: foo.toUpperCase(),
-      })
+      }),
     );
     if (expectOkResult(mappedResult)) {
       expect(mappedResult.value).toEqual({ baz: 'BAR' });
@@ -131,7 +131,7 @@ describe('notOk', () => {
     expectErrorResult(
       notOk.GenericUnexpectedException({ logger }, new Error('Hello world')),
       ErrorType.Generic,
-      'Unexpected exception: Error: Hello world'
+      'Unexpected exception: Error: Hello world',
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot(`
       [
@@ -148,7 +148,7 @@ describe('notOk', () => {
     expectErrorResult(
       notOk.GenericUnexpectedException({ logger }, 123),
       ErrorType.Generic,
-      'Unexpected exception: 123'
+      'Unexpected exception: 123',
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
   });

@@ -30,7 +30,7 @@ function createPublishedEntity(id: string): PublishedEntity {
 
 function createPublishedEntityConnection(
   ids: string[],
-  { hasPreviousPage, hasNextPage }: { hasPreviousPage: boolean; hasNextPage: boolean }
+  { hasPreviousPage, hasNextPage }: { hasPreviousPage: boolean; hasNextPage: boolean },
 ): Connection<Edge<PublishedEntity, ErrorType>> {
   return {
     pageInfo: {
@@ -48,7 +48,7 @@ function createPublishedEntityConnection(
 
 function createPublishedEntitySamplingPayload(
   ids: string[],
-  { seed, totalCount }: { seed: number; totalCount: number }
+  { seed, totalCount }: { seed: number; totalCount: number },
 ): EntitySamplingPayload<PublishedEntity> {
   return {
     seed,
@@ -153,8 +153,8 @@ describe('SearchEntityStateActions.SetQuery', () => {
       }),
       new SearchEntityStateActions.SetQuery(
         { order: AdminQueryOrder.updatedAt },
-        { partial: true, resetPagingIfModifying: true }
-      )
+        { partial: true, resetPagingIfModifying: true },
+      ),
     );
     expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
     expect(state.paging).toEqual({});
@@ -171,8 +171,8 @@ describe('SearchEntityStateActions.SetQuery', () => {
       }),
       new SearchEntityStateActions.SetQuery(
         { order: AdminQueryOrder.name, reverse: false },
-        { partial: true, resetPagingIfModifying: true }
-      )
+        { partial: true, resetPagingIfModifying: true },
+      ),
     );
     expect(state.query).toEqual({ order: AdminQueryOrder.name, reverse: false });
     expect(state.paging).toEqual({});
@@ -187,8 +187,8 @@ describe('SearchEntityStateActions.SetQuery', () => {
       }),
       new SearchEntityStateActions.SetQuery(
         { boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 11.62, maxLng: 16.25 } },
-        { partial: true, resetPagingIfModifying: true }
-      )
+        { partial: true, resetPagingIfModifying: true },
+      ),
     );
     expect(state.query).toEqual({
       boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 11.62, maxLng: 16.25 },
@@ -202,7 +202,7 @@ describe('SearchEntityStateActions.SetPaging', () => {
   test('Empty paging', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({ mode: 'admin' }),
-      new SearchEntityStateActions.SetPaging({})
+      new SearchEntityStateActions.SetPaging({}),
     );
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
@@ -214,7 +214,7 @@ describe('SearchEntityStateActions.SetPaging', () => {
         mode: 'admin',
         actions: [new SearchEntityStateActions.SetSampling({}, true)],
       }),
-      new SearchEntityStateActions.SetPaging({})
+      new SearchEntityStateActions.SetPaging({}),
     );
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
@@ -225,7 +225,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
   test('Empty sampling', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState({ mode: 'admin' }),
-      new SearchEntityStateActions.SetSampling({}, true)
+      new SearchEntityStateActions.SetSampling({}, true),
     );
     expect(state.sampling).toEqual({ seed: expect.any(Number) });
     expect(state.paging).toBeUndefined();
@@ -237,7 +237,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
         mode: 'admin',
         actions: [new SearchEntityStateActions.SetPaging({ first: 200 })],
       }),
-      new SearchEntityStateActions.SetSampling({}, true)
+      new SearchEntityStateActions.SetSampling({}, true),
     );
     expect(state.sampling).toEqual({ seed: expect.any(Number) });
     expect(state.paging).toBeUndefined();
@@ -250,11 +250,11 @@ describe('SearchEntityStateActions.SetSampling', () => {
         actions: [
           new SearchEntityStateActions.SetQuery(
             { order: AdminQueryOrder.updatedAt },
-            { partial: true, resetPagingIfModifying: true }
+            { partial: true, resetPagingIfModifying: true },
           ),
         ],
       }),
-      new SearchEntityStateActions.SetSampling({}, true)
+      new SearchEntityStateActions.SetSampling({}, true),
     );
     expect(state.sampling).toEqual({ seed: expect.any(Number) });
     expect(state.query).toEqual({});
@@ -266,7 +266,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
         mode: 'admin',
         actions: [new SearchEntityStateActions.SetSampling({ seed: 123 }, false)],
       }),
-      new SearchEntityStateActions.SetSampling({ count: 100 }, true)
+      new SearchEntityStateActions.SetSampling({ count: 100 }, true),
     );
     expect(state.sampling).toEqual({ seed: 123, count: 100 });
     expect(state.requestedCount).toBe(100);
@@ -281,7 +281,7 @@ describe('SearchEntityState scenarios', () => {
         new SearchEntityStateActions.SetPaging({ first: 1 }),
         new SearchEntityStateActions.UpdateSearchResult(
           createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
-          undefined
+          undefined,
         ),
         new SearchEntityStateActions.UpdateTotalCount(2),
       ],
@@ -291,7 +291,7 @@ describe('SearchEntityState scenarios', () => {
     const loadingState = reduceSearchEntityStateActions(
       initialState,
       new SearchEntityStateActions.SetPaging({ after: 'cursor-1' }, 'next-page'),
-      new SearchEntityStateActions.UpdateSearchResult(undefined, undefined)
+      new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
     );
     expect(loadingState).toMatchSnapshot('2 - loading');
 
@@ -299,13 +299,13 @@ describe('SearchEntityState scenarios', () => {
       loadingState,
       new SearchEntityStateActions.UpdateSearchResult(
         createPublishedEntityConnection(['2'], { hasPreviousPage: true, hasNextPage: false }),
-        undefined
-      )
+        undefined,
+      ),
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
 
     expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
-      loadedState.entitiesScrollToTopSignal
+      loadedState.entitiesScrollToTopSignal,
     );
   });
 
@@ -316,7 +316,7 @@ describe('SearchEntityState scenarios', () => {
         new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
         new SearchEntityStateActions.UpdateSampleResult(
           createPublishedEntitySamplingPayload(['1'], { seed: 123, totalCount: 2 }),
-          undefined
+          undefined,
         ),
       ],
     });
@@ -325,7 +325,7 @@ describe('SearchEntityState scenarios', () => {
     const loadingState = reduceSearchEntityStateActions(
       initialState,
       new SearchEntityStateActions.SetSampling({ seed: 456 }, true),
-      new SearchEntityStateActions.UpdateSampleResult(undefined, undefined)
+      new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
     );
     expect(loadingState).toMatchSnapshot('2 - loading');
 
@@ -333,13 +333,13 @@ describe('SearchEntityState scenarios', () => {
       loadingState,
       new SearchEntityStateActions.UpdateSampleResult(
         createPublishedEntitySamplingPayload(['2'], { seed: 456, totalCount: 2 }),
-        undefined
-      )
+        undefined,
+      ),
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
 
     expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
-      loadedState.entitiesScrollToTopSignal
+      loadedState.entitiesScrollToTopSignal,
     );
   });
 
@@ -350,7 +350,7 @@ describe('SearchEntityState scenarios', () => {
         new SearchEntityStateActions.SetPaging({ first: 1 }),
         new SearchEntityStateActions.UpdateSearchResult(
           createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
-          undefined
+          undefined,
         ),
         new SearchEntityStateActions.UpdateTotalCount(2),
         new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
@@ -362,7 +362,7 @@ describe('SearchEntityState scenarios', () => {
       initialState,
       new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
-      new SearchEntityStateActions.UpdateTotalCount(null)
+      new SearchEntityStateActions.UpdateTotalCount(null),
     );
     expect(loadingState).toMatchSnapshot('2 - loading');
 
@@ -370,13 +370,13 @@ describe('SearchEntityState scenarios', () => {
       loadingState,
       new SearchEntityStateActions.UpdateSampleResult(
         createPublishedEntitySamplingPayload(['2'], { seed: 123, totalCount: 1 }),
-        undefined
-      )
+        undefined,
+      ),
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
 
     expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
-      loadedState.entitiesScrollToTopSignal
+      loadedState.entitiesScrollToTopSignal,
     );
   });
 
@@ -387,7 +387,7 @@ describe('SearchEntityState scenarios', () => {
         new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
         new SearchEntityStateActions.UpdateSampleResult(
           createPublishedEntitySamplingPayload(['1'], { seed: 123, totalCount: 1 }),
-          undefined
+          undefined,
         ),
       ],
     });
@@ -398,7 +398,7 @@ describe('SearchEntityState scenarios', () => {
       new SearchEntityStateActions.SetPaging({ first: 1 }, 'first-page'),
       new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
-      new SearchEntityStateActions.UpdateTotalCount(null)
+      new SearchEntityStateActions.UpdateTotalCount(null),
     );
     expect(loadingState).toMatchSnapshot('2 - loading');
 
@@ -406,14 +406,14 @@ describe('SearchEntityState scenarios', () => {
       loadingState,
       new SearchEntityStateActions.UpdateSearchResult(
         createPublishedEntityConnection(['2'], { hasPreviousPage: false, hasNextPage: true }),
-        undefined
+        undefined,
       ),
-      new SearchEntityStateActions.UpdateTotalCount(2)
+      new SearchEntityStateActions.UpdateTotalCount(2),
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
 
     expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
-      loadedState.entitiesScrollToTopSignal
+      loadedState.entitiesScrollToTopSignal,
     );
   });
 
@@ -424,7 +424,7 @@ describe('SearchEntityState scenarios', () => {
         new SearchEntityStateActions.SetPaging({ first: 1 }),
         new SearchEntityStateActions.UpdateSearchResult(
           createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
-          undefined
+          undefined,
         ),
         new SearchEntityStateActions.UpdateTotalCount(2),
       ],
@@ -435,8 +435,8 @@ describe('SearchEntityState scenarios', () => {
       initialState,
       new SearchEntityStateActions.UpdateSearchResult(
         createPublishedEntityConnection(['2'], { hasPreviousPage: false, hasNextPage: true }),
-        undefined
-      )
+        undefined,
+      ),
     );
     expect(loadedState).toMatchSnapshot('2 - loaded');
 

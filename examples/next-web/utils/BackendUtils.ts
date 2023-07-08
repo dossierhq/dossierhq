@@ -4,7 +4,7 @@ import { notOk, ok } from '@dossierhq/core';
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): PromiseResult<TOk, ErrorType> {
   try {
     const response = await fetch(input, init);

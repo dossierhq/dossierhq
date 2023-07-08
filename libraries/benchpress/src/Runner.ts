@@ -20,12 +20,12 @@ export interface BenchPressResult {
 
 export async function runTest(
   iteration: (clock: BenchPressClock) => Promise<boolean>,
-  options: BenchPressOptions
+  options: BenchPressOptions,
 ): Promise<BenchPressResult> {
   const { clock, controlClock } = createClock();
 
   console.log(
-    `Warming up '${options.testName}' - ${options.variant} (${options.warmup} iterations)`
+    `Warming up '${options.testName}' - ${options.variant} (${options.warmup} iterations)`,
   );
   for (let i = 0; i < options.warmup; i += 1) {
     replaceStdoutLineIfSupported(`Iteration [${i + 1}/${options.warmup}]`);
@@ -34,7 +34,7 @@ export async function runTest(
   }
 
   console.log(
-    `\nStarting test '${options.testName}' - ${options.variant} (${options.iterations} iterations)`
+    `\nStarting test '${options.testName}' - ${options.variant} (${options.iterations} iterations)`,
   );
   const iterationDurations_ms = new Array<number | null>(options.iterations).fill(null);
   const profileLabel = `${options.runName}-${options.variant}-${options.testName}`;

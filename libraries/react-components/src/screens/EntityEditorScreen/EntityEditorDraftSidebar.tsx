@@ -105,13 +105,13 @@ function ActivityList({
     adminClient,
     activityFilter === ActivityFilter.All || activityFilter === ActivityFilter.Versions
       ? reference
-      : undefined
+      : undefined,
   );
   const { publishingHistory, publishingHistoryError: _2 } = useAdminPublishingHistory(
     adminClient,
     activityFilter === ActivityFilter.All || activityFilter === ActivityFilter.Publishing
       ? reference
-      : undefined
+      : undefined,
   );
 
   if (!entityHistory && !publishingHistory) return null;
@@ -124,7 +124,7 @@ function ActivityList({
         date: it.createdAt,
         version: it.version,
         kind: 'create',
-      }))
+      })),
     );
   }
   if (publishingHistory) {
@@ -133,7 +133,7 @@ function ActivityList({
         date: it.publishedAt,
         version: it.version,
         kind: it.kind,
-      }))
+      })),
     );
   }
 

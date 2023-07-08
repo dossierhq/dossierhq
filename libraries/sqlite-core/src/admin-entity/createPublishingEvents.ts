@@ -11,7 +11,7 @@ import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 export async function adminEntityPublishingCreateEvents(
   database: Database,
   context: TransactionContext,
-  event: DatabaseAdminEntityPublishingCreateEventArg
+  event: DatabaseAdminEntityPublishingCreateEventArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const now = new Date();
 

@@ -17,7 +17,7 @@ describe('Published publishedSampleEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.publishedEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
     databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(ok([]));
@@ -28,7 +28,7 @@ describe('Published publishedSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { seed: 777 }
+      { seed: 777 },
     );
 
     expectResultValue(result, { seed: 777, totalCount: 0, items: [] });
@@ -73,7 +73,7 @@ describe('Published publishedSampleEntities', () => {
     const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.publishedEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(1)));
     databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(
@@ -87,7 +87,7 @@ describe('Published publishedSampleEntities', () => {
           createdAt: now,
           fieldValues: {},
         },
-      ])
+      ]),
     );
 
     const result = await publishedSampleEntities(
@@ -96,7 +96,7 @@ describe('Published publishedSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { seed: 312 }
+      { seed: 312 },
     );
 
     expectResultValue(result, {

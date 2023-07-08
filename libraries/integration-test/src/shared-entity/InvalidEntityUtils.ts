@@ -27,21 +27,21 @@ export async function createInvalidEntity(
   server: Server,
   adminClient: AppAdminClient,
   fields: Partial<AdminChangeValidations['fields']>,
-  options?: Options
+  options?: Options,
 ) {
   return doCreateInvalidEntity<AdminChangeValidations>(
     server,
     adminClient,
     ChangeValidationsWithoutValidationsUpdate,
     copyEntity(CHANGE_VALIDATIONS_CREATE, { fields }),
-    options
+    options,
   );
 }
 
 export async function createEntityWithInvalidValueItem(
   server: Server,
   adminClient: AppAdminClient,
-  options?: Options
+  options?: Options,
 ) {
   return doCreateInvalidEntity<AdminValueItems>(
     server,
@@ -50,7 +50,7 @@ export async function createEntityWithInvalidValueItem(
     copyEntity(VALUE_ITEMS_CREATE, {
       fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'no match' } },
     }),
-    options
+    options,
   );
 }
 
@@ -59,7 +59,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
   adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   entity: AdminEntityCreate<TEntity>,
-  options?: Options
+  options?: Options,
 ): PromiseResult<
   {
     entity: TEntity;
@@ -96,7 +96,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
       if (result.isOk() && result.value.entity.id === processed.id) {
         result.value.validations.push(processed);
       }
-    }
+    },
   );
   if (schemaResult.isError()) return schemaResult;
 
@@ -108,7 +108,7 @@ async function withTemporarySchemaChange(
   adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   onChangedSchema: () => Promise<void>,
-  onProcessed: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void
+  onProcessed: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withAdvisoryLock(
     adminClient,
@@ -123,7 +123,7 @@ async function withTemporarySchemaChange(
 
       // restore validations to the schema
       const restoreSchemaResult = await adminClient.updateSchemaSpecification(
-        IntegrationTestSchema
+        IntegrationTestSchema,
       );
       if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
@@ -140,6 +140,6 @@ async function withTemporarySchemaChange(
         }
       }
       return ok(undefined);
-    }
+    },
   );
 }

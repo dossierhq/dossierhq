@@ -11,7 +11,7 @@ import {
 
 export function calculateSchemaChangeEntityValidation(
   previous: AdminSchema,
-  next: AdminSchema
+  next: AdminSchema,
 ): Result<
   { entityTypes: string[]; valueTypes: string[] },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -49,7 +49,7 @@ function hasTypeChanged(
   previous: AdminSchema,
   previousType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
   next: AdminSchema,
-  nextType: AdminEntityTypeSpecification | AdminValueTypeSpecification
+  nextType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
 ): Result<boolean, typeof ErrorType.Generic> {
   if (!isFieldValueEqual(previousType.fields, nextType.fields)) {
     // TODO not all field changes require validation
@@ -62,7 +62,7 @@ function hasTypeChanged(
       previous,
       (previousType as AdminEntityTypeSpecification).authKeyPattern,
       next,
-      (nextType as AdminEntityTypeSpecification).authKeyPattern
+      (nextType as AdminEntityTypeSpecification).authKeyPattern,
     );
     if (patternResult.isError()) return patternResult;
     if (patternResult.value) {
@@ -79,7 +79,7 @@ function hasTypeChanged(
         previous,
         previousFieldSpec.matchPattern,
         next,
-        'matchPattern' in nextFieldSpec ? nextFieldSpec.matchPattern : null
+        'matchPattern' in nextFieldSpec ? nextFieldSpec.matchPattern : null,
       );
       if (patternResult.isError()) return patternResult;
       if (patternResult.value) {
@@ -95,7 +95,7 @@ function validateDueToPatternChange(
   previous: AdminSchema,
   previousPatternName: string | null,
   next: AdminSchema,
-  nextPatternName: string | null
+  nextPatternName: string | null,
 ): Result<boolean, typeof ErrorType.Generic> {
   if (!previousPatternName && nextPatternName) {
     // added

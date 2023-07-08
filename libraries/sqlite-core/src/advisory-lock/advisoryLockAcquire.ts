@@ -11,7 +11,7 @@ export async function advisoryLockAcquire(
   context: TransactionContext,
   name: string,
   handle: number,
-  leaseDuration: number
+  leaseDuration: number,
 ): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const now = new Date();
   const expires_at = now.getTime() + leaseDuration;

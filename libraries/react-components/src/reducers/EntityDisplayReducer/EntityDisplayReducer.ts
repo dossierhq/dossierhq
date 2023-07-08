@@ -20,7 +20,7 @@ export function initializeEntityDisplayState(entityIds: string[]): EntityDisplay
 
 export function reduceEntityDisplayState(
   state: Readonly<EntityDisplayState>,
-  action: EntityDisplayStateAction
+  action: EntityDisplayStateAction,
 ): Readonly<EntityDisplayState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);

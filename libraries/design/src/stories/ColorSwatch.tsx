@@ -17,7 +17,7 @@ export function ColorSwatch({ color }: ColorSwatchProps): JSX.Element {
         setColors({ backgroundColor, color });
       }
     },
-    [setColors]
+    [setColors],
   );
 
   return (

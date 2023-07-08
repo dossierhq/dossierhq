@@ -37,7 +37,7 @@ function* generateLocation(): Generator<Location, void> {
 
 async function createPlaceOfBusiness(
   adminClient: AppAdminClient,
-  locationGenerator: Generator<Location, void>
+  locationGenerator: Generator<Location, void>,
 ) {
   const name = faker.company.name();
   const line1 = faker.location.streetAddress();
@@ -64,7 +64,7 @@ async function createPlaceOfBusiness(
           },
         },
       },
-      { publish: true }
+      { publish: true },
     )
   ).valueOrThrow();
 }
@@ -77,7 +77,7 @@ async function createReviewer(adminClient: AppAdminClient) {
         info: { type: 'Reviewer', authKey: 'none', name },
         fields: { name },
       },
-      { publish: true }
+      { publish: true },
     )
   ).valueOrThrow();
 }
@@ -85,7 +85,7 @@ async function createReviewer(adminClient: AppAdminClient) {
 async function createReview(
   adminClient: AppAdminClient,
   placeOfBusiness: AdminPlaceOfBusiness,
-  reviewer: EntityReference
+  reviewer: EntityReference,
 ) {
   return (
     await adminClient.createEntity<AdminReview>(
@@ -97,7 +97,7 @@ async function createReview(
           review: `${faker.word.interjection()} ${faker.internet.emoji()}`,
         },
       },
-      { publish: true }
+      { publish: true },
     )
   ).valueOrThrow();
 }
@@ -105,7 +105,7 @@ async function createReview(
 async function createPersonalNote(
   adminClient: AppAdminClient,
   placeOfBusiness: AdminPlaceOfBusiness,
-  userName: string
+  userName: string,
 ) {
   return (
     await adminClient.createEntity<AdminPersonalNote>(
@@ -116,14 +116,14 @@ async function createPersonalNote(
           note: createRichTextRootNode([
             createRichTextParagraphNode([
               createRichTextTextNode(
-                `This is a personal note about ${placeOfBusiness.fields.name} that only ${userName} can see.`
+                `This is a personal note about ${placeOfBusiness.fields.name} that only ${userName} can see.`,
               ),
             ]),
             createRichTextParagraphNode(createRichTextTextAndWhitespaceNodes(faker.lorem.text())),
           ]),
         },
       },
-      { publish: true }
+      { publish: true },
     )
   ).valueOrThrow();
 }
@@ -132,7 +132,7 @@ async function main() {
   const database = await createNewDatabase('dist/reviews.sqlite');
   const { adminClient, bobAdminClient, server } = await createAdapterAndServer<AppAdminClient>(
     database,
-    SCHEMA
+    SCHEMA,
   );
 
   const placesOfBusiness: AdminPlaceOfBusiness[] = [];
@@ -151,7 +151,7 @@ async function main() {
     await createReview(
       adminClient,
       faker.helpers.arrayElement(placesOfBusiness),
-      faker.helpers.arrayElement(reviewers)
+      faker.helpers.arrayElement(reviewers),
     );
   }
 

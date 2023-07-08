@@ -9,7 +9,7 @@ const QUERY =
 
 export async function advisoryLockDeleteExpired(
   databaseAdapter: PostgresDatabaseAdapter,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<{ name: string }[], typeof ErrorType.Generic> {
   return await queryMany<Pick<AdvisoryLocksTable, 'name'>>(databaseAdapter, context, QUERY);
 }

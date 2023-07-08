@@ -34,7 +34,7 @@ interface EntityValidity {
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<
   { id: string; valid: boolean; validPublished: boolean | null } | null,
   typeof ErrorType.Generic
@@ -80,7 +80,7 @@ export async function managementDirtyProcessNextEntity(
         adminSchema,
         databaseAdapter,
         context,
-        entityResult.value
+        entityResult.value,
       );
       if (validationLatestResult.isOk()) {
         entityValidity.validAdmin = true;
@@ -99,7 +99,7 @@ export async function managementDirtyProcessNextEntity(
           context,
           entityResult.value,
           validationLatestResult.value.entityIndexes,
-          false
+          false,
         );
         if (updateLatestResult.isError()) return updateLatestResult;
       }
@@ -112,7 +112,7 @@ export async function managementDirtyProcessNextEntity(
       if (status === AdminEntityStatus.modified) {
         const getPublishedEntityResult = await databaseAdapter.publishedEntityGetOne(
           context,
-          reference
+          reference,
         );
         if (getPublishedEntityResult.isError()) {
           return notOk.Generic(getPublishedEntityResult.message); // convert NotFound to Generic
@@ -127,7 +127,7 @@ export async function managementDirtyProcessNextEntity(
         context,
         reference,
         entityResult.value.type,
-        fieldValues
+        fieldValues,
       );
       if (validationPublishedResult.isOk()) {
         entityValidity.validPublished = true;
@@ -145,7 +145,7 @@ export async function managementDirtyProcessNextEntity(
         const updatePublishedResult = await databaseAdapter.adminEntityIndexesUpdatePublished(
           context,
           entityResult.value,
-          validationPublishedResult.value.entityIndexes
+          validationPublishedResult.value.entityIndexes,
         );
         if (updatePublishedResult.isError()) return updatePublishedResult;
       }
@@ -158,7 +158,7 @@ export async function managementDirtyProcessNextEntity(
       resolvedReference,
       latestUniqueIndexValues,
       publishedUniqueIndexValues,
-      entityValidity
+      entityValidity,
     );
     if (uniqueIndexValuesResult.isError()) return uniqueIndexValuesResult;
 
@@ -167,7 +167,7 @@ export async function managementDirtyProcessNextEntity(
       context,
       entityResult.value,
       entityValidity.validAdmin,
-      entityValidity.validPublished
+      entityValidity.validPublished,
     );
     if (updateResult.isError()) return updateResult;
 
@@ -183,7 +183,7 @@ async function validateAdminEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  entityData: DatabaseAdminEntityPayload
+  entityData: DatabaseAdminEntityPayload,
 ): PromiseResult<
   { entityIndexes: DatabaseEntityIndexesArg; uniqueIndexValues: UniqueIndexValueCollection },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -205,7 +205,7 @@ async function validateAdminEntity(
     databaseAdapter,
     context,
     entitySpec,
-    normalizedEntity
+    normalizedEntity,
   );
   if (encodeResult.isError()) return encodeResult;
 
@@ -221,7 +221,7 @@ async function validatePublishedEntity(
   context: TransactionContext,
   reference: EntityReference,
   type: string,
-  fieldValues: Record<string, unknown>
+  fieldValues: Record<string, unknown>,
 ): PromiseResult<
   { entityIndexes: DatabaseEntityIndexesArg; uniqueIndexValues: UniqueIndexValueCollection },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -238,7 +238,7 @@ async function validatePublishedEntity(
     adminSchema.toPublishedSchema(),
     ['entity'],
     type,
-    entityFields
+    entityFields,
   );
   if (validateFieldsResult.isError()) return validateFieldsResult;
 
@@ -267,7 +267,7 @@ async function validateAndUpdateUniqueIndexValues(
   reference: DatabaseResolvedEntityReference,
   latestUniqueIndexValues: UniqueIndexValueCollection | null,
   publishedUniqueIndexValues: UniqueIndexValueCollection | null,
-  entityValidity: EntityValidity
+  entityValidity: EntityValidity,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (latestUniqueIndexValues === null && publishedUniqueIndexValues === null) {
     return ok(undefined);
@@ -279,7 +279,7 @@ async function validateAndUpdateUniqueIndexValues(
     reference,
     false,
     latestUniqueIndexValues,
-    publishedUniqueIndexValues
+    publishedUniqueIndexValues,
   );
   if (bothResult.isOk()) return ok(undefined);
   if (bothResult.isErrorType(ErrorType.Generic)) return bothResult;
@@ -300,7 +300,7 @@ async function validateAndUpdateUniqueIndexValues(
       reference,
       false,
       latestUniqueIndexValues,
-      null // skip publishedUniqueIndexValues
+      null, // skip publishedUniqueIndexValues
     );
     if (latestResult.isError()) {
       if (latestResult.isErrorType(ErrorType.BadRequest)) {
@@ -317,7 +317,7 @@ async function validateAndUpdateUniqueIndexValues(
       reference,
       false,
       null, // skip latestUniqueIndexValues
-      publishedUniqueIndexValues
+      publishedUniqueIndexValues,
     );
     if (publishedResult.isError()) {
       if (publishedResult.isErrorType(ErrorType.BadRequest)) {

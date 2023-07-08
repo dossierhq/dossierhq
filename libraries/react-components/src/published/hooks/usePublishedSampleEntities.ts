@@ -21,22 +21,22 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param options
  */
 export function usePublishedSampleEntities<
-  TPublishedEntity extends PublishedEntity<string, object>
+  TPublishedEntity extends PublishedEntity<string, object>,
 >(
   publishedClient: PublishedClient<TPublishedEntity>,
   query: PublishedQuery | undefined,
-  options?: EntitySamplingOptions
+  options?: EntitySamplingOptions,
 ): {
   entitySamples: FetcherData<TPublishedEntity> | undefined;
   entitySamplesError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query, options]: FetcherKey) => fetchSampleEntities(publishedClient, query, options),
-    [publishedClient]
+    [publishedClient],
   );
   const { data, error } = useSWR<FetcherData<TPublishedEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.publishedSampleEntities(query, options) : null,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('usePublishedSampleEntities updated values', { publishedClient, query, options, data, error, });
@@ -46,7 +46,7 @@ export function usePublishedSampleEntities<
 async function fetchSampleEntities<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
   query: FetcherKey[1],
-  options: FetcherKey[2]
+  options: FetcherKey[2],
 ): Promise<FetcherData<TPublishedEntity>> {
   const result = await publishedClient.sampleEntities(query, options);
   if (result.isError()) {

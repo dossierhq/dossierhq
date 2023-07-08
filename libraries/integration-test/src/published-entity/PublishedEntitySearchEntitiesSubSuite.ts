@@ -79,7 +79,7 @@ async function searchEntities_pagingFirst({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 10 }
+    { first: 10 },
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 10);
   assertPageInfoEquals(result, {
@@ -91,7 +91,7 @@ async function searchEntities_pagingFirst({
 async function searchEntities_pagingFirst0({ server }: PublishedEntityTestContext) {
   const result = await publishedClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 0 }
+    { first: 0 },
   );
   assertResultValue(result, null);
 }
@@ -103,7 +103,7 @@ async function searchEntities_pagingLast({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { last: 10 }
+    { last: 10 },
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, -10, undefined);
   assertPageInfoEquals(result, { hasPreviousPage: true, hasNextPage: false });
@@ -112,7 +112,7 @@ async function searchEntities_pagingLast({
 async function searchEntities_pagingLast0({ server }: PublishedEntityTestContext) {
   const result = await publishedClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { last: 0 }
+    { last: 0 },
   );
   assertResultValue(result, null);
 }
@@ -127,7 +127,7 @@ async function searchEntities_pagingFirstAfter({
   assertOkResult(firstResult);
   const secondResult = await client.searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 20, after: firstResult.value?.pageInfo.endCursor }
+    { first: 20, after: firstResult.value?.pageInfo.endCursor },
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, secondResult, 10, 10 + 20);
   assertPageInfoEquals(secondResult, {
@@ -146,7 +146,7 @@ async function searchEntities_pagingFirstAfterFirstEntity({
   assertOkResult(firstResult);
   const secondResult = await client.searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 10, after: firstResult.value?.edges[0].cursor }
+    { first: 10, after: firstResult.value?.edges[0].cursor },
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, secondResult, 1, 1 + 10);
   assertPageInfoEquals(secondResult, {
@@ -168,17 +168,17 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
   // First create two entities with unicode in the name
   const firstEntityResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } }),
-    { publish: true }
+    { publish: true },
   );
   const firstEntity = adminToPublishedEntity(adminSchema, firstEntityResult.valueOrThrow().entity);
 
   const secondEntityResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } }),
-    { publish: true }
+    { publish: true },
   );
   const secondEntity = adminToPublishedEntity(
     adminSchema,
-    secondEntityResult.valueOrThrow().entity
+    secondEntityResult.valueOrThrow().entity,
   );
 
   // Create entity with links to the unicode entities to create a scoped query
@@ -186,7 +186,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
     copyEntity(REFERENCES_CREATE, {
       fields: { anyList: [{ id: firstEntity.id }, { id: secondEntity.id }] },
     }),
-    { publish: true }
+    { publish: true },
   );
   const {
     entity: { id: linkId },
@@ -195,7 +195,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
   // Search to get the cursor
   const firstSearchResult = await publishedClient.searchEntities(
     { linksFrom: { id: linkId }, order: PublishedQueryOrder.name },
-    { first: 10 }
+    { first: 10 },
   );
   assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
   assertPageInfoEquals(firstSearchResult, { hasPreviousPage: false, hasNextPage: false });
@@ -207,7 +207,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
   // Search again using the cursor
   const secondSearchResult = await publishedClient.searchEntities(
     { linksFrom: { id: linkId }, order: PublishedQueryOrder.name },
-    { first: 10, after: startCursor }
+    { first: 10, after: startCursor },
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
   assertPageInfoEquals(secondSearchResult, { hasPreviousPage: true, hasNextPage: false });
@@ -223,7 +223,7 @@ async function searchEntities_pagingLastBefore({
   assertOkResult(firstResult);
   const secondResult = await client.searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { last: 20, before: firstResult.value?.pageInfo.startCursor }
+    { last: 20, before: firstResult.value?.pageInfo.startCursor },
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, secondResult, -10 - 20, -10);
   assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
@@ -243,13 +243,13 @@ async function searchEntities_pagingFirstBetween({
       first: 20,
       after: firstResult.value?.edges[2].cursor,
       before: firstResult.value?.edges[8].cursor,
-    }
+    },
   );
   assertPublishedEntityConnectionToMatchSlice(
     expectedEntities,
     secondResult,
     3 /*inclusive*/,
-    8 /*exclusive*/
+    8 /*exclusive*/,
   );
   // No next since we're paging forwards and there's a 'before'
   assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: false });
@@ -269,13 +269,13 @@ async function searchEntities_pagingLastBetween({
       last: 20,
       after: firstResult.value?.edges[2].cursor,
       before: firstResult.value?.edges[8].cursor,
-    }
+    },
   );
   assertPublishedEntityConnectionToMatchSlice(
     expectedEntities,
     secondResult,
     3 /*inclusive*/,
-    8 /*exclusive*/
+    8 /*exclusive*/,
   );
   // No prev since we're paging backwards and there's a 'after'
   assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
@@ -295,7 +295,7 @@ async function searchEntities_orderCreatedAt({
     result,
     0,
     25,
-    PublishedQueryOrder.createdAt
+    PublishedQueryOrder.createdAt,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -319,7 +319,7 @@ async function searchEntities_orderCreatedAtReversed({
     0,
     25,
     PublishedQueryOrder.createdAt,
-    true
+    true,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -341,7 +341,7 @@ async function searchEntities_orderName({
     result,
     0,
     25,
-    PublishedQueryOrder.name
+    PublishedQueryOrder.name,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -365,7 +365,7 @@ async function searchEntities_orderNameReversed({
     0,
     25,
     PublishedQueryOrder.name,
-    true
+    true,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -415,7 +415,7 @@ async function searchEntities_valueTypes({ server }: PublishedEntityTestContext)
   const matchesBeforeValueItem = await countSearchResultWithEntity(
     publishedClient,
     { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
-    entity.id
+    entity.id,
   );
   assertResultValue(matchesBeforeValueItem, 0);
 
@@ -425,14 +425,14 @@ async function searchEntities_valueTypes({ server }: PublishedEntityTestContext)
         id: entity.id,
         fields: { any: { type: 'ReferencesValue', reference: null } },
       },
-      { publish: true }
+      { publish: true },
     )
   ).throwIfError();
 
   const matchesAfterValueItem = await countSearchResultWithEntity(
     publishedClient,
     { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
-    entity.id
+    entity.id,
   );
   assertResultValue(matchesAfterValueItem, 1);
 }
@@ -452,7 +452,7 @@ async function searchEntities_linksToOneReference({
 
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
@@ -493,7 +493,7 @@ async function searchEntities_linksToTwoReferencesFromOneEntity({
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
@@ -518,7 +518,7 @@ async function searchEntities_linksToExcludedAfterUnpublish({
 
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
-    { publish: true }
+    { publish: true },
   );
   const { entity: referenceEntity } = referenceResult.valueOrThrow();
 
@@ -552,7 +552,7 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
 
   const referenceCreateResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
-    { publish: true }
+    { publish: true },
   );
   const { entity: referenceEntity } = referenceCreateResult.valueOrThrow();
 
@@ -566,8 +566,8 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
   assertOkResult(
     await adminClient.updateEntity(
       { id: referenceEntity.id, fields: { titleOnly: null } },
-      { publish: true }
-    )
+      { publish: true },
+    ),
   );
 
   const searchAfterUpdateResult = await publishedClient.searchEntities({
@@ -588,7 +588,7 @@ async function searchEntities_linksToExcludedForAdminOnlyField({
 
   const referenceCreateResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: titleOnlyId } } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceCreateResult);
 
@@ -609,7 +609,7 @@ async function searchEntities_linksFromOneReference({
 
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const {
@@ -650,7 +650,7 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceResult);
   const {
@@ -670,7 +670,7 @@ async function searchEntities_boundingBox({ server }: PublishedEntityTestContext
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
   const {
@@ -691,7 +691,7 @@ async function searchEntities_boundingBoxExcludedWithInAdminOnlyField({
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { locationAdminOnly: center } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
   const {
@@ -710,7 +710,7 @@ async function searchEntities_textIncluded({ server }: PublishedEntityTestContex
     copyEntity(TITLE_ONLY_CREATE, {
       fields: { title: 'winter is coming' },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
   const {
@@ -729,7 +729,7 @@ async function searchEntities_textExcludedInAdminOnlyField({ server }: Published
     copyEntity(STRINGS_CREATE, {
       fields: { stringAdminOnly: 'papaya, coconut, and all those things' },
     }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
   const {

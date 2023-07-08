@@ -6,7 +6,7 @@ export function randomNameGenerator(name: string) {
 }
 
 export function checkUUIDsAreUnique(
-  references: EntityReference[]
+  references: EntityReference[],
 ): Result<void, typeof ErrorType.BadRequest> {
   const unique = new Set<string>();
   for (const { id } of references) {

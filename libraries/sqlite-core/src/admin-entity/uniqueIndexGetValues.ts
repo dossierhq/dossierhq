@@ -12,7 +12,7 @@ import { queryMany } from '../QueryFunctions.js';
 export async function adminEntityUniqueIndexGetValues(
   database: Database,
   context: TransactionContext,
-  entity: DatabaseResolvedEntityReference
+  entity: DatabaseResolvedEntityReference,
 ): PromiseResult<DatabaseAdminEntityUniqueIndexValue[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<UniqueIndexValuesTable, 'index_name' | 'value' | 'latest' | 'published'>
@@ -23,7 +23,7 @@ export async function adminEntityUniqueIndexGetValues(
       sql`SELECT index_name, value, latest, published FROM unique_index_values WHERE entities_id = ${
         entity.entityInternalId as number
       }`;
-    })
+    }),
   );
   if (result.isError()) return result;
 
@@ -33,6 +33,6 @@ export async function adminEntityUniqueIndexGetValues(
       value: row.value,
       latest: !!row.latest,
       published: !!row.published,
-    }))
+    })),
   );
 }

@@ -11,7 +11,7 @@ export async function managementDirtyUpdateEntity(
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
   valid: boolean,
-  validPublished: boolean | null
+  validPublished: boolean | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const invalid = (valid === false ? 1 : 0) | (validPublished === false ? 2 : 0);
   const { query, sql } = createSqliteSqlQuery();

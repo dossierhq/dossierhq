@@ -58,11 +58,11 @@ function Content({ reference }: { reference: EntityReference }) {
   const { entityHistory } = useAdminEntityHistory(adminClient, reference ?? undefined);
   const { entity: leftEntity } = useAdminEntity(
     adminClient,
-    leftVersion !== null ? { id: reference.id, version: leftVersion } : undefined
+    leftVersion !== null ? { id: reference.id, version: leftVersion } : undefined,
   );
   const { entity: rightEntity } = useAdminEntity(
     adminClient,
-    rightVersion !== null ? { id: reference.id, version: rightVersion } : undefined
+    rightVersion !== null ? { id: reference.id, version: rightVersion } : undefined,
   );
 
   const entitySpec =

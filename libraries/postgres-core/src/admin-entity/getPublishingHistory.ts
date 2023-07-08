@@ -22,7 +22,7 @@ import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
 export async function adminEntityPublishingHistoryGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -33,7 +33,7 @@ export async function adminEntityPublishingHistoryGetEntityInfo(
     {
       text: 'SELECT id, auth_key, resolved_auth_key FROM entities WHERE uuid = $1',
       values: [reference.id],
-    }
+    },
   );
   if (result.isError()) {
     return result;
@@ -52,7 +52,7 @@ export async function adminEntityPublishingHistoryGetEntityInfo(
 export async function adminEntityPublishingHistoryGetEvents(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: DatabaseResolvedEntityReference
+  reference: DatabaseResolvedEntityReference,
 ): PromiseResult<PublishingEvent[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<EntityVersionsTable, 'version'> &
@@ -81,6 +81,6 @@ export async function adminEntityPublishingHistoryGetEvents(
         publishedBy: it.published_by,
       };
       return event;
-    })
+    }),
   );
 }

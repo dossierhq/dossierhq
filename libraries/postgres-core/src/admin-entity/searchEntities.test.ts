@@ -38,7 +38,7 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }]
+      [{ authKey: 'none', resolvedAuthKey: 'none' }],
     );
     expectResultValue(result, { entities: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
@@ -65,7 +65,7 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }]
+      [{ authKey: 'none', resolvedAuthKey: 'none' }],
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
@@ -116,7 +116,7 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }]
+      [{ authKey: 'none', resolvedAuthKey: 'none' }],
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
@@ -168,7 +168,7 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }]
+      [{ authKey: 'none', resolvedAuthKey: 'none' }],
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {

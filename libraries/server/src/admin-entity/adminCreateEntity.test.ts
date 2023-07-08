@@ -18,7 +18,7 @@ describe('Admin adminCreateEntity', () => {
     const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntityCreate.mockReturnValueOnce(
       Promise.resolve(
@@ -28,11 +28,11 @@ describe('Admin adminCreateEntity', () => {
           name: 'TitleOnly name',
           createdAt: now,
           updatedAt: now,
-        })
-      )
+        }),
+      ),
     );
     databaseAdapter.adminEntityIndexesUpdateLatest.mockReturnValueOnce(
-      Promise.resolve(ok(undefined))
+      Promise.resolve(ok(undefined)),
     );
 
     const result = await adminCreateEntity(
@@ -45,7 +45,7 @@ describe('Admin adminCreateEntity', () => {
         info: { name: 'TitleOnly name', authKey: 'none', type: 'TitleOnly' },
         fields: { title: 'Title' },
       },
-      undefined
+      undefined,
     );
 
     expectResultValue(result, {
@@ -128,16 +128,16 @@ describe('Admin adminCreateEntity', () => {
         info: { type: 'Invalid', name: 'name', authKey: 'none' },
         fields: { foo: 'title' },
       },
-      undefined
+      undefined,
     );
 
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.info.type: Entity type Invalid doesn’t exist'
+      'entity.info.type: Entity type Invalid doesn’t exist',
     );
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchInlineSnapshot('[]');
   });
 
@@ -156,12 +156,12 @@ describe('Admin adminCreateEntity', () => {
         info: { type: '', name: 'Foo', authKey: 'none' },
         fields: { foo: 'title' },
       },
-      undefined
+      undefined,
     );
 
     expectErrorResult(result, ErrorType.BadRequest, 'entity.info.type: Type is required');
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchInlineSnapshot('[]');
   });
 
@@ -171,7 +171,7 @@ describe('Admin adminCreateEntity', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
 
     const result = await adminCreateEntity(
@@ -184,16 +184,16 @@ describe('Admin adminCreateEntity', () => {
         info: { type: 'TitleOnly', name: 'TitleOnly', authKey: 'none' },
         fields: { title: 'Hello\nWorld\n' },
       },
-      undefined
+      undefined,
     );
 
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.fields.title: multiline string not allowed'
+      'entity.fields.title: multiline string not allowed',
     );
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchInlineSnapshot('[]');
   });
 });

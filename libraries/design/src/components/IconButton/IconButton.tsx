@@ -54,7 +54,7 @@ IconButton.Group = ({ condensed, skipBottomMargin, children }: IconButtonGroupPr
   const className = toClassName(
     'buttons',
     condensed && 'has-addons',
-    skipBottomMargin && 'no-bottom-margin'
+    skipBottomMargin && 'no-bottom-margin',
   );
   return <div className={className}>{children}</div>;
 };

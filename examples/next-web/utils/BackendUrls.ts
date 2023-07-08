@@ -11,18 +11,18 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const BackendUrls = {
   admin: (
     operationName: (typeof AdminClientOperationName)[keyof typeof AdminClientOperationName],
-    args?: AdminClientJsonOperationArgs
+    args?: AdminClientJsonOperationArgs,
   ): string =>
     `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
       { args },
-      { keepEmptyObjects: true }
+      { keepEmptyObjects: true },
     )}`,
   published: (
     operationName: (typeof PublishedClientOperationName)[keyof typeof PublishedClientOperationName],
-    args?: PublishedClientJsonOperationArgs
+    args?: PublishedClientJsonOperationArgs,
   ): string =>
     `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
       { args },
-      { keepEmptyObjects: true }
+      { keepEmptyObjects: true },
     )}`,
 };

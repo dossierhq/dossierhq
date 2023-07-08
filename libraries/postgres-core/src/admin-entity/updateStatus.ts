@@ -13,7 +13,7 @@ export async function adminEntityUpdateStatus(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   status: AdminEntityStatus,
-  reference: DatabaseResolvedEntityReference
+  reference: DatabaseResolvedEntityReference,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const result = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
     text: `UPDATE entities SET

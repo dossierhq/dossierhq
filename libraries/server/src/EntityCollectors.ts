@@ -89,7 +89,7 @@ export function createReferencesCollector<TSchema extends AdminSchema | Publishe
 }
 
 export function createRequestedReferencesCollector<
-  TSchema extends AdminSchema | PublishedSchema
+  TSchema extends AdminSchema | PublishedSchema,
 >() {
   const requestedReferences: RequestedReference[] = [];
   return {
@@ -130,7 +130,7 @@ export function createRequestedReferencesCollector<
 }
 
 export function createUniqueIndexCollector<TSchema extends AdminSchema | PublishedSchema>(
-  schema: TSchema
+  schema: TSchema,
 ) {
   const uniqueIndexValues: UniqueIndexValueCollection = new Map();
   return {

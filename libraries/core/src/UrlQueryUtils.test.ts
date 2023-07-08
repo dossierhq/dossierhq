@@ -24,7 +24,7 @@ describe('encodeObjectToURLSearchParams', () => {
 
   test('empty object value with keepEmptyObjects', () => {
     expect(
-      encodeObjectToURLSearchParams({ foo: {} }, { keepEmptyObjects: true }).toString()
+      encodeObjectToURLSearchParams({ foo: {} }, { keepEmptyObjects: true }).toString(),
     ).toEqual('foo=%7B%7D');
   });
 

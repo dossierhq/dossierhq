@@ -48,10 +48,10 @@ describe('convertJsonConnection()', () => {
       ],
     };
     const asJson: JsonConnection<JsonEdge<{ foo: string }, ErrorType>> = JSON.parse(
-      JSON.stringify(expected)
+      JSON.stringify(expected),
     );
     const converted = convertJsonConnection(asJson, (edge) =>
-      convertJsonEdge(edge, (node) => node)
+      convertJsonEdge(edge, (node) => node),
     );
     expect(converted).toEqual(expected);
   });

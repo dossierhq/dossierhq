@@ -22,7 +22,7 @@ export function registerTestSuite(suiteName: string, testSuite: TestSuite): void
 }
 
 export async function initializeIntegrationTestServer(
-  filename: string
+  filename: string,
 ): PromiseResult<ServerInit, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const database = Database.open(filename);
   const serverResult = await createServer({

@@ -15,18 +15,18 @@ type FetcherData = PublishedSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function usePublishedSchema(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>
+  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     (_action: FetcherKey) => fetchSchema(publishedClient),
-    [publishedClient]
+    [publishedClient],
   );
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(
     CACHE_KEYS.publishedSchema,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('usePublishedSchema changed values', { data, error });
@@ -35,7 +35,7 @@ export function usePublishedSchema(
 }
 
 async function fetchSchema(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>
+  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
 ): Promise<FetcherData> {
   const result = await publishedClient.getSchemaSpecification();
   if (result.isError()) {

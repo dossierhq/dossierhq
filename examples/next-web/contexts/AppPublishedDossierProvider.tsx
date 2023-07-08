@@ -25,7 +25,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
   }
 
   renderPublishedRichTextValueItemDisplay(
-    _props: RichTextValueItemDisplayProps
+    _props: RichTextValueItemDisplayProps,
   ): JSX.Element | null {
     return null;
   }
@@ -38,7 +38,7 @@ export function AppPublishedDossierProvider({ children }: { children: React.Reac
       adapter: new PublishedContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
-    []
+    [],
   );
 
   const { publishedClient } = args;
@@ -59,11 +59,11 @@ function createBackendPublishedClient(): PublishedClient {
 
 async function terminatingPublishedMiddleware(
   context: BackendContext,
-  operation: PublishedClientOperation
+  operation: PublishedClientOperation,
 ): Promise<void> {
   const result = await fetchJsonResult(
     context,
-    BackendUrls.published(operation.name, operation.args)
+    BackendUrls.published(operation.name, operation.args),
   );
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }

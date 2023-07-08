@@ -27,19 +27,19 @@ import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.
 
 export function usePublishedEntitySearchFilters(
   searchEntityState: SearchEntityState,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
   const { authKeys } = useContext(PublishedDossierContext);
 
   const [typeFilterState, dispatchTypeFilterState] = useSearchStateToTypeSelectorAdapter(
     searchEntityState,
-    dispatchSearchEntityState
+    dispatchSearchEntityState,
   );
 
   const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
     reduceAuthKeySelectorState,
     { authKeys, selectedIds: searchEntityState.query.authKeys },
-    initializeAuthKeySelectorState
+    initializeAuthKeySelectorState,
   );
 
   // sync auth key filter -> search state
@@ -47,8 +47,8 @@ export function usePublishedEntitySearchFilters(
     dispatchSearchEntityState(
       new SearchEntityStateActions.SetQuery(
         { authKeys: authKeyFilterState.selectedIds },
-        { partial: true, resetPagingIfModifying: true }
-      )
+        { partial: true, resetPagingIfModifying: true },
+      ),
     );
   }, [authKeyFilterState.selectedIds, dispatchSearchEntityState]);
 
@@ -63,14 +63,14 @@ export function usePublishedEntitySearchFilters(
 
 function useSearchStateToTypeSelectorAdapter(
   searchEntityState: SearchEntityState,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ): [MultipleSelectorState<TypeItem>, Dispatch<MultipleSelectorStateAction<TypeItem>>] {
   const [items, setItems] = useState<TypeItem[]>(() => [
     ...(searchEntityState.query.entityTypes?.map(
-      (it): TypeItem => ({ id: it, name: it, kind: 'entity' })
+      (it): TypeItem => ({ id: it, name: it, kind: 'entity' }),
     ) ?? []),
     ...(searchEntityState.query.valueTypes?.map(
-      (it): TypeItem => ({ id: it, name: it, kind: 'value' })
+      (it): TypeItem => ({ id: it, name: it, kind: 'value' }),
     ) ?? []),
   ]);
 
@@ -83,7 +83,7 @@ function useSearchStateToTypeSelectorAdapter(
           ...(searchEntityState.query.valueTypes ?? []),
         ],
       }),
-    [items, searchEntityState.query.entityTypes, searchEntityState.query.valueTypes]
+    [items, searchEntityState.query.entityTypes, searchEntityState.query.valueTypes],
   );
 
   const dispatchTypeFilterState = useCallback(
@@ -93,7 +93,7 @@ function useSearchStateToTypeSelectorAdapter(
         let newItems = newState.items;
         if (searchEntityState.restrictEntityTypes.length > 0) {
           newItems = newItems.filter(
-            (it) => it.kind === 'value' || searchEntityState.restrictEntityTypes.includes(it.id)
+            (it) => it.kind === 'value' || searchEntityState.restrictEntityTypes.includes(it.id),
           );
         }
         setItems((oldItems) => (isEqual(newItems, oldItems) ? oldItems : newItems));
@@ -117,8 +117,8 @@ function useSearchStateToTypeSelectorAdapter(
         dispatchSearchEntityState(
           new SearchEntityStateActions.SetQuery(
             { entityTypes: selectedEntityTypeIds, valueTypes: selectedValueTypeIds },
-            { partial: true, resetPagingIfModifying: true }
-          )
+            { partial: true, resetPagingIfModifying: true },
+          ),
         );
       }
     },
@@ -128,7 +128,7 @@ function useSearchStateToTypeSelectorAdapter(
       searchEntityState.query.entityTypes,
       searchEntityState.query.valueTypes,
       searchEntityState.restrictEntityTypes,
-    ]
+    ],
   );
 
   // useDebugLogChangedValues('useSearchStateToEntitySelectorAdapter changed values', {

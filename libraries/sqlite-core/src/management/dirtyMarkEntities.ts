@@ -10,7 +10,7 @@ export async function managementDirtyMarkEntities(
   database: Database,
   context: TransactionContext,
   entityTypes: string[],
-  valueTypes: string[]
+  valueTypes: string[],
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let count = 0;
   //TODO support marking for indexing
@@ -19,7 +19,7 @@ export async function managementDirtyMarkEntities(
     const { sql, query, addValueList } = createSqliteSqlQuery();
 
     sql`UPDATE entities SET dirty = dirty | 1|2 WHERE type IN ${addValueList(
-      entityTypes
+      entityTypes,
     )} AND (dirty & (1|2)) != (1|2)`;
 
     const result = await queryRun(database, context, query);
@@ -32,7 +32,7 @@ export async function managementDirtyMarkEntities(
 
     sql`UPDATE entities SET dirty = dirty | 1|2 FROM entity_latest_value_types elvt
     WHERE elvt.value_type IN ${addValueList(
-      valueTypes
+      valueTypes,
     )} AND elvt.entities_id = entities.id AND (entities.dirty & (1|2)) != (1|2)`;
 
     const result = await queryRun(database, context, query);

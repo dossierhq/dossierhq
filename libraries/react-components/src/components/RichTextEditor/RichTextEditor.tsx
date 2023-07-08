@@ -50,7 +50,7 @@ export function RichTextEditor({ fieldSpec, adminOnly, value, onChange }: Props)
         const json = editorState.toJSON();
         onChange(json);
       }, 500),
-    [onChange]
+    [onChange],
   );
   useEffect(() => {
     return () => debouncedHandleChange.cancel();
@@ -61,7 +61,7 @@ export function RichTextEditor({ fieldSpec, adminOnly, value, onChange }: Props)
       // open entity asynchronously to not fight with the "click to activate entity" functionality
       setTimeout(() => dispatchEntityEditorState(new EntityEditorActions.AddDraft(reference)));
     },
-    [dispatchEntityEditorState]
+    [dispatchEntityEditorState],
   );
 
   const editorValue = useMemo(() => ({ adminOnly }), [adminOnly]);

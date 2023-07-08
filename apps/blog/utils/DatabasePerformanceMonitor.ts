@@ -38,14 +38,14 @@ export class DatabasePerformanceMonitor implements DatabasePerformanceCallbacks 
     }
     if (this.rootTransactionCount > 0) {
       metrics.push(
-        `tx;desc="${this.rootTransactionCount} tx";dur=${this.rootTransactionDuration.toFixed(2)}`
+        `tx;desc="${this.rootTransactionCount} tx";dur=${this.rootTransactionDuration.toFixed(2)}`,
       );
     }
     if (this.rootTransactionAcquisitionCount > 0) {
       metrics.push(
         `tx-acq;desc="${
           this.rootTransactionAcquisitionCount
-        } tx-acq";dur=${this.rootTransactionAcquisitionDuration.toFixed(2)}`
+        } tx-acq";dur=${this.rootTransactionAcquisitionDuration.toFixed(2)}`,
       );
     }
     return metrics.join(', ');

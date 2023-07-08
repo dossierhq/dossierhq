@@ -16,7 +16,7 @@ export interface PublishedEntityTestContext {
 }
 
 export function createPublishedEntityTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<PublishedEntityTestContext, TCleanup>
+  initializer: TestFunctionInitializer<PublishedEntityTestContext, TCleanup>,
 ): TestSuite {
   return buildSuite(
     initializer,
@@ -24,6 +24,6 @@ export function createPublishedEntityTestSuite<TCleanup>(
     ...GetEntitiesSubSuite,
     ...GetTotalCountSubSuite,
     ...SampleEntitiesSubSuite,
-    ...SearchEntitiesSubSuite
+    ...SearchEntitiesSubSuite,
   );
 }

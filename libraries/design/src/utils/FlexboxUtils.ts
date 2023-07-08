@@ -43,7 +43,7 @@ export function toFlexContainerClassName({
     alignItems && alignItemsClassNames[alignItems],
     justifyContent && justifyContentClassNames[justifyContent],
     overflowX && overflowXClassNames[overflowX],
-    overflowY && overflowYClassNames[overflowY]
+    overflowY && overflowYClassNames[overflowY],
   );
 }
 
@@ -61,6 +61,6 @@ const alignSelfClassNames = {
 export function toFlexItemClassName({ alignSelf, flexGrow }: FlexItemProps) {
   return toClassName(
     typeof flexGrow === 'number' && `is-flex-grow-${flexGrow}`,
-    alignSelf && alignSelfClassNames[alignSelf]
+    alignSelf && alignSelfClassNames[alignSelf],
   );
 }

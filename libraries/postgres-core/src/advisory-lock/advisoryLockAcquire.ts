@@ -12,7 +12,7 @@ export async function advisoryLockAcquire(
   context: TransactionContext,
   name: string,
   handle: number,
-  leaseDuration: number
+  leaseDuration: number,
 ): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const query = buildPostgresSqlQuery(({ sql }) => {
     sql`INSERT INTO advisory_locks (name, handle, lease_duration)
@@ -28,13 +28,13 @@ export async function advisoryLockAcquire(
       if (
         databaseAdapter.isUniqueViolationOfConstraint(
           error,
-          UniqueConstraints.advisory_locks_name_key
+          UniqueConstraints.advisory_locks_name_key,
         )
       ) {
         return notOk.Conflict(`Lock with name '${name}' already exists`);
       }
       return notOk.GenericUnexpectedException(context, error);
-    }
+    },
   );
   if (result.isError()) return result;
   const { acquired_at: acquiredAt } = result.value;

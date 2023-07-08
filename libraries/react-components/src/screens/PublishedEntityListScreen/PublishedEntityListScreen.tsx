@@ -39,7 +39,7 @@ export function PublishedEntityListScreen({
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     { mode: 'published', urlSearchParams },
-    initializeSearchEntityStateFromUrlQuery
+    initializeSearchEntityStateFromUrlQuery,
   );
 
   const {
@@ -58,8 +58,8 @@ export function PublishedEntityListScreen({
       dispatchSearchEntityState(
         new SearchEntityStateActions.SetQuery(
           { boundingBox: undefined },
-          { partial: true, resetPagingIfModifying: true }
-        )
+          { partial: true, resetPagingIfModifying: true },
+        ),
       );
     }
     setShowMap(!showMap);
@@ -71,7 +71,7 @@ export function PublishedEntityListScreen({
     urlSearchParams,
     onUrlSearchParamsChange,
     searchEntityState,
-    dispatchSearchEntityState
+    dispatchSearchEntityState,
   );
 
   // load search/total or sampling

@@ -8,7 +8,7 @@ import { queryOne } from '../QueryFunctions.js';
 
 export async function getEntitiesUpdatedSeq(
   database: Database,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<number, typeof ErrorType.Generic> {
   const { query, sql } = createSqliteSqlQuery();
   sql`UPDATE sequences SET value = value + 1 WHERE name = ${'entities_updated'} RETURNING value`;

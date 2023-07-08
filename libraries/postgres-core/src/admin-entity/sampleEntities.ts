@@ -18,7 +18,7 @@ export async function adminEntitySampleEntities(
   query: AdminQuery | undefined,
   offset: number,
   limit: number,
-  resolvedAuthKeys: ResolvedAuthKey[]
+  resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<
   DatabaseAdminEntityPayload[],
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -29,7 +29,7 @@ export async function adminEntitySampleEntities(
   const searchResult = await queryMany<SearchAdminEntitiesItem>(
     databaseAdapter,
     context,
-    sqlQueryResult.value
+    sqlQueryResult.value,
   );
   if (searchResult.isError()) return searchResult;
 
@@ -40,6 +40,6 @@ export async function adminEntitySampleEntities(
       ...resolveAdminEntityInfo(it),
       id: it.uuid,
       fieldValues: it.data,
-    }))
+    })),
   );
 }

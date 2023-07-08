@@ -34,7 +34,7 @@ function Wrapper({
   ...props
 }: StoryProps) {
   const [urlSearchParams, setUrlSearchParams] = useState<URLSearchParams>(
-    initialUrlSearchParams ?? new URLSearchParams()
+    initialUrlSearchParams ?? new URLSearchParams(),
   );
   return (
     <CacheConfig ownCache={ownCache}>

@@ -200,13 +200,13 @@ describe('createRichTextTextAndWhitespaceNodes', () => {
 describe('richTextTextNodeHasFormat', () => {
   test('format: bold is bold', () => {
     expect(
-      richTextTextNodeHasFormat(createRichTextTextNode('hello', { format: ['bold'] }), 'bold')
+      richTextTextNodeHasFormat(createRichTextTextNode('hello', { format: ['bold'] }), 'bold'),
     ).toBe(true);
   });
 
   test('format: italic is not bold', () => {
     expect(
-      richTextTextNodeHasFormat(createRichTextTextNode('hello', { format: ['italic'] }), 'bold')
+      richTextTextNodeHasFormat(createRichTextTextNode('hello', { format: ['italic'] }), 'bold'),
     ).toBe(false);
   });
 });

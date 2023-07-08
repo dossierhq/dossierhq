@@ -18,7 +18,7 @@ export function toOpaqueCursor(database: Database, type: CursorNativeType, value
 export function fromOpaqueCursor(
   database: Database,
   type: CursorNativeType,
-  cursor: string
+  cursor: string,
 ): Result<unknown, typeof ErrorType.BadRequest> {
   switch (type) {
     case 'int': {

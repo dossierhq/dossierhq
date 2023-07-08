@@ -35,7 +35,7 @@ async function main(runName: string, ciOrLocal: { githubSha: string | undefined 
 const runNameOrCiSwitch = process.argv[2] || '';
 main(
   runNameOrCiSwitch,
-  runNameOrCiSwitch === 'ci' ? { githubSha: process.env.GITHUB_SHA } : 'local'
+  runNameOrCiSwitch === 'ci' ? { githubSha: process.env.GITHUB_SHA } : 'local',
 ).catch((error) => {
   console.warn(error);
   process.exit(1);

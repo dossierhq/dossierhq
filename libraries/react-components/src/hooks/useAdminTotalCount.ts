@@ -21,14 +21,14 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function useAdminTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  query: AdminQuery | undefined
+  query: AdminQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query]: FetcherKey) => fetchTotalCount(adminClient, query),
-    [adminClient]
+    [adminClient],
   );
   const { data: totalCount, error: totalCountError } = useSWR<
     FetcherData,
@@ -43,7 +43,7 @@ export function useAdminTotalCount(
 
 async function fetchTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  query: FetcherKey[1]
+  query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getTotalCount(query);
   if (result.isError()) {

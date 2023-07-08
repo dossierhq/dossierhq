@@ -16,7 +16,7 @@ import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 export async function adminEntityUnpublishGetEntitiesInfo(
   database: Database,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<
   DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -50,7 +50,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
         status: resolveEntityStatus(entityInfo.status),
         updatedAt: new Date(entityInfo.updated_at),
       };
-    })
+    }),
   );
 }
 
@@ -58,7 +58,7 @@ export async function adminEntityUnpublishEntities(
   database: Database,
   context: TransactionContext,
   status: AdminEntityStatus,
-  references: DatabaseResolvedEntityReference[]
+  references: DatabaseResolvedEntityReference[],
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
@@ -69,12 +69,12 @@ export async function adminEntityUnpublishEntities(
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
       const ids = addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number)
+        references.map(({ entityInternalId }) => entityInternalId as number),
       );
       sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${now.toISOString()}, updated_seq = ${
         updatedSeqResult.value
       }, status = ${status}, invalid = invalid & ~2, dirty = dirty & (~(2|8)) WHERE id IN ${ids} RETURNING id`;
-    })
+    }),
   );
   if (result.isError()) return result;
 
@@ -83,9 +83,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
       sql`DELETE FROM entity_published_references WHERE from_entities_id IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number)
+        references.map(({ entityInternalId }) => entityInternalId as number),
       )}`;
-    })
+    }),
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
 
@@ -94,9 +94,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
       sql`DELETE FROM entity_published_locations WHERE entities_id IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number)
+        references.map(({ entityInternalId }) => entityInternalId as number),
       )}`;
-    })
+    }),
   );
   if (removeLocationsIndexResult.isError()) return removeLocationsIndexResult;
 
@@ -105,9 +105,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
       sql`DELETE FROM entity_published_value_types WHERE entities_id IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number)
+        references.map(({ entityInternalId }) => entityInternalId as number),
       )}`;
-    })
+    }),
   );
   if (removeValueTypesIndexResult.isError()) return removeValueTypesIndexResult;
 
@@ -116,9 +116,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
       sql`DELETE FROM entities_published_fts WHERE rowid IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number)
+        references.map(({ entityInternalId }) => entityInternalId as number),
       )} `;
-    })
+    }),
   );
   if (ftsResult.isError()) return ftsResult;
 
@@ -127,14 +127,14 @@ export async function adminEntityUnpublishEntities(
       const row = result.value.find((it) => it.id === reference.entityInternalId);
       assertIsDefined(row);
       return { entityInternalId: row.id, updatedAt: now };
-    })
+    }),
   );
 }
 
 export async function adminEntityUnpublishGetPublishedReferencedEntities(
   database: Database,
   context: TransactionContext,
-  reference: DatabaseResolvedEntityReference
+  reference: DatabaseResolvedEntityReference,
 ): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid

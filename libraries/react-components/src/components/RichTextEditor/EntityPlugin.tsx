@@ -15,7 +15,7 @@ export function EntityPlugin(): null {
         $insertNodeToNearestRoot(entityNode);
         return true;
       },
-      COMMAND_PRIORITY_EDITOR
+      COMMAND_PRIORITY_EDITOR,
     );
   }, [editor]);
 

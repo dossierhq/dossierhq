@@ -11,7 +11,7 @@ export async function adminEntityIndexesUpdatePublished(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
-  entityIndexes: DatabaseEntityIndexesArg
+  entityIndexes: DatabaseEntityIndexesArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId as number;
   const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
@@ -24,14 +24,14 @@ export async function adminEntityIndexesUpdatePublished(
     buildSqliteSqlQuery(
       ({ sql }) =>
         sql`INSERT INTO entities_published_fts (rowid, content)
-          VALUES (${entityId}, ${fullTextSearchText})`
+          VALUES (${entityId}, ${fullTextSearchText})`,
     ),
     (error) => {
       if (database.adapter.isFtsVirtualTableConstraintFailed(error)) {
         return notOk.Conflict('Document already exists');
       }
       return notOk.GenericUnexpectedException(context, error);
-    }
+    },
   );
 
   // FTS upsert 2/2) Update when insert failed
@@ -45,8 +45,8 @@ export async function adminEntityIndexesUpdatePublished(
         ({ sql }) =>
           sql`UPDATE entities_published_fts
             SET content = ${fullTextSearchText}
-            WHERE rowid = ${entityId}`
-      )
+            WHERE rowid = ${entityId}`,
+      ),
     );
     if (ftsUpdateResult.isError()) return ftsUpdateResult;
   }
@@ -56,8 +56,9 @@ export async function adminEntityIndexesUpdatePublished(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_published_references WHERE from_entities_id = ${entityId}`
-    )
+      ({ sql }) =>
+        sql`DELETE FROM entity_published_references WHERE from_entities_id = ${entityId}`,
+    ),
   );
   if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
 
@@ -65,8 +66,8 @@ export async function adminEntityIndexesUpdatePublished(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityId}`
-    )
+      ({ sql }) => sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityId}`,
+    ),
   );
   if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
 
@@ -74,8 +75,8 @@ export async function adminEntityIndexesUpdatePublished(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_published_value_types WHERE entities_id = ${entityId}`
-    )
+      ({ sql }) => sql`DELETE FROM entity_published_value_types WHERE entities_id = ${entityId}`,
+    ),
   );
   if (removeExistingValueTypesResult.isError()) return removeExistingValueTypesResult;
 
@@ -91,7 +92,7 @@ export async function adminEntityIndexesUpdatePublished(
         for (const referenceId of referenceIds) {
           sql`(${fromEntitiesId}, ${referenceId.entityInternalId as number})`;
         }
-      })
+      }),
     );
     if (insertReferencesResult.isError()) return insertReferencesResult;
   }
@@ -106,7 +107,7 @@ export async function adminEntityIndexesUpdatePublished(
         for (const location of locations) {
           sql`(${entitiesId}, ${location.lat}, ${location.lng})`;
         }
-      })
+      }),
     );
     if (insertLocationsResult.isError()) return insertLocationsResult;
   }
@@ -121,7 +122,7 @@ export async function adminEntityIndexesUpdatePublished(
         for (const valueType of valueTypes) {
           sql`(${entitiesId}, ${valueType})`;
         }
-      })
+      }),
     );
     if (insertValueTypesResult.isError()) return insertValueTypesResult;
   }

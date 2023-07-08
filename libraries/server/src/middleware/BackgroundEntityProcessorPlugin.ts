@@ -50,13 +50,13 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
   }
 
   onCreateAdminClient(
-    pipeline: AdminClientMiddleware<SessionContext>[]
+    pipeline: AdminClientMiddleware<SessionContext>[],
   ): AdminClientMiddleware<SessionContext>[] {
     return [this.adminMiddleware, ...pipeline];
   }
 
   onCreatePublishedClient(
-    pipeline: PublishedClientMiddleware<SessionContext>[]
+    pipeline: PublishedClientMiddleware<SessionContext>[],
   ): PublishedClientMiddleware<SessionContext>[] {
     return [this.publishedMiddleware, ...pipeline];
   }
@@ -73,7 +73,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
         this.processing = true;
         if (!this.handle) {
           this.logger.info(
-            'BackgroundEntityProcessorPlugin: starting validation after schema update'
+            'BackgroundEntityProcessorPlugin: starting validation after schema update',
           );
           this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
         }
@@ -113,13 +113,13 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
           if (!result.value.valid) {
             this.logger.warn(
               'BackgroundEntityProcessorPlugin: validated entity: %s, but it was invalid',
-              result.value.id
+              result.value.id,
             );
           }
         } else {
           this.logger.info(
             'BackgroundEntityProcessorPlugin: no more entities to validate, validated %d entities',
-            this.batchCount
+            this.batchCount,
           );
           this.processing = false;
           this.batchCount = 0;
@@ -128,7 +128,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
         this.logger.error(
           'BackgroundEntityProcessorPlugin: failed validating %s: %s',
           result.error,
-          result.message
+          result.message,
         );
       }
     }

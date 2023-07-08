@@ -10,7 +10,7 @@ export async function advisoryLockRenew(
   database: Database,
   context: TransactionContext,
   name: string,
-  handle: number
+  handle: number,
 ): PromiseResult<
   { acquiredAt: Date; renewedAt: Date },
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -24,7 +24,7 @@ export async function advisoryLockRenew(
   const result = await queryNoneOrOne<Pick<AdvisoryLocksTable, 'acquired_at'>>(
     database,
     context,
-    query
+    query,
   );
   if (result.isError()) return result;
 

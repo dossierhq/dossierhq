@@ -9,7 +9,7 @@ export async function adminGetTotalCount(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminQuery | undefined
+  query: AdminQuery | undefined,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -17,7 +17,7 @@ export async function adminGetTotalCount(
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    query?.authKeys
+    query?.authKeys,
   );
   if (authKeysResult.isError()) {
     return authKeysResult;
@@ -27,6 +27,6 @@ export async function adminGetTotalCount(
     schema,
     context,
     query,
-    authKeysResult.value
+    authKeysResult.value,
   );
 }

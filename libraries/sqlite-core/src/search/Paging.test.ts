@@ -25,8 +25,8 @@ describe('resolvePagingCursors()', () => {
         'int',
         resolvePaging({
           after: toOpaqueCursor(databaseAdapter, 'int', 999),
-        })
-      )
+        }),
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -45,8 +45,8 @@ describe('resolvePagingCursors()', () => {
         'int',
         resolvePaging({
           before: toOpaqueCursor(databaseAdapter, 'int', 999),
-        })
-      )
+        }),
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -66,8 +66,8 @@ describe('resolvePagingCursors()', () => {
         resolvePaging({
           after: toOpaqueCursor(databaseAdapter, 'int', 111),
           before: toOpaqueCursor(databaseAdapter, 'int', 222),
-        })
-      )
+        }),
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {

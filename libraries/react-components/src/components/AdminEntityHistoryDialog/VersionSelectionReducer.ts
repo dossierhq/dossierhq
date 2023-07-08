@@ -27,7 +27,7 @@ export function initializeVersionSelectionState(): VersionSelectionState {
 
 export function reduceVersionSelectionState(
   state: Readonly<VersionSelectionState>,
-  action: VersionSelectionStateAction
+  action: VersionSelectionStateAction,
 ): Readonly<VersionSelectionState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);

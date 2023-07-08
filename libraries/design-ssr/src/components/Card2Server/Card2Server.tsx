@@ -74,7 +74,7 @@ export const Card2: CardComponent = ({ className, children }: CardProps) => {
       className={toClassName(
         'is-card-container',
         toFlexContainerClassName({ flexDirection: 'column' }),
-        className
+        className,
       )}
     >
       {children}
@@ -89,7 +89,7 @@ Card2.Header = ({ noIcons, children }: CardHeaderProps) => {
     <header
       className={toClassName(
         toFlexContainerClassName({ flexDirection: 'row', alignItems: 'center' }),
-        toSpacingClassName(noIcons ? { paddingHorizontal: 3 } : { paddingLeft: 3 })
+        toSpacingClassName(noIcons ? { paddingHorizontal: 3 } : { paddingLeft: 3 }),
       )}
       style={{ borderBottom: '1px solid hsl(0deg, 0%, 93%)' }}
     >
@@ -104,7 +104,7 @@ Card2.HeaderTitle = ({ children }: CardHeaderTitleProps) => {
     <Text
       className={toClassName(
         toFlexItemClassName({ flexGrow: 1 }),
-        toSpacingClassName({ paddingVertical: 2 })
+        toSpacingClassName({ paddingVertical: 2 }),
       )}
       textStyle="headline5"
       marginBottom={0}
@@ -140,7 +140,7 @@ Card2.Content = ({ style, noPadding, children }: CardContentProps) => {
     <div
       className={toClassName(
         noPadding ? '' : toSpacingClassName({ paddingHorizontal: 3, paddingVertical: 2 }),
-        toFlexContainerClassName({ flexDirection: 'column' })
+        toFlexContainerClassName({ flexDirection: 'column' }),
       )}
       style={style}
     >

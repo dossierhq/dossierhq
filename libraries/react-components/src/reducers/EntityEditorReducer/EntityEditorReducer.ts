@@ -77,7 +77,7 @@ export function initializeEntityEditorState({
 
 export function reduceEntityEditorState(
   state: Readonly<EntityEditorState>,
-  action: EntityEditorStateAction
+  action: EntityEditorStateAction,
 ): Readonly<EntityEditorState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
@@ -114,7 +114,7 @@ function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDra
 
 function resolveFieldStatus(
   field: FieldEditorState,
-  draftState: EntityEditorDraftState
+  draftState: EntityEditorDraftState,
 ): FieldEditorState['status'] {
   const isEmpty = field.normalizedValue === null;
   if (!draftState.entity) {
@@ -126,7 +126,7 @@ function resolveFieldStatus(
 }
 
 function resolveDraftErrors(
-  fields: FieldEditorState[] | undefined
+  fields: FieldEditorState[] | undefined,
 ): Pick<EntityEditorDraftState, 'hasPublishErrors' | 'hasSaveErrors'> {
   let hasSaveErrors = false;
   let hasPublishErrors = false;
@@ -178,7 +178,7 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
 
   abstract reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>
+    editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState>;
 }
 
@@ -192,11 +192,11 @@ abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
 
   reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>
+    editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState> {
     assertIsDefined(draftState.draft);
     const fieldIndex = draftState.draft.fields.findIndex(
-      (it) => it.fieldSpec.name === this.fieldName
+      (it) => it.fieldSpec.name === this.fieldName,
     );
     if (fieldIndex < 0) {
       throw new Error(`No such field ${this.fieldName} for entity with id ${this.id}`);
@@ -225,7 +225,7 @@ abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
   abstract reduceField(
     fieldState: Readonly<FieldEditorState>,
     draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>
+    editorState: Readonly<EntityEditorState>,
   ): Readonly<FieldEditorState>;
 }
 
@@ -357,7 +357,7 @@ class SetFieldAction extends EntityEditorFieldAction {
   reduceField(
     fieldState: Readonly<FieldEditorState>,
     _draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>
+    editorState: Readonly<EntityEditorState>,
   ): Readonly<FieldEditorState> {
     const { schema } = editorState;
     assertIsDefined(schema);
@@ -372,7 +372,7 @@ class SetFieldAction extends EntityEditorFieldAction {
       fieldState.fieldSpec,
       fieldState.adminOnly,
       normalizedValue,
-      fieldState.validationIssues
+      fieldState.validationIssues,
     );
 
     return { ...fieldState, value: this.value, normalizedValue, validationIssues };
@@ -380,7 +380,7 @@ class SetFieldAction extends EntityEditorFieldAction {
 
   override reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>
+    editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState> {
     let newDraftState = super.reduceDraft(draftState, editorState);
     if (newDraftState === draftState) {
@@ -414,7 +414,7 @@ class SetNameAction extends EntityEditorDraftAction {
 
   reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    _editorState: Readonly<EntityEditorState>
+    _editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState> {
     if (!draftState.draft || draftState.draft.name === this.name) {
       return draftState;
@@ -437,7 +437,7 @@ class SetNextEntityUpdateIsDueToUpsertAction extends EntityEditorDraftAction {
 
   reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    _editorState: Readonly<EntityEditorState>
+    _editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState> {
     if (draftState.entityWillBeUpdatedDueToUpsert === this.entityWillBeUpdatedDueToUpsert) {
       return draftState;
@@ -457,7 +457,7 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
 
   reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    _editorState: Readonly<EntityEditorState>
+    _editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState> {
     if (!draftState.draft || draftState.draft?.name === this.authKey) {
       return draftState;
@@ -497,7 +497,7 @@ class UpdateEntityAction extends EntityEditorDraftAction {
 
   reduceDraft(
     draftState: Readonly<EntityEditorDraftState>,
-    editorState: EntityEditorState
+    editorState: EntityEditorState,
   ): Readonly<EntityEditorDraftState> {
     if (draftState.entity && draftState.entity.info.version === this.entity.info.version) {
       // only changed entity info
@@ -564,7 +564,7 @@ function validateField(
   fieldSpec: AdminFieldSpecification,
   adminOnly: boolean,
   value: unknown,
-  previousErrors: ValidationIssue[]
+  previousErrors: ValidationIssue[],
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
   for (const node of traverseItemField(adminSchema, [], fieldSpec, value)) {
@@ -588,7 +588,7 @@ function validateField(
 function createEditorEntityDraftState(
   schema: AdminSchema,
   entitySpec: AdminEntityTypeSpecification,
-  entity: AdminEntity | null
+  entity: AdminEntity | null,
 ): EntityEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;

@@ -23,18 +23,18 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
 export function useAdminSampleEntities<TAdminEntity extends AdminEntity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: AdminQuery | undefined,
-  options: EntitySamplingOptions | undefined
+  options: EntitySamplingOptions | undefined,
 ): {
   entitySamples: FetcherData<TAdminEntity> | undefined;
   entitySamplesError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query, options]: FetcherKey) => fetchSampleEntities(adminClient, query, options),
-    [adminClient]
+    [adminClient],
   );
   const { data, error } = useSWR<FetcherData<TAdminEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.adminSampleEntities(query, options) : null,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('useAdminSampleEntities updated values', {
@@ -50,7 +50,7 @@ export function useAdminSampleEntities<TAdminEntity extends AdminEntity<string, 
 async function fetchSampleEntities<TAdminEntity extends AdminEntity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: FetcherKey[1],
-  options: FetcherKey[2]
+  options: FetcherKey[2],
 ): Promise<FetcherData<TAdminEntity>> {
   const result = await adminClient.sampleEntities(query, options);
   if (result.isError()) {

@@ -90,7 +90,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
       defaultAuthKeys: ['none'],
       logger: null,
       databasePerformance: null,
-    })
+    }),
   );
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) {
@@ -103,7 +103,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
 
 export function expectEntityHistoryVersions(
   actual: EntityHistory,
-  expectedVersions: Omit<EntityHistory['versions'][0], 'createdAt'>[]
+  expectedVersions: Omit<EntityHistory['versions'][0], 'createdAt'>[],
 ): void {
   // Skip createdAt since dates are unpredictable
   const actualVersions = actual.versions.map((x) => {
@@ -118,7 +118,7 @@ export function expectSearchResultEntities<TItem extends AdminEntity | Published
     Connection<Edge<TItem, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >,
-  actualEntities: TItem[]
+  actualEntities: TItem[],
 ): void {
   if (expectOkResult(result)) {
     if (actualEntities.length === 0) {

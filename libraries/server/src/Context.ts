@@ -33,20 +33,20 @@ export class InternalContextImpl
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     databasePerformance: DatabasePerformanceCallbacks | null,
-    transaction: Transaction | null = null
+    transaction: Transaction | null = null,
   ) {
     super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
-    transaction: Transaction
+    transaction: Transaction,
   ): InternalContext {
     return new InternalContextImpl(
       databaseAdapter,
       this.logger,
       this.databasePerformance,
-      transaction
+      transaction,
     );
   }
 }
@@ -68,7 +68,7 @@ export class SessionContextImpl
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     databasePerformance: DatabasePerformanceCallbacks | null,
-    transaction: Transaction | null = null
+    transaction: Transaction | null = null,
   ) {
     super(databaseAdapter, logger, databasePerformance, transaction);
     this.session = session;
@@ -77,7 +77,7 @@ export class SessionContextImpl
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
-    transaction: Transaction
+    transaction: Transaction,
   ): SessionContext {
     return new SessionContextImpl(
       this.session,
@@ -85,7 +85,7 @@ export class SessionContextImpl
       databaseAdapter,
       this.logger,
       this.databasePerformance,
-      transaction
+      transaction,
     );
   }
 }

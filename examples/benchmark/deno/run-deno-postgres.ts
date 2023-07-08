@@ -23,9 +23,7 @@ async function createPostgresDatabaseAdapter(connectionString: string) {
 
 async function main(runName: string, ciOrLocal: { githubSha: string | undefined } | 'local') {
   const adapter = await createPostgresDatabaseAdapter(
-    (
-      await load()
-    ).EXAMPLES_BENCHMARK_DATABASE_URL
+    (await load()).EXAMPLES_BENCHMARK_DATABASE_URL,
   );
   const result = await initializeAndRunTests({
     runName,
@@ -39,7 +37,7 @@ async function main(runName: string, ciOrLocal: { githubSha: string | undefined 
 const runNameOrCiSwitch = Deno.args[0] || '';
 await main(
   runNameOrCiSwitch,
-  runNameOrCiSwitch === 'ci' ? { githubSha: Deno.env.get('GITHUB_SHA') } : 'local'
+  runNameOrCiSwitch === 'ci' ? { githubSha: Deno.env.get('GITHUB_SHA') } : 'local',
 ).catch((error) => {
   console.warn(error);
   process.exit(1);

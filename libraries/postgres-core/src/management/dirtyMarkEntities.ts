@@ -11,7 +11,7 @@ export async function managementDirtyMarkEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   entityTypes: string[],
-  valueTypes: string[]
+  valueTypes: string[],
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let count = 0;
 

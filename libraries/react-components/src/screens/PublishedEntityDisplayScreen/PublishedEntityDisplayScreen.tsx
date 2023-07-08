@@ -56,7 +56,7 @@ export function PublishedEntityDisplayScreen({
   const [entityDisplayState, dispatchEntityDisplayState] = useReducer(
     reduceEntityDisplayState,
     urlSearchParams,
-    initializeEntityDisplayStateFromUrlQuery
+    initializeEntityDisplayStateFromUrlQuery,
   );
   const {
     activeEntityId,
@@ -69,7 +69,7 @@ export function PublishedEntityDisplayScreen({
     urlSearchParams,
     onUrlSearchParamsChange,
     entityDisplayState,
-    dispatchEntityDisplayState
+    dispatchEntityDisplayState,
   );
 
   const [showEntitySelector, setShowEntitySelector] = useState(false);
@@ -154,7 +154,7 @@ function EntityRows({
   const handleClick = useCallback(
     (_event: MouseEvent) =>
       dispatchEntityDisplayState(new EntityDisplayActions.SetActiveEntity(entityId, true, false)),
-    [dispatchEntityDisplayState, entityId]
+    [dispatchEntityDisplayState, entityId],
   );
 
   const handleLinkedItemClick = useCallback(
@@ -162,7 +162,7 @@ function EntityRows({
       // open entity asynchronously to not fight with the "click to activate entity" functionality
       setTimeout(() => dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)));
     },
-    [dispatchEntityDisplayState]
+    [dispatchEntityDisplayState],
   );
 
   if (!schema || !entity) return null;
@@ -207,7 +207,7 @@ function EntityRows({
 
 function useFocusedEntity(
   entityDisplayState: EntityDisplayState,
-  dispatchEntityDisplayState: Dispatch<EntityDisplayStateAction>
+  dispatchEntityDisplayState: Dispatch<EntityDisplayStateAction>,
 ) {
   const { activeEntityEditorScrollSignal } = entityDisplayState;
 
@@ -216,18 +216,18 @@ function useFocusedEntity(
       if (event.target instanceof HTMLElement) {
         const selectorElement = findAscendantHTMLElement(
           event.target,
-          (el) => !!el.dataset.entityid
+          (el) => !!el.dataset.entityid,
         );
         const entityId = selectorElement?.dataset.entityid;
 
         if (entityId) {
           dispatchEntityDisplayState(
-            new EntityDisplayActions.SetActiveEntity(entityId, true, false)
+            new EntityDisplayActions.SetActiveEntity(entityId, true, false),
           );
         }
       }
     },
-    [dispatchEntityDisplayState]
+    [dispatchEntityDisplayState],
   );
   useWindowEventListener('focusin', listener);
 

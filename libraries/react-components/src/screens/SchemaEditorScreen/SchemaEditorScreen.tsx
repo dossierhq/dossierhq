@@ -56,7 +56,7 @@ export function SchemaEditorScreen({
   const [schemaEditorState, dispatchSchemaEditorState] = useReducer(
     reduceSchemaEditorState,
     undefined,
-    initializeSchemaEditorState
+    initializeSchemaEditorState,
   );
   const [addOrRenameTypeSelector, setAddOrRenameTypeSelector] = useState<
     SchemaTypeSelector | 'add' | null
@@ -71,7 +71,7 @@ export function SchemaEditorScreen({
     SchemaPatternSelector | 'add' | null
   >(null);
   const [editPatternSelector, setEditPatternSelector] = useState<SchemaPatternSelector | null>(
-    null
+    null,
   );
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const hasChanges = schemaEditorState.status === 'changed';
@@ -79,15 +79,15 @@ export function SchemaEditorScreen({
   const handleCloseAddTypeDialog = useCallback(() => setAddOrRenameTypeSelector(null), []);
   const handleCloseAddOrRenameFieldDialog = useCallback(
     () => setAddOrRenameFieldSelector(null),
-    []
+    [],
   );
   const handleCloseAddOrRenameIndexDialog = useCallback(
     () => setAddOrRenameIndexSelector(null),
-    []
+    [],
   );
   const handleCloseAddOrRenamePatternDialog = useCallback(
     () => setAddOrRenamePatternSelector(null),
-    []
+    [],
   );
   const handleCloseEditPatternDialog = useCallback(() => setEditPatternSelector(null), []);
   const handleCloseSchemaDialog = useCallback(() => setShowSaveDialog(false), []);
@@ -250,15 +250,15 @@ function TypeEditorRows({
 
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
-    [typeDraft.kind, typeDraft.name]
+    [typeDraft.kind, typeDraft.name],
   );
 
   const handleClick = useCallback(
     (_event: MouseEvent) =>
       dispatchSchemaEditorState(
-        new SchemaEditorActions.SetActiveSelector(typeSelector, true, false)
+        new SchemaEditorActions.SetActiveSelector(typeSelector, true, false),
       ),
-    [dispatchSchemaEditorState, typeSelector]
+    [dispatchSchemaEditorState, typeSelector],
   );
 
   const handleDropdownItemClick = useCallback(
@@ -272,7 +272,7 @@ function TypeEditorRows({
           break;
       }
     },
-    [dispatchSchemaEditorState, onAddOrRenameType, typeSelector]
+    [dispatchSchemaEditorState, onAddOrRenameType, typeSelector],
   );
 
   const dropDownItems = canDeleteOrRenameType
@@ -342,16 +342,16 @@ function IndexEditorRows({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   const indexSelector = useMemo(
-    () => ({ kind: 'index', name: indexDraft.name } as const),
-    [indexDraft.name]
+    () => ({ kind: 'index', name: indexDraft.name }) as const,
+    [indexDraft.name],
   );
 
   const handleClick = useCallback(
     (_event: MouseEvent) =>
       dispatchSchemaEditorState(
-        new SchemaEditorActions.SetActiveSelector(indexSelector, true, false)
+        new SchemaEditorActions.SetActiveSelector(indexSelector, true, false),
       ),
-    [dispatchSchemaEditorState, indexSelector]
+    [dispatchSchemaEditorState, indexSelector],
   );
 
   return (
@@ -392,16 +392,16 @@ function PatternEditorRows({
   onEditPattern: (selector: SchemaPatternSelector) => void;
 }) {
   const patternSelector = useMemo(
-    () => ({ kind: 'pattern', name: patternDraft.name } as const),
-    [patternDraft.name]
+    () => ({ kind: 'pattern', name: patternDraft.name }) as const,
+    [patternDraft.name],
   );
 
   const handleClick = useCallback(
     (_event: MouseEvent) =>
       dispatchSchemaEditorState(
-        new SchemaEditorActions.SetActiveSelector(patternSelector, true, false)
+        new SchemaEditorActions.SetActiveSelector(patternSelector, true, false),
       ),
-    [dispatchSchemaEditorState, patternSelector]
+    [dispatchSchemaEditorState, patternSelector],
   );
 
   const handleDropdownItemClick = useCallback(
@@ -415,7 +415,7 @@ function PatternEditorRows({
           break;
       }
     },
-    [dispatchSchemaEditorState, onAddOrRenamePattern, patternSelector]
+    [dispatchSchemaEditorState, onAddOrRenamePattern, patternSelector],
   );
 
   const handleEditPattern = useCallback(() => {
@@ -468,7 +468,7 @@ function PatternEditorRows({
 
 function useSelectorFocused(
   schemaEditorState: SchemaEditorState,
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>,
 ) {
   const { activeSelectorEditorScrollSignal } = schemaEditorState;
 
@@ -477,7 +477,7 @@ function useSelectorFocused(
       if (event.target instanceof HTMLElement) {
         const selectorElement = findAscendantHTMLElement(
           event.target,
-          (el) => !!el.dataset.typename
+          (el) => !!el.dataset.typename,
         );
         const kind = selectorElement?.dataset.kind;
         const typeName = selectorElement?.dataset.typename;
@@ -485,16 +485,16 @@ function useSelectorFocused(
 
         if ((kind === 'entity' || kind === 'value') && typeName) {
           dispatchSchemaEditorState(
-            new SchemaEditorActions.SetActiveSelector({ kind, typeName }, true, false)
+            new SchemaEditorActions.SetActiveSelector({ kind, typeName }, true, false),
           );
         } else if (kind === 'pattern' && patternName) {
           dispatchSchemaEditorState(
-            new SchemaEditorActions.SetActiveSelector({ kind, name: patternName }, true, false)
+            new SchemaEditorActions.SetActiveSelector({ kind, name: patternName }, true, false),
           );
         }
       }
     },
-    [dispatchSchemaEditorState]
+    [dispatchSchemaEditorState],
   );
   useWindowEventListener('focusin', listener);
 

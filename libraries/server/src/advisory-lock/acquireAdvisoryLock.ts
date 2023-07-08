@@ -14,7 +14,7 @@ export async function acquireAdvisoryLock(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   name: string,
-  options: AdvisoryLockOptions
+  options: AdvisoryLockOptions,
 ): PromiseResult<
   AdvisoryLockPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -42,7 +42,7 @@ export async function acquireAdvisoryLock(
     context,
     name,
     handle,
-    options.leaseDuration
+    options.leaseDuration,
   );
   if (acquireResult.isError()) return acquireResult;
   const { acquiredAt } = acquireResult.value;

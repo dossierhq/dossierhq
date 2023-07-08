@@ -51,12 +51,12 @@ function startExpressServer(server: Server, schema: AdminSchema, port: number) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return context as any;
       },
-    })
+    }),
   );
   const expressServer = app.listen(port);
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
   console.log(
-    'Tip: Provide headers in "Request Headers": { "insecure-auth-provider": "test", "insecure-auth-identifier": "john-smith" }'
+    'Tip: Provide headers in "Request Headers": { "insecure-auth-provider": "test", "insecure-auth-identifier": "john-smith" }',
   );
   return expressServer;
 }

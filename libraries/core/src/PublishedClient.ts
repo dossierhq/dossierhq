@@ -38,12 +38,12 @@ export interface PublishedClient<
     TPublishedEntity,
     TPublishedValueItem,
     TUniqueIndex
-  > = PublishedExceptionClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>
+  > = PublishedExceptionClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>,
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference | UniqueIndexReference<TUniqueIndex>
+    reference: EntityReference | UniqueIndexReference<TUniqueIndex>,
   ): PromiseResult<
     TPublishedEntity,
     | typeof ErrorType.BadRequest
@@ -53,7 +53,7 @@ export interface PublishedClient<
   >;
 
   getEntities(
-    references: EntityReference[]
+    references: EntityReference[],
   ): PromiseResult<
     Result<
       TPublishedEntity,
@@ -71,7 +71,7 @@ export interface PublishedClient<
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
     >,
-    options?: EntitySamplingOptions
+    options?: EntitySamplingOptions,
   ): PromiseResult<
     EntitySamplingPayload<TPublishedEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -83,7 +83,7 @@ export interface PublishedClient<
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
     >,
-    paging?: Paging
+    paging?: Paging,
   ): PromiseResult<
     Connection<Edge<TPublishedEntity, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -94,7 +94,7 @@ export interface PublishedClient<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
-    >
+    >,
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -106,18 +106,18 @@ export interface PublishedClient<
 export interface PublishedExceptionClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
   TPublishedValueItem extends ValueItem<string, object> = ValueItem,
-  TUniqueIndex extends string = string
+  TUniqueIndex extends string = string,
 > {
   client: Readonly<PublishedClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>>;
 
   getSchemaSpecification(): Promise<PublishedSchemaSpecification>;
 
   getEntity(
-    reference: EntityReference | UniqueIndexReference<TUniqueIndex>
+    reference: EntityReference | UniqueIndexReference<TUniqueIndex>,
   ): Promise<TPublishedEntity>;
 
   getEntities(
-    references: EntityReference[]
+    references: EntityReference[],
   ): Promise<
     Result<
       TPublishedEntity,
@@ -134,7 +134,7 @@ export interface PublishedExceptionClient<
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
     >,
-    options?: EntitySamplingOptions
+    options?: EntitySamplingOptions,
   ): Promise<EntitySamplingPayload<TPublishedEntity>>;
 
   searchEntities(
@@ -143,7 +143,7 @@ export interface PublishedExceptionClient<
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
     >,
-    paging?: Paging
+    paging?: Paging,
   ): Promise<Connection<Edge<TPublishedEntity, ErrorType>> | null>;
 
   getTotalCount(
@@ -151,7 +151,7 @@ export interface PublishedExceptionClient<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
-    >
+    >,
   ): Promise<number>;
 }
 
@@ -170,7 +170,7 @@ type MethodParameters<
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
     ValueItem<string, object>
-  > = PublishedClient
+  > = PublishedClient,
 > = Parameters<TClient[TName]>;
 type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
 type MethodReturnTypeWithoutPromise<
@@ -178,7 +178,7 @@ type MethodReturnTypeWithoutPromise<
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
     ValueItem<string, object>
-  > = PublishedClient
+  > = PublishedClient,
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
@@ -187,14 +187,14 @@ type MethodReturnTypeOk<
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
     ValueItem<string, object>
-  > = PublishedClient
+  > = PublishedClient,
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
   TName extends keyof PublishedClient,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
     ValueItem<string, object>
-  > = PublishedClient
+  > = PublishedClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface PublishedClientOperationArguments {
@@ -234,7 +234,7 @@ interface PublishedClientOperationReturnError {
 }
 
 export type PublishedClientOperation<
-  TName extends PublishedClientOperationName = PublishedClientOperationName
+  TName extends PublishedClientOperationName = PublishedClientOperationName,
 > = Operation<
   TName,
   PublishedClientOperationArguments[TName],
@@ -249,7 +249,7 @@ export type PublishedClientMiddleware<TContext extends ClientContext> = Middlewa
 >;
 
 export type PublishedClientJsonOperationArgs<
-  TName extends PublishedClientOperationName = PublishedClientOperationName
+  TName extends PublishedClientOperationName = PublishedClientOperationName,
 > = PublishedClientOperationArguments[TName];
 
 class BasePublishedClient<TContext extends ClientContext> implements PublishedClient {
@@ -268,7 +268,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getEntity(
-    reference: EntityReference
+    reference: EntityReference,
   ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntity]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getEntity,
@@ -278,7 +278,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getEntities(
-    references: EntityReference[]
+    references: EntityReference[],
   ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntities]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getEntities,
@@ -298,7 +298,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getTotalCount(
-    query?: PublishedQuery
+    query?: PublishedQuery,
   ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getTotalCount]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getTotalCount,
@@ -309,7 +309,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   sampleEntities(
     query?: PublishedQuery,
-    options?: EntitySamplingOptions
+    options?: EntitySamplingOptions,
   ): PromiseResult<
     EntitySamplingPayload<PublishedEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -323,7 +323,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   searchEntities(
     query?: PublishedSearchQuery,
-    paging?: Paging
+    paging?: Paging,
   ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.searchEntities]> {
     return this.executeOperation({
       name: PublishedClientOperationName.searchEntities,
@@ -337,7 +337,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   private async executeOperation<TName extends PublishedClientOperationName>(
-    operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>
+    operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>,
   ): PromiseResult<
     PublishedClientOperationReturnOk[TName],
     PublishedClientOperationReturnError[TName]
@@ -373,13 +373,13 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
   }
 
   async getEntity(
-    reference: EntityReference | UniqueIndexReference<string>
+    reference: EntityReference | UniqueIndexReference<string>,
   ): Promise<PublishedEntity<string, Record<string, unknown>, string>> {
     return (await this.client.getEntity(reference)).valueOrThrow();
   }
 
   async getEntities(
-    references: EntityReference[]
+    references: EntityReference[],
   ): Promise<
     Result<
       PublishedEntity<string, Record<string, unknown>, string>,
@@ -391,14 +391,14 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
 
   async sampleEntities(
     query?: PublishedQuery<string, string> | undefined,
-    options?: EntitySamplingOptions | undefined
+    options?: EntitySamplingOptions | undefined,
   ): Promise<EntitySamplingPayload<PublishedEntity<string, Record<string, unknown>, string>>> {
     return (await this.client.sampleEntities(query, options)).valueOrThrow();
   }
 
   async searchEntities(
     query?: PublishedSearchQuery<string> | undefined,
-    paging?: Paging | undefined
+    paging?: Paging | undefined,
   ): Promise<Connection<
     Edge<PublishedEntity<string, Record<string, unknown>, string>, ErrorType>
   > | null> {
@@ -415,7 +415,7 @@ export function createBasePublishedClient<
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
     ValueItem<string, object>
-  > = PublishedClient
+  > = PublishedClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: PublishedClientMiddleware<TContext>[];
@@ -426,7 +426,7 @@ export function createBasePublishedClient<
 export async function executePublishedClientOperationFromJson(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
   operationName: PublishedClientOperationName | string,
-  operationArgs: PublishedClientJsonOperationArgs
+  operationArgs: PublishedClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
   const name = operationName as PublishedClientOperationName;
   switch (name) {
@@ -470,10 +470,10 @@ export function convertJsonPublishedClientResult<
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
     ValueItem<string, object>
-  > = PublishedClient
+  > = PublishedClient,
 >(
   operationName: TName,
-  jsonResult: Result<unknown, ErrorType>
+  jsonResult: Result<unknown, ErrorType>,
 ): MethodReturnTypeWithoutPromise<TName, TClient> {
   if (jsonResult.isError()) {
     //TODO check expected types
@@ -487,14 +487,14 @@ export function convertJsonPublishedClientResult<
           (jsonItemResult) => {
             const itemResult = convertJsonResult(jsonItemResult);
             return itemResult.isOk() ? itemResult.map(convertJsonPublishedEntity) : itemResult;
-          }
-        )
+          },
+        ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case PublishedClientOperationName.getEntity: {
       const result: MethodReturnTypeWithoutPromise<'getEntity'> = ok(
-        convertJsonPublishedEntity(value as JsonPublishedEntity)
+        convertJsonPublishedEntity(value as JsonPublishedEntity),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -514,8 +514,8 @@ export function convertJsonPublishedClientResult<
       const result: MethodReturnTypeWithoutPromise<'searchEntities'> = ok(
         convertJsonConnection(
           value as JsonConnection<JsonEdge<JsonPublishedEntity, ErrorType>> | null,
-          convertJsonPublishedEntityEdge
-        )
+          convertJsonPublishedEntityEdge,
+        ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }

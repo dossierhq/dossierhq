@@ -20,7 +20,7 @@ async function renewLock_minimal({ server }: AdvisoryLockTestContext) {
 
   const renewResult = await adminClient.renewAdvisoryLock(
     'renewLock_minimal',
-    acquireResult.value.handle
+    acquireResult.value.handle,
   );
   assertOkResult(renewResult);
 
@@ -46,7 +46,7 @@ async function renewLock_errorInvalidHandle({ server }: AdvisoryLockTestContext)
 
   const renewResult = await adminClient.renewAdvisoryLock(
     'renewLock_errorInvalidName',
-    acquireResult.value.handle + 1
+    acquireResult.value.handle + 1,
   );
   assertErrorResult(renewResult, ErrorType.NotFound, 'No such name or handle exists');
 }

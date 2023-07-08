@@ -123,7 +123,7 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {},
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -144,7 +144,7 @@ describe('collectDataFromEntity', () => {
           string: 'Hello string world',
           strings: ['one', 'two', 'three'],
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "Hello string world one two three",
@@ -169,7 +169,7 @@ describe('collectDataFromEntity', () => {
             child: { type: 'EntityCodecValueOne', string: 'four' },
           },
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "one two three four",
@@ -198,7 +198,7 @@ describe('collectDataFromEntity', () => {
             createRichTextRootNode([createRichTextParagraphNode([createRichTextTextNode('two')])]),
           ],
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "one one one two Header text two",
@@ -224,7 +224,7 @@ describe('collectDataFromEntity', () => {
             { lat: 5, lng: 6 },
           ],
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -263,7 +263,7 @@ describe('collectDataFromEntity', () => {
             }),
           ]),
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -296,7 +296,7 @@ describe('collectDataFromEntity', () => {
           bars: [{ id: 'barId2' }, { id: 'barId3' }],
           reference: { id: 'unspecifiedId1' },
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -372,7 +372,7 @@ describe('collectDataFromEntity', () => {
         fields: {
           valueOne: { type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -414,7 +414,7 @@ describe('collectDataFromEntity', () => {
             createRichTextValueItemNode({ type: 'EntityCodecValueOne', bar: { id: 'bar3Id' } }),
           ]),
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "bar",
@@ -481,7 +481,7 @@ describe('collectDataFromEntity', () => {
           valueItem: { type: 'EntityCodecValueOne' },
           valueItems: [{ type: 'EntityCodecValueOne' }, { type: 'EntityCodecValueTwo' }],
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -506,7 +506,7 @@ describe('collectDataFromEntity', () => {
             createRichTextValueItemNode({ type: 'EntityCodecValueOne' }),
           ]),
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "",
@@ -529,7 +529,7 @@ describe('collectDataFromEntity', () => {
           slug: 'foo',
           slugs: ['foo', 'bar'],
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       {
         "fullTextSearchText": "foo foo bar",

@@ -18,7 +18,7 @@ import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 export async function publishedEntityGetOne(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference | UniqueIndexReference
+  reference: EntityReference | UniqueIndexReference,
 ): PromiseResult<
   DatabasePublishedEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

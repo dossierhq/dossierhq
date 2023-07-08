@@ -18,7 +18,7 @@ export async function publishedGetEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference | UniqueIndexReference
+  reference: EntityReference | UniqueIndexReference,
 ): PromiseResult<
   PublishedEntity,
   | typeof ErrorType.BadRequest

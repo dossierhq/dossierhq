@@ -117,7 +117,7 @@ function DraftItem({
       event.preventDefault();
       dispatchEditorState(new SchemaEditorActions.SetActiveSelector(selector, false, true));
     },
-    [dispatchEditorState, selector]
+    [dispatchEditorState, selector],
   );
   return (
     <Menu.Item>

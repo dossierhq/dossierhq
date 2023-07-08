@@ -18,7 +18,7 @@ export function BooleanFieldEditor({ value, validationIssues, dragHandle, onChan
     (event: ChangeEvent<HTMLInputElement>) => {
       onChange(event.target.checked);
     },
-    [onChange]
+    [onChange],
   );
   const handleClear = useCallback(() => onChange(null), [onChange]);
 

@@ -25,7 +25,7 @@ const PARAMETERS_REGEX = /\?(\d+)/g;
 export async function createBetterSqlite3Adapter(
   context: Context,
   database: Database,
-  options: SqliteDatabaseOptions
+  options: SqliteDatabaseOptions,
 ): PromiseResult<
   BetterSqlite3DatabaseAdapter,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -89,7 +89,7 @@ function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstra
 
 export function convertQueryParameters(
   query: string,
-  values: ColumnValue[] | undefined
+  values: ColumnValue[] | undefined,
 ): [string, Record<string, ColumnValue> | undefined] {
   if (!values || values.length === 0) {
     return [query, undefined];

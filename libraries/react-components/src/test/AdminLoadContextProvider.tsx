@@ -24,7 +24,7 @@ export function AdminLoadContextProvider({
 
   const adminClient = useMemo(
     () => createBackendAdminClient([...(adminClientMiddleware ?? []), cachingMiddleware]),
-    [adminClientMiddleware, cachingMiddleware]
+    [adminClientMiddleware, cachingMiddleware],
   );
 
   return (

@@ -21,7 +21,7 @@ export async function adminGetEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<
   Result<
     AdminEntity,
@@ -61,7 +61,7 @@ async function mapItem(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
-  values: DatabaseAdminEntityGetOnePayload | undefined
+  values: DatabaseAdminEntityGetOnePayload | undefined,
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.BadRequest

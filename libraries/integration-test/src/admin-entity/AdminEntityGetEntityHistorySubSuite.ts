@@ -61,7 +61,7 @@ async function getEntityHistory_updateAndPublish({ server }: AdminEntityTestCont
 
   const updateResult = await adminClient.updateEntity(
     { id, fields: { title: 'Updated title' } },
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(updateResult);
   const {
@@ -100,7 +100,7 @@ async function getEntityHistory_errorWrongAuthKey({ server }: AdminEntityTestCon
   const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
-    })
+    }),
   );
   assertOkResult(createResult);
   const {

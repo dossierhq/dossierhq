@@ -30,7 +30,7 @@ export function TextArea({
         'textarea',
         fixedSize && 'has-fixed-size',
         textStyle && toTextStyleClassName(textStyle),
-        className
+        className,
       )}
       readOnly={readOnly}
       style={style}

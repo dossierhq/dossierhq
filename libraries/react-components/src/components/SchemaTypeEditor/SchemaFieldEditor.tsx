@@ -47,7 +47,7 @@ const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
     display: list ? `${type} list` : type,
     type,
     list,
-  }))
+  })),
 );
 
 function fieldTypeValue(type: FieldType, list: boolean) {
@@ -77,27 +77,27 @@ export function SchemaFieldEditor({
           break;
       }
     },
-    [dispatchSchemaEditorState, fieldSelector, onAddOrRenameField]
+    [dispatchSchemaEditorState, fieldSelector, onAddOrRenameField],
   );
 
   const handleMatchPatternChange = useCallback(
     (value: string | null) =>
       dispatchSchemaEditorState(
-        new SchemaEditorActions.ChangeFieldMatchPattern(fieldSelector, value)
+        new SchemaEditorActions.ChangeFieldMatchPattern(fieldSelector, value),
       ),
-    [dispatchSchemaEditorState, fieldSelector]
+    [dispatchSchemaEditorState, fieldSelector],
   );
 
   const handleValuesChange = useCallback(
     (value: { value: string }[]) =>
       dispatchSchemaEditorState(new SchemaEditorActions.ChangeFieldValues(fieldSelector, value)),
-    [dispatchSchemaEditorState, fieldSelector]
+    [dispatchSchemaEditorState, fieldSelector],
   );
 
   const handleIndexChange = useCallback(
     (value: string | null) =>
       dispatchSchemaEditorState(new SchemaEditorActions.ChangeFieldIndex(fieldSelector, value)),
-    [dispatchSchemaEditorState, fieldSelector]
+    [dispatchSchemaEditorState, fieldSelector],
   );
 
   const dropDownItems = canDeleteOrRenameField
@@ -146,7 +146,7 @@ export function SchemaFieldEditor({
               checked={fieldDraft.required}
               onChange={(event) =>
                 dispatchSchemaEditorState(
-                  new SchemaEditorActions.ChangeFieldRequired(fieldSelector, event.target.checked)
+                  new SchemaEditorActions.ChangeFieldRequired(fieldSelector, event.target.checked),
                 )
               }
             >
@@ -162,7 +162,7 @@ export function SchemaFieldEditor({
               disabled={!canChangeAdminOnly}
               onChange={(event) =>
                 dispatchSchemaEditorState(
-                  new SchemaEditorActions.ChangeFieldAdminOnly(fieldSelector, event.target.checked)
+                  new SchemaEditorActions.ChangeFieldAdminOnly(fieldSelector, event.target.checked),
                 )
               }
             >
@@ -203,8 +203,8 @@ export function SchemaFieldEditor({
                       dispatchSchemaEditorState(
                         new SchemaEditorActions.ChangeFieldMultiline(
                           fieldSelector,
-                          event.target.checked
-                        )
+                          event.target.checked,
+                        ),
                       )
                     }
                   >
@@ -415,11 +415,11 @@ function FieldTypeSelector({
       const item = FIELD_TYPE_ITEMS.find((it) => it.value === event.currentTarget.value);
       if (item) {
         dispatchSchemaEditorState(
-          new SchemaEditorActions.ChangeFieldType(fieldSelector, item.type, item.list)
+          new SchemaEditorActions.ChangeFieldType(fieldSelector, item.type, item.list),
         );
       }
     },
-    [dispatchSchemaEditorState, fieldSelector]
+    [dispatchSchemaEditorState, fieldSelector],
   );
 
   return (

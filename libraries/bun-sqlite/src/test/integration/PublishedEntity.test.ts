@@ -44,5 +44,5 @@ registerTestSuite(
     after: async () => {
       //empty
     },
-  })
+  }),
 );

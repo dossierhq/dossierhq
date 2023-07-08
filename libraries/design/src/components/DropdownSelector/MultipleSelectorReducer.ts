@@ -53,7 +53,7 @@ export function initializeMultipleSelectorState<TItem extends MultipleSelectorIt
 
 export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
   state: Readonly<MultipleSelectorState<TItem>>,
-  action: MultipleSelectorStateAction<TItem>
+  action: MultipleSelectorStateAction<TItem>,
 ): Readonly<MultipleSelectorState<TItem>> {
   let newState = action.reduce(state);
   if (newState !== state) {

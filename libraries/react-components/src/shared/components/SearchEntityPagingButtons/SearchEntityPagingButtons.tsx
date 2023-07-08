@@ -18,7 +18,7 @@ export function SearchEntityPagingButtons({ searchEntityState, dispatchSearchEnt
     (paging: Paging, pagingAction: 'first-page' | 'prev-page' | 'next-page' | 'last-page') => {
       dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(paging, pagingAction));
     },
-    [dispatchSearchEntityState]
+    [dispatchSearchEntityState],
   );
 
   return (

@@ -7,7 +7,7 @@ interface Props {
   pagingCount: number;
   onPagingChange: (
     paging: Paging,
-    pagingAction: 'first-page' | 'prev-page' | 'next-page' | 'last-page'
+    pagingAction: 'first-page' | 'prev-page' | 'next-page' | 'last-page',
   ) => void;
 }
 
@@ -26,7 +26,7 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
               last: pagingCount,
               before: connection.pageInfo.startCursor,
             },
-            'prev-page'
+            'prev-page',
           )
       : undefined;
   }, [
@@ -44,7 +44,7 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
               first: pagingCount,
               after: connection.pageInfo.endCursor,
             },
-            'next-page'
+            'next-page',
           )
       : undefined;
   }, [

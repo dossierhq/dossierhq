@@ -21,7 +21,7 @@ import type {
 export interface PublishedEntity<
   TType extends string = string,
   TFields extends object = Record<string, unknown>,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > {
   /** UUID */
   id: string;
@@ -31,7 +31,7 @@ export interface PublishedEntity<
 
 export interface PublishedEntityInfo<
   TType extends string = string,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > {
   type: TType;
   name: string;
@@ -118,7 +118,7 @@ export interface BoundingBox {
 
 export type ValueItem<
   TType extends string = string,
-  TFields extends object = Record<string, unknown>
+  TFields extends object = Record<string, unknown>,
 > = {
   type: TType;
 } & TFields;
@@ -140,7 +140,7 @@ export type AdminEntityStatus = (typeof AdminEntityStatus)[keyof typeof AdminEnt
 export interface AdminEntity<
   TType extends string = string,
   TFields extends object = Record<string, unknown>,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > {
   /** UUID */
   id: string;
@@ -290,7 +290,7 @@ export type AdminQueryOrder = keyof typeof AdminQueryOrder;
 export interface AdminQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
@@ -306,7 +306,7 @@ export interface AdminQuery<
 export interface AdminSearchQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > extends AdminQuery<TEntityType, TValueType, TAuthKey> {
   order?: AdminQueryOrder;
   reverse?: boolean;
@@ -321,7 +321,7 @@ export type PublishedQueryOrder = (typeof PublishedQueryOrder)[keyof typeof Publ
 export interface PublishedQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
@@ -335,7 +335,7 @@ export interface PublishedQuery<
 export interface PublishedSearchQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
-  TAuthKey extends string = string
+  TAuthKey extends string = string,
 > extends PublishedQuery<TEntityType, TValueType, TAuthKey> {
   order?: PublishedQueryOrder;
   reverse?: boolean;

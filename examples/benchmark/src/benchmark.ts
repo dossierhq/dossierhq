@@ -53,7 +53,7 @@ function randomGenerate<T>(values: Array<T | (() => T)>, weights: number[]) {
 
 async function randomGenerateResult<T>(
   values: Array<Result<T, ErrorType> | (() => PromiseResult<T, ErrorType>)>,
-  weights: number[]
+  weights: number[],
 ): PromiseResult<T, ErrorType> {
   const selected = randomWeightedSelect(values, weights);
   return typeof selected === 'function'
@@ -65,14 +65,14 @@ function randomNullUndefined<T>(
   value: T | (() => T),
   valueWeight: number,
   nullWeight: number,
-  undefinedWeight: number
+  undefinedWeight: number,
 ): T | undefined | null {
   return randomGenerate([value, null, undefined], [valueWeight, nullWeight, undefinedWeight]);
 }
 
 async function randomReference(
   adminClient: AdminClient,
-  query?: AdminQuery
+  query?: AdminQuery,
 ): PromiseResult<
   EntityReference,
   | typeof ErrorType.NotFound
@@ -87,7 +87,7 @@ async function randomReference(
 
 async function randomAdminEntity(
   adminClient: AdminClient,
-  query?: AdminQuery
+  query?: AdminQuery,
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.NotFound
@@ -106,7 +106,7 @@ async function randomAdminEntity(
 async function createEntity(
   adminClient: AdminClient,
   type: string,
-  options?: CreateEntityOptions
+  options?: CreateEntityOptions,
 ): PromiseResult<AdminEntityCreate, ErrorType> {
   if (type === 'Organization') {
     return ok(createOrganization(options));
@@ -120,7 +120,7 @@ async function createEntity(
 async function updateEntity(
   adminClient: AdminClient,
   type: string,
-  id: string
+  id: string,
 ): PromiseResult<AdminEntityUpdate, ErrorType> {
   const createResult = await createEntity(adminClient, type);
   if (createResult.isError()) return createResult;
@@ -150,7 +150,7 @@ function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
 
 async function createPerson(
   adminClient: AdminClient,
-  options?: CreateEntityOptions
+  options?: CreateEntityOptions,
 ): PromiseResult<AdminEntityCreate, ErrorType> {
   const organizationResult = await randomGenerateResult(
     [
@@ -163,7 +163,7 @@ async function createPerson(
             : undefined,
         }),
     ],
-    [10, 90]
+    [10, 90],
   );
   if (organizationResult.isError()) return organizationResult;
 
@@ -176,7 +176,7 @@ async function createPerson(
         address: createPostalAddress(),
         organization: organizationResult.value,
       },
-    })
+    }),
   );
 }
 
@@ -192,7 +192,7 @@ function createPostalAddress() {
 
 async function testCreateOrganizationEntities(
   adminClient: AdminClient,
-  options: BenchPressOptions
+  options: BenchPressOptions,
 ) {
   return await runTest(async (clock) => {
     const entity = createOrganization();
@@ -286,7 +286,7 @@ async function testArchiveEntity(adminClient: AdminClient, options: BenchPressOp
 
       if (randomResult.value.info.type === 'Person' && randomResult.value.fields.organization) {
         const referencedOrgResult = await adminClient.getEntity(
-          randomResult.value.fields.organization as EntityReference
+          randomResult.value.fields.organization as EntityReference,
         );
         if (referencedOrgResult.isError()) return false;
 
@@ -330,7 +330,7 @@ async function testGetAdminEntity(adminClient: AdminClient, options: BenchPressO
 
 async function testSearchAdminEntitiesAnyFirst50(
   adminClient: AdminClient,
-  options: BenchPressOptions
+  options: BenchPressOptions,
 ) {
   return await runTest(async (clock) => {
     clock.start();
@@ -346,7 +346,7 @@ async function testSearchAdminEntitiesAnyFirst50(
 async function report(
   resultPromise: Promise<BenchPressResult>,
   baseName: string,
-  tsvFilename: string
+  tsvFilename: string,
 ) {
   const result = await resultPromise;
   await reportResult(result, {
@@ -364,7 +364,7 @@ async function runTests(
   variant: string,
   tsvFilename: string,
   server: Server,
-  adminClient: AdminClient
+  adminClient: AdminClient,
 ) {
   const warmup = 30;
   const iterations = 1_000;
@@ -380,7 +380,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-create-entity`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -394,7 +394,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-create-entity-organization`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -408,7 +408,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-create-entity-person`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -422,7 +422,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-create-publish-entity`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -436,7 +436,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-edit-entity`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -450,7 +450,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-archive-entity`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -464,7 +464,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-get-admin-entity`,
-    tsvFilename
+    tsvFilename,
   );
 
   (await server.optimizeDatabase({ all: true })).throwIfError();
@@ -478,7 +478,7 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-search-admin-entities-any-first-50`,
-    tsvFilename
+    tsvFilename,
   );
 }
 

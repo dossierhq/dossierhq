@@ -144,7 +144,7 @@ async function getTotalCount_statusDraftArchived({
     .getMainPrincipalAdminEntities()
     .filter(
       (it) =>
-        it.info.status === AdminEntityStatus.draft || it.info.status === AdminEntityStatus.archived
+        it.info.status === AdminEntityStatus.draft || it.info.status === AdminEntityStatus.archived,
     );
   const result = await adminClientForMainPrincipal(server).getTotalCount({
     entityTypes: ['ReadOnly'],
@@ -162,7 +162,7 @@ async function getTotalCount_statusModifiedPublished({
     .filter(
       (it) =>
         it.info.status === AdminEntityStatus.modified ||
-        it.info.status === AdminEntityStatus.published
+        it.info.status === AdminEntityStatus.published,
     );
   const result = await adminClientForMainPrincipal(server).getTotalCount({
     entityTypes: ['ReadOnly'],
@@ -198,7 +198,7 @@ async function getTotalCount_linksToOneReference({ server }: AdminEntityTestCont
   } = titleOnlyResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } })
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
 
@@ -229,7 +229,7 @@ async function getTotalCount_linksToTwoReferencesFromOneEntity({ server }: Admin
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
-    })
+    }),
   );
   assertOkResult(referenceResult);
 
@@ -246,7 +246,7 @@ async function getTotalCount_linksFromOneReference({ server }: AdminEntityTestCo
   } = titleOnlyResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } })
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -282,7 +282,7 @@ async function getTotalCount_linksFromTwoReferencesFromOneEntity({
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
-    })
+    }),
   );
   assertOkResult(referenceResult);
   const {
@@ -301,7 +301,7 @@ async function getTotalCount_boundingBoxOneInside({ server }: AdminEntityTestCon
     lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
   };
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
 

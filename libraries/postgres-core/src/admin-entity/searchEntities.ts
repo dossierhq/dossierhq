@@ -18,7 +18,7 @@ export async function adminEntitySearchEntities(
   context: TransactionContext,
   query: AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
-  resolvedAuthKeys: ResolvedAuthKey[]
+  resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<
   DatabaseAdminEntitySearchPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -28,7 +28,7 @@ export async function adminEntitySearchEntities(
     schema,
     query,
     paging,
-    resolvedAuthKeys
+    resolvedAuthKeys,
   );
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;

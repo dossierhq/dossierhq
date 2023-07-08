@@ -43,10 +43,10 @@ export function EntityTypeFieldEditor({
       if (!value) return;
       // open entity asynchronously to not fight with the "click to activate entity" functionality
       setTimeout(() =>
-        dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id }))
+        dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id })),
       );
     },
-    [dispatchEntityEditorState, value]
+    [dispatchEntityEditorState, value],
   );
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
 
@@ -109,10 +109,10 @@ export function EntityTypeFieldEditorWithoutClear({
       if (!value) return;
       // open entity asynchronously to not fight with the "click to activate entity" functionality
       setTimeout(() =>
-        dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id }))
+        dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id })),
       );
     },
-    [dispatchEntityEditorState, value]
+    [dispatchEntityEditorState, value],
   );
 
   if (!entity) return null;
@@ -164,7 +164,7 @@ function AddEntityButton({
       onEntitySelected({ id: item.id });
       setShowSelector(false);
     },
-    [onEntitySelected]
+    [onEntitySelected],
   );
 
   const handleSelectClick = useCallback(() => setShowSelector(true), []);

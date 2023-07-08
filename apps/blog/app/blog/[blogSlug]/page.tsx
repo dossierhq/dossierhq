@@ -40,7 +40,7 @@ export async function generateMetadata({
         {
           url: getOpenGraphImageUrlForLimitFit(
             getCloudinaryConfig(),
-            blogPost.fields.hero.publicId
+            blogPost.fields.hero.publicId,
           ),
           alt: blogPost.fields.hero.alt ?? undefined,
         },
@@ -82,7 +82,7 @@ export default async function Page({ params }: { params: { blogSlug: string } })
           author: authors.map((it) => ({ '@type': 'Person', name: it.fields.name })),
           image: getJsonLdImageUrlsForLimitFit(
             getCloudinaryConfig(),
-            blogPost.fields.hero.publicId
+            blogPost.fields.hero.publicId,
           ),
         }}
       />

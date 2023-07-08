@@ -96,7 +96,7 @@ export function toSpacingClassName({
     valueClassName('py-', paddingVertical),
     valueClassName('g-', gap),
     valueClassName('gc-', columnGap),
-    valueClassName('gr-', rowGap)
+    valueClassName('gr-', rowGap),
   );
 }
 
@@ -109,12 +109,12 @@ export function toSizeClassName({ width, height, maxWidth, aspectRatio }: SizePr
     width !== undefined && widthToClassNameMap[width],
     height !== undefined && heightToClassNameMap[height],
     maxWidth !== undefined && maxWidthToClassNameMap[maxWidth],
-    aspectRatio !== undefined && aspectRatioClassNameMap[aspectRatio]
+    aspectRatio !== undefined && aspectRatioClassNameMap[aspectRatio],
   );
 }
 
 export function extractLayoutProps<T extends LayoutProps>(
-  props: T
+  props: T,
 ): { layoutProps: LayoutProps; otherProps: Omit<T, keyof LayoutProps> } {
   const {
     margin,

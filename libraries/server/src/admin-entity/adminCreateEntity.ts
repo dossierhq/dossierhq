@@ -29,7 +29,7 @@ export async function adminCreateEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityCreate,
-  options: AdminEntityMutationOptions | undefined
+  options: AdminEntityMutationOptions | undefined,
 ): PromiseResult<
   AdminEntityCreatePayload,
   | typeof ErrorType.BadRequest
@@ -41,7 +41,7 @@ export async function adminCreateEntity(
   const validationIssue = validateEntityInfoForCreate(adminSchema, ['entity'], entity);
   if (validationIssue) {
     return notOk.BadRequest(
-      `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
+      `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
     );
   }
 
@@ -54,7 +54,7 @@ export async function adminCreateEntity(
   const resolvedAuthKeyResult = await authResolveAuthorizationKey(
     authorizationAdapter,
     context,
-    createEntity.info.authKey
+    createEntity.info.authKey,
   );
   if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
 
@@ -64,7 +64,7 @@ export async function adminCreateEntity(
     databaseAdapter,
     context,
     entitySpec,
-    createEntity
+    createEntity,
   );
   if (encodeResult.isError()) return encodeResult;
   const encodeEntityResult = encodeResult.value;
@@ -85,7 +85,7 @@ export async function adminCreateEntity(
       context,
       { entityInternalId: createResult.value.entityInternalId },
       encodeEntityResult.entityIndexes,
-      true
+      true,
     );
     if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
@@ -111,7 +111,7 @@ export async function adminCreateEntity(
       createResult.value,
       true,
       encodeEntityResult.uniqueIndexValues,
-      null // TODO publishEntityAfterMutation is updating the values
+      null, // TODO publishEntityAfterMutation is updating the values
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;
 
@@ -122,7 +122,7 @@ export async function adminCreateEntity(
         authorizationAdapter,
         databaseAdapter,
         context,
-        { id, version: result.info.version }
+        { id, version: result.info.version },
       );
       if (publishResult.isError()) return publishResult;
 

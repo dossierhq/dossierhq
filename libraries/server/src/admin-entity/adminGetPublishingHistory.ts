@@ -9,7 +9,7 @@ export async function adminGetPublishingHistory(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   PublishingHistory,
   | typeof ErrorType.BadRequest
@@ -19,7 +19,7 @@ export async function adminGetPublishingHistory(
 > {
   const entityInfoResult = await databaseAdapter.adminEntityPublishingHistoryGetEntityInfo(
     context,
-    reference
+    reference,
   );
   if (entityInfoResult.isError()) {
     return entityInfoResult;

@@ -10,7 +10,7 @@ export async function advisoryLockRelease(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   name: string,
-  handle: number
+  handle: number,
 ): PromiseResult<void, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
   const query = buildPostgresSqlQuery(({ sql }) => {
     sql`DELETE FROM advisory_locks WHERE name = ${name} AND handle = ${handle} RETURNING id`;
@@ -19,7 +19,7 @@ export async function advisoryLockRelease(
   const result = await queryNoneOrOne<Pick<AdvisoryLocksTable, 'id'>>(
     databaseAdapter,
     context,
-    query
+    query,
   );
   if (result.isError()) return result;
 

@@ -18,10 +18,10 @@ describe('publishedSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: true, entities: [] }))
+      Promise.resolve(ok({ hasMore: true, entities: [] })),
     );
 
     const result = await publishedSearchEntities(
@@ -30,7 +30,7 @@ describe('publishedSearchEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      undefined,
     );
 
     expectResultValue(result, null);
@@ -83,15 +83,15 @@ describe('publishedSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
       Promise.resolve(
         ok({
           hasMore: false,
           entities: [createDatabaseEntity()],
-        })
-      )
+        }),
+      ),
     );
 
     const result = await publishedSearchEntities(
@@ -100,7 +100,7 @@ describe('publishedSearchEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      undefined,
     );
 
     expect(result.valueOrThrow()).toMatchInlineSnapshot(`
@@ -182,14 +182,14 @@ describe('publishedSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: false, entities: [createDatabaseEntity(2)] }))
+      Promise.resolve(ok({ hasMore: false, entities: [createDatabaseEntity(2)] })),
     );
     // check if hasPreviousPage
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: true, entities: [] }))
+      Promise.resolve(ok({ hasMore: true, entities: [] })),
     );
 
     const result = await publishedSearchEntities(
@@ -198,7 +198,7 @@ describe('publishedSearchEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { after: 'cursor-1' }
+      { after: 'cursor-1' },
     );
 
     expect(result.valueOrThrow()).toMatchInlineSnapshot(`

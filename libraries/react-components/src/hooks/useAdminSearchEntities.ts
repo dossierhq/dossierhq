@@ -25,18 +25,18 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
 export function useAdminSearchEntities<TAdminEntity extends AdminEntity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: AdminSearchQuery | undefined,
-  paging?: Paging
+  paging?: Paging,
 ): {
   connection: FetcherData<TAdminEntity> | undefined;
   connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query, paging]: FetcherKey) => fetchSearchEntities(adminClient, query, paging),
-    [adminClient]
+    [adminClient],
   );
   const { data, error } = useSWR<FetcherData<TAdminEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.adminSearchEntities(query, paging) : null,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('useAdminSearchEntities updated values', {
@@ -52,7 +52,7 @@ export function useAdminSearchEntities<TAdminEntity extends AdminEntity<string, 
 async function fetchSearchEntities<TAdminEntity extends AdminEntity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: FetcherKey[1],
-  paging: FetcherKey[2]
+  paging: FetcherKey[2],
 ): Promise<FetcherData<TAdminEntity>> {
   const result = await adminClient.searchEntities(query, paging);
   if (result.isError()) {

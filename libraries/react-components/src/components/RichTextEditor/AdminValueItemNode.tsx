@@ -39,7 +39,7 @@ export function $createAdminValueItemNode(data: ValueItem): AdminValueItemNode {
 }
 
 export function $isAdminValueItemNode(
-  node: LexicalNode | undefined | null
+  node: LexicalNode | undefined | null,
 ): node is AdminValueItemNode {
   return node instanceof AdminValueItemNode;
 }
@@ -75,7 +75,7 @@ function AdminValueItemComponent({
         }
       });
     },
-    [editor, nodeKey]
+    [editor, nodeKey],
   );
 
   const validationIssues = useMemo(() => {
@@ -111,7 +111,7 @@ function AdminValueItemComponent({
 function validateItemValue(
   adminSchema: AdminSchema | undefined,
   adminOnly: boolean,
-  value: ValueItem
+  value: ValueItem,
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
   if (adminSchema) {

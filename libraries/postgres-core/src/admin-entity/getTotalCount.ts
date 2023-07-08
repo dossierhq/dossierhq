@@ -10,7 +10,7 @@ export async function adminEntitySearchTotalCount(
   schema: AdminSchema,
   context: TransactionContext,
   query: AdminQuery | undefined,
-  resolvedAuthKeys: ResolvedAuthKey[]
+  resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);
   if (sqlQuery.isError()) {

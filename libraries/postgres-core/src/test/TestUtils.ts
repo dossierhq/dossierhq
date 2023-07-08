@@ -28,20 +28,20 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     databasePerformance: DatabasePerformanceCallbacks | null,
-    transaction: Transaction | null
+    transaction: Transaction | null,
   ) {
     super(databaseAdapter, logger, databasePerformance, transaction);
   }
 
   protected copyWithNewTransaction(
     databaseAdapter: DatabaseAdapter,
-    transaction: Transaction
+    transaction: Transaction,
   ): TransactionContext {
     return new DummyContextImpl(
       databaseAdapter,
       this.logger,
       this.databasePerformance,
-      transaction
+      transaction,
     );
   }
 }
@@ -88,7 +88,7 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
 
   databaseAdapter.base64Encode.mockImplementation((value) => Buffer.from(value).toString('base64'));
   databaseAdapter.base64Decode.mockImplementation((value) =>
-    Buffer.from(value, 'base64').toString('utf8')
+    Buffer.from(value, 'base64').toString('utf8'),
   );
 
   return databaseAdapter;
@@ -107,7 +107,7 @@ export function createTestAdminSchema(): AdminSchema {
 
 export function resolvePaging(
   paging: Paging | undefined,
-  inclusive?: { afterInclusive?: boolean; beforeInclusive?: boolean }
+  inclusive?: { afterInclusive?: boolean; beforeInclusive?: boolean },
 ): DatabasePagingInfo {
   const pagingInfo = getPagingInfo(paging).valueOrThrow();
   return {

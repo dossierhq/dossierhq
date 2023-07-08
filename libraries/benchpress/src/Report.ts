@@ -15,7 +15,7 @@ export interface BenchPressReportOptions {
 
 export async function reportResult(
   result: BenchPressResult,
-  options: BenchPressReportOptions
+  options: BenchPressReportOptions,
 ): Promise<void> {
   const processed = processResults(result, options);
 
@@ -33,7 +33,7 @@ export async function reportResult(
 function reportResultConsole(processed: BenchPressProcessedResult) {
   console.log();
   console.log(
-    `Number of successful iterations: ${processed.successCount} / ${processed.iterationCount}`
+    `Number of successful iterations: ${processed.successCount} / ${processed.iterationCount}`,
   );
   console.log(`Number of failed iterations: ${processed.failureCount}`);
   console.log(`Duration of successful iterations: ${processed.successDuration_ms.toFixed(2)} ms`);
@@ -46,7 +46,7 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
       console.log(
         `${name}: ${duration_ms.toFixed(2)} ms (${ms_to_hz(duration_ms).toFixed(2)} ops/s)${
           suffix ? ' ' + suffix : ''
-        }`
+        }`,
       );
     }
   }
@@ -54,7 +54,7 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
   logMetric(
     'Avg iteration',
     processed.mean_ms,
-    `(std dev: ${processed.standardDeviation_ms.toFixed(2)} ms)`
+    `(std dev: ${processed.standardDeviation_ms.toFixed(2)} ms)`,
   );
   logMetric('Min iteration', processed.min_ms);
   for (const [percentile, duration_ms] of Object.entries(processed.percentiles_ms)) {
@@ -65,7 +65,7 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
 
 async function reportResultTsv(
   processed: BenchPressProcessedResult,
-  options: BenchPressReportOptions
+  options: BenchPressReportOptions,
 ) {
   const header =
     [
@@ -98,7 +98,7 @@ async function reportResultTsv(
     const existingData = await fs.promises.readFile(tsvPath, 'utf8');
     if (!existingData.startsWith(header)) {
       throw new Error(
-        `Existing file (${tsvPath}) doesn't start with the expected header: ${header}`
+        `Existing file (${tsvPath}) doesn't start with the expected header: ${header}`,
       );
     }
     await fs.promises.writeFile(tsvPath, `${existingData}${row}`);
@@ -112,7 +112,7 @@ async function reportResultTsv(
 
 async function reportResultJson(
   processed: BenchPressProcessedResult,
-  options: BenchPressReportOptions
+  options: BenchPressReportOptions,
 ) {
   const percentileData: Record<string, number | null> = {};
   for (const [percentile, duration_ms] of Object.entries(processed.percentiles_ms)) {
@@ -141,7 +141,7 @@ async function reportResultJson(
 
 async function reportResultGnuPlot(
   processed: BenchPressProcessedResult,
-  options: BenchPressReportOptions
+  options: BenchPressReportOptions,
 ) {
   const gnuPlotScriptPath = path.join(options.folder, `${options.baseName}.gnu`);
   const gnuPlotDataPath = path.join(options.folder, `${options.baseName}.dat`);
@@ -204,7 +204,7 @@ set output '${path.basename(gnuPlotPngPath)}'
 async function reportResultGnuPlotDumb(
   processed: BenchPressProcessedResult,
   options: BenchPressReportOptions,
-  gnuPlotDataPath: string
+  gnuPlotDataPath: string,
 ) {
   const dumbGnuPlotScript = `set term dumb size 120, 30 ansirgb nofeed
 set key horizontal outside bottom center

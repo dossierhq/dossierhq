@@ -14,7 +14,7 @@ export async function adminArchiveEntity(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   AdminEntityArchivePayload,
   | typeof ErrorType.BadRequest
@@ -26,7 +26,7 @@ export async function adminArchiveEntity(
     // Step 1: Get entity info
     const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
       context,
-      reference
+      reference,
     );
     if (entityInfoResult.isError()) {
       return entityInfoResult;
@@ -63,7 +63,7 @@ export async function adminArchiveEntity(
       AdminEntityStatus.archived,
       {
         entityInternalId,
-      }
+      },
     );
     if (archiveResult.isError()) {
       return archiveResult;

@@ -14,7 +14,7 @@ let serverConnectionPromise: Promise<{ server: Server }> | null = null;
 export async function getSessionContextForRequest(
   server: Server,
   _req: NextApiRequest,
-  databasePerformance: DatabasePerformanceCallbacks
+  databasePerformance: DatabasePerformanceCallbacks,
 ): PromiseResult<
   { adminClient: AdminClient; publishedClient: PublishedClient },
   typeof ErrorType.NotAuthenticated
@@ -29,7 +29,7 @@ export async function getSessionContextForRequest(
   });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
-      `Failed authentication: ${sessionResult.error}: ${sessionResult.message}`
+      `Failed authentication: ${sessionResult.error}: ${sessionResult.message}`,
     );
   }
   const { context } = sessionResult.value;

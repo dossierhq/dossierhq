@@ -2,7 +2,7 @@ type Query = Record<string, string | string[] | undefined>;
 
 export function encodeObjectToURLSearchParams(
   params: object | undefined,
-  options?: { keepEmptyObjects: boolean }
+  options?: { keepEmptyObjects: boolean },
 ): URLSearchParams {
   const result = new URLSearchParams();
   const removeEmptyObjects = !options?.keepEmptyObjects;
@@ -27,7 +27,7 @@ export function encodeObjectToURLSearchParams(
 
 export function decodeURLSearchParamsParam<TReturn>(
   urlSearchParams: Readonly<URLSearchParams> | Query | undefined,
-  name: string
+  name: string,
 ): TReturn | undefined {
   if (!urlSearchParams) {
     return undefined;

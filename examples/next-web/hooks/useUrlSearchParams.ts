@@ -20,7 +20,7 @@ export function useUrlSearchParams() {
     (urlSearchParams: URLSearchParams) => {
       router.replace({ pathname: router.pathname, query: urlSearchParams.toString() });
     },
-    [router]
+    [router],
   );
 
   return { urlSearchParams, onUrlSearchParamsChange };

@@ -14,7 +14,7 @@ export async function adminUnarchiveEntity(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   AdminEntityUnarchivePayload,
   | typeof ErrorType.BadRequest
@@ -26,7 +26,7 @@ export async function adminUnarchiveEntity(
     // Step 1: Get entity info
     const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
       context,
-      reference
+      reference,
     );
     if (entityInfoResult.isError()) {
       return entityInfoResult;
@@ -60,7 +60,7 @@ export async function adminUnarchiveEntity(
         result.status,
         {
           entityInternalId,
-        }
+        },
       );
       if (unarchiveResult.isError()) {
         return unarchiveResult;

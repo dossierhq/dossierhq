@@ -38,7 +38,7 @@ export function createRichTextRootNode(children: RichTextNode[]): RichText {
 
 export function createRichTextHeadingNode(
   tag: HeadingTagType,
-  children: RichTextNode[]
+  children: RichTextNode[],
 ): RichTextHeadingNode {
   return {
     direction: 'ltr',
@@ -64,7 +64,7 @@ export function createRichTextParagraphNode(children: RichTextNode[]): RichTextP
 
 export function createRichTextTextNode(
   text: string,
-  options?: { format?: TextFormatType[] }
+  options?: { format?: TextFormatType[] },
 ): RichTextTextNode {
   let formatValue = 0;
   if (options?.format) {
@@ -104,7 +104,7 @@ export function createRichTextTabNode(): RichTextTabNode {
 
 export function createRichTextTextAndWhitespaceNodes(
   text: string,
-  options?: { format?: TextFormatType[] }
+  options?: { format?: TextFormatType[] },
 ): (RichTextTextNode | RichTextLineBreakNode | RichTextTabNode)[] {
   if (!(text.includes('\n') || text.includes('\r') || text.includes('\t'))) {
     return [createRichTextTextNode(text, options)];
@@ -129,7 +129,7 @@ export function createRichTextEntityNode(reference: EntityReference): RichTextEn
 
 export function createRichTextEntityLinkNode(
   reference: EntityReference,
-  children: RichTextNode[]
+  children: RichTextNode[],
 ): RichTextEntityLinkNode {
   const { id } = reference;
   return {
@@ -145,7 +145,7 @@ export function createRichTextEntityLinkNode(
 
 export function createRichTextListNode(
   listType: RichTextListNode['listType'],
-  children: RichTextNode[]
+  children: RichTextNode[],
 ): RichTextListNode {
   return {
     direction: 'ltr',
@@ -163,7 +163,7 @@ export function createRichTextListNode(
 export function createRichTextListItemNode(
   value: number,
   checked: boolean | undefined,
-  children: RichTextNode[]
+  children: RichTextNode[],
 ): RichTextListItemNode {
   return {
     direction: 'ltr',
@@ -178,7 +178,7 @@ export function createRichTextListItemNode(
 }
 
 export function createRichTextValueItemNode<T extends ValueItem<string, object>>(
-  data: T
+  data: T,
 ): RichTextValueItemNode {
   return { type: RichTextNodeType.valueItem, data, format: '', version: 1 };
 }

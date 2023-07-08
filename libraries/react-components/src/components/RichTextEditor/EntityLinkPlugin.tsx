@@ -13,7 +13,7 @@ export function EntityLinkPlugin(): null {
   useEffect(() => {
     if (!editor.hasNodes([AdminEntityLinkNode])) {
       throw new Error(
-        'EntityLinkPlugin: AdminEntityLinkNode not registered on editor (initialConfig.nodes)'
+        'EntityLinkPlugin: AdminEntityLinkNode not registered on editor (initialConfig.nodes)',
       );
     }
 
@@ -23,7 +23,7 @@ export function EntityLinkPlugin(): null {
         toggleEntityLink(payload);
         return true;
       },
-      COMMAND_PRIORITY_EDITOR
+      COMMAND_PRIORITY_EDITOR,
     );
   }, [editor]);
 

@@ -107,7 +107,7 @@ export interface SqliteDatabaseOptimizationOptions extends DatabaseOptimizationO
 export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
   sqliteAdapter: SqliteDatabaseAdapter,
-  options: SqliteDatabaseOptions
+  options: SqliteDatabaseOptions,
 ): PromiseResult<
   DatabaseAdapter<SqliteDatabaseOptimizationOptions>,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -124,7 +124,7 @@ export async function createSqliteDatabaseAdapterAdapter(
     const migrationResult = await migrateDatabaseIfNecessary(
       database,
       initializationContext,
-      options
+      options,
     );
     if (migrationResult.isError()) return migrationResult;
   } else {
@@ -136,7 +136,7 @@ export async function createSqliteDatabaseAdapterAdapter(
     const journalModeResult = await setJournalMode(
       database,
       initializationContext,
-      options.journalMode
+      options.journalMode,
     );
     if (journalModeResult.isError()) return journalModeResult;
   }
@@ -147,7 +147,7 @@ export async function createSqliteDatabaseAdapterAdapter(
 async function setJournalMode(
   database: Database,
   context: TransactionContext,
-  journalMode: (typeof supportedJournalModes)[number]
+  journalMode: (typeof supportedJournalModes)[number],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (!supportedJournalModes.includes(journalMode)) {
     return notOk.Generic(`Unsupported journal mode (${journalMode})`);
@@ -157,13 +157,13 @@ async function setJournalMode(
     database,
     context,
     `PRAGMA journal_mode = ${journalMode}`,
-    undefined
+    undefined,
   );
   return result.isOk() ? ok(undefined) : result;
 }
 
 function createOuterAdapter(
-  database: Database
+  database: Database,
 ): DatabaseAdapter<SqliteDatabaseOptimizationOptions> {
   return {
     adminEntityArchivingGetEntityInfo: (...args) =>
@@ -230,13 +230,13 @@ function createOuterAdapter(
 
 async function checkAdapterValidity(
   database: Database,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<void, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
   const result = await queryOne<{ version: string }>(
     database,
     context,
     'SELECT sqlite_version() AS version',
-    undefined
+    undefined,
   );
   if (result.isError()) {
     return result;
@@ -245,7 +245,7 @@ async function checkAdapterValidity(
   const isSupported = isSemVerEqualOrGreaterThan(parseSemVer(version), minimumSupportedVersion);
   if (!isSupported) {
     return notOk.BadRequest(
-      `Database is using sqlite ${version}, (${minimumSupportedVersion.major}.${minimumSupportedVersion.minor}.${minimumSupportedVersion.patch}+ required)`
+      `Database is using sqlite ${version}, (${minimumSupportedVersion.major}.${minimumSupportedVersion.minor}.${minimumSupportedVersion.patch}+ required)`,
     );
   }
   return ok(undefined);

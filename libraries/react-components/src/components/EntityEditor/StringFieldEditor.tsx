@@ -22,7 +22,7 @@ export function StringFieldEditor(props: Props) {
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onChange(event.target.value);
     },
-    [onChange]
+    [onChange],
   );
 
   if (fieldSpec.values.length > 0) {
@@ -62,7 +62,7 @@ function StringValueFieldEditor({
     (item: { id: string }) => {
       onChange(item.id);
     },
-    [onChange]
+    [onChange],
   );
   const handleClear = useCallback(() => onChange(null), [onChange]);
 

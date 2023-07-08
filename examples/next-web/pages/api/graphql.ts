@@ -11,7 +11,7 @@ let graphQLSchema: GraphQLSchema | null = null;
 
 export default async function graphQlHandler(
   req: NextApiRequest,
-  res: NextApiResponse<ExecutionResult>
+  res: NextApiResponse<ExecutionResult>,
 ): Promise<void> {
   if (req.method !== 'POST') {
     sendMethodNotAllowedError(res, ['POST']);

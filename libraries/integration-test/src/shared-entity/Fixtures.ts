@@ -229,7 +229,7 @@ export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = 
 
 export function adminToPublishedEntity<T extends AppAdminEntity>(
   schema: AdminSchema,
-  entity: T
+  entity: T,
 ): AppPublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);
   const {
@@ -260,7 +260,7 @@ export function adminToPublishedEntity<T extends AppAdminEntity>(
 interface DeepMapMapper {
   mapField: (
     fieldSpec: AdminFieldSpecification,
-    value: Readonly<unknown> | null
+    value: Readonly<unknown> | null,
   ) => Readonly<unknown> | null | undefined;
 }
 
@@ -269,7 +269,7 @@ interface DeepMapMapper {
 function deepMapEntity<T extends EntityLike>(
   schema: AdminSchema,
   entity: T,
-  mapper: DeepMapMapper
+  mapper: DeepMapMapper,
 ): T {
   const entityTypeSpec = schema.getEntityTypeSpecification(entity.info.type);
   assertIsDefined(entityTypeSpec);

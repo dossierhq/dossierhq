@@ -70,7 +70,7 @@ async function sampleEntities_statusDraft({ server }: AdminEntityTestContext) {
   assertOkResult(result);
 
   const { [AdminEntityStatus.draft]: draft, ...otherStatuses } = countEntityStatuses(
-    result.value.items
+    result.value.items,
   );
   assertTruthy(draft > 0);
   assertEquals(otherStatuses, {
@@ -89,7 +89,7 @@ async function sampleEntities_statusPublished({ server }: AdminEntityTestContext
   assertOkResult(result);
 
   const { [AdminEntityStatus.published]: published, ...otherStatuses } = countEntityStatuses(
-    result.value.items
+    result.value.items,
   );
   assertTruthy(published > 0);
   assertEquals(otherStatuses, {
@@ -108,7 +108,7 @@ async function sampleEntities_statusModified({ server }: AdminEntityTestContext)
   assertOkResult(result);
 
   const { [AdminEntityStatus.modified]: modified, ...otherStatuses } = countEntityStatuses(
-    result.value.items
+    result.value.items,
   );
   assertTruthy(modified > 0);
   assertEquals(otherStatuses, {
@@ -127,7 +127,7 @@ async function sampleEntities_statusWithdrawn({ server }: AdminEntityTestContext
   assertOkResult(result);
 
   const { [AdminEntityStatus.withdrawn]: withdrawn, ...otherStatuses } = countEntityStatuses(
-    result.value.items
+    result.value.items,
   );
   assertTruthy(withdrawn > 0);
   assertEquals(otherStatuses, {
@@ -146,7 +146,7 @@ async function sampleEntities_statusArchived({ server }: AdminEntityTestContext)
   assertOkResult(result);
 
   const { [AdminEntityStatus.archived]: archived, ...otherStatuses } = countEntityStatuses(
-    result.value.items
+    result.value.items,
   );
   assertTruthy(archived > 0);
   assertEquals(otherStatuses, {
@@ -235,13 +235,13 @@ async function sampleEntities_linksToOneReference({ server }: AdminEntityTestCon
   } = titleOnlyResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } })
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
 
   const sampleResult = await adminClient.sampleEntities(
     { linksTo: { id: titleOnlyId } },
-    { seed: 123 }
+    { seed: 123 },
   );
   assertSampledEntities(sampleResult, 123, [referenceResult.value.entity]);
 }
@@ -256,7 +256,7 @@ async function sampleEntities_linksToNoReferences({ server }: AdminEntityTestCon
 
   const sampleResult = await adminClient.sampleEntities(
     { linksTo: { id: titleOnlyId } },
-    { seed: 456 }
+    { seed: 456 },
   );
   assertSampledEntities(sampleResult, 456, []);
 }
@@ -274,13 +274,13 @@ async function sampleEntities_linksToTwoReferencesFromOneEntity({
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
-    })
+    }),
   );
   assertOkResult(referenceResult);
 
   const sampleResult = await adminClient.sampleEntities(
     { linksTo: { id: titleOnlyId } },
-    { seed: 789 }
+    { seed: 789 },
   );
   assertSampledEntities(sampleResult, 789, [referenceResult.value.entity]);
 }
@@ -292,7 +292,7 @@ async function sampleEntities_linksFromOneReference({ server }: AdminEntityTestC
   const { entity: titleEntity } = titleOnlyResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleEntity.id } } })
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleEntity.id } } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -301,7 +301,7 @@ async function sampleEntities_linksFromOneReference({ server }: AdminEntityTestC
 
   const sampleResult = await adminClient.sampleEntities(
     { linksFrom: { id: referenceId } },
-    { seed: 123 }
+    { seed: 123 },
   );
   assertSampledEntities(sampleResult, 123, [titleEntity]);
 }
@@ -329,7 +329,7 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
-    })
+    }),
   );
   assertOkResult(referenceResult);
   const {
@@ -338,7 +338,7 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
 
   const sampleResult = await adminClient.sampleEntities(
     { linksFrom: { id: referenceId } },
-    { seed: 789 }
+    { seed: 789 },
   );
   assertSampledEntities(sampleResult, 789, [titleOnlyEntity]);
 }
@@ -349,13 +349,13 @@ async function sampleEntities_boundingBoxOneInside({ server }: AdminEntityTestCo
 
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
   const { entity: locationsEntity } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -367,7 +367,7 @@ async function sampleEntities_boundingBoxOneInside({ server }: AdminEntityTestCo
       boundingBox,
       linksFrom: { id: referenceId },
     },
-    { seed: 123 }
+    { seed: 123 },
   );
   assertSampledEntities(sampleResult, 123, [locationsEntity]);
 }
@@ -380,7 +380,7 @@ async function sampleEntities_boundingBoxOneEntityTwoLocationsInside({
   const center = boundingBoxCenter(boundingBox);
   const inside = boundingBoxBelowCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } }),
   );
   assertOkResult(createResult);
   const {
@@ -388,7 +388,7 @@ async function sampleEntities_boundingBoxOneEntityTwoLocationsInside({
   } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -397,7 +397,7 @@ async function sampleEntities_boundingBoxOneEntityTwoLocationsInside({
 
   const sampleResult = await adminClient.sampleEntities(
     { boundingBox, linksFrom: { id: referenceId } },
-    { seed: 321 }
+    { seed: 321 },
   );
   assertSampledEntities(sampleResult, 321, [{ id }]);
 }
@@ -410,7 +410,7 @@ async function sampleEntities_boundingBoxOneOutside({ server }: AdminEntityTestC
     lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
   };
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: outside } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: outside } }),
   );
   assertOkResult(createResult);
   const {
@@ -418,7 +418,7 @@ async function sampleEntities_boundingBoxOneOutside({ server }: AdminEntityTestC
   } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -430,7 +430,7 @@ async function sampleEntities_boundingBoxOneOutside({ server }: AdminEntityTestC
       boundingBox,
       linksFrom: { id: referenceId },
     },
-    { seed: 123 }
+    { seed: 123 },
   );
   assertSampledEntities(sampleResult, 123, []);
 }
@@ -442,13 +442,13 @@ async function sampleEntities_boundingBoxWrappingMaxMinLongitude({
   const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
   const { entity: locationsEntity } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -457,7 +457,7 @@ async function sampleEntities_boundingBoxWrappingMaxMinLongitude({
 
   const sampleResult = await adminClient.sampleEntities(
     { boundingBox, linksFrom: { id: referenceId } },
-    { seed: 321 }
+    { seed: 321 },
   );
   assertSampledEntities(sampleResult, 321, [locationsEntity]);
 }
@@ -479,13 +479,13 @@ async function sampleEntities_textIncludedAfterCreation({ server }: AdminEntityT
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       fields: { title: 'this is a serious title with the best storytelling' },
-    })
+    }),
   );
   assertOkResult(createResult);
   const { entity: titleOnlyEntity } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: titleOnlyEntity.id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: titleOnlyEntity.id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -494,7 +494,7 @@ async function sampleEntities_textIncludedAfterCreation({ server }: AdminEntityT
 
   const sampleResult = await adminClient.sampleEntities(
     { text: 'serious storytelling', linksFrom: { id: referenceId } },
-    { seed: 111 }
+    { seed: 111 },
   );
   assertSampledEntities(sampleResult, 111, [titleOnlyEntity]);
 }
@@ -508,7 +508,7 @@ async function sampleEntities_textIncludedAfterUpdate({ server }: AdminEntityTes
   } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -518,10 +518,10 @@ async function sampleEntities_textIncludedAfterUpdate({ server }: AdminEntityTes
   assertSampledEntities(
     await adminClient.sampleEntities(
       { text: 'lightning strikes', linksFrom: { id: referenceId } },
-      { seed: 123 }
+      { seed: 123 },
     ),
     123,
-    []
+    [],
   );
 
   const updateResult = await adminClient.updateEntity({
@@ -533,17 +533,17 @@ async function sampleEntities_textIncludedAfterUpdate({ server }: AdminEntityTes
   assertSampledEntities(
     await adminClient.sampleEntities(
       { text: 'lightning strikes', linksFrom: { id: referenceId } },
-      { seed: 123 }
+      { seed: 123 },
     ),
     123,
-    [{ id }]
+    [{ id }],
   );
 }
 
 async function sampleEntities_textExcludedAfterUpdate({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's eating? It is the bear" } })
+    copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's eating? It is the bear" } }),
   );
   assertOkResult(createResult);
   const {
@@ -551,7 +551,7 @@ async function sampleEntities_textExcludedAfterUpdate({ server }: AdminEntityTes
   } = createResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -561,10 +561,10 @@ async function sampleEntities_textExcludedAfterUpdate({ server }: AdminEntityTes
   assertSampledEntities(
     await adminClient.sampleEntities(
       { text: 'bear eating', linksFrom: { id: referenceId } },
-      { seed: 123 }
+      { seed: 123 },
     ),
     123,
-    [{ id }]
+    [{ id }],
   );
 
   const updateResult = await adminClient.updateEntity({
@@ -576,10 +576,10 @@ async function sampleEntities_textExcludedAfterUpdate({ server }: AdminEntityTes
   assertSampledEntities(
     await adminClient.sampleEntities(
       { text: 'bear eating', linksFrom: { id: referenceId } },
-      { seed: 123 }
+      { seed: 123 },
     ),
     123,
-    []
+    [],
   );
 }
 

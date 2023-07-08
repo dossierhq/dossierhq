@@ -11,7 +11,7 @@ function $createPublishedEntityLinkNode(reference: EntityReference): PublishedEn
 }
 
 export function $isPublishedEntityLinkNode(
-  node: LexicalNode | undefined | null
+  node: LexicalNode | undefined | null,
 ): node is PublishedEntityLinkNode {
   return node instanceof PublishedEntityLinkNode;
 }
@@ -43,7 +43,7 @@ export class PublishedEntityLinkNode extends ElementNode {
   }
 
   static override importJSON(
-    serializedNode: SerializedPublishedEntityLinkNode
+    serializedNode: SerializedPublishedEntityLinkNode,
   ): PublishedEntityLinkNode {
     const node = $createPublishedEntityLinkNode(serializedNode.reference);
     node.setFormat(serializedNode.format);
@@ -70,7 +70,7 @@ export class PublishedEntityLinkNode extends ElementNode {
   override updateDOM(
     _prevNode: PublishedEntityLinkNode,
     _dom: HTMLElement,
-    _config: EditorConfig
+    _config: EditorConfig,
   ): boolean {
     return false; // no need to recreate the DOM
   }
@@ -175,7 +175,7 @@ export function toggleEntityLink(reference: EntityReference | null): void {
 
 function replaceParentNodesWithChildren(
   nodes: LexicalNode[],
-  predicate: (node: LexicalNode) => boolean
+  predicate: (node: LexicalNode) => boolean,
 ): void {
   for (const node of nodes) {
     const parent = node.getParent();
@@ -195,7 +195,7 @@ function $getLinkAncestor(node: LexicalNode): null | LexicalNode {
 
 function $getAncestor(
   node: LexicalNode,
-  predicate: (ancestor: LexicalNode) => boolean
+  predicate: (ancestor: LexicalNode) => boolean,
 ): null | LexicalNode {
   let parent: null | LexicalNode = node;
   while (parent !== null && (parent = parent.getParent()) !== null && !predicate(parent));

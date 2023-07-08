@@ -329,7 +329,7 @@ describe('node()', () => {
           info: { type: 'QueryBar', name: 'Bar 1 name', authKey: 'none' },
           fields: { title: 'Bar title' },
         },
-        { publish: true }
+        { publish: true },
       )
     ).valueOrThrow();
 
@@ -344,7 +344,7 @@ describe('node()', () => {
           info: { type: 'QueryBar', name: 'Bar 2 name', authKey: 'none' },
           fields: { title: 'Bar title' },
         },
-        { publish: true }
+        { publish: true },
       )
     ).valueOrThrow();
 
@@ -367,7 +367,7 @@ describe('node()', () => {
             body,
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).valueOrThrow();
 
@@ -536,7 +536,7 @@ describe('node()', () => {
         await adminClient.publishEntities([
           { id: bar1Id, version: 0 },
           { id: bar2Id, version: 0 },
-        ])
+        ]),
       );
 
       const createFooResult = await adminClient.createEntity({
@@ -800,7 +800,7 @@ describe('nodes()', () => {
         await adminClient.publishEntities([
           { id: foo1Id, version: 0 },
           { id: foo2Id, version: 0 },
-        ])
+        ]),
       );
 
       const result = await graphql({
@@ -875,7 +875,7 @@ describe('publishedEntity()', () => {
           slug,
         },
       },
-      { publish: true }
+      { publish: true },
     );
     assertOkResult(createResult);
     const {
@@ -926,7 +926,7 @@ describe('publishedEntity()', () => {
           tags: ['one', 'two', 'three'],
         },
       },
-      { publish: true }
+      { publish: true },
     );
     assertOkResult(createResult);
     const {

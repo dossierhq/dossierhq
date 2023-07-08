@@ -29,7 +29,7 @@ export function toFlexContainerClassName({
     'is-flex',
     flexDirection && flexDirectionClassNames[flexDirection],
     alignItems && alignItemsClassNames[alignItems],
-    justifyContent && justifyContentClassNames[justifyContent]
+    justifyContent && justifyContentClassNames[justifyContent],
   );
 }
 
@@ -47,6 +47,6 @@ const alignSelfClassNames = {
 export function toFlexItemClassName({ alignSelf, flexGrow }: FlexItemProps) {
   return toClassName(
     typeof flexGrow === 'number' && `is-flex-grow-${flexGrow}`,
-    alignSelf && alignSelfClassNames[alignSelf]
+    alignSelf && alignSelfClassNames[alignSelf],
   );
 }

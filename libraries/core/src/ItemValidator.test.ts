@@ -114,7 +114,7 @@ function validateEntity(entity: EntityLike) {
   for (const node of traverseEntity(
     adminSchema.toPublishedSchema(),
     ['entity'],
-    normalizedEntity
+    normalizedEntity,
   )) {
     const error = validateTraverseNodeForPublish(adminSchema, node);
     if (error) {
@@ -131,8 +131,8 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: '' } })
-      )
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: '' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -141,8 +141,8 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: 'InvalidType' } })
-      )
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: 'InvalidType' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -151,8 +151,8 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: '' } })
-      )
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: '' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -161,8 +161,8 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: 'something else' } })
-      )
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: 'something else' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -171,8 +171,8 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: '' } })
-      )
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: '' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -181,8 +181,8 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: 'Hello\nworld' } })
-      )
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: 'Hello\nworld' } }),
+      ),
     ).toMatchSnapshot();
   });
 });
@@ -193,7 +193,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(adminSchema, ['entity'], {
         info: { type: '', name: 'No type', authKey: 'none' },
         fields: {},
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -202,8 +202,8 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { type: 'InvalidType' } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { type: 'InvalidType' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -212,8 +212,8 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: '' } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: '' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -222,8 +222,8 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: 'something else' } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: 'something else' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -232,8 +232,8 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: '' } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: '' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -242,8 +242,8 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: 'Hello\nworld' } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: 'Hello\nworld' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -252,8 +252,8 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { version: 1 as 0 } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { version: 1 as 0 } }),
+      ),
     ).toMatchSnapshot();
   });
 });
@@ -264,8 +264,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { type: 'RichTextsEntity' }, fields: {} }
-      )
+        { id: '123', info: { type: 'RichTextsEntity' }, fields: {} },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -274,8 +274,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { type: 'StringEntity' }, fields: {} }
-      )
+        { id: '123', info: { type: 'StringEntity' }, fields: {} },
+      ),
     ).toBeNull();
   });
 
@@ -284,8 +284,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { authKey: 'subject' }, fields: {} }
-      )
+        { id: '123', info: { authKey: 'subject' }, fields: {} },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -294,8 +294,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { authKey: 'none' }, fields: {} }
-      )
+        { id: '123', info: { authKey: 'none' }, fields: {} },
+      ),
     ).toBeNull();
   });
 
@@ -304,8 +304,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { name: 'hello\nworld' }, fields: {} }
-      )
+        { id: '123', info: { name: 'hello\nworld' }, fields: {} },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -314,8 +314,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { version: 1 }, fields: {} }
-      )
+        { id: '123', info: { version: 1 }, fields: {} },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -324,8 +324,8 @@ describe('validateEntityInfoForUpdate', () => {
       validateEntityInfoForUpdate(
         ['entity'],
         { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { version: 2 }, fields: {} }
-      )
+        { id: '123', info: { version: 2 }, fields: {} },
+      ),
     ).toBeNull();
   });
 });
@@ -338,7 +338,7 @@ describe('validateTraverseNodeForSave', () => {
         path: ['entity', 'foo'],
         errorType: ItemTraverseNodeErrorType.generic,
         message: 'Error message',
-      })
+      }),
     ).toMatchSnapshot();
   });
 });
@@ -346,27 +346,27 @@ describe('validateTraverseNodeForSave', () => {
 describe('Validate entity', () => {
   test('Fail: integer with float value', () => {
     expect(
-      validateEntity(copyEntity(NUMBERS_ENTITY_CREATE_DEFAULT, { fields: { integer: 1.2345 } }))
+      validateEntity(copyEntity(NUMBERS_ENTITY_CREATE_DEFAULT, { fields: { integer: 1.2345 } })),
     ).toMatchSnapshot();
   });
 
   test('Pass: matchPattern matched string', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'baz' } }))
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'baz' } })),
     ).toEqual([]);
   });
 
   test('Fail: matchPattern unmatched string', () => {
     expect(
       validateEntity(
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'will not match' } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'will not match' } }),
+      ),
     ).toMatchSnapshot();
   });
 
   test('Fail: required with no value', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { required: null } }))
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { required: null } })),
     ).toMatchSnapshot();
   });
 
@@ -375,8 +375,8 @@ describe('Validate entity', () => {
       validateEntity(
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
           fields: { patternList: ['foo', 'bar', 'baz'] },
-        })
-      )
+        }),
+      ),
     ).toEqual([]);
   });
 
@@ -385,36 +385,38 @@ describe('Validate entity', () => {
       validateEntity(
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
           fields: { patternList: ['foo', 'will not match'] },
-        })
-      )
+        }),
+      ),
     ).toMatchSnapshot();
   });
 
   test('Pass: values matched string', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { values: 'baz' } }))
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { values: 'baz' } })),
     ).toEqual([]);
   });
 
   test('Pass: values matched string list', () => {
     expect(
       validateEntity(
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { valuesList: ['foo', 'bar', 'baz'] } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
+          fields: { valuesList: ['foo', 'bar', 'baz'] },
+        }),
+      ),
     ).toEqual([]);
   });
 
   test('Fail: values unmatched string', () => {
     expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { values: 'other' } }))
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { values: 'other' } })),
     ).toMatchSnapshot();
   });
 
   test('Fail: values unmatched string list', () => {
     expect(
       validateEntity(
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { valuesList: ['foo', 'other'] } })
-      )
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { valuesList: ['foo', 'other'] } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -427,8 +429,8 @@ describe('Validate entity', () => {
               createRichTextParagraphNode([createRichTextTextNode('hello\nworld')]),
             ]),
           },
-        })
-      )
+        }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -439,8 +441,8 @@ describe('Validate entity', () => {
           fields: {
             any: { type: 'AdminOnlyValueItem' },
           },
-        })
-      )
+        }),
+      ),
     ).toMatchSnapshot();
   });
 });
@@ -455,7 +457,7 @@ describe('groupValidationIssuesByTopLevelPath', () => {
       groupValidationIssuesByTopLevelPath([
         { type: 'save', path: [], message: 'Root error' },
         { type: 'save', path: [0], message: 'Index 0 error' },
-      ])
+      ]),
     ).toEqual({
       root: [{ type: 'save', path: [], message: 'Root error' }],
       children: new Map([[0, [{ type: 'save', path: [], message: 'Index 0 error' }]]]),
@@ -467,7 +469,7 @@ describe('groupValidationIssuesByTopLevelPath', () => {
       groupValidationIssuesByTopLevelPath([
         { type: 'save', path: [], message: 'Root error' },
         { type: 'save', path: ['field'], message: 'Field error' },
-      ])
+      ]),
     ).toEqual({
       root: [{ type: 'save', path: [], message: 'Root error' }],
       children: new Map([['field', [{ type: 'save', path: [], message: 'Field error' }]]]),

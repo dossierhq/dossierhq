@@ -7,7 +7,7 @@ export async function renewAdvisoryLock(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   name: string,
-  handle: number
+  handle: number,
 ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
   const { logger } = context;
   const result = await databaseAdapter.advisoryLockRenew(context, name, handle);

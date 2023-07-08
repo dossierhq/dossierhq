@@ -83,7 +83,10 @@ async function writeToTypescript(icons) {
   }
 
   const prettierConfig = await prettier.resolveConfig(config.iconsTypescriptPath);
-  result = prettier.format(result, { ...prettierConfig, filepath: config.iconsTypescriptPath });
+  result = await prettier.format(result, {
+    ...prettierConfig,
+    filepath: config.iconsTypescriptPath,
+  });
 
   console.log(`Writing Typescript to ${config.iconsTypescriptPath}`);
   await fs.writeFile(config.iconsTypescriptPath, result, 'utf8');

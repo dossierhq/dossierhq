@@ -33,7 +33,7 @@ export const Tag: TagComponent = ({ className, color, transform, children }: Tag
   const tagClassName = toClassName(
     'tag',
     (transform === undefined || transform === 'capitalized') && 'is-capitalized',
-    toColorClassName(color)
+    toColorClassName(color),
   );
   if (typeof children === 'string') {
     return <span className={toClassName(tagClassName, 'control', className)}>{children}</span>;

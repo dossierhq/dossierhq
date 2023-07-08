@@ -27,7 +27,7 @@ export function initializeSearchEntityStateFromUrlQuery({
 }
 
 function urlQueryToSearchEntityStateActions(
-  urlSearchParams: Readonly<URLSearchParams> | undefined
+  urlSearchParams: Readonly<URLSearchParams> | undefined,
 ) {
   const actions = [];
   if (urlSearchParams) {
@@ -39,7 +39,7 @@ function urlQueryToSearchEntityStateActions(
       new SearchEntityStateActions.SetQuery(query ?? {}, {
         partial: false,
         resetPagingIfModifying: false,
-      })
+      }),
     );
 
     if (sampling) {
@@ -58,7 +58,7 @@ export function useSynchronizeUrlQueryAndSearchEntityState(
   urlSearchParams: Readonly<URLSearchParams> | undefined,
   onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
   searchEntityState: SearchEntityState,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
   const { query, paging, sampling } = searchEntityState;
   useEffect(() => {

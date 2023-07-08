@@ -41,13 +41,13 @@ export interface AdminBooleansEntityFields {
 export type AdminBooleansEntity = AdminEntity<'BooleansEntity', AdminBooleansEntityFields, string>;
 
 export function isAdminBooleansEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminBooleansEntity {
   return entity.info.type === 'BooleansEntity';
 }
 
 export function assertIsAdminBooleansEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminBooleansEntity {
   if (entity.info.type !== 'BooleansEntity') {
     throw new Error('Expected info.type = BooleansEntity (but was ' + entity.info.type + ')');
@@ -67,13 +67,13 @@ export interface AdminEntitiesEntityFields {
 export type AdminEntitiesEntity = AdminEntity<'EntitiesEntity', AdminEntitiesEntityFields, string>;
 
 export function isAdminEntitiesEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminEntitiesEntity {
   return entity.info.type === 'EntitiesEntity';
 }
 
 export function assertIsAdminEntitiesEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminEntitiesEntity {
   if (entity.info.type !== 'EntitiesEntity') {
     throw new Error('Expected info.type = EntitiesEntity (but was ' + entity.info.type + ')');
@@ -94,13 +94,13 @@ export type AdminLocationsEntity = AdminEntity<
 >;
 
 export function isAdminLocationsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminLocationsEntity {
   return entity.info.type === 'LocationsEntity';
 }
 
 export function assertIsAdminLocationsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminLocationsEntity {
   if (entity.info.type !== 'LocationsEntity') {
     throw new Error('Expected info.type = LocationsEntity (but was ' + entity.info.type + ')');
@@ -119,13 +119,13 @@ export interface AdminNumbersEntityFields {
 export type AdminNumbersEntity = AdminEntity<'NumbersEntity', AdminNumbersEntityFields, string>;
 
 export function isAdminNumbersEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminNumbersEntity {
   return entity.info.type === 'NumbersEntity';
 }
 
 export function assertIsAdminNumbersEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminNumbersEntity {
   if (entity.info.type !== 'NumbersEntity') {
     throw new Error('Expected info.type = NumbersEntity (but was ' + entity.info.type + ')');
@@ -151,13 +151,13 @@ export type AdminRichTextsEntity = AdminEntity<
 >;
 
 export function isAdminRichTextsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminRichTextsEntity {
   return entity.info.type === 'RichTextsEntity';
 }
 
 export function assertIsAdminRichTextsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminRichTextsEntity {
   if (entity.info.type !== 'RichTextsEntity') {
     throw new Error('Expected info.type = RichTextsEntity (but was ' + entity.info.type + ')');
@@ -182,13 +182,13 @@ export interface AdminStringsEntityFields {
 export type AdminStringsEntity = AdminEntity<'StringsEntity', AdminStringsEntityFields, string>;
 
 export function isAdminStringsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminStringsEntity {
   return entity.info.type === 'StringsEntity';
 }
 
 export function assertIsAdminStringsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminStringsEntity {
   if (entity.info.type !== 'StringsEntity') {
     throw new Error('Expected info.type = StringsEntity (but was ' + entity.info.type + ')');
@@ -211,13 +211,13 @@ export type AdminValueItemsEntity = AdminEntity<
 >;
 
 export function isAdminValueItemsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): entity is AdminValueItemsEntity {
   return entity.info.type === 'ValueItemsEntity';
 }
 
 export function assertIsAdminValueItemsEntity(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminValueItemsEntity {
   if (entity.info.type !== 'ValueItemsEntity') {
     throw new Error('Expected info.type = ValueItemsEntity (but was ' + entity.info.type + ')');
@@ -236,13 +236,13 @@ export interface AdminCloudinaryImageFields {
 export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
 ): valueItem is AdminCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
 
 export function assertIsAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
 ): asserts valueItem is AdminCloudinaryImage {
   if (valueItem.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
@@ -257,13 +257,13 @@ export interface AdminNestedValueItemFields {
 export type AdminNestedValueItem = ValueItem<'NestedValueItem', AdminNestedValueItemFields>;
 
 export function isAdminNestedValueItem(
-  valueItem: ValueItem<string, object> | AdminNestedValueItem
+  valueItem: ValueItem<string, object> | AdminNestedValueItem,
 ): valueItem is AdminNestedValueItem {
   return valueItem.type === 'NestedValueItem';
 }
 
 export function assertIsAdminNestedValueItem(
-  valueItem: ValueItem<string, object> | AdminNestedValueItem
+  valueItem: ValueItem<string, object> | AdminNestedValueItem,
 ): asserts valueItem is AdminNestedValueItem {
   if (valueItem.type !== 'NestedValueItem') {
     throw new Error('Expected type = NestedValueItem (but was ' + valueItem.type + ')');
@@ -282,13 +282,13 @@ export interface AdminStringsValueItemFields {
 export type AdminStringsValueItem = ValueItem<'StringsValueItem', AdminStringsValueItemFields>;
 
 export function isAdminStringsValueItem(
-  valueItem: ValueItem<string, object> | AdminStringsValueItem
+  valueItem: ValueItem<string, object> | AdminStringsValueItem,
 ): valueItem is AdminStringsValueItem {
   return valueItem.type === 'StringsValueItem';
 }
 
 export function assertIsAdminStringsValueItem(
-  valueItem: ValueItem<string, object> | AdminStringsValueItem
+  valueItem: ValueItem<string, object> | AdminStringsValueItem,
 ): asserts valueItem is AdminStringsValueItem {
   if (valueItem.type !== 'StringsValueItem') {
     throw new Error('Expected type = StringsValueItem (but was ' + valueItem.type + ')');

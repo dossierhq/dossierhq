@@ -56,7 +56,7 @@ export function toTextColorClassName(color: Color | undefined): string | undefin
 
 export function toBackgroundColorClassName(
   color: Color | undefined,
-  variant?: 'dark' | 'light'
+  variant?: 'dark' | 'light',
 ): string | undefined {
   const colorName = resolveBulmaColor(color);
   if (!colorName) return undefined;

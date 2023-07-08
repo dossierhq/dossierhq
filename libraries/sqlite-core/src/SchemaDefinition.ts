@@ -257,7 +257,7 @@ export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
 export async function migrateDatabaseIfNecessary(
   database: Database,
   context: TransactionContext,
-  options: SqliteDatabaseMigrationOptions
+  options: SqliteDatabaseMigrationOptions,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   return await migrate(database, context, (version) => {
     const versionDefinition = VERSIONS[version];
@@ -278,7 +278,7 @@ export async function migrateDatabaseIfNecessary(
 
 export async function checkMigrationStatus(
   database: Database,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const versionResult = await getCurrentSchemaVersion(database, context);
   if (versionResult.isError()) return versionResult;
@@ -286,7 +286,7 @@ export async function checkMigrationStatus(
 
   if (currentVersion !== REQUIRED_SCHEMA_VERSION) {
     return notOk.Generic(
-      `Database schema needs to be migrated, is at version ${currentVersion} (should be ${REQUIRED_SCHEMA_VERSION})`
+      `Database schema needs to be migrated, is at version ${currentVersion} (should be ${REQUIRED_SCHEMA_VERSION})`,
     );
   }
   return ok(undefined);

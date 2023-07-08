@@ -11,7 +11,7 @@ import { queryMany } from '../QueryFunctions.js';
 export async function adminEntityGetReferenceEntitiesInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic> {
   if (references.length === 0) return ok([]);
 
@@ -21,7 +21,7 @@ export async function adminEntityGetReferenceEntitiesInfo(
     {
       text: 'SELECT id, uuid, type, status FROM entities WHERE uuid = ANY($1)',
       values: [references.map(({ id }) => id)],
-    }
+    },
   );
   if (result.isError()) {
     return result;
@@ -32,6 +32,6 @@ export async function adminEntityGetReferenceEntitiesInfo(
       id: it.uuid,
       type: it.type,
       status: it.status,
-    }))
+    })),
   );
 }

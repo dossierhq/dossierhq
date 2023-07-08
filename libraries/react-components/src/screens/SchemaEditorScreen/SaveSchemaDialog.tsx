@@ -28,14 +28,14 @@ export function SaveSchemaDialog({
 
   const schemaSpecUpdate = useMemo(
     () => (show ? getSchemaSpecificationUpdateFromEditorState(schemaEditorState) : null),
-    [schemaEditorState, show]
+    [schemaEditorState, show],
   );
 
   const handleClose = useCallback(
     async (_event: SyntheticEvent<HTMLDialogElement>, returnValue: string) => {
       if (returnValue === 'save' && schemaSpecUpdate) {
         dispatchSchemaEditorState(
-          new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true)
+          new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
         );
 
         const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate);
@@ -44,13 +44,13 @@ export function SaveSchemaDialog({
         } else {
           showNotification({ color: 'error', message: 'Failed saving schema.' });
           dispatchSchemaEditorState(
-            new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(false)
+            new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(false),
           );
         }
       }
       onClose();
     },
-    [adminClient, dispatchSchemaEditorState, onClose, schemaSpecUpdate, showNotification]
+    [adminClient, dispatchSchemaEditorState, onClose, schemaSpecUpdate, showNotification],
   );
 
   return (

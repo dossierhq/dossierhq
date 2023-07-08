@@ -30,7 +30,7 @@ export async function publishedGetEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<
   Result<
     PublishedEntity,
@@ -69,7 +69,7 @@ async function mapItem(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
-  values: DatabasePublishedEntityGetOnePayload | undefined
+  values: DatabasePublishedEntityGetOnePayload | undefined,
 ): PromiseResult<
   PublishedEntity,
   | typeof ErrorType.BadRequest

@@ -19,7 +19,7 @@ export async function ensureEntityCount(
   requestedCount: number,
   entityType: string,
   authKey: string,
-  fieldProvider: (random: string) => Record<string, unknown>
+  fieldProvider: (random: string) => Record<string, unknown>,
 ): PromiseResult<
   void,
   | typeof ErrorType.BadRequest
@@ -41,7 +41,7 @@ export async function ensureEntityCount(
         info: { type: entityType, name: random, authKey },
         fields: fieldProvider(random),
       },
-      { publish: true }
+      { publish: true },
     );
     if (createResult.isError()) {
       return createResult;
@@ -55,7 +55,7 @@ export async function ensureEntityWithStatus(
   entityType: string,
   authKey: string,
   status: AdminEntityStatus,
-  fieldProvider: (random: string) => Record<string, unknown>
+  fieldProvider: (random: string) => Record<string, unknown>,
 ): PromiseResult<
   void,
   | typeof ErrorType.BadRequest
@@ -124,14 +124,14 @@ export async function ensureEntityWithStatus(
 
 export async function getAllEntities(
   client: AdminClient,
-  query: AdminSearchQuery
+  query: AdminSearchQuery,
 ): PromiseResult<
   AdminEntity[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const entities: AdminEntity[] = [];
   for await (const pageResult of getAllPagesForConnection({ first: 100 }, (currentPaging) =>
-    client.searchEntities(query, currentPaging)
+    client.searchEntities(query, currentPaging),
   )) {
     if (pageResult.isError()) {
       return pageResult;
@@ -152,7 +152,7 @@ export function expectConnectionToMatchSlice<TEntity extends PublishedEntity | A
   connection: Connection<Edge<TEntity, ErrorType>> | null,
   sliceStart: number,
   sliceEnd: number | undefined,
-  compareFn?: (a: TEntity, b: TEntity) => number
+  compareFn?: (a: TEntity, b: TEntity) => number,
 ): void {
   const actualIds = connection?.edges.map((edge) => ({
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
@@ -184,7 +184,7 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
 export async function countSearchResultWithEntity(
   client: AdminClient,
   query: AdminSearchQuery,
-  entityId: string
+  entityId: string,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -192,7 +192,7 @@ export async function countSearchResultWithEntity(
 export async function countSearchResultWithEntity(
   client: PublishedClient,
   query: PublishedSearchQuery,
-  entityId: string
+  entityId: string,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -200,7 +200,7 @@ export async function countSearchResultWithEntity(
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
   query: AdminSearchQuery | PublishedSearchQuery,
-  entityId: string
+  entityId: string,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -209,7 +209,7 @@ export async function countSearchResultWithEntity(
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    client.searchEntities(query as any, currentPaging)
+    client.searchEntities(query as any, currentPaging),
   )) {
     if (pageResult.isError()) {
       return pageResult;

@@ -38,7 +38,7 @@ import { ValueTypeFieldDisplay } from './ValueTypeFieldDisplay.js';
 
 export interface FieldDisplayProps<
   TFieldSpec extends PublishedFieldSpecification = PublishedFieldSpecification,
-  TValue = unknown
+  TValue = unknown,
 > {
   fieldSpec: TFieldSpec;
   value: TValue | null;

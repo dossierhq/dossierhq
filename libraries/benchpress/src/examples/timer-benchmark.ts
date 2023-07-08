@@ -8,7 +8,7 @@ async function main(runName: string, variant: string) {
       clock.stop();
       return Math.random() > 0.1; // fail 10% of the time
     },
-    { testName: 'setTimeout', variant, runName, warmup: 5, iterations: 100 }
+    { testName: 'setTimeout', variant, runName, warmup: 5, iterations: 100 },
   );
 
   await reportResult(result, {

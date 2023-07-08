@@ -109,7 +109,7 @@ function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
   order: AdminQueryOrder | PublishedQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: PublishedQueryOrder
+  headerOrder: PublishedQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {
@@ -118,7 +118,7 @@ function handleHeaderClick(
   dispatchSearchEntityState(
     new SearchEntityStateActions.SetQuery(
       { order: headerOrder, reverse: newReverse },
-      { partial: true, resetPagingIfModifying: true }
-    )
+      { partial: true, resetPagingIfModifying: true },
+    ),
   );
 }

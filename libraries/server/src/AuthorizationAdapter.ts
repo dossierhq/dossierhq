@@ -6,7 +6,7 @@ import type { SessionContext } from './Context.js';
 export interface AuthorizationAdapter {
   resolveAuthorizationKeys(
     context: SessionContext,
-    authKeys: readonly string[]
+    authKeys: readonly string[],
   ): PromiseResult<
     ResolvedAuthKey[],
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -16,7 +16,7 @@ export interface AuthorizationAdapter {
 export const NoneAndSubjectAuthorizationAdapter: AuthorizationAdapter = {
   resolveAuthorizationKeys(
     context: SessionContext,
-    authKeys: readonly string[]
+    authKeys: readonly string[],
   ): PromiseResult<
     ResolvedAuthKey[],
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

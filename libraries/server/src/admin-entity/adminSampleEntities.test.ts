@@ -17,7 +17,7 @@ describe('Admin adminSampleEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(ok([]));
@@ -28,12 +28,12 @@ describe('Admin adminSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { seed: 9876 }
+      { seed: 9876 },
     );
 
     expectResultValue(result, { seed: 9876, totalCount: 0, items: [] });
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchSnapshot();
   });
 
@@ -44,7 +44,7 @@ describe('Admin adminSampleEntities', () => {
     const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(1)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(
@@ -62,7 +62,7 @@ describe('Admin adminSampleEntities', () => {
           updatedAt: now,
           fieldValues: {},
         },
-      ])
+      ]),
     );
 
     const result = await adminSampleEntities(
@@ -71,7 +71,7 @@ describe('Admin adminSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { seed: 3435 }
+      { seed: 3435 },
     );
 
     expectResultValue(result, {
@@ -96,7 +96,7 @@ describe('Admin adminSampleEntities', () => {
       ],
     });
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchSnapshot();
   });
 
@@ -106,7 +106,7 @@ describe('Admin adminSampleEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(ok([]));
@@ -117,12 +117,12 @@ describe('Admin adminSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      { seed: 0.123456789 }
+      { seed: 0.123456789 },
     );
 
     expectResultValue(result, { seed: 0.123456789, totalCount: 0, items: [] });
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchSnapshot();
   });
 });

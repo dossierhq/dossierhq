@@ -272,7 +272,7 @@ async function getEntitiesForAdminOnlyEditBefore(client: AdminClient, authKey: s
 async function createBarWithFooBazReferences(
   fooCount: number,
   bazCount: number,
-  bazReferencesPerEntity = 1
+  bazReferencesPerEntity = 1,
 ) {
   const createBarResult = await client.createEntity({
     info: { type: 'EntityAdminBar', name: 'Bar', authKey: 'none' },
@@ -1100,14 +1100,14 @@ describe('createEntity()', () => {
 
         expect(
           bar1References.isOk() &&
-            bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
+            bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null)),
         ).toEqual([bazId]);
 
         const bar2References = await client.searchEntities({ linksTo: { id: bar2Id } });
 
         expect(
           bar2References.isOk() &&
-            bar2References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
+            bar2References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null)),
         ).toEqual([bazId]);
       }
     }
@@ -1200,7 +1200,7 @@ describe('createEntity()', () => {
       expectErrorResult(
         secondCreateResult,
         ErrorType.Conflict,
-        `Entity with id (${id}) already exist`
+        `Entity with id (${id}) already exist`,
       );
     }
   });
@@ -1229,7 +1229,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.info.version: Version must be 0 when creating a new entity'
+      'entity.info.version: Version must be 0 when creating a new entity',
     );
   });
 
@@ -1258,7 +1258,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.NotAuthorized,
-      'User not authorized to use authKey unauthorized'
+      'User not authorized to use authKey unauthorized',
     );
   });
 
@@ -1279,7 +1279,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.fields.bar: Referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist'
+      'entity.fields.bar: Referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist',
     );
   });
 
@@ -1295,7 +1295,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      `entity.fields.bar: Referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
+      `entity.fields.bar: Referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`,
     );
   });
 
@@ -1309,7 +1309,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.tags: Expected list got string'
+      'entity.fields.tags: Expected list got string',
     );
   });
 
@@ -1323,7 +1323,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.title: Expected single String got list'
+      'entity.fields.title: Expected single String got list',
     );
   });
 
@@ -1337,7 +1337,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bars: Expected list got object'
+      'entity.fields.bars: Expected list got object',
     );
   });
 
@@ -1354,7 +1354,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bar: Expected single Entity got list'
+      'entity.fields.bar: Expected single Entity got list',
     );
   });
 
@@ -1378,7 +1378,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Couldn’t find spec for value type Invalid'
+      'entity.fields.twoStrings: Couldn’t find spec for value type Invalid',
     );
   });
 
@@ -1392,7 +1392,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: value of type EntityAdminTwoStrings is not allowed'
+      'entity.fields.oneString: value of type EntityAdminTwoStrings is not allowed',
     );
   });
 
@@ -1406,7 +1406,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: Unsupported field names: invalid'
+      'entity.fields.oneString: Unsupported field names: invalid',
     );
   });
 
@@ -1420,7 +1420,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bodyList: Expected list got object'
+      'entity.fields.bodyList: Expected list got object',
     );
   });
 
@@ -1434,7 +1434,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Expected single RichText got list'
+      'entity.fields.body: Expected single RichText got list',
     );
   });
 
@@ -1458,7 +1458,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Expected object got string'
+      'entity.fields.body: Expected object got string',
     );
   });
 
@@ -1482,7 +1482,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Expected object got string'
+      'entity.fields.body: Expected object got string',
     );
   });
 
@@ -1496,7 +1496,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.locations: Expected list got object'
+      'entity.fields.locations: Expected list got object',
     );
   });
 
@@ -1510,7 +1510,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.location: Expected single Location got list'
+      'entity.fields.location: Expected single Location got list',
     );
   });
 
@@ -1524,7 +1524,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.location: expected {lat: number, lng: number}, got [object Object]'
+      'entity.fields.location: expected {lat: number, lng: number}, got [object Object]',
     );
   });
 
@@ -1538,7 +1538,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStringsList: Expected list got object'
+      'entity.fields.twoStringsList: Expected list got object',
     );
   });
 
@@ -1555,7 +1555,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Expected single ValueItem got list'
+      'entity.fields.twoStrings: Expected single ValueItem got list',
     );
   });
 });
@@ -1653,7 +1653,7 @@ describe('getTotalCount', () => {
         await client.createEntity({
           info: { type: 'EntityAdminFoo', name: 'foo', authKey: 'none' },
           fields: { summary: 'That was indeed a sensational clown' },
-        })
+        }),
       );
 
       const resultAfter = await client.getTotalCount({ text: 'sensational clown' });
@@ -1750,7 +1750,7 @@ describe('updateEntity()', () => {
         const version0Result = await client.getEntity({ id, version: 0 });
         expectResultValue(
           version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'Original' } })
+          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'Original' } }),
         );
 
         const version1Result = await client.getEntity({ id, version: 1 });
@@ -1857,7 +1857,7 @@ describe('updateEntity()', () => {
         const version0Result = await client.getEntity({ id, version: 0 });
         expectResultValue(
           version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'First' } })
+          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'First' } }),
         );
 
         const version1Result = await client.getEntity({ id, version: 1 });
@@ -1946,7 +1946,7 @@ describe('updateEntity()', () => {
       const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(
         version0Result,
-        copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'Original' } })
+        copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'Original' } }),
       );
 
       const version1Result = await client.getEntity({ id, version: 1 });
@@ -2044,7 +2044,7 @@ describe('updateEntity()', () => {
       const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(
         version0Result,
-        copyEntity(expectedEntity, { info: { version: 0 }, fields: { summary: 'First summary' } })
+        copyEntity(expectedEntity, { info: { version: 0 }, fields: { summary: 'First summary' } }),
       );
 
       const version1Result = await client.getEntity({ id, version: 1 });
@@ -2250,7 +2250,7 @@ describe('updateEntity()', () => {
         const version0Result = await client.getEntity({ id: fooId, version: 0 });
         expectResultValue(
           version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { bar: null } })
+          copyEntity(expectedEntity, { info: { version: 0 }, fields: { bar: null } }),
         );
 
         const version1Result = await client.getEntity({ id: fooId, version: 1 });
@@ -2376,7 +2376,7 @@ describe('updateEntity()', () => {
         const version0Result = await client.getEntity({ id: bazId, version: 0 });
         expectResultValue(
           version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'First title' } })
+          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'First title' } }),
         );
 
         const version1Result = await client.getEntity({ id: bazId, version: 1 });
@@ -2509,7 +2509,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        'entity.fields.bar: Referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist'
+        'entity.fields.bar: Referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist',
       );
     }
   });
@@ -2529,7 +2529,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        `entity.fields.bar: Referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
+        `entity.fields.bar: Referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`,
       );
     }
   });
@@ -2560,7 +2560,7 @@ describe('upsertEntity()', () => {
       await client.createEntity({
         info: { type: 'EntityAdminBaz', name: 'Non-unique name', authKey: 'none' },
         fields: { title: 'Original title' },
-      })
+      }),
     );
 
     const id = insecureTestUuidv4();
@@ -2596,7 +2596,7 @@ describe('upsertEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.NotAuthorized,
-      'User not authorized to use authKey unauthorized'
+      'User not authorized to use authKey unauthorized',
     );
   });
 
@@ -2618,7 +2618,7 @@ describe('upsertEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        'entity.info.authKey: New authKey none doesn’t correspond to previous authKey subject'
+        'entity.info.authKey: New authKey none doesn’t correspond to previous authKey subject',
       );
     }
   });
@@ -2744,7 +2744,7 @@ describe('publishEntities()', () => {
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
-          `${fooId}: References unpublished entities: ${barId}`
+          `${fooId}: References unpublished entities: ${barId}`,
         );
       }
     }
@@ -2783,7 +2783,7 @@ describe('publishEntities()', () => {
       expectErrorResult(
         publishResult,
         ErrorType.BadRequest,
-        `entity(${bazId}).fields.oneString.one: Required field is empty`
+        `entity(${bazId}).fields.oneString.one: Required field is empty`,
       );
     }
   });
@@ -2806,7 +2806,7 @@ describe('publishEntities()', () => {
       expectErrorResult(
         publishResult,
         ErrorType.BadRequest,
-        `entity(${bazId}).fields.body[0].data.one: Required field is empty`
+        `entity(${bazId}).fields.body[0].data.one: Required field is empty`,
       );
     }
   });
@@ -2818,7 +2818,7 @@ describe('publishEntities()', () => {
     expectErrorResult(
       publishResult,
       ErrorType.NotFound,
-      'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+      'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
     );
   });
 
@@ -3093,7 +3093,7 @@ describe('unpublishEntities()', () => {
         expectErrorResult(
           unpublishResult,
           ErrorType.BadRequest,
-          `${barId}: Published entities referencing entity: ${fooId}`
+          `${barId}: Published entities referencing entity: ${fooId}`,
         );
       }
     }

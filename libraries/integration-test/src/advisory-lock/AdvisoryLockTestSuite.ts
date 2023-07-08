@@ -10,12 +10,12 @@ export interface AdvisoryLockTestContext {
 }
 
 export function createAdvisoryLockTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<AdvisoryLockTestContext, TCleanup>
+  initializer: TestFunctionInitializer<AdvisoryLockTestContext, TCleanup>,
 ): TestSuite {
   return buildSuite(
     initializer,
     ...AdvisoryLockAcquireSubSuite,
     ...AdvisoryLockReleaseSubSuite,
-    ...AdvisoryLockRenewSubSuite
+    ...AdvisoryLockRenewSubSuite,
   );
 }

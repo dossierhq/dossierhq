@@ -54,7 +54,7 @@ export class OkResult<TOk, TError extends ErrorType> {
   }
 
   map<TNewOk, TNewError extends ErrorType>(
-    mapper: (value: TOk) => TNewOk
+    mapper: (value: TOk) => TNewOk,
   ): Result<TNewOk, TNewError> {
     return ok(mapper(this.value));
   }
@@ -112,7 +112,7 @@ export class ErrorResultError extends Error {
 
 export function createErrorResult<TError extends ErrorType>(
   error: TError,
-  message: string
+  message: string,
 ): ErrorResult<unknown, TError> {
   return new ErrorResult<unknown, TError>(error, message);
 }
@@ -120,7 +120,7 @@ export function createErrorResult<TError extends ErrorType>(
 export function createErrorResultFromError<TError extends ErrorType | typeof ErrorType.Generic>(
   context: { logger: Logger },
   error: ErrorResultError | unknown,
-  expectedErrorTypes: TError[] | null = null
+  expectedErrorTypes: TError[] | null = null,
 ): ErrorResult<unknown, TError | typeof ErrorType.Generic> {
   // For some reason instanceof ErrorResultError doesn't always work, due to Next.js compilation?
   if (
@@ -153,19 +153,19 @@ export const notOk = {
   Generic: (message: string): ErrorResult<unknown, typeof ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, message),
   GenericUnexpectedError: (
-    result: ErrorResult<unknown, ErrorType>
+    result: ErrorResult<unknown, ErrorType>,
   ): ErrorResult<unknown, typeof ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, `Unexpected error: ${result.error}: ${result.message}`),
   GenericUnexpectedException: (
     context: { logger: Logger },
-    error: unknown
+    error: unknown,
   ): ErrorResult<unknown, typeof ErrorType.Generic> => {
     if (error instanceof Error) {
       //TODO need to decide how to pass errors to Logger
       context.logger.error('Unexpected error', error);
       return createErrorResult(
         ErrorType.Generic,
-        `Unexpected exception: ${error.name}: ${error.message}`
+        `Unexpected exception: ${error.name}: ${error.message}`,
       );
     }
     return createErrorResult(ErrorType.Generic, `Unexpected exception: ${error}`);
@@ -204,20 +204,20 @@ class AssertionError extends Error {
 }
 
 export function assertOkResult<TOk, TError extends ErrorType>(
-  actual: Result<unknown, ErrorType>
+  actual: Result<unknown, ErrorType>,
 ): asserts actual is OkResult<TOk, TError> {
   if (actual.isError()) {
     throw new AssertionError(
       actual,
       undefined,
-      `Expected ok, got error ${actual.error}: ${actual.message}`
+      `Expected ok, got error ${actual.error}: ${actual.message}`,
     );
   }
 }
 
 export function assertErrorResultType(
   actual: Result<unknown, ErrorType>,
-  expectedErrorType: ErrorType
+  expectedErrorType: ErrorType,
 ): asserts actual is ErrorResult<unknown, ErrorType> {
   if (!actual.isError()) {
     throw new AssertionError('ok', expectedErrorType, `Expected error, but was ok`);
@@ -226,7 +226,7 @@ export function assertErrorResultType(
     throw new AssertionError(
       actual.error,
       expectedErrorType,
-      `Expected error type ${expectedErrorType} but was ${actual.error} (message: ${actual.message})`
+      `Expected error type ${expectedErrorType} but was ${actual.error} (message: ${actual.message})`,
     );
   }
 }

@@ -13,7 +13,7 @@ export async function adminEntityUpdateStatus(
   database: Database,
   context: TransactionContext,
   status: AdminEntityStatus,
-  reference: DatabaseResolvedEntityReference
+  reference: DatabaseResolvedEntityReference,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const now = new Date();
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);

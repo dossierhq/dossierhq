@@ -101,7 +101,7 @@ export function initializeSearchEntityState({
   // Normalize query state
   state = reduceSearchEntityState(
     state,
-    new SetQueryAction({}, { partial: true, resetPagingIfModifying: false })
+    new SetQueryAction({}, { partial: true, resetPagingIfModifying: false }),
   );
   if (actions) {
     for (const action of actions) {
@@ -113,7 +113,7 @@ export function initializeSearchEntityState({
 
 export function reduceSearchEntityState(
   state: Readonly<SearchEntityState>,
-  action: SearchEntityStateAction
+  action: SearchEntityStateAction,
 ): Readonly<SearchEntityState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
@@ -126,7 +126,7 @@ class SetPagingAction implements SearchEntityStateAction {
 
   constructor(
     paging: Paging,
-    pagingCause?: 'first-page' | 'prev-page' | 'next-page' | 'last-page'
+    pagingCause?: 'first-page' | 'prev-page' | 'next-page' | 'last-page',
   ) {
     this.paging = paging;
     this.pagingCause = pagingCause;
@@ -193,7 +193,7 @@ class SetQueryAction implements SearchEntityStateAction {
 
   constructor(
     value: AdminSearchQuery | PublishedSearchQuery,
-    { partial, resetPagingIfModifying }: { partial: boolean; resetPagingIfModifying: boolean }
+    { partial, resetPagingIfModifying }: { partial: boolean; resetPagingIfModifying: boolean },
   ) {
     this.value = value;
     this.partial = partial;
@@ -209,7 +209,7 @@ class SetQueryAction implements SearchEntityStateAction {
     if (state.restrictEntityTypes.length > 0) {
       if (query.entityTypes && query.entityTypes.length > 0) {
         query.entityTypes = query.entityTypes.filter((it) =>
-          state.restrictEntityTypes.includes(it)
+          state.restrictEntityTypes.includes(it),
         );
       } else {
         query.entityTypes = state.restrictEntityTypes;
@@ -262,7 +262,7 @@ class SetQueryAction implements SearchEntityStateAction {
     if (
       isEqual(
         { query, paging, sampling },
-        { query: state.query, paging: state.paging, sampling: state.sampling }
+        { query: state.query, paging: state.paging, sampling: state.sampling },
       )
     ) {
       return state;
@@ -282,7 +282,7 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
 
   constructor(
     connection: SearchEntityState['connection'],
-    connectionError: SearchEntityState['connectionError']
+    connectionError: SearchEntityState['connectionError'],
   ) {
     this.connection = connection;
     this.connectionError = connectionError;
@@ -317,7 +317,7 @@ class UpdateSampleResultAction implements SearchEntityStateAction {
 
   constructor(
     entitySamples: SearchEntityState['entitySamples'],
-    entitySamplesError: SearchEntityState['entitySamplesError']
+    entitySamplesError: SearchEntityState['entitySamplesError'],
   ) {
     this.entitySamples = entitySamples;
     this.entitySamplesError = entitySamplesError;
@@ -378,7 +378,7 @@ export const SearchEntityStateActions = {
 
 export function getQueryWithoutDefaults(
   mode: 'admin' | 'published',
-  query: AdminSearchQuery | PublishedSearchQuery
+  query: AdminSearchQuery | PublishedSearchQuery,
 ): AdminSearchQuery | PublishedSearchQuery {
   let changed = false;
   const newQuery = { ...query };

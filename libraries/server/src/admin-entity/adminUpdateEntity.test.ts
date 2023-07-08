@@ -20,7 +20,7 @@ describe('Admin adminUpdateEntity', () => {
     const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntityUpdateGetEntityInfo.mockReturnValueOnce(
       Promise.resolve(
@@ -37,14 +37,14 @@ describe('Admin adminUpdateEntity', () => {
           createdAt,
           updatedAt: createdAt,
           fieldValues: { title: 'Old title' },
-        })
-      )
+        }),
+      ),
     );
     databaseAdapter.adminEntityUpdateEntity.mockReturnValueOnce(
-      Promise.resolve(ok({ name: 'Updated name#123456', version: 1, updatedAt: now }))
+      Promise.resolve(ok({ name: 'Updated name#123456', version: 1, updatedAt: now })),
     );
     databaseAdapter.adminEntityIndexesUpdateLatest.mockReturnValueOnce(
-      Promise.resolve(ok(undefined))
+      Promise.resolve(ok(undefined)),
     );
     databaseAdapter.adminEntityUniqueIndexGetValues.mockReturnValueOnce(Promise.resolve(ok([])));
 
@@ -59,7 +59,7 @@ describe('Admin adminUpdateEntity', () => {
         info: { name: 'Updated name' },
         fields: { title: 'Updated title' },
       },
-      undefined
+      undefined,
     );
 
     expectResultValue(result, {
@@ -83,7 +83,7 @@ describe('Admin adminUpdateEntity', () => {
       },
     });
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchSnapshot();
   });
 
@@ -95,7 +95,7 @@ describe('Admin adminUpdateEntity', () => {
     const createdAt = new Date('2020-01-01T00:00:00.000Z');
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntityUpdateGetEntityInfo.mockReturnValueOnce(
       Promise.resolve(
@@ -112,8 +112,8 @@ describe('Admin adminUpdateEntity', () => {
           createdAt,
           updatedAt: createdAt,
           fieldValues: { title: 'Old title' },
-        })
-      )
+        }),
+      ),
     );
 
     const result = await adminUpdateEntity(
@@ -123,12 +123,12 @@ describe('Admin adminUpdateEntity', () => {
       databaseAdapter,
       context,
       { id, fields: {} },
-      undefined
+      undefined,
     );
 
     expectErrorResult(result, ErrorType.BadRequest, 'No change to entity that is already invalid');
     expect(
-      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),
     ).toMatchSnapshot();
   });
 });

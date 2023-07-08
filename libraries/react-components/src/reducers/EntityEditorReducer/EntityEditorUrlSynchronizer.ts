@@ -4,7 +4,7 @@ import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorR
 import { EntityEditorActions, initializeEntityEditorState } from './EntityEditorReducer.js';
 
 export function initializeEditorEntityStateFromUrlQuery(
-  urlSearchParams: Readonly<URLSearchParams> | undefined
+  urlSearchParams: Readonly<URLSearchParams> | undefined,
 ): EntityEditorState {
   const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
   return initializeEntityEditorState({ actions });
@@ -14,7 +14,7 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
   urlSearchParams: Readonly<URLSearchParams> | undefined,
   onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
   entityEditorState: EntityEditorState,
-  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
+  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
 ) {
   const { schema, drafts } = entityEditorState;
   const schemaIsLoaded = !!schema;
@@ -36,7 +36,7 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
     actions.forEach((action) => dispatchEntityEditorState(action));
     if (actions.length > 0) {
       dispatchEntityEditorState(
-        new EntityEditorActions.SetActiveEntity(actions[0].selector.id, false, false)
+        new EntityEditorActions.SetActiveEntity(actions[0].selector.id, false, false),
       );
     }
   }, [schemaIsLoaded, dispatchEntityEditorState, urlSearchParams]);
@@ -45,7 +45,7 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
 }
 
 function urlQueryToSearchEntityStateActions(
-  urlSearchParams: Readonly<URLSearchParams> | undefined
+  urlSearchParams: Readonly<URLSearchParams> | undefined,
 ) {
   const actions = [];
   if (urlSearchParams) {

@@ -29,10 +29,10 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
     (reference: EntityReference) => {
       // open entity asynchronously to not fight with the "click to activate entity" functionality
       setTimeout(() =>
-        dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(reference.id))
+        dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(reference.id)),
       );
     },
-    [dispatchEntityDisplayState]
+    [dispatchEntityDisplayState],
   );
 
   const initialConfig: Parameters<typeof LexicalComposer>[0]['initialConfig'] = {

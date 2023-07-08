@@ -23,22 +23,22 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
 export function usePublishedSearchEntities<
-  TPublishedEntity extends PublishedEntity<string, object>
+  TPublishedEntity extends PublishedEntity<string, object>,
 >(
   publishedClient: PublishedClient<TPublishedEntity>,
   query: PublishedSearchQuery | undefined,
-  paging?: Paging
+  paging?: Paging,
 ): {
   connection: FetcherData<TPublishedEntity> | undefined;
   connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query, paging]: FetcherKey) => fetchSearchEntities(publishedClient, query, paging),
-    [publishedClient]
+    [publishedClient],
   );
   const { data, error } = useSWR<FetcherData<TPublishedEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.publishedSearchEntities(query, paging) : null,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('usePublishedSearchEntities updated values', { publishedClient, query, paging, data, error, });
@@ -48,7 +48,7 @@ export function usePublishedSearchEntities<
 async function fetchSearchEntities<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
   query: FetcherKey[1],
-  paging: FetcherKey[2]
+  paging: FetcherKey[2],
 ): Promise<FetcherData<TPublishedEntity>> {
   const result = await publishedClient.searchEntities(query, paging);
   if (result.isError()) {

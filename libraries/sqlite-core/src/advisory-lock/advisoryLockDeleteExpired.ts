@@ -7,7 +7,7 @@ import { queryMany } from '../QueryFunctions.js';
 
 export async function advisoryLockDeleteExpired(
   database: Database,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<{ name: string }[], typeof ErrorType.Generic> {
   const now = Date.now();
 

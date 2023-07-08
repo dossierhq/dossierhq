@@ -52,7 +52,7 @@ async function unpublishEntities_errorInvalidId({ server }: AdminEntityTestConte
   assertErrorResult(
     unpublishResult,
     ErrorType.NotFound,
-    'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
   );
 }
 
@@ -64,14 +64,14 @@ async function unpublishEntities_errorDuplicateIds({ server }: AdminEntityTestCo
   assertErrorResult(
     unpublishResult,
     ErrorType.BadRequest,
-    'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
   );
 }
 
 async function unpublishEntities_errorWrongAuthKey({ server }: AdminEntityTestContext) {
   const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
   const {
@@ -82,7 +82,7 @@ async function unpublishEntities_errorWrongAuthKey({ server }: AdminEntityTestCo
   assertErrorResult(
     publishResult,
     ErrorType.NotAuthorized,
-    `entity(${id}): Wrong authKey provided`
+    `entity(${id}): Wrong authKey provided`,
   );
 }
 
@@ -93,7 +93,7 @@ async function unpublishEntities_errorUniqueIndexValue({ server }: AdminEntityTe
 
   const createResult = await adminClient.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(createResult);
 

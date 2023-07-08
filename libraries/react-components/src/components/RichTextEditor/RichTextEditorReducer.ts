@@ -17,7 +17,7 @@ export function initializeRichTextState({ data }: { data: RichText | null }): Ri
 
 export function reduceRichTextState(
   state: Readonly<RichTextState>,
-  action: RichTextAction
+  action: RichTextAction,
 ): Readonly<RichTextState> {
   const newState = action.reduce(state);
   // if (newState !== state) {

@@ -30,7 +30,7 @@ export const Row: RowComponent = ({ className, style, children, ...props }: RowP
       className={toClassName(
         className,
         toFlexContainerClassName({ ...props, flexDirection: 'row' }),
-        toSpacingClassName(props)
+        toSpacingClassName(props),
       )}
       style={style}
     >

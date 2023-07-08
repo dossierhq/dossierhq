@@ -39,13 +39,13 @@ export function assertEquals<T>(actual: T, expected: T): void {
 }
 
 export function assertOkResult<TOk, TError extends ErrorType>(
-  actual: Result<unknown, ErrorType>
+  actual: Result<unknown, ErrorType>,
 ): asserts actual is OkResult<TOk, TError> {
   if (actual.isError()) {
     throw new AssertionError(
       actual,
       undefined,
-      `Expected ok, got error ${actual.error}: ${actual.message}`
+      `Expected ok, got error ${actual.error}: ${actual.message}`,
     );
   }
 }
@@ -53,13 +53,13 @@ export function assertOkResult<TOk, TError extends ErrorType>(
 export function assertErrorResult(
   actual: Result<unknown, ErrorType>,
   expectedErrorType: ErrorType,
-  expectedMessage: string
+  expectedMessage: string,
 ): asserts actual is ErrorResult<unknown, ErrorType> {
   if (!actual.isError()) {
     throw new AssertionError(
       actual,
       createErrorResult(expectedErrorType, expectedMessage),
-      `Expected error, but was ok`
+      `Expected error, but was ok`,
     );
   }
   const expectedString = `${expectedErrorType}: ${expectedMessage}`;
@@ -69,7 +69,7 @@ export function assertErrorResult(
 
 export function assertResultValue<TOk, TError extends ErrorType>(
   result: Result<TOk, TError>,
-  expectedValue: TOk
+  expectedValue: TOk,
 ): asserts result is OkResult<TOk, TError> {
   assertOkResult(result);
   if (!isFieldValueEqual(result.value, expectedValue)) {

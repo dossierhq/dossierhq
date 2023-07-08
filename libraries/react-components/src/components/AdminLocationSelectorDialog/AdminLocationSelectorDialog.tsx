@@ -88,7 +88,7 @@ function Content({
   const [{ latString, lngString }, dispatch] = useReducer(
     reduceLocation,
     { value, onChangeRef },
-    initializeLocationState
+    initializeLocationState,
   );
   useEffect(() => {
     dispatch({ type: 'value', value });
@@ -97,13 +97,13 @@ function Content({
   const handleLatChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void =>
       dispatch({ type: 'lat', value: event.currentTarget.value }),
-    []
+    [],
   );
 
   const handleLngChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void =>
       dispatch({ type: 'lng', value: event.currentTarget.value }),
-    []
+    [],
   );
 
   // Reset signal
@@ -116,7 +116,7 @@ function Content({
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     { mode: 'admin', actions: [new SearchEntityStateActions.SetSampling({ count: 100 }, false)] },
-    initializeSearchEntityState
+    initializeSearchEntityState,
   );
 
   useAdminLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
@@ -125,7 +125,7 @@ function Content({
   const { draftIds, markers } = useMemo(
     () => extractDraftLocations(schema, entityEditorState.drafts, value),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [schema, entityEditorState.drafts]
+    [schema, entityEditorState.drafts],
   );
 
   const filterEntity = useCallback((entity: AdminEntity) => !draftIds.has(entity.id), [draftIds]);
@@ -185,7 +185,7 @@ function Content({
 function extractDraftLocations(
   schema: AdminSchema | undefined,
   drafts: EntityEditorDraftState[],
-  value: Location | null
+  value: Location | null,
 ) {
   const draftIds = new Set<string>();
   const markers: { draftState: EntityEditorDraftState; location: Location }[] = [];

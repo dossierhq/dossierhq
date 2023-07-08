@@ -25,7 +25,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 export function createFilesystemAdminMiddleware(
-  backChannelAdminClient: AdminClient
+  backChannelAdminClient: AdminClient,
 ): AdminClientMiddleware<SessionContext> {
   return async (context: SessionContext, operation: AdminClientOperation) => {
     const result = await operation.next();
@@ -72,10 +72,10 @@ async function updateSchemaSpecification(schemaSpecification: AdminSchemaSpecifi
 
 async function updateEntityFile(
   backChannelAdminClient: AdminClient,
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ) {
   const adminSchema = new AdminSchema(
-    (await backChannelAdminClient.getSchemaSpecification()).valueOrThrow()
+    (await backChannelAdminClient.getSchemaSpecification()).valueOrThrow(),
   );
 
   const save = createCleanedUpEntity(adminSchema, entity);
@@ -115,7 +115,7 @@ function createCleanedUpEntity(adminSchema: AdminSchema, entity: AdminEntity<str
 export async function loadAllEntities(
   adminClient: AdminClient,
   logger: Logger,
-  dataDir: string
+  dataDir: string,
 ): PromiseResult<EntityReference[], ErrorType> {
   const loadedEntries: EntityReference[] = [];
 

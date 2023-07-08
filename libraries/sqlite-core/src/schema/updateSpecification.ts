@@ -11,7 +11,7 @@ import { queryRun } from '../QueryFunctions.js';
 export async function schemaUpdateSpecification(
   database: Database,
   context: TransactionContext,
-  schemaSpec: AdminSchemaSpecification
+  schemaSpec: AdminSchemaSpecification,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const result = await queryRun(database, context, {
     text: 'INSERT INTO schema_versions (specification) VALUES (?1)',

@@ -294,7 +294,7 @@ class BaseSchema<T extends AdminSchemaSpecification | PublishedSchemaSpecificati
 
   getEntityFieldSpecification(
     entitySpec: T['entityTypes'][number],
-    fieldName: string
+    fieldName: string,
   ): T['entityTypes'][number]['fields'][number] | null {
     return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
   }
@@ -309,7 +309,7 @@ class BaseSchema<T extends AdminSchemaSpecification | PublishedSchemaSpecificati
 
   getValueFieldSpecification(
     valueSpec: AdminValueTypeSpecification,
-    fieldName: string
+    fieldName: string,
   ): AdminFieldSpecification | null {
     return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
   }
@@ -339,7 +339,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
   private cachedPublishedSchema: PublishedSchema | null = null;
 
   static createAndValidate(
-    update: AdminSchemaSpecificationUpdate
+    update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const emptySpec: AdminSchemaSpecification = {
       entityTypes: [],
@@ -362,7 +362,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
 
       if (!PASCAL_CASE_PATTERN.test(typeSpec.name)) {
         return notOk.BadRequest(
-          `${typeSpec.name}: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123`
+          `${typeSpec.name}: The type name has to start with an upper-case letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123`,
         );
       }
       if (usedTypeNames.has(typeSpec.name)) {
@@ -382,12 +382,12 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
           const nameFieldSpec = typeSpec.fields.find((fieldSpec) => fieldSpec.name === nameField);
           if (!nameFieldSpec) {
             return notOk.BadRequest(
-              `${typeSpec.name}: Found no field matching nameField (${nameField})`
+              `${typeSpec.name}: Found no field matching nameField (${nameField})`,
             );
           }
           if (nameFieldSpec.type !== FieldType.String || nameFieldSpec.list) {
             return notOk.BadRequest(
-              `${typeSpec.name}: nameField (${nameField}) should be a string (non-list)`
+              `${typeSpec.name}: nameField (${nameField}) should be a string (non-list)`,
             );
           }
         }
@@ -397,12 +397,12 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
       for (const fieldSpec of typeSpec.fields) {
         if (!CAMEL_CASE_PATTERN.test(fieldSpec.name)) {
           return notOk.BadRequest(
-            `${typeSpec.name}.${fieldSpec.name}: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123`
+            `${typeSpec.name}.${fieldSpec.name}: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123`,
           );
         }
         if (isValueType && fieldSpec.name === 'type') {
           return notOk.BadRequest(
-            `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`
+            `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`,
           );
         }
         if (usedFieldNames.has(fieldSpec.name)) {
@@ -412,14 +412,14 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
 
         if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(
-            `${typeSpec.name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
+            `${typeSpec.name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`,
           );
         }
 
         for (const key of Object.keys(fieldSpec)) {
           if (!(ADMIN_FIELD_SPECIFICATION_KEYS[fieldSpec.type] as string[]).includes(key)) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify ${key}`
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify ${key}`,
             );
           }
         }
@@ -433,12 +433,12 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
             const referencedEntityType = this.getEntityTypeSpecification(referencedTypeName);
             if (!referencedEntityType) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`,
               );
             }
             if (referencedEntityType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
               );
             }
           }
@@ -453,12 +453,12 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
             const referencedEntityType = this.getEntityTypeSpecification(referencedTypeName);
             if (!referencedEntityType) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes ${referencedTypeName} doesn’t exist`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes ${referencedTypeName} doesn’t exist`,
               );
             }
             if (referencedEntityType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
               );
             }
           }
@@ -473,12 +473,12 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
             const referencedValueType = this.getValueTypeSpecification(referencedTypeName);
             if (!referencedValueType) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`
+                `${typeSpec.name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`,
               );
             }
             if (referencedValueType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: Referenced value type in valueTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced value type in valueTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
               );
             }
           }
@@ -493,20 +493,20 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
           for (const richTextNode of fieldSpec.richTextNodes) {
             if (usedRichTextNodes.has(richTextNode)) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: richTextNodes with type ${richTextNode} is duplicated`
+                `${typeSpec.name}.${fieldSpec.name}: richTextNodes with type ${richTextNode} is duplicated`,
               );
             }
             usedRichTextNodes.add(richTextNode);
           }
 
           const missingNodeTypes = REQUIRED_RICH_TEXT_NODES.filter(
-            (it) => !usedRichTextNodes.has(it)
+            (it) => !usedRichTextNodes.has(it),
           );
           if (missingNodeTypes.length > 0) {
             return notOk.BadRequest(
               `${typeSpec.name}.${
                 fieldSpec.name
-              }: richTextNodes must include ${missingNodeTypes.join(', ')}`
+              }: richTextNodes must include ${missingNodeTypes.join(', ')}`,
             );
           }
 
@@ -516,8 +516,8 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
               const unusedNodesInGroup = nodeGroup.filter((it) => !usedRichTextNodes.has(it));
               return notOk.BadRequest(
                 `${typeSpec.name}.${fieldSpec.name}: richTextNodes includes ${usedNodesInGroup.join(
-                  ', '
-                )} but must also include related ${unusedNodesInGroup.join(', ')}`
+                  ', ',
+                )} but must also include related ${unusedNodesInGroup.join(', ')}`,
               );
             }
           }
@@ -529,7 +529,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
               !usedRichTextNodes.has(RichTextNodeType.entity)
             ) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: entityTypes is specified for field, but richTextNodes is missing entity`
+                `${typeSpec.name}.${fieldSpec.name}: entityTypes is specified for field, but richTextNodes is missing entity`,
               );
             }
 
@@ -539,7 +539,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
               !usedRichTextNodes.has(RichTextNodeType.entityLink)
             ) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: linkEntityTypes is specified for field, but richTextNodes is missing entityLink`
+                `${typeSpec.name}.${fieldSpec.name}: linkEntityTypes is specified for field, but richTextNodes is missing entityLink`,
               );
             }
 
@@ -549,7 +549,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
               !usedRichTextNodes.has(RichTextNodeType.valueItem)
             ) {
               return notOk.BadRequest(
-                `${typeSpec.name}.${fieldSpec.name}: valueTypes is specified for field, but richTextNodes is missing valueItem`
+                `${typeSpec.name}.${fieldSpec.name}: valueTypes is specified for field, but richTextNodes is missing valueItem`,
               );
             }
           }
@@ -559,7 +559,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
           const pattern = this.getPattern(fieldSpec.matchPattern);
           if (!pattern) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Unknown matchPattern (${fieldSpec.matchPattern})`
+              `${typeSpec.name}.${fieldSpec.name}: Unknown matchPattern (${fieldSpec.matchPattern})`,
             );
           }
         }
@@ -570,7 +570,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
           fieldSpec.values.length > 0
         ) {
           return notOk.BadRequest(
-            `${typeSpec.name}.${fieldSpec.name}: Can’t specify both matchPattern and values`
+            `${typeSpec.name}.${fieldSpec.name}: Can’t specify both matchPattern and values`,
           );
         }
 
@@ -578,7 +578,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
           const index = this.getIndex(fieldSpec.index);
           if (!index) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Unknown index (${fieldSpec.index})`
+              `${typeSpec.name}.${fieldSpec.name}: Unknown index (${fieldSpec.index})`,
             );
           }
         }
@@ -592,7 +592,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
       }
       if (!CAMEL_CASE_PATTERN.test(patternSpec.name)) {
         return notOk.BadRequest(
-          `${patternSpec.name}: The pattern name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123`
+          `${patternSpec.name}: The pattern name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myPattern_123`,
         );
       }
       usedPatterns.add(patternSpec.name);
@@ -611,7 +611,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
       }
       if (!CAMEL_CASE_PATTERN.test(indexSpec.name)) {
         return notOk.BadRequest(
-          `${indexSpec.name}: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123`
+          `${indexSpec.name}: The index name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myIndex_123`,
         );
       }
       usedIndexes.add(indexSpec.name);
@@ -621,7 +621,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
   }
 
   updateAndValidate(
-    update: AdminSchemaSpecificationUpdate
+    update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [...this.spec.entityTypes],
@@ -634,7 +634,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     if (update.entityTypes) {
       for (const entitySpecUpdate of update.entityTypes) {
         const existingIndex = schemaSpec.entityTypes.findIndex(
-          (it) => it.name === entitySpecUpdate.name
+          (it) => it.name === entitySpecUpdate.name,
         );
         const existingEntitySpec =
           existingIndex >= 0 ? schemaSpec.entityTypes[existingIndex] : null;
@@ -642,30 +642,30 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
         const adminOnly = valueOrExistingOrDefault(
           entitySpecUpdate.adminOnly,
           existingEntitySpec?.adminOnly,
-          false
+          false,
         );
         const authKeyPattern = valueOrExistingOrDefault(
           entitySpecUpdate.authKeyPattern,
           existingEntitySpec?.authKeyPattern,
-          null
+          null,
         );
         const nameField = valueOrExistingOrDefault(
           entitySpecUpdate.nameField,
           existingEntitySpec?.nameField,
-          null
+          null,
         );
 
         if (existingEntitySpec) {
           if (existingEntitySpec.adminOnly !== adminOnly) {
             return notOk.BadRequest(
-              `${existingEntitySpec.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingEntitySpec.adminOnly}`
+              `${existingEntitySpec.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingEntitySpec.adminOnly}`,
             );
           }
         }
 
         const collectFieldsResult = collectFieldSpecsFromUpdates(
           entitySpecUpdate.fields,
-          existingEntitySpec
+          existingEntitySpec,
         );
         if (collectFieldsResult.isError()) return collectFieldsResult;
         const entitySpec: AdminEntityTypeSpecification = {
@@ -685,7 +685,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
         const fieldWithIsName = entitySpecUpdate.fields.find((it) => 'isName' in it);
         if (fieldWithIsName) {
           return notOk.BadRequest(
-            `${entitySpec.name}.${fieldWithIsName.name}: isName is specified, use nameField on the type instead`
+            `${entitySpec.name}.${fieldWithIsName.name}: isName is specified, use nameField on the type instead`,
           );
         }
       }
@@ -695,27 +695,27 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     if (update.valueTypes) {
       for (const valueSpecUpdate of update.valueTypes) {
         const existingIndex = schemaSpec.valueTypes.findIndex(
-          (it) => it.name === valueSpecUpdate.name
+          (it) => it.name === valueSpecUpdate.name,
         );
         const existingValueSpec = existingIndex >= 0 ? schemaSpec.valueTypes[existingIndex] : null;
 
         const adminOnly = valueOrExistingOrDefault(
           valueSpecUpdate.adminOnly,
           existingValueSpec?.adminOnly,
-          false
+          false,
         );
 
         if (existingValueSpec) {
           if (existingValueSpec.adminOnly !== adminOnly) {
             return notOk.BadRequest(
-              `${valueSpecUpdate.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingValueSpec.adminOnly}`
+              `${valueSpecUpdate.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingValueSpec.adminOnly}`,
             );
           }
         }
 
         const collectFieldsResult = collectFieldSpecsFromUpdates(
           valueSpecUpdate.fields,
-          existingValueSpec
+          existingValueSpec,
         );
         if (collectFieldsResult.isError()) return collectFieldsResult;
         const valueSpec = {
@@ -733,7 +733,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
 
     // Check with patterns and indexes are used
     const usedPatterns = new Set(
-      schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[]
+      schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[],
     );
     const usedIndexes = new Set<string>();
     for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
@@ -857,7 +857,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
 
 function collectFieldSpecsFromUpdates(
   fieldUpdates: AdminFieldSpecificationUpdate[],
-  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null
+  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null,
 ): Result<AdminFieldSpecification[], typeof ErrorType.BadRequest> {
   const fields: AdminFieldSpecification[] = [];
   const usedFieldNames = new Set<string>();
@@ -883,7 +883,7 @@ function collectFieldSpecsFromUpdates(
 
 function mergeAndNormalizeUpdatedFieldSpec(
   fieldSpecUpdate: AdminFieldSpecificationUpdate,
-  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null
+  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null,
 ): Result<AdminFieldSpecification, typeof ErrorType.BadRequest> {
   const existingFieldSpec = existingTypeSpec?.fields.find((it) => it.name === fieldSpecUpdate.name);
 
@@ -892,29 +892,29 @@ function mergeAndNormalizeUpdatedFieldSpec(
   const required = valueOrExistingOrDefault(
     fieldSpecUpdate.required,
     existingFieldSpec?.required,
-    false
+    false,
   );
   const adminOnly = valueOrExistingOrDefault(
     fieldSpecUpdate.adminOnly,
     existingFieldSpec?.adminOnly,
-    false
+    false,
   );
 
   if (existingTypeSpec && existingFieldSpec) {
     const typeName = existingTypeSpec.name;
     if (existingFieldSpec.type !== type) {
       return notOk.BadRequest(
-        `${typeName}.${name}: Can’t change type of field. Requested ${type} but is ${existingFieldSpec.type}`
+        `${typeName}.${name}: Can’t change type of field. Requested ${type} but is ${existingFieldSpec.type}`,
       );
     }
     if (existingFieldSpec.list !== list) {
       return notOk.BadRequest(
-        `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`
+        `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`,
       );
     }
     if (existingFieldSpec.adminOnly !== adminOnly) {
       return notOk.BadRequest(
-        `${typeName}.${name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingFieldSpec.adminOnly}`
+        `${typeName}.${name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingFieldSpec.adminOnly}`,
       );
     }
   }
@@ -930,8 +930,8 @@ function mergeAndNormalizeUpdatedFieldSpec(
         valueOrExistingOrDefault(
           fieldSpecUpdate.entityTypes,
           existingEntityFieldSpec?.entityTypes,
-          []
-        )
+          [],
+        ),
       );
       return ok({
         name,
@@ -951,7 +951,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
       const integer = valueOrExistingOrDefault(
         fieldSpecUpdate.integer,
         existingNumberFieldSpec?.integer,
-        false
+        false,
       );
       return ok({
         name,
@@ -971,32 +971,32 @@ function mergeAndNormalizeUpdatedFieldSpec(
         valueOrExistingOrDefault(
           fieldSpecUpdate.richTextNodes,
           existingRichTextFieldSpec?.richTextNodes,
-          []
-        )
+          [],
+        ),
       );
 
       const entityTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
           fieldSpecUpdate.entityTypes,
           existingRichTextFieldSpec?.entityTypes,
-          []
-        )
+          [],
+        ),
       );
 
       const linkEntityTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
           fieldSpecUpdate.linkEntityTypes,
           existingRichTextFieldSpec?.linkEntityTypes,
-          []
-        )
+          [],
+        ),
       );
 
       const valueTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
           fieldSpecUpdate.valueTypes,
           existingRichTextFieldSpec?.valueTypes,
-          []
-        )
+          [],
+        ),
       );
 
       return ok({
@@ -1019,13 +1019,13 @@ function mergeAndNormalizeUpdatedFieldSpec(
       const multiline = valueOrExistingOrDefault(
         fieldSpecUpdate.multiline,
         existingStringFieldSpec?.multiline,
-        false
+        false,
       );
 
       const matchPattern = valueOrExistingOrDefault(
         fieldSpecUpdate.matchPattern,
         existingStringFieldSpec?.matchPattern,
-        null
+        null,
       );
 
       const values = [
@@ -1036,13 +1036,13 @@ function mergeAndNormalizeUpdatedFieldSpec(
       const index = valueOrExistingOrDefault(
         fieldSpecUpdate.index,
         existingStringFieldSpec?.index,
-        null
+        null,
       );
 
       if (existingStringFieldSpec) {
         if (existingStringFieldSpec.index !== index) {
           return notOk.BadRequest(
-            `${existingTypeSpec?.name}.${name}: Can’t change the value of index. Requested ${index} but is ${existingStringFieldSpec.index}`
+            `${existingTypeSpec?.name}.${name}: Can’t change the value of index. Requested ${index} but is ${existingStringFieldSpec.index}`,
           );
         }
       }
@@ -1067,8 +1067,8 @@ function mergeAndNormalizeUpdatedFieldSpec(
         valueOrExistingOrDefault(
           fieldSpecUpdate.valueTypes,
           existingValueItemFieldSpec?.valueTypes,
-          []
-        )
+          [],
+        ),
       );
       return ok({
         name,
@@ -1087,7 +1087,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
 function valueOrExistingOrDefault<T>(
   update: T | undefined,
   existing: T | undefined,
-  defaultValue: T
+  defaultValue: T,
 ): T {
   if (update !== undefined) return update;
   if (existing !== undefined) return existing;

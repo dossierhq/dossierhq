@@ -15,7 +15,7 @@ export async function adminEntityUniqueIndexUpdateValues(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   if (values.add.length > 0) {
     const addResult = await addValues(databaseAdapter, context, entity, values);
@@ -37,7 +37,7 @@ async function addValues(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const query = buildPostgresSqlQuery(({ sql, addValue }) => {
     sql`INSERT INTO unique_index_values (entities_id, index_name, value, latest, published) VALUES`;
@@ -56,7 +56,7 @@ async function addValues(
     if (
       databaseAdapter.isUniqueViolationOfConstraint(
         error,
-        UniqueConstraints.unique_index_values_index_name_value_key
+        UniqueConstraints.unique_index_values_index_name_value_key,
       )
     ) {
       return notOk.Conflict('Conflict with unique index value');
@@ -69,7 +69,7 @@ async function updateValues(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const { index, value, latest, published } of values.update) {
     const result = await queryOne<Pick<UniqueIndexValuesTable, 'entities_id'>>(
@@ -77,7 +77,7 @@ async function updateValues(
       context,
       buildPostgresSqlQuery(({ sql }) => {
         sql`UPDATE unique_index_values SET latest = ${latest}, published = ${published} WHERE index_name = ${index} AND value = ${value} RETURNING entities_id`;
-      })
+      }),
     );
     if (result.isError()) return result;
     if (result.value.entities_id !== entity.entityInternalId) {
@@ -90,7 +90,7 @@ async function updateValues(
 async function removeValues(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const { index, value } of values.remove) {
     //TODO include entity id?
@@ -99,7 +99,7 @@ async function removeValues(
       context,
       buildPostgresSqlQuery(({ sql }) => {
         sql`DELETE FROM unique_index_values WHERE index_name = ${index} AND value = ${value}`;
-      })
+      }),
     );
     if (result.isError()) return result;
   }

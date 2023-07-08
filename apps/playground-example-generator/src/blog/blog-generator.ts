@@ -30,7 +30,7 @@ async function createPerson(adminClient: AppAdminClient) {
         info: { type: 'Person', authKey: 'none', name },
         fields: { title: name },
       },
-      { publish: true }
+      { publish: true },
     )
   ).valueOrThrow().entity;
 }
@@ -38,7 +38,7 @@ async function createPerson(adminClient: AppAdminClient) {
 async function createBlogPost(
   adminClient: AppAdminClient,
   persons: AdminPerson[],
-  images: AdminCloudinaryImage[]
+  images: AdminCloudinaryImage[],
 ) {
   const title = faker.company.catchPhrase();
 
@@ -63,7 +63,7 @@ async function createBlogPost(
           ]),
         },
       },
-      { publish: true }
+      { publish: true },
     )
   ).valueOrThrow().entity;
 }

@@ -94,7 +94,7 @@ afterAll(async () => {
 
 async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(
   client: AdminClient,
-  authKey: string
+  authKey: string,
 ) {
   const result = await ensureEntityCount(
     client,
@@ -103,7 +103,7 @@ async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(
     authKey,
     (random) => ({
       message: `Hey ${random}`,
-    })
+    }),
   );
   result.throwIfError();
 }
@@ -126,7 +126,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
       info: { type: 'PublishedEntityBar', name: 'Bar', authKey: 'none' },
       fields: { title: 'Bar' },
     },
-    { publish: true }
+    { publish: true },
   );
   if (createBarResult.isError()) {
     throw createBarResult.toError();
@@ -145,7 +145,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
         info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i, authKey: 'none' },
         fields: { bar: { id: barId }, bars },
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(createFooResult)) {
       const publishedEntityResult = await publishedClient.getEntity({
@@ -176,7 +176,7 @@ describe('searchEntities() paging', () => {
           [...entitiesOfTypePublishedEntityOnlyEditBeforeNone].reverse(),
           secondResult.value,
           10,
-          10 + 20
+          10 + 20,
         );
       }
     }
@@ -214,7 +214,7 @@ describe('searchEntities() linksTo', () => {
         info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
         fields: { entity: { id: barId } },
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(anotherBarCreateResult)) {
       const searchResult = await publishedClient.searchEntities({
@@ -250,7 +250,7 @@ describe('searchEntities() boundingBox', () => {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: { location: center },
       },
-      { publish: true }
+      { publish: true },
     );
 
     if (expectOkResult(createAndPublishResult)) {
@@ -274,7 +274,7 @@ describe('searchEntities() boundingBox', () => {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: { location: outside },
       },
-      { publish: true }
+      { publish: true },
     );
 
     if (expectOkResult(createAndPublishResult)) {
@@ -302,7 +302,7 @@ describe('searchEntities() boundingBox', () => {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: { locations: [center, inside] },
       },
-      { publish: true }
+      { publish: true },
     );
 
     if (expectOkResult(createAndPublishResult)) {
@@ -334,7 +334,7 @@ describe('searchEntities() boundingBox', () => {
           ]),
         },
       },
-      { publish: true }
+      { publish: true },
     );
 
     if (expectOkResult(createAndPublishResult)) {
@@ -354,7 +354,7 @@ describe('searchEntities() text', () => {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: { title: 'this is some serious summary with the best conclusion' },
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(createResult)) {
       const {
@@ -367,7 +367,7 @@ describe('searchEntities() text', () => {
           entityTypes: ['PublishedEntityFoo'],
           text: 'serious conclusion',
         },
-        id
+        id,
       );
       expectResultValue(matches, 1);
     }
@@ -397,7 +397,7 @@ describe('getTotalCount', () => {
         info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
         fields: { entity: { id: barId } },
       },
-      { publish: true }
+      { publish: true },
     );
     if (expectOkResult(anotherBarCreateResult)) {
       const result = await publishedClient.getTotalCount({
@@ -431,7 +431,7 @@ describe('getTotalCount', () => {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: { locations: [center, inside] },
       },
-      { publish: true }
+      { publish: true },
     );
 
     if (expectOkResult(createResult)) {
@@ -456,8 +456,8 @@ describe('getTotalCount', () => {
             info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
             fields: { title: 'That was indeed a sensational clown' },
           },
-          { publish: true }
-        )
+          { publish: true },
+        ),
       );
 
       const resultAfter = await publishedClient.getTotalCount({ text: 'sensational clown' });

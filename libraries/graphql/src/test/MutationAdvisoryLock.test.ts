@@ -14,7 +14,7 @@ let schema: GraphQLSchema;
 beforeAll(async () => {
   server = await setUpServerWithSession(
     { entityTypes: [{ name: 'Placeholder', fields: [] }] },
-    'data/advisory-lock.sqlite'
+    'data/advisory-lock.sqlite',
   );
   schema = new GraphQLSchemaGenerator({
     adminSchema: server.schema,

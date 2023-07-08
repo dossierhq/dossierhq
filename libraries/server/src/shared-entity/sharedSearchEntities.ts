@@ -18,7 +18,7 @@ import type {
 const defaultPagingCount = 25;
 
 export function resolvePagingInfo(
-  paging: Paging | undefined
+  paging: Paging | undefined,
 ): Result<DatabasePagingInfo, typeof ErrorType.BadRequest> {
   const pagingResult = getPagingInfo(paging);
   if (pagingResult.isError()) return pagingResult;
@@ -34,7 +34,7 @@ export function resolvePagingInfo(
 }
 
 export function getOppositeDirectionPaging<
-  TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload
+  TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
 >(pagingInfo: DatabasePagingInfo, result: TSearchResult): DatabasePagingInfo | null {
   if (result.entities.length === 0) {
     // If we don't get any entities in the normal direction we won't return any PageInfo, only null
@@ -67,13 +67,13 @@ export function getOppositeDirectionPaging<
 export async function sharedSearchEntities<
   TSchema,
   TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
-  TEntity
+  TEntity,
 >(
   schema: TSchema,
   paging: PagingInfo,
   searchResult: TSearchResult,
   hasMoreOppositeDirection: boolean,
-  decoder: (schema: TSchema, values: TSearchResult['entities'][number]) => TEntity
+  decoder: (schema: TSchema, values: TSearchResult['entities'][number]) => TEntity,
 ): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
   if (entities.length === 0) {

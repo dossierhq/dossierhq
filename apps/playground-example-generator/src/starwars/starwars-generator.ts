@@ -22,7 +22,7 @@ const UUID_NAMESPACE = 'b0a4c16c-8feb-4a68-9d43-98f96719eee5';
 async function downloadFile(filename: string) {
   return await fetchJsonCached(
     `https://raw.githubusercontent.com/Juriy/swapi/master/resources/fixtures/${filename}`,
-    `cache/starwars/${filename}`
+    `cache/starwars/${filename}`,
   );
 }
 
@@ -63,7 +63,7 @@ async function createFilms(adminClient: AppAdminClient) {
             species: uuidReferences('species', film.fields.species),
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }
@@ -89,7 +89,7 @@ async function createPeople(adminClient: AppAdminClient) {
             birthYear: person.fields.birth_year,
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }
@@ -115,7 +115,7 @@ async function createPlanets(adminClient: AppAdminClient) {
             population: planet.fields.population,
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }
@@ -145,7 +145,7 @@ async function createSpecies(adminClient: AppAdminClient) {
               : null,
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }
@@ -166,7 +166,7 @@ async function createStarships(adminClient: AppAdminClient) {
             pilots: uuidReferences('person', starship.fields.pilots),
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }
@@ -193,7 +193,7 @@ async function createTransports(adminClient: AppAdminClient) {
             costInCredits: transport.fields.cost_in_credits,
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }
@@ -212,7 +212,7 @@ async function createVehicles(adminClient: AppAdminClient) {
             pilots: uuidReferences('person', vehicle.fields.pilots),
           },
         },
-        { publish: true }
+        { publish: true },
       )
     ).throwIfError();
   }

@@ -32,7 +32,7 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
       // reset returnValue since if next time we show the dialog we don't want the old value (esc key doesn't set returnValue)
       if (dialog) dialog.returnValue = '';
     },
-    [onClose]
+    [onClose],
   );
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
 
   const containerClassName = toClassName(
     width === 'wide' && 'container',
-    height === 'fill' && 'is-height-100'
+    height === 'fill' && 'is-height-100',
   );
 
   return (
@@ -66,7 +66,7 @@ export function Dialog({ show, form, width, height, modal, onClose, children }: 
         className={toClassName(
           'dialog',
           widthClassNameMap[width ?? 'narrow'],
-          height && heightClassNameMap[height]
+          height && heightClassNameMap[height],
         )}
         onClose={handleClose}
       >

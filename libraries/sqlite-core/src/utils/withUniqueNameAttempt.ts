@@ -11,8 +11,8 @@ export async function withUniqueNameAttempt<TOk, TError extends ErrorType>(
   attempt: (
     context: TransactionContext,
     name: string,
-    nameConflictErrorMessage: string
-  ) => PromiseResult<TOk, TError | typeof ErrorType.Conflict>
+    nameConflictErrorMessage: string,
+  ) => PromiseResult<TOk, TError | typeof ErrorType.Conflict>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   let potentiallyModifiedName = name;
   for (let i = 0; i < maxAttempts; i += 1) {

@@ -11,7 +11,7 @@ function getObserver() {
           entry.target.classList.toggle('is-clipped', entry.intersectionRatio < 1.0);
         }
       },
-      { threshold: [1.0] }
+      { threshold: [1.0] },
     );
   }
   return observerInstance;

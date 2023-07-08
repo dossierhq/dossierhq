@@ -17,7 +17,7 @@ function $createAdminEntityLinkNode(reference: EntityReference): AdminEntityLink
 }
 
 export function $isAdminEntityLinkNode(
-  node: LexicalNode | undefined | null
+  node: LexicalNode | undefined | null,
 ): node is AdminEntityLinkNode {
   return node instanceof AdminEntityLinkNode;
 }
@@ -77,7 +77,7 @@ export class AdminEntityLinkNode extends ElementNode {
   override updateDOM(
     _prevNode: AdminEntityLinkNode,
     _dom: HTMLElement,
-    _config: EditorConfig
+    _config: EditorConfig,
   ): boolean {
     return false; // no need to recreate the DOM
   }
@@ -182,7 +182,7 @@ export function toggleEntityLink(reference: EntityReference | null): void {
 
 function replaceParentNodesWithChildren(
   nodes: LexicalNode[],
-  predicate: (node: LexicalNode) => boolean
+  predicate: (node: LexicalNode) => boolean,
 ): void {
   for (const node of nodes) {
     const parent = node.getParent();
@@ -202,7 +202,7 @@ function $getLinkAncestor(node: LexicalNode): null | LexicalNode {
 
 function $getAncestor(
   node: LexicalNode,
-  predicate: (ancestor: LexicalNode) => boolean
+  predicate: (ancestor: LexicalNode) => boolean,
 ): null | LexicalNode {
   let parent: null | LexicalNode = node;
   while (parent !== null && (parent = parent.getParent()) !== null && !predicate(parent));

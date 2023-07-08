@@ -37,7 +37,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
   publishedSchema: PublishedSchema,
   path: ItemValuePath,
   type: string,
-  entityFields: Record<string, unknown>
+  entityFields: Record<string, unknown>,
 ): Result<
   {
     fullTextSearchText: string;
@@ -68,7 +68,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
     }
     if (validationIssue) {
       return notOk.BadRequest(
-        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
+        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
       );
     }
 
@@ -90,7 +90,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
 export async function validateReferencedEntitiesArePublishedAndCollectInfo(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  entitiesWithReferences: { entity: EntityReference; references: EntityReference[] }[]
+  entitiesWithReferences: { entity: EntityReference; references: EntityReference[] }[],
 ): PromiseResult<
   Map<string, DatabaseResolvedEntityReference[]>,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -101,7 +101,7 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
     // Step 1: Check that referenced entities are published
     const referencesResult = await databaseAdapter.adminEntityGetReferenceEntitiesInfo(
       context,
-      references
+      references,
     );
     if (referencesResult.isError()) return referencesResult;
 
@@ -111,7 +111,7 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
 
     for (const requestedReference of references) {
       const referenceInfo = referencesResult.value.find(
-        (reference) => reference.id === requestedReference.id
+        (reference) => reference.id === requestedReference.id,
       );
       if (!referenceInfo) {
         // Shouldn't happen since you can't create an entity with invalid references
@@ -130,7 +130,7 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
       referenceErrorMessages.push(
         `${entity.id}: References unpublished entities: ${unpublishedReferences
           .map(({ id }) => id)
-          .join(', ')}`
+          .join(', ')}`,
       );
     }
   }

@@ -28,7 +28,7 @@ describe('AddEntityAction', () => {
     const id = 'cf05e3cc-ccda-4ff3-a46b-c02ac9659798';
     const state = reduceEntityDisplayState(
       initializeEntityDisplayState([]),
-      new EntityDisplayActions.AddEntity(id)
+      new EntityDisplayActions.AddEntity(id),
     );
 
     expect(state).toMatchSnapshot();
@@ -38,7 +38,7 @@ describe('AddEntityAction', () => {
     const id = 'cf05e3cc-ccda-4ff3-a46b-c02ac9659798';
     const state = reduceEntityDisplayState(
       initializeEntityDisplayState([id]),
-      new EntityDisplayActions.AddEntity(id)
+      new EntityDisplayActions.AddEntity(id),
     );
 
     expect(state).toMatchSnapshot();
@@ -52,7 +52,7 @@ describe('RemoveEntityAction', () => {
     const state = reduceEntityDisplayStateActions(
       initializeEntityDisplayState([]),
       new EntityDisplayActions.AddEntity(id),
-      new EntityDisplayActions.RemoveEntity(id)
+      new EntityDisplayActions.RemoveEntity(id),
     );
     expect(state).toMatchSnapshot();
     expect(state.entityIds).toHaveLength(0);
@@ -66,7 +66,7 @@ describe('SetActiveEntityAction', () => {
       initializeEntityDisplayState([]),
       new EntityDisplayActions.AddEntity('619725d7-e583-4544-8bb0-23fc3c2870c0'),
       new EntityDisplayActions.AddEntity('9516465b-935a-4cc7-8b97-ccaca81bbe9a'),
-      new EntityDisplayActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true)
+      new EntityDisplayActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true),
     );
     expect(state).toMatchSnapshot();
     expect(state.activeEntityId).toBe('619725d7-e583-4544-8bb0-23fc3c2870c0');

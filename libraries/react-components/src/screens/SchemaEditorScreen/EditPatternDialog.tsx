@@ -61,7 +61,7 @@ export function EditPatternDialog({
       onClose();
       setStatus(DialogStatus.closed);
     },
-    [dispatchSchemaEditorState, pattern, onClose, selector]
+    [dispatchSchemaEditorState, pattern, onClose, selector],
   );
 
   useEffect(() => {
@@ -127,7 +127,7 @@ function DialogContent({
         onEnterKeyPress();
       }
     },
-    [onEnterKeyPress]
+    [onEnterKeyPress],
   );
 
   const patternColor = status === DialogStatus.invalidFormat ? 'danger' : undefined;

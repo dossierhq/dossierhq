@@ -110,7 +110,7 @@ async function searchEntities_pagingFirst({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await adminClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 10 }
+    { first: 10 },
   );
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 10);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
@@ -119,7 +119,7 @@ async function searchEntities_pagingFirst({
 async function searchEntities_pagingFirst0({ server }: AdminEntityTestContext) {
   const result = await adminClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 0 }
+    { first: 0 },
   );
   assertResultValue(result, null);
 }
@@ -131,7 +131,7 @@ async function searchEntities_pagingLast({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await adminClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { last: 10 }
+    { last: 10 },
   );
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, -10, undefined);
   assertPageInfoEquals(result, { hasPreviousPage: true, hasNextPage: false });
@@ -140,7 +140,7 @@ async function searchEntities_pagingLast({
 async function searchEntities_pagingLast0({ server }: AdminEntityTestContext) {
   const result = await adminClientForMainPrincipal(server).searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { last: 0 }
+    { last: 0 },
   );
   assertResultValue(result, null);
 }
@@ -155,7 +155,7 @@ async function searchEntities_pagingFirstAfter({
   assertOkResult(firstResult);
   const secondResult = await client.searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { first: 20, after: firstResult.value?.pageInfo.endCursor }
+    { first: 20, after: firstResult.value?.pageInfo.endCursor },
   );
   assertAdminEntityConnectionToMatchSlice(expectedEntities, secondResult, 10, 10 + 20);
   assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: true });
@@ -169,12 +169,12 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({ server }: AdminE
 
   // First create two entities with unicode in the name
   const firstEntityResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } }),
   );
   const { entity: firstEntity } = firstEntityResult.valueOrThrow();
 
   const secondEntityResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } }),
   );
   const { entity: secondEntity } = secondEntityResult.valueOrThrow();
 
@@ -182,7 +182,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({ server }: AdminE
   const linkEntityResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { anyList: [{ id: firstEntity.id }, { id: secondEntity.id }] },
-    })
+    }),
   );
   const {
     entity: { id: linkId },
@@ -191,7 +191,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({ server }: AdminE
   // Search to get the cursor
   const firstSearchResult = await client.searchEntities(
     { linksFrom: { id: linkId }, order: AdminQueryOrder.name },
-    { first: 10 }
+    { first: 10 },
   );
   assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
   assertPageInfoEquals(firstSearchResult, { hasPreviousPage: false, hasNextPage: false });
@@ -203,7 +203,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({ server }: AdminE
   // Search again using the cursor
   const secondSearchResult = await client.searchEntities(
     { linksFrom: { id: linkId }, order: AdminQueryOrder.name },
-    { first: 10, after: startCursor }
+    { first: 10, after: startCursor },
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
   assertPageInfoEquals(secondSearchResult, { hasPreviousPage: true, hasNextPage: false });
@@ -219,7 +219,7 @@ async function searchEntities_pagingLastBefore({
   assertOkResult(firstResult);
   const secondResult = await client.searchEntities(
     { entityTypes: ['ReadOnly'] },
-    { last: 20, before: firstResult.value?.pageInfo.startCursor }
+    { last: 20, before: firstResult.value?.pageInfo.startCursor },
   );
   assertAdminEntityConnectionToMatchSlice(expectedEntities, secondResult, -10 - 20, -10);
   assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: true });
@@ -239,13 +239,13 @@ async function searchEntities_pagingFirstBetween({
       first: 20,
       after: firstResult.value?.edges[2].cursor,
       before: firstResult.value?.edges[8].cursor,
-    }
+    },
   );
   assertAdminEntityConnectionToMatchSlice(
     expectedEntities,
     secondResult,
     3 /*inclusive*/,
-    8 /*exclusive*/
+    8 /*exclusive*/,
   );
   // No next since we're paging forwards and there's a 'before'
   assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: false });
@@ -265,13 +265,13 @@ async function searchEntities_pagingLastBetween({
       last: 20,
       after: firstResult.value?.edges[2].cursor,
       before: firstResult.value?.edges[8].cursor,
-    }
+    },
   );
   assertAdminEntityConnectionToMatchSlice(
     expectedEntities,
     secondResult,
     3 /*inclusive*/,
-    8 /*exclusive*/
+    8 /*exclusive*/,
   );
   // No prev since we're paging backwards and there's a 'after'
   assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
@@ -291,7 +291,7 @@ async function searchEntities_orderCreatedAt({
     result,
     0,
     25,
-    AdminQueryOrder.createdAt
+    AdminQueryOrder.createdAt,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
@@ -312,7 +312,7 @@ async function searchEntities_orderCreatedAtReversed({
     0,
     25,
     AdminQueryOrder.createdAt,
-    true
+    true,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
@@ -334,8 +334,8 @@ async function searchEntities_orderUpdatedAt({
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
     adminClient.searchEntities(
       { entityTypes: ['ReadOnly'], order: AdminQueryOrder.updatedAt },
-      currentPaging
-    )
+      currentPaging,
+    ),
   )) {
     assertOkResult(node);
     count++;
@@ -369,8 +369,8 @@ async function searchEntities_orderUpdatedAtReversed({
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
     adminClient.searchEntities(
       { entityTypes: ['ReadOnly'], order: AdminQueryOrder.updatedAt, reverse: true },
-      currentPaging
-    )
+      currentPaging,
+    ),
   )) {
     assertOkResult(node);
     count++;
@@ -416,7 +416,7 @@ async function searchEntities_orderNameReversed({
     0,
     25,
     AdminQueryOrder.name,
-    true
+    true,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
@@ -600,7 +600,7 @@ async function searchEntities_invalidOnly({ server }: AdminEntityTestContext) {
   const matches = await countSearchResultWithEntity(
     adminClient,
     { entityTypes: ['ChangeValidations'], valid: false },
-    entity.id
+    entity.id,
   );
   assertResultValue(matches, 1);
 
@@ -622,7 +622,7 @@ async function searchEntities_validOnly({ server }: AdminEntityTestContext) {
   const matches = await countSearchResultWithEntity(
     adminClient,
     { entityTypes: ['ChangeValidations'], valid: true },
-    entity.id
+    entity.id,
   );
   assertResultValue(matches, 1);
 
@@ -644,7 +644,7 @@ async function searchEntities_valueTypes({ server }: AdminEntityTestContext) {
   const matchesBeforeValueItem = await countSearchResultWithEntity(
     adminClient,
     { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
-    entity.id
+    entity.id,
   );
   assertResultValue(matchesBeforeValueItem, 0);
 
@@ -658,7 +658,7 @@ async function searchEntities_valueTypes({ server }: AdminEntityTestContext) {
   const matchesAfterValueItem = await countSearchResultWithEntity(
     adminClient,
     { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
-    entity.id
+    entity.id,
   );
   assertResultValue(matchesAfterValueItem, 1);
 }
@@ -672,7 +672,7 @@ async function searchEntities_linksToOneReference({ server }: AdminEntityTestCon
   } = titleOnlyResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } })
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
 
@@ -692,7 +692,7 @@ async function searchEntities_linksToOneReferenceFromRichText({ server }: AdminE
   const referenceResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: { richText: createRichTextRootNode([createRichTextEntityNode({ id: titleOnlyId })]) },
-    })
+    }),
   );
   assertOkResult(referenceResult);
 
@@ -721,7 +721,7 @@ async function searchEntities_linksToOneReferenceFromLinkRichText({
           ]),
         ]),
       },
-    })
+    }),
   );
   assertOkResult(referenceResult);
 
@@ -750,7 +750,7 @@ async function searchEntities_linksToOneReferenceFromValueItemInRichText({
           }),
         ]),
       },
-    })
+    }),
   );
   assertOkResult(referenceResult);
 
@@ -768,7 +768,7 @@ async function searchEntities_linksToFromAdminOnlyField({ server }: AdminEntityT
 
   const referenceCreateResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: titleOnlyId } } }),
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(referenceCreateResult);
 
@@ -802,7 +802,7 @@ async function searchEntities_linksToTwoReferencesFromOneEntity({
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
-    })
+    }),
   );
   assertOkResult(referenceResult);
 
@@ -818,7 +818,7 @@ async function searchEntities_linksFromOneReference({ server }: AdminEntityTestC
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
 
   const referenceResult = await adminClient.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } })
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
   );
   assertOkResult(referenceResult);
   const {
@@ -853,7 +853,7 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
   const referenceResult = await adminClient.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
-    })
+    }),
   );
   assertOkResult(referenceResult);
   const {
@@ -870,7 +870,7 @@ async function searchEntities_boundingBoxOneInside({ server }: AdminEntityTestCo
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
   const {
@@ -898,7 +898,7 @@ async function searchEntities_boundingBoxOneInsideFromValueItemInRichText({
           }),
         ]),
       },
-    })
+    }),
   );
   assertOkResult(createResult);
   const {
@@ -917,7 +917,7 @@ async function searchEntities_boundingBoxOneEntityTwoLocationsInside({
   const center = boundingBoxCenter(boundingBox);
   const inside = boundingBoxBelowCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } }),
   );
   assertOkResult(createResult);
   const {
@@ -935,7 +935,7 @@ async function searchEntities_boundingBoxOneInsideFromAdminOnlyField({
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { locationAdminOnly: center } })
+    copyEntity(LOCATIONS_CREATE, { fields: { locationAdminOnly: center } }),
   );
   assertOkResult(createResult);
   const {
@@ -954,7 +954,7 @@ async function searchEntities_boundingBoxOneOutside({ server }: AdminEntityTestC
     lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
   };
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: outside } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: outside } }),
   );
   assertOkResult(createResult);
   const {
@@ -972,7 +972,7 @@ async function searchEntities_boundingBoxWrappingMaxMinLongitude({
   const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
-    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
   const {
@@ -1004,7 +1004,7 @@ async function searchEntities_textIncludedAfterCreation({ server }: AdminEntityT
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       fields: { title: 'this is a serious title with the best insights' },
-    })
+    }),
   );
   assertOkResult(createResult);
   const {
@@ -1025,7 +1025,7 @@ async function searchEntities_textIncludedInAdminOnlyFieldAfterCreation({
         stringAdminOnly:
           'pizza includes these three ingredients: pineapple, blue cheese and broccoli',
       },
-    })
+    }),
   );
   assertOkResult(createResult);
   const {
@@ -1047,7 +1047,7 @@ async function searchEntities_textIncludedAfterUpdate({ server }: AdminEntityTes
   const matchesBeforeUpdate = await countSearchResultWithEntity(
     adminClient,
     { text: 'fox jumping' },
-    id
+    id,
   );
   assertResultValue(matchesBeforeUpdate, 0);
 
@@ -1060,7 +1060,7 @@ async function searchEntities_textIncludedAfterUpdate({ server }: AdminEntityTes
   const matchesAfterUpdate = await countSearchResultWithEntity(
     adminClient,
     { text: 'fox jumping' },
-    id
+    id,
   );
   assertResultValue(matchesAfterUpdate, 1);
 }
@@ -1068,7 +1068,7 @@ async function searchEntities_textIncludedAfterUpdate({ server }: AdminEntityTes
 async function searchEntities_textExcludedAfterUpdate({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's jumping? It it the fox" } })
+    copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's jumping? It it the fox" } }),
   );
   assertOkResult(createResult);
   const {
@@ -1078,7 +1078,7 @@ async function searchEntities_textExcludedAfterUpdate({ server }: AdminEntityTes
   const matchesBeforeUpdate = await countSearchResultWithEntity(
     adminClient,
     { text: 'fox jumping' },
-    id
+    id,
   );
   assertResultValue(matchesBeforeUpdate, 1);
 
@@ -1091,7 +1091,7 @@ async function searchEntities_textExcludedAfterUpdate({ server }: AdminEntityTes
   const matchesAfterUpdate = await countSearchResultWithEntity(
     adminClient,
     { text: 'fox jumping' },
-    id
+    id,
   );
   assertResultValue(matchesAfterUpdate, 0);
 }

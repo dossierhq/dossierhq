@@ -107,7 +107,7 @@ async function updateEntity_noChange({ server }: AdminEntityTestContext) {
 async function updateEntity_minimalWithSubjectAuthKey({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -149,7 +149,7 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
 }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -194,7 +194,7 @@ async function updateEntity_updateAndPublishEntity({ server }: AdminEntityTestCo
   } = createResult.value;
   const updateResult = await client.updateEntity(
     { id, fields: { title: 'Updated title' } },
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(updateResult);
   const {
@@ -229,7 +229,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
 }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -237,7 +237,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
   } = createResult.value;
   const updateResult = await client.updateEntity(
     { id, info: { authKey: 'subject' }, fields: { title: 'Updated title' } },
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(updateResult);
   const {
@@ -282,7 +282,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
   const unique = Math.random().toString();
   const updateResult = await adminClient.updateEntity(
     { id, fields: { unique } },
-    { publish: true }
+    { publish: true },
   );
   assertOkResult(updateResult);
 
@@ -295,7 +295,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
   });
   assertResultValue(
     getPublishedResult,
-    adminToPublishedEntity(adminSchema, updateResult.value.entity)
+    adminToPublishedEntity(adminSchema, updateResult.value.entity),
   );
 }
 
@@ -568,7 +568,7 @@ async function updateEntity_removingUniqueIndexValueReleasesOwnership({
   const unique = Math.random().toString();
 
   const createResult = await client.createEntity(
-    copyEntity(STRINGS_CREATE, { fields: { unique } })
+    copyEntity(STRINGS_CREATE, { fields: { unique } }),
   );
   assertOkResult(createResult);
 
@@ -603,7 +603,7 @@ async function updateEntity_errorDifferentType({ server }: AdminEntityTestContex
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.info.type: New type References doesn’t correspond to previous type TitleOnly'
+    'entity.info.type: New type References doesn’t correspond to previous type TitleOnly',
   );
 }
 
@@ -623,7 +623,7 @@ async function updateEntity_errorTryingToChangeAuthKey({ server }: AdminEntityTe
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none'
+    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none',
   );
 
   const getResult = await client.getEntity({ id });
@@ -642,7 +642,7 @@ async function updateEntity_errorMultilineStringInTitle({ server }: AdminEntityT
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.fields.title: multiline string not allowed'
+    'entity.fields.title: multiline string not allowed',
   );
 
   const getResult = await client.getEntity({ id });
@@ -659,12 +659,12 @@ async function updateEntity_errorPublishWithoutRequiredTitle({ server }: AdminEn
 
   const updateResult = await client.updateEntity(
     { id, fields: { title: null } },
-    { publish: true }
+    { publish: true },
   );
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    `entity(${id}).fields.title: Required field is empty`
+    `entity(${id}).fields.title: Required field is empty`,
   );
 
   const getResult = await client.getEntity({ id });
@@ -706,6 +706,6 @@ async function updateEntity_errorDuplicateUniqueIndexValue({ server }: AdminEnti
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.fields.unique: Value is not unique (index: stringsUnique)'
+    'entity.fields.unique: Value is not unique (index: stringsUnique)',
   );
 }

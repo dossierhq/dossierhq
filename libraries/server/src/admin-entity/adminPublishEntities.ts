@@ -55,7 +55,7 @@ export async function adminPublishEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityVersionReference[]
+  references: EntityVersionReference[],
 ): PromiseResult<
   AdminEntityPublishPayload[],
   | typeof ErrorType.BadRequest
@@ -74,23 +74,23 @@ export async function adminPublishEntities(
       authorizationAdapter,
       databaseAdapter,
       context,
-      references
+      references,
     );
     if (versionsInfoResult.isError()) return versionsInfoResult;
     const versionsInfo = versionsInfoResult.value;
     const publishVersionsInfo = versionsInfo.filter(
-      ({ effect }) => effect === 'published'
+      ({ effect }) => effect === 'published',
     ) as VersionInfoToBePublished[];
 
     // Step 2: Ensure that already published versions are valid
     const invalidAlreadyPublishedVersions = versionsInfo.filter(
-      (it) => it.effect === 'none' && it.validPublished === false
+      (it) => it.effect === 'none' && it.validPublished === false,
     );
     if (invalidAlreadyPublishedVersions.length > 0) {
       return notOk.BadRequest(
         `entity(${invalidAlreadyPublishedVersions
           .map((it) => it.uuid)
-          .join(', ')}): Already published version is invalid`
+          .join(', ')}): Already published version is invalid`,
       );
     }
 
@@ -98,7 +98,7 @@ export async function adminPublishEntities(
     const publishEntityResult = await publishEntitiesAndCollectResult(
       databaseAdapter,
       context,
-      versionsInfo
+      versionsInfo,
     );
     if (publishEntityResult.isError()) return publishEntityResult;
 
@@ -107,7 +107,7 @@ export async function adminPublishEntities(
       await validateReferencedEntitiesArePublishedAndCollectInfo(
         databaseAdapter,
         context,
-        publishVersionsInfo.map(({ uuid, references }) => ({ entity: { id: uuid }, references }))
+        publishVersionsInfo.map(({ uuid, references }) => ({ entity: { id: uuid }, references })),
       );
     if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
 
@@ -115,7 +115,7 @@ export async function adminPublishEntities(
     const publishEventResult = await createPublishEvents(
       databaseAdapter,
       context,
-      publishVersionsInfo
+      publishVersionsInfo,
     );
     if (publishEventResult.isError()) return publishEventResult;
 
@@ -133,7 +133,7 @@ export async function adminPublishEntities(
       const updateIndexResult = await databaseAdapter.adminEntityIndexesUpdatePublished(
         context,
         { entityInternalId: versionInfo.entityInternalId },
-        entityIndexes
+        entityIndexes,
       );
       if (updateIndexResult.isError()) return updateIndexResult;
     }
@@ -146,7 +146,7 @@ export async function adminPublishEntities(
         { entityInternalId: versionInfo.entityInternalId },
         false,
         null,
-        versionInfo.uniqueIndexValues
+        versionInfo.uniqueIndexValues,
       );
       if (updateUniqueValueIndexResult.isError()) return updateUniqueValueIndexResult;
     }
@@ -162,7 +162,7 @@ async function collectVersionsInfo(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityVersionReference[]
+  references: EntityVersionReference[],
 ): PromiseResult<
   (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
   | typeof ErrorType.BadRequest
@@ -177,7 +177,7 @@ async function collectVersionsInfo(
   for (const reference of references) {
     const versionInfoResult = await databaseAdapter.adminEntityPublishGetVersionInfo(
       context,
-      reference
+      reference,
     );
 
     if (versionInfoResult.isError()) {
@@ -230,7 +230,7 @@ async function collectVersionsInfo(
         publishedSchema,
         [`entity(${reference.id})`],
         type,
-        entityFields
+        entityFields,
       );
       if (validateFieldsResult.isError()) return validateFieldsResult;
       const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =
@@ -262,7 +262,7 @@ async function collectVersionsInfo(
 async function publishEntitiesAndCollectResult(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[]
+  versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
 ): PromiseResult<AdminEntityPublishPayload[], typeof ErrorType.Generic> {
   const result: AdminEntityPublishPayload[] = [];
   for (const versionInfo of versionsInfo) {
@@ -289,7 +289,7 @@ async function publishEntitiesAndCollectResult(
 async function createPublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  publishVersionsInfo: VersionInfoToBePublished[]
+  publishVersionsInfo: VersionInfoToBePublished[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (publishVersionsInfo.length === 0) {
     return ok(undefined);

@@ -22,6 +22,6 @@ export const TagInput: FunctionComponent<TagInputProps> = forwardRef(
         </div>
       </div>
     );
-  }
+  },
 );
 TagInput.displayName = 'TagInput';

@@ -32,11 +32,11 @@ describe('Admin adminGetEntity', () => {
           createdAt: now,
           updatedAt: now,
           fieldValues: { title: 'Title' },
-        })
-      )
+        }),
+      ),
     );
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
 
     const result = await adminGetEntity(
@@ -44,7 +44,7 @@ describe('Admin adminGetEntity', () => {
       authorizationAdapter,
       databaseAdapter,
       context,
-      { id: '123', version: 3 }
+      { id: '123', version: 3 },
     );
 
     expectResultValue(result, {

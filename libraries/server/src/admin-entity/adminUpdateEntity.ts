@@ -28,7 +28,7 @@ export async function adminUpdateEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpdate,
-  options: AdminEntityMutationOptions | undefined
+  options: AdminEntityMutationOptions | undefined,
 ): PromiseResult<
   AdminEntityUpdatePayload,
   | typeof ErrorType.BadRequest
@@ -53,11 +53,11 @@ export async function adminUpdateEntity(
     const validationIssue = validateEntityInfoForUpdate(
       ['entity'],
       { info: entityInfoResult.value },
-      entity
+      entity,
     );
     if (validationIssue) {
       return notOk.BadRequest(
-        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`
+        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
       );
     }
 
@@ -84,7 +84,7 @@ export async function adminUpdateEntity(
           {
             id: updatedEntity.id,
             version: updatedEntity.info.version,
-          }
+          },
         );
         if (publishResult.isError()) return publishResult;
         payload.effect = 'published';
@@ -101,7 +101,7 @@ export async function adminUpdateEntity(
       databaseAdapter,
       context,
       entitySpec,
-      updatedEntity
+      updatedEntity,
     );
     if (encodeResult.isError()) return encodeResult;
     const { data, name } = encodeResult.value;
@@ -117,7 +117,7 @@ export async function adminUpdateEntity(
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,
         fieldValues: data,
-      }
+      },
     );
     if (updateResult.isError()) return updateResult;
 
@@ -129,7 +129,7 @@ export async function adminUpdateEntity(
       context,
       { entityInternalId },
       encodeResult.value.entityIndexes,
-      false
+      false,
     );
     if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
@@ -139,7 +139,7 @@ export async function adminUpdateEntity(
       { entityInternalId },
       false,
       encodeResult.value.uniqueIndexValues,
-      null // TODO publishEntityAfterMutation is updating the values
+      null, // TODO publishEntityAfterMutation is updating the values
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;
 
@@ -153,7 +153,7 @@ export async function adminUpdateEntity(
         {
           id: updatedEntity.id,
           version: updatedEntity.info.version,
-        }
+        },
       );
       if (publishResult.isError()) return publishResult;
 

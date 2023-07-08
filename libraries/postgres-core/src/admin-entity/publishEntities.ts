@@ -14,7 +14,7 @@ import { resolveEntityStatus, resolveEntityValidity } from '../utils/CodecUtils.
 export async function adminEntityPublishGetVersionInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityVersionReference
+  reference: EntityVersionReference,
 ): PromiseResult<
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -75,7 +75,7 @@ export async function adminEntityPublishGetVersionInfo(
 export async function adminEntityPublishUpdateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  values: DatabaseAdminEntityPublishUpdateEntityArg
+  values: DatabaseAdminEntityPublishUpdateEntityArg,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 

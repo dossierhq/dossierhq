@@ -127,7 +127,7 @@ export const RichTextNodePlaceholders: NodePlaceholderConfig[] = [
 ].map((nodes) => ({ name: nodes.join(', '), nodes }));
 
 const RichTextNodesInPlaceholders = new Set(
-  RichTextNodePlaceholders.flatMap((placeholder) => placeholder.nodes)
+  RichTextNodePlaceholders.flatMap((placeholder) => placeholder.nodes),
 );
 
 export const REQUIRED_NODES_PLACEHOLDER = RichTextNodePlaceholders[0];
@@ -149,7 +149,7 @@ export function initializeSchemaEditorState(): SchemaEditorState {
 
 export function reduceSchemaEditorState(
   state: Readonly<SchemaEditorState>,
-  action: SchemaEditorStateAction
+  action: SchemaEditorStateAction,
 ): Readonly<SchemaEditorState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
@@ -178,7 +178,7 @@ function withResolvedSchemaStatus(state: Readonly<SchemaEditorState>): Readonly<
 }
 
 function resolveTypeStatus(
-  state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>
+  state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>,
 ): SchemaTypeDraft['status'] {
   if (state.status === 'new') return state.status;
   if (state.kind === 'entity') {
@@ -195,7 +195,7 @@ function resolveTypeStatus(
 }
 
 function withResolvedTypeStatus<T extends SchemaEntityTypeDraft | SchemaValueTypeDraft>(
-  state: Readonly<T>
+  state: Readonly<T>,
 ): Readonly<T> {
   const newStatus = resolveTypeStatus(state);
   if (newStatus === state.status) return state;
@@ -275,7 +275,7 @@ function resolvePatternStatus(state: Readonly<SchemaPatternDraft>): SchemaPatter
 }
 
 function withResolvedPatternStatus(
-  state: Readonly<SchemaPatternDraft>
+  state: Readonly<SchemaPatternDraft>,
 ): Readonly<SchemaPatternDraft> {
   const newStatus = resolvePatternStatus(state);
   if (newStatus === state.status) return state;
@@ -320,7 +320,7 @@ abstract class TypeAction implements SchemaEditorStateAction {
   }
 
   abstract reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>;
 }
 
@@ -333,7 +333,7 @@ abstract class FieldAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     const fieldIndex = typeDraft.fields.findIndex((it) => it.name === this.fieldName);
     if (fieldIndex < 0) throw new Error(`No such field ${this.fieldName} in type ${this.typeName}`);
@@ -377,7 +377,7 @@ abstract class PatternAction implements SchemaEditorStateAction {
 
 function reduceEntityTypes(
   state: Readonly<SchemaEditorState>,
-  reduceType: (entityTypeDraft: Readonly<SchemaEntityTypeDraft>) => Readonly<SchemaEntityTypeDraft>
+  reduceType: (entityTypeDraft: Readonly<SchemaEntityTypeDraft>) => Readonly<SchemaEntityTypeDraft>,
 ): Readonly<SchemaEditorState> {
   let changedEntityTypes = false;
   const newEntityTypes = state.entityTypes.map((typeDraft) => {
@@ -398,10 +398,10 @@ function reduceEntityTypes(
 
 function reduceFieldsOfAllTypes(
   state: Readonly<SchemaEditorState>,
-  reduceField: (fieldDraft: Readonly<SchemaFieldDraft>) => Readonly<SchemaFieldDraft>
+  reduceField: (fieldDraft: Readonly<SchemaFieldDraft>) => Readonly<SchemaFieldDraft>,
 ): Readonly<SchemaEditorState> {
   function reduceTypeFields<T extends SchemaEntityTypeDraft | SchemaValueTypeDraft>(
-    typeDraft: Readonly<T>
+    typeDraft: Readonly<T>,
   ): Readonly<T> {
     let changedFields = false;
     const newFields = typeDraft.fields.map((fieldDraft) => {
@@ -454,7 +454,7 @@ function reduceFieldsOfAllTypes(
 function replaceFieldWithIndex(
   typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   fieldIndex: number,
-  newFieldDraft: SchemaFieldDraft
+  newFieldDraft: SchemaFieldDraft,
 ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
   if (typeDraft.fields[fieldIndex] === newFieldDraft) {
     return typeDraft;
@@ -914,7 +914,7 @@ class ChangeTypeNameFieldAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     if (typeDraft.kind === 'value' || typeDraft.nameField === this.nameField) {
       return typeDraft;
@@ -932,7 +932,7 @@ class DeleteFieldAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     const fields = typeDraft.fields.filter((fieldDraft) => fieldDraft.name !== this.fieldName);
 
@@ -1015,12 +1015,12 @@ class DeleteTypeAction implements SchemaEditorStateAction {
           const newFieldDraft = { ...fieldDraft };
           if (newFieldDraft.entityTypes) {
             newFieldDraft.entityTypes = newFieldDraft.entityTypes.filter(
-              (it) => it !== this.selector.typeName
+              (it) => it !== this.selector.typeName,
             );
           }
           if (newFieldDraft.linkEntityTypes) {
             newFieldDraft.linkEntityTypes = newFieldDraft.linkEntityTypes.filter(
-              (it) => it !== this.selector.typeName
+              (it) => it !== this.selector.typeName,
             );
           }
           return newFieldDraft;
@@ -1056,7 +1056,7 @@ class RenameFieldAction extends FieldAction {
   }
 
   override reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     let newTypeDraft = super.reduceType(typeDraft);
 
@@ -1146,7 +1146,7 @@ class RenameTypeAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     return { ...typeDraft, name: this.name };
   }
@@ -1179,10 +1179,10 @@ class RenameTypeAction extends TypeAction {
           return {
             ...fieldDraft,
             entityTypes: fieldDraft.entityTypes?.map((it) =>
-              it === this.typeName ? this.name : it
+              it === this.typeName ? this.name : it,
             ),
             linkEntityTypes: fieldDraft.linkEntityTypes?.map((it) =>
-              it === this.typeName ? this.name : it
+              it === this.typeName ? this.name : it,
             ),
           };
         }
@@ -1210,7 +1210,7 @@ class ReorderFieldsAction extends TypeAction {
     selector: SchemaTypeSelector,
     fieldToMove: string,
     position: 'after' | 'before',
-    targetField: string
+    targetField: string,
   ) {
     super(selector);
     this.fieldToMove = fieldToMove;
@@ -1219,7 +1219,7 @@ class ReorderFieldsAction extends TypeAction {
   }
 
   override reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
     if (this.fieldToMove === this.targetField) {
       return typeDraft;
@@ -1246,7 +1246,7 @@ class SetActiveSelectorAction implements SchemaEditorStateAction {
   constructor(
     selector: SchemaSelector | null,
     increaseMenuScrollSignal: boolean,
-    increaseEditorScrollSignal: boolean
+    increaseEditorScrollSignal: boolean,
   ) {
     this.selector = selector;
     this.increaseMenuScrollSignal = increaseMenuScrollSignal;
@@ -1303,7 +1303,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     }));
 
     const valueTypes = this.schema.spec.valueTypes.map((valueTypeSpec) =>
-      this.convertType('value', valueTypeSpec)
+      this.convertType('value', valueTypeSpec),
     );
 
     const indexes = this.schema.spec.indexes.map<SchemaIndexDraft>((indexSpec) => ({
@@ -1333,7 +1333,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
   convertType<TKind extends 'entity' | 'value'>(
     kind: TKind,
-    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification
+    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
   ): SchemaTypeDraft & { kind: TKind } {
     return {
       kind,
@@ -1358,7 +1358,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         }
         if (fieldSpec.type === FieldType.RichText) {
           fieldDraft.richTextNodesWithPlaceholders = getRichTextNodesWithPlaceholders(
-            fieldSpec.richTextNodes
+            fieldSpec.richTextNodes,
           );
           fieldDraft.existingRichTextNodesWithPlaceholders = [
             ...fieldDraft.richTextNodesWithPlaceholders,
@@ -1472,7 +1472,7 @@ export const SchemaEditorActions = {
 // CONVERSION
 
 export function getSchemaSpecificationUpdateFromEditorState(
-  state: SchemaEditorState
+  state: SchemaEditorState,
 ): AdminSchemaSpecificationUpdate {
   const update: AdminSchemaSpecificationUpdate = {};
 
@@ -1509,7 +1509,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
 }
 
 function getTypeUpdateFromEditorState(
-  draftType: SchemaValueTypeDraft | SchemaEntityTypeDraft
+  draftType: SchemaValueTypeDraft | SchemaEntityTypeDraft,
 ): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
     return {
@@ -1529,7 +1529,7 @@ function getTypeUpdateFromEditorState(
       ...(draftField.type === FieldType.RichText
         ? {
             richTextNodes: getRichTextNodesWithoutPlaceholders(
-              draftField.richTextNodesWithPlaceholders
+              draftField.richTextNodesWithPlaceholders,
             ),
             linkEntityTypes: draftField.linkEntityTypes ?? [],
           }
@@ -1556,7 +1556,7 @@ function getTypeUpdateFromEditorState(
 
 export function getElementIdForSelector(
   selector: SchemaSelector | null,
-  section: 'menuItem' | 'header'
+  section: 'menuItem' | 'header',
 ) {
   if (!selector) {
     return undefined;

@@ -32,7 +32,7 @@ async function initializeServer(logger: Logger, filename: string) {
 
 async function updateSchemaSpecification(server: Server, filename: string) {
   const schemaSpecification = JSON.parse(
-    fs.readFileSync(filename, { encoding: 'utf8' })
+    fs.readFileSync(filename, { encoding: 'utf8' }),
   ) as AdminSchemaSpecificationUpdate;
 
   const sessionResult = await server.createSession({

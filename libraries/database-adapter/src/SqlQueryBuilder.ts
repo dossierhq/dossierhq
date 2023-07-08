@@ -66,7 +66,7 @@ function addValueReference<TValue>(query: Query<TValue>, value: TValue): ValueRe
 function addValueToQuery<TValue>(
   config: DialectConfig,
   query: Query<TValue>,
-  value: InputValue<TValue>
+  value: InputValue<TValue>,
 ) {
   if (value === DEFAULT) {
     query.text += 'DEFAULT';
@@ -200,7 +200,7 @@ export function createSqliteSqlQuery(): SqliteQueryBuilder {
 }
 
 export function buildSqliteSqlQuery(
-  callback: SqliteQueryBuilderCallback
+  callback: SqliteQueryBuilderCallback,
 ): Query<SqliteColumnValue> {
   const { query, ...builder } = createSqliteSqlQuery();
   callback(builder);

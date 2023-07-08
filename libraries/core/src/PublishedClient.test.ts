@@ -18,7 +18,7 @@ import type { ClientContext } from './SharedClient.js';
 import type { PublishedEntity } from './Types.js';
 
 function createForwardingMiddleware<TContext extends ClientContext>(
-  publishedClient: PublishedClient
+  publishedClient: PublishedClient,
 ): PublishedClientMiddleware<TContext> {
   return async function (_context, operation) {
     const convertedOperationArgs = JSON.parse(JSON.stringify(operation.args));
@@ -26,7 +26,7 @@ function createForwardingMiddleware<TContext extends ClientContext>(
     const resultJson = await executePublishedClientOperationFromJson(
       publishedClient,
       operation.name,
-      convertedOperationArgs
+      convertedOperationArgs,
     );
     // normally returned over HTTP
     const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));
@@ -36,14 +36,14 @@ function createForwardingMiddleware<TContext extends ClientContext>(
 
 function createJsonConvertingPublishedClientsForOperation<
   TContext extends ClientContext,
-  TName extends (typeof PublishedClientOperationName)[keyof typeof PublishedClientOperationName]
+  TName extends (typeof PublishedClientOperationName)[keyof typeof PublishedClientOperationName],
 >(
   context: TContext,
   operationName: TName,
   operationHandlerMockImplementation: (
     context: TContext,
-    operation: PublishedClientOperation<TName>
-  ) => Promise<void>
+    operation: PublishedClientOperation<TName>,
+  ) => Promise<void>,
 ) {
   const operationHandlerMock = vi.fn<[TContext, PublishedClientOperation<TName>], Promise<void>>();
   operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
@@ -86,7 +86,7 @@ describe('PublishedClient forward operation over JSON', () => {
         async (_context, operation) => {
           const [references] = operation.args;
           operation.resolve(ok(references.map(({ id }) => ok(createDummyEntity({ id })))));
-        }
+        },
       );
 
     const result = await publishedClient.getEntities([{ id: '1234' }, { id: '5678' }]);
@@ -173,10 +173,10 @@ describe('PublishedClient forward operation over JSON', () => {
             ok(
               createDummyEntity({
                 id: 'id' in reference ? reference.id : `${reference.index}/${reference.value}`,
-              })
-            )
+              }),
+            ),
           );
-        }
+        },
       );
 
     const result = await publishedClient.getEntity({ id: '1234' });
@@ -231,7 +231,7 @@ describe('PublishedClient forward operation over JSON', () => {
         PublishedClientOperationName.getSchemaSpecification,
         async (_context, operation) => {
           operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }));
-        }
+        },
       );
 
     const result = await publishedClient.getSchemaSpecification();
@@ -276,7 +276,7 @@ describe('PublishedClient forward operation over JSON', () => {
         async (_context, operation) => {
           const [_query] = operation.args;
           operation.resolve(ok(123));
-        }
+        },
       );
 
     const result = await publishedClient.getTotalCount({
@@ -336,12 +336,12 @@ describe('PublishedClient forward operation over JSON', () => {
         async (_context, operation) => {
           const [_query, _options] = operation.args;
           operation.resolve(ok({ seed: 123, totalCount: 1, items: [entity1] }));
-        }
+        },
       );
 
     const result = await publishedClient.sampleEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
-      { count: 10 }
+      { count: 10 },
     );
     expectResultValue(result, { seed: 123, totalCount: 1, items: [entity1] });
 
@@ -415,14 +415,14 @@ describe('PublishedClient forward operation over JSON', () => {
                   node: ok(entity1),
                 },
               ],
-            })
+            }),
           );
-        }
+        },
       );
 
     const result = await publishedClient.searchEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
-      { first: 100, after: 'cursor' }
+      { first: 100, after: 'cursor' },
     );
     expectResultValue(result, {
       pageInfo: {
@@ -488,7 +488,7 @@ describe('PublishedClient forward operation over JSON', () => {
         async (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(ok(null));
-        }
+        },
       );
 
     const result = await publishedClient.searchEntities();

@@ -15,7 +15,7 @@ export async function adminEntityUniqueIndexUpdateValues(
   database: Database,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   if (values.add.length > 0) {
     const addResult = await addValues(database, context, entity, values);
@@ -37,7 +37,7 @@ async function addValues(
   database: Database,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const query = buildSqliteSqlQuery(({ sql, addValue }) => {
     sql`INSERT INTO unique_index_values (entities_id, index_name, value, latest, published) VALUES`;
@@ -66,7 +66,7 @@ async function updateValues(
   database: Database,
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const { index, value, latest, published } of values.update) {
     const result = await queryOne<Pick<UniqueIndexValuesTable, 'entities_id'>>(
@@ -76,7 +76,7 @@ async function updateValues(
         sql`UPDATE unique_index_values SET latest = ${latest ? 1 : 0}, published = ${
           published ? 1 : 0
         } WHERE index_name = ${index} AND value = ${value} RETURNING entities_id`;
-      })
+      }),
     );
     if (result.isError()) return result;
     if (result.value.entities_id !== entity.entityInternalId) {
@@ -89,7 +89,7 @@ async function updateValues(
 async function removeValues(
   database: Database,
   context: TransactionContext,
-  values: DatabaseAdminEntityUniqueIndexArg
+  values: DatabaseAdminEntityUniqueIndexArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const { index, value } of values.remove) {
     //TODO include entity id?
@@ -98,7 +98,7 @@ async function removeValues(
       context,
       buildSqliteSqlQuery(({ sql }) => {
         sql`DELETE FROM unique_index_values WHERE index_name = ${index} AND value = ${value}`;
-      })
+      }),
     );
     if (result.isError()) return result;
   }

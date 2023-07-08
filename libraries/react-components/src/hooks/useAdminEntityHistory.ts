@@ -23,18 +23,18 @@ type FetcherError = ErrorResult<
 
 export function useAdminEntityHistory(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  reference: EntityReference | undefined
+  reference: EntityReference | undefined,
 ): {
   entityHistory: FetcherData | undefined;
   entityHistoryError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, reference]: FetcherKey) => fetchEntityHistory(adminClient, reference),
-    [adminClient]
+    [adminClient],
   );
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
     reference ? CACHE_KEYS.adminEntityHistory(reference) : null,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('useAdminEntityHistory changed values', { data, error });
@@ -44,7 +44,7 @@ export function useAdminEntityHistory(
 
 async function fetchEntityHistory(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  reference: FetcherKey[1]
+  reference: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getEntityHistory(reference);
   if (result.isError()) {

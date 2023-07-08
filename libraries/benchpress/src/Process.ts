@@ -22,10 +22,10 @@ export interface BenchPressProcessedResult {
 
 export function processResults(
   result: BenchPressResult,
-  options: BenchPressProcessOptions
+  options: BenchPressProcessOptions,
 ): BenchPressProcessedResult {
   const successfulIterations_ms = result.iterationDurations_ms.filter(
-    (it) => it !== null
+    (it) => it !== null,
   ) as number[];
   const resultSorted_ms = [...successfulIterations_ms].sort((a, b) => a - b);
   const iterations_ms = result.iterationDurations_ms;
@@ -37,7 +37,7 @@ export function processResults(
   const mean_ms = successCount > 0 ? successDuration_ms / successCount : null;
   const standardDeviation_ms = getStandardDeviation_ms(successfulIterations_ms);
   const percentiles_ms = Object.fromEntries(
-    options.percentiles.map((p) => [p, percentile_ms(resultSorted_ms, p)])
+    options.percentiles.map((p) => [p, percentile_ms(resultSorted_ms, p)]),
   );
 
   return {

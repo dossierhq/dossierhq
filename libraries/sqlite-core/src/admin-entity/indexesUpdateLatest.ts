@@ -12,7 +12,7 @@ export async function adminEntityIndexesUpdateLatest(
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
   entityIndexes: DatabaseEntityIndexesArg,
-  create: boolean
+  create: boolean,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId as number;
   const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
@@ -27,7 +27,7 @@ export async function adminEntityIndexesUpdateLatest(
       } else {
         sql`UPDATE entities_latest_fts SET content = ${fullTextSearchText} WHERE rowid = ${entityId}`;
       }
-    })
+    }),
   );
   if (ftsResult.isError()) return ftsResult;
 
@@ -37,8 +37,8 @@ export async function adminEntityIndexesUpdateLatest(
       database,
       context,
       buildSqliteSqlQuery(
-        ({ sql }) => sql`DELETE FROM entity_latest_references WHERE from_entities_id = ${entityId}`
-      )
+        ({ sql }) => sql`DELETE FROM entity_latest_references WHERE from_entities_id = ${entityId}`,
+      ),
     );
     if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
 
@@ -46,8 +46,8 @@ export async function adminEntityIndexesUpdateLatest(
       database,
       context,
       buildSqliteSqlQuery(
-        ({ sql }) => sql`DELETE FROM entity_latest_locations WHERE entities_id = ${entityId}`
-      )
+        ({ sql }) => sql`DELETE FROM entity_latest_locations WHERE entities_id = ${entityId}`,
+      ),
     );
     if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
 
@@ -55,8 +55,8 @@ export async function adminEntityIndexesUpdateLatest(
       database,
       context,
       buildSqliteSqlQuery(
-        ({ sql }) => sql`DELETE FROM entity_latest_value_types WHERE entities_id = ${entityId}`
-      )
+        ({ sql }) => sql`DELETE FROM entity_latest_value_types WHERE entities_id = ${entityId}`,
+      ),
     );
     if (removeExistingValueTypesResult.isError()) return removeExistingValueTypesResult;
   }
@@ -73,7 +73,7 @@ export async function adminEntityIndexesUpdateLatest(
         for (const referenceId of referenceIds) {
           sql`(${fromEntitiesId}, ${referenceId.entityInternalId as number})`;
         }
-      })
+      }),
     );
     if (insertReferencesResult.isError()) return insertReferencesResult;
   }
@@ -88,7 +88,7 @@ export async function adminEntityIndexesUpdateLatest(
         for (const location of locations) {
           sql`(${entitiesId}, ${location.lat}, ${location.lng})`;
         }
-      })
+      }),
     );
     if (insertLocationsResult.isError()) return insertLocationsResult;
   }
@@ -103,7 +103,7 @@ export async function adminEntityIndexesUpdateLatest(
         for (const valueType of valueTypes) {
           sql`(${entitiesId}, ${valueType})`;
         }
-      })
+      }),
     );
     if (insertValueTypesResult.isError()) return insertValueTypesResult;
   }

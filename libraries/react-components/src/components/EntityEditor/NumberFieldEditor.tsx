@@ -23,7 +23,7 @@ export function NumberFieldEditor({
         onChange(isInteger ? parseInt(stringValue) : parseFloat(stringValue));
       }
     },
-    [onChange, isInteger]
+    [onChange, isInteger],
   );
 
   return (

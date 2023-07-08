@@ -5,7 +5,7 @@ import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 
 function buildSchema(
   adminSchema: AdminSchema,
-  { published, admin }: { published: boolean; admin: boolean }
+  { published, admin }: { published: boolean; admin: boolean },
 ) {
   const generator = new GraphQLSchemaGenerator({
     adminSchema: admin ? adminSchema : null,
@@ -16,7 +16,7 @@ function buildSchema(
 
 function describeGeneratedSchema(
   adminSchema: AdminSchema,
-  options: { published: boolean; admin: boolean }
+  options: { published: boolean; admin: boolean },
 ) {
   const graphQLSchema = buildSchema(adminSchema, options);
   return printSchema(graphQLSchema);
@@ -25,7 +25,7 @@ function describeGeneratedSchema(
 async function querySchema(
   adminSchema: AdminSchema,
   options: { published: boolean; admin: boolean },
-  query: string
+  query: string,
 ) {
   const graphQLSchema = buildSchema(adminSchema, options);
   return await graphql({ schema: graphQLSchema, source: query });
@@ -360,7 +360,7 @@ describe('One empty entity type schema spec', () => {
     if (result.data) {
       // Remove fields that are not in the spec
       result.data.__type.fields = result.data.__type.fields.filter(
-        (it: { name: string }) => it.name !== 'totalCount'
+        (it: { name: string }) => it.name !== 'totalCount',
       );
     }
 

@@ -11,7 +11,7 @@ import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 export async function adminEntityPublishingCreateEvents(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  event: DatabaseAdminEntityPublishingCreateEventArg
+  event: DatabaseAdminEntityPublishingCreateEventArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { addValue, query, sql } = createPostgresSqlQuery();
   sql`INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES`;

@@ -14,7 +14,7 @@ export async function authCreateSession(
   database: Database,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
   const firstGetResult = await getSubject(database, context, provider, identifier);
   if (firstGetResult.isError()) {
@@ -48,7 +48,7 @@ export async function authCreateSession(
 
 function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
-  { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>
+  { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>,
 ): OkResult<DatabaseAuthCreateSessionPayload, TError> {
   const session = createSession({ subjectInternalId: id, subjectId: uuid });
   return ok({ principalEffect, session });
@@ -58,7 +58,7 @@ async function getSubject(
   database: Database,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<DatabaseAuthCreateSessionPayload | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(database, context, {
     text: `SELECT s.id, s.uuid FROM subjects s, principals p
@@ -78,7 +78,7 @@ async function createSubject(
   database: Database,
   context: TransactionContext,
   provider: string,
-  identifier: string
+  identifier: string,
 ): PromiseResult<
   DatabaseAuthCreateSessionPayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -105,13 +105,13 @@ async function createSubject(
         if (
           database.adapter.isUniqueViolationOfConstraint(
             error,
-            PrincipalsUniqueProviderIdentifierConstraint
+            PrincipalsUniqueProviderIdentifierConstraint,
           )
         ) {
           return notOk.Conflict('Principal already exist');
         }
         return notOk.GenericUnexpectedException(context, error);
-      }
+      },
     );
     if (principalsResult.isError()) {
       return principalsResult;

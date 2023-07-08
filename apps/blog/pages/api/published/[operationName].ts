@@ -12,7 +12,7 @@ import { getServerConnection, getSessionContextForRequest } from '../../../utils
 
 export default async function publishedOperationHandler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ): Promise<void> {
   if (req.method === 'GET') {
     await handleRequest(res, async () => {
@@ -24,11 +24,11 @@ export default async function publishedOperationHandler(
 }
 
 function getOperationArgs(
-  req: NextApiRequest
+  req: NextApiRequest,
 ): Result<PublishedClientJsonOperationArgs, typeof ErrorType.BadRequest> {
   const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
     req.query,
-    'args'
+    'args',
   );
   if (!operationArgs) {
     return notOk.BadRequest('Missing args');
@@ -53,7 +53,7 @@ async function executePublishedOperation(req: NextApiRequest, res: NextApiRespon
   const result = await executePublishedClientOperationFromJson(
     publishedClient,
     operationName,
-    operationResult.value
+    operationResult.value,
   );
 
   const serverTiming = databasePerformance.getServerTimingHeader();

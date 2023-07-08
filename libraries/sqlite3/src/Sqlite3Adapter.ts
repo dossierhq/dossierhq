@@ -25,7 +25,7 @@ interface Sqlite3Error {
 export async function createSqlite3Adapter(
   context: Context,
   database: Database,
-  options: SqliteDatabaseOptions
+  options: SqliteDatabaseOptions,
 ): PromiseResult<Sqlite3DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -71,7 +71,7 @@ function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstra
   if (isSqlite3Error(error) && error.code === 'SQLITE_CONSTRAINT') {
     const qualifiedColumns = constraint.columns.map((column) => `${constraint.table}.${column}`);
     const expectedMessage = `SQLITE_CONSTRAINT: UNIQUE constraint failed: ${qualifiedColumns.join(
-      ', '
+      ', ',
     )}`;
     return error.message === expectedMessage;
   }

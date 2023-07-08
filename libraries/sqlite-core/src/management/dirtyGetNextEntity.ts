@@ -30,7 +30,7 @@ const QUERY =
 
 export async function managementDirtyGetNextEntity(
   database: Database,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<
   DatabaseManagementGetNextDirtyEntityPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

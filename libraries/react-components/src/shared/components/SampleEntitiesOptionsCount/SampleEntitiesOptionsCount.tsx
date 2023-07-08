@@ -30,10 +30,10 @@ export function SampleEntitiesOptionsCount({
   const handleCountChange = useCallback(
     (item: Item) => {
       dispatchSearchEntityState(
-        new SearchEntityStateActions.SetSampling({ count: item.count }, true)
+        new SearchEntityStateActions.SetSampling({ count: item.count }, true),
       );
     },
-    [dispatchSearchEntityState]
+    [dispatchSearchEntityState],
   );
 
   const currentPage =

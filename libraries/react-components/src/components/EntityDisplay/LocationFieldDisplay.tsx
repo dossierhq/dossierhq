@@ -17,7 +17,7 @@ export function LocationFieldDisplay({ value }: Props) {
     (entity: PublishedEntity) => {
       dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id));
     },
-    [dispatchEntityDisplayState]
+    [dispatchEntityDisplayState],
   );
 
   return value ? (

@@ -12,19 +12,19 @@ import { queryMany } from '../QueryFunctions.js';
 export async function adminEntityGetReferenceEntitiesInfo(
   database: Database,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic> {
   if (references.length === 0) return ok([]);
 
   const { addValueList, query, sql } = createSqliteSqlQuery();
   sql`SELECT id, uuid, type, status FROM entities WHERE uuid IN ${addValueList(
-    references.map(({ id }) => id)
+    references.map(({ id }) => id),
   )}`;
 
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid' | 'status'>>(
     database,
     context,
-    query
+    query,
   );
   if (result.isError()) return result;
 
@@ -34,6 +34,6 @@ export async function adminEntityGetReferenceEntitiesInfo(
       id: it.uuid,
       type: it.type,
       status: it.status,
-    }))
+    })),
   );
 }

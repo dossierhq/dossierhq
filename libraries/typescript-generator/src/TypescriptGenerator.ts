@@ -43,13 +43,13 @@ export function generateTypescriptForSchema({
     paragraphs.push(...generatePublishedClientTypes(context));
     paragraphs.push(...generateUniqueIndexesType('Published', publishedSchema.spec.indexes));
     paragraphs.push(
-      ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entity')
+      ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entity'),
     );
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       paragraphs.push(...generatePublishedEntityType(context, entitySpec, authKeyType));
     }
     paragraphs.push(
-      ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItem')
+      ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItem'),
     );
     for (const valueSpec of publishedSchema.spec.valueTypes) {
       paragraphs.push(...generatePublishedValueType(context, valueSpec));
@@ -91,7 +91,7 @@ function generatePublishedClientTypes(context: GeneratorContext) {
 
 function generateUniqueIndexesType(
   adminOrPublished: 'Admin' | 'Published',
-  indexes: SchemaIndexSpecification[]
+  indexes: SchemaIndexSpecification[],
 ) {
   const uniqueIndexNames = indexes.filter((it) => it.type === 'unique').map((it) => it.name);
   const uniqueIndexTypeDefinition = stringLiteralsUnionOrNever(uniqueIndexNames);
@@ -105,7 +105,7 @@ function generateAllTypesUnion(
     | AdminValueTypeSpecification[]
     | PublishedValueTypeSpecification[],
   adminOrPublished: 'Admin' | 'Published',
-  entityOrValueItem: 'Entity' | 'ValueItem'
+  entityOrValueItem: 'Entity' | 'ValueItem',
 ) {
   const typeDefinition = typeUnionOrNever(types.map((it) => `${adminOrPublished}${it.name}`));
   return ['', `export type App${adminOrPublished}${entityOrValueItem} = ${typeDefinition};`];
@@ -114,7 +114,7 @@ function generateAllTypesUnion(
 function generateAdminEntityType(
   context: GeneratorContext,
   entitySpec: AdminEntityTypeSpecification,
-  authKeyType: string
+  authKeyType: string,
 ) {
   return generateEntityType(context, entitySpec, 'Admin', authKeyType);
 }
@@ -122,7 +122,7 @@ function generateAdminEntityType(
 function generatePublishedEntityType(
   context: GeneratorContext,
   entitySpec: PublishedEntityTypeSpecification,
-  authKeyType: string
+  authKeyType: string,
 ) {
   return generateEntityType(context, entitySpec, 'Published', authKeyType);
 }
@@ -131,7 +131,7 @@ function generateEntityType(
   context: GeneratorContext,
   entitySpec: PublishedEntityTypeSpecification,
   adminOrPublished: 'Admin' | 'Published',
-  authKeyType: string
+  authKeyType: string,
 ) {
   const paragraphs: string[] = [''];
 
@@ -154,13 +154,13 @@ function generateEntityType(
   const entityTypeName = `${adminOrPublished}${entitySpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
-    `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}, ${authKeyType}>;`
+    `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}, ${authKeyType}>;`,
   );
 
   // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function is${entityTypeName}(entity: ${genericEntityType}): entity is ${entityTypeName} {`
+    `export function is${entityTypeName}(entity: ${genericEntityType}): entity is ${entityTypeName} {`,
   );
   paragraphs.push(`  return entity.info.type === '${entitySpec.name}';`);
   paragraphs.push(`}`);
@@ -168,11 +168,11 @@ function generateEntityType(
   // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIs${entityTypeName}(entity: ${genericEntityType}): asserts entity is ${entityTypeName} {`
+    `export function assertIs${entityTypeName}(entity: ${genericEntityType}): asserts entity is ${entityTypeName} {`,
   );
   paragraphs.push(`  if (entity.info.type !== '${entitySpec.name}') {`);
   paragraphs.push(
-    `    throw new Error('Expected info.type = ${entitySpec.name} (but was ' + entity.info.type + ')');`
+    `    throw new Error('Expected info.type = ${entitySpec.name} (but was ' + entity.info.type + ')');`,
   );
   paragraphs.push(`  }`);
   paragraphs.push(`}`);
@@ -186,7 +186,7 @@ function generateAdminValueType(context: GeneratorContext, valueSpec: AdminValue
 
 function generatePublishedValueType(
   context: GeneratorContext,
-  valueSpec: PublishedValueTypeSpecification
+  valueSpec: PublishedValueTypeSpecification,
 ) {
   return generateValueType(context, valueSpec, 'Published');
 }
@@ -194,7 +194,7 @@ function generatePublishedValueType(
 function generateValueType(
   context: GeneratorContext,
   valueSpec: PublishedValueTypeSpecification,
-  adminOrPublished: 'Admin' | 'Published'
+  adminOrPublished: 'Admin' | 'Published',
 ) {
   const paragraphs: string[] = [''];
 
@@ -217,13 +217,13 @@ function generateValueType(
   const valueTypeName = `${adminOrPublished}${valueSpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
-    `export type ${valueTypeName} = ${parentTypeName}<'${valueSpec.name}', ${fieldsName}>;`
+    `export type ${valueTypeName} = ${parentTypeName}<'${valueSpec.name}', ${fieldsName}>;`,
   );
 
   // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function is${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): valueItem is ${valueTypeName} {`
+    `export function is${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): valueItem is ${valueTypeName} {`,
   );
   paragraphs.push(`  return valueItem.type === '${valueSpec.name}';`);
   paragraphs.push(`}`);
@@ -231,11 +231,11 @@ function generateValueType(
   // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIs${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): asserts valueItem is ${valueTypeName} {`
+    `export function assertIs${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): asserts valueItem is ${valueTypeName} {`,
   );
   paragraphs.push(`  if (valueItem.type !== '${valueSpec.name}') {`);
   paragraphs.push(
-    `    throw new Error('Expected type = ${valueSpec.name} (but was ' + valueItem.type + ')');`
+    `    throw new Error('Expected type = ${valueSpec.name} (but was ' + valueItem.type + ')');`,
   );
   paragraphs.push(`  }`);
   paragraphs.push(`}`);
@@ -246,7 +246,7 @@ function generateValueType(
 function fieldType(
   { coreImports }: GeneratorContext,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
-  adminOrPublished: 'Admin' | 'Published'
+  adminOrPublished: 'Admin' | 'Published',
 ) {
   let type: string;
   switch (fieldSpec.type) {

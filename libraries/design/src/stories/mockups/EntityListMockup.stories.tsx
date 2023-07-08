@@ -70,7 +70,7 @@ function Screen({
   const [entityTypeFilterState, dispatchEntityTypeFilter] = useReducer(
     reduceEntityTypeSelectorState,
     { selectedIds: ['foo', 'bar'] },
-    initializeEntityTypeSelectorState
+    initializeEntityTypeSelectorState,
   );
   const [statusFilterState, statusFilterDispatch] = useReducer<
     StatusSelectorReducer,

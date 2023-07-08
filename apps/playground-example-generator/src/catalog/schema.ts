@@ -268,7 +268,7 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
 
 function copyEntityType(
   entityType: AdminEntityTypeSpecificationUpdate,
-  modifier: (entityType: AdminEntityTypeSpecificationUpdate) => void
+  modifier: (entityType: AdminEntityTypeSpecificationUpdate) => void,
 ): AdminEntityTypeSpecificationUpdate {
   const copy = structuredClone(entityType);
   modifier(copy);
@@ -285,7 +285,7 @@ function fieldSpec(entityType: AdminEntityTypeSpecificationUpdate, name: string)
 
 function booleanFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminBooleanFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Boolean) {
@@ -296,7 +296,7 @@ function booleanFieldSpec(
 
 function entityFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminEntityFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Entity) {
@@ -307,7 +307,7 @@ function entityFieldSpec(
 
 function locationFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminLocationFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Location) {
@@ -318,7 +318,7 @@ function locationFieldSpec(
 
 function numberFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminNumberFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Number) {
@@ -329,7 +329,7 @@ function numberFieldSpec(
 
 function richTextFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminRichTextFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.RichText) {
@@ -340,7 +340,7 @@ function richTextFieldSpec(
 
 function stringFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminStringFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.String) {
@@ -351,7 +351,7 @@ function stringFieldSpec(
 
 function valueItemFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
-  name: string
+  name: string,
 ): AdminValueItemFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.ValueItem) {

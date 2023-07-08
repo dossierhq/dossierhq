@@ -17,7 +17,7 @@ export interface Operation<
   TArgs,
   TOk,
   TError extends ErrorType | typeof ErrorType.Generic,
-  TModifies extends boolean = boolean
+  TModifies extends boolean = boolean,
 > {
   readonly name: TName;
   readonly args: TArgs;
@@ -40,11 +40,11 @@ export async function executeOperationPipeline<
   TArgs,
   TOk,
   TError extends typeof ErrorType.Generic,
-  TOp extends Operation<TName, TArgs, TOk, TError>
+  TOp extends Operation<TName, TArgs, TOk, TError>,
 >(
   context: TContext,
   pipeline: TMiddleware[],
-  operation: OperationWithoutCallbacks<TOp>
+  operation: OperationWithoutCallbacks<TOp>,
 ): PromiseResult<TOk, TError> {
   if (pipeline.length === 0) {
     return notOk.Generic('Cannot execute an empty pipeline') as Result<TOk, TError>;
@@ -60,12 +60,12 @@ async function executeOperationMiddleware<
   TArgs,
   TOk,
   TError extends typeof ErrorType.Generic,
-  TOp extends Operation<TName, TArgs, TOk, TError>
+  TOp extends Operation<TName, TArgs, TOk, TError>,
 >(
   context: TContext,
   pipeline: TMiddleware[],
   pipelineIndex: number,
-  operation: OperationWithoutCallbacks<TOp>
+  operation: OperationWithoutCallbacks<TOp>,
 ): PromiseResult<TOk, TError> {
   // Setup callbacks
   let result: Result<TOk, TError> | undefined;
@@ -79,7 +79,7 @@ async function executeOperationMiddleware<
       context,
       pipeline,
       pipelineIndex + 1,
-      operation
+      operation,
     );
     return nextResult;
   };
@@ -101,7 +101,7 @@ export async function LoggingClientMiddleware<
   TContext extends ClientContext,
   TOk,
   TError extends typeof ErrorType.Generic,
-  TOp extends Operation<unknown, unknown, TOk, TError>
+  TOp extends Operation<unknown, unknown, TOk, TError>,
 >(context: TContext, operation: TOp): Promise<void> {
   const { logger } = context;
   const noArgs = Array.isArray(operation.args) && operation.args.length === 0;

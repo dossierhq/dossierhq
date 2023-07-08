@@ -23,7 +23,7 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
       onItemClick(item);
       setShowDialog('');
     },
-    [onItemClick]
+    [onItemClick],
   );
 
   const { totalCount: linksToTotal } = usePublishedTotalCount(publishedClient, {

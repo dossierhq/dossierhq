@@ -14,7 +14,7 @@ export async function updateUniqueIndexesForEntity(
   entity: DatabaseResolvedEntityReference,
   isCreation: boolean,
   latestUniqueIndexValues: UniqueIndexValueCollection | null,
-  publishedUniqueIndexValues: UniqueIndexValueCollection | null
+  publishedUniqueIndexValues: UniqueIndexValueCollection | null,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const existingResult = isCreation
     ? ok([])
@@ -26,7 +26,7 @@ export async function updateUniqueIndexesForEntity(
   const targetValues = calculateTargetValues(
     existingValues,
     latestUniqueIndexValues,
-    publishedUniqueIndexValues
+    publishedUniqueIndexValues,
   );
 
   //
@@ -36,7 +36,7 @@ export async function updateUniqueIndexesForEntity(
   for (const [indexName, values] of targetValues) {
     for (const [value, { latest, published }] of values) {
       const existingValue = existingValues.find(
-        (it) => it.index === indexName && it.value === value
+        (it) => it.index === indexName && it.value === value,
       );
       if (existingValue) {
         if (existingValue.latest === latest && existingValue.published === published) {
@@ -77,7 +77,7 @@ export async function updateUniqueIndexesForEntity(
       if (indexValues?.length === 1) {
         const value = indexValues[0];
         return notOk.BadRequest(
-          `${visitorPathToString(value.path)}: Value is not unique (index: ${indexName})`
+          `${visitorPathToString(value.path)}: Value is not unique (index: ${indexName})`,
         );
       }
     }
@@ -91,7 +91,7 @@ export async function updateUniqueIndexesForEntity(
 function calculateTargetValues(
   existingValues: DatabaseAdminEntityUniqueIndexValue[],
   latestUniqueIndexValues: UniqueIndexValueCollection | null,
-  publishedUniqueIndexValues: UniqueIndexValueCollection | null
+  publishedUniqueIndexValues: UniqueIndexValueCollection | null,
 ) {
   const targetValues: Map<string, Map<string, { latest: boolean; published: boolean }>> = new Map();
   const getIndexValues = (indexName: string) => {
@@ -104,7 +104,7 @@ function calculateTargetValues(
   };
   const addPublishedValue = (
     targetIndexValues: Map<string, { latest: boolean; published: boolean }>,
-    value: string
+    value: string,
   ) => {
     const targetValue = targetIndexValues.get(value);
     if (targetValue) {
@@ -131,7 +131,7 @@ function calculateTargetValues(
         } else {
           targetValues.set(
             existingValue.index,
-            new Map([[existingValue.value, { latest: true, published: false }]])
+            new Map([[existingValue.value, { latest: true, published: false }]]),
           );
         }
       }

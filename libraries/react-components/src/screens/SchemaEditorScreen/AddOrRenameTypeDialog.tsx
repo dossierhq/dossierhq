@@ -75,7 +75,7 @@ export function AddOrRenameTypeDialog({
       setKind('entity');
       setStatus(DialogStatus.empty);
     },
-    [dispatchSchemaEditorState, kind, name, onClose, selector]
+    [dispatchSchemaEditorState, kind, name, onClose, selector],
   );
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export function AddOrRenameTypeDialog({
 function validateName(
   schemaEditorState: SchemaEditorState,
   selector: SchemaTypeSelector | 'add',
-  name: string
+  name: string,
 ): DialogStatus {
   if (!name) return DialogStatus.empty;
   if (!name.match(PASCAL_CASE_PATTERN)) {
@@ -154,7 +154,7 @@ function DialogContent({
         onEnterKeyPress();
       }
     },
-    [onEnterKeyPress]
+    [onEnterKeyPress],
   );
 
   const isRename = selector !== 'add';

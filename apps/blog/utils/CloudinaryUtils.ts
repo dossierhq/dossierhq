@@ -5,14 +5,14 @@ export function getResponsiveImageUrlsForLimitFit(
   cld: Cloudinary,
   publicId: string,
   width: number,
-  height: number | null
+  height: number | null,
 ) {
   const url1x = getImageUrlForLimitFill(cld, publicId, width, height);
   const url2x = getImageUrlForLimitFill(
     cld,
     publicId,
     2 * width,
-    height === null ? null : 2 * height
+    height === null ? null : 2 * height,
   );
 
   const srcSet = `${url1x} ${width}w, ${url2x} ${2 * width}w`;
@@ -36,7 +36,7 @@ export function getImageUrlForLimitFill(
   cld: Cloudinary,
   publicId: string,
   width: number,
-  height: number | null
+  height: number | null,
 ) {
   return cld
     .image(publicId)

@@ -15,7 +15,7 @@ export function $createPublishedValueItemNode(data: ValueItem): PublishedValueIt
 }
 
 export function $isPublishedValueItemNode(
-  node: LexicalNode | undefined | null
+  node: LexicalNode | undefined | null,
 ): node is PublishedValueItemNode {
   return node instanceof PublishedValueItemNode;
 }
@@ -81,7 +81,7 @@ export class PublishedValueItemNode extends DecoratorBlockNode {
   }
 
   static override importJSON(
-    serializedNode: SerializedPublishedValueItemNode
+    serializedNode: SerializedPublishedValueItemNode,
   ): PublishedValueItemNode {
     const node = $createPublishedValueItemNode(serializedNode.data);
     node.setFormat(serializedNode.format);

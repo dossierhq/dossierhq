@@ -41,7 +41,7 @@ export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is 
 }
 
 export function assertIsAdminBlogPost(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminBlogPost {
   if (entity.info.type !== 'BlogPost') {
     throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
@@ -59,7 +59,7 @@ export function isAdminPerson(entity: AdminEntity<string, object>): entity is Ad
 }
 
 export function assertIsAdminPerson(
-  entity: AdminEntity<string, object>
+  entity: AdminEntity<string, object>,
 ): asserts entity is AdminPerson {
   if (entity.info.type !== 'Person') {
     throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');
@@ -78,13 +78,13 @@ export interface AdminCloudinaryImageFields {
 export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
 ): valueItem is AdminCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
 
 export function assertIsAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
 ): asserts valueItem is AdminCloudinaryImage {
   if (valueItem.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');

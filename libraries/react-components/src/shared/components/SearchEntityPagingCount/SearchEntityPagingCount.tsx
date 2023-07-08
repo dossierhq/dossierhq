@@ -19,7 +19,7 @@ export function SearchEntityPagingCount({
     (paging: Paging) => {
       dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(paging));
     },
-    [dispatchSearchEntityState]
+    [dispatchSearchEntityState],
   );
 
   return (

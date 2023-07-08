@@ -14,7 +14,7 @@ export interface ServerInit {
 
 export async function initializeSqlite3Server(
   filename: string | ':memory:',
-  options?: Database.Options
+  options?: Database.Options,
 ): PromiseResult<ServerInit, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, options);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
@@ -44,7 +44,7 @@ export async function initializeSqlite3Server(
 
 async function createSqlite3TestAdapter(
   filename: string | ':memory:',
-  options?: Database.Options
+  options?: Database.Options,
 ): PromiseResult<
   BetterSqlite3DatabaseAdapter,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic

@@ -138,13 +138,13 @@ beforeAll(async () => {
   await ensureTestEntitiesExist(adminClient, 'none');
   entitiesOfTypeQueryAdminOnlyEditBeforeNone = await getEntitiesForAdminOnlyEditBefore(
     adminClient,
-    'none'
+    'none',
   );
 
   await ensureTestEntitiesExist(adminClient, 'subject');
   entitiesOfTypeQueryAdminOnlyEditBeforeSubject = await getEntitiesForAdminOnlyEditBefore(
     adminClient,
-    'subject'
+    'subject',
   );
 });
 
@@ -189,7 +189,7 @@ async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient, authK
   const query = { authKeys: [authKey], entityTypes: ['QueryAdminOnlyEditBefore'] };
   const entities: AdminEntity[] = [];
   for await (const pageResult of getAllPagesForConnection({}, (currentPaging) =>
-    adminClient.searchEntities(query, currentPaging)
+    adminClient.searchEntities(query, currentPaging),
   )) {
     if (pageResult.isError()) {
       throw pageResult.toError();
@@ -417,7 +417,7 @@ describe('adminEntity()', () => {
         await adminClient.updateEntity({
           id,
           fields: { title: 'Second title', summary: 'Second summary' },
-        })
+        }),
       );
 
       const result = await graphql({
@@ -1309,7 +1309,7 @@ describe('adminSampleEntities()', () => {
     expectSampledEntitiesArePartOfExpected(
       result.data?.adminSampleEntities,
       123,
-      entitiesOfTypeQueryAdminOnlyEditBeforeNone
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone,
     );
   });
 });
@@ -1333,10 +1333,10 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } })),
     );
     expect(result.data?.adminSearchEntities.totalCount).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBeforeNone.length
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.length,
     );
   });
 
@@ -1358,7 +1358,7 @@ describe('searchAdminEntities()', () => {
       variableValues: { entityTypes: ['QueryAdminOnlyEditBefore'] },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } })),
     );
   });
 
@@ -1379,7 +1379,7 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 10).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 10).map((x) => ({ node: { id: x.id } })),
     );
   });
 
@@ -1403,7 +1403,7 @@ describe('searchAdminEntities()', () => {
       [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .reverse()
         .slice(0, 10)
-        .map((x) => ({ node: { id: x.id } }))
+        .map((x) => ({ node: { id: x.id } })),
     );
   });
 
@@ -1424,7 +1424,7 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(-10).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(-10).map((x) => ({ node: { id: x.id } })),
     );
   });
 
@@ -1452,7 +1452,7 @@ describe('searchAdminEntities()', () => {
       [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .sort((a, b) => (a.info.name < b.info.name ? -1 : 1))
         .slice(-10)
-        .map((x) => ({ node: { id: x.id } }))
+        .map((x) => ({ node: { id: x.id } })),
     );
   });
 
@@ -1479,10 +1479,10 @@ describe('searchAdminEntities()', () => {
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeSubject
         .slice(0, 25)
-        .map((it) => ({ node: { id: it.id, info: { authKey: 'subject' } } }))
+        .map((it) => ({ node: { id: it.id, info: { authKey: 'subject' } } })),
     );
     expect(result.data?.adminSearchEntities.totalCount).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBeforeSubject.length
+      entitiesOfTypeQueryAdminOnlyEditBeforeSubject.length,
     );
   });
 
@@ -1680,7 +1680,7 @@ describe('entityHistory()', () => {
         expectOkResult(
           await adminClient.publishEntities([
             { id, version: updateResult.value.entity.info.version },
-          ])
+          ]),
         );
       }
 
@@ -1706,7 +1706,7 @@ describe('entityHistory()', () => {
 
       // Remove createdAt since it's tricky to test 🤷‍♂️
       result.data?.entityHistory.versions.forEach(
-        (x: { createdAt?: string }) => delete x.createdAt
+        (x: { createdAt?: string }) => delete x.createdAt,
       );
 
       expect(result.data).toEqual({

@@ -14,7 +14,7 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
   database: Database,
   context: TransactionContext,
   childContextFactory: (transaction: Transaction) => TransactionContext,
-  callback: (context: TransactionContext) => PromiseResult<TOk, TError>
+  callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');
@@ -42,12 +42,12 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
       const commitOrRollbackResult = await queryRun(
         database,
         childContext,
-        result.isOk() ? 'COMMIT' : 'ROLLBACK'
+        result.isOk() ? 'COMMIT' : 'ROLLBACK',
       );
       if (commitOrRollbackResult.isError()) return commitOrRollbackResult;
 
       return result;
-    }
+    },
   );
 }
 
@@ -55,7 +55,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
   database: Database,
   context: TransactionContext,
   transaction: Transaction,
-  callback: () => PromiseResult<TOk, TError>
+  callback: () => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   const sqliteTransaction = transaction as SqliteTransaction;
   const savePointName = `nested${sqliteTransaction.savePointCount++}`;
@@ -72,7 +72,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
   const releaseOrRollbackResult = await queryRun(
     database,
     context,
-    result.isOk() ? `RELEASE ${savePointName}` : `ROLLBACK TO ${savePointName}`
+    result.isOk() ? `RELEASE ${savePointName}` : `ROLLBACK TO ${savePointName}`,
   );
   if (releaseOrRollbackResult.isError()) return releaseOrRollbackResult;
 

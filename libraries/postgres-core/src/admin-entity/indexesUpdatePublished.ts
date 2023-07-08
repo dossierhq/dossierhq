@@ -12,7 +12,7 @@ export async function adminEntityIndexesUpdatePublished(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
-  entityIndexes: DatabaseEntityIndexesArg
+  entityIndexes: DatabaseEntityIndexesArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId;
   const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
@@ -23,7 +23,7 @@ export async function adminEntityIndexesUpdatePublished(
     context,
     buildPostgresSqlQuery(({ sql }) => {
       sql`UPDATE entities SET published_fts = to_tsvector(${fullTextSearchText}) WHERE id = ${entityId}`;
-    })
+    }),
   );
   if (ftsResult.isError()) return ftsResult;
 
@@ -32,8 +32,9 @@ export async function adminEntityIndexesUpdatePublished(
     database,
     context,
     buildPostgresSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_published_references WHERE from_entities_id = ${entityId}`
-    )
+      ({ sql }) =>
+        sql`DELETE FROM entity_published_references WHERE from_entities_id = ${entityId}`,
+    ),
   );
   if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
 
@@ -41,8 +42,8 @@ export async function adminEntityIndexesUpdatePublished(
     database,
     context,
     buildPostgresSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityId}`
-    )
+      ({ sql }) => sql`DELETE FROM entity_published_locations WHERE entities_id = ${entityId}`,
+    ),
   );
   if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
 
@@ -50,8 +51,8 @@ export async function adminEntityIndexesUpdatePublished(
     database,
     context,
     buildPostgresSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_published_value_types WHERE entities_id = ${entityId}`
-    )
+      ({ sql }) => sql`DELETE FROM entity_published_value_types WHERE entities_id = ${entityId}`,
+    ),
   );
   if (removeExistingValueTypesResult.isError()) return removeExistingValueTypesResult;
 
@@ -67,7 +68,7 @@ export async function adminEntityIndexesUpdatePublished(
         for (const referenceId of referenceIds) {
           sql`(${fromEntitiesId}, ${referenceId.entityInternalId})`;
         }
-      })
+      }),
     );
     if (insertReferencesResult.isError()) return insertReferencesResult;
   }
@@ -82,7 +83,7 @@ export async function adminEntityIndexesUpdatePublished(
         for (const location of locations) {
           sql`(${entitiesId}, ST_SetSRID(ST_Point(${location.lng}, ${location.lat}), 4326))`;
         }
-      })
+      }),
     );
     if (insertLocationsResult.isError()) return insertLocationsResult;
   }
@@ -97,7 +98,7 @@ export async function adminEntityIndexesUpdatePublished(
         for (const valueType of valueTypes) {
           sql`(${entitiesId}, ${valueType})`;
         }
-      })
+      }),
     );
     if (insertValueTypesResult.isError()) return insertValueTypesResult;
   }

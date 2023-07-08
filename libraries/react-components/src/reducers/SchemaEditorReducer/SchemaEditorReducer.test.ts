@@ -59,9 +59,9 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('entity', 'Foo')
+      new SchemaEditorActions.AddType('entity', 'Foo'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -73,9 +73,9 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Foo')
+      new SchemaEditorActions.AddType('value', 'Foo'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -87,9 +87,11 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('entity', 'Bar')
+      new SchemaEditorActions.AddType('entity', 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -101,9 +103,9 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Bar')
+      new SchemaEditorActions.AddType('value', 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -115,10 +117,10 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'ZooKeeper'),
-      new SchemaEditorActions.AddType('entity', 'Anaconda')
+      new SchemaEditorActions.AddType('entity', 'Anaconda'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -130,10 +132,10 @@ describe('AddTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('value', 'ZooKeeper'),
-      new SchemaEditorActions.AddType('value', 'Anaconda')
+      new SchemaEditorActions.AddType('value', 'Anaconda'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -147,9 +149,11 @@ describe('AddFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -160,9 +164,9 @@ describe('AddFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -175,9 +179,9 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -191,9 +195,9 @@ describe('AddFieldAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           valueTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -207,9 +211,9 @@ describe('AddIndexAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddIndex('myIndex')
+      new SchemaEditorActions.AddIndex('myIndex'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -223,9 +227,9 @@ describe('AddPatternAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddPattern('my-pattern')
+      new SchemaEditorActions.AddPattern('my-pattern'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -239,13 +243,15 @@ describe('ChangeFieldAdminOnlyAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldAdminOnly(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -258,18 +264,20 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
         FieldType.Entity,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -284,12 +292,12 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
           entityTypes: [
             { name: 'Foo', fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: [] }] },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'entity' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -302,18 +310,20 @@ describe('ChangeFieldAllowedLinkEntityTypesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
         FieldType.RichText,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -326,12 +336,12 @@ describe('ChangeFieldAllowedLinkEntityTypesAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'foo', type: FieldType.RichText }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -344,22 +354,24 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
         FieldType.RichText,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        [RichTextNodeType.entity]
+        [RichTextNodeType.entity],
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak, tab',
@@ -394,12 +406,12 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'rt' },
-        [REQUIRED_NODES_PLACEHOLDER.name, RichTextNodeType.heading, RichTextNodeType.entity]
-      )
+        [REQUIRED_NODES_PLACEHOLDER.name, RichTextNodeType.heading, RichTextNodeType.entity],
+      ),
     );
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak, tab',
@@ -438,12 +450,12 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedRichTextNodes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'rt' },
-        [REQUIRED_NODES_PLACEHOLDER.name, RichTextNodeType.heading]
-      )
+        [REQUIRED_NODES_PLACEHOLDER.name, RichTextNodeType.heading],
+      ),
     );
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
       'root, paragraph, text, linebreak, tab',
@@ -462,18 +474,18 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'foo' },
         FieldType.ValueItem,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'value', typeName: 'Foo', fieldName: 'foo' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -486,12 +498,12 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           valueTypes: [{ name: 'Foo', fields: [{ name: 'valueItem', type: FieldType.ValueItem }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'value', typeName: 'Foo', fieldName: 'valueItem' },
-        ['Foo']
-      )
+        ['Foo'],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -512,13 +524,13 @@ describe('ChangeFieldIndexAction', () => {
             },
           ],
           indexes: [{ name: 'anIndex', type: 'unique' }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldIndex(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        'anIndex'
-      )
+        'anIndex',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -526,7 +538,7 @@ describe('ChangeFieldIndexAction', () => {
 
     expect(state.entityTypes[0].fields[0].index).toBe('anIndex');
     expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).index).toBe(
-      'anIndex'
+      'anIndex',
     );
   });
 });
@@ -538,18 +550,18 @@ describe('ChangeFieldIntegerAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Number,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldInteger(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -557,7 +569,7 @@ describe('ChangeFieldIntegerAction', () => {
 
     expect(state.entityTypes[0].fields[0].integer).toBe(true);
     expect((schemaUpdate?.entityTypes?.[0].fields[0] as NumberFieldSpecification).integer).toBe(
-      true
+      true,
     );
   });
 
@@ -569,12 +581,12 @@ describe('ChangeFieldIntegerAction', () => {
           entityTypes: [
             { name: 'Foo', fields: [{ name: 'bar', type: FieldType.Number, integer: true }] },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldInteger(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        false
-      )
+        false,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -582,7 +594,7 @@ describe('ChangeFieldIntegerAction', () => {
 
     expect(state.entityTypes[0].fields[0].integer).toBe(false);
     expect((schemaUpdate?.entityTypes?.[0].fields[0] as NumberFieldSpecification).integer).toBe(
-      false
+      false,
     );
   });
 });
@@ -592,14 +604,14 @@ describe('ChangeTypeNameField', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'TitleOnly'),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'title'),
       new SchemaEditorActions.ChangeTypeNameField(
         { kind: 'entity', typeName: 'TitleOnly' },
-        'title'
-      )
+        'title',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -607,7 +619,7 @@ describe('ChangeTypeNameField', () => {
 
     expect(state.entityTypes[0].nameField).toBe('title');
     expect((schemaUpdate?.entityTypes?.[0] as AdminEntityTypeSpecificationUpdate).nameField).toBe(
-      'title'
+      'title',
     );
   });
 
@@ -623,13 +635,13 @@ describe('ChangeTypeNameField', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'TitleOnly' }, 'other'),
       new SchemaEditorActions.ChangeTypeNameField(
         { kind: 'entity', typeName: 'TitleOnly' },
-        'other'
-      )
+        'other',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -644,8 +656,8 @@ describe('ChangeTypeNameField', () => {
       state,
       new SchemaEditorActions.ChangeTypeNameField(
         { kind: 'entity', typeName: 'TitleOnly' },
-        'title'
-      )
+        'title',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -662,15 +674,15 @@ describe('ChangeFieldMatchPattern', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.AddPattern('aPattern'),
       new SchemaEditorActions.ChangePatternPattern({ kind: 'pattern', name: 'aPattern' }, '^.*$'),
       new SchemaEditorActions.ChangeFieldMatchPattern(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        'aPattern'
-      )
+        'aPattern',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -678,7 +690,7 @@ describe('ChangeFieldMatchPattern', () => {
 
     expect(state.entityTypes[0].fields[0].matchPattern).toBe('aPattern');
     expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).matchPattern).toBe(
-      'aPattern'
+      'aPattern',
     );
   });
 
@@ -694,17 +706,17 @@ describe('ChangeFieldMatchPattern', () => {
             },
           ],
           patterns: [{ name: 'aPattern', pattern: '^.+$' }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddPattern('anotherPattern'),
       new SchemaEditorActions.ChangePatternPattern(
         { kind: 'pattern', name: 'anotherPattern' },
-        '^hello$'
+        '^hello$',
       ),
       new SchemaEditorActions.ChangeFieldMatchPattern(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        'anotherPattern'
-      )
+        'anotherPattern',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -712,7 +724,7 @@ describe('ChangeFieldMatchPattern', () => {
 
     expect(state.entityTypes[0].fields[0].matchPattern).toBe('anotherPattern');
     expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).matchPattern).toBe(
-      'anotherPattern'
+      'anotherPattern',
     );
   });
 });
@@ -724,13 +736,13 @@ describe('ChangeFieldMultilineAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldMultiline(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -738,7 +750,7 @@ describe('ChangeFieldMultilineAction', () => {
 
     expect(state.entityTypes[0].fields[0].multiline).toBe(true);
     expect((schemaUpdate?.entityTypes?.[0].fields[0] as StringFieldSpecification).multiline).toBe(
-      true
+      true,
     );
   });
 
@@ -748,12 +760,12 @@ describe('ChangeFieldMultilineAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'bar', type: FieldType.String }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldMultiline(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -764,7 +776,7 @@ describe('ChangeFieldMultilineAction', () => {
     expect(state.entityTypes[0].status).toBe('changed');
     expect(state.status).toBe('changed');
     expect((schemaUpdate?.entityTypes?.[0].fields[0] as StringFieldSpecification).multiline).toBe(
-      true
+      true,
     );
   });
 });
@@ -774,13 +786,15 @@ describe('ChangeFieldRequiredAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldRequired(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -795,12 +809,12 @@ describe('ChangeFieldRequiredAction', () => {
           entityTypes: [
             { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, required: false }] },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldRequired(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -813,14 +827,16 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -831,14 +847,14 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
-        true
-      )
+        true,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -849,14 +865,14 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Number,
-        false
-      )
+        false,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -867,14 +883,16 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Entity,
-        false
-      )
+        false,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -885,14 +903,16 @@ describe('ChangeFieldTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         FieldType.ValueItem,
-        false
-      )
+        false,
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -907,13 +927,13 @@ describe('ChangeFieldValues', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldValues(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }]
-      )
+        [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -948,13 +968,13 @@ describe('ChangeFieldValues', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldValues(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         // wrong order and duplicate values
-        [{ value: 'world' }, { value: 'hello' }, { value: 'hello' }]
-      )
+        [{ value: 'world' }, { value: 'hello' }, { value: 'hello' }],
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
@@ -973,13 +993,13 @@ describe('ChangePatternPatternAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddPattern('foo'),
       new SchemaEditorActions.ChangePatternPattern(
         { kind: 'pattern', name: 'foo' },
-        '^this is a new pattern$'
-      )
+        '^this is a new pattern$',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -998,12 +1018,12 @@ describe('ChangePatternPatternAction', () => {
             },
           ],
           patterns: [{ name: 'aPattern', pattern: '^this is a pattern$' }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangePatternPattern(
         { kind: 'pattern', name: 'aPattern' },
-        '^this is a new pattern$'
-      )
+        '^this is a new pattern$',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1016,10 +1036,10 @@ describe('ChangeTypeAdminOnlyAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
-      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true)
+      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1034,10 +1054,10 @@ describe('DeleteFieldAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
-      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
+      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1050,11 +1070,11 @@ describe('DeleteFieldAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeTypeNameField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
-      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
+      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1078,14 +1098,14 @@ describe('DeletePatternAction', () => {
             },
           ],
           patterns: [{ name: 'patternA', pattern: '^patternA$' }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.SetActiveSelector(
         { kind: 'pattern', name: 'patternA' },
         false,
-        false
+        false,
       ),
-      new SchemaEditorActions.DeletePattern({ kind: 'pattern', name: 'patternA' })
+      new SchemaEditorActions.DeletePattern({ kind: 'pattern', name: 'patternA' }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1108,10 +1128,10 @@ describe('DeleteTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
-      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1135,22 +1155,22 @@ describe('DeleteTypeAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'entity' },
-        ['Foo']
+        ['Foo'],
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
-        ['Foo']
+        ['Foo'],
       ),
       new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
-        ['Foo']
+        ['Foo'],
       ),
-      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1168,10 +1188,10 @@ describe('DeleteTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('value', 'Foo'),
-      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
+      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1194,18 +1214,18 @@ describe('DeleteTypeAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('value', 'Foo'),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
-        ['Foo']
+        ['Foo'],
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'valueItem' },
-        ['Foo']
+        ['Foo'],
       ),
-      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
+      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1223,14 +1243,14 @@ describe('ChangeTypeAuthKeyPatternAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.AddPattern('my-pattern'),
       new SchemaEditorActions.ChangeTypeAuthKeyPattern(
         { kind: 'entity', typeName: 'Foo' },
-        'my-pattern'
-      )
+        'my-pattern',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1244,9 +1264,9 @@ describe('ChangeTypeAuthKeyPatternAction', () => {
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
           patterns: [{ name: 'aPattern', pattern: '^this is a pattern$' }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.ChangeTypeAuthKeyPattern({ kind: 'entity', typeName: 'Foo' }, null)
+      new SchemaEditorActions.ChangeTypeAuthKeyPattern({ kind: 'entity', typeName: 'Foo' }, null),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.entityTypes[0].status).toBe('changed');
@@ -1262,13 +1282,13 @@ describe('RenameFieldAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.RenameField(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        'baz'
-      )
+        'baz',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1279,14 +1299,16 @@ describe('RenameFieldAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeTypeNameField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.RenameField(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        'baz'
-      )
+        'baz',
+      ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1316,9 +1338,9 @@ describe('RenamePatternAction', () => {
             { name: 'patternA', pattern: '^patternA$' },
             { name: 'patternB', pattern: '^patternB$' },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.RenamePattern({ kind: 'pattern', name: 'patternA' }, 'patternC')
+      new SchemaEditorActions.RenamePattern({ kind: 'pattern', name: 'patternA' }, 'patternC'),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1340,10 +1362,10 @@ describe('RenameTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
-      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1355,20 +1377,20 @@ describe('RenameTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
         FieldType.Entity,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
-        ['Foo']
+        ['Foo'],
       ),
-      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1382,20 +1404,20 @@ describe('RenameTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('entity', 'Foo'),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
         FieldType.RichText,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
         { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
-        ['Foo']
+        ['Foo'],
       ),
-      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar')
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1409,20 +1431,20 @@ describe('RenameTypeAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
+        AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('value', 'Foo'),
       new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'self' },
         FieldType.ValueItem,
-        false
+        false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'value', typeName: 'Foo', fieldName: 'self' },
-        ['Foo']
+        ['Foo'],
       ),
-      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar')
+      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1449,14 +1471,14 @@ describe('ReorderFieldsAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ReorderFields(
         { kind: 'entity', typeName: 'Foo' },
         'fieldA',
         'after',
-        'fieldB'
-      )
+        'fieldB',
+      ),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1485,14 +1507,14 @@ describe('ReorderFieldsAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
+        }).valueOrThrow(),
       ),
       new SchemaEditorActions.ReorderFields(
         { kind: 'entity', typeName: 'Foo' },
         'fieldB',
         'before',
-        'fieldA'
-      )
+        'fieldA',
+      ),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1509,9 +1531,11 @@ describe('SetActiveSelectorAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, false)
+      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, false),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1522,9 +1546,11 @@ describe('SetActiveSelectorAction', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({ entityTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow()
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
       ),
-      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, true)
+      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false, true),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1537,8 +1563,8 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow()
-      )
+        AdminSchema.createAndValidate({}).valueOrThrow(),
+      ),
     );
     expect(state).toMatchSnapshot();
 
@@ -1557,8 +1583,8 @@ describe('UpdateSchemaSpecificationAction', () => {
               fields: [{ name: 'title', type: FieldType.String }],
             },
           ],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state).toMatchSnapshot();
@@ -1582,8 +1608,8 @@ describe('UpdateSchemaSpecificationAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state.entityTypes[0].fields[0].integer).toBe(false);
@@ -1613,8 +1639,8 @@ describe('UpdateSchemaSpecificationAction', () => {
             },
           ],
           patterns: [{ name: 'aPattern', pattern: '^a-pattern$' }],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state.entityTypes[0].fields[0].multiline).toBe(true);
@@ -1651,8 +1677,8 @@ describe('UpdateSchemaSpecificationAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state.entityTypes[0].fields[0].richTextNodesWithPlaceholders).toEqual([
@@ -1672,8 +1698,8 @@ describe('UpdateSchemaSpecificationAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           valueTypes: [{ name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] }],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state).toMatchSnapshot();
@@ -1702,8 +1728,8 @@ describe('UpdateSchemaSpecificationAction', () => {
               ],
             },
           ],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state).toMatchSnapshot();
@@ -1728,8 +1754,8 @@ describe('UpdateSchemaSpecificationAction', () => {
               fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['ValueItem'] }],
             },
           ],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state).toMatchSnapshot();
@@ -1744,8 +1770,8 @@ describe('UpdateSchemaSpecificationAction', () => {
         AdminSchema.createAndValidate({
           entityTypes: [{ name: 'Foo', authKeyPattern: 'patternOne', fields: [] }],
           patterns: [{ name: 'patternOne', pattern: '^foo$' }],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state).toMatchSnapshot();
@@ -1762,8 +1788,8 @@ describe('UpdateSchemaSpecificationAction', () => {
             { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, index: 'myIndex' }] },
           ],
           indexes: [{ name: 'myIndex', type: 'unique' }],
-        }).valueOrThrow()
-      )
+        }).valueOrThrow(),
+      ),
     );
 
     expect(state).toMatchSnapshot();
@@ -1779,7 +1805,7 @@ describe('SchemaEditorReducer scenarios', () => {
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),
       new SchemaEditorActions.AddType('entity', 'NewType'),
-      new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true)
+      new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
     );
 
     const newAdminSchema = initialSchema
@@ -1788,7 +1814,7 @@ describe('SchemaEditorReducer scenarios', () => {
 
     const afterSaveState = reduceSchemaEditorState(
       beforeSaveState,
-      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema)
+      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema),
     );
 
     expect(afterSaveState).toMatchSnapshot();

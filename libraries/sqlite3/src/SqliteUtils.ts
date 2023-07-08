@@ -5,7 +5,7 @@ import type { Database, RunResult, Statement } from 'sqlite3';
 
 type DatabaseConstructor = (new (
   filename: string,
-  callback?: (err: Error | null) => void
+  callback?: (err: Error | null) => void,
 ) => Database) &
   (new (filename: string, mode?: number, callback?: (err: Error | null) => void) => Database);
 
@@ -18,7 +18,7 @@ export async function createDatabase(
   }: {
     filename: string | ':memory:';
     mode?: number;
-  }
+  },
 ): PromiseResult<Database, typeof ErrorType.Generic> {
   try {
     const database = await doCreateDatabase(DatabaseClass, filename, mode);
@@ -31,7 +31,7 @@ export async function createDatabase(
 function doCreateDatabase(
   DatabaseClass: DatabaseConstructor,
   filename: string,
-  mode?: number
+  mode?: number,
 ): Promise<Database> {
   if (mode !== undefined) {
     return new Promise<Database>((resolve, reject) => {
@@ -61,7 +61,7 @@ export function closeDatabase(db: Database) {
         reject(error);
       }
       resolve(undefined);
-    })
+    }),
   );
 }
 
@@ -72,7 +72,7 @@ export function queryAll<R>(db: Database, query: string, values: unknown[] = [])
         reject(error);
       }
       resolve(rows as R[]);
-    })
+    }),
   );
 }
 
@@ -83,6 +83,6 @@ export function queryRun(db: Database, query: string, values: unknown[] = []) {
         reject(error);
       }
       resolve(this.changes);
-    })
+    }),
   );
 }

@@ -13,7 +13,7 @@ import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
 export async function adminEntityHistoryGetEntityInfo(
   database: Database,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   DatabaseAdminEntityHistoryGetEntityInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -44,7 +44,7 @@ export async function adminEntityHistoryGetEntityInfo(
 export async function adminEntityHistoryGetVersionsInfo(
   database: Database,
   context: TransactionContext,
-  reference: DatabaseResolvedEntityReference
+  reference: DatabaseResolvedEntityReference,
 ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<EntityVersionsTable, 'id' | 'version' | 'created_at'> & {
@@ -72,6 +72,6 @@ export async function adminEntityHistoryGetVersionsInfo(
       version: it.version,
       createdAt: new Date(it.created_at),
       createdBy: it.created_by_uuid,
-    }))
+    })),
   );
 }

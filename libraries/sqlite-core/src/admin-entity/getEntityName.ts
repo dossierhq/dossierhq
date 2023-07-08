@@ -8,7 +8,7 @@ import { queryNoneOrOne } from '../QueryFunctions.js';
 export async function adminEntityGetEntityName(
   database: Database,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<string, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<EntitiesTable, 'name'>>(database, context, {
     text: 'SELECT e.name FROM entities e WHERE e.uuid = ?1',

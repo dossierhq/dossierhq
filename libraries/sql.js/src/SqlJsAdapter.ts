@@ -16,7 +16,7 @@ export type SqlJsDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOpt
 export async function createSqlJsAdapter(
   context: Context,
   database: Database,
-  options: SqliteDatabaseOptions
+  options: SqliteDatabaseOptions,
 ): PromiseResult<SqlJsDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {

@@ -12,7 +12,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 export async function adminEntityArchivingGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference
+  reference: EntityReference,
 ): PromiseResult<
   DatabaseAdminEntityArchivingEntityInfoPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic

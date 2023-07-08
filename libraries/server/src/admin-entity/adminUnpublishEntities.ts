@@ -33,7 +33,7 @@ export async function adminUnpublishEntities(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<
   AdminEntityUnpublishPayload[],
   | typeof ErrorType.BadRequest
@@ -50,7 +50,7 @@ export async function adminUnpublishEntities(
     if (collectResult.isError()) return collectResult;
     const entitiesInfo = collectResult.value;
     const unpublishEntitiesInfo = entitiesInfo.filter(
-      ({ effect }) => effect === 'unpublished'
+      ({ effect }) => effect === 'unpublished',
     ) as EntityInfoToBeUnpublished[];
 
     // Step 2: Check authKey
@@ -62,7 +62,7 @@ export async function adminUnpublishEntities(
       if (authResult.isError()) {
         return createErrorResult(
           authResult.error,
-          `entity(${entityInfo.id}): ${authResult.message}`
+          `entity(${entityInfo.id}): ${authResult.message}`,
         );
       }
     }
@@ -72,7 +72,7 @@ export async function adminUnpublishEntities(
       databaseAdapter,
       context,
       entitiesInfo,
-      unpublishEntitiesInfo
+      unpublishEntitiesInfo,
     );
     if (unpublishResult.isError()) return unpublishResult;
 
@@ -80,7 +80,7 @@ export async function adminUnpublishEntities(
     const checkReferencedEntitiesResult = await ensureReferencedEntitiesAreNotPublished(
       databaseAdapter,
       context,
-      unpublishEntitiesInfo
+      unpublishEntitiesInfo,
     );
     if (checkReferencedEntitiesResult.isError()) return checkReferencedEntitiesResult;
 
@@ -88,7 +88,7 @@ export async function adminUnpublishEntities(
     const unpublishEventsResult = await createUnpublishEvents(
       databaseAdapter,
       context,
-      unpublishEntitiesInfo
+      unpublishEntitiesInfo,
     );
     if (unpublishEventsResult.isError()) return unpublishEventsResult;
 
@@ -100,7 +100,7 @@ export async function adminUnpublishEntities(
         { entityInternalId: entity.entityInternalId },
         false,
         null,
-        new Map()
+        new Map(),
       );
       if (uniqueResult.isError()) return uniqueResult;
     }
@@ -113,7 +113,7 @@ export async function adminUnpublishEntities(
 async function collectEntityInfo(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<
   (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -141,7 +141,7 @@ async function collectEntityInfo(
         status: it.status,
         updatedAt: it.updatedAt,
       };
-    })
+    }),
   );
 }
 
@@ -149,12 +149,12 @@ async function unpublishEntitiesAndCollectResult(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entitiesInfo: (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
-  unpublishEntitiesInfo: EntityInfoToBeUnpublished[]
+  unpublishEntitiesInfo: EntityInfoToBeUnpublished[],
 ): PromiseResult<AdminEntityUnpublishPayload[], typeof ErrorType.Generic> {
   const unpublishResult = await databaseAdapter.adminEntityUnpublishEntities(
     context,
     AdminEntityStatus.withdrawn,
-    unpublishEntitiesInfo.map((it) => ({ entityInternalId: it.entityInternalId }))
+    unpublishEntitiesInfo.map((it) => ({ entityInternalId: it.entityInternalId })),
   );
   if (unpublishResult.isError()) {
     return unpublishResult;
@@ -165,7 +165,7 @@ async function unpublishEntitiesAndCollectResult(
   for (const entityInfo of entitiesInfo) {
     if (entityInfo.effect === 'unpublished') {
       const updatedAt = unpublishRows.find(
-        (it) => it.entityInternalId === entityInfo.entityInternalId
+        (it) => it.entityInternalId === entityInfo.entityInternalId,
       )?.updatedAt;
       assertIsDefined(updatedAt);
       result.push({
@@ -189,13 +189,13 @@ async function unpublishEntitiesAndCollectResult(
 async function ensureReferencedEntitiesAreNotPublished(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  unpublishEntitiesInfo: EntityInfoToBeUnpublished[]
+  unpublishEntitiesInfo: EntityInfoToBeUnpublished[],
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const referenceErrorMessages: string[] = [];
   for (const { id, entityInternalId } of unpublishEntitiesInfo) {
     const result = await databaseAdapter.adminEntityUnpublishGetPublishedReferencedEntities(
       context,
-      { entityInternalId }
+      { entityInternalId },
     );
     if (result.isError()) {
       return result;
@@ -204,7 +204,7 @@ async function ensureReferencedEntitiesAreNotPublished(
       referenceErrorMessages.push(
         `${id}: Published entities referencing entity: ${result.value
           .map(({ id }) => id)
-          .join(', ')}`
+          .join(', ')}`,
       );
     }
   }
@@ -218,7 +218,7 @@ async function ensureReferencedEntitiesAreNotPublished(
 async function createUnpublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  unpublishEntityInfo: EntityInfoToBeUnpublished[]
+  unpublishEntityInfo: EntityInfoToBeUnpublished[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (unpublishEntityInfo.length === 0) {
     return ok(undefined);

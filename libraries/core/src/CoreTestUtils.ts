@@ -2,7 +2,7 @@ import { expect } from 'vitest';
 import type { ErrorType, OkResult, Result } from './ErrorResult.js';
 
 export function expectOkResult<TOk, TError extends ErrorType>(
-  actual: Result<unknown, ErrorType>
+  actual: Result<unknown, ErrorType>,
 ): actual is OkResult<TOk, TError> {
   if (actual.isError()) {
     throw new Error(`Expected ok, got error ${actual.error}: ${actual.message}`);
@@ -13,7 +13,7 @@ export function expectOkResult<TOk, TError extends ErrorType>(
 export function expectErrorResult(
   actual: Result<unknown, ErrorType>,
   expectedErrorType: ErrorType,
-  expectedMessage: string
+  expectedMessage: string,
 ): void {
   if (!actual.isError()) {
     throw new Error(`Expected error, but was ok`);
@@ -27,7 +27,7 @@ export function expectErrorResult(
 
 export function expectResultValue<TOk, TError extends ErrorType>(
   result: Result<TOk, TError>,
-  expectedValue: TOk
+  expectedValue: TOk,
 ): void {
   if (expectOkResult(result)) {
     expect(result.value).toEqual<TOk>(expectedValue);

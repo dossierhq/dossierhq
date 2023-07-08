@@ -68,7 +68,7 @@ function Content({
       mode: 'published',
       actions: [new SearchEntityStateActions.SetSampling({ count: 100 }, false)],
     },
-    initializeSearchEntityState
+    initializeSearchEntityState,
   );
 
   usePublishedLoadEntitySearch(searchEntityState, dispatchSearchEntityState);

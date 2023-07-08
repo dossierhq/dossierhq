@@ -25,7 +25,7 @@ export async function publishedSearchEntities(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: PublishedSearchQuery | undefined,
-  paging: Paging | undefined
+  paging: Paging | undefined,
 ): PromiseResult<
   Connection<Edge<PublishedEntity, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -37,7 +37,7 @@ export async function publishedSearchEntities(
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    query?.authKeys
+    query?.authKeys,
   );
   if (authKeysResult.isError()) return authKeysResult;
 
@@ -46,7 +46,7 @@ export async function publishedSearchEntities(
     context,
     query,
     pagingInfo,
-    authKeysResult.value
+    authKeysResult.value,
   );
   if (searchResult.isError()) return searchResult;
 
@@ -58,7 +58,7 @@ export async function publishedSearchEntities(
       context,
       query,
       oppositePagingInfo,
-      authKeysResult.value
+      authKeysResult.value,
     );
     if (oppositeResult.isError()) return oppositeResult;
     hasMoreOppositeDirection = oppositeResult.value.hasMore;
@@ -69,6 +69,6 @@ export async function publishedSearchEntities(
     pagingInfo,
     searchResult.value,
     hasMoreOppositeDirection,
-    decodePublishedEntity
+    decodePublishedEntity,
   );
 }

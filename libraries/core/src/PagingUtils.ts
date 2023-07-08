@@ -8,7 +8,7 @@ export interface PagingInfo {
 }
 
 export function getPagingInfo(
-  paging: Paging | undefined
+  paging: Paging | undefined,
 ): Result<PagingInfo, typeof ErrorType.BadRequest> {
   const result = validatePaging(paging);
   if (result.isError()) {
@@ -52,10 +52,10 @@ function validatePaging(paging?: Paging | undefined) {
 
 export async function* getAllPagesForConnection<
   TEdge extends Edge<unknown, ErrorType>,
-  TError extends ErrorType
+  TError extends ErrorType,
 >(
   initialPaging: Paging | undefined,
-  pageGenerator: (paging: Paging) => PromiseResult<Connection<TEdge> | null, TError>
+  pageGenerator: (paging: Paging) => PromiseResult<Connection<TEdge> | null, TError>,
 ): AsyncGenerator<Result<Connection<TEdge>, TError>, undefined> {
   const currentPaging: Paging = { ...initialPaging };
 
@@ -91,10 +91,10 @@ export async function* getAllPagesForConnection<
 
 export async function* getAllNodesForConnection<
   TEdge extends Edge<unknown, ErrorType>,
-  TError extends ErrorType
+  TError extends ErrorType,
 >(
   initialPaging: Paging | undefined,
-  pageGenerator: (paging: Paging) => PromiseResult<Connection<TEdge> | null, TError>
+  pageGenerator: (paging: Paging) => PromiseResult<Connection<TEdge> | null, TError>,
 ): AsyncGenerator<TEdge['node'], undefined> {
   for await (const pageResult of getAllPagesForConnection(initialPaging, pageGenerator)) {
     if (pageResult.isError()) {

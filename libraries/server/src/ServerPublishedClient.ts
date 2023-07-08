@@ -35,7 +35,7 @@ export function createServerPublishedClient({
 }): PublishedClient {
   async function terminatingMiddleware(
     context: SessionContext,
-    operation: PublishedClientOperation
+    operation: PublishedClientOperation,
   ): Promise<void> {
     switch (operation.name) {
       case PublishedClientOperationName.getEntities: {
@@ -49,8 +49,8 @@ export function createServerPublishedClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            references
-          )
+            references,
+          ),
         );
         break;
       }
@@ -65,8 +65,8 @@ export function createServerPublishedClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            reference
-          )
+            reference,
+          ),
         );
         break;
       }
@@ -91,8 +91,8 @@ export function createServerPublishedClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            query
-          )
+            query,
+          ),
         );
         break;
       }
@@ -110,8 +110,8 @@ export function createServerPublishedClient({
             databaseAdapter,
             context,
             query,
-            options
-          )
+            options,
+          ),
         );
         break;
       }
@@ -129,8 +129,8 @@ export function createServerPublishedClient({
             databaseAdapter,
             context,
             query,
-            paging
-          )
+            paging,
+          ),
         );
         break;
       }

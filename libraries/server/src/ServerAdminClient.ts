@@ -51,7 +51,7 @@ export function createServerAdminClient({
 }): AdminClient {
   async function terminatingMiddleware(
     context: SessionContext,
-    operation: AdminClientOperation
+    operation: AdminClientOperation,
   ): Promise<void> {
     switch (operation.name) {
       case AdminClientOperationName.acquireAdvisoryLock: {
@@ -68,7 +68,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.archiveEntity>;
         resolve(
-          await adminArchiveEntity(databaseAdapter, authorizationAdapter, context, reference)
+          await adminArchiveEntity(databaseAdapter, authorizationAdapter, context, reference),
         );
         break;
       }
@@ -85,8 +85,8 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             entity as AdminEntityCreate,
-            options
-          )
+            options,
+          ),
         );
         break;
       }
@@ -101,8 +101,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            references
-          )
+            references,
+          ),
         );
         break;
       }
@@ -117,8 +117,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            reference
-          )
+            reference,
+          ),
         );
         break;
       }
@@ -128,7 +128,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntityHistory>;
         resolve(
-          await adminGetEntityHistory(databaseAdapter, authorizationAdapter, context, reference)
+          await adminGetEntityHistory(databaseAdapter, authorizationAdapter, context, reference),
         );
         break;
       }
@@ -138,7 +138,12 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.getPublishingHistory>;
         resolve(
-          await adminGetPublishingHistory(databaseAdapter, authorizationAdapter, context, reference)
+          await adminGetPublishingHistory(
+            databaseAdapter,
+            authorizationAdapter,
+            context,
+            reference,
+          ),
         );
         break;
       }
@@ -161,8 +166,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            query
-          )
+            query,
+          ),
         );
         break;
       }
@@ -178,8 +183,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            references
-          )
+            references,
+          ),
         );
         break;
       }
@@ -211,8 +216,8 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             query,
-            options
-          )
+            options,
+          ),
         );
         break;
       }
@@ -228,8 +233,8 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             query,
-            paging
-          )
+            paging,
+          ),
         );
         break;
       }
@@ -239,7 +244,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.unarchiveEntity>;
         resolve(
-          await adminUnarchiveEntity(databaseAdapter, authorizationAdapter, context, reference)
+          await adminUnarchiveEntity(databaseAdapter, authorizationAdapter, context, reference),
         );
         break;
       }
@@ -249,7 +254,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.unpublishEntities>;
         resolve(
-          await adminUnpublishEntities(databaseAdapter, authorizationAdapter, context, references)
+          await adminUnpublishEntities(databaseAdapter, authorizationAdapter, context, references),
         );
         break;
       }
@@ -266,8 +271,8 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             entity as AdminEntityUpdate,
-            options
-          )
+            options,
+          ),
         );
         break;
       }
@@ -298,8 +303,8 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             entity as AdminEntityUpsert,
-            options
-          )
+            options,
+          ),
         );
         break;
       }

@@ -156,13 +156,13 @@ export function ToolbarPlugin({
           $updateToolbar();
           return false;
         },
-        COMMAND_PRIORITY_CRITICAL
+        COMMAND_PRIORITY_CRITICAL,
       ),
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           $updateToolbar();
         });
-      })
+      }),
     );
   }, [editor, $updateToolbar]);
 
@@ -289,7 +289,7 @@ function BlockFormatDropDown({
   fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
 }): JSX.Element {
   const items: { id: BlockTypeName; name: string; icon: IconName }[] = Object.entries(
-    blockTypeToBlockName
+    blockTypeToBlockName,
   )
     .filter(([_blockType, blockConfig]) => {
       if (!fieldSpec.richTextNodes || fieldSpec.richTextNodes.length === 0) return true;
@@ -377,7 +377,7 @@ function BlockFormatDropDown({
           assertExhaustive(item.id);
       }
     },
-    [blockType, editor]
+    [blockType, editor],
   );
 
   return (
@@ -429,7 +429,7 @@ function CodeLanguageDropdown({
         }
       });
     },
-    [editor, selectedElementKey]
+    [editor, selectedElementKey],
   );
 
   return (

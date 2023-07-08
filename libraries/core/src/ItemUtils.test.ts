@@ -124,8 +124,8 @@ describe('isFieldValueEqual', () => {
           stringList: ['string', 'list'],
           entity: { id: 'entity-id-1' },
           entityList: [{ id: 'entity-id-1' }],
-        }
-      )
+        },
+      ),
     ).toBeTruthy());
 
   test('value item!==value item', () =>
@@ -144,8 +144,8 @@ describe('isFieldValueEqual', () => {
           stringList: ['string', 'DIFFERENCE'],
           entity: { id: 'entity-id-1' },
           entityList: [{ id: 'entity-id-1' }],
-        }
-      )
+        },
+      ),
     ).toBeFalsy());
 });
 
@@ -186,7 +186,7 @@ describe('isRichTextXxxNode', () => {
 describe('normalizeEntityFields', () => {
   test('empty Foo', () => {
     expect(
-      normalizeEntityFields(schema, { info: { type: 'Foo' }, fields: {} }).valueOrThrow()
+      normalizeEntityFields(schema, { info: { type: 'Foo' }, fields: {} }).valueOrThrow(),
     ).toMatchSnapshot();
   });
 
@@ -195,8 +195,8 @@ describe('normalizeEntityFields', () => {
       normalizeEntityFields(
         schema,
         { info: { type: 'Foo' }, fields: {} },
-        { excludeOmitted: true }
-      ).valueOrThrow()
+        { excludeOmitted: true },
+      ).valueOrThrow(),
     ).toEqual({});
   });
 });
@@ -208,7 +208,7 @@ describe('normalizeValueItem', () => {
 
   test('TwoStrings with empty strings', () => {
     expect(
-      normalizeValueItem(schema, { type: 'TwoStrings', string1: '', string2: null }).valueOrThrow()
+      normalizeValueItem(schema, { type: 'TwoStrings', string1: '', string2: null }).valueOrThrow(),
     ).toMatchSnapshot();
   });
 });
@@ -216,26 +216,26 @@ describe('normalizeValueItem', () => {
 describe('normalizeFieldValue()', () => {
   test('"" => null', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), '')).toEqual(
-      null
+      null,
     );
   });
 
   test('[] => null', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), [])).toBe(
-      null
+      null,
     );
   });
 
   test('[string, ""] => [string]', () => {
     expect(
-      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), ['hello', ''])
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), ['hello', '']),
     ).toEqual(['hello']);
   });
 
   test('[string] => [string] (no change)', () => {
     const fieldValue = ['hello', 'world'];
     expect(
-      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), fieldValue)
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), fieldValue),
     ).toBe(fieldValue);
   });
 
@@ -245,7 +245,7 @@ describe('normalizeFieldValue()', () => {
         type: 'TwoStrings',
         string1: 'Hello',
         string2: '',
-      })
+      }),
     ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null });
   });
 
@@ -255,7 +255,7 @@ describe('normalizeFieldValue()', () => {
         type: 'TwoStrings',
         string1: undefined,
         // no string2
-      })
+      }),
     ).toEqual({ type: 'TwoStrings', string1: null, string2: null });
   });
 
@@ -266,25 +266,25 @@ describe('normalizeFieldValue()', () => {
       string2: 'World',
     };
     expect(
-      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), fieldValue)
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), fieldValue),
     ).toBe(fieldValue);
   });
 
   test('string undefined => null', () => {
     expect(
-      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined)
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined),
     ).toBe(null);
   });
 
   test('string[] undefined => null', () => {
     expect(
-      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined)
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined),
     ).toBe(null);
   });
 
   test('ValueItem: undefined => null', () => {
     expect(
-      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined)
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined),
     ).toBe(null);
   });
 
@@ -293,14 +293,14 @@ describe('normalizeFieldValue()', () => {
       normalizeFieldValue(
         schema,
         getEntityFieldSpec(schema, 'Foo', 'richText'),
-        createRichTextRootNode([createRichTextParagraphNode([])])
-      )
+        createRichTextRootNode([createRichTextParagraphNode([])]),
+      ),
     ).toBe(null);
   });
 
   test('RichText: let invalid rich text pass through (no root)', () => {
     expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'richText'), {})).toEqual(
-      {}
+      {},
     );
   });
 
@@ -308,7 +308,7 @@ describe('normalizeFieldValue()', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'richText'), {
         root: 'hello world',
-      })
+      }),
     ).toEqual({ root: 'hello world' });
   });
 });

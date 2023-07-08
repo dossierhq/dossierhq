@@ -8,7 +8,7 @@ import type {
 export async function managementOptimize(
   _databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  _options: PostgresDatabaseOptimizationOptions
+  _options: PostgresDatabaseOptimizationOptions,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   context.logger.info('Currently no optimizations are implemented for Postgres');
   return ok(undefined);

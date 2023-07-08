@@ -18,17 +18,17 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
   fieldSelector: SchemaFieldSelector,
   items: TItem[],
   selectedIds: string[],
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>,
 ) {
   const [state, dispatch] = useReducer(
     reduceMultipleSelectorState,
     { items, selectedIds },
-    initializeMultipleSelectorState
+    initializeMultipleSelectorState,
   );
 
   useEffect(() => {
     dispatchSchemaEditorState(
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(fieldSelector, state.selectedIds)
+      new SchemaEditorActions.ChangeFieldAllowedValueTypes(fieldSelector, state.selectedIds),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
@@ -62,7 +62,7 @@ export function FieldValueTypeSelector({
     fieldSelector,
     items,
     valueTypes,
-    dispatchSchemaEditorState
+    dispatchSchemaEditorState,
   );
   return (
     <TagInputSelector

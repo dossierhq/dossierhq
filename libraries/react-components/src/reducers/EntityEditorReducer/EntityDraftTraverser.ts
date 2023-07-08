@@ -4,7 +4,7 @@ import type { EntityEditorDraftState } from './EntityEditorReducer.js';
 
 export function* traverseEntityEditorDraft(
   schema: AdminSchema,
-  draftState: EntityEditorDraftState
+  draftState: EntityEditorDraftState,
 ): Generator<ItemTraverseNode<AdminSchema>> {
   if (!draftState.draft) {
     return;

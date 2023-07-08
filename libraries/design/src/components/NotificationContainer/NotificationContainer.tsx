@@ -46,7 +46,7 @@ export function NotificationContainer({ children }: NotificationContainerProps) 
         { id, hideHandle, ...notification },
       ]);
     },
-    [hideNotification]
+    [hideNotification],
   );
 
   return (

@@ -48,7 +48,7 @@ const AUTH_KEYS_HEADER = {
 };
 
 export function createBackendAdminClient(
-  pipeline: AdminClientMiddleware<BackendContext>[] = []
+  pipeline: AdminClientMiddleware<BackendContext>[] = [],
 ): AdminClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
   return createBaseAdminClient<BackendContext>({
@@ -62,7 +62,7 @@ export function createBackendAdminClient(
 }
 
 export function createBackendPublishedClient(
-  pipeline: PublishedClientMiddleware<BackendContext>[] = []
+  pipeline: PublishedClientMiddleware<BackendContext>[] = [],
 ): PublishedClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
   return createBasePublishedClient<BackendContext>({
@@ -77,7 +77,7 @@ export function createBackendPublishedClient(
 
 async function terminatingAdminMiddleware(
   _context: BackendContext,
-  operation: AdminClientOperation
+  operation: AdminClientOperation,
 ): Promise<void> {
   let response: Response;
   if (operation.modifies) {
@@ -90,9 +90,9 @@ async function terminatingAdminMiddleware(
     response = await fetch(
       `/api/admin/${operation.name}?${encodeObjectToURLSearchParams(
         { args: operation.args },
-        { keepEmptyObjects: true }
+        { keepEmptyObjects: true },
       )}`,
-      { method: 'GET', headers: AUTH_KEYS_HEADER }
+      { method: 'GET', headers: AUTH_KEYS_HEADER },
     );
   }
 
@@ -102,14 +102,14 @@ async function terminatingAdminMiddleware(
 
 async function terminatingPublishedMiddleware(
   _context: BackendContext,
-  operation: PublishedClientOperation
+  operation: PublishedClientOperation,
 ): Promise<void> {
   const response = await fetch(
     `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
       { args: operation.args },
-      { keepEmptyObjects: true }
+      { keepEmptyObjects: true },
     )}`,
-    { method: 'GET', headers: AUTH_KEYS_HEADER }
+    { method: 'GET', headers: AUTH_KEYS_HEADER },
   );
 
   const result = await getBodyAsJsonResult(response);
@@ -155,7 +155,7 @@ export class TestContextAdapter
     return null;
   }
   renderPublishedRichTextValueItemDisplay(
-    _props: RichTextValueItemDisplayProps
+    _props: RichTextValueItemDisplayProps,
   ): JSX.Element | null {
     return null;
   }
@@ -169,7 +169,7 @@ export class TestContextAdapter
 
 export async function ensureManyBarEntities(
   adminClient: AdminClient,
-  entityCount: number
+  entityCount: number,
 ): PromiseResult<void, ErrorType> {
   const totalCountResult = await adminClient.getTotalCount({ entityTypes: ['Bar'] });
   if (totalCountResult.isError()) return totalCountResult;

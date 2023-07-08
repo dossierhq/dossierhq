@@ -75,7 +75,7 @@ Table.Header = ({ clickable, narrow, order, onClick, children }: TableHeaderProp
   const className = toClassName(
     (clickable || order !== undefined) && 'is-clickable',
     narrow && 'is-narrow',
-    order !== undefined && 'is-order-header'
+    order !== undefined && 'is-order-header',
   );
   const iconName = order === 'asc' ? 'orderAsc' : order === 'desc' ? 'orderDesc' : null;
   return (

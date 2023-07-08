@@ -59,7 +59,7 @@ export function AdminEntityList({
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminQueryOrder.createdAt
+                AdminQueryOrder.createdAt,
               )
             }
           >
@@ -73,7 +73,7 @@ export function AdminEntityList({
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminQueryOrder.updatedAt
+                AdminQueryOrder.updatedAt,
               )
             }
           >
@@ -159,7 +159,7 @@ function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
   order: AdminQueryOrder | PublishedQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: AdminQueryOrder | PublishedQueryOrder
+  headerOrder: AdminQueryOrder | PublishedQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {
@@ -174,7 +174,7 @@ function handleHeaderClick(
   dispatchSearchEntityState(
     new SearchEntityStateActions.SetQuery(
       { order: headerOrder, reverse: newReverse },
-      { partial: true, resetPagingIfModifying: true }
-    )
+      { partial: true, resetPagingIfModifying: true },
+    ),
   );
 }

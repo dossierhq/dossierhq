@@ -22,7 +22,7 @@ export default function TypographyExample({ textStyle, loremIpsum }: Props): JSX
         });
       }
     },
-    [setFontStyles]
+    [setFontStyles],
   );
 
   return (

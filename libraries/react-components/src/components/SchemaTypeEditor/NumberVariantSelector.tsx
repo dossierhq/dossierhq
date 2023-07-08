@@ -30,7 +30,7 @@ export function NumberVariantSelector({
         disabled={disabled}
         onChange={() => {
           dispatchSchemaEditorState(
-            new SchemaEditorActions.ChangeFieldInteger(fieldSelector, false)
+            new SchemaEditorActions.ChangeFieldInteger(fieldSelector, false),
           );
         }}
       >
@@ -43,7 +43,7 @@ export function NumberVariantSelector({
         disabled={disabled}
         onChange={() => {
           dispatchSchemaEditorState(
-            new SchemaEditorActions.ChangeFieldInteger(fieldSelector, true)
+            new SchemaEditorActions.ChangeFieldInteger(fieldSelector, true),
           );
         }}
       >

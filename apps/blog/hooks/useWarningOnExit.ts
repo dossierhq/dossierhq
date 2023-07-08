@@ -22,7 +22,7 @@ function getHistory() {
 
 export function useWarningOnExit(
   message: string,
-  shouldWarn: boolean | ((fromUrl: string, toUrl: string) => boolean)
+  shouldWarn: boolean | ((fromUrl: string, toUrl: string) => boolean),
 ) {
   const router = useRouter();
   const lastHistory = useRef(getHistory());

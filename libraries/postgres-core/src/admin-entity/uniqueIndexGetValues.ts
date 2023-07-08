@@ -12,7 +12,7 @@ import { queryMany } from '../QueryFunctions.js';
 export async function adminEntityUniqueIndexGetValues(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  entity: DatabaseResolvedEntityReference
+  entity: DatabaseResolvedEntityReference,
 ): PromiseResult<DatabaseAdminEntityUniqueIndexValue[], typeof ErrorType.Generic> {
   const result = await queryMany<
     Pick<UniqueIndexValuesTable, 'index_name' | 'value' | 'latest' | 'published'>
@@ -21,7 +21,7 @@ export async function adminEntityUniqueIndexGetValues(
     context,
     buildPostgresSqlQuery(({ sql }) => {
       sql`SELECT index_name, value, latest, published FROM unique_index_values WHERE entities_id = ${entity.entityInternalId}`;
-    })
+    }),
   );
   if (result.isError()) return result;
 
@@ -31,6 +31,6 @@ export async function adminEntityUniqueIndexGetValues(
       value: row.value,
       latest: row.latest,
       published: row.published,
-    }))
+    })),
   );
 }

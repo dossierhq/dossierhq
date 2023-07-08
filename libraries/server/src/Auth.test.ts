@@ -14,7 +14,7 @@ describe('Auth authCreateSession', () => {
     const context = createMockTransactionContext();
 
     databaseAdapter.authCreateSession.mockReturnValueOnce(
-      Promise.resolve(ok({ principalEffect: 'created', session: { subjectId: '1-2-3' } }))
+      Promise.resolve(ok({ principalEffect: 'created', session: { subjectId: '1-2-3' } })),
     );
     const result = await authCreateSession(databaseAdapter, context, 'test', 'hello');
 
@@ -44,7 +44,7 @@ describe('Auth verifyAuthKeysFormat', () => {
     expectErrorResult(
       verifyAuthKeysFormat(['none', '']),
       ErrorType.BadRequest,
-      'No authKey provided'
+      'No authKey provided',
     );
   });
 
@@ -52,7 +52,7 @@ describe('Auth verifyAuthKeysFormat', () => {
     expectErrorResult(
       verifyAuthKeysFormat(['none', ' subject']),
       ErrorType.BadRequest,
-      'Invalid authKey ( subject), can’t start with whitespace'
+      'Invalid authKey ( subject), can’t start with whitespace',
     );
   });
 
@@ -60,7 +60,7 @@ describe('Auth verifyAuthKeysFormat', () => {
     expectErrorResult(
       verifyAuthKeysFormat(['none', 'subject ']),
       ErrorType.BadRequest,
-      'Invalid authKey (subject ), can’t end with whitespace'
+      'Invalid authKey (subject ), can’t end with whitespace',
     );
   });
 
@@ -68,7 +68,7 @@ describe('Auth verifyAuthKeysFormat', () => {
     expectErrorResult(
       verifyAuthKeysFormat(['none', 'sub,ject']),
       ErrorType.BadRequest,
-      'Invalid authKey (sub,ject), can’t contain comma'
+      'Invalid authKey (sub,ject), can’t contain comma',
     );
   });
 });

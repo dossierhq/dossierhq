@@ -9,7 +9,7 @@ type FetcherData = AdminSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminSchema(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
@@ -17,7 +17,7 @@ export function useAdminSchema(
   const fetcher = useCallback((_action: FetcherKey) => fetchSchema(adminClient), [adminClient]);
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(
     CACHE_KEYS.adminSchema,
-    fetcher
+    fetcher,
   );
 
   // useDebugLogChangedValues('useAdminSchema changed values', { data, error });
@@ -26,7 +26,7 @@ export function useAdminSchema(
 }
 
 async function fetchSchema(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>
+  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
 ): Promise<FetcherData> {
   const result = await adminClient.getSchemaSpecification();
   if (result.isError()) {

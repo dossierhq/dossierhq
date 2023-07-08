@@ -4,7 +4,7 @@ import type { EntityDisplayState, EntityDisplayStateAction } from './EntityDispl
 import { EntityDisplayActions, initializeEntityDisplayState } from './EntityDisplayReducer.js';
 
 export function initializeEntityDisplayStateFromUrlQuery(
-  urlSearchParams: Readonly<URLSearchParams> | undefined
+  urlSearchParams: Readonly<URLSearchParams> | undefined,
 ): EntityDisplayState {
   const entityIds = urlQueryToEntityIds(urlSearchParams);
   return initializeEntityDisplayState(entityIds);
@@ -14,7 +14,7 @@ export function useSynchronizeUrlQueryAndEntityDisplayState(
   urlSearchParams: Readonly<URLSearchParams> | undefined,
   onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
   entityDisplayState: EntityDisplayState,
-  dispatchEntityDisplayState: Dispatch<EntityDisplayStateAction>
+  dispatchEntityDisplayState: Dispatch<EntityDisplayStateAction>,
 ) {
   const { entityIds } = entityDisplayState;
 
@@ -35,7 +35,7 @@ export function useSynchronizeUrlQueryAndEntityDisplayState(
     entityIds.forEach((id) => dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(id)));
     if (entityIds.length > 0) {
       dispatchEntityDisplayState(
-        new EntityDisplayActions.SetActiveEntity(entityIds[0], false, false)
+        new EntityDisplayActions.SetActiveEntity(entityIds[0], false, false),
       );
     }
   }, [dispatchEntityDisplayState, urlSearchParams]);

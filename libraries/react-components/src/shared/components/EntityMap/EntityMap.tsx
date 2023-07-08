@@ -49,10 +49,10 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
       dispatchSearchEntityState(
         new SearchEntityStateActions.SetQuery(
           { boundingBox },
-          { partial: true, resetPagingIfModifying: true }
-        )
+          { partial: true, resetPagingIfModifying: true },
+        ),
       ),
-    [dispatchSearchEntityState]
+    [dispatchSearchEntityState],
   );
 
   return (
@@ -74,7 +74,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
             }
             const locations = extractEntityLocations(schema, entity);
             return locations.map((location, locationIndex) =>
-              renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location)
+              renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location),
             );
           })
         : null}
@@ -85,7 +85,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
 
 function extractEntityLocations(
   schema: AdminSchema | PublishedSchema,
-  entity: AdminEntity | PublishedEntity
+  entity: AdminEntity | PublishedEntity,
 ) {
   const locations: Location[] = [];
   for (const node of traverseEntity(schema, ['entity'], entity)) {

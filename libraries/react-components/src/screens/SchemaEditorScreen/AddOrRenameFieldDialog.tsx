@@ -69,7 +69,7 @@ export function AddOrRenameFieldDialog({
       }
       onClose();
     },
-    [dispatchSchemaEditorState, name, onClose, selector]
+    [dispatchSchemaEditorState, name, onClose, selector],
   );
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export function AddOrRenameFieldDialog({
 function validateName(
   schemaEditorState: SchemaEditorState,
   selector: SchemaFieldSelector | SchemaTypeSelector,
-  name: string
+  name: string,
 ): DialogStatus {
   if (!name) return DialogStatus.empty;
   if (!name.match(CAMEL_CASE_PATTERN)) {
@@ -144,7 +144,7 @@ function DialogContent({
         onEnterKeyPress();
       }
     },
-    [onEnterKeyPress]
+    [onEnterKeyPress],
   );
 
   const isRename = 'fieldName' in selector;

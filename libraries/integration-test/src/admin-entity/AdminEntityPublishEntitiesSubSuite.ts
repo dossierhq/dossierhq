@@ -76,7 +76,7 @@ async function publishEntities_minimal({ server }: AdminEntityTestContext) {
 async function publishEntities_authKeySubject({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -146,7 +146,7 @@ async function publishEntities_twoEntitiesReferencingEachOther({ server }: Admin
   } = create1Result.value;
 
   const create2Result = await client.createEntity(
-    copyEntity(REFERENCES_CREATE, { fields: { any: { id: id1 } } })
+    copyEntity(REFERENCES_CREATE, { fields: { any: { id: id1 } } }),
   );
   assertOkResult(create2Result);
   const {
@@ -236,7 +236,7 @@ async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
     },
   } = (
     await client.createEntity(
-      copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: draftId } } })
+      copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: draftId } } }),
     )
   ).valueOrThrow();
 
@@ -250,7 +250,7 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
   const client = adminClientForMainPrincipal(server);
   const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
   const createResult = await client.createEntity(
-    copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyValueItem } })
+    copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyValueItem } }),
   );
   const {
     entity: {
@@ -292,7 +292,7 @@ async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext
   assertErrorResult(
     publishResult,
     ErrorType.NotFound,
-    'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
   );
 }
 
@@ -304,14 +304,14 @@ async function publishEntities_errorDuplicateIds({ server }: AdminEntityTestCont
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
   );
 }
 
 async function publishEntities_errorMissingRequiredTitle({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } })
+    copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } }),
   );
   assertOkResult(createResult);
   const {
@@ -325,13 +325,13 @@ async function publishEntities_errorMissingRequiredTitle({ server }: AdminEntity
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `entity(${id}).fields.title: Required field is empty`
+    `entity(${id}).fields.title: Required field is empty`,
   );
 }
 
 async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestContext) {
   const createResult = await adminClientForMainPrincipal(server).createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
   assertOkResult(createResult);
   const {
@@ -347,7 +347,7 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
   assertErrorResult(
     publishResult,
     ErrorType.NotAuthorized,
-    `entity(${id}): Wrong authKey provided`
+    `entity(${id}): Wrong authKey provided`,
   );
 }
 
@@ -355,7 +355,7 @@ async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTe
   const client = adminClientForMainPrincipal(server);
   const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
   const createResult = await client.createEntity(
-    copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyValueItem } })
+    copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyValueItem } }),
   );
   assertOkResult(createResult);
   const {
@@ -369,7 +369,7 @@ async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTe
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `entity(${id}).fields.any: Value item of type AdminOnlyValue is adminOnly`
+    `entity(${id}).fields.any: Value item of type AdminOnlyValue is adminOnly`,
   );
 }
 
@@ -398,14 +398,14 @@ async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntity
             ]),
           ]),
         },
-      })
+      }),
     )
   ).valueOrThrow();
   const publishResult = await client.publishEntities([{ id: richTextId, version }]);
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `${richTextId}: References unpublished entities: ${titleOnlyId}`
+    `${richTextId}: References unpublished entities: ${titleOnlyId}`,
   );
 }
 
@@ -429,7 +429,7 @@ async function publishEntities_errorPublishInvalidEntity({ server }: AdminEntity
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `entity(${entity.id}).fields.matchPattern: Value does not match pattern fooBarBaz`
+    `entity(${entity.id}).fields.matchPattern: Value does not match pattern fooBarBaz`,
   );
 }
 
@@ -445,6 +445,6 @@ async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `entity(${entity.id}): Already published version is invalid`
+    `entity(${entity.id}): Already published version is invalid`,
   );
 }

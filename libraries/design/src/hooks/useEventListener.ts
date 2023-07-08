@@ -4,7 +4,7 @@ export function useEventListener(
   target: EventTarget,
   type: string,
   listener: EventListenerOrEventListenerObject,
-  options?: boolean | AddEventListenerOptions
+  options?: boolean | AddEventListenerOptions,
 ): void {
   const listenerRef = useRef<typeof listener | null>(null);
   listenerRef.current = listener;

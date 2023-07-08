@@ -19,12 +19,12 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
   referenceOrLink: 'reference' | 'link',
   items: TItem[],
   selectedIds: string[],
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>,
 ) {
   const [state, dispatch] = useReducer(
     reduceMultipleSelectorState,
     { items, selectedIds },
-    initializeMultipleSelectorState
+    initializeMultipleSelectorState,
   );
 
   useEffect(() => {
@@ -33,8 +33,8 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
         ? new SchemaEditorActions.ChangeFieldAllowedEntityTypes(fieldSelector, state.selectedIds)
         : new SchemaEditorActions.ChangeFieldAllowedLinkEntityTypes(
             fieldSelector,
-            state.selectedIds
-          )
+            state.selectedIds,
+          ),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
@@ -71,7 +71,7 @@ export function FieldEntityTypeSelector({
     referenceOrLink,
     items,
     entityTypes,
-    dispatchSchemaEditorState
+    dispatchSchemaEditorState,
   );
   return (
     <TagInputSelector

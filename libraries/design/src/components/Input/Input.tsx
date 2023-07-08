@@ -47,7 +47,7 @@ export function Input({
           'input',
           toColorClassName(color),
           textStyle && toTextStyleClassName(textStyle),
-          onClick && 'is-clickable'
+          onClick && 'is-clickable',
         )}
         type={type ?? 'text'}
         {...{ min, max, step, placeholder, readOnly, value, onChange, onKeyDown, onClick }}

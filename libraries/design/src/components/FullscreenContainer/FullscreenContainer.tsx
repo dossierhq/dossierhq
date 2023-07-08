@@ -95,7 +95,7 @@ export const FullscreenContainer: FullscreenContainerComponent = ({
       className={toClassName(
         'is-flex is-flex-direction-column',
         toSizeClassName({ height: height ?? '100vh' }),
-        card && 'is-card-container'
+        card && 'is-card-container',
       )}
     >
       {children}
@@ -126,7 +126,7 @@ FullscreenContainer.Row = ({
     sticky && !addStickyFullWidthWrapper && 'is-sticky-row',
     toSizeClassName({ width, height }),
     toFlexContainerClassName(layoutProps),
-    toSpacingClassName(layoutProps)
+    toSpacingClassName(layoutProps),
   );
 
   if (addStickyFullWidthWrapper) {
@@ -188,7 +188,7 @@ FullscreenContainer.Column = ({
     'column',
     width && COLUMN_WIDTHS[width],
     toFlexContainerClassName({ ...props, flexDirection }),
-    toSpacingClassName(props)
+    toSpacingClassName(props),
   );
   return <div className={className}>{children}</div>;
 };
@@ -206,7 +206,7 @@ FullscreenContainer.ScrollableColumn = ({
     'column p-0',
     width && COLUMN_WIDTHS[width],
     toFlexContainerClassName({ ...props, flexDirection }),
-    toSpacingClassName(props)
+    toSpacingClassName(props),
   );
   return (
     <Scrollable

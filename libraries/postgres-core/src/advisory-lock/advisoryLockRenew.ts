@@ -10,7 +10,7 @@ export async function advisoryLockRenew(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   name: string,
-  handle: number
+  handle: number,
 ): PromiseResult<
   { acquiredAt: Date; renewedAt: Date },
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -22,7 +22,7 @@ export async function advisoryLockRenew(
   const result = await queryNoneOrOne<Pick<AdvisoryLocksTable, 'acquired_at' | 'renewed_at'>>(
     databaseAdapter,
     context,
-    query
+    query,
   );
   if (result.isError()) return result;
 

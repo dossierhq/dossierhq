@@ -41,7 +41,7 @@ export const CACHE_KEYS = {
   },
   publishedSampleEntities(
     query: PublishedQuery | undefined,
-    options: EntitySamplingOptions | undefined
+    options: EntitySamplingOptions | undefined,
   ) {
     return ['dossierhq/usePublishedSampleEntities', query, options] as const;
   },
@@ -70,7 +70,7 @@ export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSch
 
 export function updateCacheEntity<T extends AdminEntity<string, object> = AdminEntity>(
   mutate: ScopedMutator,
-  entity: T
+  entity: T,
 ) {
   const key = CACHE_KEYS.adminEntity({ id: entity.id });
   mutate(key, entity);
@@ -78,7 +78,7 @@ export function updateCacheEntity<T extends AdminEntity<string, object> = AdminE
 
 export function updateCacheEntityInfo<TEffect>(
   mutate: ScopedMutator,
-  payload: AdminEntityPublishingPayload<TEffect>
+  payload: AdminEntityPublishingPayload<TEffect>,
 ) {
   const key = CACHE_KEYS.adminEntity({ id: payload.id });
   mutate(key, (entity: AdminEntity | undefined) => {

@@ -19,7 +19,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
   database: Database,
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
-  errorConverter: ErrorConverter<TRow[], TError> | undefined
+  errorConverter: ErrorConverter<TRow[], TError> | undefined,
 ): PromiseResult<TRow[], TError | typeof ErrorType.Generic> {
   const { text, values } =
     typeof queryOrQueryAndValues === 'string'
@@ -61,12 +61,12 @@ async function queryCommon<TRow, TError extends ErrorType>(
 }
 
 export async function queryRun<
-  TError extends ErrorType | typeof ErrorType.Generic = typeof ErrorType.Generic
+  TError extends ErrorType | typeof ErrorType.Generic = typeof ErrorType.Generic,
 >(
   database: Database,
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<number, TError>
+  errorConverter?: ErrorConverter<number, TError>,
 ): PromiseResult<number, TError | typeof ErrorType.Generic> {
   const { text, values } =
     typeof queryOrQueryAndValues === 'string'
@@ -111,13 +111,13 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof Err
   database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<TRow, TError | typeof ErrorType.Generic>
+  errorConverter?: ErrorConverter<TRow, TError | typeof ErrorType.Generic>,
 ): PromiseResult<TRow | null, TError | typeof ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
     database,
     context,
     query,
-    errorConverter as ErrorConverter<TRow[], TError>
+    errorConverter as ErrorConverter<TRow[], TError>,
   );
   if (result.isError()) {
     return result;
@@ -136,13 +136,13 @@ export async function queryOne<TRow, TError extends ErrorType = typeof ErrorType
   database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<TRow, TError | typeof ErrorType.Generic>
+  errorConverter?: ErrorConverter<TRow, TError | typeof ErrorType.Generic>,
 ): PromiseResult<TRow, TError | typeof ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
     database,
     context,
     query,
-    errorConverter as ErrorConverter<TRow[], TError>
+    errorConverter as ErrorConverter<TRow[], TError>,
   );
   if (result.isError()) {
     return result;
@@ -158,13 +158,13 @@ export async function queryMany<TRow, TError extends ErrorType = typeof ErrorTyp
   database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<TRow, TError | typeof ErrorType.Generic>
+  errorConverter?: ErrorConverter<TRow, TError | typeof ErrorType.Generic>,
 ): PromiseResult<TRow[], TError | typeof ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
     database,
     context,
     query,
-    errorConverter as ErrorConverter<TRow[], TError>
+    errorConverter as ErrorConverter<TRow[], TError>,
   );
   return result;
 }

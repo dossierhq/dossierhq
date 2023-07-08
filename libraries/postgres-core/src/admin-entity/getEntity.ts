@@ -19,7 +19,7 @@ import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 export async function adminGetEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference | EntityVersionReference | UniqueIndexReference
+  reference: EntityReference | EntityVersionReference | UniqueIndexReference,
 ): PromiseResult<
   DatabaseAdminEntityGetOnePayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -45,7 +45,7 @@ export async function adminGetEntity(
 async function getEntityWithLatestVersion(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityReference | UniqueIndexReference
+  reference: EntityReference | UniqueIndexReference,
 ) {
   const { sql, query } = createPostgresSqlQuery();
   sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data`;
@@ -81,7 +81,7 @@ async function getEntityWithLatestVersion(
 async function getEntityWithVersion(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: EntityVersionReference
+  reference: EntityVersionReference,
 ) {
   const result = await queryNoneOrOne<
     Pick<

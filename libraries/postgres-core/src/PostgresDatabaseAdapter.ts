@@ -69,7 +69,7 @@ export interface PostgresDatabaseAdapter {
   query<R>(
     transaction: PostgresTransaction | null,
     query: string,
-    values: unknown[] | undefined
+    values: unknown[] | undefined,
   ): Promise<PostgresQueryResult<R>>;
 
   isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
@@ -79,7 +79,7 @@ export interface PostgresDatabaseAdapter {
 }
 
 export function createPostgresDatabaseAdapterAdapter(
-  databaseAdapter: PostgresDatabaseAdapter
+  databaseAdapter: PostgresDatabaseAdapter,
 ): DatabaseAdapter<PostgresDatabaseOptimizationOptions> {
   return {
     adminEntityArchivingGetEntityInfo: (...args) =>

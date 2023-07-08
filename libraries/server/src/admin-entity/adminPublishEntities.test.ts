@@ -18,7 +18,7 @@ describe('Admin adminPublishEntities', () => {
     const now = new Date();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
     );
     databaseAdapter.adminEntityPublishGetVersionInfo.mockReturnValueOnce(
       Promise.resolve(
@@ -35,8 +35,8 @@ describe('Admin adminPublishEntities', () => {
           validPublished: null,
           updatedAt: new Date('2021-08-17T07:51:25.56Z'),
           fieldValues: { title: 'Title' },
-        })
-      )
+        }),
+      ),
     );
     databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(ok({ updatedAt: now }));
     databaseAdapter.adminEntityGetReferenceEntitiesInfo.mockResolvedValueOnce(ok([]));
@@ -50,7 +50,7 @@ describe('Admin adminPublishEntities', () => {
       authorizationAdapter,
       databaseAdapter,
       context,
-      [{ id: '123', version: 5 }]
+      [{ id: '123', version: 5 }],
     );
 
     expectResultValue(result, [

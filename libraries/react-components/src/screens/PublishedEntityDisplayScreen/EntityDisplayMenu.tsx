@@ -47,7 +47,7 @@ function MenuItem({
   const handleItemClick = useCallback(
     () =>
       dispatchEntityDisplayState(new EntityDisplayActions.SetActiveEntity(entityId, false, true)),
-    [dispatchEntityDisplayState, entityId]
+    [dispatchEntityDisplayState, entityId],
   );
 
   const handleDeleteClick = useCallback(
@@ -55,7 +55,7 @@ function MenuItem({
       event.stopPropagation(); // otherwise it will try to activate the entity after delete
       dispatchEntityDisplayState(new EntityDisplayActions.RemoveEntity(entityId));
     },
-    [dispatchEntityDisplayState, entityId]
+    [dispatchEntityDisplayState, entityId],
   );
 
   if (!entity) return null;

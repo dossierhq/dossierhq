@@ -16,7 +16,7 @@ export type BunSqliteDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizatio
 export async function createBunSqliteAdapter(
   context: Context,
   database: Database,
-  options: SqliteDatabaseOptions
+  options: SqliteDatabaseOptions,
 ): PromiseResult<BunSqliteDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {

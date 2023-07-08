@@ -22,7 +22,7 @@ export async function adminUpsertEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpsert,
-  options: AdminEntityMutationOptions | undefined
+  options: AdminEntityMutationOptions | undefined,
 ): PromiseResult<
   AdminEntityUpsertPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -37,7 +37,7 @@ export async function adminUpsertEntity(
       databaseAdapter,
       context,
       entity,
-      options
+      options,
     );
   } else if (nameResult.isError()) {
     return nameResult as ErrorResult<unknown, typeof ErrorType.Generic>;
@@ -56,7 +56,7 @@ export async function adminUpsertEntity(
     databaseAdapter,
     context,
     entityUpdate,
-    options
+    options,
   );
   if (updateResult.isOk()) {
     return ok(updateResult.value);
@@ -77,7 +77,7 @@ async function createNewEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpsert,
-  options: AdminEntityMutationOptions | undefined
+  options: AdminEntityMutationOptions | undefined,
 ): PromiseResult<
   AdminEntityUpsertPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -89,7 +89,7 @@ async function createNewEntity(
     databaseAdapter,
     context,
     entity,
-    options
+    options,
   );
   if (createResult.isOk()) {
     return createResult.map((value) => value);
@@ -101,7 +101,7 @@ async function createNewEntity(
       databaseAdapter,
       context,
       entity,
-      options
+      options,
     );
   } else if (
     createResult.isErrorType(ErrorType.BadRequest) ||

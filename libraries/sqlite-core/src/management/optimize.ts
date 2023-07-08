@@ -6,7 +6,7 @@ import type { SqliteDatabaseOptimizationOptions } from '../SqliteDatabaseAdapter
 export async function managementOptimize(
   database: Database,
   context: TransactionContext,
-  options: SqliteDatabaseOptimizationOptions
+  options: SqliteDatabaseOptimizationOptions,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { logger } = context;
 
@@ -16,7 +16,7 @@ export async function managementOptimize(
     const result = await queryRun(
       database,
       context,
-      "INSERT INTO entities_latest_fts(entities_latest_fts) VALUES('optimize')"
+      "INSERT INTO entities_latest_fts(entities_latest_fts) VALUES('optimize')",
     );
     if (result.isError()) return result;
     const duration = performance.now() - start;
@@ -29,7 +29,7 @@ export async function managementOptimize(
     const result = await queryRun(
       database,
       context,
-      "INSERT INTO entities_published_fts(entities_published_fts) VALUES('optimize')"
+      "INSERT INTO entities_published_fts(entities_published_fts) VALUES('optimize')",
     );
     if (result.isError()) return result;
     const duration = performance.now() - start;

@@ -39,7 +39,7 @@ interface ButtonComponent extends FunctionComponent<ButtonProps> {
 const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
   (
     { className, iconLeft, iconRight, color, style, title, children, ...props }: ButtonProps,
-    ref
+    ref,
   ) => {
     const realClassName = toClassName('button', toColorClassName(color), className);
     const content = (
@@ -78,7 +78,7 @@ const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
         {content}
       </button>
     );
-  }
+  },
 );
 ButtonWithRef.displayName = 'Button';
 
@@ -91,7 +91,7 @@ Button.Group = ({ centered, hasAddons, noBottomMargin, children }: ButtonGroupPr
         'buttons',
         centered && 'is-centered',
         hasAddons && 'has-addons',
-        noBottomMargin && 'mb-0'
+        noBottomMargin && 'mb-0',
       )}
     >
       {children}

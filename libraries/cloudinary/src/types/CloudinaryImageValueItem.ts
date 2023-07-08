@@ -19,13 +19,13 @@ export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryI
 export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage
+  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
 ): valueItem is AdminCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
 
 export function isPublishedCloudinaryImage(
-  valueItem: ValueItem<string, object> | PublishedCloudinaryImage
+  valueItem: ValueItem<string, object> | PublishedCloudinaryImage,
 ): valueItem is PublishedCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }

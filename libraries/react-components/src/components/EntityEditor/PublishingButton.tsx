@@ -45,7 +45,7 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
 
   const [buttonAction, ...dropdownActions] = useMemo(
     () => createPublishActions(entity, entitySpec),
-    [entity, entitySpec]
+    [entity, entitySpec],
   );
 
   if (!buttonAction) {
@@ -81,7 +81,7 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
 
 function createPublishActions(
   entity: AdminEntity | null,
-  entitySpec: AdminEntityTypeSpecification
+  entitySpec: AdminEntityTypeSpecification,
 ) {
   if (!entity) {
     return [];
@@ -137,7 +137,7 @@ async function executeAction(
   action: PublishingActionId,
   entity: AdminEntity,
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  showNotification: (notification: NotificationInfo) => void
+  showNotification: (notification: NotificationInfo) => void,
 ) {
   const reference = { id: entity.id };
   let result: Result<unknown, ErrorType>;

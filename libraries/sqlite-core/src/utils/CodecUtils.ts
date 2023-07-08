@@ -23,7 +23,7 @@ export function resolveAdminEntityInfo(
     EntitiesTable,
     'auth_key' | 'created_at' | 'invalid' | 'name' | 'status' | 'type' | 'updated_at'
   > &
-    Pick<EntityVersionsTable, 'version'>
+    Pick<EntityVersionsTable, 'version'>,
 ) {
   const status = resolveEntityStatus(row.status);
   return {
@@ -39,7 +39,7 @@ export function resolveAdminEntityInfo(
 }
 
 export function resolvePublishedEntityInfo(
-  row: Pick<EntitiesTable, 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'>
+  row: Pick<EntitiesTable, 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'>,
 ) {
   return {
     type: row.type,
@@ -52,7 +52,7 @@ export function resolvePublishedEntityInfo(
 
 export function resolveEntityValidity(
   invalid: EntitiesTable['invalid'],
-  status: AdminEntityStatus
+  status: AdminEntityStatus,
 ) {
   return {
     valid: (invalid & 1) === 0,

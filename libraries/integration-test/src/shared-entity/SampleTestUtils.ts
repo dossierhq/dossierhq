@@ -27,11 +27,11 @@ export function countEntityStatuses(entities: AppAdminEntity[]): Record<AdminEnt
 }
 
 export function assertSampledEntities<
-  TEntity extends AppAdminEntity | AppPublishedEntity | EntityReference
+  TEntity extends AppAdminEntity | AppPublishedEntity | EntityReference,
 >(
   actualResult: Result<EntitySamplingPayload<AppAdminEntity | AppPublishedEntity>, ErrorType>,
   expectedSeed: number,
-  expectedEntities: TEntity[]
+  expectedEntities: TEntity[],
 ) {
   assertOkResult(actualResult);
   const { seed, totalCount, items } = actualResult.value;
@@ -46,7 +46,7 @@ export function assertSampledEntities<
 }
 
 export function assertSampledEntitiesArePartOfExpected<
-  TEntity extends AdminEntity<string, object> | PublishedEntity<string, object>
+  TEntity extends AdminEntity<string, object> | PublishedEntity<string, object>,
 >(actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>, expectedEntities: TEntity[]) {
   assertOkResult(actualResult);
   assertTruthy(actualResult.value.items.length > 0);

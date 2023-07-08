@@ -33,10 +33,10 @@ export async function createNewDatabase(databasePath: string) {
 }
 
 export async function createAdapterAndServer<
-  TAdminClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>>
+  TAdminClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
 >(
   database: Sqlite.Database,
-  schema: AdminSchemaSpecificationUpdate
+  schema: AdminSchemaSpecificationUpdate,
 ): Promise<{
   adminClient: TAdminClient;
   bobAdminClient: TAdminClient;
@@ -82,7 +82,7 @@ export async function createAdapterAndServer<
   });
   const bobAdminClient = server.createAdminClient<TAdminClient>(
     () => bobSession,
-    [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>]
+    [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>],
   );
 
   return { adminClient, bobAdminClient, server };

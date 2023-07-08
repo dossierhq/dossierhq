@@ -10,7 +10,7 @@ export async function publishedEntitySearchTotalCount(
   schema: PublishedSchema,
   context: TransactionContext,
   query: PublishedQuery | undefined,
-  resolvedAuthKeys: ResolvedAuthKey[]
+  resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalPublishedEntitiesQuery(schema, resolvedAuthKeys, query);
   if (sqlQuery.isError()) return sqlQuery;

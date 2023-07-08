@@ -14,7 +14,10 @@ async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filenam
   const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema: null });
 
   const prettierConfig = await prettier.resolveConfig(filename);
-  const formattedSource = prettier.format(sourceCode, { ...prettierConfig, filepath: filename });
+  const formattedSource = await prettier.format(sourceCode, {
+    ...prettierConfig,
+    filepath: filename,
+  });
 
   await writeFile(filename, formattedSource, { encoding: 'utf8' });
 }

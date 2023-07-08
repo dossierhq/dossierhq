@@ -21,14 +21,14 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function usePublishedTotalCount(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
-  query: PublishedQuery | undefined
+  query: PublishedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, query]: FetcherKey) => fetchTotalCount(publishedClient, query),
-    [publishedClient]
+    [publishedClient],
   );
   const { data: totalCount, error: totalCountError } = useSWR<
     FetcherData,
@@ -43,7 +43,7 @@ export function usePublishedTotalCount(
 
 async function fetchTotalCount(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
-  query: FetcherKey[1]
+  query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await publishedClient.getTotalCount(query);
   if (result.isError()) {

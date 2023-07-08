@@ -97,7 +97,7 @@ export function createMockSessionContext({
     resolvedDefaultAuthKeys,
     databaseAdapter,
     resolvedLogger,
-    null
+    null,
   );
 }
 
@@ -169,7 +169,7 @@ export function createMockAuthorizationAdapter(): MockAuthorizationAdapter {
 }
 
 export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
-  databaseAdapter: MockDatabaseAdapter
+  databaseAdapter: MockDatabaseAdapter,
 ): Array<unknown[]> {
   const calls: Array<unknown[]> = [];
   for (const methodName of Object.keys(databaseAdapter).sort() as (keyof MockDatabaseAdapter)[]) {

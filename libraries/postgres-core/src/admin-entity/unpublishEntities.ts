@@ -15,7 +15,7 @@ import { resolveEntityStatus } from '../utils/CodecUtils.js';
 export async function adminEntityUnpublishGetEntitiesInfo(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<
   DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
   typeof ErrorType.NotFound | typeof ErrorType.Generic
@@ -50,7 +50,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
         status: resolveEntityStatus(entityInfo.status),
         updatedAt: entityInfo.updated_at,
       };
-    })
+    }),
   );
 }
 
@@ -58,7 +58,7 @@ export async function adminEntityUnpublishEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   status: AdminEntityStatus,
-  references: DatabaseResolvedEntityReference[]
+  references: DatabaseResolvedEntityReference[],
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'updated_at'>>(
     databaseAdapter,
@@ -76,7 +76,7 @@ export async function adminEntityUnpublishEntities(
       WHERE id = ANY($2)
       RETURNING id, updated_at`,
       values: [status, references.map((it) => it.entityInternalId)],
-    }
+    },
   );
   if (result.isError()) {
     return result;
@@ -87,9 +87,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
       sql`DELETE FROM entity_published_references WHERE from_entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId)
+        references.map(({ entityInternalId }) => entityInternalId),
       )})`;
-    })
+    }),
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
 
@@ -98,9 +98,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
       sql`DELETE FROM entity_published_locations WHERE entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId)
+        references.map(({ entityInternalId }) => entityInternalId),
       )})`;
-    })
+    }),
   );
   if (removeLocationIndexResult.isError()) return removeLocationIndexResult;
 
@@ -109,9 +109,9 @@ export async function adminEntityUnpublishEntities(
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
       sql`DELETE FROM entity_published_value_types WHERE entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId)
+        references.map(({ entityInternalId }) => entityInternalId),
       )})`;
-    })
+    }),
   );
   if (removeValueTypesIndexResult.isError()) return removeValueTypesIndexResult;
 
@@ -120,14 +120,14 @@ export async function adminEntityUnpublishEntities(
       const row = result.value.find((it) => it.id === reference.entityInternalId);
       assertIsDefined(row);
       return { entityInternalId: row.id, updatedAt: row.updated_at };
-    })
+    }),
   );
 }
 
 export async function adminEntityUnpublishGetPublishedReferencedEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  reference: DatabaseResolvedEntityReference
+  reference: DatabaseResolvedEntityReference,
 ): PromiseResult<EntityReference[], typeof ErrorType.Generic> {
   const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(databaseAdapter, context, {
     text: `SELECT e.uuid

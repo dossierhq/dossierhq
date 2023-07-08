@@ -14,7 +14,7 @@ import { getServerConnection, getSessionContextForRequest } from '../../../utils
 
 export default async function adminOperationHandler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ): Promise<void> {
   if (req.method === 'GET' || req.method === 'PUT') {
     await handleRequest(res, async () => {
@@ -29,7 +29,7 @@ export default async function adminOperationHandler(
 }
 
 function getOperationArgs(
-  req: NextApiRequest
+  req: NextApiRequest,
 ): Result<AdminClientJsonOperationArgs, typeof ErrorType.BadRequest> {
   let operationArgs: AdminClientJsonOperationArgs | undefined;
   if (req.method === 'GET') {
@@ -67,7 +67,7 @@ async function executeAdminOperation(req: NextApiRequest, res: NextApiResponse) 
   const result = await executeAdminClientOperationFromJson(
     adminClient,
     operationName,
-    operationResult.value
+    operationResult.value,
   );
 
   const serverTiming = databasePerformance.getServerTimingHeader();

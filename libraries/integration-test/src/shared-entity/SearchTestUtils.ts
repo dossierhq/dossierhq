@@ -54,7 +54,7 @@ export function assertAdminEntityConnectionToMatchSlice(
   sliceStart: number,
   sliceEnd: number | undefined,
   order?: AdminQueryOrder,
-  reverse?: boolean
+  reverse?: boolean,
 ): void {
   const resolvedOrder = order ?? AdminQueryOrder.createdAt;
   const orderExtractor = adminOrderExtract[resolvedOrder];
@@ -80,7 +80,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   sliceStart: number,
   sliceEnd: number | undefined,
   order?: PublishedQueryOrder,
-  reverse?: boolean
+  reverse?: boolean,
 ): void {
   assertOkResult(connectionResult);
   const connection = connectionResult.value;
@@ -89,7 +89,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   }));
 
   const allEntitiesOrdered = [...allEntities].sort(
-    publishedOrderCompare[order ?? PublishedQueryOrder.createdAt]
+    publishedOrderCompare[order ?? PublishedQueryOrder.createdAt],
   );
   if (reverse) allEntitiesOrdered.reverse();
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
@@ -103,7 +103,7 @@ export function assertSearchResultEntities<TItem extends AppAdminEntity | AppPub
     Connection<Edge<TItem, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >,
-  actualEntities: TItem[]
+  actualEntities: TItem[],
 ): asserts result is OkResult<
   Connection<Edge<TItem, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -122,7 +122,7 @@ export function assertSearchResultEntities<TItem extends AppAdminEntity | AppPub
 
 export function assertPageInfoEquals<TEntity extends AppAdminEntity | AppPublishedEntity>(
   connectionResult: Result<Connection<Edge<TEntity, ErrorType>> | null, ErrorType>,
-  { hasNextPage, hasPreviousPage }: { hasNextPage: boolean; hasPreviousPage: boolean }
+  { hasNextPage, hasPreviousPage }: { hasNextPage: boolean; hasPreviousPage: boolean },
 ) {
   assertOkResult(connectionResult);
   assertTruthy(connectionResult.value);
@@ -139,7 +139,7 @@ export function assertPageInfoEquals<TEntity extends AppAdminEntity | AppPublish
 export async function countSearchResultWithEntity(
   client: AppAdminClient,
   query: Parameters<AppAdminClient['searchEntities']>[0],
-  entityId: string
+  entityId: string,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -147,7 +147,7 @@ export async function countSearchResultWithEntity(
 export async function countSearchResultWithEntity(
   client: AppPublishedClient,
   query: Parameters<AppPublishedClient['searchEntities']>[0],
-  entityId: string
+  entityId: string,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -157,7 +157,7 @@ export async function countSearchResultWithEntity(
   query:
     | Parameters<AppAdminClient['searchEntities']>[0]
     | Parameters<AppPublishedClient['searchEntities']>[0],
-  entityId: string
+  entityId: string,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -169,7 +169,7 @@ export async function countSearchResultWithEntity(
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >({ first: 50 }, (currentPaging) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    client.searchEntities(query as any, currentPaging)
+    client.searchEntities(query as any, currentPaging),
   )) {
     if (pageResult.isError()) return pageResult;
     for (const edge of pageResult.value.edges) {
@@ -184,7 +184,7 @@ export async function countSearchResultWithEntity(
 
 export async function countSearchResultStatuses(
   client: AppAdminClient,
-  query: Parameters<AppAdminClient['searchEntities']>[0]
+  query: Parameters<AppAdminClient['searchEntities']>[0],
 ): PromiseResult<
   Record<AdminEntityStatus | 'valid' | 'invalid', number>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -200,7 +200,7 @@ export async function countSearchResultStatuses(
   };
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
-    client.searchEntities(query, currentPaging)
+    client.searchEntities(query, currentPaging),
   )) {
     if (pageResult.isError()) {
       return pageResult;

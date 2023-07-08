@@ -13,7 +13,7 @@ import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
 export async function adminEntityGetMultiple(
   database: Database,
   context: TransactionContext,
-  references: EntityReference[]
+  references: EntityReference[],
 ): PromiseResult<DatabaseAdminEntityGetOnePayload[], typeof ErrorType.Generic> {
   const { addValueList, query, sql } = createSqliteSqlQuery();
   const uuids = addValueList(references.map((it) => it.id));
@@ -44,6 +44,6 @@ export async function adminEntityGetMultiple(
       id: row.uuid,
       resolvedAuthKey: row.resolved_auth_key,
       fieldValues: JSON.parse(row.fields),
-    }))
+    })),
   );
 }

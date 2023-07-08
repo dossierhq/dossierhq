@@ -15,7 +15,7 @@ const secondaryPrincipal = {
 } as const;
 
 export async function sessionForMainPrincipal(
-  server: Server
+  server: Server,
 ): PromiseResult<SessionContext, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const result = await server.createSession({
     ...mainPrincipal,

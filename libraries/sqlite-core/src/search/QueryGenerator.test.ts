@@ -40,8 +40,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -67,8 +67,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ first: 10 }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -94,8 +94,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 999) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -123,10 +123,10 @@ describe('searchAdminEntitiesQuery()', () => {
         undefined,
         resolvePaging(
           { first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 999) },
-          { afterInclusive: true }
+          { afterInclusive: true },
         ),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -153,8 +153,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ last: 10 }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -180,8 +180,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ last: 10, before: toOpaqueCursor(databaseAdapter, 'int', 456) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -209,10 +209,10 @@ describe('searchAdminEntitiesQuery()', () => {
         undefined,
         resolvePaging(
           { last: 10, before: toOpaqueCursor(databaseAdapter, 'int', 456) },
-          { beforeInclusive: true }
+          { beforeInclusive: true },
         ),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -243,8 +243,8 @@ describe('searchAdminEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -276,8 +276,8 @@ describe('searchAdminEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -305,8 +305,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { order: AdminQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -332,8 +332,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { entityTypes: [] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -359,8 +359,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { entityTypes: ['QueryGeneratorFoo'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -387,8 +387,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -416,8 +416,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 543) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -446,8 +446,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { valueTypes: [] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -473,8 +473,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { valueTypes: ['QueryGeneratorValueOne'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -501,8 +501,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -530,8 +530,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -557,8 +557,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.draft] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -585,8 +585,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.published] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -613,8 +613,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.modified] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -641,8 +641,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.withdrawn] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -669,8 +669,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.archived] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -697,8 +697,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.draft, AdminEntityStatus.published] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -726,8 +726,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { status: [AdminEntityStatus.draft, AdminEntityStatus.archived] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -763,8 +763,8 @@ describe('searchAdminEntitiesQuery()', () => {
           ],
         },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -795,8 +795,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { valid: true },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -822,8 +822,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { valid: false },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -849,8 +849,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -877,8 +877,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -912,8 +912,8 @@ describe('searchAdminEntitiesQuery()', () => {
           },
         },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -943,8 +943,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 179, maxLng: -179 } },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -974,8 +974,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { text: 'foo bar' },
         resolvePaging({}),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1005,8 +1005,8 @@ describe('searchAdminEntitiesQuery()', () => {
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 123) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1036,8 +1036,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { order: AdminQueryOrder.createdAt },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1063,8 +1063,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { order: AdminQueryOrder.updatedAt },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1090,8 +1090,8 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         { order: AdminQueryOrder.name },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1116,7 +1116,7 @@ describe('searchAdminEntitiesQuery()', () => {
       schema,
       { entityTypes: ['Invalid'] },
       resolvePaging(undefined),
-      authKeysNone
+      authKeysNone,
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
@@ -1128,7 +1128,7 @@ describe('searchAdminEntitiesQuery()', () => {
       schema,
       { valueTypes: ['Invalid'] },
       resolvePaging(undefined),
-      authKeysNone
+      authKeysNone,
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find value type in query: Invalid');
   });
@@ -1143,8 +1143,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1170,8 +1170,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ first: 10 }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1200,8 +1200,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 999),
         }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1228,8 +1228,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { reverse: true },
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 999) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1256,8 +1256,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ last: 10 }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1283,8 +1283,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         undefined,
         resolvePaging({ last: 10, before: toOpaqueCursor(databaseAdapter, 'int', 456) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1315,8 +1315,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1348,8 +1348,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1381,8 +1381,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
         }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1410,8 +1410,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { order: PublishedQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1437,8 +1437,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { entityTypes: [] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1464,8 +1464,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { entityTypes: ['QueryGeneratorFoo'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1492,8 +1492,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1521,8 +1521,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 543) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1551,8 +1551,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { valueTypes: [] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1578,8 +1578,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { valueTypes: ['QueryGeneratorValueOne'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1606,8 +1606,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1635,8 +1635,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1663,8 +1663,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1698,8 +1698,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           },
         },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1729,8 +1729,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 179, maxLng: -179 } },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1760,8 +1760,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { text: 'foo bar' },
         resolvePaging({}),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1791,8 +1791,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
         resolvePaging({ first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 123) }),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1822,8 +1822,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { order: PublishedQueryOrder.createdAt },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1849,8 +1849,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         { order: PublishedQueryOrder.name },
         resolvePaging(undefined),
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1875,7 +1875,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       schema,
       { entityTypes: ['Invalid'] },
       resolvePaging(undefined),
-      authKeysNone
+      authKeysNone,
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
@@ -1887,7 +1887,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       schema,
       { valueTypes: ['Invalid'] },
       resolvePaging(undefined),
-      authKeysNone
+      authKeysNone,
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find value type in query: Invalid');
   });
@@ -1912,7 +1912,7 @@ describe('sampleAdminEntitiesQuery()', () => {
 
   test('entityType', () => {
     expect(
-      sampleAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, 5, 10, authKeysNone)
+      sampleAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, 5, 10, authKeysNone),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1936,8 +1936,8 @@ describe('sampleAdminEntitiesQuery()', () => {
         { valueTypes: ['QueryGeneratorValueOne'] },
         5,
         10,
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1980,8 +1980,8 @@ describe('samplePublishedEntitiesQuery()', () => {
         { entityTypes: ['QueryGeneratorFoo'] },
         5,
         10,
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2005,8 +2005,8 @@ describe('samplePublishedEntitiesQuery()', () => {
         { valueTypes: ['QueryGeneratorValueOne'] },
         5,
         10,
-        authKeysNone
-      )
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2071,7 +2071,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2102,7 +2102,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('one value type', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] })
+      totalAdminEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2120,7 +2120,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
         valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2227,7 +2227,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
         linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2245,7 +2245,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2264,7 +2264,7 @@ describe('totalAdminEntitiesQuery()', () => {
       totalAdminEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2289,7 +2289,7 @@ describe('totalAdminEntitiesQuery()', () => {
           minLng: 11.62,
           maxLng: 16.25,
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2315,7 +2315,7 @@ describe('totalAdminEntitiesQuery()', () => {
           minLng: 179.11,
           maxLng: -179.88,
         },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2336,7 +2336,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
         text: 'foo bar',
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2381,7 +2381,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('one entity type', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] })
+      totalPublishedEntitiesQuery(schema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2399,7 +2399,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2430,7 +2430,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('one value type', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] })
+      totalPublishedEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2448,7 +2448,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2467,7 +2467,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2485,7 +2485,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2504,7 +2504,7 @@ describe('totalPublishedEntitiesQuery()', () => {
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2524,7 +2524,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 11.62, maxLng: 16.25 },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2545,7 +2545,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 179, maxLng: -179 },
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2566,7 +2566,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         text: 'foo bar',
-      })
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {

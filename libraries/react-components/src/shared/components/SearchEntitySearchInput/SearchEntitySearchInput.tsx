@@ -21,8 +21,8 @@ export function SearchEntitySearchInput({ searchEntityState, dispatchSearchEntit
       dispatchSearchEntityState(
         new SearchEntityStateActions.SetQuery(
           { text: value },
-          { partial: true, resetPagingIfModifying: true }
-        )
+          { partial: true, resetPagingIfModifying: true },
+        ),
       );
     };
 

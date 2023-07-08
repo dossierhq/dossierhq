@@ -8,7 +8,7 @@ import { useRuntimeDependency } from './useRuntimeDependency.js';
 export function useInitializeUploadWidget(
   cloudName: string,
   uploadPreset: string,
-  callback: CloudinaryUploadWidgetCallback
+  callback: CloudinaryUploadWidgetCallback,
 ): UploadWidget | null {
   const { status } = useRuntimeDependency('cloudinary-upload-widget');
   const [uploadWidget, setUploadWidget] = useState<UploadWidget | null>(null);
@@ -26,7 +26,7 @@ export function useInitializeUploadWidget(
         multiple: false,
         resourceType: 'image',
       },
-      callback
+      callback,
     );
 
     setUploadWidget(widget);

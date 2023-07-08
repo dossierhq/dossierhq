@@ -70,7 +70,7 @@ Message.FlexBody = ({ children, ...props }: MessageFlexBodyProps) => {
       className={toClassName(
         'message-body',
         toFlexContainerClassName(flexContainerProps),
-        toSpacingClassName(spacingProps)
+        toSpacingClassName(spacingProps),
       )}
     >
       {children}

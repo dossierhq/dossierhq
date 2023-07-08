@@ -25,7 +25,7 @@ export async function adminSearchEntities(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminSearchQuery | undefined,
-  paging: Paging | undefined
+  paging: Paging | undefined,
 ): PromiseResult<
   Connection<Edge<AdminEntity, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -37,7 +37,7 @@ export async function adminSearchEntities(
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    query?.authKeys
+    query?.authKeys,
   );
   if (authKeysResult.isError()) return authKeysResult;
 
@@ -46,7 +46,7 @@ export async function adminSearchEntities(
     context,
     query,
     pagingInfo,
-    authKeysResult.value
+    authKeysResult.value,
   );
   if (searchResult.isError()) return searchResult;
 
@@ -58,7 +58,7 @@ export async function adminSearchEntities(
       context,
       query,
       oppositePagingInfo,
-      authKeysResult.value
+      authKeysResult.value,
     );
     if (oppositeResult.isError()) return oppositeResult;
     hasMoreOppositeDirection = oppositeResult.value.hasMore;
@@ -69,6 +69,6 @@ export async function adminSearchEntities(
     pagingInfo,
     searchResult.value,
     hasMoreOppositeDirection,
-    decodeAdminEntity
+    decodeAdminEntity,
   );
 }

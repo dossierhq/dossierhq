@@ -6,7 +6,7 @@ import { queryOne, queryRun } from './QueryFunctions.js';
 
 export async function getCurrentSchemaVersion(
   database: Database,
-  context: TransactionContext
+  context: TransactionContext,
 ): PromiseResult<number, typeof ErrorType.Generic> {
   const result = await queryOne<{ user_version: number }>(database, context, 'PRAGMA user_version');
   if (result.isError()) return result;
@@ -22,7 +22,7 @@ export async function getCurrentSchemaVersion(
 export async function migrate(
   database: Database,
   context: TransactionContext,
-  schemaVersionGenerator: (version: number) => QueryOrQueryAndValues[] | null
+  schemaVersionGenerator: (version: number) => QueryOrQueryAndValues[] | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const initialVersionResult = await getCurrentSchemaVersion(database, context);
   if (initialVersionResult.isError()) return initialVersionResult;
@@ -45,7 +45,7 @@ async function migrateVersion(
   database: Database,
   context: TransactionContext,
   version: number,
-  statements: QueryOrQueryAndValues[]
+  statements: QueryOrQueryAndValues[],
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
     const { logger } = context;

@@ -5,7 +5,7 @@ export const NoSuchCommand = Symbol('NoSuchCommand');
 export async function execFile(
   file: string,
   args: string[],
-  options: { cwd: string; input?: string }
+  options: { cwd: string; input?: string },
 ): Promise<string | typeof NoSuchCommand> {
   if (typeof Deno !== 'undefined') {
     try {

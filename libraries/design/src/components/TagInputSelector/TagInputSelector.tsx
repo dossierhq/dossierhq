@@ -34,7 +34,7 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
 
   const handleItemClick = useCallback(
     ({ id }: TItem) => dispatch(new MultipleSelectorStateActions.ToggleItem(id)),
-    [dispatch]
+    [dispatch],
   );
 
   return (
