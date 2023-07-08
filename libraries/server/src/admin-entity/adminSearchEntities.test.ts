@@ -39,7 +39,7 @@ describe('Admin adminSearchEntities', () => {
         [
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
@@ -142,7 +142,7 @@ describe('Admin adminSearchEntities', () => {
         [
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
@@ -244,7 +244,7 @@ describe('Admin adminSearchEntities', () => {
         [
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
@@ -279,7 +279,7 @@ describe('Admin adminSearchEntities', () => {
           ],
           [
             "adminEntitySearchEntities",
-            _SessionContextImpl {
+            SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
                 "none",
