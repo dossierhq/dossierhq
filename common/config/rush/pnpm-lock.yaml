@@ -918,10 +918,10 @@ importers:
   ../../libraries/postgres-tools:
     specifiers:
       pg: ~8.10.0
-      postgrator: ~7.1.1
+      postgrator: ~7.2.0
     dependencies:
       pg: 8.10.0
-      postgrator: 7.1.1
+      postgrator: 7.2.0
 
   ../../libraries/react-components:
     specifiers:
@@ -1344,7 +1344,7 @@ importers:
       next: ~13.4.9
       nodemon: ~2.0.22
       pg: ~8.10.0
-      postgrator: ~7.1.1
+      postgrator: ~7.2.0
       prettier: 3.0.0
       react: ~18.2.0
       react-aria-components: ~1.0.0-alpha.5
@@ -1406,7 +1406,7 @@ importers:
       lodash: 4.17.21
       next: 13.4.9_63tktvor3xwbblcac5shyx4aca
       pg: 8.10.0
-      postgrator: 7.1.1
+      postgrator: 7.2.0
       react: 18.2.0
       react-aria-components: 1.0.0-alpha.5_biqbaboplfbrettd7655fr4n2y
       react-dom: 18.2.0_react@18.2.0
@@ -15421,8 +15421,8 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /postgrator/7.1.1:
-    resolution: {integrity: sha512-n3Wac+Uf/tAR+UUFanQHLhbd1Fu43jEZBGGUQeL9nzLGL0a2jqy6yCHP7rXcdagj6HAgyHXKCmTzNZSlVYJkgg==}
+  /postgrator/7.2.0:
+    resolution: {integrity: sha512-rVi/X5//51Sj5SWsBb2knBn/GCWdFOXRdq4VATnNePLK1h2774j0byr5tsDDb5B+UWVAZftjq5VYCQaB6dXMWw==}
     engines: {node: '>=14.0.0'}
     dependencies:
       glob: 7.2.3
