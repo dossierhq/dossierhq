@@ -20,7 +20,7 @@ export async function createNewDatabase(
 }
 
 export function resetDatabase(
-  clearDatabase: () => void,
+  clearDatabase: (this: void) => void,
   showNotification: (notification: NotificationInfo) => void,
   navigate: NavigateFunction
 ) {
@@ -63,7 +63,7 @@ export function uploadDatabase(
   const reader = new FileReader();
   reader.onload = () => {
     const data = new Uint8Array(reader.result as ArrayBuffer);
-    createDatabase(data).then(() => {
+    void createDatabase(data).then(() => {
       showNotification({ color: 'success', message: 'Loaded new database' });
       navigate(ROUTE.adminEntities.url('upload'));
     });

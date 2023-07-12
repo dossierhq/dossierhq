@@ -80,7 +80,7 @@ export default function GraphiQLEditor({
         schema: graphQlSchema,
         source: graphQLParams.query,
         operationName: graphQLParams.operationName,
-        variableValues: graphQLParams.variables,
+        variableValues: graphQLParams.variables as Record<string, unknown>,
         contextValue: graphQlSession,
       });
       return result;

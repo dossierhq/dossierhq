@@ -74,7 +74,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
   useEffect(() => {
     if (server) {
-      login(users[0].id);
+      void login(users[0].id);
     }
   }, [login, server, users]);
 
@@ -128,6 +128,7 @@ async function loginUser(server: Server, userId: string, cache: Cache<any>, muta
 
   //TODO add support to ARC for clearing cache?
   if (cache instanceof Map) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const mutators = [...cache.keys()].map((key) => mutate(key));
     await Promise.all(mutators);
   }

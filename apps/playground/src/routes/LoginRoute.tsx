@@ -16,7 +16,7 @@ export function LoginRoute() {
   useEffect(() => {
     if (userId && !executedLoginRef.current) {
       executedLoginRef.current = true;
-      login(userId);
+      void login(userId);
     }
   }, [login, userId]);
 

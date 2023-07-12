@@ -5,7 +5,10 @@ function buildRules(profile) {
       browser: true,
       es2021: true,
     },
-    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    extends: [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended-type-checked",
+    ],
     parserOptions: {
       ecmaVersion: 12,
       sourceType: "module",

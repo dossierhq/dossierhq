@@ -6,7 +6,7 @@ export interface NotificationInfo {
 }
 
 interface NotificationContextValue {
-  showNotification(notification: NotificationInfo): void;
+  showNotification(this: void, notification: NotificationInfo): void;
 }
 
 export const NotificationContext = createClientContext<NotificationContextValue>(undefined);

@@ -8,7 +8,7 @@ export interface User {
 export interface UserContextValue {
   currentUserId: string | null;
   users: User[];
-  setCurrentUserId(id: string): void;
+  setCurrentUserId(this: void, id: string): void;
 }
 
 export const UserContext = createContext<UserContextValue>({

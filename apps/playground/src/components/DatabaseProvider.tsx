@@ -47,7 +47,7 @@ export function DatabaseProvider({ children }: Props) {
 
     const config = ExampleConfigs.find((it) => it.name === serverName);
     if (serverName === 'new') {
-      createNewDatabase(createDatabase, showNotification);
+      void createNewDatabase(createDatabase, showNotification);
     } else if (serverName === 'upload') {
       showNotification({
         color: 'error',
@@ -55,7 +55,7 @@ export function DatabaseProvider({ children }: Props) {
       });
       navigate(ROUTE.index.url);
     } else if (config) {
-      loadDatabaseFromUrl(config.url, createDatabase, showNotification);
+      void loadDatabaseFromUrl(config.url, createDatabase, showNotification);
     }
   }, [createDatabase, database, navigate, serverName, showNotification]);
 

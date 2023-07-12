@@ -27,7 +27,7 @@ export function ServerProvider({ children }: Props) {
     if (!database) {
       setValue({ server: null, error: false });
     } else {
-      initializeServer(database).then((result) => {
+      void initializeServer(database).then((result) => {
         if (result.isOk()) {
           setValue({ server: result.value, error: false });
         } else {
