@@ -3,7 +3,7 @@ function buildRules(profile) {
     root: true,
     env: {
       browser: true,
-      es2021: true,
+      es2023: true,
     },
     extends: [
       "eslint:recommended",
@@ -11,7 +11,7 @@ function buildRules(profile) {
       "plugin:@typescript-eslint/stylistic-type-checked",
     ],
     parserOptions: {
-      ecmaVersion: 12,
+      ecmaVersion: 2023,
       sourceType: "module",
       project: true,
     },

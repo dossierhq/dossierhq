@@ -53,6 +53,7 @@ describe('Published publishedSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             [
@@ -137,6 +138,7 @@ describe('Published publishedSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             0,
@@ -166,6 +168,7 @@ describe('Published publishedSampleEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
+              Symbol(SessionContext): undefined,
             },
             undefined,
             [
