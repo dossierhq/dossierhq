@@ -385,7 +385,7 @@ importers:
       express-jwt: ~8.4.1
       jwks-rsa: ~3.0.1
       leaflet: ~1.9.4
-      nodemon: ~2.0.22
+      nodemon: ~3.0.1
       react: ~18.2.0
       react-dom: ~18.2.0
       react-router-dom: ~6.14.1
@@ -420,7 +420,7 @@ importers:
       '@types/react-dom': 18.2.7
       '@vitejs/plugin-react': 4.0.3_vite@4.4.3
       concurrently: 8.2.0
-      nodemon: 2.0.22
+      nodemon: 3.0.1
       ts-node: 10.9.1_typescript@5.1.6
       typescript: 5.1.6
       vite: 4.4.3
@@ -918,10 +918,10 @@ importers:
   ../../libraries/postgres-tools:
     specifiers:
       pg: ~8.10.0
-      postgrator: ~7.1.1
+      postgrator: ~7.2.0
     dependencies:
       pg: 8.10.0
-      postgrator: 7.1.1
+      postgrator: 7.2.0
 
   ../../libraries/react-components:
     specifiers:
@@ -1342,9 +1342,9 @@ importers:
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.4
       next: ~13.4.9
-      nodemon: ~2.0.22
+      nodemon: ~3.0.1
       pg: ~8.10.0
-      postgrator: ~7.1.1
+      postgrator: ~7.2.0
       prettier: 3.0.0
       react: ~18.2.0
       react-aria-components: ~1.0.0-alpha.5
@@ -1406,7 +1406,7 @@ importers:
       lodash: 4.17.21
       next: 13.4.9_63tktvor3xwbblcac5shyx4aca
       pg: 8.10.0
-      postgrator: 7.1.1
+      postgrator: 7.2.0
       react: 18.2.0
       react-aria-components: 1.0.0-alpha.5_biqbaboplfbrettd7655fr4n2y
       react-dom: 18.2.0_react@18.2.0
@@ -1457,7 +1457,7 @@ importers:
       graphql-config: 5.0.2_qedojxaxjtm2cu3vck5mk7djpy
       graphql-ws: 5.14.0_graphql@16.7.1
       mini-svg-data-uri: 1.4.4
-      nodemon: 2.0.22
+      nodemon: 3.0.1
       prettier: 3.0.0
       react-stately: 3.24.0_react@18.2.0
       rollup-plugin-visualizer: 5.9.2
@@ -5861,7 +5861,7 @@ packages:
     resolution: {integrity: sha512-8ltnOpRR/oJbOp8vaGUnipOi3bqkcW+sLHFlyXIr08OGHmVJLB1Hn7QtGXbYcpVtH1gAYZTlmDXtE4YV0+AMMQ==}
     dependencies:
       '@gar/promisify': 1.1.2
-      semver: 7.5.2
+      semver: 7.5.4
     optional: true
 
   /@npmcli/move-file/1.1.2:
@@ -5922,7 +5922,7 @@ packages:
       '@pnpm/crypto.base32-hash': 2.0.0
       '@pnpm/types': 9.1.0
       encode-registry: 3.0.0
-      semver: 7.5.2
+      semver: 7.5.4
     dev: false
 
   /@pnpm/error/1.4.0:
@@ -8508,7 +8508,7 @@ packages:
       prompts: 2.4.2
       puppeteer-core: 2.1.1
       read-pkg-up: 7.0.1
-      semver: 7.5.2
+      semver: 7.5.4
       shelljs: 0.8.5
       simple-update-notifier: 1.1.0
       strip-json-comments: 3.1.1
@@ -8643,7 +8643,7 @@ packages:
       pretty-hrtime: 1.0.3
       prompts: 2.4.2
       read-pkg-up: 7.0.1
-      semver: 7.5.2
+      semver: 7.5.4
       serve-favicon: 2.5.0
       telejson: 7.0.4
       ts-dedent: 2.2.0
@@ -8736,7 +8736,7 @@ packages:
       memoizerific: 1.11.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      semver: 7.5.2
+      semver: 7.5.4
       store2: 2.14.2
       telejson: 7.0.4
       ts-dedent: 2.2.0
@@ -9676,7 +9676,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.2
+      semver: 7.5.4
       tsutils: 3.21.0_typescript@5.1.6
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -9697,7 +9697,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.2
+      semver: 7.5.4
       tsutils: 3.21.0_typescript@5.1.6
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -9718,7 +9718,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.2
+      semver: 7.5.4
       ts-api-utils: 1.0.1
     transitivePeerDependencies:
       - supports-color
@@ -9738,7 +9738,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.2
+      semver: 7.5.4
       ts-api-utils: 1.0.1_typescript@5.1.6
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -9758,7 +9758,7 @@ packages:
       '@typescript-eslint/typescript-estree': 5.59.2_typescript@5.1.6
       eslint: 8.44.0
       eslint-scope: 5.1.1
-      semver: 7.5.2
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -11381,7 +11381,7 @@ packages:
       resolve: 1.22.1
       sass: 1.63.6
       scss-parser: 1.0.6
-      semver: 7.5.2
+      semver: 7.5.4
       yargs: 16.2.0
     transitivePeerDependencies:
       - supports-color
@@ -11403,7 +11403,7 @@ packages:
       '@pnpm/crypto.base32-hash': 1.0.1
       '@pnpm/types': 8.9.0
       encode-registry: 3.0.0
-      semver: 7.5.2
+      semver: 7.5.4
     dev: false
 
   /deps-regex/0.1.4:
@@ -13858,7 +13858,7 @@ packages:
       jws: 3.2.2
       lodash: 4.17.21
       ms: 2.1.3
-      semver: 7.5.2
+      semver: 7.5.4
     dev: false
 
   /jsx-ast-utils/3.2.1:
@@ -14761,9 +14761,9 @@ packages:
     resolution: {integrity: sha512-QzsYKWhXTWx8h1kIvqfnC++o0pEmpRQA/aenALsL2F4pqNVr7YzcdMlDij5WBnwftRbJCNJL/O7zdKaxKPHqgQ==}
     dev: true
 
-  /nodemon/2.0.22:
-    resolution: {integrity: sha512-B8YqaKMmyuCO7BowF1Z1/mkPqLk6cs/l63Ojtd6otKjMx47Dq1utxfRxcavH1I7VSaL8n5BUaoutadnsX3AAVQ==}
-    engines: {node: '>=8.10.0'}
+  /nodemon/3.0.1:
+    resolution: {integrity: sha512-g9AZ7HmkhQkqXkRc20w+ZfQ73cHLbE8hnPbtaFbFtCumZsjyMhKk9LajQ07U5Ux28lvFjZ5X7HvWR1xzU8jHVw==}
+    engines: {node: '>=10'}
     hasBin: true
     dependencies:
       chokidar: 3.5.3
@@ -14771,8 +14771,8 @@ packages:
       ignore-by-default: 1.0.1
       minimatch: 3.1.2
       pstree.remy: 1.1.8
-      semver: 5.7.1
-      simple-update-notifier: 1.1.0
+      semver: 7.5.4
+      simple-update-notifier: 2.0.0
       supports-color: 5.5.0
       touch: 3.1.0
       undefsafe: 2.0.5
@@ -14806,7 +14806,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.11.0
-      semver: 7.5.2
+      semver: 7.5.4
       validate-npm-package-license: 3.0.4
     dev: false
 
@@ -14857,7 +14857,7 @@ packages:
       pkg-dir: 5.0.0
       preferred-pm: 3.0.3
       rc-config-loader: 4.1.1
-      semver: 7.5.2
+      semver: 7.5.4
       semver-diff: 3.1.1
       strip-ansi: 6.0.1
       text-table: 0.2.0
@@ -15421,8 +15421,8 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /postgrator/7.1.1:
-    resolution: {integrity: sha512-n3Wac+Uf/tAR+UUFanQHLhbd1Fu43jEZBGGUQeL9nzLGL0a2jqy6yCHP7rXcdagj6HAgyHXKCmTzNZSlVYJkgg==}
+  /postgrator/7.2.0:
+    resolution: {integrity: sha512-rVi/X5//51Sj5SWsBb2knBn/GCWdFOXRdq4VATnNePLK1h2774j0byr5tsDDb5B+UWVAZftjq5VYCQaB6dXMWw==}
     engines: {node: '>=14.0.0'}
     dependencies:
       glob: 7.2.3
@@ -16513,6 +16513,13 @@ packages:
     dependencies:
       lru-cache: 6.0.0
 
+  /semver/7.5.4:
+    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+
   /send/0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
     engines: {node: '>= 0.8.0'}
@@ -16630,6 +16637,13 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       semver: 7.0.0
+    dev: true
+
+  /simple-update-notifier/2.0.0:
+    resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
+    engines: {node: '>=10'}
+    dependencies:
+      semver: 7.5.4
     dev: true
 
   /sisteransi/1.0.5:
@@ -17547,7 +17561,7 @@ packages:
       is-yarn-global: 0.3.0
       latest-version: 5.1.0
       pupa: 2.1.1
-      semver: 7.5.2
+      semver: 7.5.4
       semver-diff: 3.1.1
       xdg-basedir: 4.0.0
     dev: false

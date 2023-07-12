@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "pg": "~8.10.0",
-    "postgrator": "~7.1.1"
+    "postgrator": "~7.2.0"
   }
 }
