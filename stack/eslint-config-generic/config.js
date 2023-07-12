@@ -8,11 +8,12 @@ function buildRules(profile) {
     extends: [
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended-type-checked",
+      "plugin:@typescript-eslint/stylistic-type-checked",
     ],
     parserOptions: {
       ecmaVersion: 12,
       sourceType: "module",
-      project: ["./tsconfig.json"],
+      project: true,
     },
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint"],
