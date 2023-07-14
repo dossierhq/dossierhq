@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "~2.2.0",
-    "@cloudinary/url-gen": "~1.10.1",
+    "@cloudinary/url-gen": "~1.10.2",
     "@creativebulma/bulma-badge": "~1.0.1",
     "@faker-js/faker": "~8.0.2",
     "@fortawesome/free-solid-svg-icons": "~6.4.0",
@@ -65,7 +65,7 @@
     "@graphiql/toolkit": "~0.8.4",
     "@playwright/test": "~1.36.0",
     "@rushstack/heft": "0.57.0",
-    "@rushstack/heft-typescript-plugin": "~0.1.16",
+    "@rushstack/heft-typescript-plugin": "~0.1.17",
     "@storybook/addon-actions": "~7.0.27",
     "@storybook/addon-docs": "~7.0.27",
     "@storybook/addon-essentials": "~7.0.27",
@@ -80,10 +80,10 @@
     "@types/leaflet": "~1.9.3",
     "@types/leaflet.locatecontrol": "~0.74.1",
     "@types/lodash": "~4.14.195",
-    "@types/node": "~20.4.1",
+    "@types/node": "~20.4.2",
     "@types/pg": "~8.10.2",
     "@types/prettier": "~2.7.3",
-    "@types/react": "~18.2.14",
+    "@types/react": "~18.2.15",
     "@types/react-dom": "~18.2.7",
     "@types/sql.js": "~1.4.4",
     "@types/sqlite3": "~3.1.8",
@@ -92,7 +92,7 @@
     "@vitejs/plugin-react-swc": "~3.3.2",
     "base-64": "~1.0.0",
     "bulma": "~0.9.4",
-    "bun-types": "~0.6.13",
+    "bun-types": "~0.6.14",
     "concurrently": "~8.2.0",
     "eslint-config-next": "~13.4.9",
     "eslint-plugin-import": "~2.27.5",
@@ -110,7 +110,7 @@
     "storybook": "~7.0.27",
     "svgo": "~3.0.2",
     "ts-node": "~10.9.1",
-    "vite": "~4.4.3",
+    "vite": "~4.4.4",
     "vitest": "~0.33.0"
   }
 }

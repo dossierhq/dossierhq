@@ -34,7 +34,7 @@
     "@dossierhq/eslint-config-react": "workspace:*",
     "@graphiql/toolkit": "~0.8.4",
     "@types/react-dom": "~18.2.7",
-    "@types/react": "~18.2.14",
+    "@types/react": "~18.2.15",
     "@types/sql.js": "~1.4.4",
     "@vitejs/plugin-react-swc": "~3.3.2",
     "eslint": "~8.44.0",
@@ -43,6 +43,6 @@
     "rollup-plugin-visualizer": "~5.9.2",
     "ts-node": "~10.9.1",
     "typescript": "~5.1.6",
-    "vite": "~4.4.3"
+    "vite": "~4.4.4"
   }
 }

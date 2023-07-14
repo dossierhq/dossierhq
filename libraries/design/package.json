@@ -55,7 +55,7 @@
     "@storybook/react": "~7.0.27",
     "@storybook/react-vite": "~7.0.27",
     "@types/lodash": "~4.14.195",
-    "@types/react": "~18.2.14",
+    "@types/react": "~18.2.15",
     "@types/react-dom": "~18.2.7",
     "@typescript-eslint/eslint-plugin": "~6.0.0",
     "@typescript-eslint/parser": "~6.0.0",
@@ -73,6 +73,6 @@
     "storybook": "~7.0.27",
     "svgo": "~3.0.2",
     "typescript": "~5.1.6",
-    "vite": "~4.4.3"
+    "vite": "~4.4.4"
   }
 }
