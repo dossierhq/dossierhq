@@ -362,7 +362,7 @@ importers:
 
   ../../examples/tutorial:
     specifiers:
-      '@auth0/auth0-react': ~2.1.1
+      '@auth0/auth0-react': ~2.2.0
       '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
@@ -393,7 +393,7 @@ importers:
       typescript: ~5.1.6
       vite: ~4.4.3
     dependencies:
-      '@auth0/auth0-react': 2.1.1_biqbaboplfbrettd7655fr4n2y
+      '@auth0/auth0-react': 2.2.0_biqbaboplfbrettd7655fr4n2y
       '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
@@ -1267,7 +1267,7 @@ importers:
 
   ../../tools/all-dependencies:
     specifiers:
-      '@auth0/auth0-react': ~2.1.1
+      '@auth0/auth0-react': ~2.2.0
       '@cloudinary/url-gen': ~1.10.1
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~8.0.2
@@ -1368,7 +1368,7 @@ importers:
       vite: ~4.4.3
       vitest: ~0.33.0
     dependencies:
-      '@auth0/auth0-react': 2.1.1_biqbaboplfbrettd7655fr4n2y
+      '@auth0/auth0-react': 2.2.0_biqbaboplfbrettd7655fr4n2y
       '@cloudinary/url-gen': 1.10.1
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 8.0.2
@@ -1503,19 +1503,19 @@ packages:
       - encoding
     dev: true
 
-  /@auth0/auth0-react/2.1.1_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-KOFdTaFvashPX1o3h3ARYSCtR0qMya1ia57rSL2q7yggKv7PijHI/cKoG/gDvLA2G0M1qoCR3eACGDgHxstO3Q==}
+  /@auth0/auth0-react/2.2.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Kqk73HamFDDit9rGlmqUMbZiSuYcAJ0+P3ZS3kek79fsrUTc2od9tTVOjkNbzMLifetevOJ3Mgt/6f/6To4vkg==}
     peerDependencies:
       react: ^16.11.0 || ^17 || ^18
       react-dom: ^16.11.0 || ^17 || ^18
     dependencies:
-      '@auth0/auth0-spa-js': 2.0.8
+      '@auth0/auth0-spa-js': 2.1.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /@auth0/auth0-spa-js/2.0.8:
-    resolution: {integrity: sha512-qCgWZS58S69WCg2ybd+SDiaw3ahBVJ4/tSFWMtIpc//Fq8kRHGwMOmgpNKVAFrpHG0ck2oWFGrpylxoto8Z0mA==}
+  /@auth0/auth0-spa-js/2.1.0:
+    resolution: {integrity: sha512-7cF2NxrslgjArIdBwpNg02atPldpHHOrXxDScL71cbxKuKny3eziZIpNHQAdsPFiLhjKQ+izWmLq2ZRFlYB/eQ==}
     dev: false
 
   /@aw-web-design/x-default-browser/1.4.88:
