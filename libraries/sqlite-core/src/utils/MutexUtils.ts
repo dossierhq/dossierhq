@@ -1,5 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk } from '@dossierhq/core';
+import { notOk, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { Context } from '@dossierhq/database-adapter';
 
 export class Mutex {
@@ -15,8 +14,8 @@ export class Mutex {
     this.#queueCount++;
     let unlockNext: (value: void) => void;
 
-    const willLock: Promise<void> = new Promise((resolve) => (unlockNext = resolve));
-    willLock.then(() => this.#queueCount--);
+    const willLock = new Promise<void>((resolve) => (unlockNext = resolve));
+    void willLock.then(() => this.#queueCount--);
 
     const willUnlock: Promise<() => void> = this.#locking.then(() => unlockNext);
 

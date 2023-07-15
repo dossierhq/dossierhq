@@ -10,7 +10,7 @@ export async function managementOptimize(
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { logger } = context;
 
-  if (options.all || options.fullTextSearchAdmin) {
+  if (!!options.all || !!options.fullTextSearchAdmin) {
     logger.info('Starting optimizing admin full text search');
     const start = performance.now();
     const result = await queryRun(
@@ -23,7 +23,7 @@ export async function managementOptimize(
     logger.info(`Finished optimizing admin full text search in ${duration.toFixed(2)}ms`);
   }
 
-  if (options.all || options.fullTextSearchPublished) {
+  if (!!options.all || !!options.fullTextSearchPublished) {
     logger.info('Starting optimizing published full text search');
     const start = performance.now();
     const result = await queryRun(

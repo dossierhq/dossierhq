@@ -9,9 +9,10 @@ describe('adminGetEntity', () => {
     const now = new Date();
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, query, _values) => {
-      if (query.startsWith('SELECT e.uuid'))
-        return {
+    adapter.query.mockImplementation((_transaction, query, _values) => {
+      let result;
+      if (query.startsWith('SELECT e.uuid')) {
+        result = {
           rows: [
             {
               uuid: '123',
@@ -28,7 +29,10 @@ describe('adminGetEntity', () => {
             },
           ],
         };
-      return { rows: [] };
+      } else {
+        result = { rows: [] };
+      }
+      return Promise.resolve(result);
     });
 
     const result = await adminGetEntity(adapter, context, { id: '123' });
@@ -61,9 +65,10 @@ describe('adminGetEntity', () => {
     const now = new Date();
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, query, _values) => {
-      if (query.startsWith('SELECT e.uuid'))
-        return {
+    adapter.query.mockImplementation((_transaction, query, _values) => {
+      let result;
+      if (query.startsWith('SELECT e.uuid')) {
+        result = {
           rows: [
             {
               uuid: '123',
@@ -80,7 +85,10 @@ describe('adminGetEntity', () => {
             },
           ],
         };
-      return { rows: [] };
+      } else {
+        result = { rows: [] };
+      }
+      return Promise.resolve(result);
     });
 
     const result = await adminGetEntity(adapter, context, { id: '123', version: 5 });

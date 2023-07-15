@@ -10,11 +10,15 @@ export interface SqliteTransaction extends Transaction {
   savePointCount: number;
 }
 
-export async function withRootTransaction<TOk, TError extends ErrorType>(
+export async function withRootTransaction<
+  TOk,
+  TError extends ErrorType,
+  TContext extends TransactionContext,
+>(
   database: Database,
   context: TransactionContext,
-  childContextFactory: (transaction: Transaction) => TransactionContext,
-  callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
+  childContextFactory: (transaction: Transaction) => TContext,
+  callback: (context: TContext) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');

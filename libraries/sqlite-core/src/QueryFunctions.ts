@@ -4,9 +4,9 @@ import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { ColumnValue, SqliteDatabaseAdapter } from './SqliteDatabaseAdapter.js';
 import type { Mutex } from './utils/MutexUtils.js';
 
-interface ErrorConverter<TOk, TError extends ErrorType> {
-  (error: unknown): Result<TOk, TError | typeof ErrorType.Generic>;
-}
+type ErrorConverter<TOk, TError extends ErrorType> = (
+  error: unknown,
+) => Result<TOk, TError | typeof ErrorType.Generic>;
 
 export interface Database {
   mutex: Mutex;

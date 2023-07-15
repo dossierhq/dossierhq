@@ -1,5 +1,5 @@
 import type { ErrorType, Result } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { assertExhaustive, notOk, ok } from '@dossierhq/core';
 import type { Database } from '../QueryFunctions.js';
 
 export type CursorNativeType = 'int' | 'string';
@@ -11,7 +11,7 @@ export function toOpaqueCursor(database: Database, type: CursorNativeType, value
     case 'string':
       return database.adapter.encodeCursor(value as string);
     default:
-      throw new Error(`Unknown cursor type ${type}`);
+      assertExhaustive(type);
   }
 }
 
@@ -34,6 +34,6 @@ export function fromOpaqueCursor(
       return ok(value);
     }
     default:
-      throw new Error(`Unknown cursor type ${type}`);
+      assertExhaustive(type);
   }
 }

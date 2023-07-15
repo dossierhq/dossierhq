@@ -1,5 +1,5 @@
 import type { Logger, Paging } from '@dossierhq/core';
-import { AdminSchema, getPagingInfo, NoOpLogger } from '@dossierhq/core';
+import { AdminSchema, NoOpLogger, getPagingInfo } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,
@@ -8,8 +8,7 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { TransactionContextImpl } from '@dossierhq/database-adapter';
-import type { SpyInstance } from 'vitest';
-import { vi } from 'vitest';
+import { vi, type SpyInstance } from 'vitest';
 import type { UniqueConstraints } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { createPostgresDatabaseAdapterAdapter } from '../PostgresDatabaseAdapter.js';
@@ -77,11 +76,12 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
       error instanceof MockUniqueViolationOfConstraintError &&
       error.uniqueConstraint === constraintName,
     query,
-    createTransaction: async () => ({
-      _type: 'Transaction',
-      savePointCount: 0,
-      release: vi.fn(),
-    }),
+    createTransaction: () =>
+      Promise.resolve({
+        _type: 'Transaction',
+        savePointCount: 0,
+        release: vi.fn(),
+      }),
     base64Encode: vi.fn(),
     base64Decode: vi.fn(),
   };

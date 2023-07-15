@@ -59,7 +59,7 @@ export async function publishedEntitySearchEntities(
     entities: entitiesValues.map((it) => ({
       ...resolvePublishedEntityInfo(it),
       id: it.uuid,
-      fieldValues: JSON.parse(it.fields),
+      fieldValues: JSON.parse(it.fields) as Record<string, unknown>,
       cursor: cursorExtractor(it),
     })),
   });

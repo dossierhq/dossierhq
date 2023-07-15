@@ -1,8 +1,6 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
-import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
-import { queryOne, queryRun } from './QueryFunctions.js';
+import { queryOne, queryRun, type Database, type QueryOrQueryAndValues } from './QueryFunctions.js';
 
 export async function getCurrentSchemaVersion(
   database: Database,
@@ -57,6 +55,7 @@ async function migrateVersion(
 
     // PRAGMA can't use values, so create query manually. No SQL injection since we know it's a number
     if (typeof version !== 'number') {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       return notOk.Generic(`version is for some reason NaN (${version})`);
     }
     const updateVersionResult = await queryRun(database, context, 'PRAGMA user_version=' + version);

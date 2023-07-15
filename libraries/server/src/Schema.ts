@@ -83,7 +83,7 @@ export async function getSchemaSpecification(
 
 export async function updateSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
-  context: TransactionContext<TransactionContext>,
+  context: TransactionContext,
   schemaSpec: AdminSchemaSpecificationUpdate,
 ): PromiseResult<
   SchemaSpecificationUpdatePayload,

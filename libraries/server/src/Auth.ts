@@ -3,8 +3,8 @@ import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAuthCreateSessionPayload,
-  ResolvedAuthKey,
   TransactionContext,
+  ResolvedAuthKey,
 } from '@dossierhq/database-adapter';
 import { ensureRequired } from './Assertions.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
@@ -20,9 +20,7 @@ export async function authCreateSession(
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const assertion = ensureRequired({ provider, identifier });
-  if (assertion.isError()) {
-    return assertion;
-  }
+  if (assertion.isError()) return assertion;
 
   return await databaseAdapter.authCreateSession(context, provider, identifier);
 }

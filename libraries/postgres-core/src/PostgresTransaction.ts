@@ -1,5 +1,4 @@
-import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
-import { notOk } from '@dossierhq/core';
+import { notOk, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
 import type { Transaction, TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from './PostgresDatabaseAdapter.js';
 
@@ -8,11 +7,15 @@ export interface PostgresTransaction extends Transaction {
   savePointCount: number;
 }
 
-export async function withRootTransaction<TOk, TError extends ErrorType>(
+export async function withRootTransaction<
+  TOk,
+  TError extends ErrorType,
+  TContext extends TransactionContext,
+>(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  childContextFactory: (transaction: Transaction) => TransactionContext,
-  callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
+  childContextFactory: (transaction: Transaction) => TContext,
+  callback: (context: TContext) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');

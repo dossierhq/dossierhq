@@ -36,11 +36,11 @@ import {
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
+  TransactionContext,
   DatabaseEntityIndexesArg,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
-  TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
   createFullTextSearchCollector,

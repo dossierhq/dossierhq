@@ -210,7 +210,7 @@ function createOuterAdapter(
     advisoryLockRelease: (...args) => advisoryLockRelease(database, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
     authCreateSession: (...args) => authCreateSession(database, ...args),
-    disconnect: database.adapter.disconnect,
+    disconnect: () => database.adapter.disconnect(),
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(database, ...args),
     managementOptimize: (...args) => managementOptimize(database, ...args),
     managementDirtyGetNextEntity: (...args) => managementDirtyGetNextEntity(database, ...args),

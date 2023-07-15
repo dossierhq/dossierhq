@@ -1,24 +1,32 @@
-import type { Logger } from '@dossierhq/core';
-import type {
-  DatabaseAdapter,
-  DatabasePerformanceCallbacks,
-  Session,
-  Transaction,
-  TransactionContext,
+import type { ErrorType, Logger, PromiseResult } from '@dossierhq/core';
+import {
+  TransactionContextImpl,
+  type DatabaseAdapter,
+  type DatabasePerformanceCallbacks,
+  type Session,
+  type Transaction,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { TransactionContextImpl } from '@dossierhq/database-adapter';
 
 const internalContextSymbol = Symbol('InternalContext');
 const sessionContextSymbol = Symbol('SessionContext');
 
-export interface InternalContext extends TransactionContext<InternalContext> {
+export interface InternalContext extends TransactionContext {
   [internalContextSymbol]: never;
+
+  withTransaction<TOk, TError extends ErrorType>(
+    callback: (context: InternalContext) => PromiseResult<TOk, TError>,
+  ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 
-export interface SessionContext extends TransactionContext<SessionContext> {
+export interface SessionContext extends TransactionContext {
   readonly session: Session;
   readonly defaultAuthKeys: readonly string[];
   [sessionContextSymbol]: never;
+
+  withTransaction<TOk, TError extends ErrorType>(
+    callback: (context: SessionContext) => PromiseResult<TOk, TError>,
+  ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 
 export class InternalContextImpl

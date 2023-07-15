@@ -39,7 +39,7 @@ export async function adminEntitySampleEntities(
     entitiesValues.map((it) => ({
       ...resolveAdminEntityInfo(it),
       id: it.uuid,
-      fieldValues: JSON.parse(it.fields),
+      fieldValues: JSON.parse(it.fields) as Record<string, unknown>,
     })),
   );
 }

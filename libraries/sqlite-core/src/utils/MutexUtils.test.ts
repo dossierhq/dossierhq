@@ -20,11 +20,11 @@ describe('Mutex', () => {
         messages.push('1-b');
         return ok(undefined);
       }),
-      mutex.withLock(context, async () => {
+      mutex.withLock(context, () => {
         expect(mutex.isLocked()).toBe(true);
 
         messages.push('2');
-        return ok(undefined);
+        return Promise.resolve(ok(undefined));
       }),
     ]);
 

@@ -70,7 +70,7 @@ export async function adminEntityPublishGetVersionInfo(
     status,
     validPublished: validity.validPublished,
     updatedAt: new Date(updatedAt),
-    fieldValues: JSON.parse(fieldValues),
+    fieldValues: JSON.parse(fieldValues) as Record<string, unknown>,
   });
 }
 

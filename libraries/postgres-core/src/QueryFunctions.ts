@@ -3,9 +3,9 @@ import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter, PostgresQueryResult } from './PostgresDatabaseAdapter.js';
 import type { PostgresTransaction } from './PostgresTransaction.js';
 
-interface ErrorConverter<TRow, TError extends ErrorType> {
-  (error: unknown): Result<PostgresQueryResult<TRow>, TError | typeof ErrorType.Generic>;
-}
+type ErrorConverter<TRow, TError extends ErrorType> = (
+  error: unknown,
+) => Result<PostgresQueryResult<TRow>, TError | typeof ErrorType.Generic>;
 
 type QueryOrQueryAndValues = string | { text: string; values?: unknown[] };
 

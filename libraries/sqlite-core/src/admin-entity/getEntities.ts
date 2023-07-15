@@ -43,7 +43,7 @@ export async function adminEntityGetMultiple(
       ...resolveAdminEntityInfo(row),
       id: row.uuid,
       resolvedAuthKey: row.resolved_auth_key,
-      fieldValues: JSON.parse(row.fields),
+      fieldValues: JSON.parse(row.fields) as Record<string, unknown>,
     })),
   );
 }

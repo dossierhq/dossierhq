@@ -52,7 +52,7 @@ export async function adminEntitySearchEntities(
     entities: entitiesValues.map((it) => ({
       ...resolveAdminEntityInfo(it),
       id: it.uuid,
-      fieldValues: JSON.parse(it.fields),
+      fieldValues: JSON.parse(it.fields) as Record<string, unknown>,
       cursor: cursorExtractor(it),
     })),
   });

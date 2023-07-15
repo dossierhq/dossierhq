@@ -275,10 +275,10 @@ export interface DatabaseAdapter<
 > {
   disconnect(): Promise<void>;
 
-  withRootTransaction<TOk, TError extends ErrorType>(
+  withRootTransaction<TOk, TError extends ErrorType, TContext extends TransactionContext>(
     context: TransactionContext,
-    childContextFactory: (transaction: Transaction) => TransactionContext,
-    callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
+    childContextFactory: (transaction: Transaction) => TContext,
+    callback: (context: TContext) => PromiseResult<TOk, TError>,
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 
   withNestedTransaction<TOk, TError extends ErrorType>(

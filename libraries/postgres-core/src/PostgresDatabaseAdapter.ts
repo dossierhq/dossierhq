@@ -130,7 +130,7 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockRelease: (...args) => advisoryLockRelease(databaseAdapter, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
-    disconnect: databaseAdapter.disconnect,
+    disconnect: () => databaseAdapter.disconnect(),
     managementDirtyGetNextEntity: (...args) =>
       managementDirtyGetNextEntity(databaseAdapter, ...args),
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(databaseAdapter, ...args),

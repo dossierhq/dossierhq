@@ -1,5 +1,5 @@
 import type { ErrorType, Logger, Paging, PromiseResult } from '@dossierhq/core';
-import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@dossierhq/core';
+import { AdminSchema, NoOpLogger, getPagingInfo, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,
@@ -9,8 +9,7 @@ import type {
 } from '@dossierhq/database-adapter';
 import { TransactionContextImpl } from '@dossierhq/database-adapter';
 import { randomUUID } from 'node:crypto';
-import type { SpyInstance } from 'vitest';
-import { vi } from 'vitest';
+import { vi, type SpyInstance } from 'vitest';
 import { REQUIRED_SCHEMA_VERSION } from '../SchemaDefinition.js';
 import type { ColumnValue, SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
 import { createSqliteDatabaseAdapterAdapter } from '../SqliteDatabaseAdapter.js';
@@ -108,22 +107,28 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     randomUUID: vi.fn(),
   };
 
-  mockAdapter.query.mockImplementation(async (query, values) => {
+  mockAdapter.query.mockImplementation((query, values) => {
     allQueries.push([query, ...(values ?? [])]);
 
+    let result: unknown[] | undefined;
     if (mockAdapter.mockQuery) {
-      const result = mockAdapter.mockQuery(query, values);
-      if (result) return result;
+      result = mockAdapter.mockQuery(query, values);
     }
-
-    if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.37.0' }];
-    if (query === 'PRAGMA user_version') return [{ user_version: REQUIRED_SCHEMA_VERSION }]; // prevent migration
-    return [];
+    if (!result) {
+      if (query.startsWith('SELECT sqlite_version()')) {
+        result = [{ version: '3.37.0' }];
+      } else if (query === 'PRAGMA user_version') {
+        result = [{ user_version: REQUIRED_SCHEMA_VERSION }]; // prevent migration
+      } else {
+        result = [];
+      }
+    }
+    return Promise.resolve(result);
   });
 
-  mockAdapter.run.mockImplementation(async (query, values) => {
+  mockAdapter.run.mockImplementation((query, values) => {
     allQueries.push([query, ...(values ?? [])]);
-    return 0;
+    return Promise.resolve(0);
   });
 
   mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));

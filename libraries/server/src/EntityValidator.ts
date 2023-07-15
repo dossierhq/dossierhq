@@ -20,8 +20,8 @@ import {
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
-  DatabaseResolvedEntityReference,
   TransactionContext,
+  DatabaseResolvedEntityReference,
 } from '@dossierhq/database-adapter';
 import {
   createFullTextSearchCollector,

@@ -59,7 +59,7 @@ export async function adminEntityUpdateGetEntityInfo(
     ...resolveAdminEntityInfo(result.value),
     entityInternalId,
     resolvedAuthKey,
-    fieldValues: JSON.parse(fieldValues),
+    fieldValues: JSON.parse(fieldValues) as Record<string, unknown>,
   });
 }
 

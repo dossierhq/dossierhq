@@ -16,20 +16,17 @@ export interface DatabasePerformanceCallbacks {
   onRootTransactionCompleted: (duration: number) => void;
 }
 
-export interface TransactionContext<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  TContext extends TransactionContext<TContext> = TransactionContext<any>,
-> extends Context {
+export interface TransactionContext extends Context {
   readonly transaction: Transaction | null;
   databasePerformance: DatabasePerformanceCallbacks | null;
 
   withTransaction<TOk, TError extends ErrorType>(
-    callback: (context: TContext) => PromiseResult<TOk, TError>,
+    callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 
-export abstract class TransactionContextImpl<TContext extends TransactionContext<TContext>>
-  implements TransactionContext<TContext>
+export abstract class TransactionContextImpl<TContext extends TransactionContext>
+  implements TransactionContext
 {
   readonly #databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
@@ -71,7 +68,7 @@ export abstract class TransactionContextImpl<TContext extends TransactionContext
         const acquireDuration = performance.now() - startTime;
         this.databasePerformance?.onRootTransactionAcquired(acquireDuration);
 
-        return callback(context as unknown as TContext);
+        return callback(context);
       },
     );
 

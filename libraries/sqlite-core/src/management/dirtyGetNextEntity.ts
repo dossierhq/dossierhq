@@ -54,7 +54,7 @@ export async function managementDirtyGetNextEntity(
     entityInternalId,
     id,
     resolvedAuthKey,
-    fieldValues: JSON.parse(fieldValues),
+    fieldValues: JSON.parse(fieldValues) as Record<string, unknown>,
     dirtyValidateLatest: !!(dirty & 1),
     dirtyValidatePublished: !!(dirty & 2),
     dirtyIndexLatest: !!(dirty & 4),

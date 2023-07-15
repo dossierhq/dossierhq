@@ -3,8 +3,8 @@ import type {
   DatabaseAdapter,
   DatabaseAdminEntityUniqueIndexReference,
   DatabaseAdminEntityUniqueIndexValue,
-  DatabaseResolvedEntityReference,
   TransactionContext,
+  DatabaseResolvedEntityReference,
 } from '@dossierhq/database-adapter';
 import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
 

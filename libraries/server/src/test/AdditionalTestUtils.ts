@@ -1,6 +1,6 @@
 import type { Logger } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
-import type { DatabaseAdapter, Session, TransactionContext } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter, TransactionContext, Session } from '@dossierhq/database-adapter';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
