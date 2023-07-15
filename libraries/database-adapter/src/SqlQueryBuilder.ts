@@ -85,7 +85,7 @@ function addValueToQuery<TValue>(
   ) {
     query.text += value.sql;
   } else {
-    query.values.push(value as TValue);
+    query.values.push(value);
     query.text += `${config.indexPrefix}${query.values.length}`; // 1-based index
   }
 }

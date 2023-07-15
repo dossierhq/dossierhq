@@ -17,7 +17,8 @@ export interface DatabasePerformanceCallbacks {
 }
 
 export interface TransactionContext<
-  TContext extends TransactionContext<any> = TransactionContext<any>, // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TContext extends TransactionContext<TContext> = TransactionContext<any>,
 > extends Context {
   readonly transaction: Transaction | null;
   databasePerformance: DatabasePerformanceCallbacks | null;
@@ -27,8 +28,7 @@ export interface TransactionContext<
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export abstract class TransactionContextImpl<TContext extends TransactionContext<any>>
+export abstract class TransactionContextImpl<TContext extends TransactionContext<TContext>>
   implements TransactionContext<TContext>
 {
   readonly #databaseAdapter: DatabaseAdapter;
