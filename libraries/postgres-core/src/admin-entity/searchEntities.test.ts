@@ -31,7 +31,9 @@ describe('adminEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({ rows: [] }));
+    adapter.query.mockImplementation((_transaction, _query, _values) =>
+      Promise.resolve({ rows: [] }),
+    );
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -56,9 +58,11 @@ describe('adminEntitySearchEntities', () => {
   test('Minimal, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
-      rows: [createEntityDbRow(1)],
-    }));
+    adapter.query.mockImplementation((_transaction, _query, _values) =>
+      Promise.resolve({
+        rows: [createEntityDbRow(1)],
+      }),
+    );
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -107,9 +111,9 @@ describe('adminEntitySearchEntities', () => {
   test('Paging after, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
-      rows: [createEntityDbRow(2)],
-    }));
+    adapter.query.mockImplementation((_transaction, _query, _values) =>
+      Promise.resolve({ rows: [createEntityDbRow(2)] }),
+    );
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),
@@ -159,9 +163,9 @@ describe('adminEntitySearchEntities', () => {
   test('Paging before, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, _query, _values) => ({
-      rows: [createEntityDbRow(2)],
-    }));
+    adapter.query.mockImplementation((_transaction, _query, _values) =>
+      Promise.resolve({ rows: [createEntityDbRow(2)] }),
+    );
     const result = await adminEntitySearchEntities(
       adapter,
       createTestAdminSchema(),

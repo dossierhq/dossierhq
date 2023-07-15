@@ -7,9 +7,11 @@ describe('authCreateSession', () => {
   test('Create new principal', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, query, _values) => {
-      if (query.startsWith('INSERT INTO subjects')) return { rows: [{ id: 123, uuid: '4321' }] };
-      return { rows: [] };
+    adapter.query.mockImplementation((_transaction, query, _values) => {
+      let result;
+      if (query.startsWith('INSERT INTO subjects')) result = { rows: [{ id: 123, uuid: '4321' }] };
+      else result = { rows: [] };
+      return Promise.resolve(result);
     });
     const result = await authCreateSession(adapter, context, 'test', 'hello');
     expectResultValue(result, {
@@ -46,10 +48,11 @@ describe('authCreateSession', () => {
   test('Existing principal', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation(async (_transaction, query, _values) => {
-      if (query.startsWith('SELECT s.id, s.uuid FROM'))
-        return { rows: [{ id: 123, uuid: '4321' }] };
-      return { rows: [] };
+    adapter.query.mockImplementation((_transaction, query, _values) => {
+      if (query.startsWith('SELECT s.id, s.uuid FROM')) {
+        return Promise.resolve({ rows: [{ id: 123, uuid: '4321' }] });
+      }
+      return Promise.resolve({ rows: [] });
     });
     const result = await authCreateSession(adapter, context, 'test', 'hello');
     expectResultValue(result, {
