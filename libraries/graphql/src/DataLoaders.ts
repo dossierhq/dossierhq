@@ -77,7 +77,7 @@ export async function loadPublishedEntities<TContext extends SessionGraphQLConte
   schema: PublishedSchema,
   context: TContext,
   ids: string[],
-): Promise<Array<PublishedEntity | null>> {
+): Promise<(PublishedEntity | null)[]> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
   if (results.isError()) {
@@ -176,7 +176,7 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   ids: string[],
-): Promise<Array<AdminEntity | null>> {
+): Promise<(AdminEntity | null)[]> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
   return results.valueOrThrow().map((result) => {

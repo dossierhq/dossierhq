@@ -139,8 +139,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
 
     const containsEntityTypes =
-      (this.adminSchema && this.adminSchema.getEntityTypeCount() > 0) ||
-      (this.publishedSchema && this.publishedSchema.getEntityTypeCount() > 0);
+      !!(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0) ||
+      !!(this.publishedSchema && this.publishedSchema.getEntityTypeCount() > 0);
     if (!containsEntityTypes) {
       return;
     }
@@ -1685,6 +1685,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       return JSON.parse(fieldValue);
     } catch (error) {
       throw new Error(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         `${fieldPrefix}: Failed parsing JSON: ${error instanceof Error ? error.message : error}`,
       );
     }
