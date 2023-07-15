@@ -64,7 +64,7 @@ export async function adminSearchEntities(
     hasMoreOppositeDirection = oppositeResult.value.hasMore;
   }
 
-  return await sharedSearchEntities(
+  return sharedSearchEntities(
     schema,
     pagingInfo,
     searchResult.value,

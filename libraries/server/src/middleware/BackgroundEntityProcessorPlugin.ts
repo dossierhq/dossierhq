@@ -25,10 +25,6 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
   constructor(server: Server, logger: Logger) {
     this.server = server;
     this.logger = logger;
-
-    this.tick = this.tick.bind(this);
-    this.adminMiddleware = this.adminMiddleware.bind(this);
-    this.publishedMiddleware = this.publishedMiddleware.bind(this);
   }
 
   start() {
@@ -61,7 +57,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
     return [this.publishedMiddleware, ...pipeline];
   }
 
-  private async adminMiddleware(_context: SessionContext, operation: AdminClientOperation) {
+  private adminMiddleware = async (_context: SessionContext, operation: AdminClientOperation) => {
     this.lastOperationTimestamp = Date.now();
 
     const result = await operation.next();
@@ -80,61 +76,71 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
       }
     }
     operation.resolve(result);
-  }
+  };
 
-  private async publishedMiddleware(_context: SessionContext, operation: PublishedClientOperation) {
+  private publishedMiddleware = async (
+    _context: SessionContext,
+    operation: PublishedClientOperation,
+  ) => {
     this.lastOperationTimestamp = Date.now();
 
     const result = await operation.next();
     operation.resolve(result);
-  }
+  };
 
-  private async tick() {
-    this.handle = null;
+  private tick = () => {
+    const run = async () => {
+      this.handle = null;
 
-    const timeSinceLastOperation = Date.now() - this.lastOperationTimestamp;
-    if (timeSinceLastOperation < TIME_SINCE_LAST_OPERATION_MS) {
-      this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS - timeSinceLastOperation);
-      return;
-    }
-
-    if (this.processing) {
-      const result = await this.server.processNextDirtyEntity();
-      if (result.isOk() && result.value) {
-        this.batchCount++;
+      const timeSinceLastOperation = Date.now() - this.lastOperationTimestamp;
+      if (timeSinceLastOperation < TIME_SINCE_LAST_OPERATION_MS) {
+        this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS - timeSinceLastOperation);
+        return;
       }
 
-      if (this.batchCount % 200 === 0) {
-        this.logger.info('BackgroundEntityProcessorPlugin: validated %d entities', this.batchCount);
-      }
+      if (this.processing) {
+        const result = await this.server.processNextDirtyEntity();
+        if (result.isOk() && result.value) {
+          this.batchCount++;
+        }
 
-      if (result.isOk()) {
-        if (result.value) {
-          if (!result.value.valid) {
-            this.logger.warn(
-              'BackgroundEntityProcessorPlugin: validated entity: %s, but it was invalid',
-              result.value.id,
-            );
-          }
-        } else {
+        if (this.batchCount % 200 === 0) {
           this.logger.info(
-            'BackgroundEntityProcessorPlugin: no more entities to validate, validated %d entities',
+            'BackgroundEntityProcessorPlugin: validated %d entities',
             this.batchCount,
           );
-          this.processing = false;
-          this.batchCount = 0;
         }
-      } else {
-        this.logger.error(
-          'BackgroundEntityProcessorPlugin: failed validating %s: %s',
-          result.error,
-          result.message,
-        );
-      }
-    }
 
-    if (this.processing) {
-      this.handle = setTimeout(this.tick, TIME_SINCE_LAST_PROCESSING_MS);
-    }
-  }
+        if (result.isOk()) {
+          if (result.value) {
+            if (!result.value.valid) {
+              this.logger.warn(
+                'BackgroundEntityProcessorPlugin: validated entity: %s, but it was invalid',
+                result.value.id,
+              );
+            }
+          } else {
+            this.logger.info(
+              'BackgroundEntityProcessorPlugin: no more entities to validate, validated %d entities',
+              this.batchCount,
+            );
+            this.processing = false;
+            this.batchCount = 0;
+          }
+        } else {
+          this.logger.error(
+            'BackgroundEntityProcessorPlugin: failed validating %s: %s',
+            result.error,
+            result.message,
+          );
+        }
+      }
+
+      if (this.processing) {
+        this.handle = setTimeout(this.tick, TIME_SINCE_LAST_PROCESSING_MS);
+      }
+    };
+
+    void run();
+  };
 }

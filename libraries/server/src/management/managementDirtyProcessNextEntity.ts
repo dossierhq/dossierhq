@@ -34,7 +34,7 @@ interface EntityValidity {
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
-  context: TransactionContext,
+  context: TransactionContext<TransactionContext>,
 ): PromiseResult<
   { id: string; valid: boolean; validPublished: boolean | null } | null,
   typeof ErrorType.Generic

@@ -72,7 +72,7 @@ export async function updateUniqueIndexesForEntity(
   if (result.isError() && result.isErrorType(ErrorType.Conflict)) {
     //TODO handle resolving error messages when there are multiple unique values
     if (latestUniqueIndexValues?.size === 1) {
-      const indexName = latestUniqueIndexValues.keys().next().value;
+      const indexName = latestUniqueIndexValues.keys().next().value as string;
       const indexValues = latestUniqueIndexValues.get(indexName);
       if (indexValues?.length === 1) {
         const value = indexValues[0];
@@ -93,7 +93,7 @@ function calculateTargetValues(
   latestUniqueIndexValues: UniqueIndexValueCollection | null,
   publishedUniqueIndexValues: UniqueIndexValueCollection | null,
 ) {
-  const targetValues: Map<string, Map<string, { latest: boolean; published: boolean }>> = new Map();
+  const targetValues = new Map<string, Map<string, { latest: boolean; published: boolean }>>();
   const getIndexValues = (indexName: string) => {
     let indexValues = targetValues.get(indexName);
     if (!indexValues) {

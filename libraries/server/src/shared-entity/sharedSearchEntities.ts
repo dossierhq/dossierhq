@@ -1,13 +1,13 @@
-import type {
-  Connection,
-  Edge,
-  ErrorType,
-  Paging,
-  PagingInfo,
-  PromiseResult,
-  Result,
+import {
+  getPagingInfo,
+  ok,
+  type Connection,
+  type Edge,
+  type ErrorType,
+  type Paging,
+  type PagingInfo,
+  type Result,
 } from '@dossierhq/core';
-import { getPagingInfo, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
   DatabasePagingInfo,
@@ -64,7 +64,7 @@ export function getOppositeDirectionPaging<
   return null;
 }
 
-export async function sharedSearchEntities<
+export function sharedSearchEntities<
   TSchema,
   TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
   TEntity,
@@ -74,7 +74,7 @@ export async function sharedSearchEntities<
   searchResult: TSearchResult,
   hasMoreOppositeDirection: boolean,
   decoder: (schema: TSchema, values: TSearchResult['entities'][number]) => TEntity,
-): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
+): Result<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
   if (entities.length === 0) {
     return ok(null);

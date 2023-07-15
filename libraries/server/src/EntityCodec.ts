@@ -108,15 +108,21 @@ function decodeFieldItemOrList(
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
   if (fieldSpec.list) {
     if (!Array.isArray(fieldValue)) {
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
       throw new Error(`Expected list but got ${fieldValue} (${fieldSpec.name})`);
     }
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
       if (fieldSpec.type === FieldType.ValueItem) {
-        const decodedItem = decodeValueItemField(schema, fieldSpec, codecMode, encodedItem);
+        const decodedItem = decodeValueItemField(
+          schema,
+          fieldSpec,
+          codecMode,
+          encodedItem as ValueItem,
+        );
         decodedItems.push(decodedItem);
       } else if (fieldSpec.type === FieldType.RichText) {
-        decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem));
+        decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem as RichText));
       } else {
         decodedItems.push(
           codecMode === 'optimized'
@@ -452,7 +458,7 @@ function encodeValueItemField(
   if (typeof data !== 'object' || !data) {
     return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
   }
-  const value = data as ValueItem;
+  const value = data;
   const valueType = value.type;
   if (!valueType) {
     return notOk.BadRequest(`${prefix}: missing type`);

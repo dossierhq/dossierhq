@@ -61,6 +61,7 @@ const locationCodec: FieldTypeAdapter<
     const { lat, lng } = data;
     if (typeof lat !== 'number' || typeof lng !== 'number') {
       if (typeof lat !== 'number' && typeof lng !== 'number') {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
         return notOk.BadRequest(`${prefix}: expected {lat: number, lng: number}, got ${data}`);
       }
       if (typeof lat !== 'number') {

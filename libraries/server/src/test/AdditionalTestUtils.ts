@@ -62,7 +62,7 @@ interface MockAuthorizationAdapter extends AuthorizationAdapter {
 }
 
 export function createMockTransactionContext(logger: Logger | null = null): TransactionContext {
-  const resolvedLogger = logger || NoOpLogger;
+  const resolvedLogger = logger ?? NoOpLogger;
   const context: TransactionContext = {
     get logger() {
       return resolvedLogger;
@@ -91,7 +91,7 @@ export function createMockSessionContext({
 }): SessionContext {
   const resolvedSession = session ?? { subjectId: 'subject-id', subjectInternalId: 123 };
   const resolvedDefaultAuthKeys = defaultAuthKeys ?? ['none'];
-  const resolvedLogger = logger || NoOpLogger;
+  const resolvedLogger = logger ?? NoOpLogger;
   return new SessionContextImpl(
     resolvedSession,
     resolvedDefaultAuthKeys,
@@ -170,11 +170,11 @@ export function createMockAuthorizationAdapter(): MockAuthorizationAdapter {
 
 export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
   databaseAdapter: MockDatabaseAdapter,
-): Array<unknown[]> {
-  const calls: Array<unknown[]> = [];
+): unknown[][] {
+  const calls: unknown[][] = [];
   for (const methodName of Object.keys(databaseAdapter).sort() as (keyof MockDatabaseAdapter)[]) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    for (const args of (databaseAdapter[methodName] as MockedFunction<any>).mock.calls) {
+    for (const args of (databaseAdapter[methodName] as unknown as MockedFunction<() => void>).mock
+      .calls) {
       // remove first arg (normally context)
       calls.push([methodName, ...args.slice(1)]);
     }

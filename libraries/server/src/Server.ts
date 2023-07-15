@@ -259,7 +259,7 @@ export async function createServer<
       const contextResult = serverImpl.createSessionContext(
         session,
         defaultAuthKeys ?? [],
-        (sessionLogger ?? serverLogger) || null,
+        sessionLogger ?? serverLogger ?? null,
         databasePerformance,
       );
       if (contextResult.isError()) return contextResult;
