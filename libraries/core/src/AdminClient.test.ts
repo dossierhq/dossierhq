@@ -1,5 +1,10 @@
 import { describe, expect, test, vi } from 'vitest';
-import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from './AdminClient.js';
+import type {
+  AdminClient,
+  AdminClientJsonOperationArgs,
+  AdminClientMiddleware,
+  AdminClientOperation,
+} from './AdminClient.js';
 import {
   AdminClientOperationName,
   convertJsonAdminClientResult,
@@ -33,7 +38,9 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient,
 ): AdminClientMiddleware<TContext> {
   return async function (_context, operation) {
-    const operationArgsJson = JSON.parse(JSON.stringify(operation.args));
+    const operationArgsJson = JSON.parse(
+      JSON.stringify(operation.args),
+    ) as AdminClientJsonOperationArgs;
     // normally sent over HTTP
     const resultJson = await executeAdminClientOperationFromJson(
       adminClient,
@@ -41,7 +48,9 @@ function createForwardingMiddleware<TContext extends ClientContext>(
       operationArgsJson,
     );
     // normally returned over HTTP
-    const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));
+    const convertedResultJson = convertJsonResult(
+      JSON.parse(JSON.stringify(resultJson)) as typeof resultJson,
+    );
     operation.resolve(convertJsonAdminClientResult(operation.name, convertedResultJson));
   };
 }

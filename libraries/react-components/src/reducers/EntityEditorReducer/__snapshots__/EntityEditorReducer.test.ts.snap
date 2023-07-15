@@ -102,6 +102,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -222,6 +223,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -289,6 +291,7 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -409,6 +412,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -529,6 +533,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -649,6 +654,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -783,6 +789,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -919,6 +926,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1039,6 +1047,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1159,6 +1168,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1279,6 +1289,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1399,6 +1410,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1533,6 +1545,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1669,6 +1682,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1805,6 +1819,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -1941,6 +1956,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2090,6 +2106,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2226,6 +2243,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2362,6 +2380,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2498,6 +2517,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2704,6 +2724,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2837,6 +2858,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -2976,6 +2998,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -3168,6 +3191,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -3315,6 +3339,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             "name": "RequiredString",
           },
         ],
+        "version": 1,
       },
     },
     "spec": {
@@ -3494,6 +3519,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             "name": "RequiredString",
           },
         ],
+        "version": 1,
       },
     },
     "spec": {
@@ -3687,6 +3713,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
             "name": "RequiredString",
           },
         ],
+        "version": 1,
       },
     },
     "spec": {
@@ -3910,6 +3937,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4043,6 +4071,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
           },
         ],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4168,6 +4197,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4288,6 +4318,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4408,6 +4439,7 @@ exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4528,6 +4560,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4664,6 +4697,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {
@@ -4812,6 +4846,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
         "indexes": [],
         "patterns": [],
         "valueTypes": [],
+        "version": 1,
       },
     },
     "spec": {

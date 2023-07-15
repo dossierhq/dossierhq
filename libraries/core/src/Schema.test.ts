@@ -1977,6 +1977,7 @@ describe('validate()', () => {
 describe('AdminSchema.toPublishedSchema()', () => {
   test('empty->empty', () => {
     expect(AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema().spec).toEqual({
+      version: 0,
       entityTypes: [],
       valueTypes: [],
       patterns: [],
@@ -1998,6 +1999,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -2041,6 +2043,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -2079,6 +2082,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -2119,7 +2123,8 @@ describe('AdminSchema.toPublishedSchema()', () => {
       })
         .valueOrThrow()
         .toPublishedSchema().spec,
-    ).toEqual({
+    ).toEqual<PublishedSchemaSpecification>({
+      version: 1,
       entityTypes: [],
       valueTypes: [],
       patterns: [],
@@ -2146,7 +2151,8 @@ describe('AdminSchema.toPublishedSchema()', () => {
       })
         .valueOrThrow()
         .toPublishedSchema().spec,
-    ).toEqual({
+    ).toEqual<PublishedSchemaSpecification>({
+      version: 1,
       entityTypes: [{ name: 'Foo', authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],
       patterns: [],

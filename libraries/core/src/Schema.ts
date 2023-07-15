@@ -199,6 +199,7 @@ export interface SchemaIndexSpecification {
 }
 
 export interface PublishedSchemaSpecification {
+  version: number;
   entityTypes: PublishedEntityTypeSpecification[];
   valueTypes: PublishedValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
@@ -798,6 +799,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     }
 
     const spec: PublishedSchemaSpecification = {
+      version: this.spec.version,
       entityTypes: [],
       valueTypes: [],
       patterns: [],

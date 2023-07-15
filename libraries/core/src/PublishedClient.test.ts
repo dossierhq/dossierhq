@@ -230,7 +230,9 @@ describe('PublishedClient forward operation over JSON', () => {
         { logger: NoOpLogger },
         PublishedClientOperationName.getSchemaSpecification,
         async (_context, operation) => {
-          operation.resolve(ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] }));
+          operation.resolve(
+            ok({ version: 0, entityTypes: [], valueTypes: [], patterns: [], indexes: [] }),
+          );
         },
       );
 
@@ -242,6 +244,7 @@ describe('PublishedClient forward operation over JSON', () => {
           "indexes": [],
           "patterns": [],
           "valueTypes": [],
+          "version": 0,
         }
       `);
 

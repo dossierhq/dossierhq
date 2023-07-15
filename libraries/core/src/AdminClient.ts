@@ -758,7 +758,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   ): PromiseResult<AdminClientOperationReturnOk[TName], AdminClientOperationReturnError[TName]> {
     let context: TContext;
     if (typeof this.context === 'function') {
-      const contextResult = await (this.context as ContextProvider<TContext>)();
+      const contextResult = await this.context();
       if (contextResult.isError()) {
         if (contextResult.isErrorType(ErrorType.Generic)) {
           return contextResult;
