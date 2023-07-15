@@ -248,7 +248,9 @@ ALTER SEQUENCE public.principals_id_seq OWNED BY public.principals.id;
 
 CREATE TABLE public.schema_versions (
     id integer NOT NULL,
-    specification jsonb NOT NULL
+    specification jsonb NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    version integer NOT NULL
 );
 
 CREATE SEQUENCE public.schema_versions_id_seq
@@ -383,6 +385,9 @@ ALTER TABLE ONLY public.principals
 
 ALTER TABLE ONLY public.schema_versions
     ADD CONSTRAINT schema_versions_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.schema_versions
+    ADD CONSTRAINT schema_versions_version_key UNIQUE (version);
 
 ALTER TABLE ONLY public.schemaversion
     ADD CONSTRAINT schemaversion_pkey PRIMARY KEY (version);

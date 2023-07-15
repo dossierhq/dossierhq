@@ -1,6 +1,7 @@
 import { assertExhaustive } from './Asserts.js';
 import type { ErrorType, Result } from './ErrorResult.js';
 import { notOk, ok } from './ErrorResult.js';
+import { isFieldValueEqual } from './ItemUtils.js';
 import type { EntityReference, Location, RichText, ValueItem } from './Types.js';
 
 export interface AdminEntityTypeSpecification {
@@ -205,6 +206,7 @@ export interface PublishedSchemaSpecification {
 }
 
 export interface AdminSchemaSpecification {
+  version: number;
   entityTypes: AdminEntityTypeSpecification[];
   valueTypes: AdminValueTypeSpecification[];
   patterns: SchemaPatternSpecification[];
@@ -212,6 +214,7 @@ export interface AdminSchemaSpecification {
 }
 
 export interface AdminSchemaSpecificationUpdate {
+  version?: number;
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
   valueTypes?: AdminValueTypeSpecificationUpdate[];
   patterns?: SchemaPatternSpecification[];
@@ -342,6 +345,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const emptySpec: AdminSchemaSpecification = {
+      version: 0,
       entityTypes: [],
       valueTypes: [],
       patterns: [],
@@ -624,6 +628,7 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
     const schemaSpec: AdminSchemaSpecification = {
+      version: this.spec.version, // increment below if differs
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
       patterns: [],
@@ -772,6 +777,12 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     schemaSpec.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
     schemaSpec.patterns.sort((a, b) => a.name.localeCompare(b.name));
     schemaSpec.indexes.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Detect if changed and bump version
+    if (isFieldValueEqual(this.spec, schemaSpec)) {
+      return ok(this); // no change
+    }
+    schemaSpec.version += 1;
 
     // Validate
     const updatedSchema = new AdminSchema(schemaSpec);

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`mergeWith() > duplicate values 1`] = `
+exports[`updateAndValidate() > duplicate values 1`] = `
 {
   "entityTypes": [
     {
@@ -85,10 +85,11 @@ exports[`mergeWith() > duplicate values 1`] = `
       "name": "ValueType",
     },
   ],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > empty->entity with pattern 1`] = `
+exports[`updateAndValidate() > empty->entity with pattern 1`] = `
 {
   "entityTypes": [
     {
@@ -107,10 +108,11 @@ exports[`mergeWith() > empty->entity with pattern 1`] = `
     },
   ],
   "valueTypes": [],
+  "version": 2,
 }
 `;
 
-exports[`mergeWith() > field with index 1`] = `
+exports[`updateAndValidate() > field with index 1`] = `
 {
   "entityTypes": [
     {
@@ -141,10 +143,11 @@ exports[`mergeWith() > field with index 1`] = `
   ],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > field with matchPattern 1`] = `
+exports[`updateAndValidate() > field with matchPattern 1`] = `
 {
   "entityTypes": [
     {
@@ -175,10 +178,11 @@ exports[`mergeWith() > field with matchPattern 1`] = `
     },
   ],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > fields not updated are kept 1`] = `
+exports[`updateAndValidate() > fields not updated are kept 1`] = `
 {
   "entityTypes": [
     {
@@ -219,10 +223,11 @@ exports[`mergeWith() > fields not updated are kept 1`] = `
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 2,
 }
 `;
 
-exports[`mergeWith() > unused pattern is removed 1`] = `
+exports[`updateAndValidate() > unused pattern is removed 1`] = `
 {
   "entityTypes": [
     {
@@ -236,10 +241,11 @@ exports[`mergeWith() > unused pattern is removed 1`] = `
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 2,
 }
 `;
 
-exports[`mergeWith() > update pattern 1`] = `
+exports[`updateAndValidate() > update pattern 1`] = `
 {
   "entityTypes": [
     {
@@ -258,10 +264,11 @@ exports[`mergeWith() > update pattern 1`] = `
     },
   ],
   "valueTypes": [],
+  "version": 2,
 }
 `;
 
-exports[`mergeWith() > use existing adminOnly value if not specified on field update 1`] = `
+exports[`updateAndValidate() > use existing adminOnly value if not specified on field update 1`] = `
 {
   "entityTypes": [
     {
@@ -283,10 +290,11 @@ exports[`mergeWith() > use existing adminOnly value if not specified on field up
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing adminOnly value if not specified on value type update 1`] = `
+exports[`updateAndValidate() > use existing adminOnly value if not specified on value type update 1`] = `
 {
   "entityTypes": [],
   "indexes": [],
@@ -298,10 +306,11 @@ exports[`mergeWith() > use existing adminOnly value if not specified on value ty
       "name": "Foo",
     },
   ],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
+exports[`updateAndValidate() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
 {
   "entityTypes": [
     {
@@ -332,10 +341,11 @@ exports[`mergeWith() > use existing adminOnly, authKeyPattern value if not speci
     },
   ],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing entityTypes value if not specified on Entity field update 1`] = `
+exports[`updateAndValidate() > use existing entityTypes value if not specified on Entity field update 1`] = `
 {
   "entityTypes": [
     {
@@ -360,10 +370,11 @@ exports[`mergeWith() > use existing entityTypes value if not specified on Entity
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update 1`] = `
+exports[`updateAndValidate() > use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update 1`] = `
 {
   "entityTypes": [
     {
@@ -410,10 +421,11 @@ exports[`mergeWith() > use existing entityTypes, linkEntityTypes, valueTypes, ri
       "name": "Bar",
     },
   ],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing index, multiline, matchPattern values if not specified on String field update 1`] = `
+exports[`updateAndValidate() > use existing index, multiline, matchPattern values if not specified on String field update 1`] = `
 {
   "entityTypes": [
     {
@@ -449,10 +461,11 @@ exports[`mergeWith() > use existing index, multiline, matchPattern values if not
     },
   ],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing integer value if not specified on Number field update 1`] = `
+exports[`updateAndValidate() > use existing integer value if not specified on Number field update 1`] = `
 {
   "entityTypes": [
     {
@@ -475,10 +488,11 @@ exports[`mergeWith() > use existing integer value if not specified on Number fie
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing list value if not specified on field update 1`] = `
+exports[`updateAndValidate() > use existing list value if not specified on field update 1`] = `
 {
   "entityTypes": [
     {
@@ -504,10 +518,11 @@ exports[`mergeWith() > use existing list value if not specified on field update 
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing required value if not specified on field update 1`] = `
+exports[`updateAndValidate() > use existing required value if not specified on field update 1`] = `
 {
   "entityTypes": [
     {
@@ -529,10 +544,11 @@ exports[`mergeWith() > use existing required value if not specified on field upd
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing valueTypes value if not specified on ValueItem field update 1`] = `
+exports[`updateAndValidate() > use existing valueTypes value if not specified on ValueItem field update 1`] = `
 {
   "entityTypes": [
     {
@@ -563,10 +579,11 @@ exports[`mergeWith() > use existing valueTypes value if not specified on ValueIt
       "name": "Bar",
     },
   ],
+  "version": 1,
 }
 `;
 
-exports[`mergeWith() > use existing values value if not specified on String field update 1`] = `
+exports[`updateAndValidate() > use existing values value if not specified on String field update 1`] = `
 {
   "entityTypes": [
     {
@@ -596,5 +613,6 @@ exports[`mergeWith() > use existing values value if not specified on String fiel
   "indexes": [],
   "patterns": [],
   "valueTypes": [],
+  "version": 1,
 }
 `;

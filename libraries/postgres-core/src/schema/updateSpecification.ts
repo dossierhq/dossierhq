@@ -8,8 +8,9 @@ export async function schemaUpdateSpecification(
   context: TransactionContext,
   schemaSpec: AdminSchemaSpecification,
 ): PromiseResult<void, typeof ErrorType.Generic> {
+  const { version, ...schemaSpecWithoutVersion } = schemaSpec;
   return await queryNone(adapter, context, {
-    text: 'INSERT INTO schema_versions (specification) VALUES ($1)',
-    values: [schemaSpec],
+    text: 'INSERT INTO schema_versions (version, specification) VALUES ($1, $2)',
+    values: [version, schemaSpecWithoutVersion],
   });
 }

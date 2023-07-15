@@ -18,7 +18,13 @@ describe('AdminSchema getSchema', () => {
     const result = await getSchemaSpecification(databaseAdapter, context, false);
 
     // defaults to empty spec
-    expectResultValue(result, { entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
+    expectResultValue(result, {
+      version: 0,
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
         [
@@ -34,6 +40,7 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecification = {
+      version: 1,
       entityTypes: [
         { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
       ],
@@ -60,6 +67,7 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec = {
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -88,6 +96,7 @@ describe('AdminSchema getSchema', () => {
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await getSchemaSpecification(databaseAdapter, context, false);
     expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -120,6 +129,7 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec = {
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -148,6 +158,7 @@ describe('AdminSchema getSchema', () => {
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await getSchemaSpecification(databaseAdapter, context, false);
     expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -180,6 +191,7 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecification = {
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',
@@ -213,6 +225,7 @@ describe('AdminSchema getSchema', () => {
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await getSchemaSpecification(databaseAdapter, context, false);
     expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+      version: 1,
       entityTypes: [
         {
           name: 'Foo',

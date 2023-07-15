@@ -12,10 +12,6 @@ CREATE TABLE principals (
     CONSTRAINT principals_pkey UNIQUE (provider, identifier),
     FOREIGN KEY (subjects_id) REFERENCES subjects(id) ON DELETE CASCADE
   ) STRICT;
-CREATE TABLE schema_versions (
-    id INTEGER PRIMARY KEY,
-    specification TEXT NOT NULL
-  ) STRICT;
 CREATE TABLE sequences (
     name TEXT NOT NULL UNIQUE,
     value INTEGER DEFAULT 0
@@ -151,3 +147,9 @@ CREATE TABLE entity_published_value_types (
     value_type TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
   );
+CREATE TABLE schema_versions (
+    id INTEGER PRIMARY KEY,
+    version INTEGER NOT NULL UNIQUE,
+    updated_at TEXT NOT NULL,
+    specification TEXT NOT NULL
+  ) STRICT;

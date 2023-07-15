@@ -2,7 +2,6 @@ import {
   AdminSchema,
   FieldType,
   RichTextNodeType,
-  isFieldValueEqual,
   ok,
   type AdminSchemaSpecification,
   type AdminSchemaSpecificationUpdate,
@@ -26,7 +25,7 @@ export async function getSchemaSpecification(
   const specification = result.value;
   if (!specification) {
     if (initialLoad) logger.info('No schema set, defaulting to empty');
-    return ok({ entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
+    return ok({ version: 0, entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
   }
 
   // Handle old schema format which lacked patterns/indexes
@@ -107,7 +106,7 @@ export async function updateSchemaSpecification(
     if (mergeResult.isError()) return mergeResult;
     const newSchema = mergeResult.value;
 
-    if (isFieldValueEqual(oldSchema.spec, newSchema.spec)) {
+    if (newSchema === oldSchema) {
       return ok({ effect: 'none', schemaSpecification: newSchema.spec });
     }
 

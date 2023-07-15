@@ -235,6 +235,22 @@ const VERSION_13: SchemaVersionDefinition[] = [
   'UPDATE entities SET dirty = 1 | 2 | 4 | 8',
 ];
 
+const VERSION_14: SchemaVersionDefinition[] = [
+  'ALTER TABLE schema_versions RENAME TO old_schema_versions',
+  `CREATE TABLE schema_versions (
+    id INTEGER PRIMARY KEY,
+    version INTEGER NOT NULL UNIQUE,
+    updated_at TEXT NOT NULL,
+    specification TEXT NOT NULL
+  ) STRICT`,
+  () => ({
+    text: `INSERT INTO schema_versions(version, updated_at, specification)
+            SELECT id AS version, ?1 AS updated_at, specification FROM old_schema_versions`,
+    values: [new Date().toISOString()],
+  }),
+  'DROP TABLE old_schema_versions',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -250,6 +266,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_11,
   VERSION_12,
   VERSION_13,
+  VERSION_14,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

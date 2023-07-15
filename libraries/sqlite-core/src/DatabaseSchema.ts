@@ -87,6 +87,8 @@ export interface PrincipalsTable {
 
 export interface SchemaVersionsTable {
   id: number;
+  version: number;
+  updated_at: string;
   specification: string;
 }
 

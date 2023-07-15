@@ -19,7 +19,9 @@ export interface AdvisoryLocksTable {
 
 export interface SchemaVersionsTable {
   id: number;
-  specification: AdminSchemaSpecification;
+  version: number;
+  updated_at: Date;
+  specification: Omit<AdminSchemaSpecification, 'version'>;
 }
 
 export interface SubjectsTable {
