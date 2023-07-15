@@ -4,7 +4,12 @@ import { ErrorType } from './ErrorResult.js';
 import type {
   AdminFieldSpecification,
   BooleanFieldSpecification,
+  EntityFieldSpecification,
+  NumberFieldSpecification,
   PublishedSchemaSpecification,
+  RichTextFieldSpecification,
+  StringFieldSpecification,
+  ValueItemFieldSpecification,
 } from './Schema.js';
 import { AdminSchema, FieldType, REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from './Schema.js';
 
@@ -156,12 +161,11 @@ describe('updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).index).toBe('anIndex');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).multiline).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).matchPattern).toBe('aPattern');
+
+    const stringFieldSpec = result.spec.entityTypes[0].fields[0] as StringFieldSpecification;
+    expect(stringFieldSpec.index).toBe('anIndex');
+    expect(stringFieldSpec.multiline).toBe(true);
+    expect(stringFieldSpec.matchPattern).toBe('aPattern');
   });
 
   test('use existing values value if not specified on String field update', () => {
@@ -180,8 +184,8 @@ describe('updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).values).toEqual([{ value: 'hello' }]);
+    const stringFieldSpec = result.spec.entityTypes[0].fields[0] as StringFieldSpecification;
+    expect(stringFieldSpec.values).toEqual([{ value: 'hello' }]);
   });
 
   test('use existing entityTypes value if not specified on Entity field update', () => {
@@ -197,8 +201,8 @@ describe('updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).entityTypes).toEqual(['Foo']);
+    const entityFieldSpec = result.spec.entityTypes[0].fields[0] as EntityFieldSpecification;
+    expect(entityFieldSpec.entityTypes).toEqual(['Foo']);
   });
 
   test('use existing integer value if not specified on Number field update', () => {
@@ -214,8 +218,8 @@ describe('updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).integer).toBe(true);
+    const numberFieldSpec = result.spec.entityTypes[0].fields[0] as NumberFieldSpecification;
+    expect(numberFieldSpec.integer).toBe(true);
   });
 
   test('use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update', () => {
@@ -249,14 +253,11 @@ describe('updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).entityTypes).toEqual(['Foo']);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).linkEntityTypes).toEqual(['Foo']);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).valueTypes).toEqual(['Bar']);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).richTextNodes).toEqual([
+    const richTextFieldSpec = result.spec.entityTypes[0].fields[0] as RichTextFieldSpecification;
+    expect(richTextFieldSpec.entityTypes).toEqual(['Foo']);
+    expect(richTextFieldSpec.linkEntityTypes).toEqual(['Foo']);
+    expect(richTextFieldSpec.valueTypes).toEqual(['Bar']);
+    expect(richTextFieldSpec.richTextNodes).toEqual([
       RichTextNodeType.entity,
       RichTextNodeType.entityLink,
       RichTextNodeType.linebreak,
@@ -291,8 +292,8 @@ describe('updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((result.spec.entityTypes[0].fields[0] as any).valueTypes).toEqual(['Bar']);
+    const valueItemFieldSpec = result.spec.entityTypes[0].fields[0] as ValueItemFieldSpecification;
+    expect(valueItemFieldSpec.valueTypes).toEqual(['Bar']);
   });
 
   test('empty->entity with pattern', () => {

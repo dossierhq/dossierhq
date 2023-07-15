@@ -41,6 +41,7 @@ import type {
   OperationWithoutCallbacks,
 } from './SharedClient.js';
 import { executeOperationPipeline } from './SharedClient.js';
+import type { LooseAutocomplete } from './TypeUtils.js';
 import type {
   AdminEntity,
   AdminEntityArchivePayload,
@@ -921,7 +922,7 @@ export function createBaseAdminClient<
 
 export async function executeAdminClientOperationFromJson(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  operationName: AdminClientOperationName | string,
+  operationName: LooseAutocomplete<AdminClientOperationName>,
   operationArgs: AdminClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
   const name = operationName as AdminClientOperationName;

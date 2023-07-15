@@ -53,14 +53,15 @@ describe('executeOperationPipeline()', () => {
     const result = await executeTestPipeline(
       { logger: NoOpLogger },
       [
-        async (_context, operation) => {
+        (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
             const {
               args: [firstArg],
               resolve,
-            } = operation as TestClientOperation<typeof TestClientOperationName.foo>;
+            } = operation;
             resolve(ok({ item: firstArg }));
           }
+          return Promise.resolve();
         },
       ],
       { name: TestClientOperationName.foo, args: ['hello'], modifies: false },
@@ -74,21 +75,21 @@ describe('executeOperationPipeline()', () => {
       [
         async (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
-            const { resolve } = operation as TestClientOperation<
-              typeof TestClientOperationName.foo
-            >;
+            const { resolve } = operation;
             const result = await operation.next();
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
             resolve(ok({ item: `[[[${result.isOk() ? result.value.item : result}]]]` }));
           }
         },
-        async (_context, operation) => {
+        (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
             const {
               args: [firstArg],
               resolve,
-            } = operation as TestClientOperation<typeof TestClientOperationName.foo>;
+            } = operation;
             resolve(ok({ item: firstArg }));
           }
+          return Promise.resolve();
         },
       ],
       { name: TestClientOperationName.foo, args: ['hello'], modifies: false },
@@ -100,8 +101,8 @@ describe('executeOperationPipeline()', () => {
     const result = await executeTestPipeline(
       { logger: NoOpLogger },
       [
-        async (_context, _operation) => {
-          throw new Error('Error message');
+        (_context, _operation) => {
+          return Promise.reject(new Error('Error message'));
         },
       ],
       { name: TestClientOperationName.foo, args: ['hello'], modifies: false },

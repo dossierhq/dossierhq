@@ -2,6 +2,7 @@ import { assertExhaustive } from './Asserts.js';
 import type { ErrorType, Result } from './ErrorResult.js';
 import { notOk, ok } from './ErrorResult.js';
 import { isFieldValueEqual } from './ItemUtils.js';
+import type { LooseAutocomplete } from './TypeUtils.js';
 import type { EntityReference, Location, RichText, ValueItem } from './Types.js';
 
 export interface AdminEntityTypeSpecification {
@@ -106,7 +107,7 @@ export interface RichTextFieldSpecification extends SharedFieldSpecification {
    * The type can either be a standard RichTextNodeType or any type that's supported by the
    * application.
    */
-  richTextNodes: (RichTextNodeType | string)[];
+  richTextNodes: LooseAutocomplete<RichTextNodeType>[];
 }
 
 export interface StringFieldSpecification extends SharedFieldSpecification {

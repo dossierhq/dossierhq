@@ -119,6 +119,7 @@ export function createErrorResult<TError extends ErrorType>(
 
 export function createErrorResultFromError<TError extends ErrorType | typeof ErrorType.Generic>(
   context: { logger: Logger },
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   error: ErrorResultError | unknown,
   expectedErrorTypes: TError[] | null = null,
 ): ErrorResult<unknown, TError | typeof ErrorType.Generic> {
@@ -168,6 +169,7 @@ export const notOk = {
         `Unexpected exception: ${error.name}: ${error.message}`,
       );
     }
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return createErrorResult(ErrorType.Generic, `Unexpected exception: ${error}`);
   },
   NotAuthenticated: (message: string): ErrorResult<unknown, typeof ErrorType.NotAuthenticated> =>

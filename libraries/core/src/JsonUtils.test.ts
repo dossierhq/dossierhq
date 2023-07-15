@@ -47,9 +47,9 @@ describe('convertJsonConnection()', () => {
         { cursor: 'two', node: notOk.BadRequest('Failed') },
       ],
     };
-    const asJson: JsonConnection<JsonEdge<{ foo: string }, ErrorType>> = JSON.parse(
-      JSON.stringify(expected),
-    );
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonConnection<
+      JsonEdge<{ foo: string }, ErrorType>
+    >;
     const converted = convertJsonConnection(asJson, (edge) =>
       convertJsonEdge(edge, (node) => node),
     );
@@ -69,7 +69,7 @@ describe('convertJsonConnection()', () => {
         { cursor: 'two', edgeProperty: 'extra two', node: notOk.BadRequest('Failed') },
       ],
     };
-    const asJson: JsonConnection<JsonCustomEdge> = JSON.parse(JSON.stringify(expected));
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonConnection<JsonCustomEdge>;
     const converted = convertJsonConnection(asJson, convertCustomJsonEdge);
     expect(converted).toEqual(expected);
   });
@@ -78,7 +78,7 @@ describe('convertJsonConnection()', () => {
 describe('convertJsonResult()', () => {
   test('ok', () => {
     const expected = ok({ foo: 123 });
-    const asJson: JsonResult<{ foo: number }, ErrorType> = JSON.parse(JSON.stringify(expected));
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<{ foo: number }, ErrorType>;
     const converted = convertJsonResult(asJson);
     if (expectOkResult(converted)) {
       expect(converted).toEqual(expected);
@@ -87,7 +87,7 @@ describe('convertJsonResult()', () => {
 
   test('ok(null)', () => {
     const expected = ok(null);
-    const asJson: JsonResult<null, ErrorType> = JSON.parse(JSON.stringify(expected));
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<null, ErrorType>;
     const converted = convertJsonResult(asJson);
     if (expectOkResult(converted)) {
       expect(converted).toEqual(expected);
@@ -96,7 +96,7 @@ describe('convertJsonResult()', () => {
 
   test('notOk', () => {
     const expected = notOk.NotAuthenticated('Error message');
-    const asJson: JsonResult<{ foo: number }, ErrorType> = JSON.parse(JSON.stringify(expected));
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<{ foo: number }, ErrorType>;
     const converted = convertJsonResult(asJson);
     expectErrorResult(converted, ErrorType.NotAuthenticated, 'Error message');
   });
@@ -108,7 +108,7 @@ describe('convertJsonEntityVersion()', () => {
       id: '123',
       versions: [{ createdAt: new Date(), createdBy: '4321', published: true, version: 0 }],
     };
-    const asJson: JsonEntityHistory = JSON.parse(JSON.stringify(expected));
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonEntityHistory;
     const converted = convertJsonEntityHistory(asJson);
     expect(converted).toEqual(expected);
 
@@ -129,7 +129,7 @@ describe('convertJsonPublishingHistory()', () => {
         },
       ],
     };
-    const asJson: JsonPublishingHistory = JSON.parse(JSON.stringify(expected));
+    const asJson = JSON.parse(JSON.stringify(expected)) as JsonPublishingHistory;
     const converted = convertJsonPublishingHistory(asJson);
     expect(converted).toEqual(expected);
 

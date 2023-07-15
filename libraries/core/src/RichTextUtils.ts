@@ -105,7 +105,7 @@ export function createRichTextTabNode(): RichTextTabNode {
 export function createRichTextTextAndWhitespaceNodes(
   text: string,
   options?: { format?: TextFormatType[] },
-): (RichTextTextNode | RichTextLineBreakNode | RichTextTabNode)[] {
+): (RichTextTextNode | RichTextLineBreakNode)[] {
   if (!(text.includes('\n') || text.includes('\r') || text.includes('\t'))) {
     return [createRichTextTextNode(text, options)];
   }

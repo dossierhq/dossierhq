@@ -42,7 +42,7 @@ type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean && !fieldSpec.list;
 }
@@ -50,15 +50,15 @@ export function isBooleanField(
 /** Check if `value` with `fieldSpec` is a list boolean field */
 export function isBooleanListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.Boolean]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Boolean][] | null {
   return fieldSpec.type === FieldType.Boolean && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single boolean field or an item in a list field */
 export function isBooleanItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean;
 }
@@ -66,7 +66,7 @@ export function isBooleanItemField(
 /** Check if `value` with `fieldSpec` is a single Entity field */
 export function isEntityField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
   return fieldSpec.type === FieldType.Entity && !fieldSpec.list;
 }
@@ -74,15 +74,15 @@ export function isEntityField(
 /** Check if `value` with `fieldSpec` is a list Entity field */
 export function isEntityListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.Entity]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Entity][] | null {
   return fieldSpec.type === FieldType.Entity && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single Entity field or an item in a list field */
 export function isEntityItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
   return fieldSpec.type === FieldType.Entity;
 }
@@ -90,7 +90,7 @@ export function isEntityItemField(
 /** Check if `value` with `fieldSpec` is a single Location field */
 export function isLocationField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location && !fieldSpec.list;
 }
@@ -98,15 +98,15 @@ export function isLocationField(
 /** Check if `value` with `fieldSpec` is a list Location field */
 export function isLocationListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.Location]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Location][] | null {
   return fieldSpec.type === FieldType.Location && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single Location field or an item in a list field */
 export function isLocationItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location;
 }
@@ -114,7 +114,7 @@ export function isLocationItemField(
 /** Check if `value` with `fieldSpec` is a single number field */
 export function isNumberField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Number] | null {
   return fieldSpec.type === FieldType.Number && !fieldSpec.list;
 }
@@ -122,15 +122,15 @@ export function isNumberField(
 /** Check if `value` with `fieldSpec` is a list number field */
 export function isNumberListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.Number]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Number][] | null {
   return fieldSpec.type === FieldType.Number && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single number field or an item in a list field */
 export function isNumberItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Number] | null {
   return fieldSpec.type === FieldType.Number;
 }
@@ -138,7 +138,7 @@ export function isNumberItemField(
 /** Check if `value` with `fieldSpec` is a single String field */
 export function isStringField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String && !fieldSpec.list;
 }
@@ -146,15 +146,15 @@ export function isStringField(
 /** Check if `value` with `fieldSpec` is a list String field */
 export function isStringListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.String]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.String][] | null {
   return fieldSpec.type === FieldType.String && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single String field or an item in a list field */
 export function isStringItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String;
 }
@@ -162,7 +162,7 @@ export function isStringItemField(
 /** Check if `value` with `fieldSpec` is a single RichText field */
 export function isRichTextField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText && !fieldSpec.list;
 }
@@ -170,15 +170,15 @@ export function isRichTextField(
 /** Check if `value` with `fieldSpec` is a list RichText field */
 export function isRichTextListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.RichText]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.RichText][] | null {
   return fieldSpec.type === FieldType.RichText && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single RichText field or an item in a list field */
 export function isRichTextItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText;
 }
@@ -186,7 +186,7 @@ export function isRichTextItemField(
 /** Check if `value` with `fieldSpec` is a single ValueItem field */
 export function isValueItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.ValueItem] | null {
   return fieldSpec.type === FieldType.ValueItem && !fieldSpec.list;
 }
@@ -194,15 +194,15 @@ export function isValueItemField(
 /** Check if `value` with `fieldSpec` is a list ValueItem field */
 export function isValueItemListField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
-): value is Array<FieldValueTypeMap[typeof FieldType.ValueItem]> | null {
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.ValueItem][] | null {
   return fieldSpec.type === FieldType.ValueItem && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single ValueItem field or an item in a list field */
 export function isValueItemItemField(
   fieldSpec: FieldSpecification,
-  value: unknown | null,
+  value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.ValueItem] | null {
   return fieldSpec.type === FieldType.ValueItem;
 }
@@ -379,6 +379,7 @@ export function isEntityNameAsRequested(currentName: string, requestedName: stri
 export function isFieldValueEqual(a: unknown, b: unknown): boolean {
   if (a === b) return true;
 
+  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (a === null || a === undefined || b === null || b === undefined) {
     return false; // if a or be are not defined they can't be equal
   }
@@ -493,9 +494,8 @@ export function normalizeFieldValue(
     }
 
     let changed = false;
-    const newList = [];
-    for (let i = 0; i < value.length; i += 1) {
-      const item = value[i];
+    const newList: unknown[] = [];
+    for (const item of value) {
       const normalizedItem = normalizeFieldValueItem(schema, fieldSpec, item);
       if (item !== normalizedItem || normalizedItem === null) {
         changed = true;
@@ -508,7 +508,7 @@ export function normalizeFieldValue(
     if (newList.length === 0) {
       return null;
     }
-    return changed ? newList : value;
+    return changed ? newList : (value as unknown[]);
   }
 
   return normalizeFieldValueItem(schema, fieldSpec, value);

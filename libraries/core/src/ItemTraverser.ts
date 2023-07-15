@@ -193,7 +193,7 @@ export function* traverseItemField<TSchema extends AdminSchema | PublishedSchema
 
     for (let i = 0; i < value.length; i += 1) {
       const fieldItemPath = [...path, i];
-      const fieldItem = value[i];
+      const fieldItem = value[i] as unknown;
       yield* traverseItemFieldValue(schema, fieldItemPath, fieldSpec, fieldItem);
     }
   } else {

@@ -14,6 +14,7 @@ export function encodeObjectToURLSearchParams(
         (removeEmptyObjects &&
           typeof value === 'object' &&
           value &&
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           Object.keys(value).length === 0)
       ) {
         continue;
@@ -40,5 +41,5 @@ export function decodeURLSearchParamsParam<TReturn>(
   if (typeof encoded !== 'string') {
     throw new Error(`Expected string value for URL search param ${name}`);
   }
-  return JSON.parse(encoded);
+  return JSON.parse(encoded) as TReturn;
 }

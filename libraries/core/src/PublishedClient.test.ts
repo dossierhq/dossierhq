@@ -5,14 +5,15 @@ import { convertJsonResult } from './JsonUtils.js';
 import { NoOpLogger } from './Logger.js';
 import type {
   PublishedClient,
+  PublishedClientJsonOperationArgs,
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient.js';
 import {
+  PublishedClientOperationName,
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
-  PublishedClientOperationName,
 } from './PublishedClient.js';
 import type { ClientContext } from './SharedClient.js';
 import type { PublishedEntity } from './Types.js';
@@ -21,7 +22,9 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   publishedClient: PublishedClient,
 ): PublishedClientMiddleware<TContext> {
   return async function (_context, operation) {
-    const convertedOperationArgs = JSON.parse(JSON.stringify(operation.args));
+    const convertedOperationArgs = JSON.parse(
+      JSON.stringify(operation.args),
+    ) as PublishedClientJsonOperationArgs;
     // normally sent over HTTP
     const resultJson = await executePublishedClientOperationFromJson(
       publishedClient,
@@ -29,7 +32,9 @@ function createForwardingMiddleware<TContext extends ClientContext>(
       convertedOperationArgs,
     );
     // normally returned over HTTP
-    const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));
+    const convertedResultJson = convertJsonResult(
+      JSON.parse(JSON.stringify(resultJson)) as typeof resultJson,
+    );
     operation.resolve(convertJsonPublishedClientResult(operation.name, convertedResultJson));
   };
 }
@@ -83,9 +88,10 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.getEntities,
-        async (_context, operation) => {
+        (_context, operation) => {
           const [references] = operation.args;
           operation.resolve(ok(references.map(({ id }) => ok(createDummyEntity({ id })))));
+          return Promise.resolve();
         },
       );
 
@@ -167,7 +173,7 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.getEntity,
-        async (_context, operation) => {
+        (_context, operation) => {
           const [reference] = operation.args;
           operation.resolve(
             ok(
@@ -176,6 +182,7 @@ describe('PublishedClient forward operation over JSON', () => {
               }),
             ),
           );
+          return Promise.resolve();
         },
       );
 
@@ -229,10 +236,11 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.getSchemaSpecification,
-        async (_context, operation) => {
+        (_context, operation) => {
           operation.resolve(
             ok({ version: 0, entityTypes: [], valueTypes: [], patterns: [], indexes: [] }),
           );
+          return Promise.resolve();
         },
       );
 
@@ -276,9 +284,10 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.getTotalCount,
-        async (_context, operation) => {
+        (_context, operation) => {
           const [_query] = operation.args;
           operation.resolve(ok(123));
+          return Promise.resolve();
         },
       );
 
@@ -336,9 +345,10 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.sampleEntities,
-        async (_context, operation) => {
+        (_context, operation) => {
           const [_query, _options] = operation.args;
           operation.resolve(ok({ seed: 123, totalCount: 1, items: [entity1] }));
+          return Promise.resolve();
         },
       );
 
@@ -402,7 +412,7 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.searchEntities,
-        async (_context, operation) => {
+        (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(
             ok({
@@ -420,6 +430,7 @@ describe('PublishedClient forward operation over JSON', () => {
               ],
             }),
           );
+          return Promise.resolve();
         },
       );
 
@@ -488,9 +499,10 @@ describe('PublishedClient forward operation over JSON', () => {
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
         PublishedClientOperationName.searchEntities,
-        async (_context, operation) => {
+        (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(ok(null));
+          return Promise.resolve();
         },
       );
 

@@ -178,9 +178,10 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.acquireAdvisoryLock,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [name, _options] = operation.args;
         operation.resolve(ok({ name, handle: 123 }));
+        return Promise.resolve();
       },
     );
 
@@ -222,7 +223,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.archiveEntity,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [reference] = operation.args;
         operation.resolve(
           ok({
@@ -232,6 +233,7 @@ describe('AdminClient forward operation over JSON', () => {
             updatedAt: new Date('2021-08-17T08:51:25.56Z'),
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -275,7 +277,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.createEntity,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [entity, options] = operation.args;
         operation.resolve(
           ok({
@@ -288,6 +290,7 @@ describe('AdminClient forward operation over JSON', () => {
             }) as unknown as AdminEntity,
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -367,11 +370,12 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.getEntities,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
           ok(references.map(({ id }) => ok(createDummyEntity({ id }) as unknown as AdminEntity))),
         );
+        return Promise.resolve();
       },
     );
 
@@ -465,7 +469,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.getEntity,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [reference] = operation.args;
         operation.resolve(
           ok(
@@ -474,6 +478,7 @@ describe('AdminClient forward operation over JSON', () => {
             }) as unknown as AdminEntity,
           ),
         );
+        return Promise.resolve();
       },
     );
 
@@ -534,7 +539,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.getEntityHistory,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [reference] = operation.args;
         operation.resolve(
           ok({
@@ -549,6 +554,7 @@ describe('AdminClient forward operation over JSON', () => {
             ],
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -602,7 +608,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.getPublishingHistory,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [reference] = operation.args;
         operation.resolve(
           ok({
@@ -617,6 +623,7 @@ describe('AdminClient forward operation over JSON', () => {
             ],
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -670,10 +677,11 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.getSchemaSpecification,
-      async (_context, operation) => {
+      (_context, operation) => {
         operation.resolve(
           ok({ version: 1, entityTypes: [], valueTypes: [], patterns: [], indexes: [] }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -716,9 +724,10 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.getTotalCount,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [_query] = operation.args;
         operation.resolve(ok(123));
+        return Promise.resolve();
       },
     );
 
@@ -763,7 +772,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.publishEntities,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
           ok(
@@ -775,6 +784,7 @@ describe('AdminClient forward operation over JSON', () => {
             })),
           ),
         );
+        return Promise.resolve();
       },
     );
 
@@ -837,9 +847,10 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.releaseAdvisoryLock,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [name, _handle] = operation.args;
         operation.resolve(ok({ name }));
+        return Promise.resolve();
       },
     );
 
@@ -876,9 +887,10 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.renewAdvisoryLock,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [name, handle] = operation.args;
         operation.resolve(ok({ name, handle }));
+        return Promise.resolve();
       },
     );
 
@@ -931,9 +943,10 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.sampleEntities,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [_query, options] = operation.args;
         operation.resolve(ok({ seed: options?.seed ?? 1, totalCount: 1, items: [entity1] }));
+        return Promise.resolve();
       },
     );
 
@@ -1004,7 +1017,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.searchEntities,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [_query, _paging] = operation.args;
         operation.resolve(
           ok({
@@ -1022,6 +1035,7 @@ describe('AdminClient forward operation over JSON', () => {
             ],
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -1093,9 +1107,10 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.searchEntities,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [_query, _paging] = operation.args;
         operation.resolve(ok(null));
+        return Promise.resolve();
       },
     );
 
@@ -1132,7 +1147,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.unarchiveEntity,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [reference] = operation.args;
         operation.resolve(
           ok({
@@ -1142,6 +1157,7 @@ describe('AdminClient forward operation over JSON', () => {
             updatedAt: new Date('2021-08-17T08:51:25.56Z'),
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -1185,7 +1201,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.unpublishEntities,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
           ok(
@@ -1197,6 +1213,7 @@ describe('AdminClient forward operation over JSON', () => {
             })),
           ),
         );
+        return Promise.resolve();
       },
     );
 
@@ -1254,7 +1271,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.updateEntity,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [entity, options] = operation.args;
         operation.resolve(
           ok({
@@ -1267,6 +1284,7 @@ describe('AdminClient forward operation over JSON', () => {
             }) as unknown as AdminEntity,
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -1340,7 +1358,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.updateSchemaSpecification,
-      async (_context, operation) => {
+      (_context, operation) => {
         operation.resolve(
           ok({
             effect: 'updated',
@@ -1353,6 +1371,7 @@ describe('AdminClient forward operation over JSON', () => {
             },
           }),
         );
+        return Promise.resolve();
       },
     );
 
@@ -1403,7 +1422,7 @@ describe('AdminClient forward operation over JSON', () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
       AdminClientOperationName.upsertEntity,
-      async (_context, operation) => {
+      (_context, operation) => {
         const [entity, options] = operation.args;
         operation.resolve(
           ok({
@@ -1416,6 +1435,7 @@ describe('AdminClient forward operation over JSON', () => {
             }) as unknown as AdminEntity,
           }),
         );
+        return Promise.resolve();
       },
     );
 

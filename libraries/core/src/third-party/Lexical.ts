@@ -8,16 +8,16 @@ export interface SerializedEditorState {
 
 export type SerializedRootNode = SerializedElementNode;
 
-export type SerializedLexicalNode = {
+export interface SerializedLexicalNode {
   type: string;
   version: number;
-};
+}
 
 type ElementFormatType = 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
 
 export type SerializedElementNode<T extends SerializedLexicalNode = SerializedLexicalNode> = Spread<
   {
-    children: Array<T>;
+    children: T[];
     direction: 'ltr' | 'rtl' | null;
     format: ElementFormatType;
     indent: number;
@@ -95,10 +95,10 @@ export type SerializedCodeHighlightNode = Spread<
 
 // from @lexical/link
 
-export type LinkAttributes = {
+export interface LinkAttributes {
   rel?: null | string;
   target?: null | string;
-};
+}
 
 export type SerializedLinkNode = Spread<
   { url: string },

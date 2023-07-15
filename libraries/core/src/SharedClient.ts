@@ -28,9 +28,10 @@ export interface Operation<
 
 export type OperationWithoutCallbacks<T> = Omit<T, 'resolve' | 'next'>;
 
-export interface Middleware<TContext extends ClientContext, TOp> {
-  (context: TContext, operation: TOp): Promise<void>;
-}
+export type Middleware<TContext extends ClientContext, TOp> = (
+  context: TContext,
+  operation: TOp,
+) => Promise<void>;
 
 export async function executeOperationPipeline<
   TContext extends ClientContext,

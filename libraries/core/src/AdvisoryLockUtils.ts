@@ -42,7 +42,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
 
   // Keep lock alive
   const intervalHandle = setInterval(() => {
-    (async () => {
+    void (async () => {
       try {
         const renewResult = await adminClient.renewAdvisoryLock(name, handle);
         if (renewResult.isError()) {

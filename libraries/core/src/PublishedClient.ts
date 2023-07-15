@@ -16,6 +16,7 @@ import type {
   OperationWithoutCallbacks,
 } from './SharedClient.js';
 import { executeOperationPipeline } from './SharedClient.js';
+import type { LooseAutocomplete } from './TypeUtils.js';
 import type {
   Connection,
   Edge,
@@ -344,7 +345,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   > {
     let context: TContext;
     if (typeof this.context === 'function') {
-      const contextResult = await (this.context as ContextProvider<TContext>)();
+      const contextResult = await this.context();
       if (contextResult.isError()) {
         if (contextResult.isErrorType(ErrorType.Generic)) {
           return contextResult;
@@ -425,7 +426,7 @@ export function createBasePublishedClient<
 
 export async function executePublishedClientOperationFromJson(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
-  operationName: PublishedClientOperationName | string,
+  operationName: LooseAutocomplete<PublishedClientOperationName>,
   operationArgs: PublishedClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
   const name = operationName as PublishedClientOperationName;
