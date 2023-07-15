@@ -288,7 +288,7 @@ function fieldType(
   if (!fieldSpec.list) {
     return type + nullableSuffix;
   }
-  return (type.includes('|') ? `Array<${type}>` : `${type}[]`) + nullableSuffix;
+  return (type.includes('|') ? `(${type})[]` : `${type}[]`) + nullableSuffix;
 }
 
 function stringLiteralsUnionOrNever(stringValues: string[]) {

@@ -206,7 +206,7 @@ export interface AdminStringsFields {
   string: string | null;
   stringList: string[] | null;
   values: 'bar' | 'baz' | 'foo' | null;
-  valuesList: Array<'bar' | 'baz' | 'foo'> | null;
+  valuesList: ('bar' | 'baz' | 'foo')[] | null;
 }
 
 export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;
@@ -318,7 +318,7 @@ export interface AdminValueTypesFields {
   valueTypeFooBar: AdminBar | AdminFoo | null;
   valueTypeList: AppAdminValueItem[] | null;
   valueTypeListFoo: AdminFoo[] | null;
-  valueTypeListFooBar: Array<AdminBar | AdminFoo> | null;
+  valueTypeListFooBar: (AdminBar | AdminFoo)[] | null;
 }
 
 export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields, string>;

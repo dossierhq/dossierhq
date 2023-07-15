@@ -97,7 +97,7 @@ export function assertIsAdminBlogPost(
 }
 
 export interface AdminChapterFields {
-  items: Array<AdminArticleTocItem | AdminTocItem> | null;
+  items: (AdminArticleTocItem | AdminTocItem)[] | null;
 }
 
 export type AdminChapter = AdminEntity<'Chapter', AdminChapterFields, string>;
@@ -184,7 +184,7 @@ export function assertIsAdminCloudinaryImage(
 
 export interface AdminTocItemFields {
   title: string | null;
-  items: Array<AdminArticleTocItem | AdminTocItem> | null;
+  items: (AdminArticleTocItem | AdminTocItem)[] | null;
 }
 
 export type AdminTocItem = ValueItem<'TocItem', AdminTocItemFields>;
@@ -296,7 +296,7 @@ export function assertIsPublishedBlogPost(
 }
 
 export interface PublishedChapterFields {
-  items: Array<PublishedArticleTocItem | PublishedTocItem>;
+  items: (PublishedArticleTocItem | PublishedTocItem)[];
 }
 
 export type PublishedChapter = PublishedEntity<'Chapter', PublishedChapterFields, string>;
@@ -392,7 +392,7 @@ export function assertIsPublishedCloudinaryImage(
 
 export interface PublishedTocItemFields {
   title: string;
-  items: Array<PublishedArticleTocItem | PublishedTocItem>;
+  items: (PublishedArticleTocItem | PublishedTocItem)[];
 }
 
 export type PublishedTocItem = ValueItem<'TocItem', PublishedTocItemFields>;

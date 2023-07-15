@@ -148,7 +148,7 @@ export interface AdminStringsFields {
   pattern: string | null;
   patternList: string[] | null;
   values: 'bar' | 'baz' | 'foo' | null;
-  valuesList: Array<'bar' | 'baz' | 'foo'> | null;
+  valuesList: ('bar' | 'baz' | 'foo')[] | null;
   unique: string | null;
   uniqueAdminOnly: string | null;
   uniqueGenericIndex: string | null;
@@ -455,7 +455,7 @@ export interface PublishedStringsFields {
   pattern: string | null;
   patternList: string[] | null;
   values: 'bar' | 'baz' | 'foo' | null;
-  valuesList: Array<'bar' | 'baz' | 'foo'> | null;
+  valuesList: ('bar' | 'baz' | 'foo')[] | null;
   unique: string | null;
   uniqueGenericIndex: string | null;
 }
