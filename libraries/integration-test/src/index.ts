@@ -17,6 +17,4 @@ export interface TestFunctionInitializer<TContext, TCleanup> {
 
 export type TestFunction = () => void | Promise<void>;
 
-export interface TestSuite {
-  [testName: string]: TestFunction;
-}
+export type TestSuite = Record<string, TestFunction>;

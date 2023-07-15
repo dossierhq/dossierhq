@@ -21,12 +21,14 @@ export function assertTruthy(actual: unknown): asserts actual {
 
 export function assertSame<T>(actual: T, expected: T): void {
   if (actual !== expected) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     throw new AssertionError(actual, expected, `Expected same, got ${actual} !== ${expected}`);
   }
 }
 
 export function assertNotSame<T>(actual: T, expected: T): void {
   if (actual === expected) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     throw new AssertionError(actual, expected, `Expected not same, got ${actual} === ${expected}`);
   }
 }
@@ -34,6 +36,7 @@ export function assertNotSame<T>(actual: T, expected: T): void {
 export function assertEquals<T>(actual: T, expected: T): void {
   //TODO need a different name for isFieldValueEqual
   if (!isFieldValueEqual(actual, expected)) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     throw new AssertionError(actual, expected, `Expected equals, got ${actual} !== ${expected}`);
   }
 }

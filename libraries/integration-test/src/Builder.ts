@@ -1,8 +1,6 @@
 import type { TestFunctionInitializer, TestSuite } from './index.js';
 
-export interface UnboundTestFunction<TContext> {
-  (context: TContext): void | Promise<void>;
-}
+export type UnboundTestFunction<TContext> = (context: TContext) => void | Promise<void>;
 
 export function buildSuite<TContext, TCleanup>(
   context: TestFunctionInitializer<TContext, TCleanup>,

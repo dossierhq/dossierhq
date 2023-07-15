@@ -136,27 +136,11 @@ export function assertPageInfoEquals<TEntity extends AppAdminEntity | AppPublish
   });
 }
 
-export async function countSearchResultWithEntity(
-  client: AppAdminClient,
-  query: Parameters<AppAdminClient['searchEntities']>[0],
-  entityId: string,
-): PromiseResult<
-  number,
-  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
->;
-export async function countSearchResultWithEntity(
-  client: AppPublishedClient,
-  query: Parameters<AppPublishedClient['searchEntities']>[0],
-  entityId: string,
-): PromiseResult<
-  number,
-  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
->;
-export async function countSearchResultWithEntity(
-  client: AppAdminClient | AppPublishedClient,
-  query:
-    | Parameters<AppAdminClient['searchEntities']>[0]
-    | Parameters<AppPublishedClient['searchEntities']>[0],
+export async function countSearchResultWithEntity<
+  TClient extends AppAdminClient | AppPublishedClient,
+>(
+  client: TClient,
+  query: Parameters<TClient['searchEntities']>[0],
   entityId: string,
 ): PromiseResult<
   number,
@@ -167,10 +151,8 @@ export async function countSearchResultWithEntity(
   for await (const pageResult of getAllPagesForConnection<
     Edge<AppAdminEntity | AppPublishedEntity, ErrorType>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
-  >({ first: 50 }, (currentPaging) =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    client.searchEntities(query as any, currentPaging),
-  )) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+  >({ first: 50 }, (currentPaging) => client.searchEntities(query as any, currentPaging))) {
     if (pageResult.isError()) return pageResult;
     for (const edge of pageResult.value.edges) {
       if (edge.node.isOk() && edge.node.value.id === entityId) {

@@ -2,7 +2,7 @@
 import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { writeFile } from 'node:fs/promises';
-import prettier from 'prettier';
+import { format, resolveConfig } from 'prettier';
 import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
@@ -10,8 +10,8 @@ async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filenam
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
 
-  const prettierConfig = await prettier.resolveConfig(filename);
-  const formattedSource = await prettier.format(sourceCode, {
+  const prettierConfig = await resolveConfig(filename);
+  const formattedSource = await format(sourceCode, {
     ...prettierConfig,
     filepath: filename,
   });
