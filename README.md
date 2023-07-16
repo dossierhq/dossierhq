@@ -30,12 +30,10 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 
 ## Development dependencies
 
-- Use nvm to manage node version
+- Use [asdf](https://asdf-vm.com/) to install the tools in `.tools-versions`
 - `npm install -g @microsoft/rush`
-- `brew install deno` (for `examples/deno`)
 - `brew install pgcli` (optional, for Postgres access)
 - `brew install gnuplot` (for benchmarking)
-- `curl https://bun.sh/install | bash` (for [Bun](https://bun.sh/), needed by `examples/bun`)
 - `npx playwright install` (for installing browsers for Playwright testing)
 
 ## Getting started
@@ -65,9 +63,7 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 
 ## Upgrade dependencies
 
-- Upgrade node version in `.nvmrc`
-- Upgrade deno version in Github Actions workflows (`deno-version`)
-- Upgrade bun version in Github Actions workflows (`bun-version`)
+- Upgrade tool versions in `.tool-versions`
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
 - Upgrade individual dependencies in `tools/all-dependencies/`:
   - `npm run outdated` to get a list of outdated dependencies

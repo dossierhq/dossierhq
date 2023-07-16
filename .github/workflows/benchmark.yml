@@ -22,22 +22,11 @@ jobs:
           path: |
             common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - name: Use bun
-        uses: antongolub/action-setup-bun@v1
-        with:
-          bun-version: 0.6.13
+      - uses: asdf-vm/actions/install@v2
       - name: Install gnuplot
         run: |
           sudo apt-get update # to avoid error: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
           sudo apt-get install -y gnuplot
-      - name: Use deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: "1.33.1"
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install --bypass-policy
