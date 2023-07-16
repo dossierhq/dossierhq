@@ -175,7 +175,7 @@ set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8 size
 set output '${path.basename(gnuPlotPngPath)}'
   ${mainGnuPlotScript}`;
 
-  const gnuPlotData = processed.iterations_ms.map((x) => (x === null ? 'NaN' : x)).join('\n');
+  const gnuPlotData = processed.iterations_ms.map((it) => it ?? 'NaN').join('\n');
 
   const containsSomeDataPoint = processed.iterations_ms.some((it) => it !== null);
   if (!containsSomeDataPoint) {

@@ -17,7 +17,7 @@ export interface BenchPressProcessedResult {
   min_ms: number | null;
   max_ms: number | null;
   percentiles_ms: Record<string, number | null>;
-  iterations_ms: Array<number | null>;
+  iterations_ms: (number | null)[];
 }
 
 export function processResults(

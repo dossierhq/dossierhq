@@ -14,7 +14,7 @@ export interface BenchPressResult {
   testName: string;
   variant: string;
   runName: string;
-  iterationDurations_ms: Array<number | null>;
+  iterationDurations_ms: (number | null)[];
   iterationCount: number;
 }
 
