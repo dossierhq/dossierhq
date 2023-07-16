@@ -17,7 +17,7 @@ async function createPostgresDatabaseAdapter(
   await client.connect();
   const {
     rows: [{ count }],
-  } = await client.query('SELECT COUNT(*) FROM entities');
+  } = await client.query<{ count: number }>('SELECT COUNT(*) FROM entities');
   if (count > 0) {
     console.log(`Deleting ${count} entities from database`);
     await client.query('DELETE FROM entities');

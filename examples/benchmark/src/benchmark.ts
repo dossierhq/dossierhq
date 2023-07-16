@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import type {
   AdminClient,
   AdminEntity,
@@ -12,6 +11,7 @@ import type {
 } from '@dossierhq/core';
 import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, Server } from '@dossierhq/server';
+import { faker } from '@faker-js/faker';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
 import { initializeServer } from './server.js';
@@ -46,13 +46,13 @@ function randomWeightedSelect<T>(values: T[], weights: number[]) {
   throw new Error('Unexpected, remaining random: ' + remainingRandom);
 }
 
-function randomGenerate<T>(values: Array<T | (() => T)>, weights: number[]) {
+function randomGenerate<T>(values: (T | (() => T))[], weights: number[]) {
   const selected = randomWeightedSelect(values, weights);
   return typeof selected === 'function' ? (selected as () => T)() : selected;
 }
 
 async function randomGenerateResult<T>(
-  values: Array<Result<T, ErrorType> | (() => PromiseResult<T, ErrorType>)>,
+  values: (Result<T, ErrorType> | (() => PromiseResult<T, ErrorType>))[],
   weights: number[],
 ): PromiseResult<T, ErrorType> {
   const selected = randomWeightedSelect(values, weights);
@@ -143,7 +143,7 @@ function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
       name,
       organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
       address: createPostalAddress(),
-      web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+      web: randomNullUndefined(faker.internet.url(), 30, 0, 70),
     },
   });
 }
@@ -184,7 +184,7 @@ function createPostalAddress() {
   return {
     type: 'PostalAddress',
     address1: faker.location.streetAddress(),
-    address2: randomNullUndefined(faker.location.secondaryAddress, 50, 0, 50),
+    address2: randomNullUndefined(faker.location.secondaryAddress(), 50, 0, 50),
     city: faker.location.city(),
     zip: faker.location.zipCode(),
   };
