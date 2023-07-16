@@ -1,25 +1,34 @@
-import type { AdminSchema } from '@dossierhq/core';
+import type { AdminSchema, ErrorType, Result } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@dossierhq/graphql';
 import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
 import type { Server } from '@dossierhq/server';
-import express, { type Request } from 'express';
+import express from 'express';
+import type { OperationContext, RequestHeaders } from 'graphql-http';
 import { createHandler } from 'graphql-http/lib/use/express';
-import type { IncomingHttpHeaders } from 'http';
 import { initializeServer, updateSchema } from './server.js';
 
-async function createSessionContext(server: Server, headers: IncomingHttpHeaders) {
-  const provider = headers['insecure-auth-provider'];
-  const identifier = headers['insecure-auth-identifier'];
-  if (typeof provider !== 'string' || !provider) {
-    return notOk.BadRequest('Header insecure-auth-provider is missing');
+async function createSessionContext(server: Server, headers: RequestHeaders) {
+  function getHeader(header: string): Result<string, typeof ErrorType.BadRequest> {
+    let value: string | string[] | undefined | null;
+    if ('get' in headers && typeof headers.get === 'function') {
+      value = headers.get(header);
+    } else {
+      value = (headers as Record<string, string | string[] | undefined>)[header];
+    }
+    if (typeof value !== 'string' || !value) {
+      return notOk.BadRequest(`Header ${header} is missing`);
+    }
+    return ok(value);
   }
-  if (typeof identifier !== 'string' || !identifier) {
-    return notOk.BadRequest('Header insecure-auth-identifier is missing');
-  }
+  const provider = getHeader('insecure-auth-identifier');
+  const identifier = getHeader('insecure-auth-identifier');
+  if (provider.isError()) return provider;
+  if (identifier.isError()) return identifier;
+
   const sessionResult = await server.createSession({
-    provider,
-    identifier,
+    provider: provider.value,
+    identifier: identifier.value,
     defaultAuthKeys: ['none'],
     logger: null,
     databasePerformance: null,
@@ -37,7 +46,7 @@ function startExpressServer(server: Server, schema: AdminSchema, port: number) {
     '/graphql',
     createHandler({
       schema: gqlSchema,
-      async context(request: Request) {
+      async context(request): Promise<OperationContext> {
         const context: SessionGraphQLContext = {
           adminClient: notOk.NotAuthenticated('No session'),
           publishedClient: notOk.NotAuthenticated('No session'),
@@ -47,9 +56,7 @@ function startExpressServer(server: Server, schema: AdminSchema, port: number) {
           context.adminClient = ok(server.createAdminClient(sessionResult.value.context));
           context.publishedClient = ok(server.createPublishedClient(sessionResult.value.context));
         }
-        // TODO typing in graphql-http is wrong
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return context as any;
+        return context as unknown as OperationContext;
       },
     }),
   );
@@ -73,8 +80,10 @@ async function main(port: number) {
     logger.warn('SIGINT signal received: closing HTTP server');
     expressServer.close(() => {
       logger.warn('HTTP server closed');
-      server.shutdown().then(() => logger.warn('Dossier server closed'));
-      process.exit(1);
+      void server
+        .shutdown()
+        .then(() => logger.warn('Dossier server closed'))
+        .then(() => process.exit(1));
     });
   });
 }
