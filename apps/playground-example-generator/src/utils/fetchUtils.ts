@@ -21,7 +21,7 @@ export async function fetchTextCached(url: string, cachePath: string) {
   return text;
 }
 
-export async function fetchJsonCached(url: string, cachePath: string) {
+export async function fetchJsonCached<T>(url: string, cachePath: string) {
   const text = await fetchTextCached(url, cachePath);
-  return JSON.parse(text);
+  return JSON.parse(text) as T;
 }

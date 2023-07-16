@@ -19,8 +19,123 @@ import { SCHEMA } from './schema.js';
 
 const UUID_NAMESPACE = 'b0a4c16c-8feb-4a68-9d43-98f96719eee5';
 
-async function downloadFile(filename: string) {
-  return await fetchJsonCached(
+type StarwarsFilms = {
+  pk: number;
+  model: string;
+  fields: {
+    starships: number[];
+    edited: string;
+    vehicles: number[];
+    planets: number[];
+    producer: string;
+    title: string;
+    created: string;
+    episode_id: number;
+    director: string;
+    release_date: string;
+    opening_crawl: string;
+    characters: number[];
+    species: number[];
+  };
+}[];
+
+type StarwarsPeople = {
+  pk: number;
+  model: string;
+  fields: {
+    edited: string;
+    name: string;
+    created: string;
+    gender: string;
+    skin_color: string;
+    hair_color: string;
+    height: string;
+    eye_color: string;
+    mass: string;
+    homeworld: number;
+    birth_year: string;
+  };
+}[];
+
+type StarwarsPlanets = {
+  pk: number;
+  model: string;
+  fields: {
+    edited: string;
+    climate: string;
+    surface_water: string;
+    name: string;
+    diameter: string;
+    rotation_period: string;
+    created: string;
+    terrain: string;
+    gravity: string;
+    orbital_period: string;
+    population: string;
+  };
+}[];
+
+type StarwarsSpecies = {
+  pk: number;
+  model: string;
+  fields: {
+    edited: string;
+    classification: string;
+    name: string;
+    designation: string;
+    created: string;
+    eye_colors: string;
+    people: number[];
+    skin_colors: string;
+    language: string;
+    hair_colors: string;
+    homeworld?: number;
+    average_lifespan: string;
+    average_height: string;
+  };
+}[];
+
+type StarwarsStarships = {
+  pk: number;
+  model: string;
+  fields: {
+    pilots: number[];
+    MGLT: string;
+    starship_class: string;
+    hyperdrive_rating: string;
+  };
+}[];
+
+type StarwarsTransport = {
+  pk: number;
+  model: string;
+  fields: {
+    edited: string;
+    consumables: string;
+    name: string;
+    created: string;
+    cargo_capacity: string;
+    passengers: string;
+    max_atmosphering_speed: string;
+    crew: string;
+    length: string;
+    model: string;
+    cost_in_credits: string;
+    manufacturer: string;
+  };
+}[];
+
+type StarwarsVehicles = {
+  pk: number;
+  model: string;
+  fields: {
+    vehicle_class: string;
+    pilots: number[];
+  };
+}[];
+
+async function downloadFile<T>(filename: string) {
+  return await fetchJsonCached<T>(
     `https://raw.githubusercontent.com/Juriy/swapi/master/resources/fixtures/${filename}`,
     `cache/starwars/${filename}`,
   );
@@ -29,7 +144,6 @@ async function downloadFile(filename: string) {
 type IdType = 'film' | 'planet' | 'person' | 'species' | 'starship' | 'transport' | 'vehicle';
 
 function uuidForEntity(type: IdType, pk: number) {
-  if (typeof pk !== 'number') throw new Error(`pk is not a number (${pk})`);
   return uuidv5(`${type}:${pk}`, UUID_NAMESPACE);
 }
 
@@ -42,7 +156,7 @@ function splitCsv(value: string) {
 }
 
 async function createFilms(adminClient: AppAdminClient) {
-  const filmsData = await downloadFile('films.json');
+  const filmsData = await downloadFile<StarwarsFilms>('films.json');
   for (const film of filmsData) {
     (
       await adminClient.createEntity<AdminFilm>(
@@ -70,7 +184,7 @@ async function createFilms(adminClient: AppAdminClient) {
 }
 
 async function createPeople(adminClient: AppAdminClient) {
-  const peopleData = await downloadFile('people.json');
+  const peopleData = await downloadFile<StarwarsPeople>('people.json');
   for (const person of peopleData) {
     (
       await adminClient.createEntity<AdminPerson>(
@@ -96,7 +210,7 @@ async function createPeople(adminClient: AppAdminClient) {
 }
 
 async function createPlanets(adminClient: AppAdminClient) {
-  const planetsData = await downloadFile('planets.json');
+  const planetsData = await downloadFile<StarwarsPlanets>('planets.json');
   for (const planet of planetsData) {
     (
       await adminClient.createEntity<AdminPlanet>(
@@ -122,7 +236,7 @@ async function createPlanets(adminClient: AppAdminClient) {
 }
 
 async function createSpecies(adminClient: AppAdminClient) {
-  const speciesData = await downloadFile('species.json');
+  const speciesData = await downloadFile<StarwarsSpecies>('species.json');
   for (const species of speciesData) {
     (
       await adminClient.createEntity<AdminSpecies>(
@@ -152,7 +266,7 @@ async function createSpecies(adminClient: AppAdminClient) {
 }
 
 async function createStarships(adminClient: AppAdminClient) {
-  const starshipsData = await downloadFile('starships.json');
+  const starshipsData = await downloadFile<StarwarsStarships>('starships.json');
   for (const starship of starshipsData) {
     (
       await adminClient.createEntity<AdminStarship>(
@@ -173,7 +287,7 @@ async function createStarships(adminClient: AppAdminClient) {
 }
 
 async function createTransports(adminClient: AppAdminClient) {
-  const transportsData = await downloadFile('transport.json');
+  const transportsData = await downloadFile<StarwarsTransport>('transport.json');
   for (const transport of transportsData) {
     (
       await adminClient.createEntity<AdminTransport>(
@@ -200,7 +314,7 @@ async function createTransports(adminClient: AppAdminClient) {
 }
 
 async function createVehicles(adminClient: AppAdminClient) {
-  const vehiclesData = await downloadFile('vehicles.json');
+  const vehiclesData = await downloadFile<StarwarsVehicles>('vehicles.json');
   for (const vehicle of vehiclesData) {
     (
       await adminClient.createEntity<AdminVehicle>(

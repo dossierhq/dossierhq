@@ -14,11 +14,11 @@ export interface CloudinaryAsset {
 }
 
 export async function listCloudinaryImages(folder: string): Promise<CloudinaryAsset[]> {
-  const response = await cloudinary.api.resources({
+  const response = (await cloudinary.api.resources({
     content_type: 'image',
     max_results: 500,
     prefix: folder + '/',
     type: 'upload',
-  });
+  })) as { resources: CloudinaryAsset[] };
   return response.resources;
 }
