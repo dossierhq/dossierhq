@@ -519,7 +519,6 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot();
 
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
@@ -583,7 +582,6 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot();
 
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
@@ -659,7 +657,6 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot();
 
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       getEntityUpdateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 

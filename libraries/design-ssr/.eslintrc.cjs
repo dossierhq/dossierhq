@@ -19,7 +19,6 @@ module.exports = {
   reportUnusedDisableDirectives: true,
   rules: {
     '@typescript-eslint/consistent-type-imports': ['warn'],
-    '@typescript-eslint/no-parameter-properties': ['error'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
