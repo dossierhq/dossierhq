@@ -5,17 +5,17 @@ import type {
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
+  FieldType,
+  PublishingEventKind,
   assertOkResult,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextRootNode,
   createRichTextTextNode,
-  FieldType,
   ok,
-  PublishingEventKind,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
-import type { GraphQLSchema } from 'graphql';
+import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
@@ -115,6 +115,12 @@ mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolea
 }
 `;
 
+type CreateMutationFooGqlQueryResult = ExecutionResult<{
+  createMutationFooEntity: {
+    entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+  };
+}>;
+
 const upsertMutationFooGqlQuery = `
 mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!, $publish: Boolean) {
   upsertMutationFooEntity(entity: $entity, publish: $publish) {
@@ -140,6 +146,12 @@ mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!, $publish: Boolea
   }
 }
 `;
+
+type UpsertMutationFooGqlQueryResult = ExecutionResult<{
+  upsertMutationFooEntity: {
+    entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+  };
+}>;
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification, 'data/mutation.sqlite');
@@ -181,14 +193,14 @@ describe('create*Entity()', () => {
       source: createMutationFooGqlQuery,
       contextValue: createContext(),
       variableValues: { entity },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as CreateMutationFooGqlQueryResult;
 
     expect(result.errors).toBeUndefined();
     expect(result.data).toBeDefined();
     const {
       id,
       info: { name, createdAt, updatedAt },
-    } = result.data.createMutationFooEntity.entity;
+    } = result.data!.createMutationFooEntity.entity;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -268,10 +280,10 @@ describe('create*Entity()', () => {
       variableValues: {
         entity,
       },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as CreateMutationFooGqlQueryResult;
 
     expect(result.errors).toBeUndefined();
-    const { name, createdAt, updatedAt } = result.data.createMutationFooEntity.entity.info;
+    const { name, createdAt, updatedAt } = result.data!.createMutationFooEntity.entity.info;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -320,13 +332,13 @@ describe('create*Entity()', () => {
         entity,
         publish: true,
       },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as CreateMutationFooGqlQueryResult;
 
     expect(result.errors).toBeUndefined();
     const {
       id,
       info: { name, createdAt, updatedAt },
-    } = result.data.createMutationFooEntity.entity;
+    } = result.data!.createMutationFooEntity.entity;
 
     expect(result).toEqual({
       data: {
@@ -412,12 +424,16 @@ describe('create*Entity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { entity },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        createMutationFooEntity: {
+          entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+        };
+      }>;
 
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data.createMutationFooEntity.entity;
+      } = gqlResult.data!.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -530,13 +546,17 @@ describe('create*Entity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { entity },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        createMutationFooEntity: {
+          entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+        };
+      }>;
 
       expect(gqlResult.errors).toBeUndefined();
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data.createMutationFooEntity.entity;
+      } = gqlResult.data!.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -654,13 +674,17 @@ describe('create*Entity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { entity },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        createMutationFooEntity: {
+          entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+        };
+      }>;
 
       expect(gqlResult.errors).toBeUndefined();
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data.createMutationFooEntity.entity;
+      } = gqlResult.data!.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -780,13 +804,17 @@ describe('create*Entity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { entity },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        createMutationFooEntity: {
+          entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+        };
+      }>;
 
       expect(gqlResult.errors).toBeUndefined();
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data.createMutationFooEntity.entity;
+      } = gqlResult.data!.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -918,12 +946,16 @@ describe('create*Entity()', () => {
           entity,
           publish: true,
         },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        createMutationFooEntity: {
+          entity: { id: string; info: { name: string; createdAt: string; updatedAt: string } };
+        };
+      }>;
 
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = createFooResult.data.createMutationFooEntity.entity;
+      } = createFooResult.data!.createMutationFooEntity.entity;
 
       expect(createFooResult).toEqual({
         data: {
@@ -1042,12 +1074,19 @@ describe('create*Entity()', () => {
       `,
       contextValue: createContext(),
       variableValues: { entity },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{
+      createMutationFooEntity: {
+        entity: {
+          id: string;
+          info: { name: string; createdAt: string; updatedAt: string };
+        };
+      };
+    }>;
 
     const {
       id: fooId,
       info: { name: fooName, createdAt, updatedAt },
-    } = createResult.data.createMutationFooEntity.entity;
+    } = createResult.data!.createMutationFooEntity.entity;
 
     expect(createResult).toEqual({
       data: {
@@ -1140,7 +1179,14 @@ describe('create*Entity()', () => {
       `,
       contextValue: createContext(),
       variableValues: { entity },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{
+      createMutationFooEntity: {
+        entity: {
+          id: string;
+          info: { name: string };
+        };
+      };
+    }>;
 
     expect(result.errors).toBeUndefined();
     const id = result.data?.createMutationFooEntity.entity.id;
@@ -1279,9 +1325,13 @@ describe('update*Entity()', () => {
         variableValues: {
           entity: { id, fields: { title: 'Updated title' } },
         },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        updateMutationFooEntity: {
+          entity: { info: { updatedAt: string } };
+        };
+      }>;
 
-      const { updatedAt: updatedAtString } = result.data.updateMutationFooEntity.entity.info;
+      const { updatedAt } = result.data!.updateMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -1297,7 +1347,7 @@ describe('update*Entity()', () => {
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
                 createdAt: createdAt.toISOString(),
-                updatedAt: updatedAtString,
+                updatedAt: updatedAt,
               },
               fields: {
                 title: 'Updated title',
@@ -1321,7 +1371,7 @@ describe('update*Entity()', () => {
           valid: true,
           validPublished: null,
           createdAt,
-          updatedAt: new Date(updatedAtString),
+          updatedAt: new Date(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -1536,10 +1586,20 @@ describe('update*Entity()', () => {
               },
             },
           },
-        })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+        })) as ExecutionResult<{
+          updateMutationFooEntity: {
+            entity: {
+              info: {
+                name: string;
+                createdAt: string;
+                updatedAt: string;
+              };
+            };
+          };
+        }>;
 
         expect(result.errors).toBeFalsy();
-        const { name, createdAt, updatedAt } = result.data.updateMutationFooEntity.entity.info;
+        const { name, createdAt, updatedAt } = result.data!.updateMutationFooEntity.entity.info;
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
         expect(result).toEqual({
@@ -1700,9 +1760,13 @@ describe('update*Entity()', () => {
         variableValues: {
           entity: { id, fields: { title: 'Updated title' } },
         },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        updateMutationFooEntity: {
+          entity: { info: { updatedAt: string } };
+        };
+      }>;
 
-      const { updatedAt: updatedAtString } = result.data.updateMutationFooEntity.entity.info;
+      const { updatedAt: updatedAtString } = result.data!.updateMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -1871,9 +1935,9 @@ describe('upsert*Entity()', () => {
       variableValues: {
         entity,
       },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as UpsertMutationFooGqlQueryResult;
 
-    const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
+    const { name, createdAt, updatedAt } = result.data!.upsertMutationFooEntity.entity.info;
 
     expect(result).toEqual({
       data: {
@@ -1946,9 +2010,9 @@ describe('upsert*Entity()', () => {
             fields: { title: 'Updated title' },
           },
         },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as UpsertMutationFooGqlQueryResult;
 
-      const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
+      const { name, createdAt, updatedAt } = result.data!.upsertMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -2022,9 +2086,9 @@ describe('upsert*Entity()', () => {
             fields: { title: 'Title' },
           },
         },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as UpsertMutationFooGqlQueryResult;
 
-      const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
+      const { name, createdAt, updatedAt } = result.data!.upsertMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -2070,9 +2134,9 @@ describe('upsert*Entity()', () => {
         entity,
         publish: true,
       },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as UpsertMutationFooGqlQueryResult;
 
-    const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
+    const { name, createdAt, updatedAt } = result.data!.upsertMutationFooEntity.entity.info;
 
     expect(result).toEqual({
       data: {
@@ -2184,8 +2248,8 @@ describe('publishEntities()', () => {
         `,
         contextValue: createContext(),
         variableValues: { references: [{ id, version: 0 }] },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-      const updatedAt = result.data?.publishEntities[0].updatedAt;
+      })) as ExecutionResult<{ publishEntities: { updatedAt: string }[] }>;
+      const updatedAt = result.data!.publishEntities[0].updatedAt;
       expect(result).toEqual({
         data: {
           publishEntities: [
@@ -2256,7 +2320,7 @@ describe('publishEntities()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: `
           mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
@@ -2267,7 +2331,7 @@ describe('publishEntities()', () => {
         `,
         contextValue: createContext(),
         variableValues: { references: [{ id, version: 0 }] },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
       expect(result).toEqual({
         data: {
           publishEntities: null,
@@ -2307,8 +2371,8 @@ describe('unpublishEntities()', () => {
         `,
         contextValue: createContext(),
         variableValues: { references: [{ id }] },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-      const updatedAt = result.data?.unpublishEntities[0].updatedAt;
+      })) as ExecutionResult<{ unpublishEntities: { updatedAt: string }[] }>;
+      const updatedAt = result.data!.unpublishEntities[0].updatedAt;
       expect(result).toEqual({
         data: {
           unpublishEntities: [
@@ -2387,7 +2451,7 @@ describe('unpublishEntities()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: `
           mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
@@ -2398,7 +2462,7 @@ describe('unpublishEntities()', () => {
         `,
         contextValue: createContext(),
         variableValues: { references: [{ id }] },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
       expect(result).toEqual({
         data: {
           unpublishEntities: null,
@@ -2436,8 +2500,8 @@ describe('archiveEntity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-      const updatedAt = result.data?.archiveEntity.updatedAt;
+      })) as ExecutionResult<{ archiveEntity: { updatedAt: string } }>;
+      const updatedAt = result.data!.archiveEntity.updatedAt;
       expect(result).toEqual({
         data: {
           archiveEntity: {
@@ -2479,7 +2543,7 @@ describe('archiveEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: `
           mutation ArchiveEntity($id: ID!) {
@@ -2490,7 +2554,7 @@ describe('archiveEntity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -2534,8 +2598,8 @@ describe('unarchiveEntity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-      const updatedAt = result.data?.unarchiveEntity.updatedAt;
+      })) as ExecutionResult<{ unarchiveEntity: { updatedAt: string } }>;
+      const updatedAt = result.data!.unarchiveEntity.updatedAt;
       expect(result).toEqual({
         data: {
           unarchiveEntity: {
@@ -2612,7 +2676,7 @@ describe('unarchiveEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: `
           mutation UnarchiveEntity($id: ID!) {
@@ -2623,7 +2687,7 @@ describe('unarchiveEntity()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {

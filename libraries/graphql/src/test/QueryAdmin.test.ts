@@ -18,7 +18,7 @@ import {
   ok,
 } from '@dossierhq/core';
 import { expectOkResult } from '@dossierhq/core-vitest';
-import type { GraphQLSchema } from 'graphql';
+import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
@@ -1304,8 +1304,10 @@ describe('adminSampleEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-    expect(result.error).toBeUndefined();
+    })) as ExecutionResult<{
+      adminSampleEntities: { seed: number; totalCount: number; items: { id: string }[] };
+    }>;
+    expect(result.errors).toBeUndefined();
     expectSampledEntitiesArePartOfExpected(
       result.data?.adminSampleEntities,
       123,
@@ -1331,7 +1333,9 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{
+      adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+    }>;
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } })),
     );
@@ -1356,7 +1360,9 @@ describe('searchAdminEntities()', () => {
       `,
       contextValue: createContext(),
       variableValues: { entityTypes: ['QueryAdminOnlyEditBefore'] },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{
+      adminSearchEntities: { edges: { node: { id: string } }[] };
+    }>;
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } })),
     );
@@ -1377,7 +1383,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 10).map((x) => ({ node: { id: x.id } })),
     );
@@ -1398,7 +1404,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .reverse()
@@ -1422,7 +1428,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(-10).map((x) => ({ node: { id: x.id } })),
     );
@@ -1446,7 +1452,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
     expect(result.errors).toBeUndefined();
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
@@ -1475,7 +1481,9 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{
+      adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+    }>;
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeSubject
         .slice(0, 25)
@@ -1622,12 +1630,14 @@ describe('searchAdminEntities()', () => {
         `,
         contextValue: createContext(),
         variableValues: { boundingBox },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+      }>;
 
       expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(1);
 
       let fooIdCount = 0;
-      for (const edge of result.data.adminSearchEntities.edges) {
+      for (const edge of result.data!.adminSearchEntities.edges) {
         if (edge.node.id === fooId) {
           fooIdCount += 1;
         }
@@ -1653,7 +1663,9 @@ describe('searchAdminEntities()', () => {
       `,
       contextValue: createContext(),
       variableValues: { text: 'Hey' }, // There are at least 50 QueryAdminOnlyEditBefore entities
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as ExecutionResult<{
+      adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+    }>;
 
     expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(50);
     expect(result?.data?.adminSearchEntities.edges.length).toBe(25);
@@ -1701,7 +1713,12 @@ describe('entityHistory()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        entityHistory: {
+          id: string;
+          versions: { version: number; published: boolean; createdBy: string; createdAt: string }[];
+        };
+      }>;
       expect(result.errors).toBeUndefined();
 
       // Remove createdAt since it's tricky to test 🤷‍♂️
@@ -1760,7 +1777,7 @@ describe('entityHistory()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: `
           query EntityHistory($id: ID!) {
@@ -1771,7 +1788,7 @@ describe('entityHistory()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -1819,10 +1836,15 @@ describe('publishingHistory()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ExecutionResult<{
+        publishingHistory: {
+          id: string;
+          events: { version: number; publishedBy: string; publishedAt: string }[];
+        };
+      }>;
 
       expect(result.errors).toBeUndefined();
-      const { publishedAt } = result.data.publishingHistory.events[0];
+      const { publishedAt } = result.data!.publishingHistory.events[0];
 
       expect(result.data).toEqual({
         publishingHistory: {
@@ -1872,7 +1894,7 @@ describe('publishingHistory()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: `
           query PublishingHistory($id: ID!) {
@@ -1883,7 +1905,7 @@ describe('publishingHistory()', () => {
         `,
         contextValue: createContext(),
         variableValues: { id },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {

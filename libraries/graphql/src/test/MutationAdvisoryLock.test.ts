@@ -1,6 +1,6 @@
 import { ok } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
-import type { GraphQLSchema } from 'graphql';
+import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
@@ -40,6 +40,10 @@ mutation AcquireAdvisoryLock($name: String!, $leaseDuration: Int!) {
   }
 }`;
 
+type AcquireAdvisoryLockResult = ExecutionResult<{
+  acquireAdvisoryLock: { name: string; handle: number };
+}>;
+
 const renewAdvisoryLockQuery = `
 mutation RenewAdvisoryLock($name: String!, $handle: Int!) {
   renewAdvisoryLock(name: $name, handle: $handle) {
@@ -48,12 +52,20 @@ mutation RenewAdvisoryLock($name: String!, $handle: Int!) {
   }
 }`;
 
+type RenewAdvisoryLockResult = ExecutionResult<{
+  renewAdvisoryLock: { name: string; handle: number };
+}>;
+
 const releaseAdvisoryLockQuery = `
 mutation ReleaseAdvisoryLock($name: String!, $handle: Int!) {
   releaseAdvisoryLock(name: $name, handle: $handle) {
     name
   }
 }`;
+
+type ReleaseAdvisoryLockResult = ExecutionResult<{
+  releaseAdvisoryLock: { name: string };
+}>;
 
 describe('acquireAdvisoryLock()', () => {
   test('Acquire', async () => {
@@ -64,11 +76,11 @@ describe('acquireAdvisoryLock()', () => {
       source: acquireAdvisoryLockQuery,
       contextValue: createContext(),
       variableValues: { name: 'Acquire', leaseDuration: 500 },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    })) as AcquireAdvisoryLockResult;
 
     expect(result.errors).toBeUndefined();
     expect(result.data).toBeDefined();
-    const { name, handle } = result.data.acquireAdvisoryLock;
+    const { name, handle } = result.data!.acquireAdvisoryLock;
     expect(name).toEqual('Acquire');
     expect(typeof handle).toEqual('number');
 
@@ -83,12 +95,12 @@ describe('acquireAdvisoryLock()', () => {
       leaseDuration: 500,
     });
     if (expectOkResult(acquireResult)) {
-      const result = (await graphql({
+      const result = await graphql({
         schema,
         source: acquireAdvisoryLockQuery,
         contextValue: createContext(),
         variableValues: { name: 'Already locked', leaseDuration: 123 },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      });
 
       expect(result).toMatchInlineSnapshot(`
         {
@@ -116,21 +128,21 @@ describe('renewAdvisoryLock()', () => {
         source: renewAdvisoryLockQuery,
         contextValue: createContext(),
         variableValues: { name, handle },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as RenewAdvisoryLockResult;
 
       expect(result.errors).toBeUndefined();
       expect(result.data).toBeDefined();
-      expect(result.data.renewAdvisoryLock).toEqual({ name, handle });
+      expect(result.data!.renewAdvisoryLock).toEqual({ name, handle });
     }
   });
 
   test('Error: renew invalid lock name', async () => {
-    const result = (await graphql({
+    const result = await graphql({
       schema,
       source: renewAdvisoryLockQuery,
       contextValue: createContext(),
       variableValues: { name: 'Invalid lock name', handle: 123 },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -157,21 +169,21 @@ describe('releaseAdvisoryLock()', () => {
         source: releaseAdvisoryLockQuery,
         contextValue: createContext(),
         variableValues: { name, handle },
-      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      })) as ReleaseAdvisoryLockResult;
 
       expect(result.errors).toBeUndefined();
       expect(result.data).toBeDefined();
-      expect(result.data.releaseAdvisoryLock).toEqual({ name });
+      expect(result.data!.releaseAdvisoryLock).toEqual({ name });
     }
   });
 
   test('Error: release invalid lock name', async () => {
-    const result = (await graphql({
+    const result = await graphql({
       schema,
       source: releaseAdvisoryLockQuery,
       contextValue: createContext(),
       variableValues: { name: 'Invalid loch name', handle: 123 },
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
 
     expect(result).toMatchInlineSnapshot(`
       {
