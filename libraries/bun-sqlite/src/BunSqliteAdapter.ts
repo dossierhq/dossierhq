@@ -19,20 +19,21 @@ export async function createBunSqliteAdapter(
   options: SqliteDatabaseOptions,
 ): PromiseResult<BunSqliteDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
-    disconnect: async () => {
+    disconnect: () => {
       database.close();
+      return Promise.resolve();
     },
 
-    query: async <R>(query: string, values: ColumnValue[] | undefined) => {
+    query: <R>(query: string, values: ColumnValue[] | undefined) => {
       const statement = database.prepare<R, ColumnValue[]>(query);
       const result = values ? statement.all(...values) : statement.all();
-      return result;
+      return Promise.resolve(result);
     },
 
-    run: async (query: string, values: ColumnValue[] | undefined) => {
+    run: (query: string, values: ColumnValue[] | undefined) => {
       const statement = database.prepare(query);
       const result = values ? statement.all(...values) : statement.all();
-      return typeof result === 'number' ? result : 0;
+      return Promise.resolve(typeof result === 'number' ? result : 0);
       // TODO https://github.com/oven-sh/bun/issues/2608
     },
 
@@ -47,7 +48,9 @@ export async function createBunSqliteAdapter(
       return Buffer.from(value, 'base64').toString('utf8');
     },
 
-    randomUUID: crypto.randomUUID,
+    randomUUID() {
+      return crypto.randomUUID();
+    },
   };
 
   return await createSqliteDatabaseAdapterAdapter(context, adapter, options);

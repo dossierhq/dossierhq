@@ -21,9 +21,9 @@ afterAll(async () => {
 registerTestSuite(
   'AdvisoryLockTest',
   createAdvisoryLockTestSuite({
-    before: async () => {
+    before: () => {
       assertIsDefined(serverInit);
-      return [{ server: serverInit.server }, undefined];
+      return Promise.resolve([{ server: serverInit.server }, undefined]);
     },
     after: async () => {
       //empty
