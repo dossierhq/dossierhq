@@ -1,14 +1,14 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import type {
-  ColumnValue,
-  Context,
-  DatabaseAdapter,
-  SqliteDatabaseAdapter,
-  SqliteDatabaseOptimizationOptions,
-  SqliteDatabaseOptions,
-  UniqueConstraint,
+import {
+  createSqliteDatabaseAdapterAdapter,
+  type ColumnValue,
+  type Context,
+  type DatabaseAdapter,
+  type SqliteDatabaseAdapter,
+  type SqliteDatabaseOptimizationOptions,
+  type SqliteDatabaseOptions,
+  type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
-import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'better-sqlite3';
 import { randomUUID } from 'node:crypto';
 
@@ -31,22 +31,23 @@ export async function createBetterSqlite3Adapter(
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const adapter: SqliteDatabaseAdapter = {
-    disconnect: async () => {
+    disconnect: () => {
       database.close();
+      return Promise.resolve();
     },
 
-    query: async <R>(query: string, values: ColumnValue[] | undefined) => {
+    query: <R>(query: string, values: ColumnValue[] | undefined) => {
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
       const statement = database.prepare(convertedQuery);
       const result = convertedValues ? statement.all(convertedValues) : statement.all();
-      return result as R[];
+      return Promise.resolve(result as R[]);
     },
 
-    run: async (query: string, values: ColumnValue[] | undefined) => {
+    run: (query: string, values: ColumnValue[] | undefined) => {
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
       const statement = database.prepare(convertedQuery);
       const result = convertedValues ? statement.run(convertedValues) : statement.run();
-      return result.changes;
+      return Promise.resolve(result.changes);
     },
 
     isFtsVirtualTableConstraintFailed,

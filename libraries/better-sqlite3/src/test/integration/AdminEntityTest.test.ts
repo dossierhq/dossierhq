@@ -30,16 +30,16 @@ afterAll(async () => {
 registerTestSuite(
   'AdminEntityTest',
   createAdminEntityTestSuite({
-    before: async () => {
+    before: () => {
       assertIsDefined(serverInit);
-      return [
+      return Promise.resolve([
         {
           server: serverInit.server,
           adminSchema: serverInit.adminSchema,
           readOnlyEntityRepository,
         },
         undefined,
-      ];
+      ]);
     },
     after: async () => {
       //empty

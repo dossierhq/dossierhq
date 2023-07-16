@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
-import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
+import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
@@ -12,8 +12,11 @@ export interface ServerInit {
   adminSchema: AdminSchema;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type LooseAutocomplete<T> = T | (string & {});
+
 export async function initializeSqlite3Server(
-  filename: string | ':memory:',
+  filename: LooseAutocomplete<':memory:'>,
   options?: Database.Options,
 ): PromiseResult<ServerInit, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, options);
@@ -43,7 +46,7 @@ export async function initializeSqlite3Server(
 }
 
 async function createSqlite3TestAdapter(
-  filename: string | ':memory:',
+  filename: LooseAutocomplete<':memory:'>,
   options?: Database.Options,
 ): PromiseResult<
   BetterSqlite3DatabaseAdapter,
