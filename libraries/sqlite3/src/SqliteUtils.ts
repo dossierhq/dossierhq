@@ -2,6 +2,7 @@ import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 import type { Context } from '@dossierhq/sqlite-core';
 import type { Database, RunResult, Statement } from 'sqlite3';
+import type { LooseAutocomplete } from './TypeUtils.js';
 
 type DatabaseConstructor = (new (
   filename: string,
@@ -12,13 +13,7 @@ type DatabaseConstructor = (new (
 export async function createDatabase(
   context: Context,
   DatabaseClass: DatabaseConstructor,
-  {
-    filename,
-    mode,
-  }: {
-    filename: string | ':memory:';
-    mode?: number;
-  },
+  { filename, mode }: { filename: LooseAutocomplete<':memory:'>; mode?: number },
 ): PromiseResult<Database, typeof ErrorType.Generic> {
   try {
     const database = await doCreateDatabase(DatabaseClass, filename, mode);
@@ -71,7 +66,7 @@ export function queryAll<R>(db: Database, query: string, values: unknown[] = [])
       if (error) {
         reject(error);
       }
-      resolve(rows as R[]);
+      resolve(rows);
     }),
   );
 }

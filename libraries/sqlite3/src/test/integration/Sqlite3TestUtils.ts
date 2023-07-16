@@ -7,6 +7,7 @@ import Sqlite from 'sqlite3';
 import type { Sqlite3DatabaseAdapter } from '../../Sqlite3Adapter.js';
 import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';
 import { createDatabase } from '../../SqliteUtils.js';
+import type { LooseAutocomplete } from '../../TypeUtils.js';
 
 const { Database } = Sqlite;
 
@@ -16,7 +17,7 @@ export interface ServerInit {
 }
 
 export async function initializeSqlite3Server(
-  filename: string | ':memory:',
+  filename: LooseAutocomplete<':memory:'>,
   mode?: number,
 ): PromiseResult<ServerInit, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, mode);
@@ -53,7 +54,7 @@ export async function initializeSqlite3Server(
 }
 
 async function createSqlite3TestAdapter(
-  filename: string | ':memory:',
+  filename: LooseAutocomplete<':memory:'>,
   mode?: number,
 ): PromiseResult<Sqlite3DatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const context = { logger: NoOpLogger };
