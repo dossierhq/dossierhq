@@ -299,7 +299,7 @@ async function createBarWithFooBazReferences(
     }
   }
   for (let i = 0; i < bazCount; i += 1) {
-    const bars = [...new Array(bazReferencesPerEntity - 1)].map(() => ({ id: barId }));
+    const bars = [...new Array<undefined>(bazReferencesPerEntity - 1)].map(() => ({ id: barId }));
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz: ' + i, authKey: 'none' },
       fields: { bar: { id: barId }, bars },
@@ -1220,8 +1220,7 @@ describe('createEntity()', () => {
         type: 'EntityAdminFoo',
         name: 'Foo',
         authKey: 'none',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        version: 1 as any,
+        version: 1 as 0,
       },
       fields: {},
     });

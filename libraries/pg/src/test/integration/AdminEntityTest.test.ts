@@ -26,10 +26,10 @@ afterAll(async () => {
 
 registerTestSuite(
   createAdminEntityTestSuite({
-    before: async () => {
+    before: () => {
       assertIsDefined(serverInit);
       const { adminSchema, server } = serverInit;
-      return [{ adminSchema, server, readOnlyEntityRepository }, undefined];
+      return Promise.resolve([{ adminSchema, server, readOnlyEntityRepository }, undefined]);
     },
     after: async () => {
       // empty

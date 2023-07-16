@@ -28,9 +28,9 @@ afterAll(async () => {
 
 registerTestSuite(
   createAuthTestSuite({
-    before: async () => {
+    before: () => {
       assertIsDefined(server);
-      return [{ server }, undefined];
+      return Promise.resolve([{ server }, undefined]);
     },
     after: async () => {
       // empty

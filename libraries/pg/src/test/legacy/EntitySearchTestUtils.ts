@@ -9,7 +9,6 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedEntity,
-  PublishedSearchQuery,
 } from '@dossierhq/core';
 import { AdminEntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
 import { expect } from 'vitest';
@@ -181,25 +180,9 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
   return { minLat, maxLat, minLng, maxLng };
 }
 
-export async function countSearchResultWithEntity(
-  client: AdminClient,
-  query: AdminSearchQuery,
-  entityId: string,
-): PromiseResult<
-  number,
-  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
->;
-export async function countSearchResultWithEntity(
-  client: PublishedClient,
-  query: PublishedSearchQuery,
-  entityId: string,
-): PromiseResult<
-  number,
-  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
->;
-export async function countSearchResultWithEntity(
-  client: AdminClient | PublishedClient,
-  query: AdminSearchQuery | PublishedSearchQuery,
+export async function countSearchResultWithEntity<TClient extends AdminClient | PublishedClient>(
+  client: TClient,
+  query: Parameters<TClient['searchEntities']>[0],
   entityId: string,
 ): PromiseResult<
   number,
@@ -208,7 +191,7 @@ export async function countSearchResultWithEntity(
   let matchCount = 0;
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
     client.searchEntities(query as any, currentPaging),
   )) {
     if (pageResult.isError()) {

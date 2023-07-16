@@ -7,9 +7,9 @@ import type {
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
+  FieldType,
   createRichTextRootNode,
   createRichTextValueItemNode,
-  FieldType,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';
@@ -139,7 +139,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
   const fooEntities: PublishedEntity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
-    const bars = [...new Array(referencesPerFoo - 1)].map(() => ({ id: barId }));
+    const bars = [...new Array<undefined>(referencesPerFoo - 1)].map(() => ({ id: barId }));
     const createFooResult = await adminClient.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i, authKey: 'none' },
