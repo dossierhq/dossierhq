@@ -1172,6 +1172,7 @@ importers:
   ../../rigs/heft-node-rig:
     specifiers:
       '@rushstack/heft': 0.57.0
+      '@rushstack/heft-lint-plugin': ~0.1.18
       '@rushstack/heft-typescript-plugin': ~0.1.17
       eslint: ~8.44.0
       typescript: ~5.1.6
@@ -1180,6 +1181,7 @@ importers:
       typescript: 5.1.6
     devDependencies:
       '@rushstack/heft': 0.57.0
+      '@rushstack/heft-lint-plugin': 0.1.18_@rushstack+heft@0.57.0
       '@rushstack/heft-typescript-plugin': 0.1.17_@rushstack+heft@0.57.0
 
   ../../stack/eslint-config-generic:
@@ -7828,6 +7830,18 @@ packages:
       '@rushstack/node-core-library': 3.59.5_@types+node@20.4.2
       '@rushstack/rig-package': 0.4.0
       jsonpath-plus: 4.0.0
+    transitivePeerDependencies:
+      - '@types/node'
+    dev: true
+
+  /@rushstack/heft-lint-plugin/0.1.18_@rushstack+heft@0.57.0:
+    resolution: {integrity: sha512-f+zKzlAF2h2xs2NlssMtYQrOD/DK/iLoZIBmt7YryNzDIQPIqq5fEUnIZO7+rXiCDH2Cbo8EXcQ97exUSgm2EQ==}
+    peerDependencies:
+      '@rushstack/heft': 0.57.0
+    dependencies:
+      '@rushstack/heft': 0.57.0
+      '@rushstack/node-core-library': 3.59.5
+      semver: 7.3.8
     transitivePeerDependencies:
       - '@types/node'
     dev: true
