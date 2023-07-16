@@ -14,7 +14,7 @@ export function useRuntimeDependency(dependencyName: keyof typeof EXTERNAL_DEPEN
   const scriptUrl = EXTERNAL_DEPENDENCIES[dependencyName];
   // check if the promise is already set
   let initialStatus: Status = 'loading';
-  dependencyStatus[scriptUrl]?.then((status) => {
+  void dependencyStatus[scriptUrl]?.then((status) => {
     initialStatus = status;
   });
   const [status, setStatus] = useState<Status>(initialStatus);
@@ -22,7 +22,7 @@ export function useRuntimeDependency(dependencyName: keyof typeof EXTERNAL_DEPEN
   useEffect(() => {
     const statusPromise = dependencyStatus[scriptUrl];
     if (statusPromise) {
-      statusPromise.then(setStatus);
+      void statusPromise.then(setStatus);
       return;
     }
 

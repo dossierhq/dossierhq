@@ -31,7 +31,7 @@ export function useInitializeUploadWidget(
 
     setUploadWidget(widget);
     return () => {
-      widget.destroy();
+      void widget.destroy();
       setUploadWidget(null);
     };
   }, [callback, status]);
