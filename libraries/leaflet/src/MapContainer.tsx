@@ -95,7 +95,7 @@ export const MapContainer: MapContainerComponent = ({
       maxBounds={maxBoundingBox ? toLatLngLiteral(maxBoundingBox) : undefined}
       scrollWheelZoom
     >
-      {onBoundingBoxChanged || onZoomMetricsChanged ? (
+      {!!onBoundingBoxChanged || !!onZoomMetricsChanged ? (
         <MapEventListener
           onBoundingBoxChanged={onBoundingBoxChanged}
           onZoomMetricsChanged={onZoomMetricsChanged}
@@ -180,7 +180,7 @@ function LocateControl({ outsideMapBoundsMsg, showPopup, autoStart, title }: Loc
     map.addControl(locateControl);
 
     if (autoStart) {
-      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+      void navigator.permissions.query({ name: 'geolocation' }).then((result) => {
         if (result.state === 'granted') locateControl.start();
       });
     }

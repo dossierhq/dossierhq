@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /* eslint-env node */
-import fs from 'fs/promises';
 import svgToDataUri from 'mini-svg-data-uri';
-import path from 'path';
-import prettier from 'prettier';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { format, resolveConfig } from 'prettier';
 import { optimize } from 'svgo';
 
 const config = {
@@ -14,6 +14,7 @@ const config = {
 };
 
 async function loadIcons() {
+  /** @type {{ name: string, svg: string, toCss: boolean, toTypescript: boolean }[]}*/
   const result = [];
 
   async function loadDirectory(directory, toExport) {
@@ -82,8 +83,8 @@ async function writeToTypescript(icons) {
     return;
   }
 
-  const prettierConfig = await prettier.resolveConfig(config.iconsTypescriptPath);
-  result = await prettier.format(result, {
+  const prettierConfig = await resolveConfig(config.iconsTypescriptPath);
+  result = await format(result, {
     ...prettierConfig,
     filepath: config.iconsTypescriptPath,
   });

@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "types": ["node"]
+  },
+  "include": [".eslintrc.cjs", "vitest.config.js", "scripts"]
+}
