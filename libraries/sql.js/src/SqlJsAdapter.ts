@@ -19,11 +19,12 @@ export async function createSqlJsAdapter(
   options: SqliteDatabaseOptions,
 ): PromiseResult<SqlJsDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const adapter: SqliteDatabaseAdapter = {
-    disconnect: async () => {
+    disconnect: () => {
       database.close();
+      return Promise.resolve();
     },
 
-    query: async <R>(query: string, values: ColumnValue[] | undefined) => {
+    query: <R>(query: string, values: ColumnValue[] | undefined) => {
       const result: R[] = [];
       const statement = database.prepare(query, values);
       while (statement.step()) {
@@ -31,12 +32,12 @@ export async function createSqlJsAdapter(
         result.push(row);
       }
       statement.free();
-      return result;
+      return Promise.resolve(result);
     },
 
-    run: async (query: string, values: ColumnValue[] | undefined) => {
+    run: (query: string, values: ColumnValue[] | undefined) => {
       database.run(query, values);
-      return database.getRowsModified();
+      return Promise.resolve(database.getRowsModified());
     },
 
     isFtsVirtualTableConstraintFailed,

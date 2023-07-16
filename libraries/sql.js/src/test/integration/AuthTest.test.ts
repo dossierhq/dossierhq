@@ -18,10 +18,10 @@ afterAll(async () => {
 
 registerTestSuite(
   createAuthTestSuite({
-    before: async () => {
+    before: () => {
       assertIsDefined(serverInit);
       const { server } = serverInit;
-      return [{ server }, undefined];
+      return Promise.resolve([{ server }, undefined]);
     },
     after: async () => {
       //empty

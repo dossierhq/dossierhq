@@ -18,9 +18,9 @@ afterAll(async () => {
 
 registerTestSuite(
   createSchemaTestSuite({
-    before: async () => {
+    before: () => {
       assertIsDefined(serverInit);
-      return [serverInit, undefined];
+      return Promise.resolve([serverInit, undefined]);
     },
     after: async () => {
       //empty
