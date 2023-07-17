@@ -25,10 +25,10 @@ import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { InternalContext, SessionContext } from './Context.js';
 import { InternalContextImpl, SessionContextImpl } from './Context.js';
-import { getSchemaSpecification } from './Schema.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
+import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';
@@ -122,7 +122,7 @@ export class ServerImpl {
 
   async reloadSchema(context: InternalContext): PromiseResult<void, typeof ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
-    const result = await getSchemaSpecification(this.#databaseAdapter, context, true);
+    const result = await schemaGetSpecification(this.#databaseAdapter, context, true);
     if (result.isError()) {
       return result;
     }

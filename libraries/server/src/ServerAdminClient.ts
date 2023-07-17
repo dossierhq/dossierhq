@@ -14,6 +14,9 @@ import {
   ok,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+import type { SessionContext } from './Context.js';
+import type { ServerImpl } from './Server.js';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
 import { adminGetEntities } from './admin-entity/adminGetEntities.js';
@@ -31,10 +34,7 @@ import { adminUpsertEntity } from './admin-entity/adminUpsertEntity.js';
 import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock.js';
 import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
 import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
-import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
-import type { SessionContext } from './Context.js';
-import { updateSchemaSpecification } from './Schema.js';
-import type { ServerImpl } from './Server.js';
+import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 
 export function createServerAdminClient({
   context,
@@ -283,7 +283,7 @@ export function createServerAdminClient({
         } = operation as AdminClientOperation<
           typeof AdminClientOperationName.updateSchemaSpecification
         >;
-        const result = await updateSchemaSpecification(databaseAdapter, context, schemaSpec);
+        const result = await schemaUpdateSpecification(databaseAdapter, context, schemaSpec);
         if (result.isOk()) {
           serverImpl.setAdminSchema(result.value.schemaSpecification);
         }
