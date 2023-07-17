@@ -21,14 +21,9 @@ export function schemaUpdate(
   currentSchemaSpec: AdminSchemaSpecificationWithMigrations,
   update: AdminSchemaSpecificationUpdate,
 ): Result<AdminSchemaSpecificationWithMigrations, typeof ErrorType.BadRequest> {
-  const schemaSpec: AdminSchemaSpecificationWithMigrations = {
-    version: currentSchemaSpec.version,
-    entityTypes: [...currentSchemaSpec.entityTypes],
-    valueTypes: [...currentSchemaSpec.valueTypes],
-    patterns: [...currentSchemaSpec.patterns],
-    indexes: [...currentSchemaSpec.indexes],
-    migrations: [...currentSchemaSpec.migrations],
-  };
+  const schemaSpec = JSON.parse(
+    JSON.stringify(currentSchemaSpec),
+  ) as AdminSchemaSpecificationWithMigrations;
 
   const mergeMigrationsResult = mergeMigrations(update, schemaSpec);
   if (mergeMigrationsResult.isError()) return mergeMigrationsResult;
@@ -267,26 +262,20 @@ function applyMigrationsToSchema(
     const { action } = actionSpec;
     switch (action) {
       case 'deleteField': {
-        // Remove from entity types
-        const entityTypeResult = removeFieldFromTypeSpec(schemaSpec.entityTypes, actionSpec);
-        if (entityTypeResult.isError()) return entityTypeResult;
-        if (entityTypeResult.value) {
-          const entitySpec = entityTypeResult.value;
-          // Reset nameField if it was deleted
-          if (actionSpec.field === entitySpec.nameField) {
-            entitySpec.nameField = null;
-          }
-        } else {
-          // Remove from value types
-          const valueTypeResult = removeFieldFromTypeSpec(schemaSpec.valueTypes, actionSpec);
-          if (valueTypeResult.isError()) return valueTypeResult;
+        const result = applyFieldMigration(
+          schemaSpec,
+          actionSpec,
+          (typeSpec, _fieldSpec, fieldIndex) => {
+            // remove field
+            typeSpec.fields.splice(fieldIndex, 1);
 
-          if (!valueTypeResult.value) {
-            return notOk.BadRequest(
-              `Type for migration ${action} ${actionSpec.type}.${actionSpec.field} does not exist`,
-            );
-          }
-        }
+            // Reset nameField if it was deleted
+            if ('nameField' in typeSpec && typeSpec.nameField === actionSpec.field) {
+              typeSpec.nameField = null;
+            }
+          },
+        );
+        if (result.isError()) return result;
         break;
       }
       case 'deleteType':
@@ -303,31 +292,49 @@ function applyMigrationsToSchema(
   return ok(undefined);
 }
 
-function removeFieldFromTypeSpec<
-  TTypeSpec extends AdminEntityTypeSpecification | AdminValueTypeSpecification,
->(
-  typeSpecs: TTypeSpec[],
-  action: { action: 'deleteField'; type: string; field: string },
-): Result<TTypeSpec | null, typeof ErrorType.BadRequest> {
-  const typeIndex = typeSpecs.findIndex((it) => it.name === action.type);
-  if (typeIndex < 0) {
-    return ok(null);
+function applyFieldMigration(
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  actionSpec: { action: 'deleteField'; type: string; field: string },
+  apply: (
+    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    fieldSpec: AdminFieldSpecification,
+    fieldIndex: number,
+  ) => void,
+) {
+  function applyToEntityOrValueTypes<
+    TTypeSpec extends AdminEntityTypeSpecification | AdminValueTypeSpecification,
+  >(typeSpecs: TTypeSpec[]): Result<boolean, typeof ErrorType.BadRequest> {
+    const typeSpec = typeSpecs.find((it) => it.name === actionSpec.type);
+    if (!typeSpec) {
+      return ok(false);
+    }
+
+    const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = actionSpec.field));
+    if (fieldIndex < 0) {
+      return notOk.BadRequest(
+        `Field for migration ${actionSpec.action} ${actionSpec.type}.${actionSpec.field} does not exist`,
+      );
+    }
+
+    apply(typeSpec, typeSpec.fields[fieldIndex], fieldIndex);
+
+    return ok(true);
   }
-  let typeSpec = typeSpecs[typeIndex];
 
-  const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = action.field));
-  if (fieldIndex < 0) {
-    return notOk.BadRequest(
-      `Field for migration ${action.action} ${action.type}.${action.field} does not exist`,
-    );
+  const entityTypeResult = applyToEntityOrValueTypes(schemaSpec.entityTypes);
+  if (entityTypeResult.isError()) return entityTypeResult;
+
+  if (!entityTypeResult.value) {
+    const valueTypeResult = applyToEntityOrValueTypes(schemaSpec.valueTypes);
+    if (valueTypeResult.isError()) return valueTypeResult;
+
+    if (!valueTypeResult.value) {
+      return notOk.BadRequest(
+        `Type for migration ${actionSpec.action} ${actionSpec.type}.${actionSpec.field} does not exist`,
+      );
+    }
   }
-  const fields = [...typeSpec.fields];
-  fields.splice(fieldIndex, 1);
-
-  typeSpec = { ...typeSpec, fields };
-  typeSpecs[typeIndex] = typeSpec;
-
-  return ok(typeSpec);
+  return ok(undefined);
 }
 
 function collectFieldSpecsFromUpdates(
