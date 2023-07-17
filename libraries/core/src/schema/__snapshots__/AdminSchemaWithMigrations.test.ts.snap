@@ -707,6 +707,46 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > include migrations for older versions 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "field": "two",
+          "type": "Foo",
+        },
+      ],
+      "version": 3,
+    },
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "field": "one",
+          "type": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [],
+  "version": 3,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > value item field (migration only) 1`] = `
 {
   "entityTypes": [],

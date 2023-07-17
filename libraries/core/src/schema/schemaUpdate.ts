@@ -267,33 +267,21 @@ function applyMigrationsToSchema(
     const { action } = actionSpec;
     switch (action) {
       case 'deleteField': {
-        const entityTypeIndex = schemaSpec.entityTypes.findIndex(
-          (it) => it.name === actionSpec.type,
-        );
-        if (entityTypeIndex >= 0) {
-          const updatedTypeResult = removeFieldFromTypeSpec(
-            schemaSpec.entityTypes[entityTypeIndex],
-            actionSpec,
-          );
-          if (updatedTypeResult.isError()) return updatedTypeResult;
-          const entitySpec = updatedTypeResult.value;
-          schemaSpec.entityTypes[entityTypeIndex] = entitySpec;
-
+        // Remove from entity types
+        const entityTypeResult = removeFieldFromTypeSpec(schemaSpec.entityTypes, actionSpec);
+        if (entityTypeResult.isError()) return entityTypeResult;
+        if (entityTypeResult.value) {
+          const entitySpec = entityTypeResult.value;
+          // Reset nameField if it was deleted
           if (actionSpec.field === entitySpec.nameField) {
             entitySpec.nameField = null;
           }
         } else {
-          const valueTypeIndex = schemaSpec.valueTypes.findIndex(
-            (it) => it.name === actionSpec.type,
-          );
-          if (valueTypeIndex >= 0) {
-            const updatedTypeResult = removeFieldFromTypeSpec(
-              schemaSpec.valueTypes[valueTypeIndex],
-              actionSpec,
-            );
-            if (updatedTypeResult.isError()) return updatedTypeResult;
-            schemaSpec.valueTypes[valueTypeIndex] = updatedTypeResult.value;
-          } else {
+          // Remove from value types
+          const valueTypeResult = removeFieldFromTypeSpec(schemaSpec.valueTypes, actionSpec);
+          if (valueTypeResult.isError()) return valueTypeResult;
+
+          if (!valueTypeResult.value) {
             return notOk.BadRequest(
               `Type for migration ${action} ${actionSpec.type}.${actionSpec.field} does not exist`,
             );
@@ -318,9 +306,15 @@ function applyMigrationsToSchema(
 function removeFieldFromTypeSpec<
   TTypeSpec extends AdminEntityTypeSpecification | AdminValueTypeSpecification,
 >(
-  typeSpec: TTypeSpec,
+  typeSpecs: TTypeSpec[],
   action: { action: 'deleteField'; type: string; field: string },
-): Result<TTypeSpec, typeof ErrorType.BadRequest> {
+): Result<TTypeSpec | null, typeof ErrorType.BadRequest> {
+  const typeIndex = typeSpecs.findIndex((it) => it.name === action.type);
+  if (typeIndex < 0) {
+    return ok(null);
+  }
+  let typeSpec = typeSpecs[typeIndex];
+
   const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = action.field));
   if (fieldIndex < 0) {
     return notOk.BadRequest(
@@ -329,7 +323,11 @@ function removeFieldFromTypeSpec<
   }
   const fields = [...typeSpec.fields];
   fields.splice(fieldIndex, 1);
-  return ok({ ...typeSpec, fields });
+
+  typeSpec = { ...typeSpec, fields };
+  typeSpecs[typeIndex] = typeSpec;
+
+  return ok(typeSpec);
 }
 
 function collectFieldSpecsFromUpdates(

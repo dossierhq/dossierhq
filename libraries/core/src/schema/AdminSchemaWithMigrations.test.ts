@@ -549,6 +549,113 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
 });
 
 describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
+  test('empty actions is removed', () => {
+    const schema = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'one', type: FieldType.Boolean }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [{ version: 2, actions: [] }],
+      })
+      .valueOrThrow();
+
+    expect(schema.spec.migrations).toEqual([]);
+  });
+
+  test('include migrations for older versions', () => {
+    const firstSchema = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            { name: 'one', type: FieldType.Boolean },
+            { name: 'two', type: FieldType.Boolean },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'one' }] },
+        ],
+      })
+      .valueOrThrow();
+
+    const secondSchema = firstSchema
+      .updateAndValidate({
+        migrations: [
+          ...firstSchema.spec.migrations,
+          { version: 3, actions: [{ action: 'deleteField', type: 'Foo', field: 'two' }] },
+        ],
+      })
+      .valueOrThrow();
+
+    expect(secondSchema.spec).toMatchSnapshot();
+    expect(secondSchema.spec.migrations).toEqual([
+      { version: 3, actions: [{ action: 'deleteField', field: 'two', type: 'Foo' }] },
+      { version: 2, actions: [{ action: 'deleteField', field: 'one', type: 'Foo' }] },
+    ]);
+  });
+
+  test('Error: duplicate for version', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [] },
+        ],
+      });
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Duplicate migrations for version 2');
+  });
+
+  test('Error: wrong version', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 1, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'New migration 1 must be the same as the schema new version 2',
+    );
+  });
+
+  test('Error: old version is different than existing migration', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'new' }],
+          },
+        ],
+      });
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Migration 2 is already defined');
+  });
+});
+
+describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   test('entity field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
@@ -607,5 +714,39 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
     expect(result.spec).toMatchSnapshot();
 
     expect(result.spec.valueTypes[0].fields).toEqual([]);
+  });
+
+  test('Error: invalid type name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 1, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Type for migration deleteField Foo.field does not exist',
+    );
+  });
+
+  test('Error: invalid field name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Field for migration deleteField Foo.field does not exist',
+    );
   });
 });
