@@ -1,5 +1,6 @@
 import {
   AdminSchema,
+  notOk,
   ok,
   type AdminSchemaSpecificationUpdate,
   type ErrorType,
@@ -13,7 +14,7 @@ import { schemaGetSpecification } from './schemaGetSpecification.js';
 export async function schemaUpdateSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  schemaSpec: AdminSchemaSpecificationUpdate,
+  update: AdminSchemaSpecificationUpdate,
 ): PromiseResult<
   SchemaSpecificationUpdatePayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -30,8 +31,18 @@ export async function schemaUpdateSpecification(
     );
     if (previousSpecificationResult.isError()) return previousSpecificationResult;
 
+    // Check version if specified
+    if (
+      typeof update.version === 'number' &&
+      update.version !== previousSpecificationResult.value.version + 1
+    ) {
+      return notOk.BadRequest(
+        `Expected version ${previousSpecificationResult.value.version + 1}, got ${update.version}`,
+      );
+    }
+
     const oldSchema = new AdminSchema(previousSpecificationResult.value);
-    const mergeResult = oldSchema.updateAndValidate(schemaSpec);
+    const mergeResult = oldSchema.updateAndValidate(update);
     if (mergeResult.isError()) return mergeResult;
     const newSchema = mergeResult.value;
 
