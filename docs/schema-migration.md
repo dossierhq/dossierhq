@@ -2,8 +2,8 @@ This document describes what migrations are supported and what impact they have.
 
 | Type property     | Kind     | Change | Description                                                   |
 | ----------------- | -------- | ------ | ------------------------------------------------------------- |
-| Creating new type | `*`      |        |                                                               |
-| Removing type     | `*`      |        | Removing a type is currently not supported.                   |
+| Creating new type | `*`      | Yes    |                                                               |
+| Removing type     | `*`      | No     | Removing a type is currently not supported.                   |
 | `name`            | `*`      | No     | Renaming a type is currently not supported.                   |
 | `adminOnly`       | `*`      | No     | Changing if a field is admin only is currently not supported. |
 | `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.          |
@@ -11,10 +11,10 @@ This document describes what migrations are supported and what impact they have.
 
 | Field property    | Field type             | Change | Description                                                                                                           |
 | ----------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
-| Adding new field  |                        |        |                                                                                                                       |
-| Removing field    |                        |        | Removing a field is currently not supported.                                                                          |
+| Adding new field  |                        | Yes    |                                                                                                                       |
+| Removing field    |                        | No     | Removing a field is currently not supported.                                                                          |
 | Reorder fields    |                        | Yes    |                                                                                                                       |
-| `name`            | `*`                    | No     | Renaming name fields is currently not supported.                                                                      |
+| `name`            | `*`                    | No     | Renaming fields is currently not supported.                                                                           |
 | `type`            | `*`                    | No     | Changing field type is not supported.                                                                                 |
 | `list`            | `*`                    | No     | Changing list is not supported.                                                                                       |
 | `required`        | `*`                    | Yes    | Changing from `false` to `true` requires validation. Published entities can become invalid.                           |
@@ -31,14 +31,14 @@ This document describes what migrations are supported and what impact they have.
 
 | Index property   | Change | Description                                   |
 | ---------------- | ------ | --------------------------------------------- |
-| Adding new index |        |                                               |
-| Removing index   |        | Removing an index is currently not supported. |
+| Adding new index | Yes    |                                               |
+| Removing index   | No     | Removing an index is currently not supported. |
 | `name`           | No     | Renaming an index is currently not supported. |
 | `type`           | No     | Changing the type is currently not supported. |
 
 | Pattern property   | Change | Description                                                          |
 | ------------------ | ------ | -------------------------------------------------------------------- |
-| Adding new pattern |        |                                                                      |
-| Removing pattern   |        | Removing a pattern removes it from all types using the pattern.      |
+| Adding new pattern | Yes    |                                                                      |
+| Removing pattern   | Yes    | Removing a pattern removes it from all types using the pattern.      |
 | `name`             | Yes    | Renaming a pattern does not require validation.                      |
 | `pattern`          | Yes    | Changing pattern requires validation of all types using the pattern. |
