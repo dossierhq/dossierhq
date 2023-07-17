@@ -5,15 +5,15 @@ import {
   isRichTextValueItemNode,
   isValueItemItemField,
 } from './ItemUtils.js';
+import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
+import type { AdminSchema } from './schema/AdminSchema.js';
+import type { PublishedSchema } from './schema/PublishedSchema.js';
 import type {
   AdminEntityTypeSpecification,
-  AdminSchema,
   AdminValueTypeSpecification,
   PublishedEntityTypeSpecification,
-  PublishedSchema,
   PublishedValueTypeSpecification,
-} from './Schema.js';
-import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
+} from './schema/SchemaSpecification.js';
 
 export const ItemTraverseNodeType = {
   error: 'error',

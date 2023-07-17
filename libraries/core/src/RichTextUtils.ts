@@ -1,4 +1,4 @@
-import { RichTextNodeType } from './Schema.js';
+import { RichTextNodeType } from './schema/SchemaSpecification.js';
 import {
   IS_UNMERGEABLE,
   TEXT_TYPE_TO_FORMAT,

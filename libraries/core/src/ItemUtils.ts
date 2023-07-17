@@ -2,13 +2,6 @@ import { assertExhaustive } from './Asserts.js';
 import type { ErrorType, Result } from './ErrorResult.js';
 import { notOk, ok } from './ErrorResult.js';
 import type {
-  AdminFieldSpecification,
-  AdminSchema,
-  FieldSpecification,
-  FieldValueTypeMap,
-} from './Schema.js';
-import { FieldType, RichTextNodeType } from './Schema.js';
-import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
@@ -33,6 +26,13 @@ import type {
   RichTextValueItemNode,
   ValueItem,
 } from './Types.js';
+import type { AdminSchema } from './schema/AdminSchema.js';
+import type {
+  AdminFieldSpecification,
+  FieldSpecification,
+  FieldValueTypeMap,
+} from './schema/SchemaSpecification.js';
+import { FieldType, RichTextNodeType } from './schema/SchemaSpecification.js';
 
 type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType> = Omit<
   TNode,

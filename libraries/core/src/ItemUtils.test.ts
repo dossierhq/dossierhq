@@ -22,8 +22,9 @@ import {
   normalizeValueItem,
 } from './ItemUtils.js';
 import { createRichTextParagraphNode, createRichTextRootNode } from './RichTextUtils.js';
-import { AdminSchema, FieldType } from './Schema.js';
 import type { AdminEntity, AdminEntityCreate, RichText, RichTextNode, ValueItem } from './Types.js';
+import { AdminSchema } from './schema/AdminSchema.js';
+import { FieldType } from './schema/SchemaSpecification.js';
 
 type AdminFoo = AdminEntity<'Foo', AdminFooFields, 'none'>;
 

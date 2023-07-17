@@ -149,48 +149,6 @@ export {
   createRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from './RichTextUtils.js';
-export {
-  AdminSchema,
-  AdminSchemaWithMigrations,
-  FieldType,
-  PublishedSchema,
-  REQUIRED_RICH_TEXT_NODES,
-  RichTextNodeType,
-} from './Schema.js';
-export type {
-  AdminBooleanFieldSpecificationUpdate,
-  AdminEntityFieldSpecificationUpdate,
-  AdminEntityTypeSpecification,
-  AdminEntityTypeSpecificationUpdate,
-  AdminFieldSpecification,
-  AdminFieldSpecificationUpdate,
-  AdminLocationFieldSpecificationUpdate,
-  AdminNumberFieldSpecificationUpdate,
-  AdminRichTextFieldSpecificationUpdate,
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
-  AdminSchemaSpecificationWithMigrations,
-  AdminStringFieldSpecificationUpdate,
-  AdminValueItemFieldSpecificationUpdate,
-  AdminValueTypeSpecification,
-  AdminValueTypeSpecificationUpdate,
-  BooleanFieldSpecification,
-  EntityFieldSpecification,
-  FieldSpecification,
-  FieldValueTypeMap,
-  LocationFieldSpecification,
-  NumberFieldSpecification,
-  PublishedEntityTypeSpecification,
-  PublishedFieldSpecification,
-  PublishedSchemaSpecification,
-  PublishedValueTypeSpecification,
-  RichTextFieldSpecification,
-  SchemaIndexSpecification,
-  SchemaPatternSpecification,
-  SchemaSpecificationUpdatePayload,
-  StringFieldSpecification,
-  ValueItemFieldSpecification,
-} from './Schema.js';
 export { LoggingClientMiddleware } from './SharedClient.js';
 export type { ClientContext, ContextProvider } from './SharedClient.js';
 export {
@@ -259,3 +217,44 @@ export type {
   ValueItem,
 } from './Types.js';
 export { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from './UrlQueryUtils.js';
+export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
+export { PublishedSchema } from './schema/PublishedSchema.js';
+export {
+  FieldType,
+  REQUIRED_RICH_TEXT_NODES,
+  RichTextNodeType,
+} from './schema/SchemaSpecification.js';
+export type {
+  AdminBooleanFieldSpecificationUpdate,
+  AdminEntityFieldSpecificationUpdate,
+  AdminEntityTypeSpecification,
+  AdminEntityTypeSpecificationUpdate,
+  AdminFieldSpecification,
+  AdminFieldSpecificationUpdate,
+  AdminLocationFieldSpecificationUpdate,
+  AdminNumberFieldSpecificationUpdate,
+  AdminRichTextFieldSpecificationUpdate,
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
+  AdminSchemaSpecificationWithMigrations,
+  AdminStringFieldSpecificationUpdate,
+  AdminValueItemFieldSpecificationUpdate,
+  AdminValueTypeSpecification,
+  AdminValueTypeSpecificationUpdate,
+  BooleanFieldSpecification,
+  EntityFieldSpecification,
+  FieldSpecification,
+  FieldValueTypeMap,
+  LocationFieldSpecification,
+  NumberFieldSpecification,
+  PublishedEntityTypeSpecification,
+  PublishedFieldSpecification,
+  PublishedSchemaSpecification,
+  PublishedValueTypeSpecification,
+  RichTextFieldSpecification,
+  SchemaIndexSpecification,
+  SchemaPatternSpecification,
+  SchemaSpecificationUpdatePayload,
+  StringFieldSpecification,
+  ValueItemFieldSpecification,
+} from './schema/SchemaSpecification.js';

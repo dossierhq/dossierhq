@@ -16,8 +16,9 @@ import {
   createRichTextRootNode,
   createRichTextTextNode,
 } from './RichTextUtils.js';
-import { AdminSchema, FieldType } from './Schema.js';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
+import { AdminSchema } from './schema/AdminSchema.js';
+import { FieldType } from './schema/SchemaSpecification.js';
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [

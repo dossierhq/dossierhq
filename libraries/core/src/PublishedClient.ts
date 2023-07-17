@@ -7,7 +7,6 @@ import {
   convertJsonPublishedEntity,
   convertJsonResult,
 } from './JsonUtils.js';
-import type { PublishedSchemaSpecification } from './Schema.js';
 import type {
   ClientContext,
   ContextProvider,
@@ -30,6 +29,7 @@ import type {
   UniqueIndexReference,
   ValueItem,
 } from './Types.js';
+import type { PublishedSchemaSpecification } from './schema/SchemaSpecification.js';
 
 export interface PublishedClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,

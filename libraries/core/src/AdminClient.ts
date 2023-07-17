@@ -29,12 +29,6 @@ import {
   convertJsonResult,
 } from './JsonUtils.js';
 import type {
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
-  AdminSchemaSpecificationWithMigrations,
-  SchemaSpecificationUpdatePayload,
-} from './Schema.js';
-import type {
   ClientContext,
   ContextProvider,
   Middleware,
@@ -73,6 +67,12 @@ import type {
   UniqueIndexReference,
   ValueItem,
 } from './Types.js';
+import type {
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
+  AdminSchemaSpecificationWithMigrations,
+  SchemaSpecificationUpdatePayload,
+} from './schema/SchemaSpecification.js';
 
 export interface AdminClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,

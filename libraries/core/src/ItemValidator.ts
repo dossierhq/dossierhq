@@ -7,14 +7,14 @@ import {
   isStringItemField,
   type ItemValuePath,
 } from './ItemUtils.js';
+import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from './Types.js';
+import type { AdminSchema } from './schema/AdminSchema.js';
+import type { PublishedSchema } from './schema/PublishedSchema.js';
 import type {
-  AdminSchema,
   NumberFieldSpecification,
-  PublishedSchema,
   RichTextFieldSpecification,
   StringFieldSpecification,
-} from './Schema.js';
-import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from './Types.js';
+} from './schema/SchemaSpecification.js';
 
 export interface SaveValidationIssue {
   type: 'save';
