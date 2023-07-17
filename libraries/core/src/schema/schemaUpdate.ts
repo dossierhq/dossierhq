@@ -280,8 +280,22 @@ function applyMigrationsToSchema(
       }
       case 'deleteType':
         return notOk.BadRequest('TODO Not implemented (deleteType)');
-      case 'renameField':
-        return notOk.BadRequest('TODO Not implemented (renameField)');
+      case 'renameField': {
+        const result = applyFieldMigration(
+          schemaSpec,
+          actionSpec,
+          (typeSpec, fieldSpec, _fieldIndex) => {
+            fieldSpec.name = actionSpec.newName;
+
+            // Change nameField if it was renamed
+            if ('nameField' in typeSpec && typeSpec.nameField === actionSpec.field) {
+              typeSpec.nameField = actionSpec.newName;
+            }
+          },
+        );
+        if (result.isError()) return result;
+        break;
+      }
       case 'renameType':
         return notOk.BadRequest('TODO Not implemented (renameType)');
       default:
@@ -294,7 +308,7 @@ function applyMigrationsToSchema(
 
 function applyFieldMigration(
   schemaSpec: AdminSchemaSpecificationWithMigrations,
-  actionSpec: { action: 'deleteField'; type: string; field: string },
+  actionSpec: { action: string; type: string; field: string },
   apply: (
     typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
     fieldSpec: AdminFieldSpecification,

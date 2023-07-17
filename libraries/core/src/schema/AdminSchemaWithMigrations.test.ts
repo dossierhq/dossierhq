@@ -548,7 +548,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
+describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
   test('empty actions is removed', () => {
     const schema = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'one', type: FieldType.Boolean }] }],
@@ -700,6 +700,23 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
     expect(result.spec.entityTypes[0].fields[0].name).toEqual('anotherField');
   });
 
+  test('entity field, replace with other field of same name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes[0].fields[0].type).toBe(FieldType.Boolean);
+  });
+
   test('value item field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
@@ -747,6 +764,121 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       result,
       ErrorType.BadRequest,
       'Field for migration deleteField Foo.field does not exist',
+    );
+  });
+});
+
+describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
+  test('entity field (migration only)', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+          },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes[0].fields[0].name).toEqual('newField');
+  });
+
+  test('entity name field, modify validations', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          nameField: 'field',
+          fields: [
+            { name: 'field', type: FieldType.String },
+            { name: 'anotherField', type: FieldType.String },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [{ name: 'newField', type: FieldType.String, values: [{ value: 'one' }] }],
+          },
+        ],
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+          },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes[0].nameField).toEqual('newField');
+    expect(result.spec.entityTypes[0].fields).toHaveLength(2);
+  });
+
+  test('value item field (migration only)', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+          },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.valueTypes[0].fields[0].name).toBe('newField');
+  });
+
+  test('Error: invalid type name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 1,
+            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+          },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Type for migration renameField Foo.field does not exist',
+    );
+  });
+
+  test('Error: invalid field name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+          },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Field for migration renameField Foo.field does not exist',
     );
   });
 });
