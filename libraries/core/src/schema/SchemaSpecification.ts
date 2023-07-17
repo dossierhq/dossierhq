@@ -215,7 +215,7 @@ export interface AdminSchemaSpecificationWithMigrations extends AdminSchemaSpeci
   migrations: AdminSchemaVersionMigration[];
 }
 
-interface AdminSchemaVersionMigration {
+export interface AdminSchemaVersionMigration {
   version: number;
   actions: AdminSchemaMigrationAction[];
 }
@@ -232,6 +232,7 @@ export interface AdminSchemaSpecificationUpdate {
   valueTypes?: AdminValueTypeSpecificationUpdate[];
   patterns?: SchemaPatternSpecification[];
   indexes?: SchemaIndexSpecification[];
+  migrations?: AdminSchemaVersionMigration[];
 }
 
 export interface SchemaSpecificationUpdatePayload<

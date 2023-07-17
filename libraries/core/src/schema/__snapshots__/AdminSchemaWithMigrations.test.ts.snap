@@ -634,3 +634,103 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing values val
   "version": 1,
 }
 `;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity field (migration only) 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "field": "field",
+          "type": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name field with another field 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "anotherField",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "field": "field",
+          "type": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > value item field (migration only) 1`] = `
+{
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "field": "field",
+          "type": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;

@@ -1,7 +1,6 @@
 import { assertExhaustive } from '../Asserts.js';
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import { isFieldValueEqual } from '../ItemUtils.js';
-import type { BaseSchema } from './BaseSchema.js';
 import {
   FieldType,
   type AdminEntityTypeSpecification,
@@ -9,6 +8,7 @@ import {
   type AdminFieldSpecificationUpdate,
   type AdminSchemaSpecificationUpdate,
   type AdminSchemaSpecificationWithMigrations,
+  type AdminSchemaVersionMigration,
   type AdminValueTypeSpecification,
   type EntityFieldSpecification,
   type NumberFieldSpecification,
@@ -18,17 +18,24 @@ import {
 } from './SchemaSpecification.js';
 
 export function schemaUpdate(
-  current: BaseSchema<AdminSchemaSpecificationWithMigrations>,
+  currentSchemaSpec: AdminSchemaSpecificationWithMigrations,
   update: AdminSchemaSpecificationUpdate,
 ): Result<AdminSchemaSpecificationWithMigrations, typeof ErrorType.BadRequest> {
   const schemaSpec: AdminSchemaSpecificationWithMigrations = {
-    version: current.spec.version,
-    entityTypes: [...current.spec.entityTypes],
-    valueTypes: [...current.spec.valueTypes],
-    patterns: [],
-    indexes: [],
-    migrations: [...current.spec.migrations],
+    version: currentSchemaSpec.version,
+    entityTypes: [...currentSchemaSpec.entityTypes],
+    valueTypes: [...currentSchemaSpec.valueTypes],
+    patterns: [...currentSchemaSpec.patterns],
+    indexes: [...currentSchemaSpec.indexes],
+    migrations: [...currentSchemaSpec.migrations],
   };
+
+  const mergeMigrationsResult = mergeMigrations(update, schemaSpec);
+  if (mergeMigrationsResult.isError()) return mergeMigrationsResult;
+  const currentMigration = mergeMigrationsResult.value;
+
+  const applyMigrationsResult = applyMigrationsToSchema(currentMigration, schemaSpec);
+  if (applyMigrationsResult.isError()) return applyMigrationsResult;
 
   // Merge entity types
   if (update.entityTypes) {
@@ -147,24 +154,48 @@ export function schemaUpdate(
     }
   }
 
-  // Merge used patterns
-  for (const patternName of [...usedPatterns].sort()) {
-    const pattern =
-      update.patterns?.find((it) => it.name === patternName) ?? current.getPattern(patternName);
-    if (!pattern) {
-      return notOk.BadRequest(`Pattern ${patternName} is used, but not defined`);
+  // Merge patterns
+  for (const pattern of update.patterns ?? []) {
+    const existingPatternIndex = schemaSpec.patterns.findIndex((it) => it.name === pattern.name);
+    if (existingPatternIndex >= 0) {
+      schemaSpec.patterns[existingPatternIndex] = pattern;
+    } else {
+      schemaSpec.patterns.push(pattern);
     }
-    schemaSpec.patterns.push(pattern);
   }
 
-  // Merge used indexes
-  for (const indexName of [...usedIndexes].sort()) {
-    const index =
-      update.indexes?.find((it) => it.name === indexName) ?? current.getIndex(indexName);
-    if (!index) {
-      return notOk.BadRequest(`Index ${indexName} is used, but not defined`);
+  // Delete unused patterns and check that all used patterns are defined
+  const unspecifiedPatternNames = new Set(usedPatterns);
+  schemaSpec.patterns = schemaSpec.patterns.filter((it) => {
+    unspecifiedPatternNames.delete(it.name);
+    return usedPatterns.has(it.name);
+  });
+  if (unspecifiedPatternNames.size > 0) {
+    return notOk.BadRequest(
+      `Pattern ${[...unspecifiedPatternNames].join(', ')} is used, but not defined`,
+    );
+  }
+
+  // Merge indexes
+  for (const index of update.indexes ?? []) {
+    const existingIndexIndex = schemaSpec.indexes.findIndex((it) => it.name === index.name);
+    if (existingIndexIndex >= 0) {
+      schemaSpec.indexes[existingIndexIndex] = index;
+    } else {
+      schemaSpec.indexes.push(index);
     }
-    schemaSpec.indexes.push(index);
+  }
+
+  // Delete unused indexes and check that all used indexes are defined
+  const unspecifiedIndexNames = new Set(usedIndexes);
+  schemaSpec.indexes = schemaSpec.indexes.filter((it) => {
+    unspecifiedIndexNames.delete(it.name);
+    return usedIndexes.has(it.name);
+  });
+  if (unspecifiedIndexNames.size > 0) {
+    return notOk.BadRequest(
+      `Index ${[...unspecifiedIndexNames].join(', ')} is used, but not defined`,
+    );
   }
 
   // Sort everything
@@ -172,14 +203,133 @@ export function schemaUpdate(
   schemaSpec.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
   schemaSpec.patterns.sort((a, b) => a.name.localeCompare(b.name));
   schemaSpec.indexes.sort((a, b) => a.name.localeCompare(b.name));
+  schemaSpec.migrations.sort((a, b) => b.version - a.version);
 
   // Detect if changed and bump version
-  if (isFieldValueEqual(current.spec, schemaSpec)) {
-    return ok(current.spec); // no change
+  if (isFieldValueEqual(currentSchemaSpec, schemaSpec)) {
+    return ok(currentSchemaSpec); // no change
   }
   schemaSpec.version += 1;
 
   return ok(schemaSpec);
+}
+
+function mergeMigrations(
+  update: AdminSchemaSpecificationUpdate,
+  updatedSpec: AdminSchemaSpecificationWithMigrations,
+): Result<AdminSchemaVersionMigration | null, typeof ErrorType.BadRequest> {
+  let currentMigration: AdminSchemaVersionMigration | null = null;
+
+  for (const newMigration of update.migrations ?? []) {
+    const existingMigration = updatedSpec.migrations.find(
+      (it) => it.version === newMigration.version,
+    );
+    if (existingMigration) {
+      if (!isFieldValueEqual(existingMigration, newMigration)) {
+        return notOk.BadRequest(`Migration ${newMigration.version} is already defined`);
+      }
+    } else {
+      if (newMigration.version !== updatedSpec.version + 1) {
+        return notOk.BadRequest(
+          `New migration ${newMigration.version} must be the same as the schema new version ${
+            updatedSpec.version + 1
+          }`,
+        );
+      } else {
+        if (currentMigration) {
+          return notOk.BadRequest(`Duplicate migrations for version ${newMigration.version}`);
+        }
+        currentMigration = newMigration;
+      }
+    }
+  }
+
+  if (currentMigration?.actions.length === 0) {
+    currentMigration = null;
+  }
+
+  if (currentMigration) {
+    updatedSpec.migrations.unshift(currentMigration);
+  }
+
+  return ok(currentMigration);
+}
+
+function applyMigrationsToSchema(
+  migration: AdminSchemaVersionMigration | null,
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
+): Result<void, typeof ErrorType.BadRequest> {
+  if (!migration) {
+    return ok(undefined);
+  }
+
+  for (const actionSpec of migration.actions) {
+    const { action } = actionSpec;
+    switch (action) {
+      case 'deleteField': {
+        const entityTypeIndex = schemaSpec.entityTypes.findIndex(
+          (it) => it.name === actionSpec.type,
+        );
+        if (entityTypeIndex >= 0) {
+          const updatedTypeResult = removeFieldFromTypeSpec(
+            schemaSpec.entityTypes[entityTypeIndex],
+            actionSpec,
+          );
+          if (updatedTypeResult.isError()) return updatedTypeResult;
+          const entitySpec = updatedTypeResult.value;
+          schemaSpec.entityTypes[entityTypeIndex] = entitySpec;
+
+          if (actionSpec.field === entitySpec.nameField) {
+            entitySpec.nameField = null;
+          }
+        } else {
+          const valueTypeIndex = schemaSpec.valueTypes.findIndex(
+            (it) => it.name === actionSpec.type,
+          );
+          if (valueTypeIndex >= 0) {
+            const updatedTypeResult = removeFieldFromTypeSpec(
+              schemaSpec.valueTypes[valueTypeIndex],
+              actionSpec,
+            );
+            if (updatedTypeResult.isError()) return updatedTypeResult;
+            schemaSpec.valueTypes[valueTypeIndex] = updatedTypeResult.value;
+          } else {
+            return notOk.BadRequest(
+              `Type for migration ${action} ${actionSpec.type}.${actionSpec.field} does not exist`,
+            );
+          }
+        }
+        break;
+      }
+      case 'deleteType':
+        return notOk.BadRequest('TODO Not implemented (deleteType)');
+      case 'renameField':
+        return notOk.BadRequest('TODO Not implemented (renameField)');
+      case 'renameType':
+        return notOk.BadRequest('TODO Not implemented (renameType)');
+      default:
+        assertExhaustive(action);
+    }
+  }
+
+  return ok(undefined);
+}
+
+function removeFieldFromTypeSpec<
+  TTypeSpec extends AdminEntityTypeSpecification | AdminValueTypeSpecification,
+>(
+  typeSpec: TTypeSpec,
+  action: { action: 'deleteField'; type: string; field: string },
+): Result<TTypeSpec, typeof ErrorType.BadRequest> {
+  const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = action.field));
+  if (fieldIndex < 0) {
+    return notOk.BadRequest(
+      `Field for migration ${action.action} ${action.type}.${action.field} does not exist`,
+    );
+  }
+  const fields = [...typeSpec.fields];
+  fields.splice(fieldIndex, 1);
+  return ok({ ...typeSpec, fields });
 }
 
 function collectFieldSpecsFromUpdates(

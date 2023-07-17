@@ -547,3 +547,65 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     );
   });
 });
+
+describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
+  test('entity field (migration only)', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes[0].fields).toEqual([]);
+  });
+
+  test('entity name field with another field', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          nameField: 'field',
+          fields: [
+            { name: 'field', type: FieldType.String },
+            { name: 'anotherField', type: FieldType.String },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'anotherField', type: FieldType.String }] }],
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes[0].nameField).toEqual(null);
+    expect(result.spec.entityTypes[0].fields).toHaveLength(1);
+    expect(result.spec.entityTypes[0].fields[0].name).toEqual('anotherField');
+  });
+
+  test('value item field (migration only)', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.valueTypes[0].fields).toEqual([]);
+  });
+});

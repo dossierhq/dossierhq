@@ -68,7 +68,7 @@ export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificat
     update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchemaWithMigrations, typeof ErrorType.BadRequest> {
     // Update
-    const updatedResult = schemaUpdate(this, update);
+    const updatedResult = schemaUpdate(this.spec, update);
     if (updatedResult.isError()) return updatedResult;
     const updatedSpec = updatedResult.value;
 
