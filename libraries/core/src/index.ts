@@ -151,6 +151,7 @@ export {
 } from './RichTextUtils.js';
 export {
   AdminSchema,
+  AdminSchemaWithMigrations,
   FieldType,
   PublishedSchema,
   REQUIRED_RICH_TEXT_NODES,
@@ -168,6 +169,7 @@ export type {
   AdminRichTextFieldSpecificationUpdate,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
+  AdminSchemaSpecificationWithMigrations,
   AdminStringFieldSpecificationUpdate,
   AdminValueItemFieldSpecificationUpdate,
   AdminValueTypeSpecification,

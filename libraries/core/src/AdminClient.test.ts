@@ -709,7 +709,68 @@ describe('AdminClient forward operation over JSON', () => {
             },
           },
           {
-            "args": [],
+            "args": [
+              null,
+            ],
+            "modifies": false,
+            "name": "getSchemaSpecification",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getSchemaSpecification includeMigrations', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getSchemaSpecification,
+      (_context, operation) => {
+        operation.resolve(
+          ok({
+            version: 1,
+            migrations: [],
+            entityTypes: [],
+            valueTypes: [],
+            patterns: [],
+            indexes: [],
+          }),
+        );
+        return Promise.resolve();
+      },
+    );
+
+    const result = await adminClient.getSchemaSpecification({ includeMigrations: true });
+    expectOkResult(result) &&
+      expect(result.value).toMatchInlineSnapshot(`
+        {
+          "entityTypes": [],
+          "indexes": [],
+          "migrations": [],
+          "patterns": [],
+          "valueTypes": [],
+          "version": 1,
+        }
+      `);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          {
+            "logger": {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          {
+            "args": [
+              {
+                "includeMigrations": true,
+              },
+            ],
             "modifies": false,
             "name": "getSchemaSpecification",
             "next": [Function],
@@ -1406,6 +1467,79 @@ describe('AdminClient forward operation over JSON', () => {
               {
                 "entityTypes": [],
                 "valueTypes": [],
+              },
+              null,
+            ],
+            "modifies": true,
+            "name": "updateSchemaSpecification",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('updateSchemaSpecification includeMigrations', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.updateSchemaSpecification,
+      (_context, operation) => {
+        operation.resolve(
+          ok({
+            effect: 'updated',
+            schemaSpecification: {
+              version: 2,
+              entityTypes: [],
+              valueTypes: [],
+              patterns: [],
+              indexes: [],
+              migrations: [],
+            },
+          }),
+        );
+        return Promise.resolve();
+      },
+    );
+
+    const result = await adminClient.updateSchemaSpecification(
+      { entityTypes: [], valueTypes: [] },
+      { includeMigrations: true },
+    );
+    expectOkResult(result) &&
+      expect(result.value).toMatchInlineSnapshot(`
+        {
+          "effect": "updated",
+          "schemaSpecification": {
+            "entityTypes": [],
+            "indexes": [],
+            "migrations": [],
+            "patterns": [],
+            "valueTypes": [],
+            "version": 2,
+          },
+        }
+      `);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          {
+            "logger": {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          {
+            "args": [
+              {
+                "entityTypes": [],
+                "valueTypes": [],
+              },
+              {
+                "includeMigrations": true,
               },
             ],
             "modifies": true,

@@ -3905,7 +3905,7 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
   ],
   "indexes": [],
   "patterns": [],
-  "schema": AdminSchema {
+  "schema": AdminSchemaWithMigrations {
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
@@ -3919,6 +3919,7 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
         },
       ],
       "indexes": [],
+      "migrations": [],
       "patterns": [],
       "valueTypes": [],
       "version": 1,

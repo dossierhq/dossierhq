@@ -1,20 +1,24 @@
-import type {
-  AdminClient,
-  AdminClientMiddleware,
-  AdminEntity,
-  AdminSchemaSpecification,
-  ContextProvider,
-  ErrorType,
-  Logger,
-  PromiseResult,
-  PublishedClient,
-  PublishedClientMiddleware,
-  PublishedEntity,
-  PublishedSchema,
-  Result,
-  ValueItem,
+import {
+  AdminSchemaWithMigrations,
+  NoOpLogger,
+  assertIsDefined,
+  notOk,
+  ok,
+  type AdminClient,
+  type AdminClientMiddleware,
+  type AdminEntity,
+  type AdminSchemaSpecificationWithMigrations,
+  type ContextProvider,
+  type ErrorType,
+  type Logger,
+  type PromiseResult,
+  type PublishedClient,
+  type PublishedClientMiddleware,
+  type PublishedEntity,
+  type PublishedSchema,
+  type Result,
+  type ValueItem,
 } from '@dossierhq/core';
-import { AdminSchema, NoOpLogger, assertIsDefined, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseOptimizationOptions,
@@ -23,8 +27,12 @@ import type {
 } from '@dossierhq/database-adapter';
 import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
-import type { InternalContext, SessionContext } from './Context.js';
-import { InternalContextImpl, SessionContextImpl } from './Context.js';
+import {
+  InternalContextImpl,
+  SessionContextImpl,
+  type InternalContext,
+  type SessionContext,
+} from './Context.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
@@ -95,7 +103,7 @@ export interface ServerPlugin {
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
-  #adminSchema: AdminSchema | null = null;
+  #adminSchema: AdminSchemaWithMigrations | null = null;
   #publishedSchema: PublishedSchema | null = null;
   #plugins: ServerPlugin[] = [];
 
@@ -123,9 +131,8 @@ export class ServerImpl {
   async reloadSchema(context: InternalContext): PromiseResult<void, typeof ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
     const result = await schemaGetSpecification(this.#databaseAdapter, context, true);
-    if (result.isError()) {
-      return result;
-    }
+    if (result.isError()) return result;
+
     this.setAdminSchema(result.value);
     return ok(undefined);
   }
@@ -134,7 +141,7 @@ export class ServerImpl {
     this.#plugins.push(plugin);
   }
 
-  getAdminSchema(): AdminSchema {
+  getAdminSchema(): AdminSchemaWithMigrations {
     if (!this.#adminSchema) {
       throw new Error('AdminSchema is not set');
     }
@@ -148,8 +155,8 @@ export class ServerImpl {
     return this.#publishedSchema;
   }
 
-  setAdminSchema(schemaSpec: AdminSchemaSpecification): void {
-    this.#adminSchema = new AdminSchema(schemaSpec);
+  setAdminSchema(schemaSpec: AdminSchemaSpecificationWithMigrations): void {
+    this.#adminSchema = new AdminSchemaWithMigrations(schemaSpec);
     this.#publishedSchema = this.#adminSchema.toPublishedSchema();
   }
 

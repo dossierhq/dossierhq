@@ -30,7 +30,6 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "vitest",
-    "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
   },
   "repository": {

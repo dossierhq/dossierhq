@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminSchemaSpecification,
+  type AdminSchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -10,7 +10,7 @@ import { queryRun, type Database } from '../QueryFunctions.js';
 export async function schemaUpdateSpecification(
   database: Database,
   context: TransactionContext,
-  schemaSpec: AdminSchemaSpecification,
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;
   const result = await queryRun(database, context, {

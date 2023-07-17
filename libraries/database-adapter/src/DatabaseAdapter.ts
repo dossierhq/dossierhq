@@ -2,7 +2,7 @@ import type {
   AdminEntityStatus,
   AdminQuery,
   AdminSchema,
-  AdminSchemaSpecification,
+  AdminSchemaSpecificationWithMigrations,
   AdminSearchQuery,
   EntityReference,
   EntityVersionReference,
@@ -566,10 +566,10 @@ export interface DatabaseAdapter<
 
   schemaGetSpecification(
     context: TransactionContext,
-  ): PromiseResult<AdminSchemaSpecification | null, typeof ErrorType.Generic>;
+  ): PromiseResult<AdminSchemaSpecificationWithMigrations | null, typeof ErrorType.Generic>;
 
   schemaUpdateSpecification(
     context: TransactionContext,
-    schemaSpec: AdminSchemaSpecification,
+    schemaSpec: AdminSchemaSpecificationWithMigrations,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 }

@@ -3,7 +3,12 @@ import type {
   NumberFieldSpecification,
   StringFieldSpecification,
 } from '@dossierhq/core';
-import { AdminSchema, FieldType, RichTextNodeType } from '@dossierhq/core';
+import {
+  AdminSchema,
+  AdminSchemaWithMigrations,
+  FieldType,
+  RichTextNodeType,
+} from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import type {
   SchemaEditorState,
@@ -1800,7 +1805,7 @@ describe('UpdateSchemaSpecificationAction', () => {
 
 describe('SchemaEditorReducer scenarios', () => {
   test('add type, save, force update', () => {
-    const initialSchema = AdminSchema.createAndValidate({}).valueOrThrow();
+    const initialSchema = AdminSchemaWithMigrations.createAndValidate({}).valueOrThrow();
     const beforeSaveState = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),

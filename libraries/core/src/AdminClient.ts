@@ -31,6 +31,7 @@ import {
 import type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
+  AdminSchemaSpecificationWithMigrations,
   SchemaSpecificationUpdatePayload,
 } from './Schema.js';
 import type {
@@ -83,10 +84,23 @@ export interface AdminClient<
     TUniqueIndex
   > = AdminExceptionClient<TAdminEntity, TAdminValueItem, TUniqueIndex>,
 > {
-  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
+  getSchemaSpecification(options: {
+    includeMigrations: true;
+  }): PromiseResult<AdminSchemaSpecificationWithMigrations, typeof ErrorType.Generic>;
+  getSchemaSpecification(options?: {
+    includeMigrations: boolean;
+  }): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
 
   updateSchemaSpecification(
     schemaSpec: AdminSchemaSpecificationUpdate,
+    options: { includeMigrations: true },
+  ): PromiseResult<
+    SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
+  updateSchemaSpecification(
+    schemaSpec: AdminSchemaSpecificationUpdate,
+    options?: { includeMigrations: boolean },
   ): PromiseResult<
     SchemaSpecificationUpdatePayload,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -271,10 +285,20 @@ export interface AdminExceptionClient<
 > {
   client: Readonly<AdminClient<TAdminEntity, TAdminValueItem, TUniqueIndex>>;
 
-  getSchemaSpecification(): Promise<AdminSchemaSpecification>;
+  getSchemaSpecification(options: {
+    includeMigrations: true;
+  }): Promise<AdminSchemaSpecificationWithMigrations>;
+  getSchemaSpecification(options?: {
+    includeMigrations: boolean;
+  }): Promise<AdminSchemaSpecification>;
 
   updateSchemaSpecification(
     schemaSpec: AdminSchemaSpecificationUpdate,
+    options: { includeMigrations: true },
+  ): Promise<SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>>;
+  updateSchemaSpecification(
+    schemaSpec: AdminSchemaSpecificationUpdate,
+    options?: { includeMigrations: boolean },
   ): Promise<SchemaSpecificationUpdatePayload>;
 
   getEntity(
@@ -512,23 +536,36 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     this.pipeline = pipeline;
   }
 
-  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
+  getSchemaSpecification(options: {
+    includeMigrations: true;
+  }): PromiseResult<AdminSchemaSpecificationWithMigrations, typeof ErrorType.Generic>;
+  getSchemaSpecification(options?: {
+    includeMigrations: boolean;
+  }): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.getSchemaSpecification,
-      args: [],
+      args: [options],
       modifies: false,
     });
   }
 
   updateSchemaSpecification(
     schemaSpec: AdminSchemaSpecificationUpdate,
+    options: { includeMigrations: true },
+  ): PromiseResult<
+    SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
+  updateSchemaSpecification(
+    schemaSpec: AdminSchemaSpecificationUpdate,
+    options?: { includeMigrations: boolean },
   ): PromiseResult<
     SchemaSpecificationUpdatePayload,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > {
     return this.executeOperation({
       name: AdminClientOperationName.updateSchemaSpecification,
-      args: [schemaSpec],
+      args: [schemaSpec, options],
       modifies: true,
     });
   }
@@ -782,14 +819,25 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   constructor(client: AdminClient) {
     this.client = client;
   }
-  async getSchemaSpecification(): Promise<AdminSchemaSpecification> {
-    return (await this.client.getSchemaSpecification()).valueOrThrow();
+
+  async getSchemaSpecification(options: {
+    includeMigrations: true;
+  }): Promise<AdminSchemaSpecificationWithMigrations>;
+  async getSchemaSpecification(options?: {
+    includeMigrations: boolean;
+  }): Promise<AdminSchemaSpecification> {
+    return (await this.client.getSchemaSpecification(options)).valueOrThrow();
   }
 
   async updateSchemaSpecification(
     schemaSpec: AdminSchemaSpecificationUpdate,
+    options: { includeMigrations: true },
+  ): Promise<SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>>;
+  async updateSchemaSpecification(
+    schemaSpec: AdminSchemaSpecificationUpdate,
+    options?: { includeMigrations: boolean },
   ): Promise<SchemaSpecificationUpdatePayload> {
-    return (await this.client.updateSchemaSpecification(schemaSpec)).valueOrThrow();
+    return (await this.client.updateSchemaSpecification(schemaSpec, options)).valueOrThrow();
   }
 
   async getEntity(
@@ -963,7 +1011,9 @@ export async function executeAdminClientOperationFromJson(
       return await adminClient.getPublishingHistory(reference);
     }
     case AdminClientOperationName.getSchemaSpecification: {
-      return await adminClient.getSchemaSpecification();
+      const [options] =
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getSchemaSpecification];
+      return await adminClient.getSchemaSpecification(options);
     }
     case AdminClientOperationName.getTotalCount: {
       const [query] =
@@ -1011,9 +1061,9 @@ export async function executeAdminClientOperationFromJson(
       return await adminClient.updateEntity(entity, options);
     }
     case AdminClientOperationName.updateSchemaSpecification: {
-      const [schemaSpec] =
+      const [schemaSpec, options] =
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.updateSchemaSpecification];
-      return await adminClient.updateSchemaSpecification(schemaSpec);
+      return await adminClient.updateSchemaSpecification(schemaSpec, options);
     }
     case AdminClientOperationName.upsertEntity: {
       const [entity, options] =

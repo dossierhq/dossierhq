@@ -1,4 +1,9 @@
-import { FieldType, RichTextNodeType, ok, type AdminSchemaSpecification } from '@dossierhq/core';
+import {
+  FieldType,
+  RichTextNodeType,
+  ok,
+  type AdminSchemaSpecificationWithMigrations,
+} from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
@@ -23,6 +28,7 @@ describe('schemaGetSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
+      migrations: [],
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
@@ -38,8 +44,9 @@ describe('schemaGetSpecification', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const context = createMockTransactionContext();
 
-    const schemaSpec: AdminSchemaSpecification = {
+    const schemaSpec: AdminSchemaSpecificationWithMigrations = {
       version: 1,
+      migrations: [],
       entityTypes: [
         { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
       ],
@@ -91,11 +98,12 @@ describe('schemaGetSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
-    } as unknown as AdminSchemaSpecification;
+    } as unknown as AdminSchemaSpecificationWithMigrations;
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await schemaGetSpecification(databaseAdapter, context, false);
-    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecificationWithMigrations>({
       version: 1,
+      migrations: [],
       entityTypes: [
         {
           name: 'Foo',
@@ -153,10 +161,10 @@ describe('schemaGetSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
-    } as unknown as AdminSchemaSpecification;
+    } as unknown as AdminSchemaSpecificationWithMigrations;
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await schemaGetSpecification(databaseAdapter, context, false);
-    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecificationWithMigrations>({
       version: 1,
       entityTypes: [
         {
@@ -182,6 +190,7 @@ describe('schemaGetSpecification', () => {
       indexes: [],
       patterns: [],
       valueTypes: [],
+      migrations: [],
     });
   });
 
@@ -189,7 +198,7 @@ describe('schemaGetSpecification', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const context = createMockTransactionContext();
 
-    const schemaSpec: AdminSchemaSpecification = {
+    const schemaSpec = {
       version: 1,
       entityTypes: [
         {
@@ -220,11 +229,12 @@ describe('schemaGetSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
-    };
+    } as unknown as AdminSchemaSpecificationWithMigrations;
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await schemaGetSpecification(databaseAdapter, context, false);
-    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecification>({
+    expect(result.valueOrThrow()).toEqual<AdminSchemaSpecificationWithMigrations>({
       version: 1,
+      migrations: [],
       entityTypes: [
         {
           name: 'Foo',

@@ -1,8 +1,9 @@
 import {
-  AdminSchema,
+  AdminSchemaWithMigrations,
   notOk,
   ok,
   type AdminSchemaSpecificationUpdate,
+  type AdminSchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
   type SchemaSpecificationUpdatePayload,
@@ -16,11 +17,11 @@ export async function schemaUpdateSpecification(
   context: TransactionContext,
   update: AdminSchemaSpecificationUpdate,
 ): PromiseResult<
-  SchemaSpecificationUpdatePayload,
+  SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   return await context.withTransaction<
-    SchemaSpecificationUpdatePayload,
+    SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >(async (context) => {
     const { logger } = context;
@@ -41,7 +42,7 @@ export async function schemaUpdateSpecification(
       );
     }
 
-    const oldSchema = new AdminSchema(previousSpecificationResult.value);
+    const oldSchema = new AdminSchemaWithMigrations(previousSpecificationResult.value);
     const mergeResult = oldSchema.updateAndValidate(update);
     if (mergeResult.isError()) return mergeResult;
     const newSchema = mergeResult.value;

@@ -1,6 +1,5 @@
 import { assertExhaustive } from './Asserts.js';
-import type { ErrorType, Result } from './ErrorResult.js';
-import { notOk, ok } from './ErrorResult.js';
+import { notOk, ok, type ErrorType, type Result } from './ErrorResult.js';
 import { isFieldValueEqual } from './ItemUtils.js';
 import type { LooseAutocomplete } from './TypeUtils.js';
 import type { EntityReference, Location, RichText, ValueItem } from './Types.js';
@@ -215,6 +214,16 @@ export interface AdminSchemaSpecification {
   indexes: SchemaIndexSpecification[];
 }
 
+export interface AdminSchemaSpecificationWithMigrations extends AdminSchemaSpecification {
+  migrations: { version: number; actions: AdminSchemaMigrationAction[] }[];
+}
+
+type AdminSchemaMigrationAction =
+  | { action: 'renameType'; type: string; newName: string }
+  | { action: 'renameField'; type: string; field: string; newName: string }
+  | { action: 'deleteType'; type: string }
+  | { action: 'deleteField'; type: string; field: string };
+
 export interface AdminSchemaSpecificationUpdate {
   version?: number;
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
@@ -223,9 +232,13 @@ export interface AdminSchemaSpecificationUpdate {
   indexes?: SchemaIndexSpecification[];
 }
 
-export interface SchemaSpecificationUpdatePayload {
+export interface SchemaSpecificationUpdatePayload<
+  TSpec extends
+    | AdminSchemaSpecification
+    | AdminSchemaSpecificationWithMigrations = AdminSchemaSpecification,
+> {
   effect: 'updated' | 'none';
-  schemaSpecification: AdminSchemaSpecification;
+  schemaSpecification: TSpec;
 }
 
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
@@ -281,7 +294,12 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   [FieldType.ValueItem]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
 };
 
-class BaseSchema<T extends AdminSchemaSpecification | PublishedSchemaSpecification> {
+class BaseSchema<
+  T extends
+    | AdminSchemaSpecification
+    | AdminSchemaSpecificationWithMigrations
+    | PublishedSchemaSpecification,
+> {
   readonly spec: T;
   private cachedPatternRegExps: Record<string, RegExp> = {};
 
@@ -340,24 +358,25 @@ class BaseSchema<T extends AdminSchemaSpecification | PublishedSchemaSpecificati
   }
 }
 
-export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
+export class AdminSchema<
+  TSpec extends
+    | AdminSchemaSpecification
+    | AdminSchemaSpecificationWithMigrations = AdminSchemaSpecification,
+> extends BaseSchema<TSpec> {
   private cachedPublishedSchema: PublishedSchema | null = null;
 
   static createAndValidate(
     update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchema, typeof ErrorType.BadRequest> {
-    const emptySpec: AdminSchemaSpecification = {
-      version: 0,
-      entityTypes: [],
-      valueTypes: [],
-      patterns: [],
-      indexes: [],
-    };
-    const empty = new AdminSchema(emptySpec);
-    return empty.updateAndValidate(update);
+    const result = AdminSchemaWithMigrations.createAndValidate(update);
+    if (!result.isOk()) return result;
+
+    const { migrations, ...specWithoutMigrations } = result.value.spec;
+
+    return ok(new AdminSchema(specWithoutMigrations));
   }
 
-  constructor(spec: AdminSchemaSpecification) {
+  constructor(spec: TSpec) {
     super(spec);
   }
 
@@ -626,15 +645,108 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     return ok(undefined);
   }
 
+  toPublishedSchema(): PublishedSchema {
+    if (this.cachedPublishedSchema) {
+      return this.cachedPublishedSchema;
+    }
+
+    const spec: PublishedSchemaSpecification = {
+      version: this.spec.version,
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+    };
+
+    function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
+      return fields
+        .filter((it) => !it.adminOnly)
+        .map((field) => {
+          const { adminOnly, ...publishedField } = field;
+          return publishedField;
+        });
+    }
+
+    const usedPatternNames = new Set();
+    for (const entitySpec of this.spec.entityTypes) {
+      if (entitySpec.adminOnly) {
+        continue;
+      }
+      spec.entityTypes.push({
+        name: entitySpec.name,
+        authKeyPattern: entitySpec.authKeyPattern,
+        fields: toPublishedFields(entitySpec.fields),
+      });
+      if (entitySpec.authKeyPattern) {
+        usedPatternNames.add(entitySpec.authKeyPattern);
+      }
+    }
+
+    for (const valueSpec of this.spec.valueTypes) {
+      if (valueSpec.adminOnly) {
+        continue;
+      }
+      spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
+    }
+
+    const usedIndexNames = new Set();
+    for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
+      for (const fieldSpec of typeSpec.fields) {
+        if (fieldSpec.type !== FieldType.String) continue;
+        if (fieldSpec.matchPattern) {
+          usedPatternNames.add(fieldSpec.matchPattern);
+        }
+        if (fieldSpec.index) {
+          usedIndexNames.add(fieldSpec.index);
+        }
+      }
+    }
+
+    for (const patternName of [...usedPatternNames].sort()) {
+      const pattern = this.spec.patterns.find((it) => it.name === patternName);
+      if (pattern) {
+        spec.patterns.push(pattern);
+      }
+    }
+
+    for (const indexName of [...usedIndexNames].sort()) {
+      const index = this.spec.indexes.find((it) => it.name === indexName);
+      if (index) {
+        spec.indexes.push(index);
+      }
+    }
+
+    this.cachedPublishedSchema = new PublishedSchema(spec);
+    return this.cachedPublishedSchema;
+  }
+}
+
+export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificationWithMigrations> {
+  static override createAndValidate(
+    update: AdminSchemaSpecificationUpdate,
+  ): Result<AdminSchemaWithMigrations, typeof ErrorType.BadRequest> {
+    const emptySpec: AdminSchemaSpecificationWithMigrations = {
+      version: 0,
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+      migrations: [],
+    };
+    const empty = new AdminSchemaWithMigrations(emptySpec);
+    return empty.updateAndValidate(update);
+  }
+
   updateAndValidate(
     update: AdminSchemaSpecificationUpdate,
-  ): Result<AdminSchema, typeof ErrorType.BadRequest> {
-    const schemaSpec: AdminSchemaSpecification = {
+  ): Result<AdminSchemaWithMigrations, typeof ErrorType.BadRequest> {
+    const schemaSpec: AdminSchemaSpecificationWithMigrations = {
       version: this.spec.version, // increment below if differs
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
       patterns: [],
       indexes: [],
+      migrations: [...this.spec.migrations],
     };
 
     // Merge entity types
@@ -787,85 +899,11 @@ export class AdminSchema extends BaseSchema<AdminSchemaSpecification> {
     schemaSpec.version += 1;
 
     // Validate
-    const updatedSchema = new AdminSchema(schemaSpec);
+    const updatedSchema = new AdminSchemaWithMigrations(schemaSpec);
     const validateResult = updatedSchema.validate();
     if (validateResult.isError()) return validateResult;
 
     return ok(updatedSchema);
-  }
-
-  toPublishedSchema(): PublishedSchema {
-    if (this.cachedPublishedSchema) {
-      return this.cachedPublishedSchema;
-    }
-
-    const spec: PublishedSchemaSpecification = {
-      version: this.spec.version,
-      entityTypes: [],
-      valueTypes: [],
-      patterns: [],
-      indexes: [],
-    };
-
-    function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
-      return fields
-        .filter((it) => !it.adminOnly)
-        .map((field) => {
-          const { adminOnly, ...publishedField } = field;
-          return publishedField;
-        });
-    }
-
-    const usedPatternNames = new Set();
-    for (const entitySpec of this.spec.entityTypes) {
-      if (entitySpec.adminOnly) {
-        continue;
-      }
-      spec.entityTypes.push({
-        name: entitySpec.name,
-        authKeyPattern: entitySpec.authKeyPattern,
-        fields: toPublishedFields(entitySpec.fields),
-      });
-      if (entitySpec.authKeyPattern) {
-        usedPatternNames.add(entitySpec.authKeyPattern);
-      }
-    }
-    for (const valueSpec of this.spec.valueTypes) {
-      if (valueSpec.adminOnly) {
-        continue;
-      }
-      spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
-    }
-
-    const usedIndexNames = new Set();
-    for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
-      for (const fieldSpec of typeSpec.fields) {
-        if (fieldSpec.type !== FieldType.String) continue;
-        if (fieldSpec.matchPattern) {
-          usedPatternNames.add(fieldSpec.matchPattern);
-        }
-        if (fieldSpec.index) {
-          usedIndexNames.add(fieldSpec.index);
-        }
-      }
-    }
-
-    for (const patternName of [...usedPatternNames].sort()) {
-      const pattern = this.spec.patterns.find((it) => it.name === patternName);
-      if (pattern) {
-        spec.patterns.push(pattern);
-      }
-    }
-
-    for (const indexName of [...usedIndexNames].sort()) {
-      const index = this.spec.indexes.find((it) => it.name === indexName);
-      if (index) {
-        spec.indexes.push(index);
-      }
-    }
-
-    this.cachedPublishedSchema = new PublishedSchema(spec);
-    return this.cachedPublishedSchema;
   }
 }
 

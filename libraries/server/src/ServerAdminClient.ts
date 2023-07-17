@@ -5,6 +5,7 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminEntityUpsert,
+  AdminSchemaSpecificationWithMigrations,
   ContextProvider,
 } from '@dossierhq/core';
 import {
@@ -148,11 +149,20 @@ export function createServerAdminClient({
         break;
       }
       case AdminClientOperationName.getSchemaSpecification: {
-        const { resolve } = operation as AdminClientOperation<
+        const {
+          args: [options],
+          resolve,
+        } = operation as AdminClientOperation<
           typeof AdminClientOperationName.getSchemaSpecification
         >;
         const schema = serverImpl.getAdminSchema();
-        resolve(ok(schema.spec));
+        const includeMigrations = options?.includeMigrations ?? false;
+        if (!includeMigrations) {
+          const { migrations: _, ...spec } = schema.spec;
+          resolve(ok(spec));
+        } else {
+          resolve(ok(schema.spec));
+        }
         break;
       }
       case AdminClientOperationName.getTotalCount: {
@@ -278,14 +288,20 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.updateSchemaSpecification: {
         const {
-          args: [schemaSpec],
+          args: [schemaSpec, options],
           resolve,
         } = operation as AdminClientOperation<
           typeof AdminClientOperationName.updateSchemaSpecification
         >;
+        const includeMigrations = options?.includeMigrations ?? false;
         const result = await schemaUpdateSpecification(databaseAdapter, context, schemaSpec);
         if (result.isOk()) {
           serverImpl.setAdminSchema(result.value.schemaSpecification);
+
+          if (!includeMigrations) {
+            const { migrations: _, ...spec } = result.value.schemaSpecification;
+            result.value.schemaSpecification = spec as AdminSchemaSpecificationWithMigrations;
+          }
         }
         resolve(result);
         break;

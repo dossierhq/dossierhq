@@ -1,29 +1,48 @@
 import { describe, expect, test } from 'vitest';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
 import { ErrorType } from './ErrorResult.js';
-import type {
-  AdminFieldSpecification,
-  BooleanFieldSpecification,
-  EntityFieldSpecification,
-  NumberFieldSpecification,
-  PublishedSchemaSpecification,
-  RichTextFieldSpecification,
-  StringFieldSpecification,
-  ValueItemFieldSpecification,
+import {
+  AdminSchema,
+  AdminSchemaWithMigrations,
+  FieldType,
+  REQUIRED_RICH_TEXT_NODES,
+  RichTextNodeType,
+  type AdminFieldSpecification,
+  type AdminSchemaSpecificationWithMigrations,
+  type BooleanFieldSpecification,
+  type EntityFieldSpecification,
+  type NumberFieldSpecification,
+  type PublishedSchemaSpecification,
+  type RichTextFieldSpecification,
+  type StringFieldSpecification,
+  type ValueItemFieldSpecification,
 } from './Schema.js';
-import { AdminSchema, FieldType, REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from './Schema.js';
 
-describe('updateAndValidate()', () => {
+describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   test('empty->empty->empty', () => {
     expect(
-      new AdminSchema({ version: 1, entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
+      new AdminSchemaWithMigrations({
+        version: 1,
+        entityTypes: [],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+        migrations: [],
+      })
         .updateAndValidate({})
         .valueOrThrow().spec,
-    ).toEqual({ version: 1, entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
+    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+      version: 1,
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+      migrations: [],
+    });
   });
 
   test('use existing adminOnly, authKeyPattern value if not specified on entity type update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -48,7 +67,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing adminOnly value if not specified on value type update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
@@ -59,7 +78,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('fields not updated are kept', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -88,7 +107,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing list value if not specified on field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: true }] },
       ],
@@ -104,7 +123,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing required value if not specified on field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean, required: true }] },
       ],
@@ -120,7 +139,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing adminOnly value if not specified on field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: true }] },
       ],
@@ -136,7 +155,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing index, multiline, matchPattern values if not specified on String field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -169,7 +188,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing values value if not specified on String field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -189,7 +208,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing entityTypes value if not specified on Entity field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
       ],
@@ -206,7 +225,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing integer value if not specified on Number field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Number, integer: true }] },
       ],
@@ -223,7 +242,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -270,7 +289,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('use existing valueTypes value if not specified on ValueItem field update', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -298,7 +317,14 @@ describe('updateAndValidate()', () => {
 
   test('empty->entity with pattern', () => {
     expect(
-      new AdminSchema({ version: 1, entityTypes: [], valueTypes: [], patterns: [], indexes: [] })
+      new AdminSchemaWithMigrations({
+        version: 1,
+        entityTypes: [],
+        valueTypes: [],
+        patterns: [],
+        indexes: [],
+        migrations: [],
+      })
         .updateAndValidate({
           entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
           patterns: [{ name: 'aPattern', pattern: '^hello$' }],
@@ -308,7 +334,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('update pattern', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
       patterns: [{ name: 'aPattern', pattern: '^old-pattern$' }],
     })
@@ -324,7 +350,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('unused pattern is removed', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
       patterns: [{ name: 'aPattern', pattern: '^pattern$' }],
     })
@@ -339,7 +365,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('field with matchPattern', () => {
-    const result = AdminSchema.createAndValidate({})
+    const result = AdminSchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         entityTypes: [
@@ -358,7 +384,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('field with index', () => {
-    const result = AdminSchema.createAndValidate({})
+    const result = AdminSchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         entityTypes: [
@@ -377,7 +403,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('duplicate values', () => {
-    const result = AdminSchema.createAndValidate({})
+    const result = AdminSchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         entityTypes: [
@@ -420,7 +446,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('Error: changing adminOnly of entity type', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
@@ -434,7 +460,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('Error: changing adminOnly of value type', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
@@ -448,7 +474,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('Error: changing type of field', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
     })
       .valueOrThrow()
@@ -464,7 +490,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('Error: changing list of field', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: true }] },
       ],
@@ -484,7 +510,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('Error: changing adminOnly of field', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, adminOnly: true }] },
       ],
@@ -504,7 +530,7 @@ describe('updateAndValidate()', () => {
   });
 
   test('Error: changing index of String field', () => {
-    const result = AdminSchema.createAndValidate({
+    const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
       ],

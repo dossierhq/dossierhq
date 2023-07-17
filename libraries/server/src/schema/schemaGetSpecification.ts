@@ -2,7 +2,7 @@ import {
   FieldType,
   RichTextNodeType,
   ok,
-  type AdminSchemaSpecification,
+  type AdminSchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -12,7 +12,7 @@ export async function schemaGetSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   initialLoad: boolean,
-): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
+): PromiseResult<AdminSchemaSpecificationWithMigrations, typeof ErrorType.Generic> {
   const { logger } = context;
   if (initialLoad) logger.info('Loading schema');
   const result = await databaseAdapter.schemaGetSpecification(context);
@@ -21,7 +21,14 @@ export async function schemaGetSpecification(
   const specification = result.value;
   if (!specification) {
     if (initialLoad) logger.info('No schema set, defaulting to empty');
-    return ok({ version: 0, entityTypes: [], valueTypes: [], patterns: [], indexes: [] });
+    return ok({
+      version: 0,
+      entityTypes: [],
+      valueTypes: [],
+      patterns: [],
+      indexes: [],
+      migrations: [],
+    });
   }
 
   // Handle old schema format which lacked patterns/indexes
@@ -46,6 +53,9 @@ export async function schemaGetSpecification(
       }
     }
   }
+
+  // Version 0.3.2: added migrations to schema
+  if (!specification.migrations) specification.migrations = [];
 
   for (const typeSpec of [...specification.entityTypes, ...specification.valueTypes]) {
     for (const fieldSpec of typeSpec.fields) {

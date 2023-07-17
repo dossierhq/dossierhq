@@ -1,4 +1,9 @@
-import { AdminSchema, ok, type AdminSchemaSpecificationUpdate, FieldType } from '@dossierhq/core';
+import {
+  AdminSchemaWithMigrations,
+  FieldType,
+  ok,
+  type AdminSchemaSpecificationUpdate,
+} from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { calculateSchemaChangeEntityValidation } from './calculateSchemaChangeEntityValidation.js';
 
@@ -6,7 +11,7 @@ function build(
   previousUpdate: AdminSchemaSpecificationUpdate,
   nextUpdate: AdminSchemaSpecificationUpdate,
 ) {
-  const previous = AdminSchema.createAndValidate(previousUpdate).valueOrThrow();
+  const previous = AdminSchemaWithMigrations.createAndValidate(previousUpdate).valueOrThrow();
   const next = previous.updateAndValidate(nextUpdate).valueOrThrow();
   return { previous, next };
 }

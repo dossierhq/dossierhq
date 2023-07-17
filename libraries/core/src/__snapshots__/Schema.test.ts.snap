@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`updateAndValidate() > duplicate values 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = `
 {
   "entityTypes": [
     {
@@ -77,6 +77,7 @@ exports[`updateAndValidate() > duplicate values 1`] = `
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [
     {
@@ -89,7 +90,7 @@ exports[`updateAndValidate() > duplicate values 1`] = `
 }
 `;
 
-exports[`updateAndValidate() > empty->entity with pattern 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > empty->entity with pattern 1`] = `
 {
   "entityTypes": [
     {
@@ -101,6 +102,7 @@ exports[`updateAndValidate() > empty->entity with pattern 1`] = `
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [
     {
       "name": "aPattern",
@@ -112,7 +114,7 @@ exports[`updateAndValidate() > empty->entity with pattern 1`] = `
 }
 `;
 
-exports[`updateAndValidate() > field with index 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > field with index 1`] = `
 {
   "entityTypes": [
     {
@@ -141,13 +143,14 @@ exports[`updateAndValidate() > field with index 1`] = `
       "type": "unique",
     },
   ],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
 }
 `;
 
-exports[`updateAndValidate() > field with matchPattern 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > field with matchPattern 1`] = `
 {
   "entityTypes": [
     {
@@ -171,6 +174,7 @@ exports[`updateAndValidate() > field with matchPattern 1`] = `
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [
     {
       "name": "aPattern",
@@ -182,7 +186,7 @@ exports[`updateAndValidate() > field with matchPattern 1`] = `
 }
 `;
 
-exports[`updateAndValidate() > fields not updated are kept 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > fields not updated are kept 1`] = `
 {
   "entityTypes": [
     {
@@ -221,13 +225,14 @@ exports[`updateAndValidate() > fields not updated are kept 1`] = `
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 2,
 }
 `;
 
-exports[`updateAndValidate() > unused pattern is removed 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > unused pattern is removed 1`] = `
 {
   "entityTypes": [
     {
@@ -239,13 +244,14 @@ exports[`updateAndValidate() > unused pattern is removed 1`] = `
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 2,
 }
 `;
 
-exports[`updateAndValidate() > update pattern 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
 {
   "entityTypes": [
     {
@@ -257,6 +263,7 @@ exports[`updateAndValidate() > update pattern 1`] = `
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [
     {
       "name": "aPattern",
@@ -268,7 +275,7 @@ exports[`updateAndValidate() > update pattern 1`] = `
 }
 `;
 
-exports[`updateAndValidate() > use existing adminOnly value if not specified on field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on field update 1`] = `
 {
   "entityTypes": [
     {
@@ -288,16 +295,18 @@ exports[`updateAndValidate() > use existing adminOnly value if not specified on 
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
 }
 `;
 
-exports[`updateAndValidate() > use existing adminOnly value if not specified on value type update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on value type update 1`] = `
 {
   "entityTypes": [],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [
     {
@@ -310,7 +319,7 @@ exports[`updateAndValidate() > use existing adminOnly value if not specified on 
 }
 `;
 
-exports[`updateAndValidate() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
 {
   "entityTypes": [
     {
@@ -334,6 +343,7 @@ exports[`updateAndValidate() > use existing adminOnly, authKeyPattern value if n
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [
     {
       "name": "aPattern",
@@ -345,7 +355,7 @@ exports[`updateAndValidate() > use existing adminOnly, authKeyPattern value if n
 }
 `;
 
-exports[`updateAndValidate() > use existing entityTypes value if not specified on Entity field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityTypes value if not specified on Entity field update 1`] = `
 {
   "entityTypes": [
     {
@@ -368,13 +378,14 @@ exports[`updateAndValidate() > use existing entityTypes value if not specified o
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
 }
 `;
 
-exports[`updateAndValidate() > use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update 1`] = `
 {
   "entityTypes": [
     {
@@ -413,6 +424,7 @@ exports[`updateAndValidate() > use existing entityTypes, linkEntityTypes, valueT
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [
     {
@@ -425,7 +437,7 @@ exports[`updateAndValidate() > use existing entityTypes, linkEntityTypes, valueT
 }
 `;
 
-exports[`updateAndValidate() > use existing index, multiline, matchPattern values if not specified on String field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing index, multiline, matchPattern values if not specified on String field update 1`] = `
 {
   "entityTypes": [
     {
@@ -454,6 +466,7 @@ exports[`updateAndValidate() > use existing index, multiline, matchPattern value
       "type": "unique",
     },
   ],
+  "migrations": [],
   "patterns": [
     {
       "name": "aPattern",
@@ -465,7 +478,7 @@ exports[`updateAndValidate() > use existing index, multiline, matchPattern value
 }
 `;
 
-exports[`updateAndValidate() > use existing integer value if not specified on Number field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing integer value if not specified on Number field update 1`] = `
 {
   "entityTypes": [
     {
@@ -486,13 +499,14 @@ exports[`updateAndValidate() > use existing integer value if not specified on Nu
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
 }
 `;
 
-exports[`updateAndValidate() > use existing list value if not specified on field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing list value if not specified on field update 1`] = `
 {
   "entityTypes": [
     {
@@ -516,13 +530,14 @@ exports[`updateAndValidate() > use existing list value if not specified on field
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
 }
 `;
 
-exports[`updateAndValidate() > use existing required value if not specified on field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing required value if not specified on field update 1`] = `
 {
   "entityTypes": [
     {
@@ -542,13 +557,14 @@ exports[`updateAndValidate() > use existing required value if not specified on f
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
 }
 `;
 
-exports[`updateAndValidate() > use existing valueTypes value if not specified on ValueItem field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing valueTypes value if not specified on ValueItem field update 1`] = `
 {
   "entityTypes": [
     {
@@ -571,6 +587,7 @@ exports[`updateAndValidate() > use existing valueTypes value if not specified on
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [
     {
@@ -583,7 +600,7 @@ exports[`updateAndValidate() > use existing valueTypes value if not specified on
 }
 `;
 
-exports[`updateAndValidate() > use existing values value if not specified on String field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing values value if not specified on String field update 1`] = `
 {
   "entityTypes": [
     {
@@ -611,6 +628,7 @@ exports[`updateAndValidate() > use existing values value if not specified on Str
     },
   ],
   "indexes": [],
+  "migrations": [],
   "patterns": [],
   "valueTypes": [],
   "version": 1,
