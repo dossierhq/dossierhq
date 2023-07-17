@@ -73,18 +73,17 @@ export async function adminEntityUpdateEntity(
     databaseAdapter,
     context,
     {
-      text: 'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
+      text: 'INSERT INTO entity_versions (entities_id, created_by, version, schema_version, data) VALUES ($1, $2, $3, $4, $5) RETURNING id',
       values: [
         entity.entityInternalId,
         getSessionSubjectInternalId(entity.session),
         entity.version,
+        entity.schemaVersion,
         entity.fieldValues,
       ],
     },
   );
-  if (createVersionResult.isError()) {
-    return createVersionResult;
-  }
+  if (createVersionResult.isError()) return createVersionResult;
   const { id: versionsId } = createVersionResult.value;
 
   let newName = entity.name;

@@ -76,6 +76,7 @@ export async function adminCreateEntity(
       name: encodeEntityResult.name,
       creator: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
+      schemaVersion: adminSchema.spec.version,
       fieldsData: encodeEntityResult.data,
     });
     if (createResult.isError()) return createResult;

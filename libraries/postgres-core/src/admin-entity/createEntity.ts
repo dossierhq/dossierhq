@@ -1,6 +1,7 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   DEFAULT,
+  buildPostgresSqlQuery,
   createPostgresSqlQuery,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
@@ -38,10 +39,11 @@ export async function adminCreateEntity(
   const createEntityVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
     context,
-    {
-      text: 'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
-      values: [entityId, getSessionSubjectInternalId(entity.creator), entity.fieldsData],
-    },
+    buildPostgresSqlQuery(({ sql }) => {
+      const createdBy = getSessionSubjectInternalId(entity.creator);
+      sql`INSERT INTO entity_versions (entities_id, version, schema_version, created_by, data)`;
+      sql`VALUES (${entityId}, 0, ${entity.schemaVersion}, ${createdBy}, ${entity.fieldsData}) RETURNING id`;
+    }),
   );
   if (createEntityVersionResult.isError()) return createEntityVersionResult;
   const { id: versionsId } = createEntityVersionResult.value;

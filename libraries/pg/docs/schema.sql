@@ -216,7 +216,8 @@ CREATE TABLE public.entity_versions (
     version smallint NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by integer NOT NULL,
-    data jsonb NOT NULL
+    data jsonb NOT NULL,
+    schema_version integer NOT NULL
 );
 
 CREATE SEQUENCE public.entity_versions_id_seq

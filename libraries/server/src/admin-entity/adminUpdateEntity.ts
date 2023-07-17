@@ -116,6 +116,7 @@ export async function adminUpdateEntity(
         session: context.session,
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,
+        schemaVersion: adminSchema.spec.version,
         fieldValues: data,
       },
     );
