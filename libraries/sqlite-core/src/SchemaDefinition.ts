@@ -251,6 +251,11 @@ const VERSION_14: SchemaVersionDefinition[] = [
   'DROP TABLE old_schema_versions',
 ];
 
+const VERSION_15: SchemaVersionDefinition[] = [
+  `ALTER TABLE entity_versions ADD COLUMN schema_version INTEGER NOT NULL DEFAULT 0`,
+  'UPDATE entity_versions SET schema_version = (SELECT version FROM schema_versions ORDER BY version DESC LIMIT 1) WHERE schema_version = 0',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -267,6 +272,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_12,
   VERSION_13,
   VERSION_14,
+  VERSION_15,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

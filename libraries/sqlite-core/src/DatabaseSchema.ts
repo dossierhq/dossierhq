@@ -64,6 +64,7 @@ export interface EntityVersionsTable {
   version: number;
   created_at: string;
   created_by: number;
+  schema_version: number;
   fields: string;
 }
 

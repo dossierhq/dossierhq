@@ -35,11 +35,12 @@ export async function adminCreateEntity(
     database,
     context,
     {
-      text: 'INSERT INTO entity_versions (entities_id, version, created_at, created_by, fields) VALUES (?1, 0, ?2, ?3, ?4) RETURNING id',
+      text: 'INSERT INTO entity_versions (entities_id, version, created_at, created_by, schema_version, fields) VALUES (?1, 0, ?2, ?3, ?4, ?5) RETURNING id',
       values: [
         entityId,
         createdAt.toISOString(),
         getSessionSubjectInternalId(entity.creator),
+        entity.schemaVersion,
         JSON.stringify(entity.fieldsData),
       ],
     },

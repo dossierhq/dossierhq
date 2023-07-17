@@ -72,12 +72,13 @@ export async function adminEntityUpdateEntity(
   const now = new Date();
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
-    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, fields) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING id',
+    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, schema_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6) RETURNING id',
     values: [
       entity.entityInternalId as number,
       now.toISOString(),
       getSessionSubjectInternalId(entity.session),
       entity.version,
+      entity.schemaVersion,
       JSON.stringify(entity.fieldValues),
     ],
   });
