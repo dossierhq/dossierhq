@@ -83,6 +83,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -145,6 +146,7 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -225,6 +227,7 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
       "name": "Foo",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -281,6 +284,7 @@ exports[`AddFieldAction > add field to existing value type (without any fields) 
       "name": "Foo",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -315,6 +319,7 @@ exports[`AddIndexAction > add index to empty schema 2`] = `
       "type": "unique",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -350,6 +355,7 @@ exports[`AddPatternAction > add pattern to empty schema 2`] = `
       "pattern": "",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -394,6 +400,7 @@ exports[`AddTypeAction > add entity type to empty schema 2`] = `
       "nameField": null,
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -450,6 +457,7 @@ exports[`AddTypeAction > add entity type to schema with existing type 2`] = `
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -513,6 +521,7 @@ exports[`AddTypeAction > add two entity types (orders) 2`] = `
       "nameField": null,
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -564,6 +573,7 @@ exports[`AddTypeAction > add two value types (orders) 2`] = `
       "name": "ZooKeeper",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -602,6 +612,7 @@ exports[`AddTypeAction > add value type to empty schema 2`] = `
       "name": "Foo",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -648,6 +659,7 @@ exports[`AddTypeAction > add value type to schema with existing type 2`] = `
       "name": "Bar",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -710,6 +722,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -773,6 +786,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -838,6 +852,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -905,6 +920,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -977,6 +993,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1054,6 +1071,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1137,6 +1155,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1219,6 +1238,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1278,6 +1298,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
       "name": "Foo",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1335,6 +1356,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
       "name": "Foo",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1428,6 +1450,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1489,6 +1512,7 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 2`] =
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1548,6 +1572,7 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1640,6 +1665,7 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 2`] =
       "pattern": "^hello$",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1719,6 +1745,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       "pattern": "^.*$",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1786,6 +1813,7 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1848,6 +1876,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1915,6 +1944,7 @@ exports[`ChangeFieldRequiredAction > make existing field required 2`] = `
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -1977,6 +2007,7 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2036,6 +2067,7 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2094,6 +2126,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2146,6 +2179,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
       "name": "Foo",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2199,6 +2233,7 @@ exports[`ChangeFieldTypeAction > from string to number (new field of existing va
       "name": "Foo",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2258,6 +2293,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2339,6 +2375,7 @@ exports[`ChangeFieldValues > set values on existing string field 2`] = `
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2422,6 +2459,7 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2485,6 +2523,7 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 2`] = `
       "pattern": "^this is a new pattern$",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2520,6 +2559,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
       "pattern": "^this is a new pattern$",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -2564,6 +2604,7 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 2`] = `
       "nameField": null,
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -2615,6 +2656,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity typ
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -2672,6 +2714,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 2`]
       "pattern": "",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -2737,6 +2780,7 @@ exports[`ChangeTypeNameField > make new string the name field in new type 2`] = 
       "nameField": "title",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -2823,6 +2867,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 2`] = `
       "nameField": "other",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -3010,6 +3055,7 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -3234,6 +3280,7 @@ exports[`RenameFieldAction > add and rename field 2`] = `
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -3300,6 +3347,7 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
       "nameField": "baz",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -3418,6 +3466,7 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
       "pattern": "^patternA$",
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -3485,6 +3534,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       "nameField": null,
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -3556,6 +3606,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
       "nameField": null,
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -3600,6 +3651,7 @@ exports[`RenameTypeAction > add and rename type 2`] = `
       "nameField": null,
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -3660,6 +3712,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "name": "Bar",
     },
   ],
+  "version": 1,
 }
 `;
 
@@ -3749,6 +3802,7 @@ exports[`ReorderFieldsAction > three fields, move first to middle 2`] = `
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 
@@ -3823,6 +3877,7 @@ exports[`ReorderFieldsAction > two fields, move last to first 2`] = `
       "nameField": null,
     },
   ],
+  "version": 2,
 }
 `;
 

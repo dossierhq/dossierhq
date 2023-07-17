@@ -1505,6 +1505,10 @@ export function getSchemaSpecificationUpdateFromEditorState(
     update.patterns = patterns;
   }
 
+  if (Object.keys(update).length > 0 && state.schema) {
+    update.version = state.schema.spec.version + 1;
+  }
+
   return update;
 }
 
