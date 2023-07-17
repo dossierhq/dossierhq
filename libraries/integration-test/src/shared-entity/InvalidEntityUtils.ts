@@ -113,7 +113,7 @@ async function withTemporarySchemaChange(
   return await withAdvisoryLock(
     adminClient,
     'schema-update',
-    { leaseDuration: 2000, acquireInterval: 100, renewInterval: 1000 },
+    { acquireInterval: 50, leaseDuration: 300, renewInterval: 200 },
     async () => {
       // remove validations from the schema
       const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);

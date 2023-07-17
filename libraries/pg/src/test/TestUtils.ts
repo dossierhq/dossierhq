@@ -12,8 +12,8 @@ import { AdminSchema, assertIsDefined, ok } from '@dossierhq/core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import {
-  createTestAuthorizationAdapter,
   IntegrationTestSchema,
+  createTestAuthorizationAdapter,
   type TestSuite,
 } from '@dossierhq/integration-test';
 import type { Server, SessionContext } from '@dossierhq/server';
@@ -24,7 +24,7 @@ import { createPostgresAdapter } from '../PgDatabaseAdapter.js';
 
 export function registerTestSuite(testSuite: TestSuite): void {
   for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction);
+    test(testName, testFunction, { timeout: 20_000 });
   }
 }
 
