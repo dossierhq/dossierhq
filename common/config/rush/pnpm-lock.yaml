@@ -79,7 +79,7 @@ importers:
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sql.js': workspace:*
-      '@graphiql/toolkit': ~0.8.4
+      '@graphiql/toolkit': ~0.9.0
       '@types/react': ~18.2.15
       '@types/react-dom': ~18.2.7
       '@types/sql.js': ~1.4.4
@@ -122,7 +122,7 @@ importers:
       swr: 2.2.0_react@18.2.0
     devDependencies:
       '@dossierhq/eslint-config-react': link:../../stack/eslint-config-react
-      '@graphiql/toolkit': 0.8.4_i54uu7jnabm74xwgjfoo6np6pe
+      '@graphiql/toolkit': 0.9.0_i54uu7jnabm74xwgjfoo6np6pe
       '@types/react': 18.2.15
       '@types/react-dom': 18.2.7
       '@types/sql.js': 1.4.4
@@ -1274,7 +1274,7 @@ importers:
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~8.0.2
       '@fortawesome/free-solid-svg-icons': ~6.4.0
-      '@graphiql/toolkit': ~0.8.4
+      '@graphiql/toolkit': ~0.9.0
       '@lexical/code': 0.11.1
       '@lexical/link': 0.11.1
       '@lexical/list': 0.11.1
@@ -1422,7 +1422,7 @@ importers:
       typescript: 5.1.6
       uuid: 9.0.0
     devDependencies:
-      '@graphiql/toolkit': 0.8.4_ubsglirj3inu35lbb7zuevz2n4
+      '@graphiql/toolkit': 0.9.0_ubsglirj3inu35lbb7zuevz2n4
       '@playwright/test': 1.36.0
       '@rushstack/heft': 0.57.0_@types+node@20.4.2
       '@rushstack/heft-lint-plugin': 0.1.18_6vpszyzvdtzisdfkgllrzajxoe
@@ -4706,9 +4706,10 @@ packages:
       '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
       graphql: 16.7.1
       graphql-ws: 5.14.0_graphql@16.7.1
-      meros: 1.2.0
+      meros: 1.2.1
     transitivePeerDependencies:
       - '@types/node'
+    dev: false
 
   /@graphiql/toolkit/0.8.4_ubsglirj3inu35lbb7zuevz2n4:
     resolution: {integrity: sha512-cFUGqh3Dau+SD3Vq9EFlZrhzYfaHKyOJveFtaCR+U5Cn/S68p7oy+vQBIdwtO6J2J58FncnwBbVRfr+IvVfZqQ==}
@@ -4722,9 +4723,44 @@ packages:
       '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
       graphql: 16.7.1
       graphql-ws: 5.14.0_graphql@16.7.1
-      meros: 1.2.0_@types+node@20.4.2
+      meros: 1.2.1_@types+node@20.4.2
     transitivePeerDependencies:
       - '@types/node'
+    dev: false
+
+  /@graphiql/toolkit/0.9.0_i54uu7jnabm74xwgjfoo6np6pe:
+    resolution: {integrity: sha512-BQNbQQixDuwkPq8IDKtyFX4MyqoSP39NAtb75u631NfoNH05soTU1JEduW9acPokP736nBOj+Sa4uz7822y9cg==}
+    peerDependencies:
+      graphql: ^15.5.0 || ^16.0.0
+      graphql-ws: '>= 4.5.0'
+    peerDependenciesMeta:
+      graphql-ws:
+        optional: true
+    dependencies:
+      '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
+      graphql: 16.7.1
+      graphql-ws: 5.14.0_graphql@16.7.1
+      meros: 1.2.1
+    transitivePeerDependencies:
+      - '@types/node'
+    dev: true
+
+  /@graphiql/toolkit/0.9.0_ubsglirj3inu35lbb7zuevz2n4:
+    resolution: {integrity: sha512-BQNbQQixDuwkPq8IDKtyFX4MyqoSP39NAtb75u631NfoNH05soTU1JEduW9acPokP736nBOj+Sa4uz7822y9cg==}
+    peerDependencies:
+      graphql: ^15.5.0 || ^16.0.0
+      graphql-ws: '>= 4.5.0'
+    peerDependenciesMeta:
+      graphql-ws:
+        optional: true
+    dependencies:
+      '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
+      graphql: 16.7.1
+      graphql-ws: 5.14.0_graphql@16.7.1
+      meros: 1.2.1_@types+node@20.4.2
+    transitivePeerDependencies:
+      - '@types/node'
+    dev: true
 
   /@graphql-tools/batch-execute/9.0.0_graphql@16.7.1:
     resolution: {integrity: sha512-lT9/1XmPSYzBcEybXPLsuA6C5E0t8438PVUELABcqdvwHgZ3VOOx29MLBEqhr2oewOlDChH6PXNkfxoOoAuzRg==}
@@ -14357,26 +14393,6 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  /meros/1.2.0:
-    resolution: {integrity: sha512-3QRZIS707pZQnijHdhbttXRWwrHhZJ/gzolneoxKVz9N/xmsvY/7Ls8lpnI9gxbgxjcHsAVEW3mgwiZCo6kkJQ==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      '@types/node': '>=12'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-
-  /meros/1.2.0_@types+node@20.4.2:
-    resolution: {integrity: sha512-3QRZIS707pZQnijHdhbttXRWwrHhZJ/gzolneoxKVz9N/xmsvY/7Ls8lpnI9gxbgxjcHsAVEW3mgwiZCo6kkJQ==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      '@types/node': '>=12'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-    dependencies:
-      '@types/node': 20.4.2
-
   /meros/1.2.1:
     resolution: {integrity: sha512-R2f/jxYqCAGI19KhAvaxSOxALBMkaXWH2a7rOyqQw+ZmizX5bKkEYWLzdhC+U82ZVVPVp6MCXe3EkVligh+12g==}
     engines: {node: '>=13'}
@@ -14385,7 +14401,6 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
-    dev: true
 
   /meros/1.2.1_@types+node@20.4.2:
     resolution: {integrity: sha512-R2f/jxYqCAGI19KhAvaxSOxALBMkaXWH2a7rOyqQw+ZmizX5bKkEYWLzdhC+U82ZVVPVp6MCXe3EkVligh+12g==}
@@ -14397,7 +14412,6 @@ packages:
         optional: true
     dependencies:
       '@types/node': 20.4.2
-    dev: true
 
   /methods/1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
