@@ -2,10 +2,17 @@ import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import type { BaseSchema } from './BaseSchema.js';
 import type {
   AdminEntityTypeSpecification,
+  AdminFieldSpecification,
   AdminSchemaSpecification,
+  BooleanFieldSpecification,
+  EntityFieldSpecification,
+  LocationFieldSpecification,
+  NumberFieldSpecification,
+  RichTextFieldSpecification,
+  StringFieldSpecification,
+  ValueItemFieldSpecification,
 } from './SchemaSpecification.js';
 import {
-  ADMIN_FIELD_SPECIFICATION_KEYS,
   FieldType,
   GROUPED_RICH_TEXT_NODE_TYPES,
   REQUIRED_RICH_TEXT_NODES,
@@ -14,6 +21,44 @@ import {
 
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 const PASCAL_CASE_PATTERN = /^[A-Z][a-zA-Z0-9_]*$/;
+
+const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
+  'name',
+  'list',
+  'required',
+  'adminOnly',
+  'type',
+] as const;
+
+const ADMIN_FIELD_SPECIFICATION_KEYS: {
+  Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
+  Entity: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
+  Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
+  Number: readonly (keyof AdminFieldSpecification<NumberFieldSpecification>)[];
+  RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
+  String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
+  ValueItem: readonly (keyof AdminFieldSpecification<ValueItemFieldSpecification>)[];
+} = {
+  [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.Entity]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
+  [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.Number]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'integer'],
+  [FieldType.RichText]: [
+    ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+    'entityTypes',
+    'linkEntityTypes',
+    'valueTypes',
+    'richTextNodes',
+  ],
+  [FieldType.String]: [
+    ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+    'multiline',
+    'matchPattern',
+    'values',
+    'index',
+  ],
+  [FieldType.ValueItem]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
+};
 
 export function schemaValidateAdmin(
   adminSchema: BaseSchema<AdminSchemaSpecification>,
