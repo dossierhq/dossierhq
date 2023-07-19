@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminSchema,
+  AdminSchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -17,7 +17,7 @@ import type { SessionContext } from '../Context.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
 
 export async function adminGetEntities(
-  schema: AdminSchema,
+  schema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -37,9 +37,7 @@ export async function adminGetEntities(
   }
 
   const entityInfoResult = await databaseAdapter.adminEntityGetMultiple(context, references);
-  if (entityInfoResult.isError()) {
-    return entityInfoResult;
-  }
+  if (entityInfoResult.isError()) return entityInfoResult;
 
   const result: Result<
     AdminEntity,
@@ -57,7 +55,7 @@ export async function adminGetEntities(
 }
 
 async function mapItem(
-  schema: AdminSchema,
+  schema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
@@ -77,9 +75,7 @@ async function mapItem(
     authKey: values.authKey,
     resolvedAuthKey: values.resolvedAuthKey,
   });
-  if (authResult.isError()) {
-    return authResult;
-  }
+  if (authResult.isError()) return authResult;
 
   return ok(decodeAdminEntity(schema, values));
 }

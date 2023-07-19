@@ -5,10 +5,10 @@ import type {
   AdminEntityUpdate,
   AdminFieldSpecification,
   AdminSchema,
+  AdminSchemaWithMigrations,
   ErrorType,
   PromiseResult,
   PublishedEntity,
-  PublishedEntityTypeSpecification,
   PublishedFieldSpecification,
   PublishedSchema,
   Result,
@@ -36,11 +36,11 @@ import {
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
-  TransactionContext,
   DatabaseEntityIndexesArg,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
   DatabaseResolvedEntityReference,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
   createFullTextSearchCollector,
@@ -94,6 +94,34 @@ export function decodePublishedEntity(
     entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
   }
   return entity;
+}
+
+function applySchemaMigrations(
+  adminSchema: AdminSchemaWithMigrations,
+  entityType: string,
+  schemaVersion: number,
+  fieldValues: Record<string, unknown>,
+) {
+  const migrationsToConsider = adminSchema.spec.migrations.filter(
+    (it) => it.version >= schemaVersion,
+  );
+  if (migrationsToConsider.length === 0) {
+    return;
+  }
+
+  migrationsToConsider.sort((a, b) => a.version - b.version);
+  for (const migration of migrationsToConsider) {
+    for (const action of migration.actions) {
+      switch (action.action) {
+        case 'deleteField': {
+          if (action.type === entityType) {
+            delete fieldValues[action.field];
+          }
+          break;
+        }
+      }
+    }
+  }
 }
 
 function decodeFieldItemOrList(
@@ -182,7 +210,7 @@ function decodeRichTextField(
 }
 
 export function decodeAdminEntity(
-  schema: AdminSchema,
+  schema: AdminSchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
 ): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
@@ -203,17 +231,20 @@ export function decodeAdminEntity(
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
-    fields: decodeAdminEntityFields(schema, entitySpec, values.fieldValues),
+    fields: decodeAdminEntityFields(schema, entitySpec, values.schemaVersion, values.fieldValues),
   };
 
   return entity;
 }
 
 export function decodeAdminEntityFields(
-  schema: AdminSchema | PublishedSchema,
-  entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
+  schema: AdminSchemaWithMigrations,
+  entitySpec: AdminEntityTypeSpecification,
+  schemaVersion: number,
   fieldValues: Record<string, unknown>,
 ): AdminEntity['fields'] {
+  applySchemaMigrations(schema, entitySpec.name, schemaVersion, fieldValues);
+
   const fields: AdminEntity['fields'] = {};
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
@@ -253,7 +284,7 @@ export function resolveCreateEntity(
 }
 
 export function resolveUpdateEntity(
-  schema: AdminSchema,
+  schema: AdminSchemaWithMigrations,
   entity: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
@@ -286,6 +317,9 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
+  const { fieldValues } = entityInfo;
+  applySchemaMigrations(schema, entitySpec.name, entityInfo.schemaVersion, fieldValues);
+
   const normalizedResult = normalizeEntityFields(
     schema,
     { ...entity, info: { type: result.info.type } },
@@ -304,7 +338,7 @@ export function resolveUpdateEntity(
       schema,
       fieldSpec,
       'optimized',
-      entityInfo.fieldValues[fieldName] ?? null,
+      fieldValues[fieldName] ?? null,
     );
 
     if (fieldName in normalizedFields) {

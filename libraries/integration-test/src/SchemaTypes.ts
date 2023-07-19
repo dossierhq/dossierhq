@@ -29,6 +29,7 @@ export type AppAdminUniqueIndexes = 'genericUnique' | 'stringsUnique';
 export type AppAdminEntity =
   | AdminChangeValidations
   | AdminLocations
+  | AdminMigrationEntity
   | AdminReadOnly
   | AdminReferences
   | AdminRichTexts
@@ -79,6 +80,28 @@ export function assertIsAdminLocations(
 ): asserts entity is AdminLocations {
   if (entity.info.type !== 'Locations') {
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AdminMigrationEntityFields = Record<never, never>;
+
+export type AdminMigrationEntity = AdminEntity<
+  'MigrationEntity',
+  AdminMigrationEntityFields,
+  string
+>;
+
+export function isAdminMigrationEntity(
+  entity: AdminEntity<string, object>,
+): entity is AdminMigrationEntity {
+  return entity.info.type === 'MigrationEntity';
+}
+
+export function assertIsAdminMigrationEntity(
+  entity: AdminEntity<string, object>,
+): asserts entity is AdminMigrationEntity {
+  if (entity.info.type !== 'MigrationEntity') {
+    throw new Error('Expected info.type = MigrationEntity (but was ' + entity.info.type + ')');
   }
 }
 
@@ -331,6 +354,7 @@ export type AppPublishedUniqueIndexes = 'genericUnique' | 'stringsUnique';
 export type AppPublishedEntity =
   | PublishedChangeValidations
   | PublishedLocations
+  | PublishedMigrationEntity
   | PublishedReadOnly
   | PublishedReferences
   | PublishedRichTexts
@@ -382,6 +406,28 @@ export function assertIsPublishedLocations(
 ): asserts entity is PublishedLocations {
   if (entity.info.type !== 'Locations') {
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
+  }
+}
+
+export type PublishedMigrationEntityFields = Record<never, never>;
+
+export type PublishedMigrationEntity = PublishedEntity<
+  'MigrationEntity',
+  PublishedMigrationEntityFields,
+  string
+>;
+
+export function isPublishedMigrationEntity(
+  entity: PublishedEntity<string, object>,
+): entity is PublishedMigrationEntity {
+  return entity.info.type === 'MigrationEntity';
+}
+
+export function assertIsPublishedMigrationEntity(
+  entity: PublishedEntity<string, object>,
+): asserts entity is PublishedMigrationEntity {
+  if (entity.info.type !== 'MigrationEntity') {
+    throw new Error('Expected info.type = MigrationEntity (but was ' + entity.info.type + ')');
   }
 }
 

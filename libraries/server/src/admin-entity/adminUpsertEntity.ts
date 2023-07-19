@@ -3,7 +3,7 @@ import type {
   AdminEntityUpdate,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
-  AdminSchema,
+  AdminSchemaWithMigrations,
   ErrorResult,
   PromiseResult,
   PublishedSchema,
@@ -16,7 +16,7 @@ import { adminCreateEntity } from './adminCreateEntity.js';
 import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 export async function adminUpsertEntity(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -71,7 +71,7 @@ export async function adminUpsertEntity(
 }
 
 async function createNewEntity(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

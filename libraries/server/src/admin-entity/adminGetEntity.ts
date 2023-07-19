@@ -1,7 +1,7 @@
 import {
   ok,
   type AdminEntity,
-  type AdminSchema,
+  type AdminSchemaWithMigrations,
   type EntityReference,
   type EntityVersionReference,
   type ErrorType,
@@ -15,7 +15,7 @@ import type { SessionContext } from '../Context.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
 
 export async function adminGetEntity(
-  schema: AdminSchema,
+  schema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

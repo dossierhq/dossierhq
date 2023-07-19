@@ -7,7 +7,7 @@ import {
   notOk,
   ok,
   validateEntityInfo,
-  type AdminSchema,
+  type AdminSchemaWithMigrations,
   type EntityReference,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -32,7 +32,7 @@ interface EntityValidity {
 }
 
 export async function managementDirtyProcessNextEntity(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
 ): PromiseResult<
@@ -108,6 +108,7 @@ export async function managementDirtyProcessNextEntity(
     // Validate / index published
     if ((dirtyValidatePublished || dirtyIndexPublished) && entityIsPublished) {
       // Fetch the correct version of the entity since when modified we got the wrong version
+      let schemaVersion = entityResult.value.schemaVersion;
       let fieldValues = entityResult.value.fieldValues;
       if (status === AdminEntityStatus.modified) {
         const getPublishedEntityResult = await databaseAdapter.publishedEntityGetOne(
@@ -117,6 +118,7 @@ export async function managementDirtyProcessNextEntity(
         if (getPublishedEntityResult.isError()) {
           return notOk.Generic(getPublishedEntityResult.message); // convert NotFound to Generic
         }
+        schemaVersion = getPublishedEntityResult.value.schemaVersion;
         fieldValues = getPublishedEntityResult.value.fieldValues;
       }
 
@@ -127,6 +129,7 @@ export async function managementDirtyProcessNextEntity(
         context,
         reference,
         entityResult.value.type,
+        schemaVersion,
         fieldValues,
       );
       if (validationPublishedResult.isOk()) {
@@ -180,7 +183,7 @@ export async function managementDirtyProcessNextEntity(
 }
 
 async function validateAdminEntity(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entityData: DatabaseAdminEntityPayload,
@@ -216,11 +219,12 @@ async function validateAdminEntity(
 }
 
 async function validatePublishedEntity(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   reference: EntityReference,
   type: string,
+  schemaVersion: number,
   fieldValues: Record<string, unknown>,
 ): PromiseResult<
   { entityIndexes: DatabaseEntityIndexesArg; uniqueIndexValues: UniqueIndexValueCollection },
@@ -231,7 +235,7 @@ async function validatePublishedEntity(
 
   if (entitySpec.adminOnly) return notOk.Generic(`Entity type is admin only`);
 
-  const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, fieldValues);
+  const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, schemaVersion, fieldValues);
 
   const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,

@@ -26,6 +26,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       ],
     },
     {
+      name: 'MigrationEntity',
+      fields: [],
+    },
+    {
       name: 'References',
       fields: [
         { name: 'any', type: FieldType.Entity },

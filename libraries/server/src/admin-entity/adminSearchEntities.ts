@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminSchema,
+  AdminSchemaWithMigrations,
   AdminSearchQuery,
   Connection,
   Edge,
@@ -20,7 +20,7 @@ import {
 } from '../shared-entity/sharedSearchEntities.js';
 
 export async function adminSearchEntities(
-  schema: AdminSchema,
+  schema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

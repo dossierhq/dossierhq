@@ -1,6 +1,6 @@
 import type {
   AdminEntityPublishPayload,
-  AdminSchema,
+  AdminSchemaWithMigrations,
   EntityReference,
   EntityVersionReference,
   Location,
@@ -50,7 +50,7 @@ interface VersionInfoAlreadyPublished {
 }
 
 export async function adminPublishEntities(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -157,7 +157,7 @@ export async function adminPublishEntities(
 }
 
 async function collectVersionsInfo(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -199,6 +199,7 @@ async function collectVersionsInfo(
       status,
       validPublished,
       updatedAt,
+      schemaVersion,
       fieldValues,
     } = versionInfoResult.value;
 
@@ -224,7 +225,12 @@ async function collectVersionsInfo(
         validPublished: validPublished ?? true,
       });
     } else {
-      const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, fieldValues);
+      const entityFields = decodeAdminEntityFields(
+        adminSchema,
+        entitySpec,
+        schemaVersion,
+        fieldValues,
+      );
       const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
         adminSchema,
         publishedSchema,

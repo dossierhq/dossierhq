@@ -1,6 +1,6 @@
 import type {
   AdminEntityPublishPayload,
-  AdminSchema,
+  AdminSchemaWithMigrations,
   EntityVersionReference,
   PromiseResult,
   PublishedSchema,
@@ -14,7 +14,7 @@ import { adminPublishEntities } from './adminPublishEntities.js';
 //TODO not optimized since we already have the entity data before this and adminPublishEntities() fetches it again
 
 export async function publishEntityAfterMutation(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

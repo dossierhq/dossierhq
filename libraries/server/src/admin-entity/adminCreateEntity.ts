@@ -8,7 +8,7 @@ import {
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
   type AdminEntityMutationOptions,
-  type AdminSchema,
+  type AdminSchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
   type PublishedSchema,
@@ -23,7 +23,7 @@ import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminCreateEntity(
-  adminSchema: AdminSchema,
+  adminSchema: AdminSchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

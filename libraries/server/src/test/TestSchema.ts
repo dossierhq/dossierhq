@@ -1,6 +1,6 @@
-import { AdminSchema, FieldType } from '@dossierhq/core';
+import { AdminSchemaWithMigrations, FieldType } from '@dossierhq/core';
 
-export const adminTestSchema = AdminSchema.createAndValidate({
+export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
   entityTypes: [{ name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] }],
 }).valueOrThrow();
 

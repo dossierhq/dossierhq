@@ -2,7 +2,6 @@ import {
   copyEntity,
   notOk,
   ok,
-  withAdvisoryLock,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminSchemaSpecificationUpdate,
@@ -18,6 +17,7 @@ import {
 } from '../IntegrationTestSchema.js';
 import type { AdminChangeValidations, AdminValueItems, AppAdminClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
+import { withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 
 interface Options {
   publish?: boolean;
@@ -110,36 +110,29 @@ async function withTemporarySchemaChange(
   onChangedSchema: () => Promise<void>,
   onProcessed: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return await withAdvisoryLock(
-    adminClient,
-    'schema-update',
-    { acquireInterval: 50, leaseDuration: 300, renewInterval: 200 },
-    async () => {
-      // remove validations from the schema
-      const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);
-      if (removeValidationsResult.isError()) return removeValidationsResult;
+  return await withSchemaAdvisoryLock(adminClient, async () => {
+    // remove validations from the schema
+    const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);
+    if (removeValidationsResult.isError()) return removeValidationsResult;
 
-      await onChangedSchema();
+    await onChangedSchema();
 
-      // restore validations to the schema
-      const restoreSchemaResult = await adminClient.updateSchemaSpecification(
-        IntegrationTestSchema,
-      );
-      if (restoreSchemaResult.isError()) return restoreSchemaResult;
+    // restore validations to the schema
+    const restoreSchemaResult = await adminClient.updateSchemaSpecification(IntegrationTestSchema);
+    if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
-      // validate
+    // validate
 
-      let done = false;
-      while (!done) {
-        const processResult = await server.processNextDirtyEntity();
-        if (processResult.isError()) return processResult;
-        if (processResult.value) {
-          onProcessed(processResult.value);
-        } else {
-          done = true;
-        }
+    let done = false;
+    while (!done) {
+      const processResult = await server.processNextDirtyEntity();
+      if (processResult.isError()) return processResult;
+      if (processResult.value) {
+        onProcessed(processResult.value);
+      } else {
+        done = true;
       }
-      return ok(undefined);
-    },
-  );
+    }
+    return ok(undefined);
+  });
 }
