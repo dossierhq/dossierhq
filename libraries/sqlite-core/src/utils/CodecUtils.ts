@@ -1,4 +1,4 @@
-import { assertExhaustive, AdminEntityStatus } from '@dossierhq/core';
+import { AdminEntityStatus, assertExhaustive } from '@dossierhq/core';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 
 export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {

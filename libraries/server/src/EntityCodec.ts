@@ -90,12 +90,16 @@ export function decodePublishedEntity(
     fields: {},
   };
 
-  const { fieldValues } = values;
-  applySchemaMigrations(adminSchema, values.type, values.schemaVersion, values.fieldValues);
+  const migratedFieldValues = applySchemaMigrationsToFieldValues(
+    adminSchema,
+    values.type,
+    values.schemaVersion,
+    values.fieldValues,
+  );
 
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
-    const fieldValue = fieldValues[fieldName];
+    const fieldValue = migratedFieldValues[fieldName];
     entity.fields[fieldName] = decodeFieldItemOrList(
       publishedSchema,
       fieldSpec,
@@ -107,17 +111,19 @@ export function decodePublishedEntity(
   return entity;
 }
 
-function applySchemaMigrations(
+function applySchemaMigrationsToFieldValues(
   adminSchema: AdminSchemaWithMigrations,
   entityType: string,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
-) {
+): Record<string, unknown> {
+  const migratedFieldValues = JSON.parse(JSON.stringify(fieldValues)) as Record<string, unknown>;
+
   const migrationsToConsider = adminSchema.spec.migrations.filter(
-    (it) => it.version >= schemaVersion,
+    (it) => it.version > schemaVersion,
   );
   if (migrationsToConsider.length === 0) {
-    return;
+    return fieldValues;
   }
 
   migrationsToConsider.sort((a, b) => a.version - b.version);
@@ -126,13 +132,26 @@ function applySchemaMigrations(
       switch (action.action) {
         case 'deleteField': {
           if ('entityType' in action && action.entityType === entityType) {
-            delete fieldValues[action.field];
+            delete migratedFieldValues[action.field];
           }
+          //TODO valueType
+          break;
+        }
+        case 'renameField': {
+          if ('entityType' in action && action.entityType === entityType) {
+            if (action.field in migratedFieldValues) {
+              migratedFieldValues[action.newName] = migratedFieldValues[action.field];
+              delete migratedFieldValues[action.field];
+            }
+          }
+          //TODO valueType
           break;
         }
       }
     }
   }
+
+  return migratedFieldValues;
 }
 
 function decodeFieldItemOrList(
@@ -254,12 +273,17 @@ export function decodeAdminEntityFields(
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
 ): AdminEntity['fields'] {
-  applySchemaMigrations(schema, entitySpec.name, schemaVersion, fieldValues);
+  const migratedFieldValues = applySchemaMigrationsToFieldValues(
+    schema,
+    entitySpec.name,
+    schemaVersion,
+    fieldValues,
+  );
 
   const fields: AdminEntity['fields'] = {};
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
-    const fieldValue = fieldValues[fieldName];
+    const fieldValue = migratedFieldValues[fieldName];
     fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
   }
   return fields;
@@ -328,8 +352,12 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const { fieldValues } = entityInfo;
-  applySchemaMigrations(schema, entitySpec.name, entityInfo.schemaVersion, fieldValues);
+  const migratedFieldValues = applySchemaMigrationsToFieldValues(
+    schema,
+    entitySpec.name,
+    entityInfo.schemaVersion,
+    entityInfo.fieldValues,
+  );
 
   const normalizedResult = normalizeEntityFields(
     schema,
@@ -349,7 +377,7 @@ export function resolveUpdateEntity(
       schema,
       fieldSpec,
       'optimized',
-      fieldValues[fieldName] ?? null,
+      migratedFieldValues[fieldName] ?? null,
     );
 
     if (fieldName in normalizedFields) {
