@@ -269,20 +269,20 @@ function resolveFields<TContext extends SessionGraphQLContext>(
             : (_args: undefined, context: TContext, _info: unknown) => {
                 return isAdmin
                   ? loadAdminEntities(schema as AdminSchema, context, ids)
-                  : loadPublishedEntities(schema, context, ids);
+                  : loadPublishedEntities(schema as PublishedSchema, context, ids);
               },
       };
     } else if (isEntityField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin
           ? loadAdminEntity(schema as AdminSchema, context, value)
-          : loadPublishedEntity(schema, context, value);
+          : loadPublishedEntity(schema as PublishedSchema, context, value);
     } else if (isEntityListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
         return isAdmin
           ? loadAdminEntities(schema as AdminSchema, context, ids)
-          : loadPublishedEntities(schema, context, ids);
+          : loadPublishedEntities(schema as PublishedSchema, context, ids);
       };
     } else if (isValueItemField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);

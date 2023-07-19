@@ -196,6 +196,7 @@ export interface SchemaIndexSpecification {
 }
 
 export interface PublishedSchemaSpecification {
+  schemaKind: 'published';
   version: number;
   entityTypes: PublishedEntityTypeSpecification[];
   valueTypes: PublishedValueTypeSpecification[];
@@ -204,6 +205,7 @@ export interface PublishedSchemaSpecification {
 }
 
 export interface AdminSchemaSpecification {
+  schemaKind: 'admin';
   version: number;
   entityTypes: AdminEntityTypeSpecification[];
   valueTypes: AdminValueTypeSpecification[];

@@ -9,6 +9,7 @@ import {
 
 export function schemaAdminToPublished(adminSchema: BaseSchema<AdminSchemaSpecification>) {
   const spec: PublishedSchemaSpecification = {
+    schemaKind: 'published',
     version: adminSchema.spec.version,
     entityTypes: [],
     valueTypes: [],

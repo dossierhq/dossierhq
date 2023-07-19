@@ -33,7 +33,7 @@ describe('publishedEntitySearchEntities', () => {
     );
     const result = await publishedEntitySearchEntities(
       adapter,
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging(undefined),
@@ -59,7 +59,7 @@ describe('publishedEntitySearchEntities', () => {
     );
     const result = await publishedEntitySearchEntities(
       adapter,
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging(undefined),
@@ -106,7 +106,7 @@ describe('publishedEntitySearchEntities', () => {
     );
     const result = await publishedEntitySearchEntities(
       adapter,
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
@@ -154,7 +154,7 @@ describe('publishedEntitySearchEntities', () => {
     );
     const result = await publishedEntitySearchEntities(
       adapter,
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),

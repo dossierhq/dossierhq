@@ -238,7 +238,14 @@ describe('PublishedClient forward operation over JSON', () => {
         PublishedClientOperationName.getSchemaSpecification,
         (_context, operation) => {
           operation.resolve(
-            ok({ version: 0, entityTypes: [], valueTypes: [], patterns: [], indexes: [] }),
+            ok({
+              schemaKind: 'published',
+              version: 0,
+              entityTypes: [],
+              valueTypes: [],
+              patterns: [],
+              indexes: [],
+            }),
           );
           return Promise.resolve();
         },
@@ -251,6 +258,7 @@ describe('PublishedClient forward operation over JSON', () => {
           "entityTypes": [],
           "indexes": [],
           "patterns": [],
+          "schemaKind": "published",
           "valueTypes": [],
           "version": 0,
         }

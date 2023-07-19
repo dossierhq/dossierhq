@@ -18,7 +18,7 @@ import {
   totalPublishedEntitiesQuery,
 } from './QueryGenerator.js';
 
-const schema = AdminSchema.createAndValidate({
+const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
     { name: 'QueryGeneratorFoo', fields: [] },
     { name: 'QueryGeneratorBar', fields: [] },
@@ -29,6 +29,8 @@ const schema = AdminSchema.createAndValidate({
   ],
 }).valueOrThrow();
 
+const publishedSchema = adminSchema.toPublishedSchema();
+
 const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
 
 describe('searchAdminEntitiesQuery()', () => {
@@ -37,7 +39,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging(undefined),
         authKeysNone,
@@ -64,7 +66,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging({ first: 10 }),
         authKeysNone,
@@ -91,7 +93,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging({
           first: 10,
@@ -122,7 +124,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging(
           {
@@ -156,7 +158,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging({ last: 10 }),
         authKeysNone,
@@ -183,7 +185,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging({
           last: 10,
@@ -214,7 +216,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging(
           {
@@ -248,7 +250,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging({
           first: 10,
@@ -281,7 +283,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         undefined,
         resolvePaging({
           last: 10,
@@ -314,7 +316,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { order: AdminQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
         authKeysNone,
@@ -341,7 +343,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { entityTypes: [] },
         resolvePaging(undefined),
         authKeysNone,
@@ -368,7 +370,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { entityTypes: ['QueryGeneratorFoo'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -398,7 +400,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -429,7 +431,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging({
           first: 10,
@@ -464,7 +466,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { valueTypes: [] },
         resolvePaging(undefined),
         authKeysNone,
@@ -491,7 +493,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { valueTypes: ['QueryGeneratorValueOne'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -521,7 +523,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -552,7 +554,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [] },
         resolvePaging(undefined),
         authKeysNone,
@@ -579,7 +581,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.draft] },
         resolvePaging(undefined),
         authKeysNone,
@@ -607,7 +609,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.published] },
         resolvePaging(undefined),
         authKeysNone,
@@ -635,7 +637,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.modified] },
         resolvePaging(undefined),
         authKeysNone,
@@ -663,7 +665,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.withdrawn] },
         resolvePaging(undefined),
         authKeysNone,
@@ -691,7 +693,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.archived] },
         resolvePaging(undefined),
         authKeysNone,
@@ -719,7 +721,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.draft, AdminEntityStatus.published] },
         resolvePaging(undefined),
         authKeysNone,
@@ -750,7 +752,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { status: [AdminEntityStatus.draft, AdminEntityStatus.archived] },
         resolvePaging(undefined),
         authKeysNone,
@@ -781,7 +783,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         {
           status: [
             AdminEntityStatus.draft,
@@ -823,7 +825,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { valid: true },
         resolvePaging(undefined),
         authKeysNone,
@@ -850,7 +852,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { valid: false },
         resolvePaging(undefined),
         authKeysNone,
@@ -877,7 +879,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
         authKeysNone,
@@ -905,7 +907,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
         authKeysNone,
@@ -933,7 +935,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         {
           boundingBox: {
             minLat: 55.07,
@@ -971,7 +973,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { text: 'foo bar' },
         resolvePaging({}),
         authKeysNone,
@@ -999,7 +1001,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
@@ -1038,7 +1040,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { order: AdminQueryOrder.createdAt },
         resolvePaging(undefined),
         authKeysNone,
@@ -1065,7 +1067,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { order: AdminQueryOrder.updatedAt },
         resolvePaging(undefined),
         authKeysNone,
@@ -1092,7 +1094,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
-        schema,
+        adminSchema,
         { order: AdminQueryOrder.name },
         resolvePaging(undefined),
         authKeysNone,
@@ -1118,7 +1120,7 @@ describe('searchAdminEntitiesQuery()', () => {
     const databaseAdapter = createMockAdapter();
     const result = searchAdminEntitiesQuery(
       databaseAdapter,
-      schema,
+      adminSchema,
       { entityTypes: ['Invalid'] },
       resolvePaging(undefined),
       authKeysNone,
@@ -1130,7 +1132,7 @@ describe('searchAdminEntitiesQuery()', () => {
     const databaseAdapter = createMockAdapter();
     const result = searchAdminEntitiesQuery(
       databaseAdapter,
-      schema,
+      adminSchema,
       { valueTypes: ['Invalid'] },
       resolvePaging(undefined),
       authKeysNone,
@@ -1145,7 +1147,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging(undefined),
         authKeysNone,
@@ -1171,7 +1173,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging({ first: 10 }),
         authKeysNone,
@@ -1197,7 +1199,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging({
           first: 10,
@@ -1227,7 +1229,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { reverse: true },
         resolvePaging({
           first: 10,
@@ -1257,7 +1259,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging({ last: 10 }),
         authKeysNone,
@@ -1283,7 +1285,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging({
           last: 10,
@@ -1313,7 +1315,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging({
           first: 10,
@@ -1345,7 +1347,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { reverse: true },
         resolvePaging({
           first: 10,
@@ -1377,7 +1379,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         undefined,
         resolvePaging({
           last: 10,
@@ -1409,7 +1411,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { order: PublishedQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
         authKeysNone,
@@ -1435,7 +1437,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { entityTypes: [] },
         resolvePaging(undefined),
         authKeysNone,
@@ -1461,7 +1463,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { entityTypes: ['QueryGeneratorFoo'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -1490,7 +1492,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -1520,7 +1522,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         resolvePaging({
           first: 10,
@@ -1554,7 +1556,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { valueTypes: [] },
         resolvePaging(undefined),
         authKeysNone,
@@ -1580,7 +1582,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { valueTypes: ['QueryGeneratorValueOne'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -1609,7 +1611,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
         resolvePaging(undefined),
         authKeysNone,
@@ -1639,7 +1641,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
         authKeysNone,
@@ -1666,7 +1668,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         resolvePaging(undefined),
         authKeysNone,
@@ -1693,7 +1695,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         {
           boundingBox: {
             minLat: 55.07,
@@ -1730,7 +1732,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { text: 'foo bar' },
         resolvePaging({}),
         authKeysNone,
@@ -1757,7 +1759,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
@@ -1795,7 +1797,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { order: PublishedQueryOrder.createdAt },
         resolvePaging(undefined),
         authKeysNone,
@@ -1821,7 +1823,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
-        schema,
+        publishedSchema,
         { order: PublishedQueryOrder.name },
         resolvePaging(undefined),
         authKeysNone,
@@ -1846,7 +1848,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     const databaseAdapter = createMockAdapter();
     const result = searchPublishedEntitiesQuery(
       databaseAdapter,
-      schema,
+      publishedSchema,
       { entityTypes: ['Invalid'] },
       resolvePaging(undefined),
       authKeysNone,
@@ -1858,7 +1860,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     const databaseAdapter = createMockAdapter();
     const result = searchPublishedEntitiesQuery(
       databaseAdapter,
-      schema,
+      publishedSchema,
       { valueTypes: ['Invalid'] },
       resolvePaging(undefined),
       authKeysNone,
@@ -1869,7 +1871,8 @@ describe('searchPublishedEntitiesQuery()', () => {
 
 describe('sampleAdminEntitiesQuery()', () => {
   test('no query', () => {
-    expect(sampleAdminEntitiesQuery(schema, undefined, 5, 10, authKeysNone)).toMatchInlineSnapshot(`
+    expect(sampleAdminEntitiesQuery(adminSchema, undefined, 5, 10, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
@@ -1886,7 +1889,13 @@ describe('sampleAdminEntitiesQuery()', () => {
 
   test('entityTypes', () => {
     expect(
-      sampleAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, 5, 10, authKeysNone),
+      sampleAdminEntitiesQuery(
+        adminSchema,
+        { entityTypes: ['QueryGeneratorFoo'] },
+        5,
+        10,
+        authKeysNone,
+      ),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -1908,7 +1917,7 @@ describe('sampleAdminEntitiesQuery()', () => {
   test('valueTypes', () => {
     expect(
       sampleAdminEntitiesQuery(
-        schema,
+        adminSchema,
         { valueTypes: ['QueryGeneratorValueOne'] },
         5,
         10,
@@ -1935,7 +1944,7 @@ describe('sampleAdminEntitiesQuery()', () => {
 
 describe('samplePublishedEntitiesQuery()', () => {
   test('no query', () => {
-    expect(samplePublishedEntitiesQuery(schema, undefined, 5, 10, authKeysNone))
+    expect(samplePublishedEntitiesQuery(publishedSchema, undefined, 5, 10, authKeysNone))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -1953,7 +1962,7 @@ describe('samplePublishedEntitiesQuery()', () => {
   test('entityTypes', () => {
     expect(
       samplePublishedEntitiesQuery(
-        schema,
+        publishedSchema,
         { entityTypes: ['QueryGeneratorFoo'] },
         5,
         10,
@@ -1979,7 +1988,7 @@ describe('samplePublishedEntitiesQuery()', () => {
   test('valueTypes', () => {
     expect(
       samplePublishedEntitiesQuery(
-        schema,
+        publishedSchema,
         { valueTypes: ['QueryGeneratorValueOne'] },
         5,
         10,
@@ -2005,7 +2014,7 @@ describe('samplePublishedEntitiesQuery()', () => {
 
 describe('totalAdminEntitiesQuery()', () => {
   test('no query', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, undefined)).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1",
@@ -2018,7 +2027,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('no entity type => all', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { entityTypes: [] }))
+    expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, { entityTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -2032,8 +2041,9 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('one entity type', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] }),
+    ).toMatchInlineSnapshot(`
         OkResult {
           "value": {
             "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND e.type = ANY($2)",
@@ -2050,7 +2060,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('two entity types', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
       }),
     ).toMatchInlineSnapshot(`
@@ -2070,7 +2080,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('no value types => all', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { valueTypes: [] }))
+    expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, { valueTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -2085,7 +2095,9 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('one value type', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] }),
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
+        valueTypes: ['QueryGeneratorValueOne'],
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2103,7 +2115,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('two value types', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
       }),
     ).toMatchInlineSnapshot(`
@@ -2123,7 +2135,8 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status empty list', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [] })).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, { status: [] }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1",
@@ -2136,8 +2149,9 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status draft', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.draft] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, { status: [AdminEntityStatus.draft] }),
+    ).toMatchInlineSnapshot(`
         OkResult {
           "value": {
             "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -2151,8 +2165,9 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status published', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.published] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, { status: [AdminEntityStatus.published] }),
+    ).toMatchInlineSnapshot(`
         OkResult {
           "value": {
             "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -2166,8 +2181,9 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status modified', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.modified] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, { status: [AdminEntityStatus.modified] }),
+    ).toMatchInlineSnapshot(`
         OkResult {
           "value": {
             "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -2181,8 +2197,9 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status withdrawn', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.withdrawn] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, { status: [AdminEntityStatus.withdrawn] }),
+    ).toMatchInlineSnapshot(`
         OkResult {
           "value": {
             "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -2196,8 +2213,9 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status archived', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.archived] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, { status: [AdminEntityStatus.archived] }),
+    ).toMatchInlineSnapshot(`
         OkResult {
           "value": {
             "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -2212,7 +2230,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query linksFrom', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       }),
     ).toMatchInlineSnapshot(`
@@ -2230,7 +2248,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query linksTo', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       }),
     ).toMatchInlineSnapshot(`
@@ -2248,7 +2266,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query linksTo and entity types and paging', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       }),
@@ -2271,7 +2289,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query bounding box', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         boundingBox: {
           minLat: 55.07,
           maxLat: 56.79,
@@ -2297,7 +2315,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query text', () => {
     expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, {
+      totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         text: 'foo bar',
       }),
     ).toMatchInlineSnapshot(`
@@ -2316,7 +2334,8 @@ describe('totalAdminEntitiesQuery()', () => {
 
 describe('totalPublishedEntitiesQuery()', () => {
   test('no query', () => {
-    expect(totalPublishedEntitiesQuery(schema, authKeysNone, undefined)).toMatchInlineSnapshot(`
+    expect(totalPublishedEntitiesQuery(publishedSchema, authKeysNone, undefined))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1",
@@ -2329,7 +2348,7 @@ describe('totalPublishedEntitiesQuery()', () => {
   });
 
   test('no entity type => all', () => {
-    expect(totalPublishedEntitiesQuery(schema, authKeysNone, { entityTypes: [] }))
+    expect(totalPublishedEntitiesQuery(publishedSchema, authKeysNone, { entityTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -2344,7 +2363,9 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('one entity type', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] }),
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
+        entityTypes: ['QueryGeneratorFoo'],
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2362,7 +2383,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('two entity types', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
       }),
     ).toMatchInlineSnapshot(`
@@ -2382,7 +2403,7 @@ describe('totalPublishedEntitiesQuery()', () => {
   });
 
   test('no value type => all', () => {
-    expect(totalPublishedEntitiesQuery(schema, authKeysNone, { valueTypes: [] }))
+    expect(totalPublishedEntitiesQuery(publishedSchema, authKeysNone, { valueTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -2397,7 +2418,9 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('one value type', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, { valueTypes: ['QueryGeneratorValueOne'] }),
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
+        valueTypes: ['QueryGeneratorValueOne'],
+      }),
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
@@ -2415,7 +2438,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('two value types', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
       }),
     ).toMatchInlineSnapshot(`
@@ -2436,7 +2459,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query linksFrom', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       }),
     ).toMatchInlineSnapshot(`
@@ -2454,7 +2477,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query linksTo', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       }),
     ).toMatchInlineSnapshot(`
@@ -2472,7 +2495,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query linksTo and entity types and paging', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       }),
@@ -2495,7 +2518,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query bounding box', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         boundingBox: {
           minLat: 55.07,
           maxLat: 56.79,
@@ -2521,7 +2544,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query text', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, authKeysNone, {
+      totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         text: 'foo bar',
       }),
     ).toMatchInlineSnapshot(`

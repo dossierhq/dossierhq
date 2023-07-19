@@ -23,6 +23,7 @@ describe('schemaGetSpecification', () => {
 
     // defaults to empty spec
     expectResultValue(result, {
+      schemaKind: 'admin',
       version: 0,
       entityTypes: [],
       valueTypes: [],
@@ -45,6 +46,7 @@ describe('schemaGetSpecification', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecificationWithMigrations = {
+      schemaKind: 'admin',
       version: 1,
       migrations: [],
       entityTypes: [
@@ -102,6 +104,7 @@ describe('schemaGetSpecification', () => {
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await schemaGetSpecification(databaseAdapter, context, false);
     expect(result.valueOrThrow()).toEqual<AdminSchemaSpecificationWithMigrations>({
+      schemaKind: 'admin',
       version: 1,
       migrations: [],
       entityTypes: [
@@ -165,6 +168,7 @@ describe('schemaGetSpecification', () => {
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await schemaGetSpecification(databaseAdapter, context, false);
     expect(result.valueOrThrow()).toEqual<AdminSchemaSpecificationWithMigrations>({
+      schemaKind: 'admin',
       version: 1,
       entityTypes: [
         {
@@ -233,6 +237,7 @@ describe('schemaGetSpecification', () => {
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await schemaGetSpecification(databaseAdapter, context, false);
     expect(result.valueOrThrow()).toEqual<AdminSchemaSpecificationWithMigrations>({
+      schemaKind: 'admin',
       version: 1,
       migrations: [],
       entityTypes: [

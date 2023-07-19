@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { AdminSchema } from './AdminSchema.js';
 import { expectErrorResult, expectOkResult } from '../CoreTestUtils.js';
 import { ErrorType } from '../ErrorResult.js';
+import { AdminSchema } from './AdminSchema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
@@ -15,6 +15,7 @@ describe('AdminSchema.validate()', () => {
   test('Empty spec validates', () => {
     expectOkResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -27,6 +28,7 @@ describe('AdminSchema.validate()', () => {
   test('Limit value and entity types on rich text', () => {
     expectOkResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -77,6 +79,7 @@ describe('AdminSchema.validate()', () => {
   test('Entity field referencing an adminOnly entity type from an adminOnly field', () => {
     expectOkResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -113,6 +116,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -143,6 +147,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Invalid entity type name', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           { name: 'foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
@@ -159,6 +164,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Invalid value type name', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [{ name: 'foo', adminOnly: false, fields: [] }],
@@ -173,6 +179,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Duplicate entity type names', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
@@ -190,6 +197,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Duplicate entity and value type names', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
@@ -206,6 +214,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: nameField with missing field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -228,6 +237,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: nameField to non-single string field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -258,6 +268,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Invalid field name', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [
@@ -290,6 +301,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Field named type on value type', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [
@@ -322,6 +334,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Duplicate field names', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -360,6 +373,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Boolean (i.e. non-String) with multiline', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -391,6 +405,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Reference to invalid entity type', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -422,6 +437,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Reference to invalid entity type in linkEntityTypes', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -456,6 +472,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: entityTypes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -488,6 +505,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Value type with invalid value type', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -519,6 +537,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: linkEntityTypes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -551,6 +570,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: valueTypes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -583,6 +603,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes specified on Boolean field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -614,6 +635,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes with duplicate type', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -648,6 +670,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes without required nodes', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -682,6 +705,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes without paragraph', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -718,6 +742,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes without text', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -754,6 +779,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes without linebreak', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -790,6 +816,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes without tab', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -824,6 +851,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes with list without listitem', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -858,6 +886,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes with listitem without list', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -892,6 +921,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes with code without code-highlight', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -926,6 +956,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: richTextNodes with code-highlight without code', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -960,6 +991,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: entityTypes specified but not entity richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -994,6 +1026,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: linkEntityTypes specified but not entityLink richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1028,6 +1061,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: valueTypes specified but not valueItem richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1062,6 +1096,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: referencing adminOnly entity from non-adminOnly', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1100,6 +1135,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: referencing adminOnly link entity from non-adminOnly', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1141,6 +1177,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: referencing adminOnly value type from non-adminOnly', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [
@@ -1175,6 +1212,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Boolean (i.e. non-String) with matchPattern', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1206,6 +1244,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: matchPattern with missing pattern name', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1240,6 +1279,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: duplicate pattern', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -1257,6 +1297,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: invalid pattern name', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -1271,6 +1312,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: entity authKey using missing pattern', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           { name: 'Foo', adminOnly: false, authKeyPattern: 'missing', nameField: null, fields: [] },
@@ -1287,6 +1329,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: invalid pattern', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -1301,6 +1344,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Boolean (i.e. non-String) with values', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1332,6 +1376,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: both matchPattern and values on same field', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1366,6 +1411,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: Boolean (i.e. non-String) with index', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1397,6 +1443,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: index with missing index name', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [
           {
@@ -1431,6 +1478,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: duplicate index', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -1448,6 +1496,7 @@ describe('AdminSchema.validate()', () => {
   test('Error: non-camelCase index', () => {
     expectErrorResult(
       new AdminSchema({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -1462,7 +1511,10 @@ describe('AdminSchema.validate()', () => {
 
 describe('AdminSchema.toPublishedSchema()', () => {
   test('empty->empty', () => {
-    expect(AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema().spec).toEqual({
+    expect(
+      AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema().spec,
+    ).toEqual<PublishedSchemaSpecification>({
+      schemaKind: 'published',
       version: 0,
       entityTypes: [],
       valueTypes: [],
@@ -1485,6 +1537,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      schemaKind: 'published',
       version: 1,
       entityTypes: [
         {
@@ -1529,6 +1582,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      schemaKind: 'published',
       version: 1,
       entityTypes: [
         {
@@ -1568,6 +1622,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      schemaKind: 'published',
       version: 1,
       entityTypes: [
         {
@@ -1610,6 +1665,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      schemaKind: 'published',
       version: 1,
       entityTypes: [],
       valueTypes: [],
@@ -1638,6 +1694,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
         .valueOrThrow()
         .toPublishedSchema().spec,
     ).toEqual<PublishedSchemaSpecification>({
+      schemaKind: 'published',
       version: 1,
       entityTypes: [{ name: 'Foo', authKeyPattern: null, fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],

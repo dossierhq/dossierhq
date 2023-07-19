@@ -3921,6 +3921,7 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
       "indexes": [],
       "migrations": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4006,6 +4007,7 @@ exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
       "entityTypes": [],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 0,
     },
@@ -4087,6 +4089,7 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
       ],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [
         {
           "adminOnly": false,
@@ -4198,6 +4201,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
           "pattern": "^foo$",
         },
       ],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4293,6 +4297,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
         },
       ],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4377,6 +4382,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
       ],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4530,6 +4536,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
       ],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4641,6 +4648,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
       ],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4740,6 +4748,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
           "pattern": "^a-pattern$",
         },
       ],
+      "schemaKind": "admin",
       "valueTypes": [],
       "version": 1,
     },
@@ -4765,6 +4774,7 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
       "entityTypes": [],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [
         {
           "adminOnly": false,
@@ -4899,6 +4909,7 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
       ],
       "indexes": [],
       "patterns": [],
+      "schemaKind": "admin",
       "valueTypes": [
         {
           "adminOnly": false,

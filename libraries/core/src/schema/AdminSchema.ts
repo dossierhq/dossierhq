@@ -53,6 +53,7 @@ export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificat
     update: AdminSchemaSpecificationUpdate,
   ): Result<AdminSchemaWithMigrations, typeof ErrorType.BadRequest> {
     const emptySpec: AdminSchemaSpecificationWithMigrations = {
+      schemaKind: 'admin',
       version: 0,
       entityTypes: [],
       valueTypes: [],

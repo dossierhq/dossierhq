@@ -26,7 +26,7 @@ describe('publishedSearchEntities', () => {
 
     const result = await publishedSearchEntities(
       adminTestSchema,
-      adminTestSchema,
+      publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,

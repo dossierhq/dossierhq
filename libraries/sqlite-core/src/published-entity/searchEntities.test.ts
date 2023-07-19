@@ -30,7 +30,7 @@ describe('publishedEntitySearchEntities', () => {
 
     innerAdapter.clearAllQueries();
     const result = await outerAdapter.publishedEntitySearchEntities(
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging(undefined),
@@ -56,7 +56,7 @@ describe('publishedEntitySearchEntities', () => {
     innerAdapter.clearAllQueries();
     innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(1)];
     const result = await outerAdapter.publishedEntitySearchEntities(
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging(undefined),
@@ -103,7 +103,7 @@ describe('publishedEntitySearchEntities', () => {
     innerAdapter.clearAllQueries();
     innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(2)];
     const result = await outerAdapter.publishedEntitySearchEntities(
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
@@ -151,7 +151,7 @@ describe('publishedEntitySearchEntities', () => {
     innerAdapter.clearAllQueries();
     innerAdapter.mockQuery = (_query, _values) => [createEntityDbRow(2)];
     const result = await outerAdapter.publishedEntitySearchEntities(
-      createTestAdminSchema(),
+      createTestAdminSchema().toPublishedSchema(),
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),

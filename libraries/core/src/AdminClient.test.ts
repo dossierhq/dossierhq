@@ -679,7 +679,14 @@ describe('AdminClient forward operation over JSON', () => {
       AdminClientOperationName.getSchemaSpecification,
       (_context, operation) => {
         operation.resolve(
-          ok({ version: 1, entityTypes: [], valueTypes: [], patterns: [], indexes: [] }),
+          ok({
+            schemaKind: 'admin',
+            version: 1,
+            entityTypes: [],
+            valueTypes: [],
+            patterns: [],
+            indexes: [],
+          }),
         );
         return Promise.resolve();
       },
@@ -692,6 +699,7 @@ describe('AdminClient forward operation over JSON', () => {
           "entityTypes": [],
           "indexes": [],
           "patterns": [],
+          "schemaKind": "admin",
           "valueTypes": [],
           "version": 1,
         }
@@ -729,6 +737,7 @@ describe('AdminClient forward operation over JSON', () => {
       (_context, operation) => {
         operation.resolve(
           ok({
+            schemaKind: 'admin',
             version: 1,
             migrations: [],
             entityTypes: [],
@@ -749,6 +758,7 @@ describe('AdminClient forward operation over JSON', () => {
           "indexes": [],
           "migrations": [],
           "patterns": [],
+          "schemaKind": "admin",
           "valueTypes": [],
           "version": 1,
         }
@@ -1424,6 +1434,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok({
             effect: 'updated',
             schemaSpecification: {
+              schemaKind: 'admin',
               version: 2,
               entityTypes: [],
               valueTypes: [],
@@ -1445,6 +1456,7 @@ describe('AdminClient forward operation over JSON', () => {
             "entityTypes": [],
             "indexes": [],
             "patterns": [],
+            "schemaKind": "admin",
             "valueTypes": [],
             "version": 2,
           },
@@ -1489,6 +1501,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok({
             effect: 'updated',
             schemaSpecification: {
+              schemaKind: 'admin',
               version: 2,
               entityTypes: [],
               valueTypes: [],
@@ -1515,6 +1528,7 @@ describe('AdminClient forward operation over JSON', () => {
             "indexes": [],
             "migrations": [],
             "patterns": [],
+            "schemaKind": "admin",
             "valueTypes": [],
             "version": 2,
           },

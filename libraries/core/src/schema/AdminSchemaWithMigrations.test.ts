@@ -18,6 +18,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   test('empty->empty->empty', () => {
     expect(
       new AdminSchemaWithMigrations({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],
@@ -28,6 +29,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
         .updateAndValidate({})
         .valueOrThrow().spec,
     ).toEqual<AdminSchemaSpecificationWithMigrations>({
+      schemaKind: 'admin',
       version: 1,
       entityTypes: [],
       valueTypes: [],
@@ -314,6 +316,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   test('empty->entity with pattern', () => {
     expect(
       new AdminSchemaWithMigrations({
+        schemaKind: 'admin',
         version: 1,
         entityTypes: [],
         valueTypes: [],

@@ -22,6 +22,7 @@ export async function schemaGetSpecification(
   if (!specification) {
     if (initialLoad) logger.info('No schema set, defaulting to empty');
     return ok({
+      schemaKind: 'admin',
       version: 0,
       entityTypes: [],
       valueTypes: [],
@@ -54,7 +55,8 @@ export async function schemaGetSpecification(
     }
   }
 
-  // Version 0.3.2: added migrations to schema
+  // Version 0.3.2: added schemaKind and migrations to schema
+  if (!specification.schemaKind) specification.schemaKind = 'admin';
   if (!specification.migrations) specification.migrations = [];
 
   for (const typeSpec of [...specification.entityTypes, ...specification.valueTypes]) {
