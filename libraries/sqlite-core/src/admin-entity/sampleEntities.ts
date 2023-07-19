@@ -9,7 +9,7 @@ import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import { sampleAdminEntitiesQuery } from '../search/QueryGenerator.js';
-import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminEntitySampleEntities(
   database: Database,
@@ -38,8 +38,8 @@ export async function adminEntitySampleEntities(
   return ok(
     entitiesValues.map((it) => ({
       ...resolveAdminEntityInfo(it),
+      ...resolveEntityFields(it),
       id: it.uuid,
-      fieldValues: JSON.parse(it.fields) as Record<string, unknown>,
     })),
   );
 }

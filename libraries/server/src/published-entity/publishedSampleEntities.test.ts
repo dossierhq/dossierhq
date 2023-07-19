@@ -86,6 +86,7 @@ describe('Published publishedSampleEntities', () => {
           authKey: 'none',
           validPublished: true,
           createdAt: now,
+          schemaVersion: 1,
           fieldValues: {},
         },
       ]),

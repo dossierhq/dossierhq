@@ -9,7 +9,11 @@ import type {
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
-import { resolveEntityStatus, resolveEntityValidity } from '../utils/CodecUtils.js';
+import {
+  resolveEntityFields,
+  resolveEntityStatus,
+  resolveEntityValidity,
+} from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityPublishGetVersionInfo(
@@ -21,7 +25,7 @@ export async function adminEntityPublishGetVersionInfo(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<
-    Pick<EntityVersionsTable, 'id' | 'entities_id' | 'fields'> &
+    Pick<EntityVersionsTable, 'id' | 'entities_id' | 'schema_version' | 'fields'> &
       Pick<
         EntitiesTable,
         | 'type'
@@ -34,7 +38,7 @@ export async function adminEntityPublishGetVersionInfo(
         | 'invalid'
       >
   >(database, context, {
-    text: `SELECT ev.id, ev.entities_id, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id, e.invalid
+    text: `SELECT ev.id, ev.entities_id, ev.schema_version, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id, e.invalid
          FROM entity_versions ev, entities e
          WHERE e.uuid = ?1 AND e.id = ev.entities_id AND ev.version = ?2`,
     values: [reference.id, reference.version],
@@ -48,7 +52,6 @@ export async function adminEntityPublishGetVersionInfo(
   const {
     id: entityVersionInternalId,
     entities_id: entityInternalId,
-    fields: fieldValues,
     type,
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
@@ -60,6 +63,7 @@ export async function adminEntityPublishGetVersionInfo(
   const validity = resolveEntityValidity(invalid, status);
 
   return ok({
+    ...resolveEntityFields(result.value),
     entityInternalId,
     entityVersionInternalId,
     versionIsPublished: entityVersionInternalId === result.value.published_entity_versions_id,
@@ -70,7 +74,6 @@ export async function adminEntityPublishGetVersionInfo(
     status,
     validPublished: validity.validPublished,
     updatedAt: new Date(updatedAt),
-    fieldValues: JSON.parse(fieldValues) as Record<string, unknown>,
   });
 }
 

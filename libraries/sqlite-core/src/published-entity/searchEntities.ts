@@ -15,7 +15,7 @@ import type { Database } from '../QueryFunctions.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
-import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
+import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntitySearchEntities(
   database: Database,
@@ -39,10 +39,7 @@ export async function publishedEntitySearchEntities(
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
   const searchResult = await queryMany<SearchPublishedEntitiesItem>(database, context, sqlQuery);
-  if (searchResult.isError()) {
-    return searchResult;
-  }
-
+  if (searchResult.isError()) return searchResult;
   const entitiesValues = searchResult.value;
 
   const hasMore = entitiesValues.length > paging.count;
@@ -58,8 +55,8 @@ export async function publishedEntitySearchEntities(
     hasMore,
     entities: entitiesValues.map((it) => ({
       ...resolvePublishedEntityInfo(it),
+      ...resolveEntityFields(it),
       id: it.uuid,
-      fieldValues: JSON.parse(it.fields) as Record<string, unknown>,
       cursor: cursorExtractor(it),
     })),
   });

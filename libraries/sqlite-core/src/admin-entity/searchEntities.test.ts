@@ -22,6 +22,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     status: 'draft',
     invalid: 0,
     version: 0,
+    schema_version: 1,
     fields: JSON.stringify({ title: 'Title' }),
   };
 }
@@ -45,7 +46,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
-      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           26,
         ],
@@ -79,6 +80,7 @@ describe('adminEntitySearchEntities', () => {
               },
               "id": "uuid-1",
               "name": "Title#1",
+              "schemaVersion": 1,
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
@@ -95,7 +97,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
-      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           26,
         ],
@@ -129,6 +131,7 @@ describe('adminEntitySearchEntities', () => {
               },
               "id": "uuid-2",
               "name": "Title#2",
+              "schemaVersion": 1,
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
@@ -145,7 +148,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
-      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           1,
           11,
@@ -181,6 +184,7 @@ describe('adminEntitySearchEntities', () => {
               },
               "id": "uuid-2",
               "name": "Title#2",
+              "schemaVersion": 1,
               "status": "draft",
               "type": "TitleOnly",
               "updatedAt": 2021-08-17T07:51:25.560Z,
@@ -197,7 +201,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
-      SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           1,
           11,

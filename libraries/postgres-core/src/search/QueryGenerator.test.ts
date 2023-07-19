@@ -47,7 +47,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -74,7 +74,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -104,7 +104,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -138,7 +138,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id >= $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -166,7 +166,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
             "values": [
               "none",
@@ -196,7 +196,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
             "values": [
               "none",
@@ -230,7 +230,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id <= $2 ORDER BY e.id DESC LIMIT $3",
             "values": [
               "none",
@@ -262,7 +262,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id LIMIT $4",
             "values": [
               "none",
@@ -295,7 +295,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id DESC LIMIT $4",
             "values": [
               "none",
@@ -324,7 +324,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
             "values": [
               "none",
@@ -351,7 +351,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -378,7 +378,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -408,7 +408,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -442,7 +442,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id > $3 ORDER BY e.id LIMIT $4",
             "values": [
               "none",
@@ -474,7 +474,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -501,7 +501,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entity_latest_value_types evt WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -531,7 +531,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entity_latest_value_types evt WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -562,7 +562,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -589,7 +589,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -617,7 +617,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -645,7 +645,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -673,7 +673,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -701,7 +701,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -729,7 +729,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -760,7 +760,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -799,7 +799,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -833,7 +833,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.invalid = 0 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -860,7 +860,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.invalid != 0 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -887,7 +887,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entities e_from, entity_latest_references er_from WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -915,7 +915,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entity_latest_references er_to, entities e_to WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -950,7 +950,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entity_latest_locations el WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
             "values": [
               "none",
@@ -981,7 +981,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.latest_fts @@ websearch_to_tsquery($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
@@ -1015,7 +1015,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entity_latest_references er_to, entities e_to WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = $3 AND e.id > $4 ORDER BY e.id LIMIT $5",
             "values": [
               "none",
@@ -1048,7 +1048,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
@@ -1075,7 +1075,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.updated LIMIT $2",
             "values": [
               "none",
@@ -1102,7 +1102,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.name LIMIT $2",
             "values": [
               "none",
@@ -1155,7 +1155,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
               26,
@@ -1181,7 +1181,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
               11,
@@ -1210,7 +1210,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               999,
@@ -1240,7 +1240,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
             "values": [
               "none",
               999,
@@ -1267,7 +1267,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
             "values": [
               "none",
               11,
@@ -1296,7 +1296,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
             "values": [
               "none",
               456,
@@ -1327,7 +1327,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id LIMIT $4",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id LIMIT $4",
             "values": [
               "none",
               123,
@@ -1359,7 +1359,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 AND e.id > $3 ORDER BY e.id DESC LIMIT $4",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 AND e.id > $3 ORDER BY e.id DESC LIMIT $4",
             "values": [
               "none",
               123,
@@ -1391,7 +1391,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id DESC LIMIT $4",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id DESC LIMIT $4",
             "values": [
               "none",
               123,
@@ -1419,7 +1419,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
             "values": [
               "none",
               26,
@@ -1445,7 +1445,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
               26,
@@ -1471,7 +1471,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               [
@@ -1500,7 +1500,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               [
@@ -1533,7 +1533,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id > $3 ORDER BY e.id LIMIT $4",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id > $3 ORDER BY e.id LIMIT $4",
             "values": [
               "none",
               [
@@ -1564,7 +1564,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
               26,
@@ -1590,7 +1590,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entity_published_value_types evt WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entity_published_value_types evt WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               [
@@ -1619,7 +1619,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entity_published_value_types evt WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entity_published_value_types evt WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               [
@@ -1649,7 +1649,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entities e_from, entity_published_references er_from WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entities e_from, entity_published_references er_from WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               "37b48706-803e-4227-a51e-8208db12d949",
@@ -1676,7 +1676,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entity_published_references er_to, entities e_to WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = $2 ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entity_published_references er_to, entities e_to WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               "37b48706-803e-4227-a51e-8208db12d949",
@@ -1710,7 +1710,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entity_published_locations el WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
+            "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entity_published_locations el WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id = el.entities_id AND el.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
             "values": [
               "none",
               11.62,
@@ -1740,7 +1740,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.published_fts @@ websearch_to_tsquery($2) ORDER BY e.id LIMIT $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.published_fts @@ websearch_to_tsquery($2) ORDER BY e.id LIMIT $3",
             "values": [
               "none",
               "foo bar",
@@ -1773,7 +1773,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entity_published_references er_to, entities e_to WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = $3 AND e.id > $4 ORDER BY e.id LIMIT $5",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entity_published_references er_to, entities e_to WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = $3 AND e.id > $4 ORDER BY e.id LIMIT $5",
             "values": [
               "none",
               [
@@ -1805,7 +1805,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
             "values": [
               "none",
               26,
@@ -1831,7 +1831,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.name LIMIT $2",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.name LIMIT $2",
             "values": [
               "none",
               26,
@@ -1872,7 +1872,7 @@ describe('sampleAdminEntitiesQuery()', () => {
     expect(sampleAdminEntitiesQuery(schema, undefined, 5, 10, authKeysNone)).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.uuid LIMIT $2 OFFSET $3",
           "values": [
             "none",
@@ -1890,7 +1890,7 @@ describe('sampleAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.uuid LIMIT $3 OFFSET $4",
           "values": [
             "none",
@@ -1917,7 +1917,7 @@ describe('sampleAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev, entity_latest_value_types evt WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.uuid LIMIT $3 OFFSET $4",
           "values": [
             "none",
@@ -1939,7 +1939,7 @@ describe('samplePublishedEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
-            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.uuid LIMIT $2 OFFSET $3",
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.uuid LIMIT $2 OFFSET $3",
             "values": [
               "none",
               10,
@@ -1962,7 +1962,7 @@ describe('samplePublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.uuid LIMIT $3 OFFSET $4",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.uuid LIMIT $3 OFFSET $4",
           "values": [
             "none",
             [
@@ -1988,7 +1988,7 @@ describe('samplePublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev, entity_published_value_types evt WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.uuid LIMIT $3 OFFSET $4",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev, entity_published_value_types evt WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND evt.value_type = ANY($2) AND evt.entities_id = e.id ORDER BY e.uuid LIMIT $3 OFFSET $4",
           "values": [
             "none",
             [

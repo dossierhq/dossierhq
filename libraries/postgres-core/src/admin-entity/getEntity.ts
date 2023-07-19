@@ -14,7 +14,7 @@ import { createPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
-import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminGetEntity(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -32,13 +32,13 @@ export async function adminGetEntity(
     return result;
   }
 
-  const { uuid: id, resolved_auth_key: resolvedAuthKey, data: fieldValues } = result.value;
+  const { uuid: id, resolved_auth_key: resolvedAuthKey } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
+    ...resolveEntityFields(result.value),
     id,
     resolvedAuthKey,
-    fieldValues,
   });
 }
 
@@ -48,7 +48,7 @@ async function getEntityWithLatestVersion(
   reference: EntityReference | UniqueIndexReference,
 ) {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.data`;
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
@@ -69,7 +69,7 @@ async function getEntityWithLatestVersion(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'data'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'data'>
   >(databaseAdapter, context, query);
   if (result.isError()) return result;
   if (!result.value) {
@@ -96,18 +96,16 @@ async function getEntityWithVersion(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'data'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.data
     FROM entities e, entity_versions ev
     WHERE e.uuid = $1
     AND e.id = ev.entities_id
     AND ev.version = $2`,
     values: [reference.id, reference.version],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
   if (!result.value) {
     return notOk.NotFound('No such entity or version');
   }

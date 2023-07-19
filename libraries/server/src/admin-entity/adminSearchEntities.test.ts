@@ -334,6 +334,7 @@ function createDatabaseEntity(id = 1): DatabaseAdminEntitySearchPayloadEntity {
     validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),
     updatedAt: new Date('2022-03-16T08:51:25.56Z'),
+    schemaVersion: 1,
     fieldValues: { title: 'Title' },
   };
 }

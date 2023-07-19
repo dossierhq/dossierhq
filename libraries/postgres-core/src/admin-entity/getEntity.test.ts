@@ -25,6 +25,7 @@ describe('adminGetEntity', () => {
               status: 'modified',
               valid: true,
               version: 2,
+              schema_version: 1,
               data: { title: 'Title' },
             },
           ],
@@ -49,12 +50,13 @@ describe('adminGetEntity', () => {
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
       updatedAt: now,
+      schemaVersion: 1,
       fieldValues: { title: 'Title' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data FROM entities e, entity_versions ev WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id",
+          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id",
           "123",
         ],
       ]
@@ -81,6 +83,7 @@ describe('adminGetEntity', () => {
               status: 'modified',
               valid: true,
               version: 5,
+              schema_version: 1,
               data: { title: 'Title' },
             },
           ],
@@ -105,12 +108,13 @@ describe('adminGetEntity', () => {
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
       updatedAt: now,
+      schemaVersion: 1,
       fieldValues: { title: 'Title' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data
+          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.data
           FROM entities e, entity_versions ev
           WHERE e.uuid = $1
           AND e.id = ev.entities_id

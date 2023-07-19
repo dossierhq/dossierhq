@@ -10,7 +10,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import { searchAdminEntitiesQuery } from '../search/QueryGenerator.js';
-import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -51,8 +51,8 @@ export async function adminEntitySearchEntities(
     hasMore,
     entities: entitiesValues.map((it) => ({
       ...resolveAdminEntityInfo(it),
+      ...resolveEntityFields(it),
       id: it.uuid,
-      fieldValues: it.data,
       cursor: cursorExtractor(it),
     })),
   });

@@ -73,6 +73,7 @@ export interface DatabaseAdminEntityPayload {
   validPublished: boolean | null;
   createdAt: Date;
   updatedAt: Date;
+  schemaVersion: number;
   fieldValues: Record<string, unknown>;
 }
 
@@ -114,6 +115,7 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   status: AdminEntityStatus;
   updatedAt: Date;
   validPublished: boolean | null;
+  schemaVersion: number;
   fieldValues: Record<string, unknown>;
 }
 
@@ -185,6 +187,7 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   version: number;
   createdAt: Date;
   updatedAt: Date;
+  schemaVersion: number;
   fieldValues: Record<string, unknown>;
 }
 
@@ -252,6 +255,7 @@ export interface DatabasePublishedEntityPayload {
   authKey: string;
   createdAt: Date;
   validPublished: boolean;
+  schemaVersion: number;
   fieldValues: Record<string, unknown>;
 }
 

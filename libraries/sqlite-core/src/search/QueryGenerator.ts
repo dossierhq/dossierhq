@@ -36,12 +36,12 @@ export type SearchAdminEntitiesItem = Pick<
   | 'status'
   | 'invalid'
 > &
-  Pick<EntityVersionsTable, 'version' | 'fields'>;
+  Pick<EntityVersionsTable, 'version' | 'schema_version' | 'fields'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
   'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'
 > &
-  Pick<EntityVersionsTable, 'fields'>;
+  Pick<EntityVersionsTable, 'schema_version' | 'fields'>;
 
 type CursorName = 'name' | 'updated_seq' | 'id';
 
@@ -140,7 +140,7 @@ function sharedSearchEntitiesQuery<
 SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id`;
   } else {
     sql`)
-SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id`;
+SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id`;
   }
 
   return ok({
@@ -310,10 +310,10 @@ function sampleEntitiesQuery(
 
   if (published) {
     sql`)
-SELECT e.*, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id`;
+SELECT e.*, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id`;
   } else {
     sql`)
-SELECT e.*, ev.version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id`;
+SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id`;
   }
 
   return ok(queryBuilder.query);

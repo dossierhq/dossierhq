@@ -18,6 +18,7 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     auth_key: 'none',
     created_at: '2021-08-17T07:51:25.56Z',
     invalid: 0,
+    schema_version: 1,
     fields: JSON.stringify({ title: 'Title' }),
   };
 }
@@ -74,6 +75,7 @@ describe('publishedEntitySearchEntities', () => {
               },
               "id": "uuid-1",
               "name": "Title#1",
+              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -120,6 +122,7 @@ describe('publishedEntitySearchEntities', () => {
               },
               "id": "uuid-2",
               "name": "Title#2",
+              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -167,6 +170,7 @@ describe('publishedEntitySearchEntities', () => {
               },
               "id": "uuid-2",
               "name": "Title#2",
+              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },

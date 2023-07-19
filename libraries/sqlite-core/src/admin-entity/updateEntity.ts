@@ -10,7 +10,7 @@ import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
-import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
@@ -36,9 +36,9 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'fields'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.fields
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -49,17 +49,13 @@ export async function adminEntityUpdateGetEntityInfo(
     return notOk.NotFound('No such entity');
   }
 
-  const {
-    id: entityInternalId,
-    resolved_auth_key: resolvedAuthKey,
-    fields: fieldValues,
-  } = result.value;
+  const { id: entityInternalId, resolved_auth_key: resolvedAuthKey } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
+    ...resolveEntityFields(result.value),
     entityInternalId,
     resolvedAuthKey,
-    fieldValues: JSON.parse(fieldValues) as Record<string, unknown>,
   });
 }
 

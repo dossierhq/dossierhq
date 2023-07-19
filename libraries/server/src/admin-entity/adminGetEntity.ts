@@ -1,13 +1,13 @@
-import type {
-  AdminEntity,
-  AdminSchema,
-  EntityReference,
-  EntityVersionReference,
-  ErrorType,
-  PromiseResult,
-  UniqueIndexReference,
+import {
+  ok,
+  type AdminEntity,
+  type AdminSchema,
+  type EntityReference,
+  type EntityVersionReference,
+  type ErrorType,
+  type PromiseResult,
+  type UniqueIndexReference,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

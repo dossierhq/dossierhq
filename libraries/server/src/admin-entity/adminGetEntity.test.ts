@@ -31,6 +31,7 @@ describe('Admin adminGetEntity', () => {
           validPublished: true,
           createdAt: now,
           updatedAt: now,
+          schemaVersion: 1,
           fieldValues: { title: 'Title' },
         }),
       ),

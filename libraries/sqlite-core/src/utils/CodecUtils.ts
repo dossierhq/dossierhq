@@ -62,3 +62,10 @@ export function resolveEntityValidity(
         : null,
   };
 }
+
+export function resolveEntityFields(row: Pick<EntityVersionsTable, 'schema_version' | 'fields'>) {
+  return {
+    schemaVersion: row.schema_version,
+    fieldValues: JSON.parse(row.fields) as Record<string, unknown>,
+  };
+}

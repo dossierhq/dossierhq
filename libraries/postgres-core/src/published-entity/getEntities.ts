@@ -4,10 +4,10 @@ import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
-import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
+import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntityGetEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -19,9 +19,9 @@ export async function publishedEntityGetEntities(
       EntitiesTable,
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'data'>
+      Pick<EntityVersionsTable, 'schema_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.published_entity_versions_id = ev.id`,
@@ -32,9 +32,9 @@ export async function publishedEntityGetEntities(
   return ok(
     result.value.map((row) => ({
       ...resolvePublishedEntityInfo(row),
+      ...resolveEntityFields(row),
       id: row.uuid,
       resolvedAuthKey: row.resolved_auth_key,
-      fieldValues: row.data,
     })),
   );
 }

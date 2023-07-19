@@ -15,7 +15,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
-import { resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
+import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -60,8 +60,8 @@ export async function publishedEntitySearchEntities(
     hasMore,
     entities: entitiesValues.map((it) => ({
       ...resolvePublishedEntityInfo(it),
+      ...resolveEntityFields(it),
       id: it.uuid,
-      fieldValues: it.data,
       cursor: cursorExtractor(it),
     })),
   });

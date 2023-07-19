@@ -10,7 +10,7 @@ import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { UniqueConstraints } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
-import { resolveAdminEntityInfo } from '../utils/CodecUtils.js';
+import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
@@ -35,31 +35,26 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'data'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.data
+    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
     values: [reference.id],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
 
-  const {
-    id: entityInternalId,
-    resolved_auth_key: resolvedAuthKey,
-    data: fieldValues,
-  } = result.value;
+  const { id: entityInternalId, resolved_auth_key: resolvedAuthKey } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
+    ...resolveEntityFields(result.value),
     entityInternalId,
     resolvedAuthKey,
-    fieldValues,
   });
 }
 

@@ -19,6 +19,7 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     invalid: 0,
     auth_key: 'none',
     created_at: new Date('2021-08-17T07:51:25.56Z'),
+    schema_version: 1,
     data: { title: 'Title' },
   };
 }
@@ -42,7 +43,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "none",
           26,
         ],
@@ -77,6 +78,7 @@ describe('publishedEntitySearchEntities', () => {
               },
               "id": "uuid-1",
               "name": "Title#1",
+              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -88,7 +90,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "none",
           26,
         ],
@@ -123,6 +125,7 @@ describe('publishedEntitySearchEntities', () => {
               },
               "id": "uuid-2",
               "name": "Title#2",
+              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -134,7 +137,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
           "none",
           1,
           11,
@@ -170,6 +173,7 @@ describe('publishedEntitySearchEntities', () => {
               },
               "id": "uuid-2",
               "name": "Title#2",
+              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -181,7 +185,7 @@ describe('publishedEntitySearchEntities', () => {
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+          "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "none",
           1,
           11,
