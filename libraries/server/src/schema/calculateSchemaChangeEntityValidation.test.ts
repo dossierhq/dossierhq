@@ -115,7 +115,7 @@ describe('calculateSchemaChangeEntityValidation field.matchPattern', () => {
     );
   });
 
-  test('change: matchPattern pattern change entity type', () => {
+  test('change: matchPattern pattern change value type', () => {
     const { previous, next } = build(
       {
         valueTypes: [
@@ -127,6 +127,42 @@ describe('calculateSchemaChangeEntityValidation field.matchPattern', () => {
         patterns: [{ name: 'aPattern', pattern: 'old-pattern' }],
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
+    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
+      ok({ entityTypes: [], valueTypes: ['OneType'] }),
+    );
+  });
+});
+
+describe('calculateSchemaChangeEntityValidation migration deleteField', () => {
+  test('delete field on entity type', () => {
+    const { previous, next } = build(
+      { entityTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'deleteField', entityType: 'OneType', field: 'field' }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
+      ok({ entityTypes: ['OneType'], valueTypes: [] }),
+    );
+  });
+
+  test('delete field on value type', () => {
+    const { previous, next } = build(
+      { valueTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'deleteField', valueType: 'OneType', field: 'field' }],
+          },
+        ],
+      },
     );
     expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
       ok({ entityTypes: [], valueTypes: ['OneType'] }),
