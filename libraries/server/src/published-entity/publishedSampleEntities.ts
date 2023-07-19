@@ -1,4 +1,5 @@
 import type {
+  AdminSchemaWithMigrations,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorType,
@@ -15,7 +16,8 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities.js';
 
 export async function publishedSampleEntities(
-  schema: PublishedSchema,
+  adminSchema: AdminSchemaWithMigrations,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -28,7 +30,12 @@ export async function publishedSampleEntities(
   function getTotal(
     authKeys: ResolvedAuthKey[],
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-    return databaseAdapter.publishedEntitySearchTotalCount(schema, context, query, authKeys);
+    return databaseAdapter.publishedEntitySearchTotalCount(
+      publishedSchema,
+      context,
+      query,
+      authKeys,
+    );
   }
 
   async function sampleEntities(
@@ -37,7 +44,7 @@ export async function publishedSampleEntities(
     authKeys: ResolvedAuthKey[],
   ): PromiseResult<PublishedEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
     const sampleResult = await databaseAdapter.publishedEntitySampleEntities(
-      schema,
+      publishedSchema,
       context,
       query,
       offset,
@@ -46,7 +53,7 @@ export async function publishedSampleEntities(
     );
     if (sampleResult.isError()) return sampleResult;
 
-    const entities = sampleResult.value.map((it) => decodePublishedEntity(schema, it));
+    const entities = sampleResult.value.map((it) => decodePublishedEntity(adminSchema, it));
     return ok(entities);
   }
 

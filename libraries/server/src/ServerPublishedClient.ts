@@ -43,7 +43,7 @@ export function createServerPublishedClient({
         } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntities>;
         resolve(
           await publishedGetEntities(
-            serverImpl.getPublishedSchema(),
+            serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -59,7 +59,7 @@ export function createServerPublishedClient({
         } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntity>;
         resolve(
           await publishedGetEntity(
-            serverImpl.getPublishedSchema(),
+            serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -103,6 +103,7 @@ export function createServerPublishedClient({
         >;
         resolve(
           await publishedSampleEntities(
+            serverImpl.getAdminSchema(),
             serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -122,6 +123,7 @@ export function createServerPublishedClient({
         >;
         resolve(
           await publishedSearchEntities(
+            serverImpl.getAdminSchema(),
             serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,

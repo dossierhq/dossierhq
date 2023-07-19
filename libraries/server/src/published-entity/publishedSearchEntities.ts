@@ -1,4 +1,5 @@
 import type {
+  AdminSchemaWithMigrations,
   Connection,
   Edge,
   ErrorType,
@@ -20,7 +21,8 @@ import {
 } from '../shared-entity/sharedSearchEntities.js';
 
 export async function publishedSearchEntities(
-  schema: PublishedSchema,
+  adminSchema: AdminSchemaWithMigrations,
+  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -42,7 +44,7 @@ export async function publishedSearchEntities(
   if (authKeysResult.isError()) return authKeysResult;
 
   const searchResult = await databaseAdapter.publishedEntitySearchEntities(
-    schema,
+    publishedSchema,
     context,
     query,
     pagingInfo,
@@ -54,7 +56,7 @@ export async function publishedSearchEntities(
   const oppositePagingInfo = getOppositeDirectionPaging(pagingInfo, searchResult.value);
   if (oppositePagingInfo) {
     const oppositeResult = await databaseAdapter.publishedEntitySearchEntities(
-      schema,
+      publishedSchema,
       context,
       query,
       oppositePagingInfo,
@@ -65,7 +67,7 @@ export async function publishedSearchEntities(
   }
 
   return sharedSearchEntities(
-    schema,
+    adminSchema,
     pagingInfo,
     searchResult.value,
     hasMoreOppositeDirection,

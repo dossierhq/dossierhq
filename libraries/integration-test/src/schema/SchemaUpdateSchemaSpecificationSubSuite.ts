@@ -2,7 +2,10 @@ import { ErrorType, FieldType, ok } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import { withSchemaAdvisoryLock } from '../shared-entity/SchemaTestUtils.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients.js';
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
@@ -12,27 +15,31 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
 ];
 
 async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(client, async () => {
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
-    const firstUpdateResult = await client.updateSchemaSpecification({
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
       entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the new field set
     const { entity } = (
-      await client.createEntity({
-        info: { name: fieldName, type: 'MigrationEntity', authKey: 'none' },
-        fields: { [fieldName]: 'value' },
-      })
+      await adminClient.createEntity(
+        {
+          info: { name: fieldName, type: 'MigrationEntity', authKey: 'none' },
+          fields: { [fieldName]: 'value' },
+        },
+        { publish: true },
+      )
     ).valueOrThrow();
 
     // Delete the field
-    const secondUpdateResult = await client.updateSchemaSpecification({
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -46,20 +53,29 @@ async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaT
   assertOkResult(result);
 
   // Check that the field is removed
-  const entityAfterMigration = (await client.getEntity({ id: result.value.id })).valueOrThrow();
+  const entityAfterMigration = (
+    await adminClient.getEntity({ id: result.value.id })
+  ).valueOrThrow();
   assertEquals(fieldName in entityAfterMigration.fields, false);
+
+  // And in published entity
+  const publishedEntityAfterMigration = (
+    await publishedClient.getEntity({ id: result.value.id })
+  ).valueOrThrow();
+  assertEquals(fieldName in publishedEntityAfterMigration.fields, false);
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField({
   server,
 }: SchemaTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(client, async () => {
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
-    const firstUpdateResult = await client.updateSchemaSpecification({
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -68,14 +84,17 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
 
     // Create entity with the new field set
     const { entity } = (
-      await client.createEntity({
-        info: { name: fieldName, type: 'MigrationEntity', authKey: 'none' },
-        fields: { [fieldName]: 'value' },
-      })
+      await adminClient.createEntity(
+        {
+          info: { name: fieldName, type: 'MigrationEntity', authKey: 'none' },
+          fields: { [fieldName]: 'value' },
+        },
+        { publish: true },
+      )
     ).valueOrThrow();
 
     // Delete/replace the field
-    const secondUpdateResult = await client.updateSchemaSpecification({
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -96,12 +115,21 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
   const entity = result.value;
 
   // Check that the field is reset
-  const entityAfterMigration = (await client.getEntity({ id: entity.id })).valueOrThrow();
+  const entityAfterMigration = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
   assertEquals((entityAfterMigration.fields as Record<string, unknown>)[fieldName], null);
+
+  // And for published entity
+  const publishedEntityAfterMigration = (
+    await publishedClient.getEntity({ id: entity.id })
+  ).valueOrThrow();
+  assertEquals((publishedEntityAfterMigration.fields as Record<string, unknown>)[fieldName], null);
 
   // Check that the new field is usable
   (
-    await client.updateEntity({ id: entity.id, fields: { [fieldName]: [{ lat: 1, lng: 2 }] } })
+    await adminClient.updateEntity(
+      { id: entity.id, fields: { [fieldName]: [{ lat: 1, lng: 2 }] } },
+      { publish: true },
+    )
   ).throwIfError();
 }
 

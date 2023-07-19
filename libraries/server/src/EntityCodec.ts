@@ -70,10 +70,11 @@ export interface EncodeAdminEntityResult {
 export type CodecMode = 'optimized' | 'json';
 
 export function decodePublishedEntity(
-  schema: PublishedSchema,
+  adminSchema: AdminSchemaWithMigrations,
   values: DatabasePublishedEntityPayload,
 ): PublishedEntity {
-  const entitySpec = schema.getEntityTypeSpecification(values.type);
+  const publishedSchema = adminSchema.toPublishedSchema();
+  const entitySpec = publishedSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
   }
@@ -88,11 +89,21 @@ export function decodePublishedEntity(
     },
     fields: {},
   };
+
+  const { fieldValues } = values;
+  applySchemaMigrations(adminSchema, values.type, values.schemaVersion, values.fieldValues);
+
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
-    const fieldValue = values.fieldValues[fieldName];
-    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
+    const fieldValue = fieldValues[fieldName];
+    entity.fields[fieldName] = decodeFieldItemOrList(
+      publishedSchema,
+      fieldSpec,
+      'optimized',
+      fieldValue,
+    );
   }
+
   return entity;
 }
 

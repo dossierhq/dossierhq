@@ -1,9 +1,9 @@
 import type {
+  AdminSchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
   PublishedEntity,
-  PublishedSchema,
   UniqueIndexReference,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
@@ -14,7 +14,7 @@ import type { SessionContext } from '../Context.js';
 import { decodePublishedEntity } from '../EntityCodec.js';
 
 export async function publishedGetEntity(
-  schema: PublishedSchema,
+  adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -37,7 +37,7 @@ export async function publishedGetEntity(
   });
   if (authResult.isError()) return authResult;
 
-  const entity = decodePublishedEntity(schema, result.value);
+  const entity = decodePublishedEntity(adminSchema, result.value);
 
   return ok(entity);
 }

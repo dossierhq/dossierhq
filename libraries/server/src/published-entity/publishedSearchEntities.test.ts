@@ -8,7 +8,7 @@ import {
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
-import { adminTestSchema } from '../test/TestSchema.js';
+import { adminTestSchema, publishedTestSchema } from '../test/TestSchema.js';
 import { publishedSearchEntities } from './publishedSearchEntities.js';
 
 describe('publishedSearchEntities', () => {
@@ -25,6 +25,7 @@ describe('publishedSearchEntities', () => {
     );
 
     const result = await publishedSearchEntities(
+      adminTestSchema,
       adminTestSchema,
       authorizationAdapter,
       databaseAdapter,
@@ -97,6 +98,7 @@ describe('publishedSearchEntities', () => {
 
     const result = await publishedSearchEntities(
       adminTestSchema,
+      publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -196,6 +198,7 @@ describe('publishedSearchEntities', () => {
 
     const result = await publishedSearchEntities(
       adminTestSchema,
+      publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,

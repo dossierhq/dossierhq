@@ -1,9 +1,9 @@
 import type {
+  AdminSchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
   PublishedEntity,
-  PublishedSchema,
   Result,
 } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
@@ -26,7 +26,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
  */
 
 export async function publishedGetEntities(
-  schema: PublishedSchema,
+  adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -45,9 +45,7 @@ export async function publishedGetEntities(
     return ok([]);
   }
   const entitiesInfoResult = await databaseAdapter.publishedEntityGetEntities(context, references);
-  if (entitiesInfoResult.isError()) {
-    return entitiesInfoResult;
-  }
+  if (entitiesInfoResult.isError()) return entitiesInfoResult;
 
   const result: Result<
     PublishedEntity,
@@ -58,14 +56,14 @@ export async function publishedGetEntities(
   >[] = [];
   for (const reference of references) {
     const entityMain = entitiesInfoResult.value.find((it) => it.id === reference.id);
-    result.push(await mapItem(schema, authorizationAdapter, context, reference, entityMain));
+    result.push(await mapItem(adminSchema, authorizationAdapter, context, reference, entityMain));
   }
 
   return ok(result);
 }
 
 async function mapItem(
-  schema: PublishedSchema,
+  adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
@@ -85,10 +83,8 @@ async function mapItem(
     authKey: values.authKey,
     resolvedAuthKey: values.resolvedAuthKey,
   });
-  if (authResult.isError()) {
-    return authResult;
-  }
+  if (authResult.isError()) return authResult;
 
-  const entity = decodePublishedEntity(schema, values);
+  const entity = decodePublishedEntity(adminSchema, values);
   return ok(entity);
 }

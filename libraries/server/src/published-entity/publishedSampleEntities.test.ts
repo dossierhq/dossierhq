@@ -7,7 +7,7 @@ import {
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
-import { publishedTestSchema } from '../test/TestSchema.js';
+import { adminTestSchema, publishedTestSchema } from '../test/TestSchema.js';
 import { publishedSampleEntities } from './publishedSampleEntities.js';
 
 describe('Published publishedSampleEntities', () => {
@@ -23,6 +23,7 @@ describe('Published publishedSampleEntities', () => {
     databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(ok([]));
 
     const result = await publishedSampleEntities(
+      adminTestSchema,
       publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
@@ -93,6 +94,7 @@ describe('Published publishedSampleEntities', () => {
     );
 
     const result = await publishedSampleEntities(
+      adminTestSchema,
       publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
