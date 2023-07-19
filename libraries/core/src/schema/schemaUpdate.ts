@@ -317,32 +317,33 @@ function applyFieldMigration(
     fieldIndex: number,
   ) => void,
 ) {
-  function applyToEntityOrValueTypes<
-    TTypeSpec extends AdminEntityTypeSpecification | AdminValueTypeSpecification,
-  >(typeSpecs: TTypeSpec[], typeName: string): Result<void, typeof ErrorType.BadRequest> {
-    const typeSpec = typeSpecs.find((it) => it.name === typeName);
-    if (!typeSpec) {
-      return notOk.BadRequest(
-        `Type for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,
-      );
-    }
-
-    const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = actionSpec.field));
-    if (fieldIndex < 0) {
-      return notOk.BadRequest(
-        `Field for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,
-      );
-    }
-
-    apply(typeSpec, typeSpec.fields[fieldIndex], fieldIndex);
-
-    return ok(undefined);
-  }
-
+  let typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[];
+  let typeName: string;
   if ('entityType' in actionSpec) {
-    return applyToEntityOrValueTypes(schemaSpec.entityTypes, actionSpec.entityType);
+    typeSpecs = schemaSpec.entityTypes;
+    typeName = actionSpec.entityType;
+  } else {
+    typeSpecs = schemaSpec.valueTypes;
+    typeName = actionSpec.valueType;
   }
-  return applyToEntityOrValueTypes(schemaSpec.valueTypes, actionSpec.valueType);
+
+  const typeSpec = typeSpecs.find((it) => it.name === typeName);
+  if (!typeSpec) {
+    return notOk.BadRequest(
+      `Type for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,
+    );
+  }
+
+  const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = actionSpec.field));
+  if (fieldIndex < 0) {
+    return notOk.BadRequest(
+      `Field for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,
+    );
+  }
+
+  apply(typeSpec, typeSpec.fields[fieldIndex], fieldIndex);
+
+  return ok(undefined);
 }
 
 function collectFieldSpecsFromUpdates(
