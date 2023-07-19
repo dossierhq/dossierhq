@@ -237,6 +237,7 @@ export type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminSchemaSpecificationWithMigrations,
+  AdminSchemaVersionMigration,
   AdminStringFieldSpecificationUpdate,
   AdminValueItemFieldSpecificationUpdate,
   AdminValueTypeSpecification,

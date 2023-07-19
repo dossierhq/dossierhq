@@ -8,6 +8,7 @@ import {
   type AdminFieldSpecification,
   type AdminSchema,
   type AdminSchemaSpecificationUpdate,
+  type AdminSchemaVersionMigration,
   type AdminValueTypeSpecification,
   type AdminValueTypeSpecificationUpdate,
   type SchemaIndexSpecification,
@@ -45,6 +46,7 @@ export interface SchemaTypeDraft {
   status: 'new' | '' | 'changed';
   adminOnly: boolean;
   fields: readonly SchemaFieldDraft[];
+  deletedFields: readonly string[];
   existingFieldOrder: string[];
 }
 
@@ -185,6 +187,7 @@ function resolveTypeStatus(
     if (state.nameField !== state.existingNameField) return 'changed';
     if (state.authKeyPattern !== state.existingAuthKeyPattern) return 'changed';
   }
+  if (state.deletedFields.length > 0) return 'changed';
   for (const field of state.fields) {
     if (field.status !== '') return 'changed';
   }
@@ -206,6 +209,9 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   const { existingFieldSpec } = state;
   if (existingFieldSpec === null) {
     return 'new';
+  }
+  if (existingFieldSpec.name !== state.name) {
+    return 'changed';
   }
   if (existingFieldSpec.required !== state.required) {
     return 'changed';
@@ -251,7 +257,6 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
       return 'changed';
     }
   }
-  // TODO expand when supporting changing more properties of a field
   return '';
 }
 
@@ -483,6 +488,7 @@ class AddTypeAction implements SchemaEditorStateAction {
       status: 'new',
       name: this.name,
       adminOnly: false,
+      deletedFields: [],
       fields: [],
     } as const;
     const newState: SchemaEditorState = {
@@ -934,13 +940,41 @@ class DeleteFieldAction extends TypeAction {
   reduceType(
     typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
-    const fields = typeDraft.fields.filter((fieldDraft) => fieldDraft.name !== this.fieldName);
-
-    if (typeDraft.kind === 'entity' && typeDraft.nameField === this.fieldName) {
-      return { ...typeDraft, fields, nameField: null };
+    const fieldIndex = typeDraft.fields.findIndex(
+      (fieldDraft) => fieldDraft.name === this.fieldName,
+    );
+    if (fieldIndex === -1) {
+      return typeDraft;
     }
 
-    return { ...typeDraft, fields };
+    const fields = [...typeDraft.fields];
+    const [fieldDraft] = fields.splice(fieldIndex, 1);
+
+    let deletedFields = typeDraft.deletedFields;
+    if (fieldDraft.existingFieldSpec) {
+      deletedFields = [...deletedFields, this.fieldName].sort();
+    }
+
+    if (typeDraft.kind === 'entity' && typeDraft.nameField === this.fieldName) {
+      return { ...typeDraft, fields, nameField: null, deletedFields };
+    }
+
+    return { ...typeDraft, fields, deletedFields };
+  }
+
+  override reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const newState = super.reduce(state);
+    const activeSelector = newState.activeSelector;
+    if (
+      activeSelector &&
+      activeSelector.kind == this.kind &&
+      activeSelector.typeName == this.typeName &&
+      'fieldName' in activeSelector &&
+      activeSelector.fieldName == this.fieldName
+    ) {
+      return { ...newState, activeSelector: null };
+    }
+    return newState;
   }
 }
 
@@ -1340,6 +1374,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       name: typeSpec.name,
       status: '',
       adminOnly: typeSpec.adminOnly,
+      deletedFields: [],
       fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => {
         const fieldDraft: SchemaFieldDraft = {
           name: fieldSpec.name,
@@ -1492,6 +1527,8 @@ export function getSchemaSpecificationUpdateFromEditorState(
     .filter((it) => it.status !== '')
     .map(({ name, pattern }) => ({ name, pattern }));
 
+  const migrations = getMigrationsFromEditorState(state);
+
   if (entityTypes.length > 0) {
     update.entityTypes = entityTypes;
   }
@@ -1503,6 +1540,9 @@ export function getSchemaSpecificationUpdateFromEditorState(
   }
   if (patterns.length > 0) {
     update.patterns = patterns;
+  }
+  if (migrations.length > 0) {
+    update.migrations = migrations;
   }
 
   if (Object.keys(update).length > 0 && state.schema) {
@@ -1554,6 +1594,37 @@ function getTypeUpdateFromEditorState(
   }
 
   return shared;
+}
+
+function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVersionMigration[] {
+  const actions: AdminSchemaVersionMigration['actions'] = [];
+  for (const typeDraft of [...state.entityTypes, ...state.valueTypes]) {
+    if (typeDraft.status !== 'changed') {
+      continue;
+    }
+    const typeName =
+      typeDraft.kind === 'entity' ? { entityType: typeDraft.name } : { valueType: typeDraft.name };
+
+    for (const fieldName of typeDraft.deletedFields) {
+      actions.push({ ...typeName, action: 'deleteField', field: fieldName });
+    }
+
+    for (const fieldDraft of typeDraft.fields) {
+      if (fieldDraft.existingFieldSpec && fieldDraft.existingFieldSpec.name !== fieldDraft.name) {
+        actions.push({
+          ...typeName,
+          action: 'renameField',
+          field: fieldDraft.existingFieldSpec.name,
+          newName: fieldDraft.name,
+        });
+      }
+    }
+  }
+
+  if (actions.length > 0) {
+    return [{ version: (state.schema?.spec.version ?? 0) + 1, actions }];
+  }
+  return [];
 }
 
 // SELECTORS

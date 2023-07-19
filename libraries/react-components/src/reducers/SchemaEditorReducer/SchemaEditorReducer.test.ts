@@ -1062,6 +1062,15 @@ describe('DeleteFieldAction', () => {
         }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.SetActiveSelector(
+        {
+          kind: 'entity',
+          typeName: 'Foo',
+          fieldName: 'bar',
+        },
+        true,
+        true,
+      ),
       new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1086,6 +1095,21 @@ describe('DeleteFieldAction', () => {
     expect(state.entityTypes[0].nameField).toBe(null);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
+  });
+
+  test('delete existing name field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'title' }),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 
@@ -1320,6 +1344,34 @@ describe('RenameFieldAction', () => {
     expect(state.entityTypes[0].nameField).toBe('baz');
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('rename existing entity name field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              nameField: 'oldName',
+              fields: [{ name: 'oldName', type: FieldType.String }],
+            },
+          ],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameField(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'oldName' },
+        'newName',
+      ),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+    expect(state.entityTypes[0].nameField).toBe('newName');
+
+    const update = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(update).toMatchSnapshot();
+    expect(update.migrations?.[0].actions).toHaveLength(1);
   });
 });
 
