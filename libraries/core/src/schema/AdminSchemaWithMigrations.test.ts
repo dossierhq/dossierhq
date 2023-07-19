@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { AdminSchemaWithMigrations } from './AdminSchema.js';
 import { expectErrorResult } from '../CoreTestUtils.js';
 import { ErrorType } from '../ErrorResult.js';
+import { AdminSchemaWithMigrations } from './AdminSchema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
@@ -580,7 +580,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'one' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'one' }] },
         ],
       })
       .valueOrThrow();
@@ -589,15 +589,15 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
       .updateAndValidate({
         migrations: [
           ...firstSchema.spec.migrations,
-          { version: 3, actions: [{ action: 'deleteField', type: 'Foo', field: 'two' }] },
+          { version: 3, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'two' }] },
         ],
       })
       .valueOrThrow();
 
     expect(secondSchema.spec).toMatchSnapshot();
     expect(secondSchema.spec.migrations).toEqual([
-      { version: 3, actions: [{ action: 'deleteField', field: 'two', type: 'Foo' }] },
-      { version: 2, actions: [{ action: 'deleteField', field: 'one', type: 'Foo' }] },
+      { version: 3, actions: [{ action: 'deleteField', field: 'two', entityType: 'Foo' }] },
+      { version: 2, actions: [{ action: 'deleteField', field: 'one', entityType: 'Foo' }] },
     ]);
   });
 
@@ -608,7 +608,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
           { version: 2, actions: [] },
         ],
       });
@@ -623,7 +623,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 1, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 1, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       });
 
@@ -641,7 +641,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       })
       .valueOrThrow()
@@ -649,7 +649,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'new' }],
+            actions: [{ action: 'renameField', entityType: 'Foo', field: 'field', newName: 'new' }],
           },
         ],
       });
@@ -666,7 +666,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       })
       .valueOrThrow();
@@ -692,7 +692,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'anotherField', type: FieldType.String }] }],
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       })
       .valueOrThrow();
@@ -711,7 +711,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       .updateAndValidate({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       })
       .valueOrThrow();
@@ -727,7 +727,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', valueType: 'Foo', field: 'field' }] },
         ],
       })
       .valueOrThrow();
@@ -741,7 +741,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 1, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 1, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       });
 
@@ -759,7 +759,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', type: 'Foo', field: 'field' }] },
+          { version: 2, actions: [{ action: 'deleteField', entityType: 'Foo', field: 'field' }] },
         ],
       });
 
@@ -781,7 +781,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'field', newName: 'newField' },
+            ],
           },
         ],
       })
@@ -815,7 +817,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'field', newName: 'newField' },
+            ],
           },
         ],
       })
@@ -835,7 +839,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+            actions: [
+              { action: 'renameField', valueType: 'Foo', field: 'field', newName: 'newField' },
+            ],
           },
         ],
       })
@@ -852,7 +858,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
         migrations: [
           {
             version: 1,
-            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'field', newName: 'newField' },
+            ],
           },
         ],
       });
@@ -873,7 +881,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameField', type: 'Foo', field: 'field', newName: 'newField' }],
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'field', newName: 'newField' },
+            ],
           },
         ],
       });

@@ -308,7 +308,9 @@ function applyMigrationsToSchema(
 
 function applyFieldMigration(
   schemaSpec: AdminSchemaSpecificationWithMigrations,
-  actionSpec: { action: string; type: string; field: string },
+  actionSpec:
+    | { action: string; entityType: string; field: string }
+    | { action: string; valueType: string; field: string },
   apply: (
     typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
     fieldSpec: AdminFieldSpecification,
@@ -317,38 +319,30 @@ function applyFieldMigration(
 ) {
   function applyToEntityOrValueTypes<
     TTypeSpec extends AdminEntityTypeSpecification | AdminValueTypeSpecification,
-  >(typeSpecs: TTypeSpec[]): Result<boolean, typeof ErrorType.BadRequest> {
-    const typeSpec = typeSpecs.find((it) => it.name === actionSpec.type);
+  >(typeSpecs: TTypeSpec[], typeName: string): Result<void, typeof ErrorType.BadRequest> {
+    const typeSpec = typeSpecs.find((it) => it.name === typeName);
     if (!typeSpec) {
-      return ok(false);
+      return notOk.BadRequest(
+        `Type for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,
+      );
     }
 
     const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = actionSpec.field));
     if (fieldIndex < 0) {
       return notOk.BadRequest(
-        `Field for migration ${actionSpec.action} ${actionSpec.type}.${actionSpec.field} does not exist`,
+        `Field for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,
       );
     }
 
     apply(typeSpec, typeSpec.fields[fieldIndex], fieldIndex);
 
-    return ok(true);
+    return ok(undefined);
   }
 
-  const entityTypeResult = applyToEntityOrValueTypes(schemaSpec.entityTypes);
-  if (entityTypeResult.isError()) return entityTypeResult;
-
-  if (!entityTypeResult.value) {
-    const valueTypeResult = applyToEntityOrValueTypes(schemaSpec.valueTypes);
-    if (valueTypeResult.isError()) return valueTypeResult;
-
-    if (!valueTypeResult.value) {
-      return notOk.BadRequest(
-        `Type for migration ${actionSpec.action} ${actionSpec.type}.${actionSpec.field} does not exist`,
-      );
-    }
+  if ('entityType' in actionSpec) {
+    return applyToEntityOrValueTypes(schemaSpec.entityTypes, actionSpec.entityType);
   }
-  return ok(undefined);
+  return applyToEntityOrValueTypes(schemaSpec.valueTypes, actionSpec.valueType);
 }
 
 function collectFieldSpecsFromUpdates(

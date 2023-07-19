@@ -670,8 +670,8 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity fiel
       "actions": [
         {
           "action": "deleteField",
+          "entityType": "Foo",
           "field": "field",
-          "type": "Foo",
         },
       ],
       "version": 2,
@@ -709,8 +709,8 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity fiel
       "actions": [
         {
           "action": "deleteField",
+          "entityType": "Foo",
           "field": "field",
-          "type": "Foo",
         },
       ],
       "version": 2,
@@ -752,8 +752,8 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name
       "actions": [
         {
           "action": "deleteField",
+          "entityType": "Foo",
           "field": "field",
-          "type": "Foo",
         },
       ],
       "version": 2,
@@ -776,7 +776,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > value item 
         {
           "action": "deleteField",
           "field": "field",
-          "type": "Foo",
+          "valueType": "Foo",
         },
       ],
       "version": 2,
@@ -812,8 +812,8 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migr
       "actions": [
         {
           "action": "deleteField",
+          "entityType": "Foo",
           "field": "two",
-          "type": "Foo",
         },
       ],
       "version": 3,
@@ -822,8 +822,8 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migr
       "actions": [
         {
           "action": "deleteField",
+          "entityType": "Foo",
           "field": "one",
-          "type": "Foo",
         },
       ],
       "version": 2,
@@ -865,9 +865,9 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity fiel
       "actions": [
         {
           "action": "renameField",
+          "entityType": "Foo",
           "field": "field",
           "newName": "newField",
-          "type": "Foo",
         },
       ],
       "version": 2,
@@ -924,9 +924,9 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity name
       "actions": [
         {
           "action": "renameField",
+          "entityType": "Foo",
           "field": "field",
           "newName": "newField",
-          "type": "Foo",
         },
       ],
       "version": 2,
@@ -950,7 +950,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > value item 
           "action": "renameField",
           "field": "field",
           "newName": "newField",
-          "type": "Foo",
+          "valueType": "Foo",
         },
       ],
       "version": 2,

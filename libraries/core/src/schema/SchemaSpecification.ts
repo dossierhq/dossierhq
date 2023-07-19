@@ -223,10 +223,14 @@ export interface AdminSchemaVersionMigration {
 }
 
 type AdminSchemaMigrationAction =
-  | { action: 'renameType'; type: string; newName: string }
-  | { action: 'renameField'; type: string; field: string; newName: string }
-  | { action: 'deleteType'; type: string }
-  | { action: 'deleteField'; type: string; field: string };
+  | { action: 'renameType'; entityType: string; newName: string }
+  | { action: 'renameType'; valueType: string; newName: string }
+  | { action: 'renameField'; entityType: string; field: string; newName: string }
+  | { action: 'renameField'; valueType: string; field: string; newName: string }
+  | { action: 'deleteType'; entityType: string }
+  | { action: 'deleteType'; valueType: string }
+  | { action: 'deleteField'; entityType: string; field: string }
+  | { action: 'deleteField'; valueType: string; field: string };
 
 export interface AdminSchemaSpecificationUpdate {
   version?: number;

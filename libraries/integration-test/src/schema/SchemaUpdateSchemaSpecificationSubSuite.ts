@@ -43,7 +43,7 @@ async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaT
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteField', type: 'MigrationEntity', field: fieldName }],
+          actions: [{ action: 'deleteField', entityType: 'MigrationEntity', field: fieldName }],
         },
       ],
     });
@@ -104,7 +104,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteField', type: 'MigrationEntity', field: fieldName }],
+          actions: [{ action: 'deleteField', entityType: 'MigrationEntity', field: fieldName }],
         },
       ],
     });

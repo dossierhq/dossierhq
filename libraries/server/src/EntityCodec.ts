@@ -125,7 +125,7 @@ function applySchemaMigrations(
     for (const action of migration.actions) {
       switch (action.action) {
         case 'deleteField': {
-          if (action.type === entityType) {
+          if ('entityType' in action && action.entityType === entityType) {
             delete fieldValues[action.field];
           }
           break;
