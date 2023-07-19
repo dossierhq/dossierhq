@@ -830,6 +830,74 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
     expect(result.spec.entityTypes[0].fields).toHaveLength(2);
   });
 
+  test('entity rich text field, many validations', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            {
+              name: 'oldName',
+              type: FieldType.RichText,
+              list: true,
+              required: true,
+              adminOnly: true,
+              entityTypes: ['Foo'],
+              linkEntityTypes: ['Foo'],
+              richTextNodes: [...REQUIRED_RICH_TEXT_NODES, 'entity', 'entityLink', 'valueItem'],
+              valueTypes: ['ValueItem'],
+            },
+          ],
+        },
+      ],
+      valueTypes: [{ name: 'ValueItem', fields: [] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'newName', type: FieldType.RichText }] }],
+        migrations: [
+          {
+            version: 2,
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'oldName', newName: 'newName' },
+            ],
+          },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('entity field with other fields', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            { name: 'one', type: FieldType.String, list: true },
+            { name: 'two', type: FieldType.Number, integer: true },
+            { name: 'three', type: FieldType.Boolean, list: true },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 2,
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'two', newName: 'newName' },
+            ],
+          },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes[0].fields[1].name).toEqual('newName');
+  });
+
   test('value item field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],

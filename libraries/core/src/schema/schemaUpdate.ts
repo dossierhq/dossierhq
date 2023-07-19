@@ -334,7 +334,7 @@ function applyFieldMigration(
     );
   }
 
-  const fieldIndex = typeSpec.fields.findIndex((it) => (it.name = actionSpec.field));
+  const fieldIndex = typeSpec.fields.findIndex((it) => it.name === actionSpec.field);
   if (fieldIndex < 0) {
     return notOk.BadRequest(
       `Field for migration ${actionSpec.action} ${typeName}.${actionSpec.field} does not exist`,

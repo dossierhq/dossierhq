@@ -880,6 +880,65 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity fiel
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity field with other fields 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": true,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "one",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "integer": true,
+          "list": false,
+          "name": "newName",
+          "required": false,
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "three",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "entityType": "Foo",
+          "field": "two",
+          "newName": "newName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity name field, modify validations 1`] = `
 {
   "entityTypes": [
@@ -935,6 +994,71 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity name
   "patterns": [],
   "schemaKind": "admin",
   "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich text field, many validations 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": true,
+          "entityTypes": [
+            "Foo",
+          ],
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "list": true,
+          "name": "newName",
+          "required": true,
+          "richTextNodes": [
+            "entity",
+            "entityLink",
+            "linebreak",
+            "paragraph",
+            "root",
+            "tab",
+            "text",
+            "valueItem",
+          ],
+          "type": "RichText",
+          "valueTypes": [
+            "ValueItem",
+          ],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "entityType": "Foo",
+          "field": "oldName",
+          "newName": "newName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "ValueItem",
+    },
+  ],
   "version": 2,
 }
 `;
