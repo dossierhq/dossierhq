@@ -1612,8 +1612,8 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
     for (const fieldDraft of typeDraft.fields) {
       if (fieldDraft.existingFieldSpec && fieldDraft.existingFieldSpec.name !== fieldDraft.name) {
         actions.push({
-          ...typeName,
           action: 'renameField',
+          ...typeName,
           field: fieldDraft.existingFieldSpec.name,
           newName: fieldDraft.name,
         });

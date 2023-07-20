@@ -499,14 +499,29 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     draftState: Readonly<EntityEditorDraftState>,
     editorState: EntityEditorState,
   ): Readonly<EntityEditorDraftState> {
-    if (draftState.entity && draftState.entity.info.version === this.entity.info.version) {
-      // only changed entity info
-      return { ...draftState, entity: this.entity };
-    }
-
-    //TODO handle when changed on server
     if (!draftState.entityWillBeUpdatedDueToUpsert && draftState.entity) {
-      return draftState;
+      if (isEqual(draftState.entity, this.entity)) {
+        // no change
+        return draftState;
+      }
+      if (isEqual(draftState.entity.fields, this.entity.fields)) {
+        // only changed entity info
+        return { ...draftState, entity: this.entity };
+      }
+      if (draftState.status !== '') {
+        // TODO apply migrations and keep local changes
+        const changedFields: string[] = [];
+        for (const field of draftState.draft?.fields || []) {
+          if (field.status === 'changed') {
+            changedFields.push(field.fieldSpec.name);
+          }
+        }
+        console.log(
+          `Entity ${this.entity.id} changed on server, changes to fields ${changedFields.join(
+            ', ',
+          )} will be overwritten`,
+        );
+      }
     }
 
     const { schema } = editorState;

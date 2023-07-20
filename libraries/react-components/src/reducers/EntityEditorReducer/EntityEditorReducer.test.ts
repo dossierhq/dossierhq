@@ -2,6 +2,7 @@ import type { AdminEntity } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   AdminSchema,
+  AdminSchemaWithMigrations,
   assertIsDefined,
   copyEntity,
   FieldType,
@@ -865,5 +866,59 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state.drafts[0].draft?.fields[1].validationIssues).toEqual([
       { message: 'Required field is empty', path: ['required'], type: 'publish' },
     ]);
+  });
+
+  test('renameField of entity field', async () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+
+    const initialEntity: AdminEntity = {
+      id,
+      info: {
+        authKey: 'none',
+        name: 'Foo',
+        type: 'Foo',
+        status: AdminEntityStatus.draft,
+        valid: true,
+        validPublished: null,
+        createdAt: new Date('2022-04-30T07:51:25.56Z'),
+        updatedAt: new Date('2022-05-01T07:51:25.56Z'),
+        version: 0,
+      },
+      fields: {
+        oldName: 'value',
+      },
+    };
+
+    const schema = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'oldName', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          {
+            version: 2,
+            actions: [
+              { action: 'renameField', entityType: 'Foo', field: 'oldName', newName: 'newName' },
+            ],
+          },
+        ],
+      })
+      .valueOrThrow();
+
+    let state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(schema),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.UpdateEntity(initialEntity),
+    );
+    expect(state).toMatchSnapshot('1 Initial loaded entity with oldName');
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.UpdateEntity({ ...initialEntity, fields: { newName: 'value' } }),
+    );
+    expect(state).toMatchSnapshot('2 Loading entity with correct field name');
+    expect(state.drafts[0].draft?.fields[0].fieldSpec.name).toBe('newName');
+    expect(state.drafts[0].draft?.fields[0].value).toBe('value');
   });
 });

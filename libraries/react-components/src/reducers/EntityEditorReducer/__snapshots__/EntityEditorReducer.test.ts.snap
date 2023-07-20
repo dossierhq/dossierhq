@@ -3272,6 +3272,310 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
 }
 `;
 
+exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial loaded entity with oldName 1`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "none",
+        "entitySpec": {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "oldName": "value",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "none",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": AdminSchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "newName",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "valueTypes": [],
+        "version": 2,
+      },
+    },
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+        },
+      ],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "renameField",
+              "entityType": "Foo",
+              "field": "oldName",
+              "newName": "newName",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "admin",
+      "valueTypes": [],
+      "version": 2,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading entity with correct field name 1`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "none",
+        "entitySpec": {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "value",
+            "status": "",
+            "validationIssues": [],
+            "value": "value",
+          },
+        ],
+        "name": "Foo",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "newName": "value",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "none",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": AdminSchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "newName",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "valueTypes": [],
+        "version": 2,
+      },
+    },
+    "spec": {
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+        },
+      ],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "renameField",
+              "entityType": "Foo",
+              "field": "oldName",
+              "newName": "newName",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "admin",
+      "valueTypes": [],
+      "version": 2,
+    },
+  },
+  "status": "",
+}
+`;
+
 exports[`EntityEditorReducer scenarios > required string fields value item place in normal and adminOnly fields > 1 Initial 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
