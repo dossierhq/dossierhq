@@ -1,17 +1,17 @@
-import type {
-  AdminEntity,
-  AdminEntityPublishingPayload,
-  AdminQuery,
-  AdminSchema,
-  AdminSearchQuery,
-  EntityReference,
-  EntitySamplingOptions,
-  EntityVersionReference,
-  Paging,
-  PublishedQuery,
-  PublishedSearchQuery,
+import {
+  copyEntity,
+  type AdminEntity,
+  type AdminEntityPublishingPayload,
+  type AdminQuery,
+  type AdminSchemaWithMigrations,
+  type AdminSearchQuery,
+  type EntityReference,
+  type EntitySamplingOptions,
+  type EntityVersionReference,
+  type Paging,
+  type PublishedQuery,
+  type PublishedSearchQuery,
 } from '@dossierhq/core';
-import { copyEntity } from '@dossierhq/core';
 import type { Cache, useSWRConfig } from 'swr';
 
 export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
@@ -54,7 +54,27 @@ export const CACHE_KEYS = {
   publishedSchema: 'dossierhq/usePublishedSchema',
 };
 
-export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSchema: AdminSchema) {
+export function clearCacheDueToSchemaMigrations(cache: Cache, mutate: ScopedMutator) {
+  mutate((key) => {
+    let firstStringKey;
+    if (typeof key === 'string') {
+      firstStringKey = key;
+    } else if (Array.isArray(key) && typeof key[0] === 'string') {
+      firstStringKey = key[0];
+    } else {
+      return false;
+    }
+
+    const shouldMutate = firstStringKey.startsWith('dossierhq');
+    return shouldMutate;
+  });
+}
+
+export function updateCacheSchemas(
+  cache: Cache,
+  mutate: ScopedMutator,
+  adminSchema: AdminSchemaWithMigrations | undefined,
+) {
   const hasAdmin = !!cache.get(CACHE_KEYS.adminSchema);
   const hasPublished = !!cache.get(CACHE_KEYS.publishedSchema);
   if (hasAdmin || hasPublished) {
@@ -62,7 +82,7 @@ export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSch
       mutate(CACHE_KEYS.adminSchema, adminSchema);
     }
     if (hasPublished) {
-      const publishedSchema = adminSchema.toPublishedSchema();
+      const publishedSchema = adminSchema?.toPublishedSchema();
       mutate(CACHE_KEYS.publishedSchema, publishedSchema);
     }
   }

@@ -549,6 +549,8 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
   }
 
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    // TODO apply migrations
+    // TODO update specs in drafts
     const actions = state.pendingSchemaActions;
     let newState: EntityEditorState = { ...state, schema: this.schema, pendingSchemaActions: null };
     if (actions) {

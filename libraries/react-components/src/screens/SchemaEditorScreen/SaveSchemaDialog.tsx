@@ -38,7 +38,9 @@ export function SaveSchemaDialog({
           new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
         );
 
-        const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate);
+        const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate, {
+          includeMigrations: true,
+        });
         if (result.isOk()) {
           showNotification({ color: 'success', message: 'Updated schema.' });
         } else {

@@ -1,11 +1,17 @@
-import type { AdminClient, AdminEntity, ErrorResult, ErrorType, ValueItem } from '@dossierhq/core';
-import { AdminSchema } from '@dossierhq/core';
+import {
+  AdminSchemaWithMigrations,
+  type AdminClient,
+  type AdminEntity,
+  type ErrorResult,
+  type ErrorType,
+  type ValueItem,
+} from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = string;
-type FetcherData = AdminSchema;
+type FetcherData = AdminSchemaWithMigrations;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminSchema(
@@ -28,9 +34,9 @@ export function useAdminSchema(
 async function fetchSchema(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
 ): Promise<FetcherData> {
-  const result = await adminClient.getSchemaSpecification();
+  const result = await adminClient.getSchemaSpecification({ includeMigrations: true });
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }
-  return new AdminSchema(result.value);
+  return new AdminSchemaWithMigrations(result.value);
 }
