@@ -117,36 +117,32 @@ function applySchemaMigrationsToFieldValues(
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
 ): Record<string, unknown> {
-  const migratedFieldValues = JSON.parse(JSON.stringify(fieldValues)) as Record<string, unknown>;
+  const actions = adminSchema.collectMigrationActionsSinceVersion(schemaVersion);
 
-  const migrationsToConsider = adminSchema.spec.migrations.filter(
-    (it) => it.version > schemaVersion,
-  );
-  if (migrationsToConsider.length === 0) {
+  if (actions.length === 0) {
     return fieldValues;
   }
 
-  migrationsToConsider.sort((a, b) => a.version - b.version);
-  for (const migration of migrationsToConsider) {
-    for (const action of migration.actions) {
-      switch (action.action) {
-        case 'deleteField': {
-          if ('entityType' in action && action.entityType === entityType) {
+  const migratedFieldValues = JSON.parse(JSON.stringify(fieldValues)) as Record<string, unknown>;
+
+  for (const action of actions) {
+    switch (action.action) {
+      case 'deleteField': {
+        if ('entityType' in action && action.entityType === entityType) {
+          delete migratedFieldValues[action.field];
+        }
+        //TODO valueType
+        break;
+      }
+      case 'renameField': {
+        if ('entityType' in action && action.entityType === entityType) {
+          if (action.field in migratedFieldValues) {
+            migratedFieldValues[action.newName] = migratedFieldValues[action.field];
             delete migratedFieldValues[action.field];
           }
-          //TODO valueType
-          break;
         }
-        case 'renameField': {
-          if ('entityType' in action && action.entityType === entityType) {
-            if (action.field in migratedFieldValues) {
-              migratedFieldValues[action.newName] = migratedFieldValues[action.field];
-              delete migratedFieldValues[action.field];
-            }
-          }
-          //TODO valueType
-          break;
-        }
+        //TODO valueType
+        break;
       }
     }
   }

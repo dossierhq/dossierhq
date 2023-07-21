@@ -222,7 +222,7 @@ export interface AdminSchemaVersionMigration {
   actions: AdminSchemaMigrationAction[];
 }
 
-type AdminSchemaMigrationAction =
+export type AdminSchemaMigrationAction =
   | { action: 'renameType'; entityType: string; newName: string }
   | { action: 'renameType'; valueType: string; newName: string }
   | { action: 'renameField'; entityType: string; field: string; newName: string }

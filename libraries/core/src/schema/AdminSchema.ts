@@ -2,6 +2,7 @@ import { ok, type ErrorType, type Result } from '../ErrorResult.js';
 import { BaseSchema } from './BaseSchema.js';
 import { PublishedSchema } from './PublishedSchema.js';
 import type {
+  AdminSchemaMigrationAction,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminSchemaSpecificationWithMigrations,
@@ -83,5 +84,20 @@ export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificat
     if (validateResult.isError()) return validateResult;
 
     return ok(updatedSchema);
+  }
+
+  collectMigrationActionsSinceVersion(oldSchemaVersion: number): AdminSchemaMigrationAction[] {
+    const migrationsToConsider = this.spec.migrations.filter((it) => it.version > oldSchemaVersion);
+    if (migrationsToConsider.length === 0) {
+      return [];
+    }
+
+    migrationsToConsider.sort((a, b) => a.version - b.version);
+
+    const actions = [];
+    for (const migration of migrationsToConsider) {
+      actions.push(...migration.actions);
+    }
+    return actions;
   }
 }
