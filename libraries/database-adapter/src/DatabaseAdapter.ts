@@ -237,8 +237,16 @@ export interface DatabaseManagementGetNextDirtyEntityPayload
   dirtyIndexPublished: boolean;
 }
 
+export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
+  validateEntityTypes: string[];
+  validateValueTypes: string[];
+  indexEntityTypes: string[];
+  indexValueTypes: string[];
+}
+
 export interface DatabaseManagementMarkEntitiesDirtyPayload {
-  count: number;
+  validationCount: number;
+  indexCount: number;
 }
 
 export interface DatabaseEntityIndexesArg {
@@ -511,8 +519,7 @@ export interface DatabaseAdapter<
 
   managementDirtyMarkEntities(
     context: TransactionContext,
-    entityTypes: string[],
-    valueTypes: string[],
+    selector: DatabaseManagementMarkEntitiesDirtySelectorArg,
   ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic>;
 
   managementDirtyUpdateEntity(

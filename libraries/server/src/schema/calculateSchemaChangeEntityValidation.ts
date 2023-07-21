@@ -1,23 +1,28 @@
 import {
+  assertExhaustive,
   isFieldValueEqual,
   notOk,
   ok,
   type AdminEntityTypeSpecification,
-  type AdminSchema,
+  type AdminSchemaWithMigrations,
   type AdminValueTypeSpecification,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
+import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/database-adapter';
 
 export function calculateSchemaChangeEntityValidation(
-  previous: AdminSchema,
-  next: AdminSchema,
+  previous: AdminSchemaWithMigrations,
+  next: AdminSchemaWithMigrations,
 ): Result<
-  { entityTypes: string[]; valueTypes: string[] },
+  DatabaseManagementMarkEntitiesDirtySelectorArg | null,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const entityTypes: string[] = [];
-  const valueTypes: string[] = [];
+  const validateEntityTypes: string[] = [];
+  const indexEntityTypes: string[] = [];
+  const validateValueTypes: string[] = [];
+  const indexValueTypes: string[] = [];
+
   for (const isEntityType of [true, false]) {
     const previousTypes = isEntityType ? previous.spec.entityTypes : previous.spec.valueTypes;
     for (const previousType of previousTypes) {
@@ -32,23 +37,53 @@ export function calculateSchemaChangeEntityValidation(
       if (validationResult.isError()) return validationResult;
 
       if (validationResult.value) {
-        if (isEntityType) {
-          entityTypes.push(previousType.name);
-        } else {
-          valueTypes.push(previousType.name);
-        }
+        const validateTypes = isEntityType ? validateEntityTypes : validateValueTypes;
+        validateTypes.push(previousType.name);
       }
     }
   }
 
-  return ok({ entityTypes, valueTypes });
+  const migrationActions = next.collectMigrationActionsSinceVersion(previous.spec.version);
+  for (const actionSpec of migrationActions) {
+    const action = actionSpec.action;
+    switch (action) {
+      case 'deleteField': {
+        const isEntityType = 'entityType' in actionSpec;
+        const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
+        const typeName = isEntityType ? actionSpec.entityType : actionSpec.valueType;
+        indexTypes.push(typeName);
+        break;
+      }
+      case 'renameField':
+        break;
+      case 'deleteType':
+        //TODO support delete type
+        break;
+      case 'renameType':
+        //TODO support rename type
+        break;
+      default:
+        assertExhaustive(action);
+    }
+  }
+
+  if (
+    validateEntityTypes.length === 0 &&
+    indexEntityTypes.length === 0 &&
+    validateValueTypes.length === 0 &&
+    indexValueTypes.length === 0
+  ) {
+    return ok(null);
+  }
+
+  return ok({ validateEntityTypes, validateValueTypes, indexEntityTypes, indexValueTypes });
 }
 
 function hasTypeChanged(
   isEntityType: boolean,
-  previous: AdminSchema,
+  previous: AdminSchemaWithMigrations,
   previousType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
-  next: AdminSchema,
+  next: AdminSchemaWithMigrations,
   nextType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
 ): Result<boolean, typeof ErrorType.Generic> {
   if (!isFieldValueEqual(previousType.fields, nextType.fields)) {
@@ -92,9 +127,9 @@ function hasTypeChanged(
 }
 
 function validateDueToPatternChange(
-  previous: AdminSchema,
+  previous: AdminSchemaWithMigrations,
   previousPatternName: string | null,
-  next: AdminSchema,
+  next: AdminSchemaWithMigrations,
   nextPatternName: string | null,
 ): Result<boolean, typeof ErrorType.Generic> {
   if (!previousPatternName && nextPatternName) {

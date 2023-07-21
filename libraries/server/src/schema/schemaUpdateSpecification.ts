@@ -53,27 +53,30 @@ export async function schemaUpdateSpecification(
 
     const validationCalculationResult = calculateSchemaChangeEntityValidation(oldSchema, newSchema);
     if (validationCalculationResult.isError()) return validationCalculationResult;
+    const dirtyEntitiesSelector = validationCalculationResult.value;
 
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) return updateResult;
 
-    if (
-      validationCalculationResult.value.entityTypes.length > 0 ||
-      validationCalculationResult.value.valueTypes.length > 0
-    ) {
-      logger.info(
-        'Marking entities with for validation (entity types=%s, value types=%s)',
-        validationCalculationResult.value.entityTypes.join(','),
-        validationCalculationResult.value.valueTypes.join(','),
-      );
+    if (dirtyEntitiesSelector) {
+      const selectorLogString = Object.entries(
+        dirtyEntitiesSelector as unknown as Record<string, string[]>,
+      )
+        .filter(([_selector, types]) => types.length > 0)
+        .map(([selector, types]) => `${selector}=${types.join(',')}`)
+        .join(', ');
+      logger.info('Marking entities as dirty (%s)', selectorLogString);
       const markDirtyResult = await databaseAdapter.managementDirtyMarkEntities(
         context,
-        validationCalculationResult.value.entityTypes,
-        validationCalculationResult.value.valueTypes,
+        dirtyEntitiesSelector,
       );
       if (markDirtyResult.isError()) return markDirtyResult;
 
-      logger.info('Marked %d entities for validation', markDirtyResult.value.count);
+      logger.info(
+        'Marked entities as dirty (validate=%d, index=%d)',
+        markDirtyResult.value.validationCount,
+        markDirtyResult.value.indexCount,
+      );
     }
 
     logger.info(

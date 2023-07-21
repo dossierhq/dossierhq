@@ -19,23 +19,17 @@ function build(
 describe('calculateSchemaChangeEntityValidation unchanged', () => {
   test('no change: empty -> empty', () => {
     const { previous, next } = build({}, {});
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(ok(null));
   });
 
   test('no change: one entity type unchanged', () => {
     const { previous, next } = build({ entityTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(ok(null));
   });
 
   test('no change: one value type, unchanged', () => {
     const { previous, next } = build({ valueTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(ok(null));
   });
 });
 
@@ -48,9 +42,18 @@ describe('calculateSchemaChangeEntityValidation authKeyPattern', () => {
         patterns: [{ name: 'pattern', pattern: 'added-pattern' }],
       },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: ['OneType'], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "indexEntityTypes": [],
+          "indexValueTypes": [],
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        },
+      }
+    `);
   });
 
   test('change: authKeyPattern modified', () => {
@@ -61,9 +64,18 @@ describe('calculateSchemaChangeEntityValidation authKeyPattern', () => {
       },
       { patterns: [{ name: 'pattern', pattern: 'new-pattern' }] },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: ['OneType'], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "indexEntityTypes": [],
+          "indexValueTypes": [],
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        },
+      }
+    `);
   });
 
   test('no change: authKeyPattern removed', () => {
@@ -74,9 +86,7 @@ describe('calculateSchemaChangeEntityValidation authKeyPattern', () => {
       },
       { entityTypes: [{ name: 'OneType', fields: [] }] },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(ok(null));
   });
 
   test('no change: authKeyPattern renamed', () => {
@@ -90,9 +100,7 @@ describe('calculateSchemaChangeEntityValidation authKeyPattern', () => {
         patterns: [{ name: 'nextPatternName', pattern: 'the-pattern' }],
       },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(ok(null));
   });
 });
 
@@ -110,9 +118,18 @@ describe('calculateSchemaChangeEntityValidation field.matchPattern', () => {
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: ['OneType'], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "indexEntityTypes": [],
+          "indexValueTypes": [],
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        },
+      }
+    `);
   });
 
   test('change: matchPattern pattern change value type', () => {
@@ -128,9 +145,18 @@ describe('calculateSchemaChangeEntityValidation field.matchPattern', () => {
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: ['OneType'] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "indexEntityTypes": [],
+          "indexValueTypes": [],
+          "validateEntityTypes": [],
+          "validateValueTypes": [
+            "OneType",
+          ],
+        },
+      }
+    `);
   });
 });
 
@@ -147,9 +173,20 @@ describe('calculateSchemaChangeEntityValidation migration deleteField', () => {
         ],
       },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: ['OneType'], valueTypes: [] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "indexEntityTypes": [
+            "OneType",
+          ],
+          "indexValueTypes": [],
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        },
+      }
+    `);
   });
 
   test('delete field on value type', () => {
@@ -164,8 +201,19 @@ describe('calculateSchemaChangeEntityValidation migration deleteField', () => {
         ],
       },
     );
-    expect(calculateSchemaChangeEntityValidation(previous, next)).toEqual(
-      ok({ entityTypes: [], valueTypes: ['OneType'] }),
-    );
+    expect(calculateSchemaChangeEntityValidation(previous, next)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": {
+          "indexEntityTypes": [],
+          "indexValueTypes": [
+            "OneType",
+          ],
+          "validateEntityTypes": [],
+          "validateValueTypes": [
+            "OneType",
+          ],
+        },
+      }
+    `);
   });
 });

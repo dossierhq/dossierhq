@@ -28,6 +28,7 @@ export type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabaseManagementGetNextDirtyEntityPayload,
   DatabaseManagementMarkEntitiesDirtyPayload,
+  DatabaseManagementMarkEntitiesDirtySelectorArg,
   DatabaseOptimizationOptions,
   DatabasePagingInfo,
   DatabasePublishedEntityGetOnePayload,
