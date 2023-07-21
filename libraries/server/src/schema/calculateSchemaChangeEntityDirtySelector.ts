@@ -11,7 +11,7 @@ import {
 } from '@dossierhq/core';
 import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/database-adapter';
 
-export function calculateSchemaChangeEntityValidation(
+export function calculateSchemaChangeEntityDirtySelector(
   previous: AdminSchemaWithMigrations,
   next: AdminSchemaWithMigrations,
 ): Result<
