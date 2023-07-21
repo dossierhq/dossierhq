@@ -30,6 +30,11 @@ export interface SubjectsTable {
   created_at: Date;
 }
 
+export const ENTITY_DIRTY_FLAG_VALIDATE_LATEST = 0x1;
+export const ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED = 0x2;
+export const ENTITY_DIRTY_FLAG_INDEX_LATEST = 0x4;
+export const ENTITY_DIRTY_FLAG_INDEX_PUBLISHED = 0x8;
+
 export interface EntitiesTable {
   id: number;
   uuid: string;
@@ -43,7 +48,7 @@ export interface EntitiesTable {
   archived: boolean; // TODO remove and rely on status instead
   published_entity_versions_id: number | null;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
-  dirty: number; // bit field 0x1 = validate_latest, 0x2 = validate_published, 0x4 = index_latest, 0x8 = index_published
+  dirty: number; // bit field, ENTITY_DIRTY_FLAG_*
   invalid: number; // bit field 0x1 = latest, 0x2 = published
   auth_key: string;
   resolved_auth_key: string;

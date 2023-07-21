@@ -7,7 +7,11 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
-import { EntitiesUniqueNameConstraint } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_LATEST,
+  ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
+  EntitiesUniqueNameConstraint,
+} from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
@@ -126,13 +130,15 @@ export async function adminEntityUpdateEntity(
              updated_seq = ?3,
              status = ?4,
              invalid = invalid & ~1,
-             dirty = dirty & (~(1|4))
-           WHERE id = ?5`,
+             dirty = dirty & ?5
+           WHERE id = ?6`,
     values: [
       versionsId,
       now.toISOString(),
       updatedReqResult.value,
       entity.status,
+      // reset latest flags
+      ~(ENTITY_DIRTY_FLAG_VALIDATE_LATEST | ENTITY_DIRTY_FLAG_INDEX_LATEST),
       entity.entityInternalId as number,
     ],
   });

@@ -7,7 +7,11 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { buildSqliteSqlQuery, createSqliteSqlQuery } from '@dossierhq/database-adapter';
-import type { EntitiesTable } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
+  ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+  type EntitiesTable,
+} from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryRun } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
@@ -63,17 +67,17 @@ export async function adminEntityUnpublishEntities(
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
+  const ids = references.map(({ entityInternalId }) => entityInternalId as number);
   const now = new Date();
   const result = await queryMany<Pick<EntitiesTable, 'id'>>(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      const ids = addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number),
-      );
+      const dirty = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
       sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${now.toISOString()}, updated_seq = ${
         updatedSeqResult.value
-      }, status = ${status}, invalid = invalid & ~2, dirty = dirty & (~(2|8)) WHERE id IN ${ids} RETURNING id`;
+      }, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
+      sql`WHERE id IN ${addValueList(ids)} RETURNING id`;
     }),
   );
   if (result.isError()) return result;
@@ -82,9 +86,7 @@ export async function adminEntityUnpublishEntities(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`DELETE FROM entity_published_references WHERE from_entities_id IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number),
-      )}`;
+      sql`DELETE FROM entity_published_references WHERE from_entities_id IN ${addValueList(ids)}`;
     }),
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
@@ -93,9 +95,7 @@ export async function adminEntityUnpublishEntities(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`DELETE FROM entity_published_locations WHERE entities_id IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number),
-      )}`;
+      sql`DELETE FROM entity_published_locations WHERE entities_id IN ${addValueList(ids)}`;
     }),
   );
   if (removeLocationsIndexResult.isError()) return removeLocationsIndexResult;
@@ -104,9 +104,7 @@ export async function adminEntityUnpublishEntities(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`DELETE FROM entity_published_value_types WHERE entities_id IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number),
-      )}`;
+      sql`DELETE FROM entity_published_value_types WHERE entities_id IN ${addValueList(ids)}`;
     }),
   );
   if (removeValueTypesIndexResult.isError()) return removeValueTypesIndexResult;
@@ -115,9 +113,7 @@ export async function adminEntityUnpublishEntities(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`DELETE FROM entities_published_fts WHERE rowid IN ${addValueList(
-        references.map(({ entityInternalId }) => entityInternalId as number),
-      )} `;
+      sql`DELETE FROM entities_published_fts WHERE rowid IN ${addValueList(ids)} `;
     }),
   );
   if (ftsResult.isError()) return ftsResult;
@@ -143,9 +139,7 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
          AND epr.from_entities_id = e.id`,
     values: [reference.entityInternalId as number],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   return result.map((row) => row.map(({ uuid }) => ({ id: uuid })));
 }

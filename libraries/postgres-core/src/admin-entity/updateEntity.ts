@@ -7,7 +7,11 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
-import { UniqueConstraints } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_LATEST,
+  ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
+  UniqueConstraints,
+} from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
@@ -127,10 +131,15 @@ export async function adminEntityUpdateEntity(
       updated = nextval('entities_updated_seq'),
       status = $2,
       invalid = invalid & ~1,
-      dirty = dirty & (~(1|4))
-    WHERE id = $3
+      dirty = dirty & $3
+    WHERE id = $4
     RETURNING updated_at`,
-      values: [versionsId, entity.status, entity.entityInternalId],
+      values: [
+        versionsId,
+        entity.status,
+        ~(ENTITY_DIRTY_FLAG_VALIDATE_LATEST | ENTITY_DIRTY_FLAG_INDEX_LATEST),
+        entity.entityInternalId,
+      ],
     },
   );
   if (updateEntityResult.isError()) return updateEntityResult;

@@ -6,7 +6,12 @@ import type {
   DatabaseAdminEntityUpdateStatusPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
+  ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+  type EntitiesTable,
+  type EntityVersionsTable,
+} from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
 import {
@@ -98,13 +103,15 @@ export async function adminEntityPublishUpdateEntity(
              updated_seq = ?3,
              status = ?4,
              invalid = invalid & ~2,
-             dirty = dirty & (~(2|8))
-           WHERE id = ?5`,
+             dirty = dirty & ?5
+           WHERE id = ?6`,
     values: [
       entityVersionInternalId as number,
       now.toISOString(),
       updatedSeqResult.value,
       status,
+      // reset published flags
+      ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED),
       entityInternalId as number,
     ],
   });

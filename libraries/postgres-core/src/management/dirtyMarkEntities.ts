@@ -5,8 +5,18 @@ import {
   type DatabaseManagementMarkEntitiesDirtySelectorArg,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_LATEST,
+  ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
+  ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
+  ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+} from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryRun } from '../QueryFunctions.js';
+
+const ENTITY_DIRTY_FLAGS_VALIDATE =
+  ENTITY_DIRTY_FLAG_VALIDATE_LATEST | ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED;
+const ENTITY_DIRTY_FLAGS_INDEX = ENTITY_DIRTY_FLAG_INDEX_LATEST | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED;
 
 export async function managementDirtyMarkEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -22,13 +32,23 @@ export async function managementDirtyMarkEntities(
   let indexCount = 0;
 
   if (validateEntityTypes.length > 0) {
-    const result = await markEntitiesDirty(databaseAdapter, context, validateEntityTypes, 1 | 2);
+    const result = await markEntitiesDirty(
+      databaseAdapter,
+      context,
+      validateEntityTypes,
+      ENTITY_DIRTY_FLAGS_VALIDATE,
+    );
     if (result.isError()) return result;
     validationCount += result.value;
   }
 
   if (indexEntityTypes.length > 0) {
-    const result = await markEntitiesDirty(databaseAdapter, context, indexEntityTypes, 4 | 8);
+    const result = await markEntitiesDirty(
+      databaseAdapter,
+      context,
+      indexEntityTypes,
+      ENTITY_DIRTY_FLAGS_INDEX,
+    );
     if (result.isError()) return result;
     indexCount += result.value;
   }
@@ -38,7 +58,7 @@ export async function managementDirtyMarkEntities(
       databaseAdapter,
       context,
       validateValueTypes,
-      1 | 2,
+      ENTITY_DIRTY_FLAGS_VALIDATE,
     );
     if (result.isError()) return result;
     validationCount += result.value;
@@ -49,7 +69,7 @@ export async function managementDirtyMarkEntities(
       databaseAdapter,
       context,
       indexValueTypes,
-      4 | 8,
+      ENTITY_DIRTY_FLAGS_INDEX,
     );
     if (result.isError()) return result;
     indexCount += result.value;

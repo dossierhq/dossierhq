@@ -3,7 +3,14 @@ import type {
   DatabaseManagementGetNextDirtyEntityPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_LATEST,
+  ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
+  ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
+  ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+  type EntitiesTable,
+  type EntityVersionsTable,
+} from '../DatabaseSchema.js';
 import { queryNoneOrOne, type Database } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
@@ -54,9 +61,9 @@ export async function managementDirtyGetNextEntity(
     entityInternalId,
     id,
     resolvedAuthKey,
-    dirtyValidateLatest: !!(dirty & 1),
-    dirtyValidatePublished: !!(dirty & 2),
-    dirtyIndexLatest: !!(dirty & 4),
-    dirtyIndexPublished: !!(dirty & 8),
+    dirtyValidateLatest: !!(dirty & ENTITY_DIRTY_FLAG_VALIDATE_LATEST),
+    dirtyValidatePublished: !!(dirty & ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED),
+    dirtyIndexLatest: !!(dirty & ENTITY_DIRTY_FLAG_INDEX_LATEST),
+    dirtyIndexPublished: !!(dirty & ENTITY_DIRTY_FLAG_INDEX_PUBLISHED),
   });
 }

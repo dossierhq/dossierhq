@@ -7,7 +7,11 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
-import type { EntitiesTable } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
+  ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+  type EntitiesTable,
+} from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany, queryNone } from '../QueryFunctions.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
@@ -60,6 +64,8 @@ export async function adminEntityUnpublishEntities(
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[],
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
+  const ids = references.map((it) => it.entityInternalId);
+
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'updated_at'>>(
     databaseAdapter,
     context,
@@ -72,10 +78,14 @@ export async function adminEntityUnpublishEntities(
         updated = nextval('entities_updated_seq'),
         status = $1,
         invalid = invalid & ~2,
-        dirty = dirty & (~(2|8))
-      WHERE id = ANY($2)
+        dirty = dirty & $2
+      WHERE id = ANY($3)
       RETURNING id, updated_at`,
-      values: [status, references.map((it) => it.entityInternalId)],
+      values: [
+        status,
+        ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED),
+        ids,
+      ],
     },
   );
   if (result.isError()) {
@@ -86,9 +96,7 @@ export async function adminEntityUnpublishEntities(
     databaseAdapter,
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
-      sql`DELETE FROM entity_published_references WHERE from_entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId),
-      )})`;
+      sql`DELETE FROM entity_published_references WHERE from_entities_id = ANY(${addValue(ids)})`;
     }),
   );
   if (removeReferencesIndexResult.isError()) return removeReferencesIndexResult;
@@ -97,9 +105,7 @@ export async function adminEntityUnpublishEntities(
     databaseAdapter,
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
-      sql`DELETE FROM entity_published_locations WHERE entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId),
-      )})`;
+      sql`DELETE FROM entity_published_locations WHERE entities_id = ANY(${addValue(ids)})`;
     }),
   );
   if (removeLocationIndexResult.isError()) return removeLocationIndexResult;
@@ -108,9 +114,7 @@ export async function adminEntityUnpublishEntities(
     databaseAdapter,
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
-      sql`DELETE FROM entity_published_value_types WHERE entities_id = ANY(${addValue(
-        references.map(({ entityInternalId }) => entityInternalId),
-      )})`;
+      sql`DELETE FROM entity_published_value_types WHERE entities_id = ANY(${addValue(ids)})`;
     }),
   );
   if (removeValueTypesIndexResult.isError()) return removeValueTypesIndexResult;
@@ -136,9 +140,7 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
          AND epr.from_entities_id = e.id`,
     values: [reference.entityInternalId],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   return result.map((row) => row.map(({ uuid }) => ({ id: uuid })));
 }

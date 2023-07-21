@@ -7,6 +7,11 @@ export interface AdvisoryLocksTable {
   lease_duration: number;
 }
 
+export const ENTITY_DIRTY_FLAG_VALIDATE_LATEST = 0x1;
+export const ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED = 0x2;
+export const ENTITY_DIRTY_FLAG_INDEX_LATEST = 0x4;
+export const ENTITY_DIRTY_FLAG_INDEX_PUBLISHED = 0x8;
+
 export interface EntitiesTable {
   id: number;
   uuid: string;
@@ -16,7 +21,7 @@ export interface EntitiesTable {
   resolved_auth_key: string;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
   never_published: number; // boolean
-  dirty: number; // bit field 0x1 = validate_latest, 0x2 = validate_published, 0x4 = index_latest, 0x8 = index_published
+  dirty: number; // bit field, ENTITY_DIRTY_FLAG_*
   invalid: number; // bit field 0x1 = latest, 0x2 = published
   created_at: string;
   updated_at: string;

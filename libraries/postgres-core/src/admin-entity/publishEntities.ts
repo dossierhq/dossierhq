@@ -6,7 +6,12 @@ import type {
   DatabaseAdminEntityUpdateStatusPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import {
+  ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
+  ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+  type EntitiesTable,
+  type EntityVersionsTable,
+} from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import {
@@ -92,10 +97,15 @@ export async function adminEntityPublishUpdateEntity(
             updated = nextval('entities_updated_seq'),
             status = $2,
             invalid = invalid & ~2,
-            dirty = dirty & (~(2|8))
-          WHERE id = $3
+            dirty = dirty & $3
+          WHERE id = $4
           RETURNING updated_at`,
-    values: [entityVersionInternalId, status, entityInternalId],
+    values: [
+      entityVersionInternalId,
+      status,
+      ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED),
+      entityInternalId,
+    ],
   });
   if (updateResult.isError()) return updateResult;
 
