@@ -1,7 +1,11 @@
 import { ErrorType, FieldType, ok, type AdminEntity } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
-import { withSchemaAdvisoryLock } from '../shared-entity/SchemaTestUtils.js';
+import {
+  processAllDirtyEntities,
+  withSchemaAdvisoryLock,
+} from '../shared-entity/SchemaTestUtils.js';
+import { countSearchResultWithEntity } from '../shared-entity/SearchTestUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
@@ -11,6 +15,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_deleteFieldOnEntity,
   updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField,
+  updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated,
   updateSchemaSpecification_renameFieldOnEntity,
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_errorWrongVersion,
@@ -146,6 +151,65 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
     )
   ).valueOrThrow().entity as AdminEntity;
   assertEquals(updatedEntity.fields[fieldName], [{ lat: 1, lng: 2 }]);
+}
+
+async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+
+  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+    entityTypes: ['MigrationEntity'],
+    text: 'Supercalifragilisticexpialidocious',
+  };
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new field set
+    const { entity } = (
+      await adminClient.createEntity({
+        info: { name: fieldName, type: 'MigrationEntity', authKey: 'none' },
+        fields: { [fieldName]: query.text },
+      })
+    ).valueOrThrow();
+
+    // Check that it's in the index
+    const countBeforeSchemaUpdate = (
+      await countSearchResultWithEntity(adminClient, query, entity.id)
+    ).valueOrThrow();
+    assertEquals(countBeforeSchemaUpdate, 1);
+
+    // Delete the field
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteField', entityType: 'MigrationEntity', field: fieldName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+
+    // Process all entities
+    const processResult = await processAllDirtyEntities(server);
+    assertOkResult(processResult);
+
+    return ok(entity);
+  });
+  assertOkResult(result);
+
+  // Check that it's no longer in the index
+  const countAfterSchemaUpdate = (
+    await countSearchResultWithEntity(adminClient, query, result.value.id)
+  ).valueOrThrow();
+  assertEquals(countAfterSchemaUpdate, 0);
 }
 
 async function updateSchemaSpecification_renameFieldOnEntity({ server }: SchemaTestContext) {

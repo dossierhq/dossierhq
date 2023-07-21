@@ -17,7 +17,7 @@ import {
 } from '../IntegrationTestSchema.js';
 import type { AdminChangeValidations, AdminValueItems, AppAdminClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
-import { withSchemaAdvisoryLock } from './SchemaTestUtils.js';
+import { processAllDirtyEntities, withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 
 interface Options {
   publish?: boolean;
@@ -121,18 +121,7 @@ async function withTemporarySchemaChange(
     const restoreSchemaResult = await adminClient.updateSchemaSpecification(IntegrationTestSchema);
     if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
-    // validate
-
-    let done = false;
-    while (!done) {
-      const processResult = await server.processNextDirtyEntity();
-      if (processResult.isError()) return processResult;
-      if (processResult.value) {
-        onProcessed(processResult.value);
-      } else {
-        done = true;
-      }
-    }
-    return ok(undefined);
+    // process dirty
+    return processAllDirtyEntities(server, onProcessed);
   });
 }
