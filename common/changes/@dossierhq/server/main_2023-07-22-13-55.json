@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support schema version and migrations. ",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

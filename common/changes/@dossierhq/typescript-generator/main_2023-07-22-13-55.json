@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/typescript-generator",
+      "comment": "Use ()[] instead of Array<>",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/typescript-generator"
+}

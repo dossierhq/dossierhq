@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/database-adapter",
+      "comment": "Support schema migrations",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/database-adapter"
+}

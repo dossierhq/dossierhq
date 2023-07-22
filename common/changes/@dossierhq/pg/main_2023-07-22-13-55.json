@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

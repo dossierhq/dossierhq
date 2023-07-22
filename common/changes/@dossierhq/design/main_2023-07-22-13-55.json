@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Fix bugs where dropdowns didn't work in dialogs.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Add tests for schema migrations",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
