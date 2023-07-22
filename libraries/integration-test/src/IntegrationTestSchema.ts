@@ -25,10 +25,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
       ],
     },
-    {
-      name: 'MigrationEntity',
-      fields: [],
-    },
+    { name: 'MigrationEntity', fields: [] },
     {
       name: 'References',
       fields: [
@@ -117,6 +114,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'locationAdminOnly', type: FieldType.Location, adminOnly: true },
       ],
     },
+    { name: 'MigrationValueItem', fields: [] },
     { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.Entity }] },
   ],
   patterns: [

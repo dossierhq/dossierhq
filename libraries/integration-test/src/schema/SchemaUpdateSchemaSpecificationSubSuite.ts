@@ -1,4 +1,4 @@
-import { ErrorType, FieldType, ok, type AdminEntity } from '@dossierhq/core';
+import { ErrorType, FieldType, ok, type AdminEntity, type ValueItem } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import {
@@ -18,6 +18,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated,
   updateSchemaSpecification_renameFieldOnEntity,
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
+  updateSchemaSpecification_renameFieldOnValueItem,
   updateSchemaSpecification_errorWrongVersion,
 ];
 
@@ -377,6 +378,98 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
   ).valueOrThrow().entity as AdminEntity;
   assertEquals(updatedEntity.fields[oldFieldName], [{ lat: 1, lng: 2 }]);
   assertEquals(updatedEntity.fields[newFieldName], 'updated value');
+}
+
+async function updateSchemaSpecification_renameFieldOnValueItem({ server }: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldFieldName = `field${new Date().getTime()}`;
+  const newFieldName = `${oldFieldName}New`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [
+        { name: 'MigrationValueItem', fields: [{ name: oldFieldName, type: 'String' }] },
+      ],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new field set
+    const { entity } = (
+      await adminClient.createEntity(
+        {
+          info: { name: oldFieldName, type: 'ValueItems', authKey: 'none' },
+          fields: { any: { type: 'MigrationValueItem', [oldFieldName]: 'value' } },
+        },
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Rename the field
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [
+            {
+              action: 'renameField',
+              valueType: 'MigrationValueItem',
+              field: oldFieldName,
+              newName: newFieldName,
+            },
+          ],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok(entity);
+  });
+  assertOkResult(result);
+  const entityId = result.value.id;
+
+  // Check that the field is renamed
+  const entityAfterMigration = (
+    await adminClient.getEntity({ id: entityId })
+  ).valueOrThrow() as AdminEntity;
+  const valueItemAfterMigration = entityAfterMigration.fields.any as ValueItem;
+  assertEquals(oldFieldName in valueItemAfterMigration, false);
+  assertEquals(valueItemAfterMigration[newFieldName], 'value');
+
+  // And in published entity
+  const publishedEntityAfterMigration = (
+    await publishedClient.getEntity({ id: entityId })
+  ).valueOrThrow() as AdminEntity;
+  const publishedValueItem = publishedEntityAfterMigration.fields.any as ValueItem;
+  assertEquals(oldFieldName in publishedValueItem, false);
+  assertEquals(publishedValueItem[newFieldName], 'value');
+
+  // Check that the new name is usable
+  const updatedNewNameEntity = (
+    await adminClient.updateEntity(
+      {
+        id: entityId,
+        fields: { any: { type: 'MigrationValueItem', [newFieldName]: 'updated value' } },
+      },
+      { publish: true },
+    )
+  ).valueOrThrow().entity as AdminEntity;
+  assertEquals((updatedNewNameEntity.fields.any as ValueItem)[newFieldName], 'updated value');
+
+  // Check that the old name is not usable
+  const updatedOldNameResult = await adminClient.updateEntity(
+    {
+      id: entityId,
+      fields: { any: { type: 'MigrationValueItem', [oldFieldName]: 'updated value' } },
+    },
+    { publish: true },
+  );
+  assertErrorResult(
+    updatedOldNameResult,
+    ErrorType.BadRequest,
+    `entity.fields.any: Unsupported field names: ${oldFieldName}`,
+  );
 }
 
 async function updateSchemaSpecification_errorWrongVersion({ server }: SchemaTestContext) {

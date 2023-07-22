@@ -252,6 +252,7 @@ export type AppAdminValueItem =
   | AdminAdminOnlyValue
   | AdminChangeValidationsValueItem
   | AdminLocationsValue
+  | AdminMigrationValueItem
   | AdminReferencesValue;
 
 export type AdminAdminOnlyValueFields = Record<never, never>;
@@ -313,6 +314,27 @@ export function assertIsAdminLocationsValue(
 ): asserts valueItem is AdminLocationsValue {
   if (valueItem.type !== 'LocationsValue') {
     throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
+  }
+}
+
+export type AdminMigrationValueItemFields = Record<never, never>;
+
+export type AdminMigrationValueItem = ValueItem<
+  'MigrationValueItem',
+  AdminMigrationValueItemFields
+>;
+
+export function isAdminMigrationValueItem(
+  valueItem: ValueItem<string, object> | AdminMigrationValueItem,
+): valueItem is AdminMigrationValueItem {
+  return valueItem.type === 'MigrationValueItem';
+}
+
+export function assertIsAdminMigrationValueItem(
+  valueItem: ValueItem<string, object> | AdminMigrationValueItem,
+): asserts valueItem is AdminMigrationValueItem {
+  if (valueItem.type !== 'MigrationValueItem') {
+    throw new Error('Expected type = MigrationValueItem (but was ' + valueItem.type + ')');
   }
 }
 
@@ -589,6 +611,7 @@ export function assertIsPublishedValueItems(
 export type AppPublishedValueItem =
   | PublishedChangeValidationsValueItem
   | PublishedLocationsValue
+  | PublishedMigrationValueItem
   | PublishedReferencesValue;
 
 export interface PublishedChangeValidationsValueItemFields {
@@ -631,6 +654,27 @@ export function assertIsPublishedLocationsValue(
 ): asserts valueItem is PublishedLocationsValue {
   if (valueItem.type !== 'LocationsValue') {
     throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
+  }
+}
+
+export type PublishedMigrationValueItemFields = Record<never, never>;
+
+export type PublishedMigrationValueItem = ValueItem<
+  'MigrationValueItem',
+  PublishedMigrationValueItemFields
+>;
+
+export function isPublishedMigrationValueItem(
+  valueItem: ValueItem<string, object> | PublishedMigrationValueItem,
+): valueItem is PublishedMigrationValueItem {
+  return valueItem.type === 'MigrationValueItem';
+}
+
+export function assertIsPublishedMigrationValueItem(
+  valueItem: ValueItem<string, object> | PublishedMigrationValueItem,
+): asserts valueItem is PublishedMigrationValueItem {
+  if (valueItem.type !== 'MigrationValueItem') {
+    throw new Error('Expected type = MigrationValueItem (but was ' + valueItem.type + ')');
   }
 }
 

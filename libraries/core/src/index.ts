@@ -234,6 +234,7 @@ export type {
   AdminLocationFieldSpecificationUpdate,
   AdminNumberFieldSpecificationUpdate,
   AdminRichTextFieldSpecificationUpdate,
+  AdminSchemaMigrationAction,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminSchemaSpecificationWithMigrations,

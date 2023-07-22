@@ -1,25 +1,8 @@
-import type {
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityTypeSpecification,
-  AdminEntityUpdate,
-  AdminFieldSpecification,
-  AdminSchema,
-  AdminSchemaWithMigrations,
-  ErrorType,
-  PromiseResult,
-  PublishedEntity,
-  PublishedFieldSpecification,
-  PublishedSchema,
-  Result,
-  RichText,
-  RichTextValueItemNode,
-  ValueItem,
-  ValueItemFieldSpecification,
-} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   FieldType,
+  ItemTraverseNodeType,
+  assertExhaustive,
   isFieldValueEqual,
   isRichTextField,
   isRichTextItemField,
@@ -32,6 +15,24 @@ import {
   traverseEntity,
   validateTraverseNodeForSave,
   visitorPathToString,
+  type AdminEntity,
+  type AdminEntityCreate,
+  type AdminEntityTypeSpecification,
+  type AdminEntityUpdate,
+  type AdminFieldSpecification,
+  type AdminSchema,
+  type AdminSchemaMigrationAction,
+  type AdminSchemaWithMigrations,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedEntity,
+  type PublishedFieldSpecification,
+  type PublishedSchema,
+  type Result,
+  type RichText,
+  type RichTextValueItemNode,
+  type ValueItem,
+  type ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -123,26 +124,86 @@ function applySchemaMigrationsToFieldValues(
     return fieldValues;
   }
 
+  const entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[] = [];
+  const valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[] = [];
+  for (const action of actions) {
+    if ('entityType' in action) {
+      entityTypeActions.push(action);
+    } else {
+      valueTypeActions.push(action);
+    }
+  }
+
   const migratedFieldValues = JSON.parse(JSON.stringify(fieldValues)) as Record<string, unknown>;
 
-  for (const action of actions) {
-    switch (action.action) {
+  for (const actionSpec of entityTypeActions) {
+    const { action } = actionSpec;
+    switch (action) {
       case 'deleteField': {
-        if ('entityType' in action && action.entityType === entityType) {
-          delete migratedFieldValues[action.field];
+        if (actionSpec.entityType === entityType) {
+          delete migratedFieldValues[actionSpec.field];
         }
-        //TODO valueType
         break;
       }
       case 'renameField': {
-        if ('entityType' in action && action.entityType === entityType) {
-          if (action.field in migratedFieldValues) {
-            migratedFieldValues[action.newName] = migratedFieldValues[action.field];
-            delete migratedFieldValues[action.field];
+        if (actionSpec.entityType === entityType) {
+          if (actionSpec.field in migratedFieldValues) {
+            migratedFieldValues[actionSpec.newName] = migratedFieldValues[actionSpec.field];
+            delete migratedFieldValues[actionSpec.field];
           }
         }
-        //TODO valueType
         break;
+      }
+      case 'deleteType': {
+        //TODO
+        break;
+      }
+      case 'renameType': {
+        //TODO
+        break;
+      }
+      default:
+        assertExhaustive(action);
+    }
+  }
+
+  if (valueTypeActions.length > 0) {
+    for (const node of traverseEntity(adminSchema, ['entity'], {
+      info: { type: entityType },
+      fields: migratedFieldValues,
+    })) {
+      if (node.type === ItemTraverseNodeType.valueItem) {
+        const valueItem = node.valueItem;
+        for (const actionSpec of valueTypeActions) {
+          const { action } = actionSpec;
+          switch (action) {
+            case 'deleteField': {
+              if (actionSpec.valueType === valueItem.type) {
+                delete valueItem[actionSpec.field];
+              }
+              break;
+            }
+            case 'renameField': {
+              if (actionSpec.valueType === valueItem.type) {
+                if (actionSpec.field in valueItem) {
+                  valueItem[actionSpec.newName] = valueItem[actionSpec.field];
+                  delete valueItem[actionSpec.field];
+                }
+              }
+              break;
+            }
+            case 'deleteType': {
+              //TODO
+              break;
+            }
+            case 'renameType': {
+              //TODO
+              break;
+            }
+            default:
+              assertExhaustive(action);
+          }
+        }
       }
     }
   }
