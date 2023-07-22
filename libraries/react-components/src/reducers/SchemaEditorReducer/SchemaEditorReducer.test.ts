@@ -1097,15 +1097,36 @@ describe('DeleteFieldAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
-  test('delete existing name field', () => {
+  test('delete existing entity name field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
-          entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
+          entityTypes: [
+            {
+              name: 'Foo',
+              nameField: 'title',
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
+          ],
         }).valueOrThrow(),
       ),
       new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'title' }),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('delete existing value item field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.DeleteField({ kind: 'value', typeName: 'Foo', fieldName: 'field' }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1368,6 +1389,32 @@ describe('RenameFieldAction', () => {
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.entityTypes[0].fields[0].status).toBe('changed');
     expect(state.entityTypes[0].nameField).toBe('newName');
+
+    const update = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(update).toMatchSnapshot();
+    expect(update.migrations?.[0].actions).toHaveLength(1);
+  });
+
+  test('rename existing value item field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          valueTypes: [
+            {
+              name: 'Foo',
+              fields: [{ name: 'oldName', type: FieldType.String }],
+            },
+          ],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameField(
+        { kind: 'value', typeName: 'Foo', fieldName: 'oldName' },
+        'newName',
+      ),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    expect(state.valueTypes[0].fields[0].status).toBe('changed');
 
     const update = getSchemaSpecificationUpdateFromEditorState(state);
     expect(update).toMatchSnapshot();

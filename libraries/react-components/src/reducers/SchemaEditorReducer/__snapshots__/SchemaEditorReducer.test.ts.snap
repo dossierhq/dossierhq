@@ -3040,7 +3040,7 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
 }
 `;
 
-exports[`DeleteFieldAction > delete existing name field 1`] = `
+exports[`DeleteFieldAction > delete existing entity name field 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
@@ -3056,7 +3056,7 @@ exports[`DeleteFieldAction > delete existing name field 1`] = `
       "existingFieldOrder": [
         "title",
       ],
-      "existingNameField": null,
+      "existingNameField": "title",
       "fields": [],
       "kind": "entity",
       "name": "Foo",
@@ -3072,7 +3072,7 @@ exports[`DeleteFieldAction > delete existing name field 1`] = `
 }
 `;
 
-exports[`DeleteFieldAction > delete existing name field 2`] = `
+exports[`DeleteFieldAction > delete existing entity name field 2`] = `
 {
   "entityTypes": [
     {
@@ -3093,6 +3093,59 @@ exports[`DeleteFieldAction > delete existing name field 2`] = `
         },
       ],
       "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteFieldAction > delete existing value item field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [
+        "field",
+      ],
+      "existingFieldOrder": [
+        "field",
+      ],
+      "fields": [],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`DeleteFieldAction > delete existing value item field 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "field": "field",
+          "valueType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
     },
   ],
   "version": 2,
@@ -3544,6 +3597,86 @@ exports[`RenameFieldAction > rename existing entity name field 2`] = `
         },
       ],
       "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameFieldAction > rename existing value item field 1`] = `
+{
+  "activeSelector": {
+    "fieldName": "newName",
+    "kind": "value",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingFieldOrder": [
+        "oldName",
+      ],
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "value",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`RenameFieldAction > rename existing value item field 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "field": "oldName",
+          "newName": "newName",
+          "valueType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
     },
   ],
   "version": 2,

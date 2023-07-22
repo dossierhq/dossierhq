@@ -63,7 +63,6 @@ export function SchemaFieldEditor({
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new';
-  const canDeleteOrRenameField = fieldDraft.status === 'new' || fieldSelector.kind === 'entity'; //TODO enable for value types
   const canChangeAdminOnly = fieldDraft.status === 'new';
 
   const handleDropDownItemClick = useCallback(
@@ -100,12 +99,11 @@ export function SchemaFieldEditor({
     [dispatchSchemaEditorState, fieldSelector],
   );
 
-  const dropDownItems = canDeleteOrRenameField
-    ? [
-        { id: 'rename', title: 'Rename field' },
-        { id: 'delete', title: 'Delete field' },
-      ]
-    : [];
+  const dropDownItems = [
+    { id: 'rename', title: 'Rename field' },
+    { id: 'delete', title: 'Delete field' },
+  ];
+
   const showEntityTypes =
     fieldDraft.type === FieldType.Entity ||
     (fieldDraft.type === FieldType.RichText &&
