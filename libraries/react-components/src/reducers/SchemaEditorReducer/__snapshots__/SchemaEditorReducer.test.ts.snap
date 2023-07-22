@@ -3053,9 +3053,7 @@ exports[`DeleteFieldAction > delete existing entity name field 1`] = `
         "title",
       ],
       "existingAuthKeyPattern": null,
-      "existingFieldOrder": [
-        "title",
-      ],
+      "existingFieldOrder": [],
       "existingNameField": "title",
       "fields": [],
       "kind": "entity",
@@ -3115,9 +3113,7 @@ exports[`DeleteFieldAction > delete existing value item field 1`] = `
       "deletedFields": [
         "field",
       ],
-      "existingFieldOrder": [
-        "field",
-      ],
+      "existingFieldOrder": [],
       "fields": [],
       "kind": "value",
       "name": "Foo",
@@ -3533,9 +3529,9 @@ exports[`RenameFieldAction > rename existing entity name field 1`] = `
       "deletedFields": [],
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
-        "oldName",
+        "newName",
       ],
-      "existingNameField": "oldName",
+      "existingNameField": "newName",
       "fields": [
         {
           "adminOnly": false,
@@ -3622,7 +3618,7 @@ exports[`RenameFieldAction > rename existing value item field 1`] = `
       "adminOnly": false,
       "deletedFields": [],
       "existingFieldOrder": [
-        "oldName",
+        "newName",
       ],
       "fields": [
         {

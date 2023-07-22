@@ -955,11 +955,14 @@ class DeleteFieldAction extends TypeAction {
       deletedFields = [...deletedFields, this.fieldName].sort();
     }
 
-    if (typeDraft.kind === 'entity' && typeDraft.nameField === this.fieldName) {
-      return { ...typeDraft, fields, nameField: null, deletedFields };
+    const existingFieldOrder = typeDraft.existingFieldOrder.filter((it) => it !== this.fieldName);
+    const newTypeDraft = { ...typeDraft, fields, deletedFields, existingFieldOrder };
+
+    if ('nameField' in newTypeDraft && newTypeDraft.nameField === this.fieldName) {
+      newTypeDraft.nameField = null;
     }
 
-    return { ...typeDraft, fields, deletedFields };
+    return newTypeDraft;
   }
 
   override reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
@@ -1092,14 +1095,24 @@ class RenameFieldAction extends FieldAction {
   override reduceType(
     typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
-    let newTypeDraft = super.reduceType(typeDraft);
+    const superTypeDraft = super.reduceType(typeDraft);
 
-    if (newTypeDraft === typeDraft) {
+    if (superTypeDraft === typeDraft) {
       return typeDraft;
     }
 
-    if (newTypeDraft.kind === 'entity' && newTypeDraft.nameField === this.fieldName) {
-      newTypeDraft = { ...newTypeDraft, nameField: this.newFieldName };
+    const existingFieldOrder = superTypeDraft.existingFieldOrder.map((it) =>
+      it === this.fieldName ? this.newFieldName : it,
+    );
+
+    const newTypeDraft = { ...superTypeDraft, existingFieldOrder };
+
+    if ('nameField' in newTypeDraft && newTypeDraft.nameField === this.fieldName) {
+      newTypeDraft.nameField = this.newFieldName;
+    }
+
+    if ('existingNameField' in newTypeDraft && newTypeDraft.existingNameField === this.fieldName) {
+      newTypeDraft.existingNameField = this.newFieldName;
     }
 
     return newTypeDraft;
