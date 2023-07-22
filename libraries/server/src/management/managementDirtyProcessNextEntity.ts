@@ -191,7 +191,10 @@ async function validateAdminEntity(
   { entityIndexes: DatabaseEntityIndexesArg; uniqueIndexValues: UniqueIndexValueCollection },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const entity = decodeAdminEntity(adminSchema, entityData);
+  const entityResult = decodeAdminEntity(adminSchema, entityData);
+  if (entityResult.isError()) return entityResult;
+  const entity = entityResult.value;
+
   const validationIssue = validateEntityInfo(adminSchema, [], entity);
   if (validationIssue) return notOk.BadRequest('Invalid entity info');
 
@@ -235,7 +238,9 @@ async function validatePublishedEntity(
 
   if (entitySpec.adminOnly) return notOk.Generic(`Entity type is admin only`);
 
-  const entityFields = decodeAdminEntityFields(adminSchema, entitySpec, schemaVersion, fieldValues);
+  const decodeResult = decodeAdminEntityFields(adminSchema, entitySpec, schemaVersion, fieldValues);
+  if (decodeResult.isError()) return decodeResult;
+  const entityFields = decodeResult.value;
 
   const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,

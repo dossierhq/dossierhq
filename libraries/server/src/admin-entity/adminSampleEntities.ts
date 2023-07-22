@@ -6,6 +6,7 @@ import type {
   EntitySamplingPayload,
   ErrorType,
   PromiseResult,
+  Result,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter, ResolvedAuthKey } from '@dossierhq/database-adapter';
@@ -35,7 +36,10 @@ export async function adminSampleEntities(
     offset: number,
     limit: number,
     authKeys: ResolvedAuthKey[],
-  ): PromiseResult<AdminEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  ): PromiseResult<
+    Result<AdminEntity, typeof ErrorType.BadRequest>[],
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  > {
     const sampleResult = await databaseAdapter.adminEntitySampleEntities(
       schema,
       context,

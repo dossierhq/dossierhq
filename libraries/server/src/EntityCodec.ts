@@ -73,11 +73,11 @@ export type CodecMode = 'optimized' | 'json';
 export function decodePublishedEntity(
   adminSchema: AdminSchemaWithMigrations,
   values: DatabasePublishedEntityPayload,
-): PublishedEntity {
+): Result<PublishedEntity, typeof ErrorType.BadRequest> {
   const publishedSchema = adminSchema.toPublishedSchema();
   const entitySpec = publishedSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
-    throw new Error(`No entity spec for type ${values.type}`);
+    return notOk.BadRequest(`No entity spec for type ${values.type}`);
   }
   const entity: PublishedEntity = {
     id: values.id,
@@ -91,12 +91,14 @@ export function decodePublishedEntity(
     fields: {},
   };
 
-  const migratedFieldValues = applySchemaMigrationsToFieldValues(
+  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
     adminSchema,
     values.type,
     values.schemaVersion,
     values.fieldValues,
   );
+  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
+  const migratedFieldValues = migratedFieldValuesResult.value;
 
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
@@ -109,7 +111,7 @@ export function decodePublishedEntity(
     );
   }
 
-  return entity;
+  return ok(entity);
 }
 
 function applySchemaMigrationsToFieldValues(
@@ -117,11 +119,11 @@ function applySchemaMigrationsToFieldValues(
   entityType: string,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
-): Record<string, unknown> {
+): Result<Record<string, unknown>, typeof ErrorType.BadRequest> {
   const actions = adminSchema.collectMigrationActionsSinceVersion(schemaVersion);
 
   if (actions.length === 0) {
-    return fieldValues;
+    return ok(fieldValues);
   }
 
   const entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[] = [];
@@ -172,7 +174,9 @@ function applySchemaMigrationsToFieldValues(
       info: { type: entityType },
       fields: migratedFieldValues,
     })) {
-      if (node.type === ItemTraverseNodeType.valueItem) {
+      if (node.type === ItemTraverseNodeType.error) {
+        return notOk.BadRequest(`${visitorPathToString(node.path)}: ${node.message}`);
+      } else if (node.type === ItemTraverseNodeType.valueItem) {
         const valueItem = node.valueItem;
         for (const actionSpec of valueTypeActions) {
           const { action } = actionSpec;
@@ -208,7 +212,7 @@ function applySchemaMigrationsToFieldValues(
     }
   }
 
-  return migratedFieldValues;
+  return ok(migratedFieldValues);
 }
 
 function decodeFieldItemOrList(
@@ -267,6 +271,7 @@ function decodeValueItemField(
 ) {
   const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
   if (!valueSpec) {
+    //TODO replace with result
     throw new Error(`Couldn't find spec for value type ${encodedValue.type}`);
   }
   const decodedValue: ValueItem = { type: encodedValue.type };
@@ -299,11 +304,20 @@ function decodeRichTextField(
 export function decodeAdminEntity(
   schema: AdminSchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
-): AdminEntity {
+): Result<AdminEntity, typeof ErrorType.BadRequest> {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
-    throw new Error(`No entity spec for type ${values.type}`);
+    return notOk.BadRequest(`No entity spec for type ${values.type}`);
   }
+
+  const decodedResult = decodeAdminEntityFields(
+    schema,
+    entitySpec,
+    values.schemaVersion,
+    values.fieldValues,
+  );
+  if (decodedResult.isError()) return decodedResult;
+  const fields = decodedResult.value;
 
   const entity: AdminEntity = {
     id: values.id,
@@ -318,10 +332,10 @@ export function decodeAdminEntity(
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
-    fields: decodeAdminEntityFields(schema, entitySpec, values.schemaVersion, values.fieldValues),
+    fields,
   };
 
-  return entity;
+  return ok(entity);
 }
 
 export function decodeAdminEntityFields(
@@ -329,13 +343,15 @@ export function decodeAdminEntityFields(
   entitySpec: AdminEntityTypeSpecification,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
-): AdminEntity['fields'] {
-  const migratedFieldValues = applySchemaMigrationsToFieldValues(
+): Result<AdminEntity['fields'], typeof ErrorType.BadRequest> {
+  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
     schema,
     entitySpec.name,
     schemaVersion,
     fieldValues,
   );
+  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
+  const migratedFieldValues = migratedFieldValuesResult.value;
 
   const fields: AdminEntity['fields'] = {};
   for (const fieldSpec of entitySpec.fields) {
@@ -343,7 +359,7 @@ export function decodeAdminEntityFields(
     const fieldValue = migratedFieldValues[fieldName];
     fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
   }
-  return fields;
+  return ok(fields);
 }
 
 export function resolveCreateEntity(
@@ -381,7 +397,7 @@ export function resolveUpdateEntity(
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
   { changed: boolean; entity: AdminEntity; entitySpec: AdminEntityTypeSpecification },
-  typeof ErrorType.BadRequest
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const status =
     entityInfo.status === AdminEntityStatus.published
@@ -409,12 +425,14 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const migratedFieldValues = applySchemaMigrationsToFieldValues(
+  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
     schema,
     entitySpec.name,
     entityInfo.schemaVersion,
     entityInfo.fieldValues,
   );
+  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
+  const migratedFieldValues = migratedFieldValuesResult.value;
 
   const normalizedResult = normalizeEntityFields(
     schema,
@@ -691,3 +709,7 @@ async function resolveRequestedEntityReferences(
 
   return ok(items.map(({ entityInternalId }) => ({ entityInternalId })));
 }
+
+export const forTest = {
+  applySchemaMigrationsToFieldValues,
+};

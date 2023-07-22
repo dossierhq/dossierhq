@@ -225,18 +225,20 @@ async function collectVersionsInfo(
         validPublished: validPublished ?? true,
       });
     } else {
-      const entityFields = decodeAdminEntityFields(
+      const entityFieldsResult = decodeAdminEntityFields(
         adminSchema,
         entitySpec,
         schemaVersion,
         fieldValues,
       );
+      if (entityFieldsResult.isError()) return entityFieldsResult;
+
       const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
         adminSchema,
         publishedSchema,
         [`entity(${reference.id})`],
         type,
-        entityFields,
+        entityFieldsResult.value,
       );
       if (validateFieldsResult.isError()) return validateFieldsResult;
       const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =

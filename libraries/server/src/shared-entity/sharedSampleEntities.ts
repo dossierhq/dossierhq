@@ -5,6 +5,7 @@ import type {
   ErrorType,
   PromiseResult,
   PublishedQuery,
+  Result,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { ResolvedAuthKey } from '@dossierhq/database-adapter';
@@ -28,7 +29,10 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
     offset: number,
     limit: number,
     authKeys: ResolvedAuthKey[],
-  ) => PromiseResult<TEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
+  ) => PromiseResult<
+    Result<TEntity, typeof ErrorType.BadRequest>[],
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >,
 ): PromiseResult<
   EntitySamplingPayload<TEntity>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -62,7 +66,16 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   // Get entities
   const sampleResult = await sampleEntities(offset, limit, authKeysResult.value);
   if (sampleResult.isError()) return sampleResult;
-  const entities = sampleResult.value;
+  const entitiesWithResultItems = sampleResult.value;
+
+  // Filter out errors
+  //TODO should we silently ignore errors for sample?
+  const entities: TEntity[] = [];
+  for (const entity of entitiesWithResultItems) {
+    if (entity.isOk()) {
+      entities.push(entity.value);
+    }
+  }
 
   // Shuffle entities
   randomizer.shuffleArray(entities);

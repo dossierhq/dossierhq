@@ -73,7 +73,10 @@ export function sharedSearchEntities<
   paging: PagingInfo,
   searchResult: TSearchResult,
   hasMoreOppositeDirection: boolean,
-  decoder: (schema: TSchema, values: TSearchResult['entities'][number]) => TEntity,
+  decoder: (
+    schema: TSchema,
+    values: TSearchResult['entities'][number],
+  ) => Result<TEntity, typeof ErrorType.BadRequest>,
 ): Result<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
   if (entities.length === 0) {
@@ -89,7 +92,7 @@ export function sharedSearchEntities<
     },
     edges: entities.map((entity, index) => ({
       cursor: searchResult.entities[index].cursor,
-      node: ok(entity),
+      node: entity,
     })),
   });
 }

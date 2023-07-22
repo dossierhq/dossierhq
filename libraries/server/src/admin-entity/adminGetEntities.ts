@@ -77,5 +77,5 @@ async function mapItem(
   });
   if (authResult.isError()) return authResult;
 
-  return ok(decodeAdminEntity(schema, values));
+  return decodeAdminEntity(schema, values);
 }

@@ -1,14 +1,15 @@
-import type {
-  AdminSchemaWithMigrations,
-  EntitySamplingOptions,
-  EntitySamplingPayload,
-  ErrorType,
-  PromiseResult,
-  PublishedEntity,
-  PublishedQuery,
-  PublishedSchema,
+import {
+  ok,
+  type AdminSchemaWithMigrations,
+  type EntitySamplingOptions,
+  type EntitySamplingPayload,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedEntity,
+  type PublishedQuery,
+  type PublishedSchema,
+  type Result,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter, ResolvedAuthKey } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
@@ -42,7 +43,10 @@ export async function publishedSampleEntities(
     offset: number,
     limit: number,
     authKeys: ResolvedAuthKey[],
-  ): PromiseResult<PublishedEntity[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  ): PromiseResult<
+    Result<PublishedEntity, typeof ErrorType.BadRequest>[],
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  > {
     const sampleResult = await databaseAdapter.publishedEntitySampleEntities(
       publishedSchema,
       context,

@@ -6,7 +6,6 @@ import type {
   PublishedEntity,
   UniqueIndexReference,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -37,7 +36,5 @@ export async function publishedGetEntity(
   });
   if (authResult.isError()) return authResult;
 
-  const entity = decodePublishedEntity(adminSchema, result.value);
-
-  return ok(entity);
+  return decodePublishedEntity(adminSchema, result.value);
 }

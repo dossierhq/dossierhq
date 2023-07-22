@@ -85,6 +85,5 @@ async function mapItem(
   });
   if (authResult.isError()) return authResult;
 
-  const entity = decodePublishedEntity(adminSchema, values);
-  return ok(entity);
+  return decodePublishedEntity(adminSchema, values);
 }

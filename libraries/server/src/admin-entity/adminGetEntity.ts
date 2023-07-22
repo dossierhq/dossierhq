@@ -1,12 +1,11 @@
-import {
-  ok,
-  type AdminEntity,
-  type AdminSchemaWithMigrations,
-  type EntityReference,
-  type EntityVersionReference,
-  type ErrorType,
-  type PromiseResult,
-  type UniqueIndexReference,
+import type {
+  AdminEntity,
+  AdminSchemaWithMigrations,
+  EntityReference,
+  EntityVersionReference,
+  ErrorType,
+  PromiseResult,
+  UniqueIndexReference,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
@@ -37,7 +36,5 @@ export async function adminGetEntity(
   });
   if (authResult.isError()) return authResult;
 
-  const entity = decodeAdminEntity(schema, entityValues);
-
-  return ok(entity);
+  return decodeAdminEntity(schema, entityValues);
 }
