@@ -57,6 +57,7 @@ export async function createBunSqliteAdapter(
 }
 
 function isSqlite3Error(error: unknown): error is Error {
+  // https://github.com/oven-sh/bun/issues/871
   // TODO Bun's error only contain the message, not error codes
   return error instanceof Error;
 }

@@ -575,7 +575,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
   }
 }
 
-export function valueOrExistingOrDefault<T>(
+function valueOrExistingOrDefault<T>(
   update: T | undefined,
   existing: T | undefined,
   defaultValue: T,
