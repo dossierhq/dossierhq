@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`applySchemaMigrationsToFieldValues deleteField > nested value item 1`] = `
+{
+  "richText": {
+    "root": {
+      "children": [
+        {
+          "children": [
+            {
+              "detail": 0,
+              "format": 0,
+              "mode": "normal",
+              "style": "",
+              "text": "Heading 1",
+              "type": "text",
+              "version": 1,
+            },
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "tag": "h1",
+          "type": "heading",
+          "version": 1,
+        },
+        {
+          "data": {
+            "child": {
+              "child": null,
+              "type": "ValueItem",
+            },
+            "type": "ValueItem",
+          },
+          "format": "",
+          "type": "valueItem",
+          "version": 1,
+        },
+      ],
+      "direction": "ltr",
+      "format": "",
+      "indent": 0,
+      "type": "root",
+      "version": 1,
+    },
+  },
+}
+`;
+
+exports[`applySchemaMigrationsToFieldValues renameField > value item in rich text 1`] = `
+{
+  "richText": {
+    "root": {
+      "children": [
+        {
+          "children": [
+            {
+              "detail": 0,
+              "format": 0,
+              "mode": "normal",
+              "style": "",
+              "text": "Heading 1",
+              "type": "text",
+              "version": 1,
+            },
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "tag": "h1",
+          "type": "heading",
+          "version": 1,
+        },
+        {
+          "data": {
+            "child2": {
+              "child2": null,
+              "string2": "1.1",
+              "type": "ValueItem",
+            },
+            "string2": "1",
+            "type": "ValueItem",
+          },
+          "format": "",
+          "type": "valueItem",
+          "version": 1,
+        },
+      ],
+      "direction": "ltr",
+      "format": "",
+      "indent": 0,
+      "type": "root",
+      "version": 1,
+    },
+  },
+}
+`;
