@@ -12,9 +12,9 @@ This document describes what migrations are supported and what impact they have.
 | Field property    | Field type             | Change | Description                                                                                                           |
 | ----------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
 | Adding new field  |                        | Yes    |                                                                                                                       |
-| Removing field    |                        | No     | Removing a field is currently not supported.                                                                          |
+| Removing field    |                        | Yes    | Removing fields is irreversible. Requires validation (since invalid entities can become valid). Requires indexing.    |
 | Reorder fields    |                        | Yes    |                                                                                                                       |
-| `name`            | `*`                    | No     | Renaming fields is currently not supported.                                                                           |
+| `name`            | `*`                    | Yes    |                                                                                                                       |
 | `type`            | `*`                    | No     | Changing field type is not supported.                                                                                 |
 | `list`            | `*`                    | No     | Changing list is not supported.                                                                                       |
 | `required`        | `*`                    | Yes    | Changing from `false` to `true` requires validation. Published entities can become invalid.                           |

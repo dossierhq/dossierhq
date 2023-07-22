@@ -11,6 +11,7 @@ import { assertEquals } from '../Asserts.js';
 import type {
   AdminChangeValidations,
   AdminLocations,
+  AdminMigrationEntity,
   AdminReferences,
   AdminRichTexts,
   AdminStrings,
@@ -54,6 +55,11 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
     updatedAt: new Date('2021-08-17T07:51:25.56Z'),
   },
   fields: { location: null, locationList: null, locationAdminOnly: null },
+};
+
+export const MIGRATIONS_ENTITY_CREATE: Readonly<AdminEntityCreate<AdminMigrationEntity>> = {
+  info: { name: 'MigrationEntity name', type: 'MigrationEntity', authKey: 'none' },
+  fields: {},
 };
 
 export const REFERENCES_CREATE: Readonly<AdminEntityCreate<AdminReferences>> = {
