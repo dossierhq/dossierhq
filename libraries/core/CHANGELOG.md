@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Sun, 25 Jun 2023 20:14:23 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jul 2023 14:04:22 GMT and should not be manually modified.
+
+## 0.3.2
+Sat, 22 Jul 2023 14:04:22 GMT
+
+### Updates
+
+- Add tab rich text node and rename createRichTextTextAndLineBreakNodes() to createRichTextTextAndWhitespaceNodes(). Make tab a required rich text node, and expose REQUIRED_RICH_TEXT_NODES. Add version to schema specs. Enable deleteField and renameField migrations.
 
 ## 0.3.1
 Sun, 25 Jun 2023 20:14:23 GMT

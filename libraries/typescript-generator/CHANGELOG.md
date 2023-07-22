@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/typescript-generator
 
-This log was last generated on Sun, 25 Jun 2023 20:14:23 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jul 2023 14:04:22 GMT and should not be manually modified.
+
+## 0.3.2
+Sat, 22 Jul 2023 14:04:22 GMT
+
+### Updates
+
+- Use ()[] instead of Array<>
 
 ## 0.3.1
 Sun, 25 Jun 2023 20:14:23 GMT
