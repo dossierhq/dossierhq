@@ -24,6 +24,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_deleteFieldOnEntity,
   updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField,
+  updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid,
   updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated,
   updateSchemaSpecification_deleteFieldOnValueItem,
   updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated,
@@ -160,6 +161,87 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
     )
   ).valueOrThrow().entity as AdminEntity;
   assertEquals(updatedEntity.fields[fieldName], [{ lat: 1, lng: 2 }]);
+}
+
+async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+    });
+    assertOkResult(firstUpdateResult);
+
+    // Create entity with the new field set
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, {
+          fields: { [fieldName]: 'this value will become invalid' },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Change validations to make the field invalid
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        {
+          name: 'MigrationEntity',
+          fields: [{ name: fieldName, type: 'String', values: [{ value: 'valid' }] }],
+        },
+      ],
+    });
+    const { schemaSpecification } = secondUpdateResult.valueOrThrow();
+
+    // Process all entities
+    const validationChangeProcessed: {
+      id: string;
+      valid: boolean;
+      validPublished: boolean | null;
+    }[] = [];
+    const processAfterValidationChangeResult = await processAllDirtyEntities(
+      server,
+      (processed) => {
+        if (processed.id === entity.id) {
+          validationChangeProcessed.push(processed);
+        }
+      },
+    );
+    assertOkResult(processAfterValidationChangeResult);
+    assertEquals(validationChangeProcessed, [
+      { id: entity.id, valid: false, validPublished: false },
+    ]);
+
+    // Delete the field
+    const thirdUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteField', entityType: 'MigrationEntity', field: fieldName }],
+        },
+      ],
+    });
+    assertOkResult(thirdUpdateResult);
+
+    // Process all entities
+    const deleteFieldProcessed: { id: string; valid: boolean; validPublished: boolean | null }[] =
+      [];
+    const processAfterDeletionResult = await processAllDirtyEntities(server, (processed) => {
+      if (processed.id === entity.id) {
+        deleteFieldProcessed.push(processed);
+      }
+    });
+    assertOkResult(processAfterDeletionResult);
+    assertEquals(deleteFieldProcessed, [{ id: entity.id, valid: true, validPublished: true }]);
+
+    return ok(entity);
+  });
+  assertOkResult(result);
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
