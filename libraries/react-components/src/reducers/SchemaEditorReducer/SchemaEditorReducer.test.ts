@@ -1069,6 +1069,20 @@ describe('ChangeTypeAdminOnlyAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('make existing value type admin only', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'value', typeName: 'Foo' }, true),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    expect(state.valueTypes[0].status).toEqual('changed');
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('DeleteFieldAction', () => {

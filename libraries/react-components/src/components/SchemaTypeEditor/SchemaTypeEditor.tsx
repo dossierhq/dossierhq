@@ -29,7 +29,7 @@ export function SchemaTypeEditor({
   dispatchSchemaEditorState,
   onAddOrRenameField,
 }: Props) {
-  const canChangeAdminOnly = typeDraft.status === 'new';
+  const canChangeAdminOnly = typeDraft.status === 'new' || typeSelector.kind === 'value';
 
   const potentialNameFields =
     typeDraft.kind === 'entity'

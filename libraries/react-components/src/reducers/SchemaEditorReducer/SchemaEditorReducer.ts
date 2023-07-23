@@ -45,6 +45,7 @@ export interface SchemaTypeDraft {
   name: string;
   status: 'new' | '' | 'changed';
   adminOnly: boolean;
+  existingAdminOnly: boolean;
   fields: readonly SchemaFieldDraft[];
   deletedFields: readonly string[];
   existingFieldOrder: string[];
@@ -183,6 +184,7 @@ function resolveTypeStatus(
   state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>,
 ): SchemaTypeDraft['status'] {
   if (state.status === 'new') return state.status;
+  if (state.adminOnly !== state.existingAdminOnly) return 'changed';
   if (state.kind === 'entity') {
     if (state.nameField !== state.existingNameField) return 'changed';
     if (state.authKeyPattern !== state.existingAuthKeyPattern) return 'changed';
@@ -491,6 +493,7 @@ class AddTypeAction implements SchemaEditorStateAction {
       status: 'new',
       name: this.name,
       adminOnly: false,
+      existingAdminOnly: false,
       deletedFields: [],
       fields: [],
     } as const;
@@ -1390,6 +1393,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       name: typeSpec.name,
       status: '',
       adminOnly: typeSpec.adminOnly,
+      existingAdminOnly: typeSpec.adminOnly,
       deletedFields: [],
       fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => {
         const fieldDraft: SchemaFieldDraft = {
