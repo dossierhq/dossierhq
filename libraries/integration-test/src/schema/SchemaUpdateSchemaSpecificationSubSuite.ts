@@ -22,6 +22,8 @@ import {
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
+  updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
+  updateSchemaSpecification_adminOnlyFieldRemovesFromIndex,
   updateSchemaSpecification_deleteFieldOnEntity,
   updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid,
@@ -33,6 +35,136 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnValueItem,
   updateSchemaSpecification_errorWrongVersion,
 ];
+
+async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+
+  // Lock since the version needs to be consecutive
+  const entityResult = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+      }),
+    );
+
+    // Create entity without the new field
+    const {
+      entity: { id: entityId },
+    } = (
+      await adminClient.createEntity(MIGRATIONS_ENTITY_CREATE, { publish: true })
+    ).valueOrThrow();
+
+    // Make it required
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [
+          {
+            name: 'MigrationEntity',
+            fields: [{ name: fieldName, type: 'String', required: true }],
+          },
+        ],
+      }),
+    );
+
+    // Process all entities
+    assertOkResult(await processAllDirtyEntities(server));
+
+    // Check that the entity is invalid
+    const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
+    assertEquals(publishedEntity.info.valid, false);
+
+    // Make the field adminOnly
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [
+          {
+            name: 'MigrationEntity',
+            fields: [{ name: fieldName, type: 'String', adminOnly: true }],
+          },
+        ],
+      }),
+    );
+
+    // Process all entities
+    assertOkResult(await processAllDirtyEntities(server));
+
+    return ok(entityId);
+  });
+  assertOkResult(entityResult);
+  const entityId = entityResult.value;
+
+  // Check that the entity is valid
+  const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
+  assertEquals(publishedEntity.info.valid, true);
+}
+
+async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+
+  const query: Parameters<(typeof publishedClient)['searchEntities']>[0] = {
+    entityTypes: ['MigrationEntity'],
+    text: 'Scrumptious',
+  };
+
+  // Lock since the version needs to be consecutive
+  const entityResult = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+      }),
+    );
+
+    // Create entity
+    const {
+      entity: { id: entityId },
+    } = (
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: query.text } }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Check that it's in the index
+    const countBeforeSchemaUpdate = (
+      await countSearchResultWithEntity(publishedClient, query, entityId)
+    ).valueOrThrow();
+    assertEquals(countBeforeSchemaUpdate, 1);
+
+    // Make the field adminOnly
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [
+          {
+            name: 'MigrationEntity',
+            fields: [{ name: fieldName, type: 'String', adminOnly: true }],
+          },
+        ],
+      }),
+    );
+
+    // Process all entities
+    assertOkResult(await processAllDirtyEntities(server));
+
+    return ok(entityId);
+  });
+  const entityId = entityResult.valueOrThrow();
+
+  // Check that it's no longer in the index
+  const countAfterSchemaUpdate = (
+    await countSearchResultWithEntity(publishedClient, query, entityId)
+  ).valueOrThrow();
+  assertEquals(countAfterSchemaUpdate, 0);
+}
 
 async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -50,10 +182,7 @@ async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaT
     // Create entity with the new field set
     const { entity } = (
       await adminClient.createEntity(
-        {
-          info: { name: fieldName, type: 'MigrationEntity', authKey: 'none' },
-          fields: { [fieldName]: 'value' },
-        },
+        copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: 'value' } }),
         { publish: true },
       )
     ).valueOrThrow();
