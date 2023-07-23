@@ -152,7 +152,7 @@ export const SCHEMA = {
     {
       name: 'ValueItemsEntity',
       fields: [
-        { name: 'normal', type: FieldType.ValueItem },
+        { name: 'normal', type: FieldType.ValueItem, adminOnly: false },
         { name: 'required', type: FieldType.ValueItem, required: true },
         { name: 'list', type: FieldType.ValueItem, list: true },
         { name: 'requiredList', type: FieldType.ValueItem, list: true, required: true },
@@ -162,6 +162,11 @@ export const SCHEMA = {
     },
   ],
   valueTypes: [
+    {
+      name: 'AdminOnlyValueItem',
+      adminOnly: true,
+      fields: [{ name: 'text', type: FieldType.String }],
+    },
     {
       name: 'CloudinaryImage',
       fields: [
@@ -236,6 +241,7 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
         return copyEntityType(entityType, (entityType) => {
           richTextFieldSpec(entityType, 'required').required = false;
           richTextFieldSpec(entityType, 'minimal').richTextNodes = [];
+          richTextFieldSpec(entityType, 'adminOnly').adminOnly = false;
           richTextFieldSpec(entityType, 'stringsEntity').richTextNodes = [];
           richTextFieldSpec(entityType, 'stringsEntity').entityTypes = [];
           richTextFieldSpec(entityType, 'numbersEntityLink').richTextNodes = [];
@@ -256,8 +262,10 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
         });
       case 'ValueItemsEntity':
         return copyEntityType(entityType, (entityType) => {
+          valueItemFieldSpec(entityType, 'normal').adminOnly = true; // to allow adding admin only value items
           valueItemFieldSpec(entityType, 'required').required = false;
           valueItemFieldSpec(entityType, 'requiredList').required = false;
+          valueItemFieldSpec(entityType, 'adminOnly').adminOnly = false;
           valueItemFieldSpec(entityType, 'cloudinaryImage').valueTypes = [];
         });
       default:

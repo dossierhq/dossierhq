@@ -761,6 +761,7 @@ async function createValueItemsEntities(
             text: 'First',
             child: null,
           } as unknown as AdminCloudinaryImage,
+          normal: { type: 'AdminOnlyValueItem', text: 'Admin only' },
         },
       }),
     ),
@@ -770,6 +771,7 @@ async function createValueItemsEntities(
         id: id('value-items-published-invalid'),
         info: { name: 'ValueItems published invalid' },
         fields: {
+          normal: { type: 'AdminOnlyValueItem', text: 'Admin only' },
           required: null,
           requiredList: null,
         },

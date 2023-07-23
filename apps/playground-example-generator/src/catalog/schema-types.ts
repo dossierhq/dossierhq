@@ -224,7 +224,34 @@ export function assertIsAdminValueItemsEntity(
   }
 }
 
-export type AppAdminValueItem = AdminCloudinaryImage | AdminNestedValueItem | AdminStringsValueItem;
+export type AppAdminValueItem =
+  | AdminAdminOnlyValueItem
+  | AdminCloudinaryImage
+  | AdminNestedValueItem
+  | AdminStringsValueItem;
+
+export interface AdminAdminOnlyValueItemFields {
+  text: string | null;
+}
+
+export type AdminAdminOnlyValueItem = ValueItem<
+  'AdminOnlyValueItem',
+  AdminAdminOnlyValueItemFields
+>;
+
+export function isAdminAdminOnlyValueItem(
+  valueItem: ValueItem<string, object> | AdminAdminOnlyValueItem,
+): valueItem is AdminAdminOnlyValueItem {
+  return valueItem.type === 'AdminOnlyValueItem';
+}
+
+export function assertIsAdminAdminOnlyValueItem(
+  valueItem: ValueItem<string, object> | AdminAdminOnlyValueItem,
+): asserts valueItem is AdminAdminOnlyValueItem {
+  if (valueItem.type !== 'AdminOnlyValueItem') {
+    throw new Error('Expected type = AdminOnlyValueItem (but was ' + valueItem.type + ')');
+  }
+}
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
