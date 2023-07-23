@@ -216,6 +216,9 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   if (existingFieldSpec.required !== state.required) {
     return 'changed';
   }
+  if (existingFieldSpec.adminOnly !== state.adminOnly) {
+    return 'changed';
+  }
   if (
     (existingFieldSpec.type === FieldType.Entity ||
       existingFieldSpec.type === FieldType.RichText) &&

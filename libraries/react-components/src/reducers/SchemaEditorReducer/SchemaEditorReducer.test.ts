@@ -262,6 +262,25 @@ describe('ChangeFieldAdminOnlyAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('make existing field admin only', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.ChangeFieldAdminOnly(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'field' },
+        true,
+      ),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('ChangeFieldAllowedEntityTypesAction', () => {

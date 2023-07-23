@@ -508,26 +508,6 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     );
   });
 
-  test('Error: changing adminOnly of field', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
-      entityTypes: [
-        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, adminOnly: true }] },
-      ],
-    })
-      .valueOrThrow()
-      .updateAndValidate({
-        entityTypes: [
-          { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, adminOnly: false }] },
-        ],
-      });
-
-    expectErrorResult(
-      result,
-      ErrorType.BadRequest,
-      'Foo.field: Can’t change the value of adminOnly. Requested false but is true',
-    );
-  });
-
   test('Error: changing index of String field', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [

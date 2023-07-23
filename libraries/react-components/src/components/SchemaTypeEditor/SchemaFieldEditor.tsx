@@ -63,7 +63,6 @@ export function SchemaFieldEditor({
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
   const canChangeIndex = fieldDraft.status === 'new';
-  const canChangeAdminOnly = fieldDraft.status === 'new';
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
@@ -157,7 +156,6 @@ export function SchemaFieldEditor({
           <Field.BodyColumn>
             <Checkbox
               checked={fieldDraft.adminOnly}
-              disabled={!canChangeAdminOnly}
               onChange={(event) =>
                 dispatchSchemaEditorState(
                   new SchemaEditorActions.ChangeFieldAdminOnly(fieldSelector, event.target.checked),

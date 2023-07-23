@@ -102,6 +102,76 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
   });
 });
 
+describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
+  test('change: from true to false entity type', () => {
+    const { previous, next } = build(
+      {
+        entityTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: true }],
+          },
+        ],
+      },
+      {
+        entityTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: false }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+        {
+          "indexEntityTypes": [
+            "OneType",
+          ],
+          "indexValueTypes": [],
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        }
+      `);
+  });
+
+  test('change: from true to false value type', () => {
+    const { previous, next } = build(
+      {
+        valueTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: true }],
+          },
+        ],
+      },
+      {
+        valueTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: false }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+        {
+          "indexEntityTypes": [],
+          "indexValueTypes": [
+            "OneType",
+          ],
+          "validateEntityTypes": [],
+          "validateValueTypes": [
+            "OneType",
+          ],
+        }
+      `);
+  });
+});
+
 describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
   test('change: matchPattern pattern change entity type', () => {
     const { previous, next } = build(

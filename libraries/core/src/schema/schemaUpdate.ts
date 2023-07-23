@@ -403,11 +403,6 @@ function mergeAndNormalizeUpdatedFieldSpec(
         `${typeName}.${name}: Can’t change the value of list. Requested ${list} but is ${existingFieldSpec.list}`,
       );
     }
-    if (existingFieldSpec.adminOnly !== adminOnly) {
-      return notOk.BadRequest(
-        `${typeName}.${name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingFieldSpec.adminOnly}`,
-      );
-    }
   }
 
   switch (type) {

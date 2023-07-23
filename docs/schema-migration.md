@@ -18,7 +18,7 @@ This document describes what migrations are supported and what impact they have.
 | `type`            | `*`                    | No     | Changing field type is not supported.                                                                                 |
 | `list`            | `*`                    | No     | Changing list is not supported.                                                                                       |
 | `required`        | `*`                    | Yes    | Changing from `false` to `true` requires validation. Published entities can become invalid.                           |
-| `adminOnly`       | `*`                    | No     | Changing if a field is admin only is currently not supported.                                                         |
+| `adminOnly`       | `*`                    | Yes    | Changing if a field is admin only requires validation and indexing.                                                   |
 | `entityTypes`     | `Entity`/`RichText`    | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
 | `integer`         | `Number`               | Yes    | Changing from `true` to `false` requires validation.                                                                  |
 | `linkEntityTypes` | `RichText`             | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |

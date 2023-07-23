@@ -33,12 +33,22 @@ export function calculateSchemaChangeEntityDirtySelector(
         return notOk.BadRequest(`Type ${previousType.name} was removed`);
       }
 
-      const validationResult = hasTypeChanged(isEntityType, previous, previousType, next, nextType);
+      const validationResult = calculateTypeSelector(
+        isEntityType,
+        previous,
+        previousType,
+        next,
+        nextType,
+      );
       if (validationResult.isError()) return validationResult;
 
-      if (validationResult.value) {
+      if (validationResult.value.validate) {
         const validateTypes = isEntityType ? validateEntityTypes : validateValueTypes;
         validateTypes.push(previousType.name);
+      }
+      if (validationResult.value.index) {
+        const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
+        indexTypes.push(previousType.name);
       }
     }
   }
@@ -79,16 +89,19 @@ export function calculateSchemaChangeEntityDirtySelector(
   return ok({ validateEntityTypes, validateValueTypes, indexEntityTypes, indexValueTypes });
 }
 
-function hasTypeChanged(
+function calculateTypeSelector(
   isEntityType: boolean,
   previous: AdminSchemaWithMigrations,
   previousType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
   next: AdminSchemaWithMigrations,
   nextType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
-): Result<boolean, typeof ErrorType.Generic> {
+): Result<{ validate: boolean; index: boolean }, typeof ErrorType.Generic> {
+  let validate = false;
+  let index = false;
+
   if (!isFieldValueEqual(previousType.fields, nextType.fields)) {
     // TODO not all field changes require validation
-    return ok(true);
+    validate = true;
   }
 
   // authKeyPattern
@@ -101,13 +114,17 @@ function hasTypeChanged(
     );
     if (patternResult.isError()) return patternResult;
     if (patternResult.value) {
-      return ok(true);
+      validate = true;
     }
   }
 
   for (const previousFieldSpec of previousType.fields) {
     const nextFieldSpec = nextType.fields.find((it) => it.name === previousFieldSpec.name);
     if (!nextFieldSpec) continue;
+
+    if (!!previousFieldSpec.adminOnly !== !!nextFieldSpec.adminOnly) {
+      index = true;
+    }
 
     if ('matchPattern' in previousFieldSpec) {
       const patternResult = validateDueToPatternChange(
@@ -118,12 +135,12 @@ function hasTypeChanged(
       );
       if (patternResult.isError()) return patternResult;
       if (patternResult.value) {
-        return ok(true);
+        validate = true;
       }
     }
   }
 
-  return ok(false);
+  return ok({ validate, index });
 }
 
 function validateDueToPatternChange(

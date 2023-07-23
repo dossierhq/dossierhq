@@ -677,6 +677,67 @@ exports[`AddTypeAction > add value type to schema with existing type 2`] = `
 }
 `;
 
+exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": true,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Boolean",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldAdminOnlyAction > make existing field admin only 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": true,
+          "name": "field",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 1`] = `
 {
   "activeSelector": null,
