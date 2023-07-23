@@ -35,6 +35,7 @@ const adminSchema = AdminSchema.createAndValidate({
       authKeyPattern: 'noneSubject',
       fields: [
         { name: 'required', type: FieldType.String, required: true },
+        { name: 'requiredAndAdminOnly', type: FieldType.String, adminOnly: true, required: true },
         { name: 'pattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'fooBarBaz' },
         {
@@ -363,6 +364,14 @@ describe('Validate entity', () => {
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'will not match' } }),
       ),
     ).toMatchSnapshot();
+  });
+
+  test('Pass: required and adminOnly with no value', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { requiredAndAdminOnly: null } }),
+      ),
+    ).toEqual([]);
   });
 
   test('Fail: required with no value', () => {
