@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { ErrorType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@dossierhq/design';
 import type { Dispatch, SyntheticEvent } from 'react';
 import { useCallback, useContext, useMemo } from 'react';
@@ -44,7 +44,14 @@ export function SaveSchemaDialog({
         if (result.isOk()) {
           showNotification({ color: 'success', message: 'Updated schema.' });
         } else {
-          showNotification({ color: 'error', message: 'Failed saving schema.' });
+          showNotification({
+            color: 'error',
+            message: `Failed saving schema. ${
+              result.error === ErrorType.BadRequest
+                ? result.message
+                : `${result.error}: ${result.message}`
+            }`,
+          });
           dispatchSchemaEditorState(
             new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(false),
           );
