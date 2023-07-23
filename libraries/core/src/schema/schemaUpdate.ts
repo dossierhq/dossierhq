@@ -106,14 +106,6 @@ export function schemaUpdate(
         false,
       );
 
-      if (existingValueSpec) {
-        if (existingValueSpec.adminOnly !== adminOnly) {
-          return notOk.BadRequest(
-            `${valueSpecUpdate.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingValueSpec.adminOnly}`,
-          );
-        }
-      }
-
       const collectFieldsResult = collectFieldSpecsFromUpdates(
         valueSpecUpdate.fields,
         existingValueSpec,

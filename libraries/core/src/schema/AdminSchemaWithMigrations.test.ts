@@ -458,20 +458,6 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     );
   });
 
-  test('Error: changing adminOnly of value type', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
-    })
-      .valueOrThrow()
-      .updateAndValidate({ valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
-
-    expectErrorResult(
-      result,
-      ErrorType.BadRequest,
-      'Foo: Can’t change the value of adminOnly. Requested false but is true',
-    );
-  });
-
   test('Error: changing type of field', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
