@@ -22,7 +22,7 @@ import {
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
-  // updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
+  updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
   // updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
   updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
   updateSchemaSpecification_adminOnlyFieldRemovesFromIndex,
@@ -38,7 +38,6 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_errorWrongVersion,
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid({
   server,
 }: SchemaTestContext) {
