@@ -1,11 +1,9 @@
 import {
   AdminEntityStatus,
-  notOk,
   ok,
   traverseEntity,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
-  visitorPathToString,
   type AdminSchema,
   type EntityLike,
   type EntityReference,
@@ -20,8 +18,8 @@ import {
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
-  TransactionContext,
   DatabaseResolvedEntityReference,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
   createFullTextSearchCollector,
@@ -40,19 +38,21 @@ export function validatePublishedFieldValuesAndCollectInfo(
   entityFields: Record<string, unknown>,
 ): Result<
   {
+    validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
     fullTextSearchText: string;
     references: EntityReference[];
     locations: Location[];
     valueTypes: string[];
     uniqueIndexValues: UniqueIndexValueCollection;
   },
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  typeof ErrorType.Generic
 > {
   const entity: EntityLike = {
     info: { type },
     fields: entityFields,
   };
 
+  const validationIssues: (SaveValidationIssue | PublishValidationIssue)[] = [];
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
   const locationsCollector = createLocationsCollector();
@@ -61,15 +61,14 @@ export function validatePublishedFieldValuesAndCollectInfo(
 
   for (const node of traverseEntity(publishedSchema, path, entity)) {
     // validate for publish uses admin schema since it provides better error messages for adminOnly
-    let validationIssue: SaveValidationIssue | PublishValidationIssue | null =
-      validateTraverseNodeForPublish(adminSchema, node);
-    if (!validationIssue) {
-      validationIssue = validateTraverseNodeForSave(publishedSchema, node);
+    const publishIssue = validateTraverseNodeForPublish(adminSchema, node);
+    if (publishIssue) {
+      validationIssues.push(publishIssue);
     }
-    if (validationIssue) {
-      return notOk.BadRequest(
-        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
-      );
+
+    const saveIssue = validateTraverseNodeForSave(publishedSchema, node);
+    if (saveIssue) {
+      validationIssues.push(saveIssue);
     }
 
     ftsCollector.collect(node);
@@ -78,7 +77,9 @@ export function validatePublishedFieldValuesAndCollectInfo(
     valueTypesCollector.collect(node);
     uniqueIndexCollector.collect(node);
   }
+
   return ok({
+    validationIssues,
     fullTextSearchText: ftsCollector.result,
     references: referencesCollector.result,
     locations: locationsCollector.result,
@@ -92,13 +93,17 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
   context: TransactionContext,
   entitiesWithReferences: { entity: EntityReference; references: EntityReference[] }[],
 ): PromiseResult<
-  Map<string, DatabaseResolvedEntityReference[]>,
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  {
+    validReferences: Map<string, DatabaseResolvedEntityReference[]>;
+    unpublishedReferences: Map<string, EntityReference[]>;
+    invalidReferences: Map<string, EntityReference[]>;
+  },
+  typeof ErrorType.Generic
 > {
-  const referenceErrorMessages: string[] = [];
   const entitiesReferences = new Map<string, DatabaseResolvedEntityReference[]>();
+  const entitiesUnpublishedReferences = new Map<string, EntityReference[]>();
+  const entitiesInvalidReferences = new Map<string, EntityReference[]>();
   for (const { entity, references } of entitiesWithReferences) {
-    // Step 1: Check that referenced entities are published
     const referencesResult = await databaseAdapter.adminEntityGetReferenceEntitiesInfo(
       context,
       references,
@@ -106,6 +111,7 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
     if (referencesResult.isError()) return referencesResult;
 
     const unpublishedReferences: EntityReference[] = [];
+    const invalidReferences: EntityReference[] = [];
     const entityReferences: DatabaseResolvedEntityReference[] = [];
     entitiesReferences.set(entity.id, entityReferences);
 
@@ -115,28 +121,28 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
       );
       if (!referenceInfo) {
         // Shouldn't happen since you can't create an entity with invalid references
-        return notOk.Generic(`${entity.id}: Referenced entity ${requestedReference.id} not found`);
-      }
-      if (
+        invalidReferences.push(requestedReference);
+      } else if (
         referenceInfo.status !== AdminEntityStatus.published &&
         referenceInfo.status !== AdminEntityStatus.modified
       ) {
         unpublishedReferences.push(requestedReference);
+      } else {
+        entityReferences.push({ entityInternalId: referenceInfo.entityInternalId });
       }
-      entityReferences.push({ entityInternalId: referenceInfo.entityInternalId });
     }
 
     if (unpublishedReferences.length > 0) {
-      referenceErrorMessages.push(
-        `${entity.id}: References unpublished entities: ${unpublishedReferences
-          .map(({ id }) => id)
-          .join(', ')}`,
-      );
+      entitiesUnpublishedReferences.set(entity.id, unpublishedReferences);
+    }
+    if (invalidReferences.length > 0) {
+      entitiesInvalidReferences.set(entity.id, invalidReferences);
     }
   }
 
-  if (referenceErrorMessages.length > 0) {
-    return notOk.BadRequest(referenceErrorMessages.join('\n'));
-  }
-  return ok(entitiesReferences);
+  return ok({
+    validReferences: entitiesReferences,
+    unpublishedReferences: entitiesUnpublishedReferences,
+    invalidReferences: entitiesInvalidReferences,
+  });
 }

@@ -8,6 +8,7 @@ import type {
 import {
   AdminEntityStatus,
   FieldType,
+  assertOkResult,
   createRichTextRootNode,
   createRichTextValueItemNode,
 } from '@dossierhq/core';
@@ -76,13 +77,13 @@ let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
 
 beforeAll(async () => {
   const result = await createPostgresTestServerAndClient();
-  if (result.isError()) throw result.toError();
+  assertOkResult(result);
   server = result.value.server;
   context = result.value.context;
   adminClient = server.createAdminClient(context);
   publishedClient = server.createPublishedClient(context);
 
-  await adminClient.updateSchemaSpecification(SCHEMA);
+  (await adminClient.updateSchemaSpecification(SCHEMA)).throwIfError();
 
   await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, 'none');
   entitiesOfTypePublishedEntityOnlyEditBeforeNone =

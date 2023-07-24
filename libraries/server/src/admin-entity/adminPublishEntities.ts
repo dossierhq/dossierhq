@@ -14,6 +14,7 @@ import {
   createErrorResult,
   notOk,
   ok,
+  visitorPathToString,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
@@ -110,6 +111,28 @@ export async function adminPublishEntities(
         publishVersionsInfo.map(({ uuid, references }) => ({ entity: { id: uuid }, references })),
       );
     if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
+    if (validateReferencedEntitiesResult.value.unpublishedReferences.size > 0) {
+      const [entityId, unpublishedReferences] =
+        validateReferencedEntitiesResult.value.unpublishedReferences.entries().next().value as [
+          string,
+          EntityReference[],
+        ];
+      return notOk.BadRequest(
+        `${entityId}: References unpublished entities: ${unpublishedReferences
+          .map(({ id }) => id)
+          .join(', ')}`,
+      );
+    }
+    if (validateReferencedEntitiesResult.value.invalidReferences.size > 0) {
+      const [entityId, invalidReferences] = validateReferencedEntitiesResult.value.invalidReferences
+        .entries()
+        .next().value as [string, EntityReference[]];
+      return notOk.BadRequest(
+        `${entityId}: References invalid entities: ${invalidReferences
+          .map(({ id }) => id)
+          .join(', ')}`,
+      );
+    }
 
     // Step 5: Create publish event
     const publishEventResult = await createPublishEvents(
@@ -122,7 +145,7 @@ export async function adminPublishEntities(
     // Step 6: Update entity indexes
     for (const versionInfo of publishVersionsInfo) {
       const referenceIds: DatabaseResolvedEntityReference[] | undefined =
-        validateReferencedEntitiesResult.value.get(versionInfo.uuid);
+        validateReferencedEntitiesResult.value.validReferences.get(versionInfo.uuid);
       assertIsDefined(referenceIds);
       const entityIndexes = {
         fullTextSearchText: versionInfo.fullTextSearchText,
@@ -241,6 +264,12 @@ async function collectVersionsInfo(
         entityFieldsResult.value,
       );
       if (validateFieldsResult.isError()) return validateFieldsResult;
+      if (validateFieldsResult.value.validationIssues.length > 0) {
+        const firstValidationIssue = validateFieldsResult.value.validationIssues[0];
+        return notOk.BadRequest(
+          `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
+        );
+      }
       const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =
         validateFieldsResult.value;
 

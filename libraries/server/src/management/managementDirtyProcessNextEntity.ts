@@ -31,6 +31,14 @@ interface EntityValidity {
   validPublished: boolean | null;
 }
 
+const EMPTY_ENTITY_INFO: {
+  entityIndexes: DatabaseEntityIndexesArg;
+  uniqueIndexValues: UniqueIndexValueCollection;
+} = {
+  entityIndexes: { fullTextSearchText: '', locations: [], referenceIds: [], valueTypes: [] },
+  uniqueIndexValues: new Map(),
+};
+
 export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
@@ -124,7 +132,7 @@ export async function managementDirtyProcessNextEntity(
       }
 
       // Validate published
-      const validationPublishedResult = await validatePublishedEntity(
+      const validationPublishedResult = await validateAndCollectInfoFromPublishedEntity(
         adminSchema,
         databaseAdapter,
         context,
@@ -133,19 +141,12 @@ export async function managementDirtyProcessNextEntity(
         schemaVersion,
         fieldValues,
       );
-      if (validationPublishedResult.isOk()) {
-        entityValidity.validPublished = true;
-        publishedUniqueIndexValues = validationPublishedResult.value.uniqueIndexValues;
-      } else {
-        if (validationPublishedResult.error === ErrorType.BadRequest) {
-          entityValidity.validPublished = false;
-        } else {
-          return notOk.Generic(validationPublishedResult.message);
-        }
-      }
+      if (validationPublishedResult.isError()) return validationPublishedResult;
+      entityValidity.validPublished = validationPublishedResult.value.valid;
+      publishedUniqueIndexValues = validationPublishedResult.value.uniqueIndexValues;
 
       // Index published
-      if (dirtyIndexPublished && validationPublishedResult.isOk()) {
+      if (dirtyIndexPublished) {
         const updatePublishedResult = await databaseAdapter.adminEntityIndexesUpdatePublished(
           context,
           entityResult.value,
@@ -222,7 +223,7 @@ async function validateAdminEntity(
   });
 }
 
-async function validatePublishedEntity(
+async function validateAndCollectInfoFromPublishedEntity(
   adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
@@ -231,16 +232,36 @@ async function validatePublishedEntity(
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
 ): PromiseResult<
-  { entityIndexes: DatabaseEntityIndexesArg; uniqueIndexValues: UniqueIndexValueCollection },
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  {
+    valid: boolean;
+    entityIndexes: DatabaseEntityIndexesArg;
+    uniqueIndexValues: UniqueIndexValueCollection;
+  },
+  typeof ErrorType.Generic
 > {
+  const { logger } = context;
   const entitySpec = adminSchema.getEntityTypeSpecification(type);
-  if (!entitySpec) return notOk.Generic(`No entity spec for type ${type}`);
+  if (!entitySpec) {
+    logger.error('entity(%s): No entity spec for type %s', reference.id, type);
+    return ok({ valid: false, ...EMPTY_ENTITY_INFO });
+  }
 
-  if (entitySpec.adminOnly) return notOk.Generic(`Entity type is admin only`);
+  if (entitySpec.adminOnly) {
+    logger.error('entity(%s): Entity type %s is admin only', reference.id, type);
+    return ok({ valid: false, ...EMPTY_ENTITY_INFO });
+  }
 
   const decodeResult = decodeAdminEntityFields(adminSchema, entitySpec, schemaVersion, fieldValues);
-  if (decodeResult.isError()) return decodeResult;
+  if (decodeResult.isError()) {
+    if (decodeResult.isErrorType(ErrorType.BadRequest)) {
+      logger.error(
+        'entity(%s): Failed decoding entity fields: %s',
+        reference.id,
+        decodeResult.message,
+      );
+      return ok({ valid: false, ...EMPTY_ENTITY_INFO });
+    }
+  }
   const entityFields = decodeResult.value;
 
   const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
@@ -257,10 +278,14 @@ async function validatePublishedEntity(
       { entity: reference, references: validateFieldsResult.value.references },
     ]);
   if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
-  const referenceIds = validateReferencedEntitiesResult.value.get(reference.id);
+  const referenceIds = validateReferencedEntitiesResult.value.validReferences.get(reference.id);
   assertIsDefined(referenceIds);
 
   return ok({
+    valid:
+      validateFieldsResult.value.validationIssues.length === 0 &&
+      validateReferencedEntitiesResult.value.invalidReferences.size === 0 &&
+      validateReferencedEntitiesResult.value.unpublishedReferences.size === 0,
     entityIndexes: {
       fullTextSearchText: validateFieldsResult.value.fullTextSearchText,
       locations: validateFieldsResult.value.locations,

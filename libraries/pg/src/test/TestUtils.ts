@@ -93,9 +93,8 @@ export async function initializeIntegrationTestServer(): PromiseResult<
     }),
   );
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
-  if (schemaResult.isError()) {
-    return schemaResult;
-  }
+  if (schemaResult.isError()) return schemaResult;
+
   const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
   return ok({ server, adminSchema });
