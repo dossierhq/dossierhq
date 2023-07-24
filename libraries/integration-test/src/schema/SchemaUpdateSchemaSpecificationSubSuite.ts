@@ -22,6 +22,7 @@ import {
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
+  updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
   updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
   updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
@@ -37,6 +38,37 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnValueItem,
   updateSchemaSpecification_errorWrongVersion,
 ];
+
+async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    const schemaSpec = (
+      await adminClient.getSchemaSpecification({ includeMigrations: true })
+    ).valueOrThrow();
+
+    const migrationEntitySpec = schemaSpec.entityTypes.find((it) => it.name === 'MigrationEntity');
+    if (migrationEntitySpec && migrationEntitySpec.fields.length > 0) {
+      const updateResult = await adminClient.updateSchemaSpecification({
+        migrations: [
+          {
+            version: schemaSpec.version + 1,
+            actions: migrationEntitySpec.fields.map((it) => ({
+              action: 'deleteField',
+              entityType: 'MigrationEntity',
+              field: it.name,
+            })),
+          },
+        ],
+      });
+      assertOkResult(updateResult);
+    }
+    return ok(undefined);
+  });
+  assertOkResult(result);
+}
 
 async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid({
   server,
