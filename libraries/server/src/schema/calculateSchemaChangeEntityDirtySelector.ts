@@ -104,6 +104,11 @@ function calculateTypeSelector(
     validate = true;
   }
 
+  if (!!previousType.adminOnly !== !!nextType.adminOnly) {
+    validate = true;
+    index = true;
+  }
+
   // authKeyPattern
   if (isEntityType) {
     const patternResult = validateDueToPatternChange(

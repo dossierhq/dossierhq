@@ -22,6 +22,8 @@ import {
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
+  updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
+  updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
   updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
   updateSchemaSpecification_adminOnlyFieldRemovesFromIndex,
   updateSchemaSpecification_deleteFieldOnEntity,
@@ -35,6 +37,111 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnValueItem,
   updateSchemaSpecification_errorWrongVersion,
 ];
+
+async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // Create entity
+    const {
+      entity: { id: entityId },
+    } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: null } },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Make the value item adminOnly
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
+      }),
+    );
+
+    // Process all entities
+    assertOkResult(await processAllDirtyEntities(server));
+
+    // Check that the entity is invalid
+    const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
+    assertEquals(publishedEntity.info.valid, false);
+
+    // Make the value item normal
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
+      }),
+    );
+
+    return ok(entityId);
+  });
+  assertOkResult(result);
+}
+
+async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const query: Parameters<(typeof publishedClient)['searchEntities']>[0] = {
+    entityTypes: ['ValueItems'],
+    text: 'baz',
+  };
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // Create entity
+    const {
+      entity: { id: entityId },
+    } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'baz' } },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Check that it's in the index
+    const countBeforeSchemaUpdate = (
+      await countSearchResultWithEntity(publishedClient, query, entityId)
+    ).valueOrThrow();
+    assertEquals(countBeforeSchemaUpdate, 1);
+
+    // Make the value item adminOnly
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
+      }),
+    );
+
+    // Process all entities
+    assertOkResult(await processAllDirtyEntities(server));
+
+    // Check that it's no longer in the index
+    const countAfterSchemaUpdate = (
+      await countSearchResultWithEntity(publishedClient, query, entityId)
+    ).valueOrThrow();
+    assertEquals(countAfterSchemaUpdate, 0);
+
+    // Make the value item normal
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
+      }),
+    );
+
+    return ok(entityId);
+  });
+  assertOkResult(result);
+}
 
 async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid({
   server,

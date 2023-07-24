@@ -108,6 +108,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     { name: 'AdminOnlyValue', adminOnly: true, fields: [] },
     {
       name: 'ChangeValidationsValueItem',
+      adminOnly: false,
       fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' }],
     },
     {
