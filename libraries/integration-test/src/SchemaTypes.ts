@@ -41,6 +41,9 @@ export type AppAdminEntity =
 export interface AdminChangeValidationsFields {
   required: string | null;
   matchPattern: string | null;
+  richText: RichText | null;
+  valueItem: AppAdminValueItem | null;
+  valueItemList: AppAdminValueItem[] | null;
 }
 
 export type AdminChangeValidations = AdminEntity<
@@ -388,6 +391,9 @@ export type AppPublishedEntity =
 export interface PublishedChangeValidationsFields {
   required: string;
   matchPattern: string | null;
+  richText: RichText | null;
+  valueItem: AppPublishedValueItem | null;
+  valueItemList: AppPublishedValueItem[] | null;
 }
 
 export type PublishedChangeValidations = PublishedEntity<

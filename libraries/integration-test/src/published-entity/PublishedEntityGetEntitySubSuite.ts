@@ -3,7 +3,9 @@ import {
   AdminEntityStatus,
   assertIsDefined,
   copyEntity,
+  createRichTextHeadingNode,
   createRichTextRootNode,
+  createRichTextTextNode,
   createRichTextValueItemNode,
   ErrorType,
 } from '@dossierhq/core';
@@ -22,6 +24,7 @@ import type {
   AppPublishedUniqueIndexes,
 } from '../SchemaTypes.js';
 import {
+  assertIsPublishedChangeValidations,
   assertIsPublishedLocationsValue,
   assertIsPublishedRichTexts,
   assertIsPublishedStrings,
@@ -53,6 +56,9 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded,
   getEntity_usingUniqueIndex,
   getEntity_invalidEntity,
+  getEntity_invalidEntityAdminOnlyValueItem,
+  getEntity_invalidEntityAdminOnlyValueItemList,
+  getEntity_invalidEntityAdminOnlyValueItemInRichText,
   getEntity_errorInvalidId,
   getEntity_errorInvalidUniqueIndexValue,
   getEntity_errorUniqueIndexValueFromAdminOnlyField,
@@ -282,6 +288,77 @@ async function getEntity_invalidEntity({ server }: PublishedEntityTestContext) {
   const result = await publishedClient.getEntity({ id: entity.id });
   assertOkResult(result);
   assertSame(result.value.info.valid, false);
+}
+
+async function getEntity_invalidEntityAdminOnlyValueItem({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const { entity } = (
+    await createInvalidEntity(
+      server,
+      adminClient,
+      { valueItem: { type: 'AdminOnlyValue' } },
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  const publishedEntity = (await publishedClient.getEntity({ id: entity.id })).valueOrThrow();
+  assertIsPublishedChangeValidations(publishedEntity);
+  assertSame(publishedEntity.info.valid, false);
+  assertSame(publishedEntity.fields.valueItem, null);
+}
+
+async function getEntity_invalidEntityAdminOnlyValueItemList({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const { entity } = (
+    await createInvalidEntity(
+      server,
+      adminClient,
+      { valueItemList: [{ type: 'AdminOnlyValue' }] },
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  const publishedEntity = (await publishedClient.getEntity({ id: entity.id })).valueOrThrow();
+  assertIsPublishedChangeValidations(publishedEntity);
+  assertSame(publishedEntity.info.valid, false);
+  assertSame(publishedEntity.fields.valueItemList, null);
+}
+
+async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const { entity } = (
+    await createInvalidEntity(
+      server,
+      adminClient,
+      {
+        richText: createRichTextRootNode([
+          createRichTextValueItemNode({ type: 'AdminOnlyValue' }),
+          createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')]),
+        ]),
+      },
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  const publishedEntity = (await publishedClient.getEntity({ id: entity.id })).valueOrThrow();
+  assertIsPublishedChangeValidations(publishedEntity);
+  assertSame(publishedEntity.info.valid, false);
+  assertEquals(
+    publishedEntity.fields.richText,
+    createRichTextRootNode([
+      createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')]),
+    ]),
+  );
 }
 
 async function getEntity_errorInvalidId({ server }: PublishedEntityTestContext) {

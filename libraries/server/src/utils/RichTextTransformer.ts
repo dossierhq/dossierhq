@@ -1,7 +1,11 @@
-import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
-import { isRichTextElementNode } from '@dossierhq/core';
+import {
+  isRichTextElementNode,
+  type RichText,
+  type RichTextElementNode,
+  type RichTextNode,
+} from '@dossierhq/core';
 
-type RichTextNodeTransformer = (node: Readonly<RichTextNode>) => Readonly<RichTextNode>;
+type RichTextNodeTransformer = (node: Readonly<RichTextNode>) => Readonly<RichTextNode | null>;
 
 export function transformRichText<T extends Readonly<RichText> | RichText>(
   richText: T,
@@ -17,9 +21,9 @@ export function transformRichText<T extends Readonly<RichText> | RichText>(
 function transformNode(
   node: Readonly<RichTextNode>,
   transformer: RichTextNodeTransformer,
-): Readonly<RichTextNode> {
+): Readonly<RichTextNode | null> {
   const newNode = transformer(node);
-  if (!isRichTextElementNode(newNode)) {
+  if (!newNode || !isRichTextElementNode(newNode)) {
     return newNode;
   }
 
@@ -30,7 +34,9 @@ function transformNode(
     if (newChild !== child) {
       childrenHasChanged = true;
     }
-    newChildren.push(newChild);
+    if (newChild) {
+      newChildren.push(newChild);
+    }
   }
   if (!childrenHasChanged) {
     return newNode;

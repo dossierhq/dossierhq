@@ -239,7 +239,9 @@ function decodeFieldItemOrList(
           codecMode,
           encodedItem as ValueItem,
         );
-        decodedItems.push(decodedItem);
+        if (decodedItem) {
+          decodedItems.push(decodedItem);
+        }
       } else if (fieldSpec.type === FieldType.RichText) {
         decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem as RichText));
       } else {
@@ -250,7 +252,7 @@ function decodeFieldItemOrList(
         );
       }
     }
-    return decodedItems;
+    return decodedItems.length > 0 ? decodedItems : null;
   }
   if (fieldSpec.type === FieldType.ValueItem) {
     return decodeValueItemField(schema, fieldSpec, codecMode, fieldValue as ValueItem);
@@ -268,11 +270,11 @@ function decodeValueItemField(
   _fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   codecMode: CodecMode,
   encodedValue: ValueItem,
-) {
+): ValueItem | null {
   const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
   if (!valueSpec) {
-    //TODO replace with result
-    throw new Error(`Couldn't find spec for value type ${encodedValue.type}`);
+    // Could be that the value type was deleted or made adminOnly (when decoding published entities)
+    return null;
   }
   const decodedValue: ValueItem = { type: encodedValue.type };
   for (const fieldFieldSpec of valueSpec.fields) {
@@ -291,10 +293,11 @@ function decodeRichTextField(
 ): RichText {
   return transformRichText(encodedValue, (node) => {
     if (isRichTextValueItemNode(node)) {
-      const newNode: RichTextValueItemNode = {
-        ...node,
-        data: decodeValueItemField(schema, fieldSpec, 'json', node.data),
-      };
+      const data = decodeValueItemField(schema, fieldSpec, 'json', node.data);
+      if (!data) {
+        return null;
+      }
+      const newNode: RichTextValueItemNode = { ...node, data };
       return newNode;
     }
     return node;

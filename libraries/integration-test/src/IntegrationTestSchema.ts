@@ -23,6 +23,9 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [
         { name: 'required', type: FieldType.String, required: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
+        { name: 'richText', type: FieldType.RichText, adminOnly: false },
+        { name: 'valueItem', type: FieldType.ValueItem, adminOnly: false },
+        { name: 'valueItemList', type: FieldType.ValueItem, list: true, adminOnly: false },
       ],
     },
     { name: 'MigrationEntity', fields: [] },
@@ -134,6 +137,9 @@ export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecification
       fields: [
         { name: 'required', type: FieldType.String, required: false },
         { name: 'matchPattern', type: FieldType.String, matchPattern: null },
+        { name: 'richText', type: FieldType.RichText, adminOnly: true },
+        { name: 'valueItem', type: FieldType.ValueItem, adminOnly: true },
+        { name: 'valueItemList', type: FieldType.ValueItem, list: true, adminOnly: true },
       ],
     },
   ],
