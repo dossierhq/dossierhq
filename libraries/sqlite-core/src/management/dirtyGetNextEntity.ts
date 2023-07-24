@@ -46,12 +46,13 @@ export async function managementDirtyGetNextEntity(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createSqliteSqlQuery();
-  sql`WITH entities_cte AS (SELECT id FROM entities WHERE dirty != 0 LIMIT 1)`;
+  sql`WITH entities_cte AS (SELECT id FROM entities WHERE dirty != 0`;
+  if (filter) {
+    sql`AND uuid = ${filter.id}`;
+  }
+  sql`LIMIT 1)`;
   sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.invalid, ev.version, ev.schema_version, ev.fields`;
   sql`FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id`;
-  if (filter) {
-    sql`AND e.uuid = ${filter.id}`;
-  }
 
   const result = await queryNoneOrOne<EntityRow>(database, context, query);
   if (result.isError()) return result;

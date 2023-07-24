@@ -32,11 +32,11 @@ export async function managementDirtyGetNextEntity(
 > {
   const { sql, query } = createPostgresSqlQuery();
   sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.invalid, ev.version, ev.schema_version, ev.data`;
-  sql`FROM entities e, entity_versions ev WHERE e.dirty != 0 AND e.latest_draft_entity_versions_id = ev.id`;
+  sql`FROM entities e, entity_versions ev WHERE e.dirty != 0`;
   if (filter) {
     sql`AND e.uuid = ${filter.id}`;
   }
-  sql`LIMIT 1`;
+  sql`AND e.latest_draft_entity_versions_id = ev.id LIMIT 1`;
 
   const result = await queryNoneOrOne<
     Pick<
