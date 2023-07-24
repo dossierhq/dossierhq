@@ -57,7 +57,12 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
     })();
   }, renewInterval);
 
-  const result = await callback(status);
+  let result;
+  try {
+    result = await callback(status);
+  } catch (error) {
+    result = notOk.GenericUnexpectedException({ logger: NoOpLogger }, error);
+  }
 
   const realRenewError: AdvisoryLockHelperStatus['renewError'] = status.renewError;
 
