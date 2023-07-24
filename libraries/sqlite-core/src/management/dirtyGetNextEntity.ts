@@ -1,7 +1,14 @@
-import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import type {
-  DatabaseManagementGetNextDirtyEntityPayload,
-  TransactionContext,
+import {
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
+import {
+  createSqliteSqlQuery,
+  type DatabaseManagementGetNextDirtyEntityPayload,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
   ENTITY_DIRTY_FLAG_INDEX_LATEST,
@@ -30,19 +37,23 @@ type EntityRow = Pick<
 > &
   Pick<EntityVersionsTable, 'version' | 'schema_version' | 'fields'>;
 
-const QUERY =
-  'WITH entities_cte AS (SELECT id FROM entities WHERE dirty != 0 LIMIT 1) ' +
-  'SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.invalid, ev.version, ev.schema_version, ev.fields ' +
-  'FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id';
-
 export async function managementDirtyGetNextEntity(
   database: Database,
   context: TransactionContext,
+  filter: EntityReference | undefined,
 ): PromiseResult<
   DatabaseManagementGetNextDirtyEntityPayload,
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const result = await queryNoneOrOne<EntityRow>(database, context, QUERY);
+  const { sql, query } = createSqliteSqlQuery();
+  sql`WITH entities_cte AS (SELECT id FROM entities WHERE dirty != 0 LIMIT 1)`;
+  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.invalid, ev.version, ev.schema_version, ev.fields`;
+  sql`FROM entities_cte, entities e, entity_versions ev WHERE entities_cte.id = e.id AND e.latest_entity_versions_id = ev.id`;
+  if (filter) {
+    sql`AND e.uuid = ${filter.id}`;
+  }
+
+  const result = await queryNoneOrOne<EntityRow>(database, context, query);
   if (result.isError()) return result;
   if (!result.value) {
     return notOk.NotFound('No more dirty entities');

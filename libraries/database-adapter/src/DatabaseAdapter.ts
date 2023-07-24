@@ -512,6 +512,7 @@ export interface DatabaseAdapter<
 
   managementDirtyGetNextEntity(
     context: TransactionContext,
+    filter: EntityReference | undefined,
   ): PromiseResult<
     DatabaseManagementGetNextDirtyEntityPayload,
     typeof ErrorType.NotFound | typeof ErrorType.Generic

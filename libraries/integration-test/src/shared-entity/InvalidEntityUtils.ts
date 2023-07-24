@@ -8,6 +8,7 @@ import {
   type ErrorType,
   type PromiseResult,
   type Result,
+  type EntityReference,
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import {
@@ -91,6 +92,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
       result = createResult.isError()
         ? createResult
         : ok({ entity: createResult.value.entity, validations: [] });
+      return createResult.isOk() ? { id: createResult.value.entity.id } : undefined;
     },
     (processed) => {
       if (result.isOk() && result.value.entity.id === processed.id) {
@@ -107,7 +109,7 @@ async function withTemporarySchemaChange(
   server: Server,
   adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
-  onChangedSchema: () => Promise<void>,
+  onChangedSchema: () => Promise<EntityReference | undefined>,
   onProcessed: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withSchemaAdvisoryLock(adminClient, async () => {
@@ -115,13 +117,13 @@ async function withTemporarySchemaChange(
     const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);
     if (removeValidationsResult.isError()) return removeValidationsResult;
 
-    await onChangedSchema();
+    const filter = await onChangedSchema();
 
     // restore validations to the schema
     const restoreSchemaResult = await adminClient.updateSchemaSpecification(IntegrationTestSchema);
     if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
     // process dirty
-    return processAllDirtyEntities(server, onProcessed);
+    return processAllDirtyEntities(server, filter, onProcessed);
   });
 }

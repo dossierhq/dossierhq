@@ -16,11 +16,12 @@ export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
 
 export async function processAllDirtyEntities(
   server: Server,
+  filter: Parameters<Server['processNextDirtyEntity']>[0],
   onProcessed?: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   let done = false;
   while (!done) {
-    const processResult = await server.processNextDirtyEntity();
+    const processResult = await server.processNextDirtyEntity(filter);
     if (processResult.isError()) return processResult;
     if (processResult.value) {
       onProcessed?.(processResult.value);

@@ -106,22 +106,26 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
 
         if (this.batchCount % 200 === 0) {
           this.logger.info(
-            'BackgroundEntityProcessorPlugin: validated %d entities',
+            'BackgroundEntityProcessorPlugin: processed %d entities',
             this.batchCount,
           );
         }
 
         if (result.isOk()) {
           if (result.value) {
-            if (!result.value.valid) {
+            const { valid, validPublished } = result.value;
+            const validStrings = valid ? [] : ['invalid'];
+            if (validPublished === false) validStrings.push('invalidPublished');
+            if (validStrings.length) {
               this.logger.warn(
-                'BackgroundEntityProcessorPlugin: validated entity: %s, but it was invalid',
+                'BackgroundEntityProcessorPlugin: processed entity: %s, but it was %s',
                 result.value.id,
+                validStrings.join(', '),
               );
             }
           } else {
             this.logger.info(
-              'BackgroundEntityProcessorPlugin: no more entities to validate, validated %d entities',
+              'BackgroundEntityProcessorPlugin: no more entities to process, processed %d entities',
               this.batchCount,
             );
             this.processing = false;
@@ -129,7 +133,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
           }
         } else {
           this.logger.error(
-            'BackgroundEntityProcessorPlugin: failed validating %s: %s',
+            'BackgroundEntityProcessorPlugin: failed processing %s: %s',
             result.error,
             result.message,
           );

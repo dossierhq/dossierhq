@@ -35,13 +35,14 @@ export async function managementDirtyProcessNextEntity(
   adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
+  filter: EntityReference | undefined,
 ): PromiseResult<
   { id: string; valid: boolean; validPublished: boolean | null } | null,
   typeof ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
     // Fetch info about next dirty entity
-    const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context);
+    const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context, filter);
     if (entityResult.isError()) {
       if (entityResult.error === ErrorType.NotFound) {
         return ok(null); // no more dirty entities

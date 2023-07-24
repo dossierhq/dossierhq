@@ -66,7 +66,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     );
 
     // Process all entities
-    assertOkResult(await processAllDirtyEntities(server));
+    assertOkResult(await processAllDirtyEntities(server, { id: entityId }));
 
     // Check that the entity is invalid
     const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
@@ -123,7 +123,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     );
 
     // Process all entities
-    assertOkResult(await processAllDirtyEntities(server));
+    assertOkResult(await processAllDirtyEntities(server, { id: entityId }));
 
     // Check that it's no longer in the index
     const countAfterSchemaUpdate = (
@@ -179,7 +179,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     );
 
     // Process all entities
-    assertOkResult(await processAllDirtyEntities(server));
+    assertOkResult(await processAllDirtyEntities(server, { id: entityId }));
 
     // Check that the entity is invalid
     const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
@@ -198,7 +198,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     );
 
     // Process all entities
-    assertOkResult(await processAllDirtyEntities(server));
+    assertOkResult(await processAllDirtyEntities(server, { id: entityId }));
 
     return ok(entityId);
   });
@@ -260,7 +260,7 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
     );
 
     // Process all entities
-    assertOkResult(await processAllDirtyEntities(server));
+    assertOkResult(await processAllDirtyEntities(server, { id: entityId }));
 
     return ok(entityId);
   });
@@ -442,6 +442,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     }[] = [];
     const processAfterValidationChangeResult = await processAllDirtyEntities(
       server,
+      { id: entity.id },
       (processed) => {
         if (processed.id === entity.id) {
           validationChangeProcessed.push(processed);
@@ -467,11 +468,15 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     // Process all entities
     const deleteFieldProcessed: { id: string; valid: boolean; validPublished: boolean | null }[] =
       [];
-    const processAfterDeletionResult = await processAllDirtyEntities(server, (processed) => {
-      if (processed.id === entity.id) {
-        deleteFieldProcessed.push(processed);
-      }
-    });
+    const processAfterDeletionResult = await processAllDirtyEntities(
+      server,
+      { id: entity.id },
+      (processed) => {
+        if (processed.id === entity.id) {
+          deleteFieldProcessed.push(processed);
+        }
+      },
+    );
     assertOkResult(processAfterDeletionResult);
     assertEquals(deleteFieldProcessed, [{ id: entity.id, valid: true, validPublished: true }]);
 
@@ -524,7 +529,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process all entities
-    const processResult = await processAllDirtyEntities(server);
+    const processResult = await processAllDirtyEntities(server, { id: entity.id });
     assertOkResult(processResult);
 
     return ok(entity);
@@ -654,8 +659,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process all entities
-    const processResult = await processAllDirtyEntities(server);
-    assertOkResult(processResult);
+    assertOkResult(await processAllDirtyEntities(server, { id: entity.id }));
 
     return ok(entity);
   });

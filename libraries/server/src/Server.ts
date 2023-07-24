@@ -18,6 +18,7 @@ import {
   type PublishedSchema,
   type Result,
   type ValueItem,
+  type EntityReference,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -54,7 +55,9 @@ export interface Server<
     options: TDatabaseOptimizationOptions,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
-  processNextDirtyEntity(): PromiseResult<
+  processNextDirtyEntity(
+    filter?: EntityReference,
+  ): PromiseResult<
     { id: string; valid: boolean; validPublished: boolean | null } | null,
     typeof ErrorType.Generic
   >;
@@ -234,12 +237,13 @@ export async function createServer<
       return databaseAdapter.managementOptimize(managementContext, options);
     },
 
-    processNextDirtyEntity() {
+    processNextDirtyEntity(filter: EntityReference | undefined) {
       const managementContext = serverImpl.createInternalContext(null);
       return managementDirtyProcessNextEntity(
         serverImpl.getAdminSchema(),
         databaseAdapter,
         managementContext,
+        filter,
       );
     },
 
