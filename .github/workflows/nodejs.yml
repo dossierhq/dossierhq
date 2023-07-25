@@ -51,7 +51,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose
+          node common/scripts/install-run-rush.js build --verbose --timeline
       - name: stop db
         run: |
           cd tools/generic-tools/
