@@ -1,5 +1,42 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() > change index 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anotherIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anotherIndex",
+      "type": "unique",
+    },
+  ],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = `
 {
   "entityTypes": [

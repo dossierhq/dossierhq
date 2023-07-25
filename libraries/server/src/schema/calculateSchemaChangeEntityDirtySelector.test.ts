@@ -214,6 +214,80 @@ describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
   });
 });
 
+describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
+  test('change: index change entity type', () => {
+    const { previous, next } = build(
+      {
+        entityTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
+          },
+        ],
+        indexes: [{ name: 'anIndex', type: 'unique' }],
+      },
+      {
+        entityTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.String, index: 'anotherIndex' }],
+          },
+        ],
+        indexes: [{ name: 'anotherIndex', type: 'unique' }],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+        {
+          "indexEntityTypes": [
+            "OneType",
+          ],
+          "indexValueTypes": [],
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        }
+      `);
+  });
+
+  test('change: index change value type', () => {
+    const { previous, next } = build(
+      {
+        valueTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
+          },
+        ],
+        indexes: [{ name: 'anIndex', type: 'unique' }],
+      },
+      {
+        valueTypes: [
+          {
+            name: 'OneType',
+            fields: [{ name: 'field', type: FieldType.String, index: 'anotherIndex' }],
+          },
+        ],
+        indexes: [{ name: 'anotherIndex', type: 'unique' }],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+        {
+          "indexEntityTypes": [],
+          "indexValueTypes": [
+            "OneType",
+          ],
+          "validateEntityTypes": [],
+          "validateValueTypes": [
+            "OneType",
+          ],
+        }
+      `);
+  });
+});
+
 describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
   test('change: matchPattern pattern change entity type', () => {
     const { previous, next } = build(

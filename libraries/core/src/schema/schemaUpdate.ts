@@ -509,14 +509,6 @@ function mergeAndNormalizeUpdatedFieldSpec(
         null,
       );
 
-      if (existingStringFieldSpec) {
-        if (existingStringFieldSpec.index !== index) {
-          return notOk.BadRequest(
-            `${existingTypeSpec?.name}.${name}: Can’t change the value of index. Requested ${index} but is ${existingStringFieldSpec.index}`,
-          );
-        }
-      }
-
       return ok({
         name,
         type,

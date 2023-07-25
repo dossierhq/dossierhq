@@ -131,6 +131,12 @@ function calculateTypeSelector(
       index = true;
     }
 
+    const previousIndex = 'index' in previousFieldSpec ? previousFieldSpec.index : null;
+    const nextIndex = 'index' in nextFieldSpec ? nextFieldSpec.index : null;
+    if (previousIndex !== nextIndex) {
+      index = true;
+    }
+
     if ('matchPattern' in previousFieldSpec) {
       const patternResult = validateDueToPatternChange(
         previous,

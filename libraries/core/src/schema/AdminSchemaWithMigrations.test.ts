@@ -185,6 +185,31 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     expect(stringFieldSpec.matchPattern).toBe('aPattern');
   });
 
+  test('change index', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
+      ],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [{ name: 'field', type: FieldType.String, index: 'anotherIndex' }],
+          },
+        ],
+        indexes: [{ name: 'anotherIndex', type: 'unique' }],
+      })
+      .valueOrThrow();
+
+    expect(result.spec).toMatchSnapshot();
+    expect((result.spec.entityTypes[0].fields[0] as StringFieldSpecification).index).toBe(
+      'anotherIndex',
+    );
+  });
+
   test('use existing values value if not specified on String field update', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
@@ -477,28 +502,6 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
       result,
       ErrorType.BadRequest,
       'Foo.field: Can’t change the value of list. Requested false but is true',
-    );
-  });
-
-  test('Error: changing index of String field', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
-      entityTypes: [
-        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
-      ],
-      indexes: [{ name: 'anIndex', type: 'unique' }],
-    })
-      .valueOrThrow()
-      .updateAndValidate({
-        entityTypes: [
-          { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'otherIndex' }] },
-        ],
-        indexes: [{ name: 'otherIndex', type: 'unique' }],
-      });
-
-    expectErrorResult(
-      result,
-      ErrorType.BadRequest,
-      'Foo.field: Can’t change the value of index. Requested otherIndex but is anIndex',
     );
   });
 });
