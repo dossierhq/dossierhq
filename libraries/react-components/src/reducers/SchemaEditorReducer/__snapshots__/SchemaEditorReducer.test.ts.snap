@@ -2707,6 +2707,50 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
 }
 `;
 
+exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "entityTypes": [
+    {
+      "adminOnly": true,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingNameField": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": true,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`ChangeTypeAdminOnlyAction > make existing value type admin only 1`] = `
 {
   "activeSelector": null,

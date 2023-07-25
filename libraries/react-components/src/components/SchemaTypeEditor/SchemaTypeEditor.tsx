@@ -29,8 +29,6 @@ export function SchemaTypeEditor({
   dispatchSchemaEditorState,
   onAddOrRenameField,
 }: Props) {
-  const canChangeAdminOnly = typeDraft.status === 'new' || typeSelector.kind === 'value';
-
   const potentialNameFields =
     typeDraft.kind === 'entity'
       ? typeDraft.fields
@@ -62,7 +60,6 @@ export function SchemaTypeEditor({
         <Field.BodyColumn>
           <Checkbox
             checked={typeDraft.adminOnly}
-            disabled={!canChangeAdminOnly}
             onChange={(event) =>
               dispatchSchemaEditorState(
                 new SchemaEditorActions.ChangeTypeAdminOnly(typeSelector, event.target.checked),

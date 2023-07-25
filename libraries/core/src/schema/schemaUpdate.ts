@@ -56,14 +56,6 @@ export function schemaUpdate(
         null,
       );
 
-      if (existingEntitySpec) {
-        if (existingEntitySpec.adminOnly !== adminOnly) {
-          return notOk.BadRequest(
-            `${existingEntitySpec.name}: Can’t change the value of adminOnly. Requested ${adminOnly} but is ${existingEntitySpec.adminOnly}`,
-          );
-        }
-      }
-
       const collectFieldsResult = collectFieldSpecsFromUpdates(
         entitySpecUpdate.fields,
         existingEntitySpec,

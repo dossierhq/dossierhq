@@ -103,6 +103,26 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
 });
 
 describe('calculateSchemaChangeEntityDirtySelector type.adminOnly', () => {
+  test('change: from true to false entity type', () => {
+    const { previous, next } = build(
+      { entityTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },
+      { entityTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "indexEntityTypes": [
+          "OneType",
+        ],
+        "indexValueTypes": [],
+        "validateEntityTypes": [
+          "OneType",
+        ],
+        "validateValueTypes": [],
+      }
+    `);
+  });
+
   test('change: from true to false value type', () => {
     const { previous, next } = build(
       { valueTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },

@@ -444,20 +444,6 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     expect(result.spec).toMatchSnapshot();
   });
 
-  test('Error: changing adminOnly of entity type', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
-      entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
-    })
-      .valueOrThrow()
-      .updateAndValidate({ entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }] });
-
-    expectErrorResult(
-      result,
-      ErrorType.BadRequest,
-      'Foo: Can’t change the value of adminOnly. Requested false but is true',
-    );
-  });
-
   test('Error: changing type of field', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],

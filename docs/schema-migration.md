@@ -1,13 +1,13 @@
 This document describes what migrations are supported and what impact they have.
 
-| Type property     | Kind     | Change | Description                                                   |
-| ----------------- | -------- | ------ | ------------------------------------------------------------- |
-| Creating new type | `*`      | Yes    |                                                               |
-| Removing type     | `*`      | No     | Removing a type is currently not supported.                   |
-| `name`            | `*`      | No     | Renaming a type is currently not supported.                   |
-| `adminOnly`       | `*`      | No     | Changing if a field is admin only is currently not supported. |
-| `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.          |
-| `nameField`       | `Entity` | Yes    | Only applies to newly created entities                        |
+| Type property     | Kind     | Change | Description                                                        |
+| ----------------- | -------- | ------ | ------------------------------------------------------------------ |
+| Creating new type | `*`      | Yes    |                                                                    |
+| Removing type     | `*`      | No     | Removing a type is currently not supported.                        |
+| `name`            | `*`      | No     | Renaming a type is currently not supported.                        |
+| `adminOnly`       | `*`      | Yes    | Changing if a type is admin only requires validation and indexing. |
+| `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.               |
+| `nameField`       | `Entity` | Yes    | Only applies to newly created entities                             |
 
 | Field property    | Field type             | Change | Description                                                                                                           |
 | ----------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
