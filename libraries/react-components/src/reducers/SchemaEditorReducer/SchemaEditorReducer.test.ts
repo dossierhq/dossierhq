@@ -565,6 +565,35 @@ describe('ChangeFieldIndexAction', () => {
       'anIndex',
     );
   });
+
+  test('set index on existing string field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Foo',
+              fields: [{ name: 'existing', type: FieldType.String }],
+            },
+          ],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.AddIndex('anIndex'),
+      new SchemaEditorActions.ChangeFieldIndex(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'existing' },
+        'anIndex',
+      ),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    const schemaUpdate = getSchemaSpecificationUpdateFromEditorState(state);
+    expect(schemaUpdate).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+    expect((schemaUpdate.entityTypes?.[0].fields[0] as StringFieldSpecification).index).toBe(
+      'anIndex',
+    );
+  });
 });
 
 describe('ChangeFieldIntegerAction', () => {

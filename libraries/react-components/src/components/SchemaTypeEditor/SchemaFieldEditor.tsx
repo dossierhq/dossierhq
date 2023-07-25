@@ -62,7 +62,6 @@ export function SchemaFieldEditor({
   onAddOrRenameField,
 }: Props) {
   const canChangeType = fieldDraft.status === 'new';
-  const canChangeIndex = fieldDraft.status === 'new';
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
@@ -211,14 +210,13 @@ export function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {fieldDraft.type === FieldType.String && (canChangeIndex || fieldDraft.index) ? (
+        {fieldDraft.type === FieldType.String ? (
           <Field horizontal>
             <Field.LabelColumn>
               <Field.Label>Index</Field.Label>
             </Field.LabelColumn>
             <Field.BodyColumn>
               <IndexSelector
-                readOnly={!canChangeIndex}
                 value={fieldDraft.index ?? null}
                 schemaEditorState={schemaEditorState}
                 onChange={handleIndexChange}

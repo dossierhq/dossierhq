@@ -1470,6 +1470,91 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
 }
 `;
 
+exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
+{
+  "activeSelector": {
+    "kind": "index",
+    "name": "anIndex",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "existing",
+      ],
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "status": "new",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`ChangeFieldIndexAction > set index on existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "type": "unique",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`ChangeFieldIndexAction > set index on new string field in existing entity type 1`] = `
 {
   "activeSelector": null,
