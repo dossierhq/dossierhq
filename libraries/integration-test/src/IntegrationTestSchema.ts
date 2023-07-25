@@ -20,6 +20,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'ChangeValidations',
+      adminOnly: false,
       fields: [
         { name: 'required', type: FieldType.String, required: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
@@ -90,7 +91,6 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       authKeyPattern: 'subject',
       fields: [{ name: 'message', type: FieldType.String, required: true }],
     },
-
     {
       name: 'TitleOnly',
       nameField: 'title',

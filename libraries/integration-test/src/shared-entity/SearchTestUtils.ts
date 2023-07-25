@@ -146,7 +146,26 @@ export async function countSearchResultWithEntity<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  let matchCount = 0;
+  const result = await collectMatchingSearchResultNodes(
+    client,
+    query,
+    (node) => node.isOk() && node.value.id === entityId,
+  );
+  if (result.isError()) return result;
+  return ok(result.value.length);
+}
+
+export async function collectMatchingSearchResultNodes<
+  TClient extends AppAdminClient | AppPublishedClient,
+>(
+  client: TClient,
+  query: Parameters<TClient['searchEntities']>[0],
+  matcher: (node: Awaited<ReturnType<TClient['getEntity']>>) => boolean,
+): PromiseResult<
+  Awaited<ReturnType<TClient['getEntity']>>[],
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
+  const matches: Awaited<ReturnType<TClient['getEntity']>>[] = [];
 
   for await (const pageResult of getAllPagesForConnection<
     Edge<AppAdminEntity | AppPublishedEntity, ErrorType>,
@@ -155,13 +174,14 @@ export async function countSearchResultWithEntity<
   >({ first: 50 }, (currentPaging) => client.searchEntities(query as any, currentPaging))) {
     if (pageResult.isError()) return pageResult;
     for (const edge of pageResult.value.edges) {
-      if (edge.node.isOk() && edge.node.value.id === entityId) {
-        matchCount += 1;
+      const node = edge.node as Awaited<ReturnType<TClient['getEntity']>>;
+      if (matcher(node)) {
+        matches.push(node);
       }
     }
   }
 
-  return ok(matchCount);
+  return ok(matches);
 }
 
 export async function countSearchResultStatuses(

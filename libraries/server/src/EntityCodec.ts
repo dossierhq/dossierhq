@@ -77,7 +77,7 @@ export function decodePublishedEntity(
   const publishedSchema = adminSchema.toPublishedSchema();
   const entitySpec = publishedSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
-    return notOk.BadRequest(`No entity spec for type ${values.type}`);
+    return notOk.BadRequest(`No entity spec for type ${values.type} (id: ${values.id})`);
   }
   const entity: PublishedEntity = {
     id: values.id,

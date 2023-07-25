@@ -6,15 +6,22 @@ import {
   type AdminEntity,
   type ValueItem,
 } from '@dossierhq/core';
-import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import { assertIsAdminValueItems, assertIsPublishedValueItems } from '../SchemaTypes.js';
-import { MIGRATIONS_ENTITY_CREATE, VALUE_ITEMS_CREATE } from '../shared-entity/Fixtures.js';
+import {
+  CHANGE_VALIDATIONS_CREATE,
+  MIGRATIONS_ENTITY_CREATE,
+  VALUE_ITEMS_CREATE,
+} from '../shared-entity/Fixtures.js';
 import {
   processAllDirtyEntities,
   withSchemaAdvisoryLock,
 } from '../shared-entity/SchemaTestUtils.js';
-import { countSearchResultWithEntity } from '../shared-entity/SearchTestUtils.js';
+import {
+  collectMatchingSearchResultNodes,
+  countSearchResultWithEntity,
+} from '../shared-entity/SearchTestUtils.js';
 import {
   adminClientForMainPrincipal,
   publishedClientForMainPrincipal,
@@ -23,6 +30,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
+  updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalid,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
   updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
   updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
@@ -66,6 +74,73 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
       assertOkResult(updateResult);
     }
     return ok(undefined);
+  });
+  assertOkResult(result);
+}
+
+async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalid({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const query: Parameters<(typeof publishedClient)['searchEntities']>[0] = {
+    text: 'splendid presentation',
+  };
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // Create entity
+    const {
+      entity: { id: entityId },
+    } = (
+      await adminClient.createEntity(
+        copyEntity(CHANGE_VALIDATIONS_CREATE, { fields: { required: query.text } }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+    const reference = { id: entityId };
+
+    // Make the entity type adminOnly
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [{ name: 'ChangeValidations', adminOnly: true, fields: [] }],
+      }),
+    );
+
+    // Process the entity
+    assertOkResult(await processAllDirtyEntities(server, reference));
+
+    // Check that the entity is invalid
+    const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+    assertEquals(adminEntity.info.valid, true);
+    assertEquals(adminEntity.info.validPublished, false);
+
+    // Check that we can't get the published entity
+    const publishedEntityResult = await publishedClient.getEntity(reference);
+    assertErrorResult(
+      publishedEntityResult,
+      ErrorType.BadRequest,
+      `No entity spec for type ChangeValidations (id: ${entityId})`,
+    );
+
+    // Check that it's not in the index
+    const matchingNodesResult = await collectMatchingSearchResultNodes(
+      publishedClient,
+      query,
+      (it) =>
+        (it.isOk() && it.value.id === entityId) || (it.isError() && it.message.includes(entityId)),
+    );
+    assertResultValue(matchingNodesResult, []);
+
+    // Make the entity type normal
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [{ name: 'ChangeValidations', adminOnly: false, fields: [] }],
+      }),
+    );
+
+    return ok(entityId);
   });
   assertOkResult(result);
 }
