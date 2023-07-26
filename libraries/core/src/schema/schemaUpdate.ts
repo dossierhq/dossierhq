@@ -293,8 +293,21 @@ function applyMigrationsToSchema(
         if (result.isError()) return result;
         break;
       }
-      case 'renameType':
-        return notOk.BadRequest('TODO Not implemented (renameType)');
+      case 'renameType': {
+        const result = applyTypeMigration(
+          schemaSpec,
+          actionSpec,
+          (_typeSpecs, typeSpec, _typeIndex) => {
+            typeSpec.name = actionSpec.newName;
+          },
+        );
+        if (result.isError()) return result;
+
+        applyTypeMigrationToTypeReferences(schemaSpec, actionSpec, (references, typeIndex) => {
+          references[typeIndex] = actionSpec.newName;
+        });
+        break;
+      }
       default:
         assertExhaustive(action);
     }

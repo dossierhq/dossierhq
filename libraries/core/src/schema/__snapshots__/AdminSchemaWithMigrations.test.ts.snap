@@ -1428,3 +1428,398 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > value item 
   "version": 2,
 }
 `;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo2",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "Foo",
+          "newName": "Foo2",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type referenced by other fields 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "linkEntityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Bar",
+      "nameField": null,
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo2",
+          ],
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "Entity",
+        },
+      ],
+      "name": "Foo2",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "Foo",
+          "newName": "Foo2",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "linkEntityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Baz",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type, add other entity type with same name 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "linkEntityTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Bar",
+      "nameField": null,
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo2",
+          ],
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "Entity",
+        },
+      ],
+      "name": "Foo2",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "Foo",
+          "newName": "Foo2",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > value type 1`] = `
+{
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "newName": "Foo2",
+          "valueType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo2",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > value type referenced by other fields 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "Bar",
+            "Foo2",
+          ],
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [
+            "Bar",
+            "Foo2",
+          ],
+        },
+      ],
+      "name": "Baz",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "newName": "Foo2",
+          "valueType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "Bar",
+            "Foo2",
+          ],
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [
+            "Bar",
+            "Foo2",
+          ],
+        },
+      ],
+      "name": "Bar",
+    },
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "Foo2",
+          ],
+        },
+      ],
+      "name": "Foo2",
+    },
+  ],
+  "version": 2,
+}
+`;

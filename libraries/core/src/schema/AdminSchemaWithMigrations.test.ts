@@ -1071,3 +1071,158 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
     );
   });
 });
+
+describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
+  test('entity type', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'renameType', entityType: 'Foo', newName: 'Foo2' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('entity type referenced by other fields', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
+        {
+          name: 'Bar',
+          fields: [
+            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            {
+              name: 'richText',
+              type: FieldType.RichText,
+              entityTypes: ['Bar', 'Foo'],
+              linkEntityTypes: ['Bar', 'Foo'],
+            },
+          ],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'Baz',
+          fields: [
+            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            {
+              name: 'richText',
+              type: FieldType.RichText,
+              entityTypes: ['Bar', 'Foo'],
+              linkEntityTypes: ['Bar', 'Foo'],
+            },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'renameType', entityType: 'Foo', newName: 'Foo2' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('entity type, add other entity type with same name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
+        {
+          name: 'Bar',
+          fields: [
+            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            {
+              name: 'richText',
+              type: FieldType.RichText,
+              entityTypes: ['Bar', 'Foo'],
+              linkEntityTypes: ['Bar', 'Foo'],
+            },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+        migrations: [
+          { version: 2, actions: [{ action: 'renameType', entityType: 'Foo', newName: 'Foo2' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    const fooTypeSpec = result.spec.entityTypes.find((it) => it.name === 'Foo')!;
+    expect(fooTypeSpec.fields[0].type).toBe(FieldType.Boolean);
+  });
+
+  test('value type', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'renameType', valueType: 'Foo', newName: 'Foo2' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('value type referenced by other fields', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      valueTypes: [
+        {
+          name: 'Foo',
+          fields: [{ name: 'field', type: FieldType.ValueItem, valueTypes: ['Foo'] }],
+        },
+        {
+          name: 'Bar',
+          fields: [
+            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+          ],
+        },
+      ],
+      entityTypes: [
+        {
+          name: 'Baz',
+          fields: [
+            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 2, actions: [{ action: 'renameType', valueType: 'Foo', newName: 'Foo2' }] },
+        ],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('Error: invalid type name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [
+          { version: 1, actions: [{ action: 'renameType', entityType: 'Foo', newName: 'Foo2' }] },
+        ],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Type for migration renameType Foo does not exist',
+    );
+  });
+});
