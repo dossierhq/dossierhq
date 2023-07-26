@@ -832,6 +832,293 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > value item 
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 1`] = `
+{
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type referenced by other fields 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Bar",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Baz",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type, replace with other entity type with same name 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Bar",
+      "nameField": null,
+    },
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > value type 1`] = `
+{
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "valueType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > value type referenced by other fields 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+      ],
+      "name": "Baz",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "valueType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "ValueItem",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migrations for older versions 1`] = `
 {
   "entityTypes": [

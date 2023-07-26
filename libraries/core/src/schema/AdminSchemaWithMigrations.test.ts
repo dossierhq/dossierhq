@@ -918,3 +918,156 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
     );
   });
 });
+
+describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
+  test('entity type', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'Foo' }] }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.entityTypes).toEqual([]);
+  });
+
+  test('entity type referenced by other fields', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'Foo',
+          nameField: 'field',
+          fields: [
+            { name: 'field', type: FieldType.String },
+            { name: 'anotherField', type: FieldType.String },
+          ],
+        },
+        {
+          name: 'Bar',
+          fields: [
+            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            {
+              name: 'richText',
+              type: FieldType.RichText,
+              entityTypes: ['Bar', 'Foo'],
+              linkEntityTypes: ['Bar', 'Foo'],
+            },
+          ],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'Baz',
+          fields: [
+            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            {
+              name: 'richText',
+              type: FieldType.RichText,
+              entityTypes: ['Bar', 'Foo'],
+              linkEntityTypes: ['Bar', 'Foo'],
+            },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'Foo' }] }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('entity type, replace with other entity type with same name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] },
+        {
+          name: 'Bar',
+          fields: [
+            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            {
+              name: 'richText',
+              type: FieldType.RichText,
+              entityTypes: ['Bar', 'Foo'],
+              linkEntityTypes: ['Bar', 'Foo'],
+            },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'Foo' }] }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    const fooTypeSpec = result.spec.entityTypes.find((it) => it.name === 'Foo')!;
+    expect(fooTypeSpec.fields[0].type).toBe(FieldType.Boolean);
+    const barTypeSpec = result.spec.entityTypes.find((it) => it.name === 'Bar')!;
+    expect((barTypeSpec.fields[0] as EntityFieldSpecification).entityTypes).toEqual(['Bar']); // Foo is removed since it referred to the old type
+  });
+
+  test('value type', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'Foo' }] }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.valueTypes).toEqual([]);
+  });
+
+  test('value type referenced by other fields', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      valueTypes: [
+        { name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] },
+        {
+          name: 'Bar',
+          fields: [
+            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+          ],
+        },
+      ],
+      entityTypes: [
+        {
+          name: 'Baz',
+          fields: [
+            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+          ],
+        },
+      ],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'Foo' }] }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('Error: invalid type name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        migrations: [{ version: 1, actions: [{ action: 'deleteType', entityType: 'Foo' }] }],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Type for migration deleteType Foo does not exist',
+    );
+  });
+});

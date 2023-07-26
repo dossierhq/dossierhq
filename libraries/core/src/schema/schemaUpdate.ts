@@ -262,8 +262,21 @@ function applyMigrationsToSchema(
         if (result.isError()) return result;
         break;
       }
-      case 'deleteType':
-        return notOk.BadRequest('TODO Not implemented (deleteType)');
+      case 'deleteType': {
+        const result = applyTypeMigration(
+          schemaSpec,
+          actionSpec,
+          (typeSpecs, _typeSpec, typeIndex) => {
+            typeSpecs.splice(typeIndex, 1);
+          },
+        );
+        if (result.isError()) return result;
+
+        applyTypeMigrationToTypeReferences(schemaSpec, actionSpec, (references, typeIndex) => {
+          references.splice(typeIndex, 1);
+        });
+        break;
+      }
       case 'renameField': {
         const result = applyFieldMigration(
           schemaSpec,
@@ -328,6 +341,60 @@ function applyFieldMigration(
   apply(typeSpec, typeSpec.fields[fieldIndex], fieldIndex);
 
   return ok(undefined);
+}
+
+function applyTypeMigration(
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  actionSpec: { action: string; entityType: string } | { action: string; valueType: string },
+  apply: (
+    typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[],
+    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    typeIndex: number,
+  ) => void,
+) {
+  let typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[];
+  let typeName: string;
+  if ('entityType' in actionSpec) {
+    typeSpecs = schemaSpec.entityTypes;
+    typeName = actionSpec.entityType;
+  } else {
+    typeSpecs = schemaSpec.valueTypes;
+    typeName = actionSpec.valueType;
+  }
+
+  const typeIndex = typeSpecs.findIndex((it) => it.name === typeName);
+  if (typeIndex < 0) {
+    return notOk.BadRequest(`Type for migration ${actionSpec.action} ${typeName} does not exist`);
+  }
+
+  const typeSpec = typeSpecs[typeIndex];
+
+  apply(typeSpecs, typeSpec, typeIndex);
+
+  return ok(undefined);
+}
+
+function applyTypeMigrationToTypeReferences(
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  actionSpec: { action: string; entityType: string } | { action: string; valueType: string },
+  apply: (references: string[], typeIndex: number) => void,
+) {
+  const typeName = 'entityType' in actionSpec ? actionSpec.entityType : actionSpec.valueType;
+  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
+    for (const fieldSpec of typeSpec.fields) {
+      for (const property of 'entityType' in actionSpec
+        ? ['entityTypes', 'linkEntityTypes']
+        : ['valueTypes']) {
+        if (property in fieldSpec) {
+          const references = (fieldSpec as unknown as Record<string, string[]>)[property];
+          const index = references.indexOf(typeName);
+          if (index >= 0) {
+            apply(references, index);
+          }
+        }
+      }
+    }
+  }
 }
 
 function collectFieldSpecsFromUpdates(
