@@ -1,7 +1,8 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { ErrorType, notOk, ok, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUniqueIndexArg,
+  DatabaseAdminEntityUniqueIndexPayload,
+  DatabaseAdminEntityUniqueIndexValue,
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
@@ -16,10 +17,12 @@ export async function adminEntityUniqueIndexUpdateValues(
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
   values: DatabaseAdminEntityUniqueIndexArg,
-): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUniqueIndexPayload, typeof ErrorType.Generic> {
+  const conflictingValues: DatabaseAdminEntityUniqueIndexValue[] = [];
   if (values.add.length > 0) {
     const addResult = await addValues(database, context, entity, values);
     if (addResult.isError()) return addResult;
+    conflictingValues.push(...addResult.value);
   }
   if (values.update.length > 0) {
     const updateResult = await updateValues(database, context, entity, values);
@@ -30,7 +33,7 @@ export async function adminEntityUniqueIndexUpdateValues(
     if (removeResult.isError()) return removeResult;
   }
 
-  return ok(undefined);
+  return ok({ conflictingValues });
 }
 
 async function addValues(
@@ -38,28 +41,56 @@ async function addValues(
   context: TransactionContext,
   entity: DatabaseResolvedEntityReference,
   values: DatabaseAdminEntityUniqueIndexArg,
-): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
-  const query = buildSqliteSqlQuery(({ sql, addValue }) => {
-    sql`INSERT INTO unique_index_values (entities_id, index_name, value, latest, published) VALUES`;
-    const entityId = addValue(entity.entityInternalId as number);
-    const trueValue = addValue(1);
-    const falseValue = addValue(0);
-
-    for (const { index, value, latest, published } of values.add) {
-      sql`(${entityId}, ${index}, ${value}, ${latest ? trueValue : falseValue}, ${
-        published ? trueValue : falseValue
-      })`;
-    }
-  });
-
-  const result = await queryRun(database, context, query, (error) => {
+): PromiseResult<DatabaseAdminEntityUniqueIndexValue[], typeof ErrorType.Generic> {
+  function errorConverter(error: unknown) {
     if (database.adapter.isUniqueViolationOfConstraint(error, UniqueIndexValueConstraint)) {
       return notOk.Conflict('Conflict with unique index value');
     }
     return notOk.GenericUnexpectedException(context, error);
-  });
+  }
 
-  return result.isOk() ? ok(undefined) : result;
+  async function addValues(valuesToAdd: DatabaseAdminEntityUniqueIndexValue[]) {
+    return context.withTransaction(async (context) => {
+      const query = buildSqliteSqlQuery(({ sql, addValue }) => {
+        sql`INSERT INTO unique_index_values (entities_id, index_name, value, latest, published) VALUES`;
+        const entityId = addValue(entity.entityInternalId as number);
+        const trueValue = addValue(1);
+        const falseValue = addValue(0);
+
+        for (const { index, value, latest, published } of valuesToAdd) {
+          sql`(${entityId}, ${index}, ${value}, ${latest ? trueValue : falseValue}, ${
+            published ? trueValue : falseValue
+          })`;
+        }
+      });
+
+      return await queryRun(database, context, query, errorConverter);
+    });
+  }
+
+  const failedValues: DatabaseAdminEntityUniqueIndexValue[] = [];
+
+  // first try to add all values
+  const addAllResult = await addValues(values.add);
+  if (addAllResult.isError()) {
+    if (addAllResult.isErrorType(ErrorType.Generic)) {
+      return notOk.Generic(addAllResult.message);
+    }
+    if (values.add.length === 1) {
+      failedValues.push(values.add[0]);
+    } else {
+      // add one by one to set as many as possible
+      for (const value of values.add) {
+        const addOneResult = await addValues([value]);
+        if (addOneResult.isError() && addOneResult.isErrorType(ErrorType.Generic)) {
+          return notOk.Generic(addOneResult.message);
+        }
+        failedValues.push(value);
+      }
+    }
+  }
+
+  return ok(failedValues);
 }
 
 async function updateValues(

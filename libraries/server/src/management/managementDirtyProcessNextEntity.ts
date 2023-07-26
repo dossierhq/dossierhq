@@ -316,51 +316,16 @@ async function validateAndUpdateUniqueIndexValues(
     latestUniqueIndexValues,
     publishedUniqueIndexValues,
   );
-  if (bothResult.isOk()) return ok(undefined);
-  if (bothResult.isErrorType(ErrorType.Generic)) return bothResult;
+  if (bothResult.isError()) return bothResult;
 
-  // If only one of (latest|published) is non-null, we know where the problem is
-  if (latestUniqueIndexValues !== null && publishedUniqueIndexValues === null) {
-    entityValidity.validAdmin = false;
-  } else if (latestUniqueIndexValues === null && publishedUniqueIndexValues !== null) {
-    entityValidity.validPublished = false;
-  } else if (latestUniqueIndexValues !== null && publishedUniqueIndexValues !== null) {
-    // Since it failed when updating both, we don't know where the problem is
-    // Try updating only latest, then only published, to see if we can find out
-
-    // Check latest only
-    const latestResult = await updateUniqueIndexesForEntity(
-      databaseAdapter,
-      context,
-      reference,
-      false,
-      latestUniqueIndexValues,
-      null, // skip publishedUniqueIndexValues
-    );
-    if (latestResult.isError()) {
-      if (latestResult.isErrorType(ErrorType.BadRequest)) {
-        entityValidity.validAdmin = false;
-      } else {
-        return notOk.Generic(latestResult.message);
-      }
+  for (const { latest, published } of bothResult.value.conflictingValues) {
+    if (latest) {
+      entityValidity.validAdmin = false;
     }
-
-    // Check published only
-    const publishedResult = await updateUniqueIndexesForEntity(
-      databaseAdapter,
-      context,
-      reference,
-      false,
-      null, // skip latestUniqueIndexValues
-      publishedUniqueIndexValues,
-    );
-    if (publishedResult.isError()) {
-      if (publishedResult.isErrorType(ErrorType.BadRequest)) {
-        entityValidity.validPublished = false;
-      } else {
-        return notOk.Generic(publishedResult.message);
-      }
+    if (published) {
+      entityValidity.validPublished = false;
     }
   }
+
   return ok(undefined);
 }

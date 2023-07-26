@@ -163,7 +163,7 @@ export async function adminPublishEntities(
 
     // Step 7: Update unique value indexes
     for (const versionInfo of publishVersionsInfo) {
-      const updateUniqueValueIndexResult = await updateUniqueIndexesForEntity(
+      const uniqueIndexResult = await updateUniqueIndexesForEntity(
         databaseAdapter,
         context,
         { entityInternalId: versionInfo.entityInternalId },
@@ -171,7 +171,19 @@ export async function adminPublishEntities(
         null,
         versionInfo.uniqueIndexValues,
       );
-      if (updateUniqueValueIndexResult.isError()) return updateUniqueValueIndexResult;
+      if (uniqueIndexResult.isError()) return uniqueIndexResult;
+      if (uniqueIndexResult.value.conflictingValues.length > 0) {
+        return notOk.BadRequest(
+          uniqueIndexResult.value.conflictingValues
+            .map(
+              ({ index, value, path }) =>
+                `${versionInfo.uuid}:${visitorPathToString(
+                  path,
+                )}: Value is not unique (${index}:${value})`,
+            )
+            .join('\n'),
+        );
+      }
     }
 
     //

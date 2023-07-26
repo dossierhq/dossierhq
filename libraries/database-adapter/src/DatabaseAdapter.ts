@@ -176,6 +176,10 @@ export interface DatabaseAdminEntityUniqueIndexArg {
   remove: DatabaseAdminEntityUniqueIndexReference[];
 }
 
+export interface DatabaseAdminEntityUniqueIndexPayload {
+  conflictingValues: DatabaseAdminEntityUniqueIndexValue[];
+}
+
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
   type: string;
   name: string;
@@ -437,7 +441,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     entity: DatabaseResolvedEntityReference,
     values: DatabaseAdminEntityUniqueIndexArg,
-  ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityUniqueIndexPayload, typeof ErrorType.Generic>;
 
   adminEntityUpdateGetEntityInfo(
     context: TransactionContext,

@@ -94,7 +94,7 @@ export async function adminUnpublishEntities(
 
     // Step 6: Remove unique values
     for (const entity of unpublishEntitiesInfo) {
-      const uniqueResult = await updateUniqueIndexesForEntity(
+      const uniqueIndexResult = await updateUniqueIndexesForEntity(
         databaseAdapter,
         context,
         { entityInternalId: entity.entityInternalId },
@@ -102,7 +102,7 @@ export async function adminUnpublishEntities(
         null,
         new Map(),
       );
-      if (uniqueResult.isError()) return uniqueResult;
+      if (uniqueIndexResult.isError()) return uniqueIndexResult;
     }
 
     //

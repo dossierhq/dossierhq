@@ -6,9 +6,19 @@ import {
   type AdminEntity,
   type ValueItem,
 } from '@dossierhq/core';
-import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import {
+  assertEquals,
+  assertErrorResult,
+  assertOkResult,
+  assertResultValue,
+  assertSame,
+} from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
-import { assertIsAdminValueItems, assertIsPublishedValueItems } from '../SchemaTypes.js';
+import {
+  assertIsAdminValueItems,
+  assertIsPublishedValueItems,
+  type AppAdminUniqueIndexes,
+} from '../SchemaTypes.js';
 import {
   CHANGE_VALIDATIONS_CREATE,
   MIGRATIONS_ENTITY_CREATE,
@@ -30,7 +40,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
-  updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalid,
+  updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
   updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
   updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
@@ -44,6 +54,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnEntity,
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_renameFieldOnValueItem,
+  updateSchemaSpecification_addingIndexToField,
   updateSchemaSpecification_errorWrongVersion,
 ];
 
@@ -78,7 +89,7 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalid({
+async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -1031,6 +1042,81 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
     ErrorType.BadRequest,
     `entity.fields.any: Unsupported field names: ${oldFieldName}`,
   );
+}
+
+async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+  const indexName = fieldName;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [
+          { name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String', list: true }] },
+        ],
+      }),
+    );
+
+    // Create two entities with both unique and shared values=
+    const { entity: entityA } = (
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: ['shared', 'uniqueA'] } }),
+      )
+    ).valueOrThrow();
+
+    const { entity: entityB } = (
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: ['shared', 'uniqueB'] } }),
+      )
+    ).valueOrThrow();
+
+    // Add unique index to the field
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        {
+          name: 'MigrationEntity',
+          fields: [{ name: fieldName, type: FieldType.String, index: indexName }],
+        },
+      ],
+      indexes: [{ name: indexName, type: 'unique' }],
+    });
+    assertOkResult(secondUpdateResult);
+
+    // Process the entities
+    assertOkResult(await processAllDirtyEntities(server, { id: entityA.id }));
+    assertOkResult(await processAllDirtyEntities(server, { id: entityB.id }));
+
+    // Check that the unique values work
+    const uniqueA = (
+      await adminClient.getEntity({ index: indexName as AppAdminUniqueIndexes, value: 'uniqueA' })
+    ).valueOrThrow();
+    assertEquals(uniqueA.id, entityA.id);
+
+    const uniqueB = (
+      await adminClient.getEntity({ index: indexName as AppAdminUniqueIndexes, value: 'uniqueB' })
+    ).valueOrThrow();
+    assertEquals(uniqueB.id, entityB.id);
+
+    // Check that the shared value only resolves to one entity
+    const shared = (
+      await adminClient.getEntity({ index: indexName as AppAdminUniqueIndexes, value: 'shared' })
+    ).valueOrThrow();
+    if (shared.id === entityA.id) {
+      assertSame(uniqueA.info.valid, true);
+      assertSame(uniqueB.info.valid, false);
+    } else if (shared.id === entityB.id) {
+      assertSame(uniqueA.info.valid, false);
+      assertSame(uniqueB.info.valid, true);
+    } else {
+      throw new Error('shared value did not resolve to either entity');
+    }
+
+    return ok(undefined);
+  });
+  assertOkResult(result);
 }
 
 async function updateSchemaSpecification_errorWrongVersion({ server }: SchemaTestContext) {

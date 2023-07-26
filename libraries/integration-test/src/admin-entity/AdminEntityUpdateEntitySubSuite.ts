@@ -706,6 +706,6 @@ async function updateEntity_errorDuplicateUniqueIndexValue({ server }: AdminEnti
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.fields.unique: Value is not unique (index: stringsUnique)',
+    `entity.fields.unique: Value is not unique (stringsUnique:${unique})`,
   );
 }

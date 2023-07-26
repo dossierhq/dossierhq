@@ -15,6 +15,7 @@ export type {
   DatabaseAdminEntitySearchPayload,
   DatabaseAdminEntitySearchPayloadEntity,
   DatabaseAdminEntityUniqueIndexArg,
+  DatabaseAdminEntityUniqueIndexPayload,
   DatabaseAdminEntityUniqueIndexReference,
   DatabaseAdminEntityUniqueIndexValue,
   DatabaseAdminEntityUnpublishGetEntityInfoPayload,

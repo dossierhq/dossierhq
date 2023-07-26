@@ -143,6 +143,16 @@ export async function adminUpdateEntity(
       null, // TODO publishEntityAfterMutation is updating the values
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;
+    if (uniqueIndexResult.value.conflictingValues.length > 0) {
+      return notOk.BadRequest(
+        uniqueIndexResult.value.conflictingValues
+          .map(
+            ({ index, value, path }) =>
+              `${visitorPathToString(path)}: Value is not unique (${index}:${value})`,
+          )
+          .join('\n'),
+      );
+    }
 
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(

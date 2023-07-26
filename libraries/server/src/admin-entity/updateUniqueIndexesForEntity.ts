@@ -1,12 +1,16 @@
-import { ErrorType, notOk, ok, visitorPathToString, type PromiseResult } from '@dossierhq/core';
+import { ok, type ErrorType, type ItemValuePath, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityUniqueIndexReference,
   DatabaseAdminEntityUniqueIndexValue,
-  TransactionContext,
   DatabaseResolvedEntityReference,
+  TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
+
+interface ConflictingUniqueIndexValuePayload {
+  conflictingValues: (DatabaseAdminEntityUniqueIndexValue & { path: ItemValuePath })[];
+}
 
 export async function updateUniqueIndexesForEntity(
   databaseAdapter: DatabaseAdapter,
@@ -15,7 +19,7 @@ export async function updateUniqueIndexesForEntity(
   isCreation: boolean,
   latestUniqueIndexValues: UniqueIndexValueCollection | null,
   publishedUniqueIndexValues: UniqueIndexValueCollection | null,
-): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<ConflictingUniqueIndexValuePayload, typeof ErrorType.Generic> {
   const existingResult = isCreation
     ? ok([])
     : await databaseAdapter.adminEntityUniqueIndexGetValues(context, entity);
@@ -60,7 +64,7 @@ export async function updateUniqueIndexesForEntity(
   }
 
   if (valuesToAdd.length === 0 && valuesToUpdate.length === 0 && valuesToRemove.length === 0) {
-    return ok(undefined);
+    return ok({ conflictingValues: [] });
   }
 
   const result = await databaseAdapter.adminEntityUniqueIndexUpdateValues(context, entity, {
@@ -68,24 +72,27 @@ export async function updateUniqueIndexesForEntity(
     update: valuesToUpdate,
     remove: valuesToRemove,
   });
+  if (result.isError()) return result;
+  return ok({
+    conflictingValues: result.value.conflictingValues.map((it) => {
+      let path = findPathForIndexValue(it.index, it.value, latestUniqueIndexValues);
+      if (!path) path = findPathForIndexValue(it.index, it.value, publishedUniqueIndexValues);
+      if (!path) path = [];
+      return { ...it, path };
+    }),
+  });
+}
 
-  if (result.isError() && result.isErrorType(ErrorType.Conflict)) {
-    //TODO handle resolving error messages when there are multiple unique values
-    if (latestUniqueIndexValues?.size === 1) {
-      const indexName = latestUniqueIndexValues.keys().next().value as string;
-      const indexValues = latestUniqueIndexValues.get(indexName);
-      if (indexValues?.length === 1) {
-        const value = indexValues[0];
-        return notOk.BadRequest(
-          `${visitorPathToString(value.path)}: Value is not unique (index: ${indexName})`,
-        );
-      }
-    }
-    return notOk.BadRequest('Value is not unique');
-  } else if (result.isError()) {
-    return notOk.Generic(result.message);
-  }
-  return ok(undefined);
+function findPathForIndexValue(
+  index: string,
+  value: string,
+  collection: UniqueIndexValueCollection | null,
+) {
+  if (!collection) return null;
+  const indexValues = collection.get(index);
+  if (!indexValues) return null;
+  const item = indexValues.find((it) => it.value === value);
+  return item ? item.path : null;
 }
 
 function calculateTargetValues(
