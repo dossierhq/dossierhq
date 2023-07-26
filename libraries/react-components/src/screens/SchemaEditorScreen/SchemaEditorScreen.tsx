@@ -354,6 +354,8 @@ function IndexEditorRows({
     [dispatchSchemaEditorState, indexSelector],
   );
 
+  //TODO support renaming and deleting indexes
+
   return (
     <>
       <FullscreenContainer.Row id={`index-${indexDraft.name}-header`} sticky>

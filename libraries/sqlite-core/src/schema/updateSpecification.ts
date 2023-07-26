@@ -11,7 +11,7 @@ export async function schemaUpdateSpecification(
   database: Database,
   context: TransactionContext,
   schemaSpec: AdminSchemaSpecificationWithMigrations,
-): PromiseResult<void, typeof ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;
   const result = await queryRun(database, context, {
     text: 'INSERT INTO schema_versions (version, specification, updated_at) VALUES (?1, ?2, ?3)',

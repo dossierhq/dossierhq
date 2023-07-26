@@ -40,6 +40,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
+  updateSchemaSpecification_concurrentUpdates,
   updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
   updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
@@ -83,6 +84,53 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
         ],
       });
       assertOkResult(updateResult);
+    }
+    return ok(undefined);
+  });
+  assertOkResult(result);
+}
+
+async function updateSchemaSpecification_concurrentUpdates({ server }: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName1 = `field${new Date().getTime()}`;
+  const fieldName2 = `${fieldName1}2`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    const schemaSpec = (
+      await adminClient.getSchemaSpecification({ includeMigrations: true })
+    ).valueOrThrow();
+    const newVersion = schemaSpec.version + 1;
+
+    const updateOnePromise = adminClient.updateSchemaSpecification({
+      version: newVersion,
+      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName1, type: 'Boolean' }] }],
+    });
+    const updateTwoPromise = adminClient.updateSchemaSpecification({
+      version: newVersion,
+      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName2, type: 'String' }] }],
+    });
+
+    const [updateOneResult, updateTwoResult] = await Promise.all([
+      updateOnePromise,
+      updateTwoPromise,
+    ]);
+
+    // Since one update will finish before the other, we expect one of them to fail claiming that the version is wrong
+    if (updateOneResult.isOk()) {
+      assertErrorResult(
+        updateTwoResult,
+        ErrorType.BadRequest,
+        `Expected version ${newVersion + 1}, got ${newVersion}`,
+      );
+    } else if (updateTwoResult.isOk()) {
+      assertErrorResult(
+        updateOneResult,
+        ErrorType.BadRequest,
+        `Expected version ${newVersion + 1}, got ${newVersion}`,
+      );
+    } else {
+      throw new Error('Expected one of the updates to succeed');
     }
     return ok(undefined);
   });

@@ -5,6 +5,7 @@ export const UniqueConstraints = {
   entities_name_key: 'entities_name_key',
   entities_uuid_key: 'entities_uuid_key',
   principals_provider_identifier_key: 'principals_provider_identifier_key',
+  schema_versions_version_key: 'schema_versions_version_key',
   unique_index_values_index_name_value_key: 'unique_index_values_index_name_value_key',
 } as const;
 export type UniqueConstraints = (typeof UniqueConstraints)[keyof typeof UniqueConstraints];

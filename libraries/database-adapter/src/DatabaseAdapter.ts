@@ -589,5 +589,5 @@ export interface DatabaseAdapter<
   schemaUpdateSpecification(
     context: TransactionContext,
     schemaSpec: AdminSchemaSpecificationWithMigrations,
-  ): PromiseResult<void, typeof ErrorType.Generic>;
+  ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 }

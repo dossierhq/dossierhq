@@ -1,10 +1,10 @@
 import {
   AdminSchemaWithMigrations,
+  ErrorType,
   notOk,
   ok,
   type AdminSchemaSpecificationUpdate,
   type AdminSchemaSpecificationWithMigrations,
-  type ErrorType,
   type PromiseResult,
   type SchemaSpecificationUpdatePayload,
 } from '@dossierhq/core';
@@ -56,7 +56,15 @@ export async function schemaUpdateSpecification(
     const dirtyEntitiesSelector = dirtySelectorResult.value;
 
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
-    if (updateResult.isError()) return updateResult;
+    if (updateResult.isError()) {
+      if (updateResult.isErrorType(ErrorType.Conflict)) {
+        if (typeof update.version === 'number') {
+          return notOk.BadRequest(`Expected version ${update.version + 1}, got ${update.version}`);
+        }
+        return notOk.BadRequest('Schema was edited concurrently, try again');
+      }
+      return notOk.Generic(updateResult.message);
+    }
 
     if (dirtyEntitiesSelector) {
       const selectorLogString = Object.entries(
