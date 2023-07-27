@@ -453,3 +453,119 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameField', () =>
       `);
   });
 });
+
+describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => {
+  test('delete entity type', () => {
+    const { previous, next } = build(
+      { entityTypes: [{ name: 'OneType', fields: [] }] },
+      { migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'OneType' }] }] },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "indexEntityTypes": [
+          "OneType",
+        ],
+        "indexValueTypes": [],
+        "validateEntityTypes": [
+          "OneType",
+        ],
+        "validateValueTypes": [],
+      }
+    `);
+  });
+
+  test('delete entity type with referencing fields', () => {
+    const { previous, next } = build(
+      {
+        entityTypes: [
+          { name: 'OneType', fields: [] },
+          {
+            name: 'AnotherEntity',
+            fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: ['OneType'] }],
+          },
+        ],
+        valueTypes: [
+          {
+            name: 'AnotherValueItem',
+            fields: [{ name: 'richText', type: FieldType.RichText, linkEntityTypes: ['OneType'] }],
+          },
+        ],
+      },
+      { migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'OneType' }] }] },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "indexEntityTypes": [
+          "OneType",
+        ],
+        "indexValueTypes": [],
+        "validateEntityTypes": [
+          "AnotherEntity",
+          "OneType",
+        ],
+        "validateValueTypes": [
+          "AnotherValueItem",
+        ],
+      }
+    `);
+  });
+
+  test('delete value type', () => {
+    const { previous, next } = build(
+      { valueTypes: [{ name: 'OneType', fields: [] }] },
+      { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "indexEntityTypes": [],
+        "indexValueTypes": [
+          "OneType",
+        ],
+        "validateEntityTypes": [],
+        "validateValueTypes": [
+          "OneType",
+        ],
+      }
+    `);
+  });
+
+  test('delete value type with referencing fields', () => {
+    const { previous, next } = build(
+      {
+        valueTypes: [
+          { name: 'OneType', fields: [] },
+          {
+            name: 'AnotherValueItem',
+            fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['OneType'] }],
+          },
+        ],
+        entityTypes: [
+          {
+            name: 'AnotherEntity',
+            fields: [{ name: 'richText', type: FieldType.RichText, valueTypes: ['OneType'] }],
+          },
+        ],
+      },
+      { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "indexEntityTypes": [],
+        "indexValueTypes": [
+          "OneType",
+        ],
+        "validateEntityTypes": [
+          "AnotherEntity",
+        ],
+        "validateValueTypes": [
+          "AnotherValueItem",
+          "OneType",
+        ],
+      }
+    `);
+  });
+});

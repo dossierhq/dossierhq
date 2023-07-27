@@ -1,5 +1,4 @@
 import {
-  assertExhaustive,
   isFieldValueEqual,
   notOk,
   ok,
@@ -18,19 +17,45 @@ export function calculateSchemaChangeEntityDirtySelector(
   DatabaseManagementMarkEntitiesDirtySelectorArg | null,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const validateEntityTypes: string[] = [];
-  const indexEntityTypes: string[] = [];
-  const validateValueTypes: string[] = [];
-  const indexValueTypes: string[] = [];
+  const validateEntityTypes = new Set<string>();
+  const indexEntityTypes = new Set<string>();
+  const validateValueTypes = new Set<string>();
+  const indexValueTypes = new Set<string>();
+
+  const migrationActions = next.collectMigrationActionsSinceVersion(previous.spec.version);
 
   for (const isEntityType of [true, false]) {
     const previousTypes = isEntityType ? previous.spec.entityTypes : previous.spec.valueTypes;
+    const validateTypes = isEntityType ? validateEntityTypes : validateValueTypes;
+    const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
+
     for (const previousType of previousTypes) {
-      const nextType = isEntityType
-        ? next.getEntityTypeSpecification(previousType.name)
-        : next.getValueTypeSpecification(previousType.name);
+      // Apply migrations on type
+      let nextTypeName: string | null = previousType.name;
+      for (const actionSpec of migrationActions) {
+        if (
+          isEntityType
+            ? 'entityType' in actionSpec && actionSpec.entityType === nextTypeName
+            : 'valueType' in actionSpec && actionSpec.valueType === nextTypeName
+        ) {
+          if (actionSpec.action === 'renameType') {
+            nextTypeName = actionSpec.newName;
+          } else if (actionSpec.action === 'deleteType') {
+            nextTypeName = null;
+          }
+        }
+      }
+
+      const nextType = nextTypeName
+        ? isEntityType
+          ? next.getEntityTypeSpecification(nextTypeName)
+          : next.getValueTypeSpecification(nextTypeName)
+        : null;
+
       if (!nextType) {
-        return notOk.BadRequest(`Type ${previousType.name} was removed`);
+        validateTypes.add(previousType.name);
+        indexTypes.add(previousType.name);
+        continue;
       }
 
       const validationResult = calculateTypeSelector(
@@ -43,17 +68,14 @@ export function calculateSchemaChangeEntityDirtySelector(
       if (validationResult.isError()) return validationResult;
 
       if (validationResult.value.validate) {
-        const validateTypes = isEntityType ? validateEntityTypes : validateValueTypes;
-        validateTypes.push(previousType.name);
+        validateTypes.add(previousType.name);
       }
       if (validationResult.value.index) {
-        const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
-        indexTypes.push(previousType.name);
+        indexTypes.add(previousType.name);
       }
     }
   }
 
-  const migrationActions = next.collectMigrationActionsSinceVersion(previous.spec.version);
   for (const actionSpec of migrationActions) {
     const action = actionSpec.action;
     switch (action) {
@@ -61,32 +83,27 @@ export function calculateSchemaChangeEntityDirtySelector(
         const isEntityType = 'entityType' in actionSpec;
         const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
         const typeName = isEntityType ? actionSpec.entityType : actionSpec.valueType;
-        indexTypes.push(typeName);
+        indexTypes.add(typeName);
         break;
       }
-      case 'renameField':
-        break;
-      case 'deleteType':
-        //TODO support delete type
-        break;
-      case 'renameType':
-        //TODO support rename type
-        break;
-      default:
-        assertExhaustive(action);
     }
   }
 
   if (
-    validateEntityTypes.length === 0 &&
-    indexEntityTypes.length === 0 &&
-    validateValueTypes.length === 0 &&
-    indexValueTypes.length === 0
+    validateEntityTypes.size === 0 &&
+    indexEntityTypes.size === 0 &&
+    validateValueTypes.size === 0 &&
+    indexValueTypes.size === 0
   ) {
     return ok(null);
   }
 
-  return ok({ validateEntityTypes, validateValueTypes, indexEntityTypes, indexValueTypes });
+  return ok({
+    validateEntityTypes: [...validateEntityTypes],
+    validateValueTypes: [...validateValueTypes],
+    indexEntityTypes: [...indexEntityTypes],
+    indexValueTypes: [...indexValueTypes],
+  });
 }
 
 function calculateTypeSelector(
