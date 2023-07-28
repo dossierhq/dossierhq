@@ -31,7 +31,7 @@
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.58.0",
     "bun-types": "~0.7.0",
-    "eslint": "~8.45.0",
+    "eslint": "~8.46.0",
     "prettier": "3.0.0",
     "typescript": "~5.1.6"
   }
