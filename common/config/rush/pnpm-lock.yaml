@@ -7,7 +7,7 @@ importers:
 
   ../../apps/blog:
     specifiers:
-      '@cloudinary/url-gen': ~1.10.2
+      '@cloudinary/url-gen': ~1.11.0
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
@@ -37,7 +37,7 @@ importers:
       typescript: ~5.1.6
       vitest: ~0.33.0
     dependencies:
-      '@cloudinary/url-gen': 1.10.2
+      '@cloudinary/url-gen': 1.11.0
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
@@ -508,7 +508,7 @@ importers:
 
   ../../libraries/cloudinary:
     specifiers:
-      '@cloudinary/url-gen': ~1.10.2
+      '@cloudinary/url-gen': ~1.11.0
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
@@ -522,7 +522,7 @@ importers:
       tslib: ~2.6.0
       typescript: ~5.1.6
     dependencies:
-      '@cloudinary/url-gen': 1.10.2
+      '@cloudinary/url-gen': 1.11.0
       '@dossierhq/design': link:../design
       react: 18.2.0
       tslib: 2.6.0
@@ -1270,7 +1270,7 @@ importers:
   ../../tools/all-dependencies:
     specifiers:
       '@auth0/auth0-react': ~2.2.0
-      '@cloudinary/url-gen': ~1.10.2
+      '@cloudinary/url-gen': ~1.11.0
       '@creativebulma/bulma-badge': ~1.0.1
       '@faker-js/faker': ~8.0.2
       '@fortawesome/free-solid-svg-icons': ~6.4.0
@@ -1372,7 +1372,7 @@ importers:
       vitest: ~0.33.0
     dependencies:
       '@auth0/auth0-react': 2.2.0_biqbaboplfbrettd7655fr4n2y
-      '@cloudinary/url-gen': 1.10.2
+      '@cloudinary/url-gen': 1.11.0
       '@creativebulma/bulma-badge': 1.0.1
       '@faker-js/faker': 8.0.2
       '@fortawesome/free-solid-svg-icons': 6.4.0
@@ -3069,16 +3069,16 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@cloudinary/transformation-builder-sdk/1.2.7:
-    resolution: {integrity: sha512-Q1fhw37BXXmN6/BCxdnw3OUJ6aAy/zpDWH5t+xIwmG5GtYUYMZqOjvdOkOhWBmus9ptq9znuGsYn8h5vtSjT+w==}
+  /@cloudinary/transformation-builder-sdk/1.4.0:
+    resolution: {integrity: sha512-atU25SFAmR4aXlPHDs7fERmcl0OSnwQl80b5Fy3unvwHSj10fnqHBdLeeOEBNaOXdF3WQLmNSGMkOV8IlDPfMA==}
     dependencies:
-      '@cloudinary/url-gen': 1.10.2
+      '@cloudinary/url-gen': 1.11.0
     dev: false
 
-  /@cloudinary/url-gen/1.10.2:
-    resolution: {integrity: sha512-0iQcowRGxbRMuWijr3gkWajyrtocXyO5va6b2f5AIuA8K5Utd3IEq17DGR93kpOOLU439JBSjORuWifyphGduA==}
+  /@cloudinary/url-gen/1.11.0:
+    resolution: {integrity: sha512-jShJoh+5JQfsMnh/NUqe8Z2EzZo/++BQ/CuF/VND4hA7zNpXn6vYi5JMIZ4YvLGRrqHuMtqCFahaTe1RBsLJJQ==}
     dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.2.7
+      '@cloudinary/transformation-builder-sdk': 1.4.0
     dev: false
 
   /@creativebulma/bulma-badge/1.0.1:

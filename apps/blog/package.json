@@ -19,7 +19,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@cloudinary/url-gen": "~1.10.2",
+    "@cloudinary/url-gen": "~1.11.0",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
