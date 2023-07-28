@@ -148,7 +148,7 @@ importers:
       '@types/prettier': ~2.7.3
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.2
-      cloudinary: ~1.38.0
+      cloudinary: ~1.39.0
       dotenv: ~16.3.1
       eslint: ~8.45.0
       prettier: 3.0.0
@@ -162,7 +162,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
       '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 8.0.2
-      cloudinary: 1.38.0
+      cloudinary: 1.39.0
       dotenv: 16.3.1
       sqlite3: 5.1.4
       tslib: 2.6.0
@@ -1320,7 +1320,7 @@ importers:
       body-parser: ~1.20.2
       bulma: ~0.9.4
       bun-types: ~0.7.0
-      cloudinary: ~1.38.0
+      cloudinary: ~1.39.0
       concurrently: ~8.2.0
       dotenv: ~16.3.1
       eslint: ~8.45.0
@@ -1390,7 +1390,7 @@ importers:
       '@typescript-eslint/parser': 6.1.0_ko3fmmbeyij36muomfgt2u76xu
       better-sqlite3: 8.5.0
       body-parser: 1.20.2
-      cloudinary: 1.38.0
+      cloudinary: 1.39.0
       dotenv: 16.3.1
       eslint: 8.45.0
       eslint-plugin-react: 7.33.0_eslint@8.45.0
@@ -9971,8 +9971,8 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /cloudinary/1.38.0:
-    resolution: {integrity: sha512-s5Sh/uButN0M7lxTYvrvPcImaieI1aYh1qmgyhO0wbPUMfb0BSb+mBa5SETFJpzQGCAqP46yxapkPeEFyGZX9A==}
+  /cloudinary/1.39.0:
+    resolution: {integrity: sha512-xVCzduGsEgYWe/xnbB6rrx56NCvPtqJGh+G6aTSdattxpuewgFH9S/7JCIatLQcBw2JzkJKAYJ1wdRg/QiRFlw==}
     engines: {node: '>=0.6'}
     dependencies:
       cloudinary-core: 2.13.0_lodash@4.17.21
