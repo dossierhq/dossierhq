@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.6.0"
+    "tslib": "~2.6.1"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -43,7 +43,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@playwright/test": "~1.36.1",
+    "@playwright/test": "~1.36.2",
     "@rushstack/heft": "0.58.0",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.4",

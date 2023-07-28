@@ -42,23 +42,23 @@
     "react": "~18.2.0",
     "react-aria-components": "~1.0.0-alpha.5",
     "react-dom": "~18.2.0",
-    "tslib": "~2.6.0"
+    "tslib": "~2.6.1"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.58.0",
-    "@storybook/addon-actions": "~7.1.0",
-    "@storybook/addon-docs": "~7.1.0",
-    "@storybook/addon-essentials": "~7.1.0",
-    "@storybook/addon-links": "~7.1.0",
+    "@storybook/addon-actions": "~7.1.1",
+    "@storybook/addon-docs": "~7.1.1",
+    "@storybook/addon-essentials": "~7.1.1",
+    "@storybook/addon-links": "~7.1.1",
     "@storybook/preset-scss": "~1.0.3",
-    "@storybook/react": "~7.1.0",
-    "@storybook/react-vite": "~7.1.0",
-    "@types/lodash": "~4.14.195",
-    "@types/react": "~18.2.15",
+    "@storybook/react": "~7.1.1",
+    "@storybook/react-vite": "~7.1.1",
+    "@types/lodash": "~4.14.196",
+    "@types/react": "~18.2.17",
     "@types/react-dom": "~18.2.7",
     "@typescript-eslint/eslint-plugin": "~6.2.0",
-    "@typescript-eslint/parser": "~6.1.0",
+    "@typescript-eslint/parser": "~6.2.0",
     "@vitejs/plugin-react": "~4.0.3",
     "bulma": "~0.9.4",
     "eslint": "~8.46.0",
@@ -70,9 +70,9 @@
     "react-stately": "~3.24.0",
     "sass": "~1.64.1",
     "sass-loader": "~13.3.2",
-    "storybook": "~7.1.0",
+    "storybook": "~7.1.1",
     "svgo": "~3.0.2",
     "typescript": "~5.1.6",
-    "vite": "~4.4.6"
+    "vite": "~4.4.7"
   }
 }

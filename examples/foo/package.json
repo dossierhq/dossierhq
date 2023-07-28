@@ -23,7 +23,7 @@
     "express": "~4.18.2",
     "graphql-http": "~1.21.0",
     "sqlite3": "5.1.4",
-    "tslib": "~2.6.0"
+    "tslib": "~2.6.1"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",

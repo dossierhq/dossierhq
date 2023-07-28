@@ -34,11 +34,11 @@
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
     "sqlite3": "5.1.4",
-    "tslib": "~2.6.0"
+    "tslib": "~2.6.1"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@types/react": "~18.2.15",
+    "@types/react": "~18.2.17",
     "@types/react-dom": "~18.2.7",
     "@types/sqlite3": "~3.1.8",
     "@typescript-eslint/eslint-plugin": "~6.2.0",

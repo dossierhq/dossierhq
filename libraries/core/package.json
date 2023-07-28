@@ -39,7 +39,7 @@
     "directory": "libraries/core"
   },
   "dependencies": {
-    "tslib": "~2.6.0"
+    "tslib": "~2.6.1"
   },
   "devDependencies": {
     "@dossierhq/eslint-config-generic": "workspace:*",
