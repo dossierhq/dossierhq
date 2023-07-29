@@ -1635,6 +1635,45 @@ describe('RenameTypeAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
+
+  test('rename existing value type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar'),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    state.valueTypes[0].status = 'changed';
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('rename existing value type with fields referring to itself', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            { name: 'Baz', fields: [{ name: 'field', type: 'ValueItem', valueTypes: ['Foo'] }] },
+          ],
+          valueTypes: [
+            {
+              name: 'Foo',
+              fields: [{ name: 'self', type: FieldType.ValueItem, valueTypes: ['Foo'] }],
+            },
+          ],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar'),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
 });
 
 describe('ReorderFieldsAction', () => {

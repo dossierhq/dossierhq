@@ -246,7 +246,8 @@ function TypeEditorRows({
   onAddOrRenameType: (selector: SchemaTypeSelector) => void;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
-  const canDeleteOrRenameType = typeDraft.status === 'new';
+  //TODO support renaming/deleting entity types
+  const canDeleteOrRenameType = typeDraft.status === 'new' || typeDraft.kind === 'value';
 
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
@@ -296,21 +297,19 @@ function TypeEditorRows({
               </Text>
             </Level.Item>
           </Level.Left>
-          {typeDraft.status !== '' ? (
-            <Level.Right>
-              <Level.Item>
-                {dropDownItems.length > 0 ? (
-                  <ButtonDropdown
-                    items={dropDownItems}
-                    left
-                    renderItem={(item) => item.title}
-                    onItemClick={handleDropdownItemClick}
-                  />
-                ) : null}
-                <TypeDraftStatusTag status={typeDraft.status} />
-              </Level.Item>
-            </Level.Right>
-          ) : null}
+          <Level.Right>
+            <Level.Item>
+              {dropDownItems.length > 0 ? (
+                <ButtonDropdown
+                  items={dropDownItems}
+                  left
+                  renderItem={(item) => item.title}
+                  onItemClick={handleDropdownItemClick}
+                />
+              ) : null}
+              {typeDraft.status !== '' ? <TypeDraftStatusTag status={typeDraft.status} /> : null}
+            </Level.Item>
+          </Level.Right>
         </Level>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row

@@ -43,6 +43,7 @@ export interface SchemaPatternSelector {
 
 export interface SchemaTypeDraft {
   name: string;
+  existingName: string | null;
   status: 'new' | '' | 'changed';
   adminOnly: boolean;
   existingAdminOnly: boolean;
@@ -184,6 +185,7 @@ function resolveTypeStatus(
   state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>,
 ): SchemaTypeDraft['status'] {
   if (state.status === 'new') return state.status;
+  if (state.name !== state.existingName) return 'changed';
   if (state.adminOnly !== state.existingAdminOnly) return 'changed';
   if (state.kind === 'entity') {
     if (state.nameField !== state.existingNameField) return 'changed';
@@ -495,6 +497,7 @@ class AddTypeAction implements SchemaEditorStateAction {
     const typeDraft = {
       status: 'new',
       name: this.name,
+      existingName: null,
       adminOnly: false,
       existingAdminOnly: false,
       deletedFields: [],
@@ -1394,6 +1397,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     return {
       kind,
       name: typeSpec.name,
+      existingName: typeSpec.name,
       status: '',
       adminOnly: typeSpec.adminOnly,
       existingAdminOnly: typeSpec.adminOnly,
@@ -1628,8 +1632,18 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
     const typeName =
       typeDraft.kind === 'entity' ? { entityType: typeDraft.name } : { valueType: typeDraft.name };
 
+    if (typeDraft.existingName && typeDraft.existingName !== typeDraft.name) {
+      actions.push({
+        action: 'renameType',
+        ...(typeDraft.kind === 'entity'
+          ? { entityType: typeDraft.existingName }
+          : { valueType: typeDraft.existingName }),
+        newName: typeDraft.name,
+      });
+    }
+
     for (const fieldName of typeDraft.deletedFields) {
-      actions.push({ ...typeName, action: 'deleteField', field: fieldName });
+      actions.push({ action: 'deleteField', ...typeName, field: fieldName });
     }
 
     for (const fieldDraft of typeDraft.fields) {
