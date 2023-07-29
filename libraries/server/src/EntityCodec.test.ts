@@ -20,6 +20,7 @@ const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
       fields: [
         { name: 'richText', type: FieldType.RichText },
         { name: 'valueItem', type: FieldType.ValueItem },
+        { name: 'valueItemList', type: FieldType.ValueItem, list: true },
       ],
     },
   ],
@@ -203,6 +204,154 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
             "type": "ValueItem",
           },
           "type": "ValueItem",
+        },
+      }
+    `);
+  });
+});
+
+describe('applySchemaMigrationsToFieldValues renameType', () => {
+  test('nested value item', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [
+        {
+          version: 2,
+          actions: [{ action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' }],
+        },
+      ],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      valueItem: {
+        type: 'ValueItem',
+        string: '1',
+        child: {
+          type: 'ValueItem',
+          string: '1.1',
+          child: { type: 'ValueItem', string: '1.1.1', child: null },
+        },
+      },
+    }).valueOrThrow();
+    expect(fieldValues).toMatchInlineSnapshot(`
+      {
+        "valueItem": {
+          "child": {
+            "child": {
+              "child": null,
+              "string": "1.1.1",
+              "type": "ValueItem2",
+            },
+            "string": "1.1",
+            "type": "ValueItem2",
+          },
+          "string": "1",
+          "type": "ValueItem2",
+        },
+      }
+    `);
+  });
+
+  test('value item list', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [
+        {
+          version: 2,
+          actions: [{ action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' }],
+        },
+      ],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+    }).valueOrThrow();
+    expect(fieldValues).toMatchInlineSnapshot(`
+      {
+        "valueItemList": [
+          {
+            "child": null,
+            "string": "1",
+            "type": "ValueItem2",
+          },
+        ],
+      }
+    `);
+  });
+
+  test('value item in rich text', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [
+        {
+          version: 2,
+          actions: [{ action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' }],
+        },
+      ],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      richText: createRichTextRootNode([
+        createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
+        createRichTextValueItemNode({
+          type: 'ValueItem',
+          string: '1',
+          child: { type: 'ValueItem', string: '1.1', child: null },
+        }),
+      ]),
+    }).valueOrThrow();
+    expect(fieldValues).toMatchSnapshot();
+    expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
+      .toMatchInlineSnapshot(`
+      {
+        "child": {
+          "child": null,
+          "string": "1.1",
+          "type": "ValueItem2",
+        },
+        "string": "1",
+        "type": "ValueItem2",
+      }
+    `);
+  });
+});
+
+describe('applySchemaMigrationsToFieldValues combos', () => {
+  test('rename type and field', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [
+        {
+          version: 2,
+          actions: [
+            { action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' },
+            { action: 'renameField', valueType: 'ValueItem2', field: 'string', newName: 'string2' },
+          ],
+        },
+      ],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      valueItem: {
+        type: 'ValueItem',
+        string: '1',
+        child: {
+          type: 'ValueItem',
+          string: '1.1',
+          child: { type: 'ValueItem', string: '1.1.1', child: null },
+        },
+      },
+    }).valueOrThrow();
+    expect(fieldValues).toMatchInlineSnapshot(`
+      {
+        "valueItem": {
+          "child": {
+            "child": {
+              "child": null,
+              "string2": "1.1.1",
+              "type": "ValueItem2",
+            },
+            "string2": "1.1",
+            "type": "ValueItem2",
+          },
+          "string2": "1",
+          "type": "ValueItem2",
         },
       }
     `);

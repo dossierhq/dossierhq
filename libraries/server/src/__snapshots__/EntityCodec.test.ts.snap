@@ -95,3 +95,52 @@ exports[`applySchemaMigrationsToFieldValues renameField > value item in rich tex
   },
 }
 `;
+
+exports[`applySchemaMigrationsToFieldValues renameType > value item in rich text 1`] = `
+{
+  "richText": {
+    "root": {
+      "children": [
+        {
+          "children": [
+            {
+              "detail": 0,
+              "format": 0,
+              "mode": "normal",
+              "style": "",
+              "text": "Heading 1",
+              "type": "text",
+              "version": 1,
+            },
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "tag": "h1",
+          "type": "heading",
+          "version": 1,
+        },
+        {
+          "data": {
+            "child": {
+              "child": null,
+              "string": "1.1",
+              "type": "ValueItem2",
+            },
+            "string": "1",
+            "type": "ValueItem2",
+          },
+          "format": "",
+          "type": "valueItem",
+          "version": 1,
+        },
+      ],
+      "direction": "ltr",
+      "format": "",
+      "indent": 0,
+      "type": "root",
+      "version": 1,
+    },
+  },
+}
+`;

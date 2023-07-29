@@ -2,6 +2,7 @@ import {
   AdminEntityStatus,
   FieldType,
   ItemTraverseNodeType,
+  RichTextNodeType,
   assertExhaustive,
   isFieldValueEqual,
   isRichTextField,
@@ -176,43 +177,58 @@ function applySchemaMigrationsToFieldValues(
     })) {
       if (node.type === ItemTraverseNodeType.error) {
         return notOk.BadRequest(`${visitorPathToString(node.path)}: ${node.message}`);
-      } else if (node.type === ItemTraverseNodeType.valueItem) {
-        const valueItem = node.valueItem;
-        for (const actionSpec of valueTypeActions) {
-          const { action } = actionSpec;
-          switch (action) {
-            case 'deleteField': {
-              if (actionSpec.valueType === valueItem.type) {
-                delete valueItem[actionSpec.field];
-              }
-              break;
-            }
-            case 'renameField': {
-              if (actionSpec.valueType === valueItem.type) {
-                if (actionSpec.field in valueItem) {
-                  valueItem[actionSpec.newName] = valueItem[actionSpec.field];
-                  delete valueItem[actionSpec.field];
-                }
-              }
-              break;
-            }
-            case 'deleteType': {
-              //TODO
-              break;
-            }
-            case 'renameType': {
-              //TODO
-              break;
-            }
-            default:
-              assertExhaustive(action);
-          }
+      } else if (node.type === ItemTraverseNodeType.fieldItem) {
+        const fieldSpec = node.fieldSpec;
+        if (fieldSpec.type === FieldType.ValueItem) {
+          const valueItem = node.value as ValueItem;
+          migrateValueItem(valueItem, valueTypeActions);
+        }
+      } else if (node.type === ItemTraverseNodeType.richTextNode) {
+        if (node.node.type === RichTextNodeType.valueItem) {
+          const valueItem = (node.node as RichTextValueItemNode).data;
+          migrateValueItem(valueItem, valueTypeActions);
         }
       }
     }
   }
 
   return ok(migratedFieldValues);
+}
+
+function migrateValueItem(
+  valueItem: ValueItem | null,
+  valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
+) {
+  if (!valueItem) return;
+
+  for (const actionSpec of valueTypeActions) {
+    const { action } = actionSpec;
+    switch (action) {
+      case 'deleteField':
+        if (actionSpec.valueType === valueItem.type) {
+          delete valueItem[actionSpec.field];
+        }
+        break;
+      case 'renameField':
+        if (actionSpec.valueType === valueItem.type) {
+          if (actionSpec.field in valueItem) {
+            valueItem[actionSpec.newName] = valueItem[actionSpec.field];
+            delete valueItem[actionSpec.field];
+          }
+        }
+        break;
+      case 'deleteType':
+        //TODO
+        break;
+      case 'renameType':
+        if (actionSpec.valueType === valueItem.type) {
+          valueItem.type = actionSpec.newName;
+        }
+        break;
+      default:
+        assertExhaustive(action);
+    }
+  }
 }
 
 function decodeFieldItemOrList(
