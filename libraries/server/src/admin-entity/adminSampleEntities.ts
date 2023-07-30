@@ -37,7 +37,7 @@ export async function adminSampleEntities(
     limit: number,
     authKeys: ResolvedAuthKey[],
   ): PromiseResult<
-    Result<AdminEntity, typeof ErrorType.BadRequest>[],
+    Result<AdminEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>[],
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > {
     const sampleResult = await databaseAdapter.adminEntitySampleEntities(

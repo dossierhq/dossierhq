@@ -30,7 +30,7 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
     limit: number,
     authKeys: ResolvedAuthKey[],
   ) => PromiseResult<
-    Result<TEntity, typeof ErrorType.BadRequest>[],
+    Result<TEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>[],
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >,
 ): PromiseResult<

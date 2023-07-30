@@ -261,6 +261,7 @@ async function validateAndCollectInfoFromPublishedEntity(
       );
       return ok({ valid: false, ...EMPTY_ENTITY_INFO });
     }
+    return notOk.Generic(decodeResult.message); //cast Generic -> Generic
   }
   const entityFields = decodeResult.value;
 

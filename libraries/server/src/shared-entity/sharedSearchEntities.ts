@@ -76,7 +76,7 @@ export function sharedSearchEntities<
   decoder: (
     schema: TSchema,
     values: TSearchResult['entities'][number],
-  ) => Result<TEntity, typeof ErrorType.BadRequest>,
+  ) => Result<TEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
 ): Result<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
   if (entities.length === 0) {

@@ -44,7 +44,7 @@ export async function publishedSampleEntities(
     limit: number,
     authKeys: ResolvedAuthKey[],
   ): PromiseResult<
-    Result<PublishedEntity, typeof ErrorType.BadRequest>[],
+    Result<PublishedEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>[],
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > {
     const sampleResult = await databaseAdapter.publishedEntitySampleEntities(

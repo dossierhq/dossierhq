@@ -25,6 +25,7 @@ import {
   type AdminSchemaMigrationAction,
   type AdminSchemaWithMigrations,
   type ErrorType,
+  type ItemValuePath,
   type PromiseResult,
   type PublishedEntity,
   type PublishedFieldSpecification,
@@ -74,7 +75,7 @@ export type CodecMode = 'optimized' | 'json';
 export function decodePublishedEntity(
   adminSchema: AdminSchemaWithMigrations,
   values: DatabasePublishedEntityPayload,
-): Result<PublishedEntity, typeof ErrorType.BadRequest> {
+): Result<PublishedEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const publishedSchema = adminSchema.toPublishedSchema();
   const entitySpec = publishedSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -120,7 +121,7 @@ function applySchemaMigrationsToFieldValues(
   entityType: string,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
-): Result<Record<string, unknown>, typeof ErrorType.BadRequest> {
+): Result<Record<string, unknown>, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const actions = adminSchema.collectMigrationActionsSinceVersion(schemaVersion);
 
   if (actions.length === 0) {
@@ -306,24 +307,26 @@ function decodeRichTextField(
   schema: AdminSchema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   encodedValue: RichText,
-): RichText {
-  return transformRichText(encodedValue, (node) => {
+): RichText | null {
+  //TODO add paths to decoding
+  const path: ItemValuePath = [];
+  return transformRichText(path, encodedValue, (_path, node) => {
     if (isRichTextValueItemNode(node)) {
       const data = decodeValueItemField(schema, fieldSpec, 'json', node.data);
       if (!data) {
-        return null;
+        return ok(null);
       }
       const newNode: RichTextValueItemNode = { ...node, data };
-      return newNode;
+      return ok(newNode);
     }
-    return node;
-  });
+    return ok(node);
+  }).valueOrThrow();
 }
 
 export function decodeAdminEntity(
   schema: AdminSchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
-): Result<AdminEntity, typeof ErrorType.BadRequest> {
+): Result<AdminEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     return notOk.BadRequest(`No entity spec for type ${values.type}`);
@@ -362,7 +365,7 @@ export function decodeAdminEntityFields(
   entitySpec: AdminEntityTypeSpecification,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
-): Result<AdminEntity['fields'], typeof ErrorType.BadRequest> {
+): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
     schema,
     entitySpec.name,
