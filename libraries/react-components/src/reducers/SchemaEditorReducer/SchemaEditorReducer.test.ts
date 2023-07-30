@@ -1,26 +1,22 @@
-import type {
-  AdminEntityTypeSpecificationUpdate,
-  NumberFieldSpecification,
-  StringFieldSpecification,
-} from '@dossierhq/core';
 import {
   AdminSchema,
   AdminSchemaWithMigrations,
   FieldType,
   RichTextNodeType,
+  type AdminEntityTypeSpecificationUpdate,
+  type NumberFieldSpecification,
+  type StringFieldSpecification,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaTypeDraft,
-} from './SchemaEditorReducer.js';
 import {
   REQUIRED_NODES_PLACEHOLDER,
   SchemaEditorActions,
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaTypeDraft,
 } from './SchemaEditorReducer.js';
 
 function reduceSchemaEditorStateActions(
@@ -1328,6 +1324,20 @@ describe('DeleteTypeAction', () => {
     expect(state.status).toBe(''); // should be reset
   });
 
+  test('delete existing value type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' }),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
   test('delete newly added value type referenced by another type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
@@ -1363,6 +1373,34 @@ describe('DeleteTypeAction', () => {
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
     expect(state.status).toBe(''); // should be reset
+  });
+
+  test('delete existing value type referenced by another type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Referencing',
+              fields: [
+                { name: 'richText', type: FieldType.RichText, valueTypes: ['ToBeDeleted'] },
+                { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['ToBeDeleted'] },
+              ],
+            },
+          ],
+          valueTypes: [{ name: 'ToBeDeleted', fields: [] }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'ToBeDeleted' }),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].valueTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[1].valueTypes).toEqual([]);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 });
 

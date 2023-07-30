@@ -106,7 +106,9 @@ export interface SchemaEditorState {
   schemaWillBeUpdatedDueToSave: boolean;
 
   entityTypes: SchemaEntityTypeDraft[];
+  deletedEntityTypes: readonly string[];
   valueTypes: SchemaValueTypeDraft[];
+  deletedValueTypes: readonly string[];
   indexes: SchemaIndexDraft[];
   patterns: SchemaPatternDraft[];
 
@@ -142,7 +144,9 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     schema: null,
     schemaWillBeUpdatedDueToSave: false,
     entityTypes: [],
+    deletedEntityTypes: [],
     valueTypes: [],
+    deletedValueTypes: [],
     indexes: [],
     patterns: [],
     activeSelector: null,
@@ -1041,18 +1045,40 @@ class DeleteTypeAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    let { activeSelector, entityTypes, valueTypes } = state;
+    let { activeSelector, entityTypes, deletedEntityTypes, valueTypes, deletedValueTypes } = state;
+
+    const typeDrafts = this.selector.kind === 'entity' ? entityTypes : valueTypes;
+    const typeIndex = typeDrafts.findIndex((it) => it.name === this.selector.typeName);
+    if (typeIndex < 0)
+      throw new Error(`No such ${this.selector.kind} type ${this.selector.typeName}`);
+    const typeDraft = typeDrafts[typeIndex];
+    const newTypeDrafts = [...typeDrafts];
+    newTypeDrafts.splice(typeIndex, 1);
+
     if (this.selector.kind === 'entity') {
-      entityTypes = entityTypes.filter((it) => it.name !== this.selector.typeName);
+      entityTypes = newTypeDrafts as typeof entityTypes;
+      if (typeDraft.existingName) {
+        deletedEntityTypes = [...deletedEntityTypes, typeDraft.existingName].sort();
+      }
     } else {
-      valueTypes = valueTypes.filter((it) => it.name !== this.selector.typeName);
+      valueTypes = newTypeDrafts as typeof valueTypes;
+      if (typeDraft.existingName) {
+        deletedValueTypes = [...deletedValueTypes, typeDraft.existingName].sort();
+      }
     }
 
     if (isEqual(activeSelector, this.selector)) {
       activeSelector = null;
     }
 
-    let newState = { ...state, activeSelector, entityTypes, valueTypes };
+    let newState = {
+      ...state,
+      activeSelector,
+      entityTypes,
+      deletedEntityTypes,
+      valueTypes,
+      deletedValueTypes,
+    };
 
     // Remove references to type in fields
     newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
@@ -1625,6 +1651,15 @@ function getTypeUpdateFromEditorState(
 
 function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVersionMigration[] {
   const actions: AdminSchemaVersionMigration['actions'] = [];
+
+  for (const typeName of state.deletedEntityTypes) {
+    actions.push({ action: 'deleteType', entityType: typeName });
+  }
+
+  for (const typeName of state.deletedValueTypes) {
+    actions.push({ action: 'deleteType', valueType: typeName });
+  }
+
   for (const typeDraft of [...state.entityTypes, ...state.valueTypes]) {
     if (typeDraft.status !== 'changed') {
       continue;
