@@ -17,6 +17,7 @@ import { type UnboundTestFunction } from '../Builder.js';
 import {
   assertIsAdminValueItems,
   assertIsPublishedValueItems,
+  type AdminValueItems,
   type AppAdminUniqueIndexes,
   type AppAdminValueItem,
   type AppPublishedValueItem,
@@ -60,7 +61,11 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_renameFieldOnValueItem,
   updateSchemaSpecification_deleteTypeOnValueItem,
+  updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnotherType,
+  updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid,
+  updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated,
   updateSchemaSpecification_renameTypeOnValueItem,
+  updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnotherType,
   updateSchemaSpecification_addingIndexToField,
   updateSchemaSpecification_errorWrongVersion,
 ];
@@ -1217,6 +1222,225 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   );
 }
 
+async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnotherType({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const typeName = `MigrationValueItem${new Date().getTime()}`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the value type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: {
+            any: { type: typeName, field: `Hello ${typeName}` } as AppAdminValueItem,
+          },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Delete/replace the value type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [
+        { name: typeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
+      ],
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteType', valueType: typeName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that value item type is deleted
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  assertIsAdminValueItems(adminEntity);
+  assertEquals(adminEntity.fields.any, null);
+
+  // And for published entity
+  const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
+  assertIsPublishedValueItems(publishedEntity);
+  assertEquals(publishedEntity.fields.any, null);
+
+  // Check that the new type is usable
+  const updatedEntity = (
+    await adminClient.updateEntity<AdminValueItems>(
+      {
+        id: reference.id,
+        fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppAdminValueItem },
+      },
+      { publish: true },
+    )
+  ).valueOrThrow().entity;
+  assertEquals(updatedEntity.fields.any, {
+    type: typeName,
+    field: [{ lat: 1, lng: 2 }],
+  } as AppAdminValueItem);
+}
+
+async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const typeName = `MigrationValueItem${new Date().getTime()}`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+    });
+    assertOkResult(firstUpdateResult);
+
+    // Create entity with the new type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: {
+            any: { type: typeName, field: 'this value will become invalid' } as AppAdminValueItem,
+          },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+    const reference = { id: entity.id };
+
+    // Change validations to make the field invalid
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [
+        {
+          name: typeName,
+          fields: [{ name: 'field', type: 'String', values: [{ value: 'valid' }] }],
+        },
+      ],
+    });
+    const { schemaSpecification } = secondUpdateResult.valueOrThrow();
+
+    // Process entity
+    const validationChangeProcessed: {
+      id: string;
+      valid: boolean;
+      validPublished: boolean | null;
+    }[] = [];
+    const processAfterValidationChangeResult = await processAllDirtyEntities(
+      server,
+      reference,
+      (processed) => {
+        if (processed.id === reference.id) {
+          validationChangeProcessed.push(processed);
+        }
+      },
+    );
+    assertOkResult(processAfterValidationChangeResult);
+    assertEquals(validationChangeProcessed, [
+      { id: entity.id, valid: false, validPublished: false },
+    ]);
+
+    // Delete the value type
+    const thirdUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteType', valueType: typeName }],
+        },
+      ],
+    });
+    assertOkResult(thirdUpdateResult);
+
+    // Process entity
+    const deleteFieldProcessed: { id: string; valid: boolean; validPublished: boolean | null }[] =
+      [];
+    const processAfterDeletionResult = await processAllDirtyEntities(
+      server,
+      reference,
+      (processed) => {
+        if (processed.id === reference.id) {
+          deleteFieldProcessed.push(processed);
+        }
+      },
+    );
+    assertOkResult(processAfterDeletionResult);
+    assertEquals(deleteFieldProcessed, [{ id: reference.id, valid: true, validPublished: true }]);
+
+    return ok(entity);
+  });
+  assertOkResult(result);
+}
+
+async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const typeName = `MigrationValueItem${new Date().getTime()}`;
+
+  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+    entityTypes: ['ValueItems'],
+    text: 'wingspan hero',
+  };
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: { any: { type: typeName, field: query.text } as AppAdminValueItem },
+        }),
+      )
+    ).valueOrThrow();
+
+    // Check that it's in the index
+    const countBeforeSchemaUpdate = (
+      await countSearchResultWithEntity(adminClient, query, entity.id)
+    ).valueOrThrow();
+    assertEquals(countBeforeSchemaUpdate, 1);
+
+    // Delete the type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteType', valueType: typeName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+
+    // Process the entity
+    const processResult = await processAllDirtyEntities(server, { id: entity.id });
+    assertOkResult(processResult);
+
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that it's no longer in the index
+  const countAfterSchemaUpdate = (
+    await countSearchResultWithEntity(adminClient, query, reference.id)
+  ).valueOrThrow();
+  assertEquals(countAfterSchemaUpdate, 0);
+}
+
 async function updateSchemaSpecification_renameTypeOnValueItem({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
@@ -1282,6 +1506,90 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
     { publish: true },
   );
   assertOkResult(updateResult);
+}
+
+async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnotherType({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const newTypeName = `${oldTypeName}New`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the value type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: {
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminValueItem,
+          },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Rename/replace the value type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [
+        { name: oldTypeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
+      ],
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'renameType', valueType: oldTypeName, newName: newTypeName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that value item type is renamed
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  assertIsAdminValueItems(adminEntity);
+  assertEquals(adminEntity.fields.any, {
+    type: newTypeName,
+    field: `Hello ${oldTypeName}`,
+  } as AppAdminValueItem);
+
+  // And for published entity
+  const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
+  assertIsPublishedValueItems(publishedEntity);
+  assertEquals(publishedEntity.fields.any, {
+    type: newTypeName,
+    field: `Hello ${oldTypeName}`,
+  } as AppPublishedValueItem);
+
+  // Check that both types are usable
+  const updatedEntity = (
+    await adminClient.updateEntity<AdminValueItems>(
+      {
+        id: reference.id,
+        fields: {
+          any: { type: oldTypeName, field: [{ lat: 1, lng: 2 }] } as AppAdminValueItem,
+          anyAdminOnly: { type: newTypeName, field: `Hello ${newTypeName}` } as AppAdminValueItem,
+        },
+      },
+      { publish: true },
+    )
+  ).valueOrThrow().entity;
+  assertEquals(updatedEntity.fields.any, {
+    type: oldTypeName,
+    field: [{ lat: 1, lng: 2 }],
+  } as AppAdminValueItem);
+  assertEquals(updatedEntity.fields.anyAdminOnly, {
+    type: newTypeName,
+    field: `Hello ${newTypeName}`,
+  } as AppAdminValueItem);
 }
 
 async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTestContext) {
