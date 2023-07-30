@@ -313,6 +313,56 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
   });
 });
 
+describe('applySchemaMigrationsToFieldValues deleteType', () => {
+  test('nested value item', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      valueItem: {
+        type: 'ValueItem',
+        string: '1',
+        child: {
+          type: 'ValueItem',
+          string: '1.1',
+          child: { type: 'ValueItem', string: '1.1.1', child: null },
+        },
+      },
+    }).valueOrThrow();
+    expect(fieldValues).toMatchSnapshot();
+  });
+
+  test('value item list', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+    }).valueOrThrow();
+    expect(fieldValues).toMatchSnapshot();
+  });
+
+  test('value item in rich text', () => {
+    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
+    }).valueOrThrow();
+
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
+      richText: createRichTextRootNode([
+        createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
+        createRichTextValueItemNode({
+          type: 'ValueItem',
+          string: '1',
+          child: { type: 'ValueItem', string: '1.1', child: null },
+        }),
+      ]),
+    }).valueOrThrow();
+    expect(fieldValues).toMatchSnapshot();
+  });
+});
+
 describe('applySchemaMigrationsToFieldValues combos', () => {
   test('rename type and field', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({

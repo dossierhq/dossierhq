@@ -1,8 +1,6 @@
 import {
   AdminEntityStatus,
   FieldType,
-  ItemTraverseNodeType,
-  RichTextNodeType,
   assertExhaustive,
   isFieldValueEqual,
   isRichTextField,
@@ -24,6 +22,7 @@ import {
   type AdminSchema,
   type AdminSchemaMigrationAction,
   type AdminSchemaWithMigrations,
+  type EntityLike,
   type ErrorType,
   type ItemValuePath,
   type PromiseResult,
@@ -55,6 +54,7 @@ import {
   type UniqueIndexValueCollection,
 } from './EntityCollectors.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
+import { transformEntity } from './utils/ItemTransformer.js';
 import { transformRichText } from './utils/RichTextTransformer.js';
 
 export interface EncodeAdminEntityResult {
@@ -138,69 +138,79 @@ function applySchemaMigrationsToFieldValues(
     }
   }
 
-  const migratedFieldValues = JSON.parse(JSON.stringify(fieldValues)) as Record<string, unknown>;
+  const migratedFieldValues = migrateEntityFields(entityType, fieldValues, entityTypeActions);
 
+  const transformResult: Result<
+    EntityLike,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  > = transformEntity(
+    adminSchema,
+    [],
+    { info: { type: entityType }, fields: migratedFieldValues },
+    {
+      transformField: (_path, _fieldSpec, value) => {
+        return ok(value);
+      },
+      transformFieldItem: (_path, fieldSpec, value) => {
+        if (isValueItemItemField(fieldSpec, value) && value) {
+          return ok(migrateValueItem(value, valueTypeActions));
+        }
+        return ok(value);
+      },
+      transformRichTextNode: (_path, node) => {
+        if (isRichTextValueItemNode(node)) {
+          const valueItem = migrateValueItem(node.data, valueTypeActions);
+          if (!valueItem) return ok(null);
+          return ok({ ...node, data: valueItem });
+        }
+        return ok(node);
+      },
+    },
+  );
+
+  if (transformResult.isError()) return transformResult;
+  return ok(transformResult.value.fields);
+}
+
+function migrateEntityFields(
+  entityType: string,
+  originalFields: Record<string, unknown>,
+  entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
+) {
+  let changed = false;
+  const migratedFields = { ...originalFields };
   for (const actionSpec of entityTypeActions) {
     const { action } = actionSpec;
     switch (action) {
       case 'deleteField': {
         if (actionSpec.entityType === entityType) {
-          delete migratedFieldValues[actionSpec.field];
+          delete migratedFields[actionSpec.field];
+          changed = true;
         }
         break;
       }
       case 'renameField': {
         if (actionSpec.entityType === entityType) {
-          if (actionSpec.field in migratedFieldValues) {
-            migratedFieldValues[actionSpec.newName] = migratedFieldValues[actionSpec.field];
-            delete migratedFieldValues[actionSpec.field];
+          if (actionSpec.field in migratedFields) {
+            migratedFields[actionSpec.newName] = migratedFields[actionSpec.field];
+            delete migratedFields[actionSpec.field];
+            changed = true;
           }
         }
         break;
       }
-      case 'deleteType': {
-        //TODO
-        break;
-      }
-      case 'renameType': {
-        //TODO
-        break;
-      }
-      default:
-        assertExhaustive(action);
     }
   }
-
-  if (valueTypeActions.length > 0) {
-    for (const node of traverseEntity(adminSchema, ['entity'], {
-      info: { type: entityType },
-      fields: migratedFieldValues,
-    })) {
-      if (node.type === ItemTraverseNodeType.error) {
-        return notOk.BadRequest(`${visitorPathToString(node.path)}: ${node.message}`);
-      } else if (node.type === ItemTraverseNodeType.fieldItem) {
-        const fieldSpec = node.fieldSpec;
-        if (fieldSpec.type === FieldType.ValueItem) {
-          const valueItem = node.value as ValueItem;
-          migrateValueItem(valueItem, valueTypeActions);
-        }
-      } else if (node.type === ItemTraverseNodeType.richTextNode) {
-        if (node.node.type === RichTextNodeType.valueItem) {
-          const valueItem = (node.node as RichTextValueItemNode).data;
-          migrateValueItem(valueItem, valueTypeActions);
-        }
-      }
-    }
-  }
-
-  return ok(migratedFieldValues);
+  return changed ? migratedFields : originalFields;
 }
 
 function migrateValueItem(
-  valueItem: ValueItem | null,
+  originalValueItem: ValueItem | null,
   valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
-) {
-  if (!valueItem) return;
+): ValueItem | null {
+  if (!originalValueItem) return null;
+
+  const valueItem = { ...originalValueItem };
 
   for (const actionSpec of valueTypeActions) {
     const { action } = actionSpec;
@@ -219,7 +229,9 @@ function migrateValueItem(
         }
         break;
       case 'deleteType':
-        //TODO
+        if (actionSpec.valueType === valueItem.type) {
+          return null;
+        }
         break;
       case 'renameType':
         if (actionSpec.valueType === valueItem.type) {
@@ -230,6 +242,7 @@ function migrateValueItem(
         assertExhaustive(action);
     }
   }
+  return valueItem;
 }
 
 function decodeFieldItemOrList(

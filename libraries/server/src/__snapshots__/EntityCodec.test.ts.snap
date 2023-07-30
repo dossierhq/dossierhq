@@ -47,6 +47,53 @@ exports[`applySchemaMigrationsToFieldValues deleteField > nested value item 1`] 
 }
 `;
 
+exports[`applySchemaMigrationsToFieldValues deleteType > nested value item 1`] = `
+{
+  "valueItem": null,
+}
+`;
+
+exports[`applySchemaMigrationsToFieldValues deleteType > value item in rich text 1`] = `
+{
+  "richText": {
+    "root": {
+      "children": [
+        {
+          "children": [
+            {
+              "detail": 0,
+              "format": 0,
+              "mode": "normal",
+              "style": "",
+              "text": "Heading 1",
+              "type": "text",
+              "version": 1,
+            },
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "tag": "h1",
+          "type": "heading",
+          "version": 1,
+        },
+      ],
+      "direction": "ltr",
+      "format": "",
+      "indent": 0,
+      "type": "root",
+      "version": 1,
+    },
+  },
+}
+`;
+
+exports[`applySchemaMigrationsToFieldValues deleteType > value item list 1`] = `
+{
+  "valueItemList": null,
+}
+`;
+
 exports[`applySchemaMigrationsToFieldValues renameField > value item in rich text 1`] = `
 {
   "richText": {
