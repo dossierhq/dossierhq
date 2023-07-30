@@ -11,9 +11,10 @@ import {
   type ItemValuePath,
   type PublishedSchema,
   type Result,
+  type RichTextNode,
   type ValueItem,
 } from '@dossierhq/core';
-import { transformRichText, type RichTextNodeTransformer } from './RichTextTransformer.js';
+import { transformRichText } from './RichTextTransformer.js';
 
 interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError extends ErrorType> {
   /**
@@ -38,7 +39,13 @@ interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError 
     value: Readonly<unknown> | null,
   ) => Result<Readonly<unknown> | null | undefined, TError>;
 
-  transformRichTextNode: RichTextNodeTransformer<TError>;
+  transformRichTextNode: (
+    path: ItemValuePath,
+    fieldSpec:
+      | TSchema['spec']['entityTypes'][number]['fields'][number]
+      | TSchema['spec']['valueTypes'][number]['fields'][number],
+    node: Readonly<RichTextNode>,
+  ) => Result<Readonly<RichTextNode | null>, TError>;
 }
 
 // TODO should this be transformEntityFields()? see normalizeEntityFields()
@@ -211,7 +218,7 @@ function transformItemFieldValue<
     return transformValueItem(schema, path, value, mapper);
   } else if (isRichTextItemField(fieldSpec, value) && value) {
     return transformRichText(path, value, (path, node) => {
-      const nodeResult = mapper.transformRichTextNode(path, node);
+      const nodeResult = mapper.transformRichTextNode(path, fieldSpec, node);
       if (nodeResult.isError()) return nodeResult;
       const transformedNode = nodeResult.value;
 

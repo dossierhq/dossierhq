@@ -61,7 +61,7 @@ describe('transformEntity', () => {
         calls.push(['transformFieldItem', visitorPathToString(path)]);
         return ok(value);
       },
-      transformRichTextNode: (path, node) => {
+      transformRichTextNode: (path, _fieldSpec, node) => {
         calls.push(['transformRichTextNode', visitorPathToString(path)]);
         return ok(node);
       },
@@ -77,7 +77,8 @@ describe('transformEntity', () => {
         if (isValueItemItemField(fieldSpec, value)) return ok(null);
         return ok(value);
       },
-      transformRichTextNode: (_path, node) => ok(isRichTextValueItemNode(node) ? null : node),
+      transformRichTextNode: (_path, _fieldSpec, node) =>
+        ok(isRichTextValueItemNode(node) ? null : node),
     }).valueOrThrow();
     expect(transformed).toMatchSnapshot();
   });

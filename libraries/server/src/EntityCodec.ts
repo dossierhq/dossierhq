@@ -157,7 +157,7 @@ function applySchemaMigrationsToFieldValues(
         }
         return ok(value);
       },
-      transformRichTextNode: (_path, node) => {
+      transformRichTextNode: (_path, _fieldSpec, node) => {
         if (isRichTextValueItemNode(node)) {
           const valueItem = migrateValueItem(node.data, valueTypeActions);
           if (!valueItem) return ok(null);
