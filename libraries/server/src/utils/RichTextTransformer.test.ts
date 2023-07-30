@@ -6,9 +6,9 @@ import {
   createRichTextTextNode,
   ok,
 } from '@dossierhq/core';
+import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { transformRichText } from './RichTextTransformer.js';
-import { expectErrorResult } from '@dossierhq/core-vitest';
 
 describe('transformRichText', () => {
   test('return null root', () => {

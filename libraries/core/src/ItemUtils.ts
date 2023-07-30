@@ -413,6 +413,7 @@ export function isFieldValueEqual(a: unknown, b: unknown): boolean {
   return false;
 }
 
+// TODO move ItemTransformer to core and use it for normalization (null transformer -> normalization)
 export function normalizeEntityFields<TEntity extends EntityLike>(
   schema: AdminSchema,
   entity: EntityLike,

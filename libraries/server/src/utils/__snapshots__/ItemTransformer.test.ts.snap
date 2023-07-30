@@ -1,0 +1,115 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transformEntity > delete all value items 1`] = `
+{
+  "fields": {
+    "richText": null,
+    "valueItem": null,
+    "valueItemList": null,
+  },
+  "info": {
+    "type": "ValueItemsEntity",
+  },
+}
+`;
+
+exports[`transformEntity > identity 1`] = `
+[
+  [
+    "transformField",
+    "richText",
+  ],
+  [
+    "transformFieldItem",
+    "richText",
+  ],
+  [
+    "transformRichTextNode",
+    "richText",
+  ],
+  [
+    "transformRichTextNode",
+    "richText[0]",
+  ],
+  [
+    "transformField",
+    "richText[0].child",
+  ],
+  [
+    "transformField",
+    "richText[0].string",
+  ],
+  [
+    "transformField",
+    "valueItem",
+  ],
+  [
+    "transformFieldItem",
+    "valueItem",
+  ],
+  [
+    "transformField",
+    "valueItem.child",
+  ],
+  [
+    "transformFieldItem",
+    "valueItem.child",
+  ],
+  [
+    "transformField",
+    "valueItem.child.child",
+  ],
+  [
+    "transformField",
+    "valueItem.child.string",
+  ],
+  [
+    "transformFieldItem",
+    "valueItem.child.string",
+  ],
+  [
+    "transformField",
+    "valueItem.string",
+  ],
+  [
+    "transformFieldItem",
+    "valueItem.string",
+  ],
+  [
+    "transformField",
+    "valueItemList",
+  ],
+  [
+    "transformFieldItem",
+    "valueItemList[0]",
+  ],
+  [
+    "transformField",
+    "valueItemList[0].child",
+  ],
+  [
+    "transformField",
+    "valueItemList[0].string",
+  ],
+  [
+    "transformFieldItem",
+    "valueItemList[0].string",
+  ],
+  [
+    "transformFieldItem",
+    "valueItemList[1]",
+  ],
+  [
+    "transformField",
+    "valueItemList[1].child",
+  ],
+  [
+    "transformField",
+    "valueItemList[1].string",
+  ],
+  [
+    "transformFieldItem",
+    "valueItemList[1].string",
+  ],
+]
+`;
