@@ -663,6 +663,49 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
     ).toMatchInlineSnapshot('null'); //TODO
   });
 
+  test('rename entity type with referencing fields', () => {
+    const { previous, next } = build(
+      {
+        entityTypes: [
+          { name: 'OldName', fields: [] },
+          {
+            name: 'AnotherEntity',
+            fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: ['OldName'] }],
+          },
+        ],
+        valueTypes: [
+          {
+            name: 'AnotherValueItem',
+            fields: [{ name: 'richText', type: FieldType.RichText, linkEntityTypes: ['OldName'] }],
+          },
+        ],
+      },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameType', entityType: 'OldName', newName: 'NewName' }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "deleteValueTypes": [],
+        "indexEntityTypes": [],
+        "indexValueTypes": [],
+        "renameValueTypes": {},
+        "validateEntityTypes": [
+          "AnotherEntity",
+        ],
+        "validateValueTypes": [
+          "AnotherValueItem",
+        ],
+      }
+    `);
+  });
+
   test('rename value type', () => {
     const { previous, next } = build(
       { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
@@ -686,6 +729,51 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         },
         "validateEntityTypes": [],
         "validateValueTypes": [],
+      }
+    `);
+  });
+
+  test('rename value type with referencing fields', () => {
+    const { previous, next } = build(
+      {
+        valueTypes: [
+          { name: 'OldName', fields: [] },
+          {
+            name: 'AnotherValueItem',
+            fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['OldName'] }],
+          },
+        ],
+        entityTypes: [
+          {
+            name: 'AnotherEntity',
+            fields: [{ name: 'richText', type: FieldType.RichText, valueTypes: ['OldName'] }],
+          },
+        ],
+      },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameType', valueType: 'OldName', newName: 'NewName' }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "deleteValueTypes": [],
+        "indexEntityTypes": [],
+        "indexValueTypes": [],
+        "renameValueTypes": {
+          "OldName": "NewName",
+        },
+        "validateEntityTypes": [
+          "AnotherEntity",
+        ],
+        "validateValueTypes": [
+          "AnotherValueItem",
+        ],
       }
     `);
   });
