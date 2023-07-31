@@ -4683,6 +4683,199 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
 }
 `;
 
+exports[`RenameTypeAction > rename existing entity type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "NewName",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "deletedEntityTypes": [],
+  "deletedValueTypes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "OldName",
+      "existingNameField": null,
+      "fields": [],
+      "kind": "entity",
+      "name": "NewName",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "NewName",
+      "nameField": null,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "OldName",
+          "newName": "NewName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "NewName",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "deletedEntityTypes": [],
+  "deletedValueTypes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "self",
+      ],
+      "existingName": "OldName",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "linkEntityTypes": undefined,
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "changed",
+          "type": "Entity",
+        },
+      ],
+      "kind": "entity",
+      "name": "NewName",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingName": "Referencing",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "linkEntityTypes": undefined,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Entity",
+        },
+      ],
+      "kind": "value",
+      "name": "Referencing",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type with fields referring to itself 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "Entity",
+        },
+      ],
+      "name": "NewName",
+      "nameField": null,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "OldName",
+          "newName": "NewName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "name": "field",
+          "required": false,
+          "type": "Entity",
+        },
+      ],
+      "name": "Referencing",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`RenameTypeAction > rename existing value type 1`] = `
 {
   "activeSelector": {

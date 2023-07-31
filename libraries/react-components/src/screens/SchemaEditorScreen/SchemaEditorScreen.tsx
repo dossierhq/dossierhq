@@ -246,8 +246,8 @@ function TypeEditorRows({
   onAddOrRenameType: (selector: SchemaTypeSelector) => void;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
-  //TODO support renaming/deleting entity types
-  const canDeleteOrRenameType = typeDraft.status === 'new' || typeDraft.kind === 'value';
+  //TODO support deleting entity type
+  const canDeleteType = typeDraft.status === 'new' || typeDraft.kind === 'value';
 
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
@@ -276,12 +276,12 @@ function TypeEditorRows({
     [dispatchSchemaEditorState, onAddOrRenameType, typeSelector],
   );
 
-  const dropDownItems = canDeleteOrRenameType
+  const dropDownItems = canDeleteType
     ? [
         { id: 'rename', title: 'Rename type' },
         { id: 'delete', title: 'Delete type' },
       ]
-    : [];
+    : [{ id: 'rename', title: 'Rename type' }];
 
   return (
     <>

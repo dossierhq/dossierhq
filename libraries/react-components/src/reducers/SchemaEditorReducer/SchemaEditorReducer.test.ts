@@ -1647,6 +1647,50 @@ describe('RenameTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
+  test('rename existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'OldName', fields: [] }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'OldName' }, 'NewName'),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+    state.entityTypes[0].status = 'changed';
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('rename existing entity type with fields referring to itself', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'OldName',
+              fields: [{ name: 'self', type: FieldType.Entity, entityTypes: ['OldName'] }],
+            },
+          ],
+          valueTypes: [
+            {
+              name: 'Referencing',
+              fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['OldName'] }],
+            },
+          ],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameType({ kind: 'entity', typeName: 'OldName' }, 'NewName'),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
   test('add and rename value type with fields referring to itself', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
