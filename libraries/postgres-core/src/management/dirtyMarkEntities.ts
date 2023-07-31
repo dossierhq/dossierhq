@@ -23,6 +23,7 @@ export async function managementDirtyMarkEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   {
+    renameEntityTypes,
     renameValueTypes,
     validateEntityTypes,
     validateValueTypes,
@@ -34,7 +35,18 @@ export async function managementDirtyMarkEntities(
   let validationCount = 0;
   let indexCount = 0;
 
-  // Apply the rename first, since the value types operations will use the new names
+  // Apply the renames first, since the value types operations will use the new names
+  for (const [oldName, newName] of Object.entries(renameEntityTypes)) {
+    const result = await queryRun(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`UPDATE entities SET type = ${newName} WHERE type = ${oldName}`;
+      }),
+    );
+    if (result.isError()) return result;
+  }
+
   for (const [oldName, newName] of Object.entries(renameValueTypes)) {
     const latestResult = await queryRun(
       databaseAdapter,

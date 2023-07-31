@@ -21,6 +21,7 @@ export function calculateSchemaChangeEntityDirtySelector(
   const indexEntityTypes = new Set<string>();
   const validateValueTypes = new Set<string>();
   const indexValueTypes = new Set<string>();
+  const renameEntityTypes: Record<string, string> = {};
   const deleteValueTypes: string[] = [];
   const renameValueTypes: Record<string, string> = {};
 
@@ -64,8 +65,13 @@ export function calculateSchemaChangeEntityDirtySelector(
         continue;
       }
 
-      if (previousType.name !== nextType.name && !isEntityType) {
-        renameValueTypes[previousType.name] = nextType.name;
+      if (previousType.name !== nextType.name) {
+        // type is renamed
+        if (isEntityType) {
+          renameEntityTypes[previousType.name] = nextType.name;
+        } else {
+          renameValueTypes[previousType.name] = nextType.name;
+        }
       }
 
       const validationResult = calculateTypeSelector(
@@ -104,6 +110,7 @@ export function calculateSchemaChangeEntityDirtySelector(
     indexEntityTypes.size === 0 &&
     validateValueTypes.size === 0 &&
     indexValueTypes.size === 0 &&
+    Object.keys(renameEntityTypes).length === 0 &&
     deleteValueTypes.length === 0 &&
     Object.keys(renameValueTypes).length === 0
   ) {
@@ -115,6 +122,7 @@ export function calculateSchemaChangeEntityDirtySelector(
     validateValueTypes: [...validateValueTypes],
     indexEntityTypes: [...indexEntityTypes],
     indexValueTypes: [...indexValueTypes],
+    renameEntityTypes,
     deleteValueTypes,
     renameValueTypes,
   });

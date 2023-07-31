@@ -243,6 +243,8 @@ export interface DatabaseManagementGetNextDirtyEntityPayload
 
 export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
   /** Apply the rename first, since the value types operations will use the new names */
+  renameEntityTypes: Record<string, string>;
+  /** Apply the rename first, since the value types operations will use the new names */
   renameValueTypes: Record<string, string>;
   validateEntityTypes: string[];
   validateValueTypes: string[];
