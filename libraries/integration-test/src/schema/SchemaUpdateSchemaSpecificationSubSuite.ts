@@ -21,6 +21,7 @@ import {
   type AppAdminUniqueIndexes,
   type AppAdminValueItem,
   type AppPublishedValueItem,
+  type AppAdminEntity,
 } from '../SchemaTypes.js';
 import {
   CHANGE_VALIDATIONS_CREATE,
@@ -45,6 +46,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
   updateSchemaSpecification_removeAllFieldsFromMigrationValueItem,
   updateSchemaSpecification_removeAllTemporaryValueTypes,
+  //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes,
   updateSchemaSpecification_concurrentUpdates,
   updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
@@ -64,6 +66,8 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnotherType,
   updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid,
   updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated,
+  updateSchemaSpecification_renameTypeOnEntity,
+  updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType,
   updateSchemaSpecification_renameTypeOnValueItem,
   updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnotherType,
   updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes,
@@ -1440,6 +1444,158 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
     await countSearchResultWithEntity(adminClient, query, reference.id)
   ).valueOrThrow();
   assertEquals(countAfterSchemaUpdate, 0);
+}
+
+async function updateSchemaSpecification_renameTypeOnEntity({ server }: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldTypeName = `MigrationEntity${new Date().getTime()}`;
+  const newTypeName = `${oldTypeName}New`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new type
+    const { entity } = (
+      await adminClient.createEntity(
+        {
+          info: {
+            type: oldTypeName as AppAdminEntity['info']['type'],
+            name: oldTypeName,
+            authKey: 'none',
+          },
+          fields: { field: 'value' },
+        },
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Rename the type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'renameType', entityType: oldTypeName, newName: newTypeName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that the entity has the new type
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  assertEquals(adminEntity.info.type, newTypeName);
+
+  // And in published entity
+  const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
+  assertEquals(publishedEntity.info.type, newTypeName);
+
+  // Check that we can create new entities with the name
+  const updateResult = await adminClient.createEntity(
+    {
+      info: {
+        type: newTypeName as AppAdminEntity['info']['type'],
+        name: `${newTypeName}`,
+        authKey: 'none',
+      },
+      fields: { field: 'value' },
+    },
+    { publish: true },
+  );
+  assertOkResult(updateResult);
+}
+
+async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldTypeName = `MigrationEntity${new Date().getTime()}`;
+  const newTypeName = `${oldTypeName}New`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the type
+    const { entity } = (
+      await adminClient.createEntity(
+        {
+          info: {
+            type: oldTypeName as AppAdminEntity['info']['type'],
+            name: oldTypeName,
+            authKey: 'none',
+          },
+          fields: { field: 'value' },
+        },
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Rename/replace the type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        { name: oldTypeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
+      ],
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'renameType', entityType: oldTypeName, newName: newTypeName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that entity type is renamed
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  assertEquals(adminEntity.info.type, newTypeName);
+
+  // And for published entity
+  const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
+  assertEquals(publishedEntity.info.type, newTypeName);
+
+  // Check that both types are usable
+  assertOkResult(
+    await adminClient.createEntity(
+      {
+        info: {
+          type: newTypeName as AppAdminEntity['info']['type'],
+          name: newTypeName,
+          authKey: 'none',
+        },
+        fields: { field: 'value' },
+      },
+      { publish: true },
+    ),
+  );
+
+  assertOkResult(
+    await adminClient.createEntity(
+      {
+        info: {
+          type: oldTypeName as AppAdminEntity['info']['type'],
+          name: oldTypeName,
+          authKey: 'none',
+        },
+        fields: { field: [{ lat: 1, lng: 2 }] },
+      },
+      { publish: true },
+    ),
+  );
 }
 
 async function updateSchemaSpecification_renameTypeOnValueItem({ server }: SchemaTestContext) {
