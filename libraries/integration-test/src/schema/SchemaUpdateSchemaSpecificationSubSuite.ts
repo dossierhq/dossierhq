@@ -66,6 +66,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated,
   updateSchemaSpecification_renameTypeOnValueItem,
   updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnotherType,
+  updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes,
   updateSchemaSpecification_addingIndexToField,
   updateSchemaSpecification_errorWrongVersion,
 ];
@@ -1590,6 +1591,81 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
     type: newTypeName,
     field: `Hello ${newTypeName}`,
   } as AppAdminValueItem);
+}
+
+async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const newTypeName = `${oldTypeName}New`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new value type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new value type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: {
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminValueItem,
+          },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Check that it's in the index
+    const adminCountBeforeUpdateResult = await countSearchResultWithEntity(
+      adminClient,
+      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppAdminValueItem['type']] },
+      entity.id,
+    );
+    assertResultValue(adminCountBeforeUpdateResult, 1);
+
+    const publishedCountBeforeUpdateResult = await countSearchResultWithEntity(
+      publishedClient,
+      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppPublishedValueItem['type']] },
+      entity.id,
+    );
+    assertResultValue(publishedCountBeforeUpdateResult, 1);
+
+    // Rename the type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'renameType', valueType: oldTypeName, newName: newTypeName }],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // No processing to check that the value types index is updated as part of the schema update
+
+  // Check that it's in the index
+  const adminCountAfterUpdateResult = await countSearchResultWithEntity(
+    adminClient,
+    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppAdminValueItem['type']] },
+    reference.id,
+  );
+  assertResultValue(adminCountAfterUpdateResult, 1);
+
+  const publishedCountAfterUpdateResult = await countSearchResultWithEntity(
+    publishedClient,
+    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppPublishedValueItem['type']] },
+    reference.id,
+  );
+  assertResultValue(publishedCountAfterUpdateResult, 1);
 }
 
 async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTestContext) {

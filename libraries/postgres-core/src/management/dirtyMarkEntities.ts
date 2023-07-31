@@ -1,5 +1,6 @@
 import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
+  buildPostgresSqlQuery,
   createPostgresSqlQuery,
   type DatabaseManagementMarkEntitiesDirtyPayload,
   type DatabaseManagementMarkEntitiesDirtySelectorArg,
@@ -22,14 +23,37 @@ export async function managementDirtyMarkEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   {
+    renameValueTypes,
     validateEntityTypes,
     validateValueTypes,
     indexEntityTypes,
     indexValueTypes,
+    deleteValueTypes,
   }: DatabaseManagementMarkEntitiesDirtySelectorArg,
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let validationCount = 0;
   let indexCount = 0;
+
+  // Apply the rename first, since the value types operations will use the new names
+  for (const [oldName, newName] of Object.entries(renameValueTypes)) {
+    const latestResult = await queryRun(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`UPDATE entity_latest_value_types SET value_type = ${newName} WHERE value_type = ${oldName}`;
+      }),
+    );
+    if (latestResult.isError()) return latestResult;
+
+    const publishedResult = await queryRun(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`UPDATE entity_published_value_types SET value_type = ${newName} WHERE value_type = ${oldName}`;
+      }),
+    );
+    if (publishedResult.isError()) return publishedResult;
+  }
 
   if (validateEntityTypes.length > 0) {
     const result = await markEntitiesDirty(
@@ -73,6 +97,27 @@ export async function managementDirtyMarkEntities(
     );
     if (result.isError()) return result;
     indexCount += result.value;
+  }
+
+  // Apply the delete last, since we want to index/validate entities using the value types
+  if (deleteValueTypes.length > 0) {
+    const latestResult = await queryRun(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`DELETE FROM entity_latest_value_types WHERE value_type = ANY(${deleteValueTypes})`;
+      }),
+    );
+    if (latestResult.isError()) return latestResult;
+
+    const publishedResult = await queryRun(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`DELETE FROM entity_published_value_types WHERE value_type = ANY(${deleteValueTypes})`;
+      }),
+    );
+    if (publishedResult.isError()) return publishedResult;
   }
 
   return ok({ validationCount, indexCount });

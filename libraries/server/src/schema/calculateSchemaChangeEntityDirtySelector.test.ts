@@ -45,8 +45,10 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -66,8 +68,10 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -110,17 +114,19 @@ describe('calculateSchemaChangeEntityDirtySelector type.adminOnly', () => {
     );
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
-      {
-        "indexEntityTypes": [
-          "OneType",
-        ],
-        "indexValueTypes": [],
-        "validateEntityTypes": [
-          "OneType",
-        ],
-        "validateValueTypes": [],
-      }
-    `);
+        {
+          "deleteValueTypes": [],
+          "indexEntityTypes": [
+            "OneType",
+          ],
+          "indexValueTypes": [],
+          "renameValueTypes": {},
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        }
+      `);
   });
 
   test('change: from true to false value type', () => {
@@ -130,17 +136,19 @@ describe('calculateSchemaChangeEntityDirtySelector type.adminOnly', () => {
     );
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
-      {
-        "indexEntityTypes": [],
-        "indexValueTypes": [
-          "OneType",
-        ],
-        "validateEntityTypes": [],
-        "validateValueTypes": [
-          "OneType",
-        ],
-      }
-    `);
+        {
+          "deleteValueTypes": [],
+          "indexEntityTypes": [],
+          "indexValueTypes": [
+            "OneType",
+          ],
+          "renameValueTypes": {},
+          "validateEntityTypes": [],
+          "validateValueTypes": [
+            "OneType",
+          ],
+        }
+      `);
   });
 });
 
@@ -167,10 +175,12 @@ describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -201,10 +211,12 @@ describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
           ],
+          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
@@ -239,10 +251,12 @@ describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -275,10 +289,12 @@ describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
           ],
+          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
@@ -305,8 +321,10 @@ describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -331,8 +349,10 @@ describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
@@ -358,10 +378,12 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteField', () =>
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -385,10 +407,12 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteField', () =>
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
           ],
+          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
@@ -416,8 +440,10 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameField', () =>
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
@@ -443,8 +469,10 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameField', () =>
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
+          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
+          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
@@ -462,17 +490,19 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
     );
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
-      {
-        "indexEntityTypes": [
-          "OneType",
-        ],
-        "indexValueTypes": [],
-        "validateEntityTypes": [
-          "OneType",
-        ],
-        "validateValueTypes": [],
-      }
-    `);
+        {
+          "deleteValueTypes": [],
+          "indexEntityTypes": [
+            "OneType",
+          ],
+          "indexValueTypes": [],
+          "renameValueTypes": {},
+          "validateEntityTypes": [
+            "OneType",
+          ],
+          "validateValueTypes": [],
+        }
+      `);
   });
 
   test('delete entity type with referencing fields', () => {
@@ -496,20 +526,22 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
     );
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
-      {
-        "indexEntityTypes": [
-          "OneType",
-        ],
-        "indexValueTypes": [],
-        "validateEntityTypes": [
-          "AnotherEntity",
-          "OneType",
-        ],
-        "validateValueTypes": [
-          "AnotherValueItem",
-        ],
-      }
-    `);
+        {
+          "deleteValueTypes": [],
+          "indexEntityTypes": [
+            "OneType",
+          ],
+          "indexValueTypes": [],
+          "renameValueTypes": {},
+          "validateEntityTypes": [
+            "AnotherEntity",
+            "OneType",
+          ],
+          "validateValueTypes": [
+            "AnotherValueItem",
+          ],
+        }
+      `);
   });
 
   test('delete value type', () => {
@@ -519,17 +551,21 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
     );
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
-      {
-        "indexEntityTypes": [],
-        "indexValueTypes": [
-          "OneType",
-        ],
-        "validateEntityTypes": [],
-        "validateValueTypes": [
-          "OneType",
-        ],
-      }
-    `);
+        {
+          "deleteValueTypes": [
+            "OneType",
+          ],
+          "indexEntityTypes": [],
+          "indexValueTypes": [
+            "OneType",
+          ],
+          "renameValueTypes": {},
+          "validateEntityTypes": [],
+          "validateValueTypes": [
+            "OneType",
+          ],
+        }
+      `);
   });
 
   test('delete value type with referencing fields', () => {
@@ -553,18 +589,169 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
     );
     expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
       .toMatchInlineSnapshot(`
+        {
+          "deleteValueTypes": [
+            "OneType",
+          ],
+          "indexEntityTypes": [],
+          "indexValueTypes": [
+            "OneType",
+          ],
+          "renameValueTypes": {},
+          "validateEntityTypes": [
+            "AnotherEntity",
+          ],
+          "validateValueTypes": [
+            "AnotherValueItem",
+            "OneType",
+          ],
+        }
+      `);
+  });
+
+  test('rename and delete value type', () => {
+    // Is not a normal use case, but we want to make sure we handle it correctly
+    const { previous, next } = build(
+      { valueTypes: [{ name: 'OldName', fields: [] }] },
       {
+        migrations: [
+          {
+            version: 2,
+            actions: [
+              { action: 'renameType', valueType: 'OldName', newName: 'NewName' },
+              { action: 'deleteType', valueType: 'NewName' },
+            ],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "deleteValueTypes": [
+          "OldName",
+        ],
         "indexEntityTypes": [],
         "indexValueTypes": [
-          "OneType",
+          "OldName",
         ],
-        "validateEntityTypes": [
-          "AnotherEntity",
-        ],
+        "renameValueTypes": {},
+        "validateEntityTypes": [],
         "validateValueTypes": [
-          "AnotherValueItem",
-          "OneType",
+          "OldName",
         ],
+      }
+    `);
+  });
+});
+
+describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => {
+  test('rename entity type', () => {
+    const { previous, next } = build(
+      { entityTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameType', entityType: 'OldName', newName: 'NewName' }],
+          },
+        ],
+      },
+    );
+    expect(
+      calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow(),
+    ).toMatchInlineSnapshot('null'); //TODO
+  });
+
+  test('rename value type', () => {
+    const { previous, next } = build(
+      { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameType', valueType: 'OldName', newName: 'NewName' }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "deleteValueTypes": [],
+        "indexEntityTypes": [],
+        "indexValueTypes": [],
+        "renameValueTypes": {
+          "OldName": "NewName",
+        },
+        "validateEntityTypes": [],
+        "validateValueTypes": [],
+      }
+    `);
+  });
+
+  test('rename and change value type', () => {
+    const { previous, next } = build(
+      { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        valueTypes: [
+          {
+            name: 'NewName',
+            fields: [{ name: 'field', type: FieldType.String, values: [{ value: 'one' }] }],
+          },
+        ],
+        migrations: [
+          {
+            version: 2,
+            actions: [{ action: 'renameType', valueType: 'OldName', newName: 'NewName' }],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "deleteValueTypes": [],
+        "indexEntityTypes": [],
+        "indexValueTypes": [],
+        "renameValueTypes": {
+          "OldName": "NewName",
+        },
+        "validateEntityTypes": [],
+        "validateValueTypes": [
+          "NewName",
+        ],
+      }
+    `);
+  });
+
+  test('rename value type twice', () => {
+    // Not a normal use case, but we want to make sure we handle it correctly
+    const { previous, next } = build(
+      { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        migrations: [
+          {
+            version: 2,
+            actions: [
+              { action: 'renameType', valueType: 'OldName', newName: 'MidName' },
+              { action: 'renameType', valueType: 'MidName', newName: 'NewName' },
+            ],
+          },
+        ],
+      },
+    );
+    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
+      .toMatchInlineSnapshot(`
+      {
+        "deleteValueTypes": [],
+        "indexEntityTypes": [],
+        "indexValueTypes": [],
+        "renameValueTypes": {
+          "OldName": "NewName",
+        },
+        "validateEntityTypes": [],
+        "validateValueTypes": [],
       }
     `);
   });

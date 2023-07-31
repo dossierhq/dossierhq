@@ -21,6 +21,8 @@ export function calculateSchemaChangeEntityDirtySelector(
   const indexEntityTypes = new Set<string>();
   const validateValueTypes = new Set<string>();
   const indexValueTypes = new Set<string>();
+  const deleteValueTypes: string[] = [];
+  const renameValueTypes: Record<string, string> = {};
 
   const migrationActions = next.collectMigrationActionsSinceVersion(previous.spec.version);
 
@@ -52,10 +54,18 @@ export function calculateSchemaChangeEntityDirtySelector(
           : next.getValueTypeSpecification(nextTypeName)
         : null;
 
+      // type is deleted
       if (!nextType) {
         validateTypes.add(previousType.name);
         indexTypes.add(previousType.name);
+        if (!isEntityType) {
+          deleteValueTypes.push(previousType.name);
+        }
         continue;
+      }
+
+      if (previousType.name !== nextType.name && !isEntityType) {
+        renameValueTypes[previousType.name] = nextType.name;
       }
 
       const validationResult = calculateTypeSelector(
@@ -68,10 +78,10 @@ export function calculateSchemaChangeEntityDirtySelector(
       if (validationResult.isError()) return validationResult;
 
       if (validationResult.value.validate) {
-        validateTypes.add(previousType.name);
+        validateTypes.add(nextType.name);
       }
       if (validationResult.value.index) {
-        indexTypes.add(previousType.name);
+        indexTypes.add(nextType.name);
       }
     }
   }
@@ -93,7 +103,9 @@ export function calculateSchemaChangeEntityDirtySelector(
     validateEntityTypes.size === 0 &&
     indexEntityTypes.size === 0 &&
     validateValueTypes.size === 0 &&
-    indexValueTypes.size === 0
+    indexValueTypes.size === 0 &&
+    deleteValueTypes.length === 0 &&
+    Object.keys(renameValueTypes).length === 0
   ) {
     return ok(null);
   }
@@ -103,6 +115,8 @@ export function calculateSchemaChangeEntityDirtySelector(
     validateValueTypes: [...validateValueTypes],
     indexEntityTypes: [...indexEntityTypes],
     indexValueTypes: [...indexValueTypes],
+    deleteValueTypes,
+    renameValueTypes,
   });
 }
 
