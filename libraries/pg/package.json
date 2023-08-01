@@ -45,7 +45,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
-    "pg": "~8.11.1",
+    "pg": "~8.11.2",
     "tslib": "~2.6.1"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.58.0",
+    "@rushstack/heft": "0.58.1",
     "@types/pg": "~8.10.2",
     "@types/uuid": "~9.0.2",
     "dotenv": "~16.3.1",

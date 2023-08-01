@@ -49,7 +49,7 @@
     "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.58.0",
+    "@rushstack/heft": "0.58.1",
     "@types/sqlite3": "~3.1.8",
     "@types/uuid": "~9.0.2",
     "eslint": "~8.46.0",

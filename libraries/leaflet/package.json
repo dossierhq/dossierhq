@@ -43,10 +43,10 @@
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.58.0",
+    "@rushstack/heft": "0.58.1",
     "@types/leaflet": "~1.9.3",
     "@types/leaflet.locatecontrol": "~0.74.1",
-    "@types/react": "~18.2.17",
+    "@types/react": "~18.2.18",
     "eslint": "~8.46.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.0.0",
