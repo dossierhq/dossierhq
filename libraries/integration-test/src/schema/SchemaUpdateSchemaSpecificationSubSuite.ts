@@ -74,6 +74,8 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes,
   updateSchemaSpecification_renameFieldAndRenameTypeOnEntity,
   updateSchemaSpecification_renameTypeAndRenameFieldOnEntity,
+  updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem,
+  updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem,
   updateSchemaSpecification_addingIndexToField,
   updateSchemaSpecification_errorWrongVersion,
 ];
@@ -1965,6 +1967,160 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   assertEquals(publishedEntity.info.type, newTypeName);
   assertEquals(publishedEntity.fields[newFieldName], 'value');
   assertEquals(oldFieldName in publishedEntity.fields, false);
+}
+
+async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const newTypeName = `${oldTypeName}New`;
+  const oldFieldName = 'oldField';
+  const newFieldName = 'newField';
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new value type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new value type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminValueItem },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Rename the field and type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [
+            {
+              action: 'renameField',
+              valueType: oldTypeName,
+              field: oldFieldName,
+              newName: newFieldName,
+            },
+            { action: 'renameType', valueType: oldTypeName, newName: newTypeName },
+          ],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that the value item has the new type
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  assertIsAdminValueItems(adminEntity);
+  assertEquals(adminEntity.fields.any, {
+    type: newTypeName,
+    [newFieldName]: 'value',
+  } as AppAdminValueItem);
+
+  // And in published entity
+  const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
+  assertIsPublishedValueItems(publishedEntity);
+  assertEquals(publishedEntity.fields.any, {
+    type: newTypeName,
+    [newFieldName]: 'value',
+  } as AppPublishedValueItem);
+
+  // Check that we can create new value items with the name
+  const updateResult = await adminClient.updateEntity(
+    {
+      id: reference.id,
+      fields: { any: { type: newTypeName, [newFieldName]: 'updated value' } },
+    },
+    { publish: true },
+  );
+  assertOkResult(updateResult);
+}
+
+async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const newTypeName = `${oldTypeName}New`;
+  const oldFieldName = 'oldField';
+  const newFieldName = 'newField';
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new value type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new value type
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(VALUE_ITEMS_CREATE, {
+          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminValueItem },
+        }),
+        { publish: true },
+      )
+    ).valueOrThrow();
+
+    // Rename the field and type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [
+            { action: 'renameType', valueType: oldTypeName, newName: newTypeName },
+            {
+              action: 'renameField',
+              valueType: newTypeName,
+              field: oldFieldName,
+              newName: newFieldName,
+            },
+          ],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that the value item has the new type
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  assertIsAdminValueItems(adminEntity);
+  assertEquals(adminEntity.fields.any, {
+    type: newTypeName,
+    [newFieldName]: 'value',
+  } as AppAdminValueItem);
+
+  // And in published entity
+  const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
+  assertIsPublishedValueItems(publishedEntity);
+  assertEquals(publishedEntity.fields.any, {
+    type: newTypeName,
+    [newFieldName]: 'value',
+  } as AppPublishedValueItem);
+
+  // Check that we can create new value items with the name
+  const updateResult = await adminClient.updateEntity(
+    {
+      id: reference.id,
+      fields: { any: { type: newTypeName, [newFieldName]: 'updated value' } },
+    },
+    { publish: true },
+  );
+  assertOkResult(updateResult);
 }
 
 async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTestContext) {
