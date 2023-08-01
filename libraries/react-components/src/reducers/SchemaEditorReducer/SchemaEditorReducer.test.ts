@@ -1265,6 +1265,22 @@ describe('DeleteTypeAction', () => {
     expect(state.status).toBe(''); // should be reset
   });
 
+  test('delete existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'Foo', fields: [] }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' }),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
   test('delete newly added entity type referenced by another type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
@@ -1306,6 +1322,40 @@ describe('DeleteTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
 
     expect(state.status).toBe(''); // should be reset
+  });
+
+  test('delete existing entity type referenced by another type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [{ name: 'ToBeDeleted', fields: [] }],
+          valueTypes: [
+            {
+              name: 'Referencing',
+              fields: [
+                { name: 'entity', type: FieldType.Entity, entityTypes: ['ToBeDeleted'] },
+                {
+                  name: 'richText',
+                  type: FieldType.RichText,
+                  entityTypes: ['ToBeDeleted'],
+                  linkEntityTypes: ['ToBeDeleted'],
+                },
+              ],
+            },
+          ],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'ToBeDeleted' }),
+    );
+
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.valueTypes[0].fields[0].entityTypes).toEqual([]);
+    expect(state.valueTypes[0].fields[1].entityTypes).toEqual([]);
+    expect(state.valueTypes[0].fields[1].linkEntityTypes).toEqual([]);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
   test('delete newly added value type', () => {

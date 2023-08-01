@@ -8,8 +8,17 @@ import {
   Text,
   useWindowEventListener,
 } from '@dossierhq/design';
-import type { Dispatch, MouseEvent, ReactNode } from 'react';
-import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  type Dispatch,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
 import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaIndexEditor.js';
 import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
@@ -262,8 +271,13 @@ function TypeEditorRows({
     [dispatchSchemaEditorState, typeSelector],
   );
 
+  const dropDownItems = [
+    { id: 'rename', title: 'Rename type' },
+    { id: 'delete', title: 'Delete type' },
+  ] as const;
+
   const handleDropdownItemClick = useCallback(
-    ({ id }: { id: string }) => {
+    ({ id }: { id: (typeof dropDownItems)[number]['id'] }) => {
       switch (id) {
         case 'delete':
           dispatchSchemaEditorState(new SchemaEditorActions.DeleteType(typeSelector));
@@ -275,13 +289,6 @@ function TypeEditorRows({
     },
     [dispatchSchemaEditorState, onAddOrRenameType, typeSelector],
   );
-
-  const dropDownItems = canDeleteType
-    ? [
-        { id: 'rename', title: 'Rename type' },
-        { id: 'delete', title: 'Delete type' },
-      ]
-    : [{ id: 'rename', title: 'Rename type' }];
 
   return (
     <>
@@ -299,14 +306,12 @@ function TypeEditorRows({
           </Level.Left>
           <Level.Right>
             <Level.Item>
-              {dropDownItems.length > 0 ? (
-                <ButtonDropdown
-                  items={dropDownItems}
-                  left
-                  renderItem={(item) => item.title}
-                  onItemClick={handleDropdownItemClick}
-                />
-              ) : null}
+              <ButtonDropdown
+                items={dropDownItems}
+                left
+                renderItem={(item) => item.title}
+                onItemClick={handleDropdownItemClick}
+              />
               {typeDraft.status !== '' ? <TypeDraftStatusTag status={typeDraft.status} /> : null}
             </Level.Item>
           </Level.Right>

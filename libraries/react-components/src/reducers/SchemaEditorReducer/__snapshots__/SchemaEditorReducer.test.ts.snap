@@ -3664,6 +3664,139 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
 }
 `;
 
+exports[`DeleteTypeAction > delete existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "deletedEntityTypes": [
+    "Foo",
+  ],
+  "deletedValueTypes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "deletedEntityTypes": [
+    "ToBeDeleted",
+  ],
+  "deletedValueTypes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "entity",
+        "richText",
+      ],
+      "existingName": "Referencing",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "status": "changed",
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "changed",
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "kind": "value",
+      "name": "Referencing",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type referenced by another type 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "ToBeDeleted",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "name": "entity",
+          "required": false,
+          "type": "Entity",
+        },
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+          "valueTypes": [],
+        },
+      ],
+      "name": "Referencing",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`DeleteTypeAction > delete existing value type 1`] = `
 {
   "activeSelector": null,
@@ -3677,7 +3810,7 @@ exports[`DeleteTypeAction > delete existing value type 1`] = `
   "indexes": [],
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
+  "status": "changed",
   "valueTypes": [],
 }
 `;

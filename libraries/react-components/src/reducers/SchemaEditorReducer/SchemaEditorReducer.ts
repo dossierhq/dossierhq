@@ -176,6 +176,7 @@ function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['statu
   ]) {
     if (type.status !== '') return 'changed';
   }
+  if (state.deletedEntityTypes.length > 0 || state.deletedValueTypes.length > 0) return 'changed';
   return '';
 }
 
