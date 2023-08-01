@@ -1,13 +1,3 @@
-import type {
-  AdminSchema,
-  EntityFieldSpecification,
-  EntityReference,
-  ItemTraverseNode,
-  ItemValuePath,
-  Location,
-  PublishedSchema,
-  RichTextFieldSpecification,
-} from '@dossierhq/core';
 import {
   ItemTraverseNodeType,
   assertIsDefined,
@@ -19,7 +9,14 @@ import {
   isRichTextValueItemNode,
   isStringItemField,
   isValueItemItemField,
-  visitorPathToString,
+  type AdminSchema,
+  type EntityFieldSpecification,
+  type EntityReference,
+  type ItemTraverseNode,
+  type ItemValuePath,
+  type Location,
+  type PublishedSchema,
+  type RichTextFieldSpecification,
 } from '@dossierhq/core';
 
 export interface UniqueIndexValue {
@@ -30,7 +27,7 @@ export interface UniqueIndexValue {
 export type UniqueIndexValueCollection = Map<string, UniqueIndexValue[]>;
 
 export interface RequestedReference {
-  prefix: string;
+  path: ItemValuePath;
   uuids: string[];
   isRichTextLink: boolean;
   entityTypes: string[] | undefined;
@@ -99,7 +96,7 @@ export function createRequestedReferencesCollector<
           if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             const entityItemFieldSpec = node.fieldSpec as EntityFieldSpecification;
             requestedReferences.push({
-              prefix: visitorPathToString(node.path),
+              path: node.path,
               uuids: [node.value.id], //TODO handle list field (optimization, one requested reference instead of one for each item in the list)
               entityTypes: entityItemFieldSpec.entityTypes,
               linkEntityTypes: undefined,
@@ -112,7 +109,7 @@ export function createRequestedReferencesCollector<
           if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             const richTextFieldSpecification = node.fieldSpec as RichTextFieldSpecification;
             requestedReferences.push({
-              prefix: visitorPathToString(node.path),
+              path: node.path,
               uuids: [richTextNode.reference.id],
               entityTypes: richTextFieldSpecification.entityTypes,
               linkEntityTypes: richTextFieldSpecification.linkEntityTypes,

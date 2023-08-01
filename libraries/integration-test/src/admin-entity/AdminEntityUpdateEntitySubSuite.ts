@@ -642,7 +642,7 @@ async function updateEntity_errorMultilineStringInTitle({ server }: AdminEntityT
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.fields.title: multiline string not allowed',
+    'entity.fields.title: Multiline string not allowed',
   );
 
   const getResult = await client.getEntity({ id });

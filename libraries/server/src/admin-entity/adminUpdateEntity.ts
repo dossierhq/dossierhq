@@ -104,6 +104,12 @@ export async function adminUpdateEntity(
       updatedEntity,
     );
     if (encodeResult.isError()) return encodeResult;
+    if (encodeResult.value.validationIssues.length > 0) {
+      const firstValidationIssue = encodeResult.value.validationIssues[0];
+      return notOk.BadRequest(
+        `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
+      );
+    }
     const { data, name } = encodeResult.value;
 
     const updateResult = await databaseAdapter.adminEntityUpdateEntity(

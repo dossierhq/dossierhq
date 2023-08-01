@@ -268,22 +268,21 @@ async function collectVersionsInfo(
       );
       if (entityFieldsResult.isError()) return entityFieldsResult;
 
-      const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
+      const validateFields = validatePublishedFieldValuesAndCollectInfo(
         adminSchema,
         publishedSchema,
         [`entity(${reference.id})`],
         type,
         entityFieldsResult.value,
       );
-      if (validateFieldsResult.isError()) return validateFieldsResult;
-      if (validateFieldsResult.value.validationIssues.length > 0) {
-        const firstValidationIssue = validateFieldsResult.value.validationIssues[0];
+      if (validateFields.validationIssues.length > 0) {
+        const firstValidationIssue = validateFields.validationIssues[0];
         return notOk.BadRequest(
           `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
         );
       }
       const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =
-        validateFieldsResult.value;
+        validateFields;
 
       versionsInfo.push({
         effect: 'published',

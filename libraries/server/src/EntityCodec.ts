@@ -11,9 +11,6 @@ import {
   normalizeEntityFields,
   notOk,
   ok,
-  traverseEntity,
-  validateTraverseNodeForSave,
-  visitorPathToString,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityTypeSpecification,
@@ -32,6 +29,7 @@ import {
   type Result,
   type RichText,
   type RichTextValueItemNode,
+  type SaveValidationIssue,
   type ValueItem,
   type ValueItemFieldSpecification,
 } from '@dossierhq/core';
@@ -41,23 +39,20 @@ import type {
   DatabaseEntityIndexesArg,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
-  DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import {
-  createFullTextSearchCollector,
-  createLocationsCollector,
-  createRequestedReferencesCollector,
-  createUniqueIndexCollector,
-  createValueTypesCollector,
-  type RequestedReference,
-  type UniqueIndexValueCollection,
-} from './EntityCollectors.js';
+import { type UniqueIndexValueCollection } from './EntityCollectors.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
+import type { EncodedValue } from './EntityFieldTypeAdapters.js';
+import {
+  validateAdminFieldValuesAndCollectInfo,
+  validateReferencedEntitiesForSaveAndCollectInfo,
+} from './EntityValidator.js';
 import { transformEntity } from './utils/ItemTransformer.js';
 import { transformRichText } from './utils/RichTextTransformer.js';
 
 export interface EncodeAdminEntityResult {
+  validationIssues: SaveValidationIssue[];
   type: string;
   name: string;
   data: Record<string, unknown>;
@@ -544,41 +539,25 @@ export async function encodeAdminEntity(
   context: TransactionContext,
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | AdminEntityCreate,
-): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.Generic> {
   // Collect values and validate entity fields
-  const ftsCollector = createFullTextSearchCollector();
-  const referencesCollector = createRequestedReferencesCollector();
-  const locationsCollector = createLocationsCollector();
-  const valueTypesCollector = createValueTypesCollector();
-  const uniqueIndexCollector = createUniqueIndexCollector(schema);
+  const path = ['entity'];
+  const validation = validateAdminFieldValuesAndCollectInfo(schema, path, entity);
 
-  // TODO move all validation to this setup from the encoding
   // TODO consider not encoding data and use it as is
-  for (const node of traverseEntity(schema, ['entity'], entity)) {
-    const validationIssue = validateTraverseNodeForSave(schema, node);
-    if (validationIssue) {
-      return notOk.BadRequest(
-        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
-      );
-    }
-    ftsCollector.collect(node);
-    referencesCollector.collect(node);
-    locationsCollector.collect(node);
-    valueTypesCollector.collect(node);
-    uniqueIndexCollector.collect(node);
-  }
 
   const result: EncodeAdminEntityResult = {
+    validationIssues: validation.validationIssues,
     type: entity.info.type,
     name: entity.info.name,
     data: {},
     entityIndexes: {
       referenceIds: [],
-      locations: locationsCollector.result,
-      valueTypes: valueTypesCollector.result,
-      fullTextSearchText: ftsCollector.result,
+      locations: validation.locations,
+      valueTypes: validation.valueTypes,
+      fullTextSearchText: validation.fullTextSearchText,
     },
-    uniqueIndexValues: uniqueIndexCollector.result,
+    uniqueIndexValues: validation.uniqueIndexValues,
   };
   for (const fieldSpec of entitySpec.fields) {
     if (entity.fields && fieldSpec.name in entity.fields) {
@@ -586,22 +565,29 @@ export async function encodeAdminEntity(
       if (data === null || data === undefined) {
         continue;
       }
-      const prefix = `entity.fields.${fieldSpec.name}`;
-      const encodeResult = encodeFieldItemOrList(schema, fieldSpec, prefix, data);
-      if (encodeResult.isError()) {
-        return encodeResult;
+      const fieldPath = [...path, 'fields', fieldSpec.name];
+      const { encodedValue, validationIssues } = encodeFieldItemOrList(
+        schema,
+        fieldSpec,
+        fieldPath,
+        data,
+      );
+      if (validationIssues.length > 0) {
+        result.validationIssues.push(...validationIssues);
       }
-      result.data[fieldSpec.name] = encodeResult.value;
+      result.data[fieldSpec.name] = encodedValue;
     }
   }
 
-  const resolveResult = await resolveRequestedEntityReferences(
+  // Validate and resolve references
+  const referencesResult = await validateReferencedEntitiesForSaveAndCollectInfo(
     databaseAdapter,
     context,
-    referencesCollector.result,
+    validation.references,
   );
-  if (resolveResult.isError()) return resolveResult;
-  result.entityIndexes.referenceIds.push(...resolveResult.value);
+  if (referencesResult.isError()) return referencesResult;
+  result.validationIssues.push(...referencesResult.value.validationIssues);
+  result.entityIndexes.referenceIds.push(...referencesResult.value.references);
 
   return ok(result);
 }
@@ -609,86 +595,116 @@ export async function encodeAdminEntity(
 function encodeFieldItemOrList(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
-  prefix: string,
+  path: ItemValuePath,
   data: unknown,
-): Result<unknown, typeof ErrorType.BadRequest> {
+): EncodedValue {
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
   if (fieldSpec.list) {
     if (!Array.isArray(data)) {
-      return notOk.BadRequest(`${prefix}: expected list`);
+      return {
+        validationIssues: [{ type: 'save', path, message: 'Expected list' }],
+        encodedValue: null,
+      };
     }
     const encodedItems: unknown[] = [];
-    for (const decodedItem of data) {
-      let encodedItemResult;
+    const validationIssues: SaveValidationIssue[] = [];
+    for (let i = 0; i < data.length; i++) {
+      const decodedItem = (data as unknown[])[i];
+      const itemPath = [...path, i];
+
+      let encodedItemResult: EncodedValue;
       if (isValueItemItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeValueItemField(
           schema,
           fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
-          prefix,
+          itemPath,
           decodedItem,
         );
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeRichTextField(decodedItem);
       } else {
-        encodedItemResult = fieldAdapter.encodeData(fieldSpec, prefix, decodedItem);
+        encodedItemResult = fieldAdapter.encodeData(fieldSpec, itemPath, decodedItem);
       }
-      if (encodedItemResult.isError()) {
-        return encodedItemResult;
+      if (encodedItemResult.encodedValue !== null) {
+        encodedItems.push(encodedItemResult.encodedValue);
       }
-      encodedItems.push(encodedItemResult.value);
+      validationIssues.push(...encodedItemResult.validationIssues);
     }
-    return ok(encodedItems);
+    return { encodedValue: encodedItems.length > 0 ? encodedItems : null, validationIssues };
   }
 
   if (isValueItemField(fieldSpec, data)) {
     return encodeValueItemField(
       schema,
       fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
-      prefix,
+      path,
       data,
     );
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(data);
   }
-  return fieldAdapter.encodeData(fieldSpec, prefix, data);
+  return fieldAdapter.encodeData(fieldSpec, path, data);
 }
 
 function encodeValueItemField(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>,
-  prefix: string,
+  path: ItemValuePath,
   data: ValueItem | null,
-): Result<unknown, typeof ErrorType.BadRequest> {
+): EncodedValue {
   if (Array.isArray(data)) {
-    return notOk.BadRequest(`${prefix}: expected single value, got list`);
+    return {
+      validationIssues: [{ type: 'save', path, message: 'Expected single value, got list' }],
+      encodedValue: null,
+    };
   }
   if (typeof data !== 'object' || !data) {
-    return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
+    return {
+      validationIssues: [{ type: 'save', path, message: `Expected object, got ${typeof data}` }],
+      encodedValue: null,
+    };
   }
+
   const value = data;
   const valueType = value.type;
   if (!valueType) {
-    return notOk.BadRequest(`${prefix}: missing type`);
+    return {
+      validationIssues: [{ type: 'save', path, message: 'Missing type' }],
+      encodedValue: null,
+    };
   }
   const valueSpec = schema.getValueTypeSpecification(valueType);
   if (!valueSpec) {
-    return notOk.BadRequest(`${prefix}: value type ${valueType} doesn’t exist`);
+    return {
+      validationIssues: [{ type: 'save', path, message: `Unknown value type ${valueType}` }],
+      encodedValue: null,
+    };
   }
+
+  // From here on we can encode the value item so add validation issues instead of returning
+  const validationIssues: SaveValidationIssue[] = [];
+
   if (
     fieldSpec.valueTypes &&
     fieldSpec.valueTypes.length > 0 &&
     fieldSpec.valueTypes.indexOf(valueType) < 0
   ) {
-    return notOk.BadRequest(`${prefix}: value of type ${valueType} is not allowed`);
+    validationIssues.push({
+      type: 'save',
+      path,
+      message: `Value item of type ${valueType} is not allowed`,
+    });
   }
 
   const unsupportedFields = new Set(Object.keys(value));
   unsupportedFields.delete('type');
-  valueSpec.fields.forEach((x) => unsupportedFields.delete(x.name));
+  valueSpec.fields.forEach((it) => unsupportedFields.delete(it.name));
   if (unsupportedFields.size > 0) {
-    return notOk.BadRequest(
-      `${prefix}: Unsupported field names: ${[...unsupportedFields].join(', ')}`,
-    );
+    validationIssues.push({
+      type: 'save',
+      path,
+      message: `Unsupported field names: ${[...unsupportedFields].join(', ')}`,
+    });
   }
 
   const encodedValue: ValueItem = { type: valueType };
@@ -696,77 +712,20 @@ function encodeValueItemField(
   for (const fieldSpec of valueSpec.fields) {
     const fieldValue = value[fieldSpec.name];
     if (fieldValue === null || fieldValue === undefined) {
-      continue;
+      continue; // Skip empty fields
     }
-    const encodedField = encodeFieldItemOrList(
-      schema,
-      fieldSpec,
-      `${prefix}.${fieldSpec.name}`,
-      fieldValue,
-    );
-    if (encodedField.isError()) {
-      return encodedField;
-    }
-    encodedValue[fieldSpec.name] = encodedField.value;
+    const fieldPath = [...path, fieldSpec.name];
+    const { encodedValue: encodedFieldValue, validationIssues: fieldValidationIssues } =
+      encodeFieldItemOrList(schema, fieldSpec, fieldPath, fieldValue);
+    encodedValue[fieldSpec.name] = encodedFieldValue;
+    validationIssues.push(...fieldValidationIssues);
   }
 
-  return ok(encodedValue);
+  return { encodedValue, validationIssues };
 }
 
-function encodeRichTextField(
-  data: RichText | null,
-): Result<RichText | null, typeof ErrorType.BadRequest> {
-  return ok(data);
-}
-
-async function resolveRequestedEntityReferences(
-  databaseAdapter: DatabaseAdapter,
-  context: TransactionContext,
-  requestedReferences: RequestedReference[],
-): PromiseResult<
-  DatabaseResolvedEntityReference[],
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
-> {
-  const allUUIDs = new Set<string>();
-  requestedReferences.forEach(({ uuids }) => uuids.forEach((uuid) => allUUIDs.add(uuid)));
-
-  if (allUUIDs.size === 0) {
-    return ok([]);
-  }
-
-  const result = await databaseAdapter.adminEntityGetReferenceEntitiesInfo(
-    context,
-    [...allUUIDs].map((id) => ({ id })),
-  );
-  if (result.isError()) {
-    return result;
-  }
-
-  const items = result.value;
-
-  for (const request of requestedReferences) {
-    for (const uuid of request.uuids) {
-      const item = items.find((it) => it.id === uuid);
-      if (!item) {
-        return notOk.BadRequest(`${request.prefix}: Referenced entity (${uuid}) doesn’t exist`);
-      }
-      if (request.isRichTextLink && request.linkEntityTypes && request.linkEntityTypes.length > 0) {
-        if (request.linkEntityTypes.indexOf(item.type) < 0) {
-          return notOk.BadRequest(
-            `${request.prefix}: Linked entity (${uuid}) has an invalid type ${item.type}`,
-          );
-        }
-      } else if (request.entityTypes && request.entityTypes.length > 0) {
-        if (request.entityTypes.indexOf(item.type) < 0) {
-          return notOk.BadRequest(
-            `${request.prefix}: Referenced entity (${uuid}) has an invalid type ${item.type}`,
-          );
-        }
-      }
-    }
-  }
-
-  return ok(items.map(({ entityInternalId }) => ({ entityInternalId })));
+function encodeRichTextField(data: RichText | null): EncodedValue {
+  return { encodedValue: data, validationIssues: [] };
 }
 
 export const forTest = {

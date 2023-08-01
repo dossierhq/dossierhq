@@ -1391,7 +1391,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: value of type EntityAdminTwoStrings is not allowed',
+      'entity.fields.oneString: Value item of type EntityAdminTwoStrings is not allowed',
     );
   });
 
@@ -1523,7 +1523,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.location: expected {lat: number, lng: number}, got [object Object]',
+      'entity.fields.location: Expected {lat: number, lng: number}, got [object Object]',
     );
   });
 

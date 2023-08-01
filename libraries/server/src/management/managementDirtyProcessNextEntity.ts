@@ -7,7 +7,6 @@ import {
   notOk,
   ok,
   validateEntityInfo,
-  visitorPathToString,
   type AdminSchemaWithMigrations,
   type EntityReference,
   type ErrorResult,
@@ -201,14 +200,7 @@ async function validateAndCollectInfoFromAdminEntity(
   const entity = decodeResult.value;
 
   const validationIssue = validateEntityInfo(adminSchema, [], entity);
-  if (validationIssue) {
-    return convertErrorResultForValidation(
-      context,
-      entity,
-      'Failed validating entity info',
-      notOk.BadRequest(`${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`),
-    );
-  }
+  const validEntityInfo = !validationIssue;
 
   const entitySpec = adminSchema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
@@ -232,6 +224,7 @@ async function validateAndCollectInfoFromAdminEntity(
   const normalizedEntity = copyEntity(entity, { fields: normalizedResult.value });
 
   // TODO a bit unnecessary to encode when not updating indexes since we don't use the result, but it is running all validations
+  // could refactor it when all validations are moved to validateAdminFieldValuesAndCollectInfo()
   const encodeResult = await encodeAdminEntity(
     adminSchema,
     databaseAdapter,
@@ -244,7 +237,7 @@ async function validateAndCollectInfoFromAdminEntity(
   }
 
   return ok({
-    valid: true,
+    valid: validEntityInfo && encodeResult.value.validationIssues.length === 0,
     entityIndexes: encodeResult.value.entityIndexes,
     uniqueIndexValues: encodeResult.value.uniqueIndexValues,
   });
@@ -289,25 +282,17 @@ async function validateAndCollectInfoFromPublishedEntity(
   }
   const entityFields = decodeResult.value;
 
-  const validateFieldsResult = validatePublishedFieldValuesAndCollectInfo(
+  const validateFields = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,
     adminSchema.toPublishedSchema(),
     ['entity'],
     type,
     entityFields,
   );
-  if (validateFieldsResult.isError()) {
-    return convertErrorResultForValidation(
-      context,
-      reference,
-      'Failed validating entity fields',
-      validateFieldsResult,
-    );
-  }
 
   const validateReferencedEntitiesResult =
     await validateReferencedEntitiesArePublishedAndCollectInfo(databaseAdapter, context, [
-      { entity: reference, references: validateFieldsResult.value.references },
+      { entity: reference, references: validateFields.references },
     ]);
   if (validateReferencedEntitiesResult.isError()) {
     return convertErrorResultForValidation(
@@ -322,16 +307,16 @@ async function validateAndCollectInfoFromPublishedEntity(
 
   return ok({
     valid:
-      validateFieldsResult.value.validationIssues.length === 0 &&
+      validateFields.validationIssues.length === 0 &&
       validateReferencedEntitiesResult.value.invalidReferences.size === 0 &&
       validateReferencedEntitiesResult.value.unpublishedReferences.size === 0,
     entityIndexes: {
-      fullTextSearchText: validateFieldsResult.value.fullTextSearchText,
-      locations: validateFieldsResult.value.locations,
-      valueTypes: validateFieldsResult.value.valueTypes,
+      fullTextSearchText: validateFields.fullTextSearchText,
+      locations: validateFields.locations,
+      valueTypes: validateFields.valueTypes,
       referenceIds,
     },
-    uniqueIndexValues: validateFieldsResult.value.uniqueIndexValues,
+    uniqueIndexValues: validateFields.uniqueIndexValues,
   });
 }
 

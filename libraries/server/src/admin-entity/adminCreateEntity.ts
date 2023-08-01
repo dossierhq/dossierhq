@@ -67,6 +67,12 @@ export async function adminCreateEntity(
     createEntity,
   );
   if (encodeResult.isError()) return encodeResult;
+  if (encodeResult.value.validationIssues.length > 0) {
+    const firstValidationIssue = encodeResult.value.validationIssues[0];
+    return notOk.BadRequest(
+      `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
+    );
+  }
   const encodeEntityResult = encodeResult.value;
 
   return await context.withTransaction(async (context) => {

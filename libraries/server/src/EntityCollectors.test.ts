@@ -322,7 +322,11 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
-            "prefix": "entity.fields.bar",
+            "path": [
+              "entity",
+              "fields",
+              "bar",
+            ],
             "uuids": [
               "barId1",
             ],
@@ -333,7 +337,12 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
-            "prefix": "entity.fields.bars[0]",
+            "path": [
+              "entity",
+              "fields",
+              "bars",
+              0,
+            ],
             "uuids": [
               "barId2",
             ],
@@ -344,7 +353,12 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
-            "prefix": "entity.fields.bars[1]",
+            "path": [
+              "entity",
+              "fields",
+              "bars",
+              1,
+            ],
             "uuids": [
               "barId3",
             ],
@@ -353,7 +367,11 @@ describe('collectDataFromEntity', () => {
             "entityTypes": [],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
-            "prefix": "entity.fields.reference",
+            "path": [
+              "entity",
+              "fields",
+              "reference",
+            ],
             "uuids": [
               "unspecifiedId1",
             ],
@@ -389,7 +407,12 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
-            "prefix": "entity.fields.valueOne.bar",
+            "path": [
+              "entity",
+              "fields",
+              "valueOne",
+              "bar",
+            ],
             "uuids": [
               "bar1Id",
             ],
@@ -437,7 +460,12 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": false,
             "linkEntityTypes": [],
-            "prefix": "entity.fields.richText[0]",
+            "path": [
+              "entity",
+              "fields",
+              "richText",
+              0,
+            ],
             "uuids": [
               "barId1",
             ],
@@ -448,7 +476,12 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": true,
             "linkEntityTypes": [],
-            "prefix": "entity.fields.richText[1]",
+            "path": [
+              "entity",
+              "fields",
+              "richText",
+              1,
+            ],
             "uuids": [
               "barId2",
             ],
@@ -459,7 +492,14 @@ describe('collectDataFromEntity', () => {
             ],
             "isRichTextLink": false,
             "linkEntityTypes": undefined,
-            "prefix": "entity.fields.richText[2].data.bar",
+            "path": [
+              "entity",
+              "fields",
+              "richText",
+              2,
+              "data",
+              "bar",
+            ],
             "uuids": [
               "bar3Id",
             ],
