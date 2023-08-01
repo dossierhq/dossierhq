@@ -242,10 +242,6 @@ export interface DatabaseManagementGetNextDirtyEntityPayload
 }
 
 export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
-  /** Apply the rename first, since the value types operations will use the new names */
-  renameEntityTypes: Record<string, string>;
-  /** Apply the rename first, since the value types operations will use the new names */
-  renameValueTypes: Record<string, string>;
   validateEntityTypes: string[];
   validateValueTypes: string[];
   indexEntityTypes: string[];
@@ -596,6 +592,12 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     entityTypes: string[],
   ): PromiseResult<number, typeof ErrorType.Generic>;
+
+  schemaUpdateRenameTypes(
+    context: TransactionContext,
+    entityTypes: Record<string, string>,
+    valueTypes: Record<string, string>,
+  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   schemaUpdateSpecification(
     context: TransactionContext,

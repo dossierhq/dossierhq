@@ -74,6 +74,7 @@ export async function schemaUpdateSpecification(
       }
     }
 
+    // Update the schema spec
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) {
       if (updateResult.isErrorType(ErrorType.Conflict)) {
@@ -84,6 +85,14 @@ export async function schemaUpdateSpecification(
       }
       return notOk.Generic(updateResult.message);
     }
+
+    // Rename types
+    const renameTypesResult = await databaseAdapter.schemaUpdateRenameTypes(
+      context,
+      impactResult.value.renameEntityTypes,
+      impactResult.value.renameValueTypes,
+    );
+    if (renameTypesResult.isError()) return renameTypesResult;
 
     if (dirtyEntitiesSelector) {
       const selectorLogString = Object.entries(

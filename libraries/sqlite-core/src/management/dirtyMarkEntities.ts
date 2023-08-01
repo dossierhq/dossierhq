@@ -22,8 +22,6 @@ export async function managementDirtyMarkEntities(
   database: Database,
   context: TransactionContext,
   {
-    renameEntityTypes,
-    renameValueTypes,
     validateEntityTypes,
     validateValueTypes,
     indexEntityTypes,
@@ -33,38 +31,6 @@ export async function managementDirtyMarkEntities(
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let validationCount = 0;
   let indexCount = 0;
-
-  // Apply the renames first, since the value types operations will use the new names
-  for (const [oldName, newName] of Object.entries(renameEntityTypes)) {
-    const result = await queryRun(
-      database,
-      context,
-      buildSqliteSqlQuery(({ sql }) => {
-        sql`UPDATE entities SET type = ${newName} WHERE type = ${oldName}`;
-      }),
-    );
-    if (result.isError()) return result;
-  }
-
-  for (const [oldName, newName] of Object.entries(renameValueTypes)) {
-    const latestResult = await queryRun(
-      database,
-      context,
-      buildSqliteSqlQuery(({ sql }) => {
-        sql`UPDATE entity_latest_value_types SET value_type = ${newName} WHERE value_type = ${oldName}`;
-      }),
-    );
-    if (latestResult.isError()) return latestResult;
-
-    const publishedResult = await queryRun(
-      database,
-      context,
-      buildSqliteSqlQuery(({ sql }) => {
-        sql`UPDATE entity_published_value_types SET value_type = ${newName} WHERE value_type = ${oldName}`;
-      }),
-    );
-    if (publishedResult.isError()) return publishedResult;
-  }
 
   if (validateEntityTypes.length > 0) {
     const result = await markEntitiesDirty(

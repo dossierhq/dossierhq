@@ -22,6 +22,8 @@ describe('calculateSchemaChangeImpact unchanged', () => {
       {
         "deleteEntityTypes": [],
         "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -32,6 +34,8 @@ describe('calculateSchemaChangeImpact unchanged', () => {
       {
         "deleteEntityTypes": [],
         "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -42,6 +46,8 @@ describe('calculateSchemaChangeImpact unchanged', () => {
       {
         "deleteEntityTypes": [],
         "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -63,13 +69,13 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -89,13 +95,13 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -112,6 +118,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
       {
         "deleteEntityTypes": [],
         "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -131,6 +139,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
       {
         "deleteEntityTypes": [],
         "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -151,13 +161,13 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
             "OneType",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -176,13 +186,13 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
           "indexValueTypes": [
             "OneType",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -217,13 +227,13 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
             "OneType",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -256,13 +266,13 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
           "indexValueTypes": [
             "OneType",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -299,13 +309,13 @@ describe('calculateSchemaChangeImpact field.index', () => {
             "OneType",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -340,13 +350,13 @@ describe('calculateSchemaChangeImpact field.index', () => {
           "indexValueTypes": [
             "OneType",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -373,13 +383,13 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -404,13 +414,13 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -438,13 +448,13 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
             "OneType",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -470,13 +480,13 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
           "indexValueTypes": [
             "OneType",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -504,13 +514,13 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -536,13 +546,13 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -565,13 +575,13 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OneType",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OneType",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -606,8 +616,6 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OneType",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "AnotherEntity",
             "OneType",
@@ -616,6 +624,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "AnotherValueItem",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -636,13 +646,13 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           "indexValueTypes": [
             "OneType",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -677,8 +687,6 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           "indexValueTypes": [
             "OneType",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "AnotherEntity",
           ],
@@ -687,6 +695,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OneType",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -718,13 +728,13 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OldName",
           ],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "OldName",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -756,13 +766,13 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           "indexValueTypes": [
             "OldName",
           ],
-          "renameEntityTypes": {},
-          "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [
             "OldName",
           ],
         },
+        "renameEntityTypes": {},
+        "renameValueTypes": {},
       }
     `);
   });
@@ -784,17 +794,11 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
-        "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
-          "indexEntityTypes": [],
-          "indexValueTypes": [],
-          "renameEntityTypes": {
-            "OldName": "NewName",
-          },
-          "renameValueTypes": {},
-          "validateEntityTypes": [],
-          "validateValueTypes": [],
+        "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {
+          "OldName": "NewName",
         },
+        "renameValueTypes": {},
       }
     `);
   });
@@ -832,10 +836,6 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {
-            "OldName": "NewName",
-          },
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "AnotherEntity",
           ],
@@ -843,6 +843,10 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
             "AnotherValueItem",
           ],
         },
+        "renameEntityTypes": {
+          "OldName": "NewName",
+        },
+        "renameValueTypes": {},
       }
     `);
   });
@@ -872,15 +876,15 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {
-            "OldName": "NewName",
-          },
-          "renameValueTypes": {},
           "validateEntityTypes": [
             "NewName",
           ],
           "validateValueTypes": [],
         },
+        "renameEntityTypes": {
+          "OldName": "NewName",
+        },
+        "renameValueTypes": {},
       }
     `);
   });
@@ -904,17 +908,11 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
-        "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
-          "indexEntityTypes": [],
-          "indexValueTypes": [],
-          "renameEntityTypes": {
-            "OldName": "NewName",
-          },
-          "renameValueTypes": {},
-          "validateEntityTypes": [],
-          "validateValueTypes": [],
+        "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {
+          "OldName": "NewName",
         },
+        "renameValueTypes": {},
       }
     `);
   });
@@ -934,16 +932,10 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
-        "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
-          "indexEntityTypes": [],
-          "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {
-            "OldName": "NewName",
-          },
-          "validateEntityTypes": [],
-          "validateValueTypes": [],
+        "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {
+          "OldName": "NewName",
         },
       }
     `);
@@ -982,16 +974,16 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {
-            "OldName": "NewName",
-          },
           "validateEntityTypes": [
             "AnotherEntity",
           ],
           "validateValueTypes": [
             "AnotherValueItem",
           ],
+        },
+        "renameEntityTypes": {},
+        "renameValueTypes": {
+          "OldName": "NewName",
         },
       }
     `);
@@ -1022,14 +1014,14 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {
-            "OldName": "NewName",
-          },
           "validateEntityTypes": [],
           "validateValueTypes": [
             "NewName",
           ],
+        },
+        "renameEntityTypes": {},
+        "renameValueTypes": {
+          "OldName": "NewName",
         },
       }
     `);
@@ -1054,16 +1046,10 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
-        "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
-          "indexEntityTypes": [],
-          "indexValueTypes": [],
-          "renameEntityTypes": {},
-          "renameValueTypes": {
-            "OldName": "NewName",
-          },
-          "validateEntityTypes": [],
-          "validateValueTypes": [],
+        "dirtyEntitiesSelector": null,
+        "renameEntityTypes": {},
+        "renameValueTypes": {
+          "OldName": "NewName",
         },
       }
     `);
