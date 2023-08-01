@@ -1,18 +1,18 @@
 This document describes what migrations are supported and what impact they have.
 
-| Type property     | Kind     | Change | Description                                                        |
-| ----------------- | -------- | ------ | ------------------------------------------------------------------ |
-| Creating new type | `*`      | Yes    |                                                                    |
-| Removing type     | `*`      | No     | Removing a type is currently not supported.                        |
-| `name`            | `*`      | No     | Renaming a type is currently not supported.                        |
-| `adminOnly`       | `*`      | Yes    | Changing if a type is admin only requires validation and indexing. |
-| `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.               |
-| `nameField`       | `Entity` | Yes    | Only applies to newly created entities                             |
+| Type property     | Kind     | Change | Description                                                                                                                                                       |
+| ----------------- | -------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Creating new type | `*`      | Yes    |                                                                                                                                                                   |
+| Deleting type     | `*`      | Yes    | For entity types, deleting is only possible when there are no entities with that type. Deleting value types is irreversible and requires validation and indexing. |
+| `name`            | `*`      | Yes    |                                                                                                                                                                   |
+| `adminOnly`       | `*`      | Yes    | Changing if a type is admin only requires validation and indexing.                                                                                                |
+| `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.                                                                                                              |
+| `nameField`       | `Entity` | Yes    | Only applies to newly created entities                                                                                                                            |
 
 | Field property    | Field type             | Change | Description                                                                                                           |
 | ----------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
 | Adding new field  |                        | Yes    |                                                                                                                       |
-| Removing field    |                        | Yes    | Removing fields is irreversible. Requires validation (since invalid entities can become valid). Requires indexing.    |
+| Deleting field    |                        | Yes    | Deleting fields is irreversible. Requires validation (since invalid entities can become valid). Requires indexing.    |
 | Reorder fields    |                        | Yes    |                                                                                                                       |
 | `name`            | `*`                    | Yes    |                                                                                                                       |
 | `type`            | `*`                    | No     | Changing field type is not supported.                                                                                 |
@@ -29,16 +29,16 @@ This document describes what migrations are supported and what impact they have.
 | `values`          | `String`               | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
 | `index`           | `String`               | No     | Changing the index is not supported.                                                                                  |
 
-| Index property   | Change | Description                                   |
-| ---------------- | ------ | --------------------------------------------- |
-| Adding new index | Yes    |                                               |
-| Removing index   | No     | Removing an index is currently not supported. |
-| `name`           | No     | Renaming an index is currently not supported. |
-| `type`           | No     | Changing the type is currently not supported. |
+| Index property   | Change | Description                                                                                                                                            |
+| ---------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Adding new index | Yes    |                                                                                                                                                        |
+| Deleting index   | No     | Deleting an index is currently not supported in the web interface, but if you remove an index from all fields it will be deleted automatically.        |
+| `name`           | No     | Renaming an index is currently not supported in the web interface, but you can create a new index and change all existing fields to use the new index. |
+| `type`           | No     | Changing the type is currently not supported.                                                                                                          |
 
-| Pattern property   | Change | Description                                                          |
-| ------------------ | ------ | -------------------------------------------------------------------- |
-| Adding new pattern | Yes    |                                                                      |
-| Removing pattern   | Yes    | Removing a pattern removes it from all types using the pattern.      |
-| `name`             | Yes    | Renaming a pattern does not require validation.                      |
-| `pattern`          | Yes    | Changing pattern requires validation of all types using the pattern. |
+| Pattern property   | Change | Description                                                                          |
+| ------------------ | ------ | ------------------------------------------------------------------------------------ |
+| Adding new pattern | Yes    |                                                                                      |
+| Deleting pattern   | Yes    | Deleting a pattern removes it from all types using the pattern. Requires validation. |
+| `name`             | Yes    | Renaming a pattern does not require validation.                                      |
+| `pattern`          | Yes    | Changing pattern requires validation of all types using the pattern.                 |

@@ -250,6 +250,8 @@ export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
   validateValueTypes: string[];
   indexEntityTypes: string[];
   indexValueTypes: string[];
+  /** Ensure there are no entities with types */
+  deleteEntityTypes: string[];
   /** Apply the delete last, since we want to index/validate entities using the value types */
   deleteValueTypes: string[];
 }
