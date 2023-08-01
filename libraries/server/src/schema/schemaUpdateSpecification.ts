@@ -53,7 +53,7 @@ export async function schemaUpdateSpecification(
 
     const impactResult = calculateSchemaChangeImpact(oldSchema, newSchema);
     if (impactResult.isError()) return impactResult;
-    const dirtyEntitiesSelector = impactResult.value;
+    const { dirtyEntitiesSelector } = impactResult.value;
 
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) {

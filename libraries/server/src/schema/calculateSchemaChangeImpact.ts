@@ -14,7 +14,7 @@ export function calculateSchemaChangeImpact(
   previous: AdminSchemaWithMigrations,
   next: AdminSchemaWithMigrations,
 ): Result<
-  DatabaseManagementMarkEntitiesDirtySelectorArg | null,
+  { dirtyEntitiesSelector: DatabaseManagementMarkEntitiesDirtySelectorArg | null },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const validateEntityTypes = new Set<string>();
@@ -108,29 +108,30 @@ export function calculateSchemaChangeImpact(
     }
   }
 
+  let dirtyEntitiesSelector = null;
   if (
-    validateEntityTypes.size === 0 &&
-    indexEntityTypes.size === 0 &&
-    validateValueTypes.size === 0 &&
-    indexValueTypes.size === 0 &&
-    deleteEntityTypes.length === 0 &&
-    Object.keys(renameEntityTypes).length === 0 &&
-    deleteValueTypes.length === 0 &&
-    Object.keys(renameValueTypes).length === 0
+    validateEntityTypes.size !== 0 ||
+    indexEntityTypes.size !== 0 ||
+    validateValueTypes.size !== 0 ||
+    indexValueTypes.size !== 0 ||
+    deleteEntityTypes.length !== 0 ||
+    Object.keys(renameEntityTypes).length !== 0 ||
+    deleteValueTypes.length !== 0 ||
+    Object.keys(renameValueTypes).length !== 0
   ) {
-    return ok(null);
+    dirtyEntitiesSelector = {
+      validateEntityTypes: [...validateEntityTypes],
+      validateValueTypes: [...validateValueTypes],
+      indexEntityTypes: [...indexEntityTypes],
+      indexValueTypes: [...indexValueTypes],
+      deleteEntityTypes,
+      renameEntityTypes,
+      deleteValueTypes,
+      renameValueTypes,
+    };
   }
 
-  return ok({
-    validateEntityTypes: [...validateEntityTypes],
-    validateValueTypes: [...validateValueTypes],
-    indexEntityTypes: [...indexEntityTypes],
-    indexValueTypes: [...indexValueTypes],
-    deleteEntityTypes,
-    renameEntityTypes,
-    deleteValueTypes,
-    renameValueTypes,
-  });
+  return ok({ dirtyEntitiesSelector });
 }
 
 function calculateTypeSelector(

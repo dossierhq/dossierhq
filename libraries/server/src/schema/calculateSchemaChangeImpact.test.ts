@@ -1,7 +1,6 @@
 import {
   AdminSchemaWithMigrations,
   FieldType,
-  ok,
   type AdminSchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
@@ -19,17 +18,29 @@ function build(
 describe('calculateSchemaChangeImpact unchanged', () => {
   test('no change: empty -> empty', () => {
     const { previous, next } = build({}, {});
-    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
+      {
+        "dirtyEntitiesSelector": null,
+      }
+    `);
   });
 
   test('no change: one entity type unchanged', () => {
     const { previous, next } = build({ entityTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
+      {
+        "dirtyEntitiesSelector": null,
+      }
+    `);
   });
 
   test('no change: one value type, unchanged', () => {
     const { previous, next } = build({ valueTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
+      {
+        "dirtyEntitiesSelector": null,
+      }
+    `);
   });
 });
 
@@ -43,7 +54,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -54,8 +66,9 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('change: authKeyPattern modified', () => {
@@ -67,7 +80,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
       { patterns: [{ name: 'pattern', pattern: 'new-pattern' }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -78,8 +92,9 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('no change: authKeyPattern removed', () => {
@@ -90,7 +105,11 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
       },
       { entityTypes: [{ name: 'OneType', fields: [] }] },
     );
-    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
+      {
+        "dirtyEntitiesSelector": null,
+      }
+    `);
   });
 
   test('no change: authKeyPattern renamed', () => {
@@ -104,7 +123,11 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
         patterns: [{ name: 'nextPatternName', pattern: 'the-pattern' }],
       },
     );
-    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toEqual(null);
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
+      {
+        "dirtyEntitiesSelector": null,
+      }
+    `);
   });
 });
 
@@ -115,7 +138,8 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
       { entityTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [
@@ -128,8 +152,9 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('change: from true to false value type', () => {
@@ -138,7 +163,8 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
       { valueTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -151,8 +177,9 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -177,7 +204,8 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [
@@ -190,8 +218,9 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('change: from true to false value type', () => {
@@ -214,7 +243,8 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -227,8 +257,9 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -255,7 +286,8 @@ describe('calculateSchemaChangeImpact field.index', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [
@@ -268,8 +300,9 @@ describe('calculateSchemaChangeImpact field.index', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('change: index change value type', () => {
@@ -294,7 +327,8 @@ describe('calculateSchemaChangeImpact field.index', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -307,8 +341,9 @@ describe('calculateSchemaChangeImpact field.index', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -327,7 +362,8 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -338,8 +374,9 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('change: matchPattern pattern change value type', () => {
@@ -356,7 +393,8 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -367,8 +405,9 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -386,7 +425,8 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [
@@ -399,8 +439,9 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('delete field on value type', () => {
@@ -416,7 +457,8 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -429,8 +471,9 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -450,7 +493,8 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -461,8 +505,9 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename field on value type', () => {
@@ -480,7 +525,8 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -491,8 +537,9 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -503,7 +550,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'OneType' }] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [
             "OneType",
           ],
@@ -518,8 +566,9 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OneType",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('delete entity type with referencing fields', () => {
@@ -542,7 +591,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'OneType' }] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [
             "OneType",
           ],
@@ -560,8 +610,9 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           "validateValueTypes": [
             "AnotherValueItem",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('delete value type', () => {
@@ -570,7 +621,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [
             "OneType",
@@ -585,8 +637,9 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           "validateValueTypes": [
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('delete value type with referencing fields', () => {
@@ -609,7 +662,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [
             "OneType",
@@ -627,8 +681,9 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "AnotherValueItem",
             "OneType",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename and delete entity type', () => {
@@ -648,7 +703,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [
             "OldName",
           ],
@@ -663,8 +719,9 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OldName",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename and delete value type', () => {
@@ -684,7 +741,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [
             "OldName",
@@ -699,8 +757,9 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           "validateValueTypes": [
             "OldName",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
 
@@ -718,7 +777,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -729,8 +789,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename entity type with referencing fields', () => {
@@ -760,7 +821,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -775,8 +837,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "validateValueTypes": [
             "AnotherValueItem",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename and change entity type', () => {
@@ -798,7 +861,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -811,8 +875,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
             "NewName",
           ],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename entity type twice', () => {
@@ -832,7 +897,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -843,8 +909,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "renameValueTypes": {},
           "validateEntityTypes": [],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename value type', () => {
@@ -860,7 +927,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -871,8 +939,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           },
           "validateEntityTypes": [],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename value type with referencing fields', () => {
@@ -902,7 +971,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -917,8 +987,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "validateValueTypes": [
             "AnotherValueItem",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename and change value type', () => {
@@ -940,7 +1011,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -953,8 +1025,9 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           "validateValueTypes": [
             "NewName",
           ],
-        }
-      `);
+        },
+      }
+    `);
   });
 
   test('rename value type twice', () => {
@@ -974,7 +1047,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
       },
     );
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
-        {
+      {
+        "dirtyEntitiesSelector": {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
           "indexEntityTypes": [],
@@ -985,7 +1059,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           },
           "validateEntityTypes": [],
           "validateValueTypes": [],
-        }
-      `);
+        },
+      }
+    `);
   });
 });
