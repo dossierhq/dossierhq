@@ -193,23 +193,23 @@ function getStartingEntityType(
 }
 
 function migrateEntityFields(
-  entityType: string,
+  startingEntityType: string,
   originalFields: Record<string, unknown>,
   entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
 ) {
   let changed = false;
+  let entityType = startingEntityType;
   const migratedFields = { ...originalFields };
   for (const actionSpec of entityTypeActions) {
     const { action } = actionSpec;
     switch (action) {
-      case 'deleteField': {
+      case 'deleteField':
         if (actionSpec.entityType === entityType) {
           delete migratedFields[actionSpec.field];
           changed = true;
         }
         break;
-      }
-      case 'renameField': {
+      case 'renameField':
         if (actionSpec.entityType === entityType) {
           if (actionSpec.field in migratedFields) {
             migratedFields[actionSpec.newName] = migratedFields[actionSpec.field];
@@ -218,7 +218,11 @@ function migrateEntityFields(
           }
         }
         break;
-      }
+      case 'renameType':
+        if (actionSpec.entityType === entityType) {
+          entityType = actionSpec.newName;
+        }
+        break;
     }
   }
   return changed ? migratedFields : originalFields;
