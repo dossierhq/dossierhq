@@ -25,6 +25,7 @@ afterAll(async () => {
 });
 
 registerTestSuite(
+  'AdminEntityTest',
   createAdminEntityTestSuite({
     before: () => {
       assertIsDefined(serverInit);

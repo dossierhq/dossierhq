@@ -20,6 +20,7 @@ afterAll(async () => {
 });
 
 registerTestSuite(
+  'PublishedEntityTest',
   createPublishedEntityTestSuite({
     before: async () => {
       assertIsDefined(serverInit);

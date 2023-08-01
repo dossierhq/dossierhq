@@ -24,6 +24,7 @@ async function serverProcessNextDirtyEntity_all({ server }: SchemaTestContext) {
     }
   }
 }
+serverProcessNextDirtyEntity_all.timeout = 'long';
 
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity({
   server,

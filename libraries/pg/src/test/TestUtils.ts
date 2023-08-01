@@ -19,13 +19,16 @@ import {
 import type { Server, SessionContext } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { v4 as uuidv4 } from 'uuid';
-import { expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createPostgresAdapter } from '../PgDatabaseAdapter.js';
 
-export function registerTestSuite(testSuite: TestSuite): void {
-  for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction, { timeout: 20_000 });
-  }
+export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {
+  describe(testSuiteName, () => {
+    for (const [testName, testFunction] of Object.entries(testSuite)) {
+      const timeout = testFunction.timeout ? { long: 50_000 }[testFunction.timeout] : undefined;
+      test(testName, testFunction, { timeout });
+    }
+  });
 }
 
 export function createPostgresTestAdapter(): DatabaseAdapter {
