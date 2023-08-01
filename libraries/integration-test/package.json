@@ -47,7 +47,6 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@rushstack/heft": "0.58.1",
     "@types/node": "~20.4.5",
-    "@types/prettier": "~2.7.3",
     "@types/uuid": "~9.0.2",
     "eslint": "~8.46.0",
     "prettier": "3.0.0",

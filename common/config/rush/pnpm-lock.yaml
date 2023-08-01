@@ -145,7 +145,6 @@ importers:
       '@dossierhq/typescript-generator': workspace:*
       '@faker-js/faker': ~8.0.2
       '@rushstack/heft': 0.58.1
-      '@types/prettier': ~2.7.3
       '@types/sqlite3': ~3.1.8
       '@types/uuid': ~9.0.2
       cloudinary: ~1.40.0
@@ -172,7 +171,6 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
       '@rushstack/heft': 0.58.1
-      '@types/prettier': 2.7.3
       '@types/sqlite3': 3.1.8
       '@types/uuid': 9.0.2
       eslint: 8.46.0
@@ -780,7 +778,6 @@ importers:
       '@dossierhq/typescript-generator': workspace:*
       '@rushstack/heft': 0.58.1
       '@types/node': ~20.4.5
-      '@types/prettier': ~2.7.3
       '@types/uuid': ~9.0.2
       eslint: ~8.46.0
       prettier: 3.0.0
@@ -799,7 +796,6 @@ importers:
       '@dossierhq/typescript-generator': link:../typescript-generator
       '@rushstack/heft': 0.58.1_@types+node@20.4.5
       '@types/node': 20.4.5
-      '@types/prettier': 2.7.3
       '@types/uuid': 9.0.2
       eslint: 8.46.0
       prettier: 3.0.0
@@ -1305,7 +1301,6 @@ importers:
       '@types/lodash': ~4.14.196
       '@types/node': ~20.4.5
       '@types/pg': ~8.10.2
-      '@types/prettier': ~2.7.3
       '@types/react': ~18.2.18
       '@types/react-dom': ~18.2.7
       '@types/sql.js': ~1.4.4
@@ -1443,7 +1438,6 @@ importers:
       '@types/lodash': 4.14.196
       '@types/node': 20.4.5
       '@types/pg': 8.10.2
-      '@types/prettier': 2.7.3
       '@types/react': 18.2.18
       '@types/react-dom': 18.2.7
       '@types/sql.js': 1.4.4
@@ -8264,10 +8258,6 @@ packages:
       pg-types: 4.0.1
     dev: true
 
-  /@types/prettier/2.7.3:
-    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
-    dev: true
-
   /@types/pretty-hrtime/1.0.1:
     resolution: {integrity: sha512-VjID5MJb1eGKthz2qUerWT8+R4b9N+CHvGCzg9fn4kWZgaF9AhdYikQio3R7wV8YY1NsQKPaCwKz1Yff+aHNUQ==}
     dev: true
@@ -10812,7 +10802,7 @@ packages:
       eslint-import-resolver-typescript: 3.5.2_l44nha27mc3woukjx4qqb7fm3a
       eslint-plugin-import: 2.28.0_eslint@8.46.0
       eslint-plugin-jsx-a11y: 6.5.1_eslint@8.46.0
-      eslint-plugin-react: 7.33.0_eslint@8.46.0
+      eslint-plugin-react: 7.33.1_eslint@8.46.0
       eslint-plugin-react-hooks: 5.0.0-canary-7118f5dd7-20230705_eslint@8.46.0
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -10930,30 +10920,6 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dependencies:
       eslint: 8.46.0
-    dev: true
-
-  /eslint-plugin-react/7.33.0_eslint@8.46.0:
-    resolution: {integrity: sha512-qewL/8P34WkY8jAqdQxsiL82pDUeT7nhs8IsuXgfgnsEloKCT4miAV9N9kGtx7/KM9NH/NCGUE7Edt9iGxLXFw==}
-    engines: {node: '>=4'}
-    peerDependencies:
-      eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
-    dependencies:
-      array-includes: 3.1.6
-      array.prototype.flatmap: 1.3.1
-      array.prototype.tosorted: 1.1.1
-      doctrine: 2.1.0
-      eslint: 8.46.0
-      estraverse: 5.3.0
-      jsx-ast-utils: 3.2.1
-      minimatch: 3.1.2
-      object.entries: 1.1.6
-      object.fromentries: 2.0.6
-      object.hasown: 1.1.2
-      object.values: 1.1.6
-      prop-types: 15.8.1
-      resolve: 2.0.0-next.4
-      semver: 6.3.1
-      string.prototype.matchall: 4.0.8
     dev: true
 
   /eslint-plugin-react/7.33.1:
