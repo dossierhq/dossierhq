@@ -118,7 +118,7 @@ export function decodePublishedEntity(
 
 function applySchemaMigrationsToFieldValues(
   adminSchema: AdminSchemaWithMigrations,
-  entityType: string,
+  targetEntityType: string,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
 ): Result<Record<string, unknown>, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
@@ -138,7 +138,13 @@ function applySchemaMigrationsToFieldValues(
     }
   }
 
-  const migratedFieldValues = migrateEntityFields(entityType, fieldValues, entityTypeActions);
+  const startingEntityType = getStartingEntityType(targetEntityType, entityTypeActions);
+
+  const migratedFieldValues = migrateEntityFields(
+    startingEntityType,
+    fieldValues,
+    entityTypeActions,
+  );
 
   const transformResult: Result<
     EntityLike,
@@ -146,7 +152,7 @@ function applySchemaMigrationsToFieldValues(
   > = transformEntity(
     adminSchema,
     [],
-    { info: { type: entityType }, fields: migratedFieldValues },
+    { info: { type: targetEntityType }, fields: migratedFieldValues },
     {
       transformField: (_path, _fieldSpec, value) => {
         return ok(value);
@@ -170,6 +176,20 @@ function applySchemaMigrationsToFieldValues(
 
   if (transformResult.isError()) return transformResult;
   return ok(transformResult.value.fields);
+}
+
+function getStartingEntityType(
+  targetEntityType: string,
+  entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
+) {
+  let entityType = targetEntityType;
+  for (let i = entityTypeActions.length - 1; i >= 0; i--) {
+    const action = entityTypeActions[i];
+    if (action.action === 'renameType' && action.newName === entityType) {
+      entityType = action.entityType;
+    }
+  }
+  return entityType;
 }
 
 function migrateEntityFields(
