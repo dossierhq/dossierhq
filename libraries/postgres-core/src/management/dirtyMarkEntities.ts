@@ -1,6 +1,5 @@
 import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
-  buildPostgresSqlQuery,
   createPostgresSqlQuery,
   type DatabaseManagementMarkEntitiesDirtyPayload,
   type DatabaseManagementMarkEntitiesDirtySelectorArg,
@@ -27,7 +26,6 @@ export async function managementDirtyMarkEntities(
     validateValueTypes,
     indexEntityTypes,
     indexValueTypes,
-    deleteValueTypes,
   }: DatabaseManagementMarkEntitiesDirtySelectorArg,
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let validationCount = 0;
@@ -75,27 +73,6 @@ export async function managementDirtyMarkEntities(
     );
     if (result.isError()) return result;
     indexCount += result.value;
-  }
-
-  // Apply the delete last, since we want to index/validate entities using the value types
-  if (deleteValueTypes.length > 0) {
-    const latestResult = await queryRun(
-      databaseAdapter,
-      context,
-      buildPostgresSqlQuery(({ sql }) => {
-        sql`DELETE FROM entity_latest_value_types WHERE value_type = ANY(${deleteValueTypes})`;
-      }),
-    );
-    if (latestResult.isError()) return latestResult;
-
-    const publishedResult = await queryRun(
-      databaseAdapter,
-      context,
-      buildPostgresSqlQuery(({ sql }) => {
-        sql`DELETE FROM entity_published_value_types WHERE value_type = ANY(${deleteValueTypes})`;
-      }),
-    );
-    if (publishedResult.isError()) return publishedResult;
   }
 
   return ok({ validationCount, indexCount });

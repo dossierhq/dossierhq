@@ -146,6 +146,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     publishedEntitySearchTotalCount: vi.fn(),
     schemaGetSpecification: vi.fn(),
     schemaUpdateCountEntitiesWithTypes: vi.fn(),
+    schemaUpdateDeleteValueTypesFromIndexes: vi.fn(),
     schemaUpdateRenameTypes: vi.fn(),
     schemaUpdateSpecification: vi.fn(),
     withNestedTransaction: vi.fn(),

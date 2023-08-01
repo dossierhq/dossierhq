@@ -19,6 +19,7 @@ export function calculateSchemaChangeImpact(
     renameEntityTypes: Record<string, string>;
     renameValueTypes: Record<string, string>;
     dirtyEntitiesSelector: DatabaseManagementMarkEntitiesDirtySelectorArg | null;
+    deleteValueTypes: string[];
   },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
@@ -118,19 +119,23 @@ export function calculateSchemaChangeImpact(
     validateEntityTypes.size !== 0 ||
     indexEntityTypes.size !== 0 ||
     validateValueTypes.size !== 0 ||
-    indexValueTypes.size !== 0 ||
-    deleteValueTypes.length !== 0
+    indexValueTypes.size !== 0
   ) {
     dirtyEntitiesSelector = {
       validateEntityTypes: [...validateEntityTypes],
       validateValueTypes: [...validateValueTypes],
       indexEntityTypes: [...indexEntityTypes],
       indexValueTypes: [...indexValueTypes],
-      deleteValueTypes,
     };
   }
 
-  return ok({ deleteEntityTypes, renameEntityTypes, renameValueTypes, dirtyEntitiesSelector });
+  return ok({
+    deleteEntityTypes,
+    renameEntityTypes,
+    renameValueTypes,
+    dirtyEntitiesSelector,
+    deleteValueTypes,
+  });
 }
 
 function calculateTypeSelector(

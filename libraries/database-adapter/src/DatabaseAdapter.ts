@@ -246,8 +246,6 @@ export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
   validateValueTypes: string[];
   indexEntityTypes: string[];
   indexValueTypes: string[];
-  /** Apply the delete last, since we want to index/validate entities using the value types */
-  deleteValueTypes: string[];
 }
 
 export interface DatabaseManagementMarkEntitiesDirtyPayload {
@@ -597,6 +595,11 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     entityTypes: Record<string, string>,
     valueTypes: Record<string, string>,
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  schemaUpdateDeleteValueTypesFromIndexes(
+    context: TransactionContext,
+    valueTypes: string[],
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   schemaUpdateSpecification(

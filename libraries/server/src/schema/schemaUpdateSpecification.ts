@@ -94,6 +94,7 @@ export async function schemaUpdateSpecification(
     );
     if (renameTypesResult.isError()) return renameTypesResult;
 
+    // Mark entities as dirty
     if (dirtyEntitiesSelector) {
       const selectorLogString = Object.entries(
         dirtyEntitiesSelector as unknown as Record<string, string[]>,
@@ -114,6 +115,13 @@ export async function schemaUpdateSpecification(
         markDirtyResult.value.indexCount,
       );
     }
+
+    // Delete value types from indexes
+    const deleteValueTypesResult = await databaseAdapter.schemaUpdateDeleteValueTypesFromIndexes(
+      context,
+      impactResult.value.deleteValueTypes,
+    );
+    if (deleteValueTypesResult.isError()) return deleteValueTypesResult;
 
     logger.info(
       'Updated schema, new schema has %d entity types, %d value types, %d patterns, %d indexes',

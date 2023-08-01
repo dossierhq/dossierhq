@@ -21,6 +21,7 @@ describe('calculateSchemaChangeImpact unchanged', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {},
@@ -33,6 +34,7 @@ describe('calculateSchemaChangeImpact unchanged', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {},
@@ -45,6 +47,7 @@ describe('calculateSchemaChangeImpact unchanged', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {},
@@ -65,8 +68,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -91,8 +94,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -117,6 +120,7 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {},
@@ -138,6 +142,7 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {},
@@ -155,8 +160,8 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
@@ -180,8 +185,8 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
@@ -221,8 +226,8 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
@@ -260,8 +265,8 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
@@ -303,8 +308,8 @@ describe('calculateSchemaChangeImpact field.index', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
@@ -344,8 +349,8 @@ describe('calculateSchemaChangeImpact field.index', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
@@ -379,8 +384,8 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -410,8 +415,8 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [],
@@ -442,8 +447,8 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
@@ -474,8 +479,8 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
@@ -510,8 +515,8 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -542,8 +547,8 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [],
@@ -569,8 +574,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
         "deleteEntityTypes": [
           "OneType",
         ],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
@@ -610,8 +615,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
         "deleteEntityTypes": [
           "OneType",
         ],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OneType",
           ],
@@ -638,10 +643,10 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [
+          "OneType",
+        ],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [
-            "OneType",
-          ],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
@@ -679,10 +684,10 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [
+          "OneType",
+        ],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [
-            "OneType",
-          ],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OneType",
@@ -722,8 +727,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
         "deleteEntityTypes": [
           "OldName",
         ],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [
             "OldName",
           ],
@@ -758,10 +763,10 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [
+          "OldName",
+        ],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [
-            "OldName",
-          ],
           "indexEntityTypes": [],
           "indexValueTypes": [
             "OldName",
@@ -794,6 +799,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {
           "OldName": "NewName",
@@ -832,8 +838,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -872,8 +878,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -908,6 +914,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {
           "OldName": "NewName",
@@ -932,6 +939,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {
@@ -970,8 +978,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [
@@ -1010,8 +1018,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": {
-          "deleteValueTypes": [],
           "indexEntityTypes": [],
           "indexValueTypes": [],
           "validateEntityTypes": [],
@@ -1046,6 +1054,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
     expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
+        "deleteValueTypes": [],
         "dirtyEntitiesSelector": null,
         "renameEntityTypes": {},
         "renameValueTypes": {
