@@ -12,14 +12,14 @@ export interface DropdownProps<
   TTrigger extends HTMLElement,
   TItem extends DropdownItem = DropdownItem,
 > {
-  items: TItem[];
+  items: readonly TItem[];
   activeItemIds?: string[];
   left?: boolean;
   up?: boolean;
-  isContentItem?: (item: TItem) => boolean;
-  renderItem: (item: TItem) => ReactNode;
+  isContentItem?: (item: Readonly<TItem>) => boolean;
+  renderItem: (item: Readonly<TItem>) => ReactNode;
   renderTrigger: (ref: Ref<TTrigger>, onOpenDropDown: () => void) => ReactNode;
-  onItemClick?: (item: TItem) => void;
+  onItemClick?: (item: Readonly<TItem>) => void;
 }
 
 export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownItem>({
