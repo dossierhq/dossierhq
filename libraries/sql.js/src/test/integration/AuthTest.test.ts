@@ -17,6 +17,7 @@ afterAll(async () => {
 });
 
 registerTestSuite(
+  'AuthTest',
   createAuthTestSuite({
     before: () => {
       assertIsDefined(serverInit);

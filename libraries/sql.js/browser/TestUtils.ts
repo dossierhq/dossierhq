@@ -20,11 +20,13 @@ export async function createSqlJsTestAdapter(): PromiseResult<
   });
 }
 
-export function registerTestSuite(testSuite: TestSuite): void {
+export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {
   polyfillCrypto();
-  for (const [testName, testFunction] of Object.entries(testSuite)) {
-    test(testName, testFunction);
-  }
+  test.describe(testSuiteName, () => {
+    for (const [testName, testFunction] of Object.entries(testSuite)) {
+      test(testName, testFunction);
+    }
+  });
 }
 
 function polyfillCrypto() {

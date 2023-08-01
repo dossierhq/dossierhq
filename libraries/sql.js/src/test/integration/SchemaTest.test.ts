@@ -17,6 +17,7 @@ afterAll(async () => {
 });
 
 registerTestSuite(
+  'SchemaTest',
   createSchemaTestSuite({
     before: () => {
       assertIsDefined(serverInit);

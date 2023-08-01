@@ -3,6 +3,7 @@ import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 
 registerTestSuite(
+  'SchemaTest',
   createSchemaTestSuite({
     before: async () => {
       const serverInit = (await initializeSqlJsServer()).valueOrThrow();
