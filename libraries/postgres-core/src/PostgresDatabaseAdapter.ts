@@ -52,6 +52,7 @@ import { publishedEntitySearchTotalCount } from './published-entity/getTotalCoun
 import { publishedEntitySampleEntities } from './published-entity/sampleEntities.js';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
+import { schemaUpdateCountEntitiesWithTypes } from './schema/updateCountEntitiesWithTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 
 export type PostgresDatabaseOptimizationOptions = DatabaseOptimizationOptions;
@@ -145,6 +146,8 @@ export function createPostgresDatabaseAdapterAdapter(
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(databaseAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
+    schemaUpdateCountEntitiesWithTypes: (...args) =>
+      schemaUpdateCountEntitiesWithTypes(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),
     withRootTransaction: (...args) => withRootTransaction(databaseAdapter, ...args),

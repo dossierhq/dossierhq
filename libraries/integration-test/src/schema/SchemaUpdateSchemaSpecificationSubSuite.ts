@@ -63,6 +63,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnEntity,
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_renameFieldOnValueItem,
+  updateSchemaSpecification_deleteTypeOnEntityType,
   updateSchemaSpecification_deleteTypeOnValueItem,
   updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnotherType,
   updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid,
@@ -78,6 +79,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem,
   updateSchemaSpecification_addingIndexToField,
   updateSchemaSpecification_errorWrongVersion,
+  updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExistingEntities,
 ];
 
 async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
@@ -1173,6 +1175,35 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   );
 }
 
+async function updateSchemaSpecification_deleteTypeOnEntityType({ server }: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const typeName = `MigrationEntity${new Date().getTime()}`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Delete the type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteType', entityType: typeName }],
+        },
+      ],
+    });
+    return ok(secondUpdateResult.valueOrThrow().schemaSpecification);
+  });
+  const schemaSpec = result.valueOrThrow();
+
+  const entityType = schemaSpec.entityTypes.find((et) => et.name === typeName);
+  assertEquals(entityType, undefined);
+}
+
 async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
@@ -2208,4 +2239,46 @@ async function updateSchemaSpecification_errorWrongVersion({ server }: SchemaTes
     ErrorType.BadRequest,
     `Expected version ${version + 1}, got ${version}`,
   );
+}
+
+async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExistingEntities({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const typeName = `MigrationEntity${new Date().getTime()}`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new type
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create an entity with the type
+    assertOkResult(
+      await adminClient.createEntity({
+        info: { type: typeName as AppAdminEntity['info']['type'], name: typeName, authKey: 'none' },
+        fields: { field: 'value' },
+      }),
+    );
+
+    // Try to delete the type
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [{ action: 'deleteType', entityType: typeName }],
+        },
+      ],
+    });
+
+    assertErrorResult(
+      secondUpdateResult,
+      ErrorType.BadRequest,
+      `Cannot delete entity types with 1 existing entities: ${typeName}`,
+    );
+    return ok(undefined);
+  });
+  assertOkResult(result);
 }

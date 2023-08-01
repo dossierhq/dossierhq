@@ -64,6 +64,7 @@ import { publishedEntitySearchTotalCount } from './published-entity/getTotalCoun
 import { publishedEntitySampleEntities } from './published-entity/sampleEntities.js';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
+import { schemaUpdateCountEntitiesWithTypes } from './schema/updateCountEntitiesWithTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 import { Mutex } from './utils/MutexUtils.js';
 
@@ -222,6 +223,8 @@ function createOuterAdapter(
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(database, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(database, ...args),
+    schemaUpdateCountEntitiesWithTypes: (...args) =>
+      schemaUpdateCountEntitiesWithTypes(database, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(database, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(database, ...args),
     withRootTransaction: (...args) => withRootTransaction(database, ...args),

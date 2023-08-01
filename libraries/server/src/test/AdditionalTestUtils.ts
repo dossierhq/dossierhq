@@ -145,6 +145,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     publishedEntitySearchEntities: vi.fn(),
     publishedEntitySearchTotalCount: vi.fn(),
     schemaGetSpecification: vi.fn(),
+    schemaUpdateCountEntitiesWithTypes: vi.fn(),
     schemaUpdateSpecification: vi.fn(),
     withNestedTransaction: vi.fn(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -14,7 +14,10 @@ export function calculateSchemaChangeImpact(
   previous: AdminSchemaWithMigrations,
   next: AdminSchemaWithMigrations,
 ): Result<
-  { dirtyEntitiesSelector: DatabaseManagementMarkEntitiesDirtySelectorArg | null },
+  {
+    deleteEntityTypes: string[];
+    dirtyEntitiesSelector: DatabaseManagementMarkEntitiesDirtySelectorArg | null;
+  },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const validateEntityTypes = new Set<string>();
@@ -114,7 +117,6 @@ export function calculateSchemaChangeImpact(
     indexEntityTypes.size !== 0 ||
     validateValueTypes.size !== 0 ||
     indexValueTypes.size !== 0 ||
-    deleteEntityTypes.length !== 0 ||
     Object.keys(renameEntityTypes).length !== 0 ||
     deleteValueTypes.length !== 0 ||
     Object.keys(renameValueTypes).length !== 0
@@ -124,14 +126,13 @@ export function calculateSchemaChangeImpact(
       validateValueTypes: [...validateValueTypes],
       indexEntityTypes: [...indexEntityTypes],
       indexValueTypes: [...indexValueTypes],
-      deleteEntityTypes,
       renameEntityTypes,
       deleteValueTypes,
       renameValueTypes,
     };
   }
 
-  return ok({ dirtyEntitiesSelector });
+  return ok({ deleteEntityTypes, dirtyEntitiesSelector });
 }
 
 function calculateTypeSelector(
