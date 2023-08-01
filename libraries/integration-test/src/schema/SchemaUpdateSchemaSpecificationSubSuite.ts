@@ -58,6 +58,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid,
   updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated,
+  updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenWhenInvalid,
   updateSchemaSpecification_deleteFieldOnValueItem,
   updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated,
   updateSchemaSpecification_renameFieldOnEntity,
@@ -780,6 +781,87 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process all entities
+    const processResult = await processAllDirtyEntities(server, { id: entity.id });
+    assertOkResult(processResult);
+
+    return ok(entity);
+  });
+  assertOkResult(result);
+
+  // Check that it's no longer in the index
+  const countAfterSchemaUpdate = (
+    await countSearchResultWithEntity(adminClient, query, result.value.id)
+  ).valueOrThrow();
+  assertEquals(countAfterSchemaUpdate, 0);
+}
+
+async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenWhenInvalid({
+  server,
+}: SchemaTestContext) {
+  // The reason why we test this is that we want to ensure that we update indexes even when an entity
+  // becomes invalid.
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldToDeleteName = `field${new Date().getTime()}Delete`;
+  const fieldToBecomeInvalidName = `field${new Date().getTime()}Invalid`;
+
+  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+    entityTypes: ['MigrationEntity'],
+    text: 'Kaboom',
+  };
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add the fields
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        {
+          name: 'MigrationEntity',
+          fields: [
+            { name: fieldToDeleteName, type: 'String' },
+            { name: fieldToBecomeInvalidName, type: 'String' },
+          ],
+        },
+      ],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Create entity with the new fields set
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, {
+          fields: { [fieldToDeleteName]: query.text, [fieldToBecomeInvalidName]: 'invalid' },
+        }),
+      )
+    ).valueOrThrow();
+
+    // Check that it's in the index
+    const countBeforeSchemaUpdate = (
+      await countSearchResultWithEntity(adminClient, query, entity.id)
+    ).valueOrThrow();
+    assertEquals(countBeforeSchemaUpdate, 1);
+
+    // Delete the field and change the other field to be invalid
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        {
+          name: 'MigrationEntity',
+          fields: [
+            { name: fieldToBecomeInvalidName, type: 'String', values: [{ value: 'valid' }] },
+          ],
+        },
+      ],
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [
+            { action: 'deleteField', entityType: 'MigrationEntity', field: fieldToDeleteName },
+          ],
+        },
+      ],
+    });
+    assertOkResult(secondUpdateResult);
+
+    // Process the entity
     const processResult = await processAllDirtyEntities(server, { id: entity.id });
     assertOkResult(processResult);
 
