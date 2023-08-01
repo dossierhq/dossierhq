@@ -7,9 +7,12 @@ import {
   notOk,
   ok,
   validateEntityInfo,
+  visitorPathToString,
   type AdminSchemaWithMigrations,
   type EntityReference,
+  type ErrorResult,
   type PromiseResult,
+  type Result,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -31,10 +34,13 @@ interface EntityValidity {
   validPublished: boolean | null;
 }
 
-const EMPTY_ENTITY_INFO: {
+interface EntityValidityAndInfoPayload {
+  valid: boolean;
   entityIndexes: DatabaseEntityIndexesArg;
   uniqueIndexValues: UniqueIndexValueCollection;
-} = {
+}
+
+const EMPTY_ENTITY_INFO: Omit<EntityValidityAndInfoPayload, 'valid'> = {
   entityIndexes: { fullTextSearchText: '', locations: [], referenceIds: [], valueTypes: [] },
   uniqueIndexValues: new Map(),
 };
@@ -85,25 +91,18 @@ export async function managementDirtyProcessNextEntity(
     // Validate / index latest
     if (dirtyValidateLatest || dirtyIndexLatest) {
       // Validate latest
-      const validationLatestResult = await validateAdminEntity(
+      const validationLatestResult = await validateAndCollectInfoFromAdminEntity(
         adminSchema,
         databaseAdapter,
         context,
         entityResult.value,
       );
-      if (validationLatestResult.isOk()) {
-        entityValidity.validAdmin = true;
-        latestUniqueIndexValues = validationLatestResult.value.uniqueIndexValues;
-      } else {
-        if (validationLatestResult.isErrorType(ErrorType.BadRequest)) {
-          entityValidity.validAdmin = false;
-        } else {
-          return notOk.Generic(validationLatestResult.message);
-        }
-      }
+      if (validationLatestResult.isError()) return validationLatestResult;
+      entityValidity.validAdmin = validationLatestResult.value.valid;
+      latestUniqueIndexValues = validationLatestResult.value.uniqueIndexValues;
 
       // Index latest
-      if (dirtyIndexLatest && validationLatestResult.isOk()) {
+      if (dirtyIndexLatest) {
         const updateLatestResult = await databaseAdapter.adminEntityIndexesUpdateLatest(
           context,
           entityResult.value,
@@ -184,27 +183,52 @@ export async function managementDirtyProcessNextEntity(
   });
 }
 
-async function validateAdminEntity(
+async function validateAndCollectInfoFromAdminEntity(
   adminSchema: AdminSchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entityData: DatabaseAdminEntityPayload,
-): PromiseResult<
-  { entityIndexes: DatabaseEntityIndexesArg; uniqueIndexValues: UniqueIndexValueCollection },
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
-> {
-  const entityResult = decodeAdminEntity(adminSchema, entityData);
-  if (entityResult.isError()) return entityResult;
-  const entity = entityResult.value;
+): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
+  const decodeResult = decodeAdminEntity(adminSchema, entityData);
+  if (decodeResult.isError()) {
+    return convertErrorResultForValidation(
+      context,
+      entityData,
+      'Failed decoding entity',
+      decodeResult,
+    );
+  }
+  const entity = decodeResult.value;
 
   const validationIssue = validateEntityInfo(adminSchema, [], entity);
-  if (validationIssue) return notOk.BadRequest('Invalid entity info');
+  if (validationIssue) {
+    return convertErrorResultForValidation(
+      context,
+      entity,
+      'Failed validating entity info',
+      notOk.BadRequest(`${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`),
+    );
+  }
 
   const entitySpec = adminSchema.getEntityTypeSpecification(entity.info.type);
-  if (!entitySpec) return notOk.BadRequest('Invalid entity type');
+  if (!entitySpec) {
+    return convertErrorResultForValidation(
+      context,
+      entity,
+      'Failed fetching entity spec',
+      notOk.BadRequest(`No entity spec for type ${entity.info.type}`),
+    );
+  }
 
   const normalizedResult = normalizeEntityFields(adminSchema, entity);
-  if (normalizedResult.isError()) return normalizedResult;
+  if (normalizedResult.isError()) {
+    return convertErrorResultForValidation(
+      context,
+      entity,
+      'Failed normalizing entity',
+      normalizedResult,
+    );
+  }
   const normalizedEntity = copyEntity(entity, { fields: normalizedResult.value });
 
   // TODO a bit unnecessary to encode when not updating indexes since we don't use the result, but it is running all validations
@@ -215,9 +239,12 @@ async function validateAdminEntity(
     entitySpec,
     normalizedEntity,
   );
-  if (encodeResult.isError()) return encodeResult;
+  if (encodeResult.isError()) {
+    return convertErrorResultForValidation(context, entity, 'Failed encoding entity', encodeResult);
+  }
 
   return ok({
+    valid: true,
     entityIndexes: encodeResult.value.entityIndexes,
     uniqueIndexValues: encodeResult.value.uniqueIndexValues,
   });
@@ -231,37 +258,34 @@ async function validateAndCollectInfoFromPublishedEntity(
   type: string,
   schemaVersion: number,
   fieldValues: Record<string, unknown>,
-): PromiseResult<
-  {
-    valid: boolean;
-    entityIndexes: DatabaseEntityIndexesArg;
-    uniqueIndexValues: UniqueIndexValueCollection;
-  },
-  typeof ErrorType.Generic
-> {
-  const { logger } = context;
+): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
   const entitySpec = adminSchema.getEntityTypeSpecification(type);
   if (!entitySpec) {
-    logger.error('entity(%s): No entity spec for type %s', reference.id, type);
-    return ok({ valid: false, ...EMPTY_ENTITY_INFO });
+    return convertErrorResultForValidation(
+      context,
+      reference,
+      'Failed fetching entity spec',
+      notOk.BadRequest(`No entity spec for type ${type}`),
+    );
   }
 
   if (entitySpec.adminOnly) {
-    logger.error('entity(%s): Entity type %s is admin only', reference.id, type);
-    return ok({ valid: false, ...EMPTY_ENTITY_INFO });
+    return convertErrorResultForValidation(
+      context,
+      reference,
+      'Entity type is admin only',
+      notOk.BadRequest(`Entity type ${type} is admin only`),
+    );
   }
 
   const decodeResult = decodeAdminEntityFields(adminSchema, entitySpec, schemaVersion, fieldValues);
   if (decodeResult.isError()) {
-    if (decodeResult.isErrorType(ErrorType.BadRequest)) {
-      logger.error(
-        'entity(%s): Failed decoding entity fields: %s',
-        reference.id,
-        decodeResult.message,
-      );
-      return ok({ valid: false, ...EMPTY_ENTITY_INFO });
-    }
-    return notOk.Generic(decodeResult.message); //cast Generic -> Generic
+    return convertErrorResultForValidation(
+      context,
+      reference,
+      'Failed decoding entity fields',
+      decodeResult,
+    );
   }
   const entityFields = decodeResult.value;
 
@@ -272,13 +296,27 @@ async function validateAndCollectInfoFromPublishedEntity(
     type,
     entityFields,
   );
-  if (validateFieldsResult.isError()) return validateFieldsResult;
+  if (validateFieldsResult.isError()) {
+    return convertErrorResultForValidation(
+      context,
+      reference,
+      'Failed validating entity fields',
+      validateFieldsResult,
+    );
+  }
 
   const validateReferencedEntitiesResult =
     await validateReferencedEntitiesArePublishedAndCollectInfo(databaseAdapter, context, [
       { entity: reference, references: validateFieldsResult.value.references },
     ]);
-  if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
+  if (validateReferencedEntitiesResult.isError()) {
+    return convertErrorResultForValidation(
+      context,
+      reference,
+      'Failed validating referenced entities',
+      validateReferencedEntitiesResult,
+    );
+  }
   const referenceIds = validateReferencedEntitiesResult.value.validReferences.get(reference.id);
   assertIsDefined(referenceIds);
 
@@ -295,6 +333,19 @@ async function validateAndCollectInfoFromPublishedEntity(
     },
     uniqueIndexValues: validateFieldsResult.value.uniqueIndexValues,
   });
+}
+
+function convertErrorResultForValidation(
+  context: TransactionContext,
+  reference: EntityReference,
+  logMessage: string,
+  result: ErrorResult<undefined, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
+): Result<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
+  if (result.isErrorType(ErrorType.BadRequest)) {
+    context.logger.error('entity(%s): %s: %s', reference.id, logMessage, result.message);
+    return ok({ valid: false, ...EMPTY_ENTITY_INFO });
+  }
+  return notOk.Generic(result.message); // cast Generic -> Generic
 }
 
 async function validateAndUpdateUniqueIndexValues(
