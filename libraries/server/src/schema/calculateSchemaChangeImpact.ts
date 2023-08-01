@@ -10,7 +10,7 @@ import {
 } from '@dossierhq/core';
 import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/database-adapter';
 
-export function calculateSchemaChangeEntityDirtySelector(
+export function calculateSchemaChangeImpact(
   previous: AdminSchemaWithMigrations,
   next: AdminSchemaWithMigrations,
 ): Result<

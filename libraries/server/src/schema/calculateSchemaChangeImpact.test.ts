@@ -5,7 +5,7 @@ import {
   type AdminSchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import { calculateSchemaChangeEntityDirtySelector } from './calculateSchemaChangeEntityDirtySelector.js';
+import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 
 function build(
   previousUpdate: AdminSchemaSpecificationUpdate,
@@ -16,24 +16,24 @@ function build(
   return { previous, next };
 }
 
-describe('calculateSchemaChangeEntityDirtySelector unchanged', () => {
+describe('calculateSchemaChangeImpact unchanged', () => {
   test('no change: empty -> empty', () => {
     const { previous, next } = build({}, {});
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
   });
 
   test('no change: one entity type unchanged', () => {
     const { previous, next } = build({ entityTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
   });
 
   test('no change: one value type, unchanged', () => {
     const { previous, next } = build({ valueTypes: [{ name: 'OneType', fields: [] }] }, {});
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
+describe('calculateSchemaChangeImpact authKeyPattern', () => {
   test('change: authKeyPattern added', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OneType', fields: [] }] },
@@ -42,8 +42,7 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
         patterns: [{ name: 'pattern', pattern: 'added-pattern' }],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -67,8 +66,7 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
       },
       { patterns: [{ name: 'pattern', pattern: 'new-pattern' }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -92,7 +90,7 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
       },
       { entityTypes: [{ name: 'OneType', fields: [] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next)).toEqual(ok(null));
+    expect(calculateSchemaChangeImpact(previous, next)).toEqual(ok(null));
   });
 
   test('no change: authKeyPattern renamed', () => {
@@ -106,18 +104,17 @@ describe('calculateSchemaChangeEntityDirtySelector authKeyPattern', () => {
         patterns: [{ name: 'nextPatternName', pattern: 'the-pattern' }],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow()).toEqual(null);
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toEqual(null);
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector type.adminOnly', () => {
+describe('calculateSchemaChangeImpact type.adminOnly', () => {
   test('change: from true to false entity type', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },
       { entityTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -140,8 +137,7 @@ describe('calculateSchemaChangeEntityDirtySelector type.adminOnly', () => {
       { valueTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },
       { valueTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -160,7 +156,7 @@ describe('calculateSchemaChangeEntityDirtySelector type.adminOnly', () => {
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
+describe('calculateSchemaChangeImpact field.adminOnly', () => {
   test('change: from true to false entity type', () => {
     const { previous, next } = build(
       {
@@ -180,8 +176,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -218,8 +213,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -238,7 +232,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.adminOnly', () => {
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
+describe('calculateSchemaChangeImpact field.index', () => {
   test('change: index change entity type', () => {
     const { previous, next } = build(
       {
@@ -260,8 +254,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
         indexes: [{ name: 'anotherIndex', type: 'unique' }],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -300,8 +293,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
         indexes: [{ name: 'anotherIndex', type: 'unique' }],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -320,7 +312,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.index', () => {
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
+describe('calculateSchemaChangeImpact field.matchPattern', () => {
   test('change: matchPattern pattern change entity type', () => {
     const { previous, next } = build(
       {
@@ -334,8 +326,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -364,8 +355,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
       },
       { patterns: [{ name: 'aPattern', pattern: 'modified-pattern' }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -382,7 +372,7 @@ describe('calculateSchemaChangeEntityDirtySelector field.matchPattern', () => {
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector migration deleteField', () => {
+describe('calculateSchemaChangeImpact migration deleteField', () => {
   test('delete field on entity type', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }] },
@@ -395,8 +385,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteField', () =>
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -426,8 +415,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteField', () =>
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -446,7 +434,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteField', () =>
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector migration renameField', () => {
+describe('calculateSchemaChangeImpact migration renameField', () => {
   test('rename field on entity type', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }] },
@@ -461,8 +449,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameField', () =>
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -492,8 +479,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameField', () =>
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -510,14 +496,13 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameField', () =>
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => {
+describe('calculateSchemaChangeImpact migration deleteType', () => {
   test('delete entity type', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OneType', fields: [] }] },
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'OneType' }] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [
             "OneType",
@@ -556,8 +541,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
       },
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', entityType: 'OneType' }] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [
             "OneType",
@@ -585,8 +569,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
       { valueTypes: [{ name: 'OneType', fields: [] }] },
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [
@@ -625,8 +608,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
       },
       { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [
@@ -665,8 +647,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [
             "OldName",
@@ -702,8 +683,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [
@@ -724,7 +704,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration deleteType', () => 
   });
 });
 
-describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => {
+describe('calculateSchemaChangeImpact migration renameType', () => {
   test('rename entity type', () => {
     const { previous, next } = build(
       { entityTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
@@ -737,8 +717,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -780,8 +759,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -819,8 +797,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -854,8 +831,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -883,8 +859,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -926,8 +901,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -965,8 +939,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],
@@ -1000,8 +973,7 @@ describe('calculateSchemaChangeEntityDirtySelector migration renameType', () => 
         ],
       },
     );
-    expect(calculateSchemaChangeEntityDirtySelector(previous, next).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(calculateSchemaChangeImpact(previous, next).valueOrThrow()).toMatchInlineSnapshot(`
         {
           "deleteEntityTypes": [],
           "deleteValueTypes": [],

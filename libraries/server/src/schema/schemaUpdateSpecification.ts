@@ -9,7 +9,7 @@ import {
   type SchemaSpecificationUpdatePayload,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
-import { calculateSchemaChangeEntityDirtySelector } from './calculateSchemaChangeEntityDirtySelector.js';
+import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 import { schemaGetSpecification } from './schemaGetSpecification.js';
 
 export async function schemaUpdateSpecification(
@@ -51,9 +51,9 @@ export async function schemaUpdateSpecification(
       return ok({ effect: 'none', schemaSpecification: newSchema.spec });
     }
 
-    const dirtySelectorResult = calculateSchemaChangeEntityDirtySelector(oldSchema, newSchema);
-    if (dirtySelectorResult.isError()) return dirtySelectorResult;
-    const dirtyEntitiesSelector = dirtySelectorResult.value;
+    const impactResult = calculateSchemaChangeImpact(oldSchema, newSchema);
+    if (impactResult.isError()) return impactResult;
+    const dirtyEntitiesSelector = impactResult.value;
 
     const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
     if (updateResult.isError()) {
