@@ -255,9 +255,6 @@ function TypeEditorRows({
   onAddOrRenameType: (selector: SchemaTypeSelector) => void;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
-  //TODO support deleting entity type
-  const canDeleteType = typeDraft.status === 'new' || typeDraft.kind === 'value';
-
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
     [typeDraft.kind, typeDraft.name],
@@ -358,7 +355,24 @@ function IndexEditorRows({
     [dispatchSchemaEditorState, indexSelector],
   );
 
-  //TODO support renaming and deleting indexes
+  const dropDownItems = [
+    // { id: 'rename', title: 'Rename index' },
+    { id: 'delete', title: 'Delete index' },
+  ] as const;
+
+  const handleDropdownItemClick = useCallback(
+    ({ id }: { id: (typeof dropDownItems)[number]['id'] }) => {
+      switch (id) {
+        case 'delete':
+          dispatchSchemaEditorState(new SchemaEditorActions.DeleteIndex(indexSelector));
+          break;
+        // case 'rename':
+        // onRenameIndex(indexSelector);
+        // break;
+      }
+    },
+    [dispatchSchemaEditorState, indexSelector],
+  );
 
   return (
     <>
@@ -369,6 +383,16 @@ function IndexEditorRows({
               <Text textStyle="headline4">{indexDraft.name}</Text>
             </Level.Item>
           </Level.Left>
+          <Level.Right>
+            <Level.Item>
+              <ButtonDropdown
+                items={dropDownItems}
+                left
+                renderItem={(item) => item.title}
+                onItemClick={handleDropdownItemClick}
+              />
+            </Level.Item>
+          </Level.Right>
         </Level>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row

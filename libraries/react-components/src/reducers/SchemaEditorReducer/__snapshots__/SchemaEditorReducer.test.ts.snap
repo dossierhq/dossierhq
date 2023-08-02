@@ -6,6 +6,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -98,6 +99,7 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -166,6 +168,7 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -252,6 +255,7 @@ exports[`AddFieldAction > add field to existing value type (without any fields) 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -317,6 +321,7 @@ exports[`AddIndexAction > add index to empty schema 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [
@@ -354,6 +359,7 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -392,6 +398,7 @@ exports[`AddTypeAction > add entity type to empty schema 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -442,6 +449,7 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -507,6 +515,7 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -579,6 +588,7 @@ exports[`AddTypeAction > add two value types (orders) 1`] = `
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -639,6 +649,7 @@ exports[`AddTypeAction > add value type to empty schema 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -683,6 +694,7 @@ exports[`AddTypeAction > add value type to schema with existing type 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -735,6 +747,7 @@ exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -800,6 +813,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -868,6 +882,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -937,6 +952,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1008,6 +1024,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1081,6 +1098,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1159,6 +1177,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1242,6 +1261,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1331,6 +1351,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1419,6 +1440,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -1484,6 +1506,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -1550,6 +1573,7 @@ exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1635,6 +1659,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1734,6 +1759,7 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] =
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1801,6 +1827,7 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1869,6 +1896,7 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -1967,6 +1995,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2049,6 +2078,7 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2122,6 +2152,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2190,6 +2221,7 @@ exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2263,6 +2295,7 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2331,6 +2364,7 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2396,6 +2430,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2460,6 +2495,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -2518,6 +2554,7 @@ exports[`ChangeFieldTypeAction > from string to number (new field of existing va
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -2577,6 +2614,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2642,6 +2680,7 @@ exports[`ChangeFieldValues > set values on existing string field 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2729,6 +2768,7 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2818,6 +2858,7 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2890,6 +2931,7 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -2925,6 +2967,7 @@ exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 1`] = 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -2972,6 +3015,7 @@ exports[`ChangeTypeAdminOnlyAction > make existing value type admin only 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -3016,6 +3060,7 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3063,6 +3108,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity typ
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3123,6 +3169,7 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3186,6 +3233,7 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3254,6 +3302,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3346,6 +3395,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3402,6 +3452,7 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3449,6 +3500,7 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3481,6 +3533,7 @@ exports[`DeleteFieldAction > delete existing entity name field 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3542,6 +3595,7 @@ exports[`DeleteFieldAction > delete existing value item field 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -3591,12 +3645,140 @@ exports[`DeleteFieldAction > delete existing value item field 2`] = `
 }
 `;
 
+exports[`DeleteIndexAction > delete index used 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "deletedEntityTypes": [],
+  "deletedIndexes": [
+    "anIndex",
+  ],
+  "deletedValueTypes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "fieldA",
+      ],
+      "existingName": "EntityType",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityType",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "fieldB",
+      ],
+      "existingName": "ValueType",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "value",
+      "name": "ValueType",
+      "status": "changed",
+    },
+  ],
+}
+`;
+
+exports[`DeleteIndexAction > delete index used 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+    },
+  ],
+  "transientMigrations": [
+    {
+      "action": "deleteIndex",
+      "index": "anIndex",
+    },
+  ],
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ValueType",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPattern 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -3672,6 +3854,7 @@ exports[`DeleteTypeAction > delete existing entity type 1`] = `
   "deletedEntityTypes": [
     "Foo",
   ],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -3707,6 +3890,7 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
   "deletedEntityTypes": [
     "ToBeDeleted",
   ],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -3803,6 +3987,7 @@ exports[`DeleteTypeAction > delete existing value type 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [
     "Foo",
   ],
@@ -3838,6 +4023,7 @@ exports[`DeleteTypeAction > delete existing value type referenced by another typ
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [
     "ToBeDeleted",
   ],
@@ -3942,6 +4128,7 @@ exports[`DeleteTypeAction > delete newly added entity type 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -3958,6 +4145,7 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4016,6 +4204,7 @@ exports[`DeleteTypeAction > delete newly added value type 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -4032,6 +4221,7 @@ exports[`DeleteTypeAction > delete newly added value type referenced by another 
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4094,6 +4284,7 @@ exports[`RenameFieldAction > add and rename field 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4190,6 +4381,7 @@ exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4262,6 +4454,7 @@ exports[`RenameFieldAction > rename existing entity name field 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4352,6 +4545,7 @@ exports[`RenameFieldAction > rename existing value item field 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -4435,6 +4629,7 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4559,6 +4754,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4632,6 +4828,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4709,6 +4906,7 @@ exports[`RenameTypeAction > add and rename type 1`] = `
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4759,6 +4957,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -4825,6 +5024,7 @@ exports[`RenameTypeAction > rename existing entity type 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -4887,6 +5087,7 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5018,6 +5219,7 @@ exports[`RenameTypeAction > rename existing value type 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -5074,6 +5276,7 @@ exports[`RenameTypeAction > rename existing value type with fields referring to 
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5200,6 +5403,7 @@ exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5295,6 +5499,7 @@ exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5378,6 +5583,7 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5434,6 +5640,7 @@ exports[`SetActiveSelectorAction > set to type 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5469,6 +5676,7 @@ exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5501,6 +5709,7 @@ exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -5529,6 +5738,7 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5669,6 +5879,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5736,6 +5947,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5782,6 +5994,10 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
   ],
   "indexes": [
     {
+      "existingIndexSpec": {
+        "name": "myIndex",
+        "type": "unique",
+      },
       "name": "myIndex",
       "status": "",
       "type": "unique",
@@ -5837,6 +6053,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -5927,6 +6144,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -6086,6 +6304,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -6203,6 +6422,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -6308,6 +6528,7 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
@@ -6392,6 +6613,7 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [
     {
@@ -6532,6 +6754,7 @@ exports[`initializeSchemaEditorState > no args 1`] = `
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
   "deletedEntityTypes": [],
+  "deletedIndexes": [],
   "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],

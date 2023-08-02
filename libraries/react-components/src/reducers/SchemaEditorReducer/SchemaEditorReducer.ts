@@ -8,6 +8,7 @@ import {
   type AdminFieldSpecification,
   type AdminSchema,
   type AdminSchemaSpecificationUpdate,
+  type AdminSchemaTransientMigrationAction,
   type AdminSchemaVersionMigration,
   type AdminValueTypeSpecification,
   type AdminValueTypeSpecificationUpdate,
@@ -93,6 +94,7 @@ export interface SchemaFieldDraft {
 
 export interface SchemaIndexDraft extends SchemaIndexSpecification {
   status: 'new' | '';
+  existingIndexSpec: SchemaIndexSpecification | null;
 }
 
 export interface SchemaPatternDraft extends SchemaPatternSpecification {
@@ -110,6 +112,7 @@ export interface SchemaEditorState {
   valueTypes: SchemaValueTypeDraft[];
   deletedValueTypes: readonly string[];
   indexes: SchemaIndexDraft[];
+  deletedIndexes: readonly string[];
   patterns: SchemaPatternDraft[];
 
   activeSelector: null | SchemaSelector;
@@ -148,6 +151,7 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     valueTypes: [],
     deletedValueTypes: [],
     indexes: [],
+    deletedIndexes: [],
     patterns: [],
     activeSelector: null,
     activeSelectorMenuScrollSignal: 0,
@@ -577,6 +581,7 @@ class AddIndexAction implements SchemaEditorStateAction {
       status: 'new',
       name: this.name,
       type: 'unique',
+      existingIndexSpec: null,
     };
     const newState: SchemaEditorState = {
       ...state,
@@ -998,6 +1003,44 @@ class DeleteFieldAction extends TypeAction {
   }
 }
 
+class DeleteIndexAction implements SchemaEditorStateAction {
+  selector: SchemaIndexSelector;
+
+  constructor(selector: SchemaIndexSelector) {
+    this.selector = selector;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const indexDraftIndex = state.indexes.findIndex((it) => it.name === this.selector.name);
+    if (indexDraftIndex < 0) {
+      return state;
+    }
+
+    const indexes = [...state.indexes];
+    const [indexDraft] = indexes.splice(indexDraftIndex, 1);
+
+    let newState = { ...state, indexes };
+
+    if (isEqual(newState.activeSelector, this.selector)) {
+      newState.activeSelector = null;
+    }
+
+    // Remove references to index in fields
+    newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
+      if (fieldDraft.index === this.selector.name) {
+        return { ...fieldDraft, index: null };
+      }
+      return fieldDraft;
+    });
+
+    if (indexDraft.existingIndexSpec) {
+      newState.deletedIndexes = [...newState.deletedIndexes, this.selector.name].sort();
+    }
+
+    return withResolvedSchemaStatus(newState);
+  }
+}
+
 class DeletePatternAction implements SchemaEditorStateAction {
   selector: SchemaPatternSelector;
 
@@ -1025,11 +1068,8 @@ class DeletePatternAction implements SchemaEditorStateAction {
 
     // Remove references to pattern in fields
     newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
-      if (fieldDraft.matchPattern?.includes(this.selector.name)) {
-        return {
-          ...fieldDraft,
-          matchPattern: null,
-        };
+      if (fieldDraft.matchPattern === this.selector.name) {
+        return { ...fieldDraft, matchPattern: null };
       }
       return fieldDraft;
     });
@@ -1395,6 +1435,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     const indexes = this.schema.spec.indexes.map<SchemaIndexDraft>((indexSpec) => ({
       ...indexSpec,
       status: '',
+      existingIndexSpec: indexSpec,
     }));
 
     const patterns = this.schema.spec.patterns.map<SchemaPatternDraft>((patternSpec) => ({
@@ -1547,6 +1588,7 @@ export const SchemaEditorActions = {
   ChangeTypeAuthKeyPattern: ChangeTypeAuthKeyPatternAction,
   ChangeTypeNameField: ChangeTypeNameFieldAction,
   DeleteField: DeleteFieldAction,
+  DeleteIndex: DeleteIndexAction,
   DeletePattern: DeletePatternAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
@@ -1582,6 +1624,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
     .map(({ name, pattern }) => ({ name, pattern }));
 
   const migrations = getMigrationsFromEditorState(state);
+  const transientMigrations = getTransientMigrationsFromEditorState(state);
 
   if (entityTypes.length > 0) {
     update.entityTypes = entityTypes;
@@ -1597,6 +1640,9 @@ export function getSchemaSpecificationUpdateFromEditorState(
   }
   if (migrations.length > 0) {
     update.migrations = migrations;
+  }
+  if (transientMigrations.length > 0) {
+    update.transientMigrations = transientMigrations;
   }
 
   if (Object.keys(update).length > 0 && state.schema) {
@@ -1698,6 +1744,20 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
     return [{ version: (state.schema?.spec.version ?? 0) + 1, actions }];
   }
   return [];
+}
+
+function getTransientMigrationsFromEditorState(
+  state: SchemaEditorState,
+): AdminSchemaTransientMigrationAction[] {
+  const actions: AdminSchemaTransientMigrationAction[] = [];
+
+  for (const index of state.deletedIndexes) {
+    actions.push({ action: 'deleteIndex', index });
+  }
+
+  //TODO: add support for renaming indexes
+
+  return actions;
 }
 
 // SELECTORS

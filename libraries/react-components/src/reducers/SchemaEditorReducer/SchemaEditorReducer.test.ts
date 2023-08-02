@@ -42,8 +42,12 @@ function stateWithoutExistingSchema(state: Readonly<SchemaEditorState>) {
 
   const entityTypes = state.entityTypes.map(removeFieldSpecs);
   const valueTypes = state.valueTypes.map(removeFieldSpecs);
+  const indexes = state.indexes.map((index) => {
+    const { existingIndexSpec, ...other } = index;
+    return other;
+  });
   const { schema, ...other } = state;
-  return { ...other, entityTypes, valueTypes };
+  return { ...other, entityTypes, valueTypes, indexes };
 }
 
 describe('initializeSchemaEditorState', () => {
@@ -1203,6 +1207,46 @@ describe('DeleteFieldAction', () => {
       new SchemaEditorActions.DeleteField({ kind: 'value', typeName: 'Foo', fieldName: 'field' }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
+describe('DeleteIndexAction', () => {
+  test('delete index used', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'EntityType',
+              fields: [{ name: 'fieldA', type: FieldType.String, index: 'anIndex' }],
+            },
+          ],
+          valueTypes: [
+            {
+              name: 'ValueType',
+              fields: [{ name: 'fieldB', type: FieldType.String, index: 'anIndex' }],
+            },
+          ],
+          indexes: [{ name: 'anIndex', type: 'unique' }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.SetActiveSelector({ kind: 'index', name: 'anIndex' }, false, false),
+      new SchemaEditorActions.DeleteIndex({ kind: 'index', name: 'anIndex' }),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].fields[0].index).toBe(null);
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+
+    expect(state.valueTypes[0].fields[0].index).toBe(null);
+    expect(state.valueTypes[0].fields[0].status).toBe('changed');
+
+    expect(state.indexes.length).toBe(0);
+
+    expect(state.activeSelector).toBe(null);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
