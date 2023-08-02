@@ -14,6 +14,7 @@ import type {
 } from '@dossierhq/core';
 import {
   AdminClientOperationName,
+  AdminEntityStatus,
   AdminSchema,
   isRichTextElementNode,
   notOk,
@@ -182,13 +183,15 @@ async function loadEntity(adminClient: AdminClient, logger: Logger, entryPath: s
   logger.info('Upsert entity: %s', entryPath);
   const data = await fs.readFile(entryPath, { encoding: 'utf-8' });
   const entity = JSON.parse(data);
-  if (entity.info.status !== 'published') {
-    throw new Error(`Entity ${entity.id} is not published, need to add support for this`);
+  if (![AdminEntityStatus.draft, AdminEntityStatus.published].includes(entity.info.status)) {
+    throw new Error(
+      `Entity ${entity.id} has unsupported status ${entity.info.status}, need to add support for this`,
+    );
   }
-  const createResult = await adminClient.upsertEntity(entity, { publish: true });
-  if (createResult.isError()) {
-    return createResult;
+  const publish = entity.info.status === 'published';
+  const createResult = await adminClient.upsertEntity(entity, { publish });
+  if (createResult.isOk()) {
+    logger.info('  Effect: %s', createResult.value.effect);
   }
-  logger.info('  Effect: %s', createResult.value.effect);
   return createResult;
 }
