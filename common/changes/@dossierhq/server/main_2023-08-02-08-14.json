@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support renameType/deleteType schema migrations. Support changing field index in schema. Support changing adminOnly in schema. Allow specifying filter when processing dirty entities. Update entity indexes even if entity is invalid. Update unique values indexes when processing dirty even if we cannot add all. Only log when validity of entity changes when processing in the background.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

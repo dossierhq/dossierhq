@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Support deleting and renaming existing types. Support changing field index in schema. Support changing adminOnly in schema.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

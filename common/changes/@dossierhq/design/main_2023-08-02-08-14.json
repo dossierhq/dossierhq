@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Allow readonly items in dropdown",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}
