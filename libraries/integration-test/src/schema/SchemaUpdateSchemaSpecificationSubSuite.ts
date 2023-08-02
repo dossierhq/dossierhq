@@ -7,6 +7,7 @@ import {
   type PublishedEntity,
   type ValueItem,
 } from '@dossierhq/core';
+import type { ProcessDirtyEntityPayload } from '@dossierhq/server';
 import {
   assertEquals,
   assertErrorResult,
@@ -687,11 +688,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     const { schemaSpecification } = secondUpdateResult.valueOrThrow();
 
     // Process all entities
-    const validationChangeProcessed: {
-      id: string;
-      valid: boolean;
-      validPublished: boolean | null;
-    }[] = [];
+    const validationChangeProcessed: ProcessDirtyEntityPayload[] = [];
     const processAfterValidationChangeResult = await processAllDirtyEntities(
       server,
       { id: entity.id },
@@ -703,7 +700,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     );
     assertOkResult(processAfterValidationChangeResult);
     assertEquals(validationChangeProcessed, [
-      { id: entity.id, valid: false, validPublished: false },
+      {
+        id: entity.id,
+        valid: false,
+        validPublished: false,
+        previousValid: true,
+        previousValidPublished: true,
+      },
     ]);
 
     // Delete the field
@@ -718,8 +721,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     assertOkResult(thirdUpdateResult);
 
     // Process all entities
-    const deleteFieldProcessed: { id: string; valid: boolean; validPublished: boolean | null }[] =
-      [];
+    const deleteFieldProcessed: ProcessDirtyEntityPayload[] = [];
     const processAfterDeletionResult = await processAllDirtyEntities(
       server,
       { id: entity.id },
@@ -730,7 +732,15 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
       },
     );
     assertOkResult(processAfterDeletionResult);
-    assertEquals(deleteFieldProcessed, [{ id: entity.id, valid: true, validPublished: true }]);
+    assertEquals(deleteFieldProcessed, [
+      {
+        id: entity.id,
+        valid: true,
+        validPublished: true,
+        previousValid: false,
+        previousValidPublished: false,
+      },
+    ]);
 
     return ok(entity);
   });
@@ -1454,11 +1464,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
     const { schemaSpecification } = secondUpdateResult.valueOrThrow();
 
     // Process entity
-    const validationChangeProcessed: {
-      id: string;
-      valid: boolean;
-      validPublished: boolean | null;
-    }[] = [];
+    const validationChangeProcessed: ProcessDirtyEntityPayload[] = [];
     const processAfterValidationChangeResult = await processAllDirtyEntities(
       server,
       reference,
@@ -1470,7 +1476,13 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
     );
     assertOkResult(processAfterValidationChangeResult);
     assertEquals(validationChangeProcessed, [
-      { id: entity.id, valid: false, validPublished: false },
+      {
+        id: entity.id,
+        valid: false,
+        validPublished: false,
+        previousValid: true,
+        previousValidPublished: true,
+      },
     ]);
 
     // Delete the value type
@@ -1485,8 +1497,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
     assertOkResult(thirdUpdateResult);
 
     // Process entity
-    const deleteFieldProcessed: { id: string; valid: boolean; validPublished: boolean | null }[] =
-      [];
+    const deleteFieldProcessed: ProcessDirtyEntityPayload[] = [];
     const processAfterDeletionResult = await processAllDirtyEntities(
       server,
       reference,
@@ -1497,7 +1508,15 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
       },
     );
     assertOkResult(processAfterDeletionResult);
-    assertEquals(deleteFieldProcessed, [{ id: reference.id, valid: true, validPublished: true }]);
+    assertEquals(deleteFieldProcessed, [
+      {
+        id: reference.id,
+        valid: true,
+        validPublished: true,
+        previousValid: false,
+        previousValidPublished: false,
+      },
+    ]);
 
     return ok(entity);
   });

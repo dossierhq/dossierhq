@@ -69,7 +69,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
         this.processing = true;
         if (!this.handle) {
           this.logger.info(
-            'BackgroundEntityProcessorPlugin: starting validation after schema update',
+            'BackgroundEntityProcessorPlugin: starting processing after schema update',
           );
           this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
         }
@@ -113,14 +113,15 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
 
         if (result.isOk()) {
           if (result.value) {
-            const { valid, validPublished } = result.value;
-            const validStrings = valid ? [] : ['invalid'];
-            if (validPublished === false) validStrings.push('invalidPublished');
-            if (validStrings.length) {
+            const { valid, validPublished, previousValid, previousValidPublished } = result.value;
+            if (valid !== previousValid || validPublished !== previousValidPublished) {
               this.logger.warn(
-                'BackgroundEntityProcessorPlugin: processed entity: %s, but it was %s',
+                'BackgroundEntityProcessorPlugin: processed entity %s: valid %s (was: %s), validPublished %s (was: %s)',
                 result.value.id,
-                validStrings.join(', '),
+                valid,
+                previousValid,
+                validPublished,
+                previousValidPublished,
               );
             }
           } else {

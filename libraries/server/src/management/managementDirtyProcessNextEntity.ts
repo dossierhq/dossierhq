@@ -28,6 +28,14 @@ import {
 } from '../EntityValidator.js';
 import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
 
+export interface ProcessDirtyEntityPayload {
+  id: string;
+  valid: boolean;
+  validPublished: boolean | null;
+  previousValid: boolean;
+  previousValidPublished: boolean | null;
+}
+
 interface EntityValidity {
   validAdmin: boolean;
   validPublished: boolean | null;
@@ -49,19 +57,15 @@ export async function managementDirtyProcessNextEntity(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   filter: EntityReference | undefined,
-): PromiseResult<
-  { id: string; valid: boolean; validPublished: boolean | null } | null,
-  typeof ErrorType.Generic
-> {
+): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
     // Fetch info about next dirty entity
     const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context, filter);
     if (entityResult.isError()) {
       if (entityResult.error === ErrorType.NotFound) {
         return ok(null); // no more dirty entities
-      } else {
-        return notOk.Generic(entityResult.message);
       }
+      return notOk.Generic(entityResult.message); //cast Generic -> Generic
     }
 
     //
@@ -178,6 +182,8 @@ export async function managementDirtyProcessNextEntity(
       id: entityResult.value.id,
       valid: entityValidity.validAdmin,
       validPublished: entityValidity.validPublished,
+      previousValid: entityResult.value.valid,
+      previousValidPublished: entityResult.value.validPublished,
     });
   });
 }

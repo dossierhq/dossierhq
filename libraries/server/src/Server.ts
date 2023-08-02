@@ -36,7 +36,10 @@ import {
 } from './Context.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
-import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
+import {
+  managementDirtyProcessNextEntity,
+  type ProcessDirtyEntityPayload,
+} from './management/managementDirtyProcessNextEntity.js';
 import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
 
 export interface CreateSessionPayload {
@@ -57,10 +60,7 @@ export interface Server<
 
   processNextDirtyEntity(
     filter?: EntityReference,
-  ): PromiseResult<
-    { id: string; valid: boolean; validPublished: boolean | null } | null,
-    typeof ErrorType.Generic
-  >;
+  ): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic>;
 
   createSession(params: {
     provider: string;

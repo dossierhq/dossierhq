@@ -5,12 +5,12 @@ import {
   type AdminEntity,
   type AdminEntityCreate,
   type AdminSchemaSpecificationUpdate,
+  type EntityReference,
   type ErrorType,
   type PromiseResult,
   type Result,
-  type EntityReference,
 } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
+import type { ProcessDirtyEntityPayload, Server } from '@dossierhq/server';
 import {
   ChangeValidationsValueItemWithoutValidationsUpdate,
   ChangeValidationsWithoutValidationsUpdate,
@@ -64,7 +64,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
 ): PromiseResult<
   {
     entity: TEntity;
-    validations: { id: string; valid: boolean; validPublished: boolean | null }[];
+    validations: ProcessDirtyEntityPayload[];
   },
   | typeof ErrorType.BadRequest
   | typeof ErrorType.Conflict
@@ -72,10 +72,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
   | typeof ErrorType.Generic
 > {
   let result: Result<
-    {
-      entity: TEntity;
-      validations: { id: string; valid: boolean; validPublished: boolean | null }[];
-    },
+    { entity: TEntity; validations: ProcessDirtyEntityPayload[] },
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -110,7 +107,7 @@ async function withTemporarySchemaChange(
   adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   onChangedSchema: () => Promise<EntityReference | undefined>,
-  onProcessed: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void,
+  onProcessed: (processed: ProcessDirtyEntityPayload) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withSchemaAdvisoryLock(adminClient, async () => {
     // remove validations from the schema

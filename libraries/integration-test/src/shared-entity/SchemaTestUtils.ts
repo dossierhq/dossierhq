@@ -1,5 +1,5 @@
 import { ok, withAdvisoryLock, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
+import type { ProcessDirtyEntityPayload, Server } from '@dossierhq/server';
 import type { AppAdminClient } from '../SchemaTypes.js';
 
 export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
@@ -17,7 +17,7 @@ export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
 export async function processAllDirtyEntities(
   server: Server,
   filter: Parameters<Server['processNextDirtyEntity']>[0],
-  onProcessed?: (processed: { id: string; valid: boolean; validPublished: boolean | null }) => void,
+  onProcessed?: (processed: ProcessDirtyEntityPayload) => void,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   let done = false;
   while (!done) {
