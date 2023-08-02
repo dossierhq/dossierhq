@@ -1226,3 +1226,169 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
     );
   });
 });
+
+describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
+  test('unique index', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'EntityType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'ValueType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
+        },
+      ],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({ transientMigrations: [{ action: 'deleteIndex', index: 'anIndex' }] })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+
+    expect(result.spec.indexes).toEqual([]);
+  });
+
+  test('unique index, replace with other index with same name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'EntityType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'ValueType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
+        },
+      ],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [
+          {
+            name: 'EntityType',
+            fields: [{ name: 'anotherField', type: FieldType.String, index: 'anIndex' }],
+          },
+        ],
+        indexes: [{ name: 'anIndex', type: 'unique' }],
+        transientMigrations: [{ action: 'deleteIndex', index: 'anIndex' }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('Error: invalid type name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        transientMigrations: [{ action: 'deleteIndex', index: 'anInvalidIndex' }],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Index for migration deleteIndex anInvalidIndex does not exist',
+    );
+  });
+});
+
+describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
+  test('unique index', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'EntityType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'ValueType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
+        },
+      ],
+      indexes: [{ name: 'oldIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        transientMigrations: [{ action: 'renameIndex', index: 'oldIndex', newName: 'newIndex' }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('unique index and add to another field', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'EntityType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'ValueType',
+          fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
+        },
+      ],
+      indexes: [{ name: 'oldIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [
+          {
+            name: 'EntityType',
+            fields: [{ name: 'anotherField', type: FieldType.String, index: 'newIndex' }],
+          },
+        ],
+        transientMigrations: [{ action: 'renameIndex', index: 'oldIndex', newName: 'newIndex' }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('unique index, add other index with same name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [
+        {
+          name: 'OneEntity',
+          fields: [{ name: 'fieldA', type: FieldType.String, index: 'oldIndex' }],
+        },
+      ],
+      indexes: [{ name: 'oldIndex', type: 'unique' }],
+    })
+      .valueOrThrow()
+      .updateAndValidate({
+        entityTypes: [
+          {
+            name: 'OneEntity',
+            fields: [{ name: 'fieldB', type: FieldType.String, index: 'oldIndex' }],
+          },
+        ],
+        indexes: [{ name: 'oldIndex', type: 'unique' }],
+        transientMigrations: [{ action: 'renameIndex', index: 'oldIndex', newName: 'newIndex' }],
+      })
+      .valueOrThrow();
+    expect(result.spec).toMatchSnapshot();
+  });
+
+  test('Error: invalid index name', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        transientMigrations: [{ action: 'renameIndex', index: 'invalid', newName: 'invalid2' }],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Index for migration renameIndex invalid does not exist',
+    );
+  });
+});

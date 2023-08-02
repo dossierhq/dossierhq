@@ -8,6 +8,7 @@ import {
   type AdminFieldSpecificationUpdate,
   type AdminSchemaSpecificationUpdate,
   type AdminSchemaSpecificationWithMigrations,
+  type AdminSchemaTransientMigrationAction,
   type AdminSchemaVersionMigration,
   type AdminValueTypeSpecification,
   type EntityFieldSpecification,
@@ -31,6 +32,12 @@ export function schemaUpdate(
 
   const applyMigrationsResult = applyMigrationsToSchema(currentMigration, schemaSpec);
   if (applyMigrationsResult.isError()) return applyMigrationsResult;
+
+  const applyTransientMigrationsResult = applyTransientMigrationsToSchema(
+    update.transientMigrations,
+    schemaSpec,
+  );
+  if (applyTransientMigrationsResult.isError()) return applyTransientMigrationsResult;
 
   // Merge entity types
   if (update.entityTypes) {
@@ -404,6 +411,62 @@ function applyTypeMigrationToTypeReferences(
           if (index >= 0) {
             apply(references, index);
           }
+        }
+      }
+    }
+  }
+}
+
+function applyTransientMigrationsToSchema(
+  transientMigrations: AdminSchemaTransientMigrationAction[] | undefined,
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
+) {
+  for (const actionSpec of transientMigrations ?? []) {
+    const { action } = actionSpec;
+    switch (action) {
+      case 'deleteIndex': {
+        const indexIndex = schemaSpec.indexes.findIndex((it) => it.name === actionSpec.index);
+        if (indexIndex < 0) {
+          return notOk.BadRequest(
+            `Index for migration ${actionSpec.action} ${actionSpec.index} does not exist`,
+          );
+        }
+        schemaSpec.indexes.splice(indexIndex, 1);
+
+        applyIndexMigrationToIndexReferences(schemaSpec, actionSpec, () => null);
+        break;
+      }
+      case 'renameIndex': {
+        const index = schemaSpec.indexes.find((it) => it.name === actionSpec.index);
+        if (!index) {
+          return notOk.BadRequest(
+            `Index for migration ${actionSpec.action} ${actionSpec.index} does not exist`,
+          );
+        }
+        index.name = actionSpec.newName;
+
+        applyIndexMigrationToIndexReferences(schemaSpec, actionSpec, () => actionSpec.newName);
+        break;
+      }
+      default:
+        assertExhaustive(action);
+    }
+  }
+  return ok(undefined);
+}
+
+function applyIndexMigrationToIndexReferences(
+  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  actionSpec: { action: string; index: string },
+  apply: () => string | null,
+) {
+  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
+    for (const fieldSpec of typeSpec.fields) {
+      if (fieldSpec.type === FieldType.String) {
+        const reference = fieldSpec.index;
+        if (reference === actionSpec.index) {
+          const newReference = apply();
+          fieldSpec.index = newReference;
         }
       }
     }

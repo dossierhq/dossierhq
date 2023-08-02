@@ -832,6 +832,122 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > value item 
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique index 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ValueType",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique index, replace with other index with same name 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "anotherField",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "type": "unique",
+    },
+  ],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ValueType",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 1`] = `
 {
   "entityTypes": [],
@@ -1425,6 +1541,179 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > value item 
       "name": "Foo",
     },
   ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique index 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newIndex",
+      "type": "unique",
+    },
+  ],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ValueType",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique index and add to another field 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "anotherField",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": "newIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newIndex",
+      "type": "unique",
+    },
+  ],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ValueType",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique index, add other index with same name 1`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "oldIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": "newIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "OneEntity",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newIndex",
+      "type": "unique",
+    },
+    {
+      "name": "oldIndex",
+      "type": "unique",
+    },
+  ],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "valueTypes": [],
   "version": 2,
 }
 `;

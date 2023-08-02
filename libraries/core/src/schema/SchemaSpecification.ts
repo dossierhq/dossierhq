@@ -232,6 +232,10 @@ export type AdminSchemaMigrationAction =
   | { action: 'deleteField'; entityType: string; field: string }
   | { action: 'deleteField'; valueType: string; field: string };
 
+export type AdminSchemaTransientMigrationAction =
+  | { action: 'renameIndex'; index: string; newName: string }
+  | { action: 'deleteIndex'; index: string };
+
 export interface AdminSchemaSpecificationUpdate {
   version?: number;
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
@@ -239,6 +243,7 @@ export interface AdminSchemaSpecificationUpdate {
   patterns?: SchemaPatternSpecification[];
   indexes?: SchemaIndexSpecification[];
   migrations?: AdminSchemaVersionMigration[];
+  transientMigrations?: AdminSchemaTransientMigrationAction[];
 }
 
 export interface SchemaSpecificationUpdatePayload<
