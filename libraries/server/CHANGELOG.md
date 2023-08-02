@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Sat, 22 Jul 2023 20:55:47 GMT and should not be manually modified.
+This log was last generated on Wed, 02 Aug 2023 10:08:15 GMT and should not be manually modified.
+
+## 0.4.0
+Wed, 02 Aug 2023 10:08:15 GMT
+
+### Updates
+
+- Support renameType/deleteType schema migrations. Support changing field index in schema. Support changing adminOnly in schema. Allow specifying filter when processing dirty entities. Update entity indexes even if entity is invalid. Update unique values indexes when processing dirty even if we cannot add all. Only log when validity of entity changes when processing in the background.
 
 ## 0.3.3
 Sat, 22 Jul 2023 20:55:47 GMT

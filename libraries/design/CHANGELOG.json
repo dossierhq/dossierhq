@@ -2,6 +2,18 @@
   "name": "@dossierhq/design",
   "entries": [
     {
+      "version": "0.4.0",
+      "tag": "@dossierhq/design_v0.4.0",
+      "date": "Wed, 02 Aug 2023 10:08:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Allow readonly items in dropdown"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.3.3",
       "tag": "@dossierhq/design_v0.3.3",
       "date": "Sat, 22 Jul 2023 20:55:47 GMT",
