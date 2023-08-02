@@ -179,9 +179,9 @@ export async function loadAllEntities(
   return ok(loadedEntries);
 }
 
-async function loadEntity(adminClient: AdminClient, logger: Logger, entryPath: string) {
-  logger.info('Upsert entity: %s', entryPath);
-  const data = await fs.readFile(entryPath, { encoding: 'utf-8' });
+async function loadEntity(adminClient: AdminClient, logger: Logger, entityPath: string) {
+  logger.info('Upsert entity: %s', entityPath);
+  const data = await fs.readFile(entityPath, { encoding: 'utf-8' });
   const entity = JSON.parse(data);
   if (![AdminEntityStatus.draft, AdminEntityStatus.published].includes(entity.info.status)) {
     throw new Error(
