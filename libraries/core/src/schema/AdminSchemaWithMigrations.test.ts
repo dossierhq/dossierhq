@@ -1227,6 +1227,22 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 });
 
+describe('AdminSchemaWithMigrations.updateAndValidate() transientMigrations', () => {
+  test('error: specified without version', () => {
+    const result = AdminSchemaWithMigrations.createAndValidate({})
+      .valueOrThrow()
+      .updateAndValidate({
+        transientMigrations: [{ action: 'renameIndex', index: 'anIndex', newName: 'newName' }],
+      });
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Schema version is required when specifying transient migrations',
+    );
+  });
+});
+
 describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
   test('unique index', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
@@ -1245,7 +1261,10 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
       indexes: [{ name: 'anIndex', type: 'unique' }],
     })
       .valueOrThrow()
-      .updateAndValidate({ transientMigrations: [{ action: 'deleteIndex', index: 'anIndex' }] })
+      .updateAndValidate({
+        version: 2,
+        transientMigrations: [{ action: 'deleteIndex', index: 'anIndex' }],
+      })
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
 
@@ -1270,6 +1289,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
     })
       .valueOrThrow()
       .updateAndValidate({
+        version: 2,
         entityTypes: [
           {
             name: 'EntityType',
@@ -1287,6 +1307,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
+        version: 2,
         transientMigrations: [{ action: 'deleteIndex', index: 'anInvalidIndex' }],
       });
 
@@ -1317,6 +1338,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
     })
       .valueOrThrow()
       .updateAndValidate({
+        version: 2,
         transientMigrations: [{ action: 'renameIndex', index: 'oldIndex', newName: 'newIndex' }],
       })
       .valueOrThrow();
@@ -1341,6 +1363,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
     })
       .valueOrThrow()
       .updateAndValidate({
+        version: 2,
         entityTypes: [
           {
             name: 'EntityType',
@@ -1365,6 +1388,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
     })
       .valueOrThrow()
       .updateAndValidate({
+        version: 2,
         entityTypes: [
           {
             name: 'OneEntity',
@@ -1382,6 +1406,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
+        version: 2,
         transientMigrations: [{ action: 'renameIndex', index: 'invalid', newName: 'invalid2' }],
       });
 

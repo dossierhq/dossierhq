@@ -40,6 +40,7 @@ export async function schemaUpdateSpecification(
       return notOk.BadRequest(
         `Expected version ${previousSpecificationResult.value.version + 1}, got ${update.version}`,
       );
+      //TODO how to handle if wrong version, but the update creates an identical spec? (e.g. making the exact same update twice)
     }
 
     // Merge update into previous schema

@@ -34,6 +34,7 @@ export function schemaUpdate(
   if (applyMigrationsResult.isError()) return applyMigrationsResult;
 
   const applyTransientMigrationsResult = applyTransientMigrationsToSchema(
+    update.version,
     update.transientMigrations,
     schemaSpec,
   );
@@ -418,9 +419,16 @@ function applyTypeMigrationToTypeReferences(
 }
 
 function applyTransientMigrationsToSchema(
+  version: number | undefined,
   transientMigrations: AdminSchemaTransientMigrationAction[] | undefined,
   schemaSpec: AdminSchemaSpecificationWithMigrations,
 ) {
+  if (!transientMigrations || transientMigrations.length === 0) return ok(undefined);
+
+  if (typeof version !== 'number') {
+    return notOk.BadRequest('Schema version is required when specifying transient migrations');
+  }
+
   for (const actionSpec of transientMigrations ?? []) {
     const { action } = actionSpec;
     switch (action) {
