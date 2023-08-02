@@ -1,4 +1,10 @@
-import { ok, withAdvisoryLock, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  ok,
+  withAdvisoryLock,
+  type ErrorType,
+  type PromiseResult,
+  type EntityReference,
+} from '@dossierhq/core';
 import type { ProcessDirtyEntityPayload, Server } from '@dossierhq/server';
 import type { AppAdminClient } from '../SchemaTypes.js';
 
@@ -12,6 +18,18 @@ export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
     { acquireInterval: 50, leaseDuration: 300, renewInterval: 200 },
     callback,
   );
+}
+
+export async function processDirtyEntity(
+  server: Server,
+  reference: EntityReference,
+): PromiseResult<ProcessDirtyEntityPayload[], typeof ErrorType.Generic> {
+  const payload: ProcessDirtyEntityPayload[] = [];
+  const result = await processAllDirtyEntities(server, reference, (processed) => {
+    payload.push(processed);
+  });
+  if (result.isError()) return result;
+  return ok(payload);
 }
 
 export async function processAllDirtyEntities(
