@@ -9,7 +9,7 @@ import type {
 import type { UniqueConstraint } from './DatabaseSchema.js';
 import { createInitializationContext } from './InitializationContext.js';
 import type { Database } from './QueryFunctions.js';
-import { queryOne, queryRun } from './QueryFunctions.js';
+import { queryNoneOrOne, queryOne, queryRun } from './QueryFunctions.js';
 import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction.js';
@@ -122,6 +122,9 @@ export async function createSqliteDatabaseAdapterAdapter(
 
   const validityResult = await checkAdapterValidity(database, initializationContext);
   if (validityResult.isError()) return validityResult;
+
+  const enableForeignKeysResult = await enableForeignKeys(database, initializationContext);
+  if (enableForeignKeysResult.isError()) return enableForeignKeysResult;
 
   if (options.migrate) {
     const migrationResult = await migrateDatabaseIfNecessary(
@@ -240,21 +243,42 @@ async function checkAdapterValidity(
   database: Database,
   context: TransactionContext,
 ): PromiseResult<void, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
-  const result = await queryOne<{ version: string }>(
+  // Check the SQLite version
+  const versionResult = await queryOne<{ version: string }>(
     database,
     context,
     'SELECT sqlite_version() AS version',
     undefined,
   );
-  if (result.isError()) {
-    return result;
-  }
-  const { version } = result.value;
+  if (versionResult.isError()) return versionResult;
+  const { version } = versionResult.value;
+
   const isSupported = isSemVerEqualOrGreaterThan(parseSemVer(version), minimumSupportedVersion);
   if (!isSupported) {
     return notOk.BadRequest(
       `Database is using sqlite ${version}, (${minimumSupportedVersion.major}.${minimumSupportedVersion.minor}.${minimumSupportedVersion.patch}+ required)`,
     );
   }
+
+  // Check that foreign keys are supported (enabling them is done later)
+  const foreignKeysResult = await queryNoneOrOne<{ foreign_keys: number }>(
+    database,
+    context,
+    'PRAGMA foreign_keys',
+  );
+  if (foreignKeysResult.isError()) return foreignKeysResult;
+  if (!foreignKeysResult.value) {
+    return notOk.BadRequest('Foreign keys are not supported, PRAGMA foreign_keys returned no rows');
+  }
+
   return ok(undefined);
+}
+
+async function enableForeignKeys(
+  database: Database,
+  context: TransactionContext,
+): PromiseResult<void, typeof ErrorType.Generic> {
+  // Foreign keys need to be enabled for each connection: https://www.sqlite.org/foreignkeys.html#fk_enable
+  const result = await queryRun(database, context, 'PRAGMA foreign_keys = ON', undefined);
+  return result.isOk() ? ok(undefined) : result;
 }

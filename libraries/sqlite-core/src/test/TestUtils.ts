@@ -119,6 +119,8 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
         result = [{ version: '3.37.0' }];
       } else if (query === 'PRAGMA user_version') {
         result = [{ user_version: REQUIRED_SCHEMA_VERSION }]; // prevent migration
+      } else if (query === 'PRAGMA foreign_keys') {
+        result = [{ foreign_keys: 0 }]; // turned off by default for each connection
       } else {
         result = [];
       }

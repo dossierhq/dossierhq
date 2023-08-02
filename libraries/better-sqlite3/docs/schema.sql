@@ -153,3 +153,7 @@ CREATE TABLE schema_versions (
     updated_at TEXT NOT NULL,
     specification TEXT NOT NULL
   ) STRICT;
+CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
+    DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
+    DELETE FROM entities_published_fts WHERE rowid = OLD.id;
+   END;

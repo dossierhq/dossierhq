@@ -10,7 +10,7 @@ type SchemaVersionDefinition =
   | ((options: SqliteDatabaseMigrationOptions) => QueryOrQueryAndValues);
 
 const VERSION_1: SchemaVersionDefinition[] = [
-  'PRAGMA foreign_keys=TRUE',
+  'PRAGMA foreign_keys=TRUE', // This is slightly misleading, foreign keys need to be enabled for each connection
   `CREATE TABLE subjects (
     id INTEGER PRIMARY KEY,
     uuid TEXT NOT NULL,
@@ -256,6 +256,14 @@ const VERSION_15: SchemaVersionDefinition[] = [
   'UPDATE entity_versions SET schema_version = (SELECT version FROM schema_versions ORDER BY version DESC LIMIT 1) WHERE schema_version = 0',
 ];
 
+// FTS don't support foreign keys so use triggers to clean up if we for some reason delete an entity in the database
+const VERSION_16: SchemaVersionDefinition[] = [
+  `CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
+    DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
+    DELETE FROM entities_published_fts WHERE rowid = OLD.id;
+   END`,
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -273,6 +281,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_13,
   VERSION_14,
   VERSION_15,
+  VERSION_16,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
