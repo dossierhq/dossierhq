@@ -1,19 +1,28 @@
 // from lexical
 
+// packages/lexical/src/LexicalEditor.ts
+
 export type Spread<T1, T2> = Omit<T2, keyof T1> & T1;
 
-export interface SerializedEditorState {
-  root: SerializedRootNode;
+// packages/lexical/src/LexicalEditorState.ts
+
+export interface SerializedEditorState<T extends SerializedLexicalNode = SerializedLexicalNode> {
+  root: SerializedRootNode<T>;
 }
 
-export type SerializedRootNode = SerializedElementNode;
+// packages/lexical/src/nodes/LexicalRootNode.ts
+
+export type SerializedRootNode<T extends SerializedLexicalNode = SerializedLexicalNode> =
+  SerializedElementNode<T>;
+
+// packages/lexical/src/LexicalNode.ts
 
 export interface SerializedLexicalNode {
   type: string;
   version: number;
 }
 
-type ElementFormatType = 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+// packages/lexical/src/nodes/LexicalElementNode.ts
 
 export type SerializedElementNode<T extends SerializedLexicalNode = SerializedLexicalNode> = Spread<
   {
@@ -21,6 +30,21 @@ export type SerializedElementNode<T extends SerializedLexicalNode = SerializedLe
     direction: 'ltr' | 'rtl' | null;
     format: ElementFormatType;
     indent: number;
+  },
+  SerializedLexicalNode
+>;
+
+type ElementFormatType = 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+
+// packages/lexical/src/nodes/LexicalTextNode.ts
+
+export type SerializedTextNode = Spread<
+  {
+    detail: number;
+    format: number;
+    mode: TextModeType;
+    style: string;
+    text: string;
   },
   SerializedLexicalNode
 >;
@@ -37,30 +61,21 @@ export type TextFormatType =
 
 export type TextModeType = 'normal' | 'token' | 'segmented';
 
-export type SerializedTextNode = Spread<
-  {
-    detail: number;
-    format: number;
-    mode: TextModeType;
-    style: string;
-    text: string;
-  },
-  SerializedLexicalNode
->;
+// packages/lexical/src/nodes/LexicalLineBreakNode.ts
 
 export type SerializedLineBreakNode = SerializedLexicalNode;
 
+// packages/lexical/src/nodes/LexicalParagraphNode.ts
+
 export type SerializedParagraphNode = SerializedElementNode;
+
+// packages/lexical/src/nodes/LexicalTabNode.ts
 
 export type SerializedTabNode = SerializedTextNode;
 
-// Copy from LexicalConstants. Would be good to ensure they are identical to Lexical's constants but
-// they are not exported and we don't want a runtime dependency on Lexical.
+// packages/lexical/src/LexicalConstants.ts
 
-// Text node details
-export const IS_DIRECTIONLESS = 1;
-export const IS_UNMERGEABLE = 1 << 1;
-
+// Text node formatting
 const IS_BOLD = 1;
 const IS_ITALIC = 1 << 1;
 const IS_STRIKETHROUGH = 1 << 2;
@@ -70,6 +85,11 @@ const IS_SUBSCRIPT = 1 << 5;
 const IS_SUPERSCRIPT = 1 << 6;
 const IS_HIGHLIGHT = 1 << 7;
 
+// Text node details
+export const IS_DIRECTIONLESS = 1;
+export const IS_UNMERGEABLE = 1 << 1;
+
+// our own type, not from lexical
 export const TEXT_TYPE_TO_FORMAT = {
   bold: IS_BOLD,
   code: IS_CODE,
@@ -83,10 +103,14 @@ export const TEXT_TYPE_TO_FORMAT = {
 
 // from @lexical/code
 
+// packages/lexical-code/src/CodeNode.ts
+
 export type SerializedCodeNode = Spread<
   { language: string | null | undefined },
   SerializedElementNode
 >;
+
+// packages/lexical-code/src/CodeHighlightNode.ts
 
 export type SerializedCodeHighlightNode = Spread<
   { highlightType: string | null | undefined },
@@ -95,9 +119,12 @@ export type SerializedCodeHighlightNode = Spread<
 
 // from @lexical/link
 
+// packages/lexical-link/src/index.ts
+
 export interface LinkAttributes {
   rel?: null | string;
   target?: null | string;
+  title?: null | string;
 }
 
 export type SerializedLinkNode = Spread<
@@ -106,6 +133,8 @@ export type SerializedLinkNode = Spread<
 >;
 
 // from @lexical/list
+
+// packages/lexical-list/src/LexicalListNode.ts
 
 export type SerializedListNode = Spread<
   { listType: ListType; start: number; tag: ListNodeTagType },
@@ -116,15 +145,16 @@ export type ListType = 'number' | 'bullet' | 'check';
 
 export type ListNodeTagType = 'ul' | 'ol';
 
+// packages/lexical-list/src/LexicalListItemNode.ts
+
 export type SerializedListItemNode = Spread<
-  {
-    checked: boolean | undefined;
-    value: number;
-  },
+  { checked: boolean | undefined; value: number },
   SerializedElementNode
 >;
 
 // from @lexical/react
+
+// packages/lexical-react/src/LexicalDecoratorBlockNode.ts
 
 export type SerializedDecoratorBlockNode = Spread<
   { format: ElementFormatType },
@@ -133,9 +163,11 @@ export type SerializedDecoratorBlockNode = Spread<
 
 // from @lexical/rich-text
 
-export type HeadingTagType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+// packages/lexical-rich-text/src/index.ts
 
 export declare type SerializedHeadingNode = Spread<
   { tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' },
   SerializedElementNode
 >;
+
+export type HeadingTagType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
