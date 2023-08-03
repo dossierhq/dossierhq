@@ -1,4 +1,5 @@
 {
+  "schemaKind": "admin",
   "entityTypes": [
     {
       "name": "Article",
@@ -85,8 +86,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         }
       ]
     },
@@ -104,8 +105,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "slug",
@@ -115,8 +116,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": "slug",
-          "index": "blogSlug",
-          "values": []
+          "values": [],
+          "index": "blogSlug"
         },
         {
           "name": "publishedDate",
@@ -126,8 +127,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": "date",
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "updatedDate",
@@ -137,8 +138,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": "date",
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "authors",
@@ -168,8 +169,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "body",
@@ -178,9 +179,13 @@
           "required": true,
           "adminOnly": false,
           "richTextNodes": [
+            "code",
+            "code-highlight",
             "entityLink",
             "linebreak",
             "link",
+            "list",
+            "listitem",
             "paragraph",
             "root",
             "tab",
@@ -230,8 +235,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "slug",
@@ -241,8 +246,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": "slug",
-          "index": "glossarySlug",
-          "values": []
+          "values": [],
+          "index": "glossarySlug"
         },
         {
           "name": "description",
@@ -280,8 +285,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "article",
@@ -307,8 +312,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "width",
@@ -334,8 +339,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         }
       ]
     },
@@ -351,8 +356,8 @@
           "adminOnly": false,
           "multiline": false,
           "matchPattern": null,
-          "index": null,
-          "values": []
+          "values": [],
+          "index": null
         },
         {
           "name": "items",
@@ -395,5 +400,7 @@
       "name": "glossarySlug",
       "type": "unique"
     }
-  ]
+  ],
+  "migrations": [],
+  "version": 2
 }
