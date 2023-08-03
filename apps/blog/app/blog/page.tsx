@@ -37,7 +37,7 @@ export default async function Page() {
 
   return (
     <>
-      <Text as="h1" textStyle="headline3" marginBottom={3}>
+      <Text as="h1" textStyle="headline3" marginBottom={3} marginHorizontal={2}>
         Latest news and updates about Dossier
       </Text>
       {blogPosts.map((item) => {
